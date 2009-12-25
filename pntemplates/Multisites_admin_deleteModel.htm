@@ -1,0 +1,22 @@
+<!--[include file="Multisites_admin_menu.htm"]-->
+<div class="pn-admincontainer">
+    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='windowlist.gif' set='icons/large' alt=$templatetitle]--></div>
+    <h2><!--[gt text="Delete model"]--></h2>
+    <form name="deleteInstance" id="deleteInstance" class="pn-adminform" action="<!--[pnmodurl modname="Multisites" type="admin" func="deleteModel"]-->" method="post" >
+        <input type="hidden" name="authid" value="<!--[pnsecgenauthkey module="Multisites"]-->" />
+        <input type="hidden" name="confirmation" value="1" />
+        <input type="hidden" name="modelId" value="<!--[$model.modelId]-->" />
+        <div>
+        	<label for="instanceName"><!--[gt text="Confirm model deletion"]--></label>
+        </div>
+        <div class="formOptions" style="text-align: center;">
+            <a href="javascript:deleteInstance()">
+            	<!--[pnimg modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Delete"]-->
+            </a>
+            <!--[gt text="Delete"]-->
+            <a href="<!--[pnmodurl modname="Multisites" type="admin" func="manageModels"]-->">
+                <!--[pnimg modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"]-->
+            </a>
+        </div>
+    </form>
+</div>

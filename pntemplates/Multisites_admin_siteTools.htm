@@ -1,0 +1,18 @@
+<!--[include file="Multisites_admin_menu.htm"]-->
+<div class="pn-admincontainer">
+	<div class="pn-adminpageicon"><!--[pnimg modname='core' src='package_settings.gif' set='icons/large' alt=$templatetitle]--></div>
+    <h2><!--[gt text="Site tools"]--></h2>
+    <div>
+        <!--[gt text="Site name"]-->: <!--[$site.siteName]-->
+    </div>
+    <br />
+    <h3><!--[gt text="Available tools"]--></h3>
+    <div><a href="<!--[pnmodurl modname="Multisites" type="admin" func="executeSiteTool" tool=createAdministrator instanceId=$site.instanceId]-->">
+        <!--[gt text="Create global administrator"]--></a>
+    </div>
+	<div>
+        <a href="<!--[pnmodurl modname="Multisites" type="admin" func="executeSiteTool" tool=adminSiteControl instanceId=$site.instanceId]-->">
+            <!--[gt text="Recover administrators site control"]-->
+        </a>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<span style="padding-right: 10px; margin-right: 10px; border-right: 2px solid #999999;">
+    <a href="javascript:allowModule('<!--[$name]-->',<!--[$instanceId]-->)">
+        <!--[if $available eq 1 && $siteModules[$name].state neq 6]-->
+            <!--[pnimg modname='core' src='ok.gif' set='icons/extrasmall' __alt="Allowed" __title="Allowed"]-->
+        <!--[elseif $available eq 1 && $siteModules[$name].state eq 6]-->
+            <!--[pnimg modname='core' src='cancel.gif' set='icons/extrasmall' __alt="Not allowed" __title="Not allowed"]-->
+        <!--[elseif $available eq 0]--> <!--[pnimg modname='core' src='db_add.gif' set='icons/extrasmall' __alt="Add module" __title="Add module"]-->
+        <!--[/if]-->
+    </a>
+</span>
+<!--[if $available eq 1]-->
+    <!--[if $siteModules[$name].state eq 3]-->
+        <a href="javascript:modifyActivation('<!--[$name]-->',<!--[$instanceId]-->,2)">
+            <!--[pnimg modname='core' src='greenled.gif' set='icons/extrasmall']-->
+        </a>
+    <!--[elseif $siteModules[$name].state eq 2]-->
+        <a href="javascript:modifyActivation('<!--[$name]-->',<!--[$instanceId]-->,3)">
+            <!--[pnimg modname='core' src='yellowled.gif' set='icons/extrasmall']-->
+        </a>
+    <!--[elseif $siteModules[$name].state eq 6]-->
+        <a href="javascript:modifyActivation('<!--[$name]-->',<!--[$instanceId]-->,2)">
+            <!--[pnimg modname='core' src='yellowled.gif' set='icons/extrasmall']-->
+        </a>
+    <!--[else]-->
+        <!--[pnimg modname='core' src='redled.gif' set='icons/extrasmall']-->
+    <!--[/if]-->
+<!--[else]-->
+    <!--[pnimg modname='Multisites' src='blank.gif' set='pnimages']-->
+<!--[/if]-->

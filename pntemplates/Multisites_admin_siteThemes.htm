@@ -1,0 +1,23 @@
+<!--[include file="Multisites_admin_menu.htm"]-->
+<div class="pn-admincontainer">
+    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='configure.gif' set='icons/large' alt=$templatetitle]--></div>
+    <h2><!--[gt text="Site allowed elements"]--></h2>
+    <div><!--[gt text="Site name"]-->: <!--[$site.siteName]--></div>
+    <div><!--[gt text="Site DNS"]-->: <!--[$site.siteDNS]--></div>
+    <table class="pn-admintable">
+        <tbody>
+            <!--[foreach item=theme from=$themes]-->
+                <tr class="<!--[cycle values="pn-odd,pn-even"]-->">
+                    <td><!--[$theme.name]--></td>
+                    <td><!--[$theme.version]--></td>
+                    <td><!--[$theme.description]--></td>
+                    <td width="80">
+                        <div id="theme_<!--[$theme.name]-->">
+                            <!--[$theme.icons]-->
+                        </div>
+                    </td>
+                </tr>
+            <!--[/foreach]-->
+        </tbody>
+    </table>
+</div>

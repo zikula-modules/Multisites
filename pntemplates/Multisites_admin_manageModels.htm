@@ -1,0 +1,41 @@
+<!--[include file="Multisites_admin_menu.htm"]-->
+<div class="pn-admincontainer">
+<div class="pn-adminpageicon"><!--[pnimg modname='core' src='blockdevice.gif' set='icons/large' alt=$templatetitle]--></div>
+<h2><!--[gt text="List of models"]--></h2>
+<table class="pn-admintable">
+    <thead>
+        <tr>
+            <th><!--[gt text="Model name"]--></th>
+            <th><!--[gt text="Description"]--></th>
+            <th><!--[gt text="Model file name"]--></th>
+            <th><!--[gt text="Model folders"]--></th>
+            <th><!--[gt text="Options"]--></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--[foreach item=model from=$modelsArray]-->
+        <tr class="
+            <!--[cycle values="pn-odd,pn-even"]-->
+            ">
+            <td align="left" valign="top"><!--[$model.modelName]--></td>
+            <td align="left" valign="top"><!--[$model.description]--></td>
+            <td align="left" valign="top"><!--[$model.fileName]--></td>
+            <td align="left" valign="top"><!--[$model.folders|replace:',':'<br />']--></td>
+            <td align="right" valign="top">
+            <div><a href="<!--[pnmodurl modname="Multisites" type="admin" func="editModel" modelId=$model.modelId]-->">
+            <!--[pnimg modname='core' src='edit.gif' set='icons/extrasmall' __alt="Edit" __title="Edit"]-->
+            </a></div>
+            <div><a href="<!--[pnmodurl modname="Multisites" type="admin" func="deleteModel" modelId=$model.modelId]-->">
+            <!--[pnimg modname='core' src='14_layer_deletelayer.gif' set='icons/extrasmall' __alt="Delete" __title="Delete"]-->
+            </a></div>
+            </td>
+        </tr>
+        <!--[foreachelse]-->
+        <tr>
+            <td colspan="10"><!--[gt text="No models available. You must define models before create instances."]-->
+            </td>
+        </tr>
+        <!--[/foreach]-->
+    </tbody>
+</table>
+</div>

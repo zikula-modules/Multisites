@@ -1,0 +1,20 @@
+<span style="padding-right: 10px; margin-right: 10px; border-right: 2px solid #999999;">
+    <a href="javascript:allowTheme('<!--[$name]-->',<!--[$instanceId]-->)">
+        <!--[if $available eq 1 && $siteThemes[$name].state neq 6]-->
+            <!--[pnimg modname='core' src='ok.gif' set='icons/extrasmall' __alt="AllOWEDTHEME" __title="AllOWEDTHEME"]-->
+        <!--[elseif $available eq 1 && $siteThemes[$name].state eq 6]-->
+            <!--[pnimg modname='core' src='cancel.gif' set='icons/extrasmall' __alt="Multiple ZikulaNOTALLOWEDTHEME" __title="Multiple ZikulaNOTALLOWEDTHEME"]-->
+        <!--[elseif $available eq 0]-->
+            <!--[pnimg modname='core' src='db_add.gif' set='icons/extrasmall' __alt="Multiple ZikulaADDTHEME" __title="Multiple ZikulaADDTHEME"]-->
+        <!--[/if]-->
+    </a>
+</span>
+<!--[if $isDefaultTheme eq 1 && $available eq 1]-->
+    <!--[pnimg modname='core' src='greenled.gif' set='icons/extrasmall']-->
+<!--[elseif $isDefaultTheme neq 1 && $available eq 1]-->
+    <a href="<!--[pnmodurl modname="Multisites" type="admin" func="setThemeAsDefault" name="$name" instanceId="$instanceId"]-->">
+        <!--[pnimg modname='core' src='redled.gif' set='icons/extrasmall']-->
+    </a>
+<!--[else]-->
+    <!--[pnimg modname='Multisites' src='blank.gif' set='pnimages']-->
+<!--[/if]-->

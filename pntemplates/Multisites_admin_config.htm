@@ -1,0 +1,37 @@
+<!--[include file="Multisites_admin_menu.htm"]-->
+<div class="pn-admincontainer">
+    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='configure.gif' set='icons/large' alt=$templatetitle]--></div>
+    <h2><!--[gt text="Module configuration"]--></h2>
+    <form name="config" id="config" class="pn-adminform" action="<!--[pnmodurl modname="Multisites" type="admin" func="updateConfig"]-->" method="post">
+        <input type="hidden" name="authid" value="<!--[pnsecgenauthkey module="Multisites"]-->" />
+        <div class="pn-adminformrow">
+            <label for="modelsFolder"><!--[gt text="Model files folder"]--></label>
+            <input type="text" name="modelsFolder" size="50" maxlength="150" value="<!--[$modelsFolder]-->"/>
+        </div>
+        <div class="pn-adminformrow">
+        	<label for="tempAccessFileContent"><!--[gt text="Temporal folder .htaccess file content"]--></label>
+            <textarea name="tempAccessFileContent" rows="7" cols="50"><!--[$tempAccessFileContent]--></textarea>
+        </div>
+        <div class="pn-adminformrow">
+            <label for="globalAdminName"><!--[gt text="Global admin name"]--></label>
+            <input type="text" name="globalAdminName" size="20" maxlength="20" value="<!--[$globalAdminName]-->"/>
+        </div>
+        <div class="pn-adminformrow">
+            <label for="globalAdminPassword"><!--[gt text="Global admin password"]--></label>
+            <input type="text" name="globalAdminPassword" size="20" maxlength="20" value="<!--[$globalAdminPassword]-->"/>
+        </div>
+        <div class="pn-adminformrow">
+        	<label for="globalAdminemail"><!--[gt text="Global admin e-mail"]--></label>
+            <input type="text" name="globalAdminemail" size="20" maxlength="20" value="<!--[$globalAdminemail]-->"/>
+        </div>
+        <div class="formOptions" style="text-align: center;">
+            <a href="javascript:config()">
+                <!--[pnimg modname='core' src='button_ok.gif' set='icons/small' __alt="Modify" __title="Modify"]-->
+            </a>
+            <!--[gt text="Modify"]-->
+            <a href="<!--[pnmodurl modname="Multisites" type="admin" func="main"]-->">
+                <!--[pnimg modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"]-->
+            </a>
+        </div>
+    </form>
+</div>
