@@ -31,6 +31,7 @@ function Multisites_pntables()
 										        'siteAdminEmail' => 'ms_siteAdminEmail',
 										        'siteCompany' => 'ms_siteCompany',
 										        'siteDNS' => 'ms_siteDNS',
+                                                'siteDB' => 'siteDB',
 										        'siteInitModel' => 'ms_siteInitModel',
 										        'activationDate' => 'ms_activationDate',
 										        'active' => 'ms_active');
@@ -45,6 +46,7 @@ function Multisites_pntables()
 											        'siteAdminEmail' => "VARCHAR(30) NOTNULL DEFAULT ''",
 											        'siteCompany' => "VARCHAR(100) NOTNULL DEFAULT ''",
 											        'siteDNS' => "VARCHAR(20) NOTNULL DEFAULT ''",
+                                                    'siteDB' => "VARCHAR(20) NOTNULL DEFAULT ''",
 											        'siteInitModel' => "VARCHAR(30) NOTNULL DEFAULT ''",
 											        'activationDate' => "DATETIME NOTNULL DEFAULT '0'",
 											        'active' => "TINYINT(1) NOTNULL DEFAULT '0'");

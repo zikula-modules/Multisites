@@ -24,9 +24,15 @@
             <!--[foreach item=site from=$sites]-->
                 <tr class="<!--[cycle values="pn-odd,pn-even"]-->">
 	                <td align="left" valign="top">
-	                	<a href="<!--[$wwwroot]-->/<!--[$site.siteDNS]-->/<!--[$siteDNSEndText]-->" target="_blank">
-	                		<!--[$site.instanceName]-->
-						</a>
+	                    <!--[if $basedOnDomains ==1]-->
+                            <a href="http://<!--[$site.siteDNS]-->/" target="_blank">
+	                		    <!--[$site.instanceName]-->
+						    </a>
+                        <!--[else]-->
+                            <a href="<!--[$wwwroot]-->/<!--[$site.siteDNS]-->/<!--[$siteDNSEndText]-->" target="_blank">
+	                		    <!--[$site.instanceName]-->
+						    </a>
+                        <!--[/if]-->
 					</td>
 	                <td align="left" valign="top">
 	                	<!--[$site.description]-->

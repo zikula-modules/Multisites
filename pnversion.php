@@ -8,7 +8,7 @@
 
 $dom = ZLanguage::getModuleDomain('Multisites');
 $modversion['name'] = 'Multisites';
-$modversion['version'] = '0.8';
+$modversion['version'] = '0.9';
 $modversion['description'] = __('Zikula Multisites module', $dom);
 $modversion['displayname'] = __('Multisites manager', $dom);
 $modversion['credits'] = 'pndocs/credits.txt';

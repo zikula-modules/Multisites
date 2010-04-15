@@ -1,29 +1,29 @@
 <?php
 // DON'T CHANGE - start
-$siteDNS = (isset($_GET['siteDNS']) ? DataUtil::formatForOS($_GET['siteDNS']) : null);
-// DON'T CHANGE - end
-
+$siteDNS = (isset($_GET['siteDNS'])) ? DataUtil::formatForOS($_GET['siteDNS']) : $_SERVER['HTTP_HOST'];
+$basedOnDomains = (isset($_GET['siteDNS'])) ? 0 : 1;
 
 // sites databases connection. The dbname is a variable that depends on the site that it being consulted
-$PNConfig['DBInfo']['Multisites']['dbhost'] = '$dbhost'; // sample value
-$PNConfig['DBInfo']['Multisites']['dbuname'] = '$dbuname';
-$PNConfig['DBInfo']['Multisites']['dbpass'] = '$dbpass';
+$PNConfig['DBInfo']['Multisites']['dbhost'] = 'localhost'; // sample value
+$PNConfig['DBInfo']['Multisites']['dbuname'] = 'YzBkMw==';
+$PNConfig['DBInfo']['Multisites']['dbpass'] = 'cXdlcnR5';
 $PNConfig['DBInfo']['Multisites']['dbname'] = ''; // sample value
 $PNConfig['DBInfo']['Multisites']['encoded'] = 1;
 $PNConfig['DBInfo']['Multisites']['pconnect'] = 0;
 
 // multi Zikula information
-$PNConfig['Multisites']['multi'] = 0; // inform about if it is a multiple Zikula installation
-$PNConfig['Multisites']['mainSiteURL'] = '$mainSiteURL'; // name used for the main site where the module Multisites is allowed
-$PNConfig['Multisites']['siteDNSEndText'] = '$siteDNSEndText'; // Internet address http://host.domain/siteDNS/this_parameter
+$PNConfig['Multisites']['multi'] = 1; // inform about if it is a multiple Zikula installation
+$PNConfig['Multisites']['mainSiteURL'] = 'www.c0d3.me'; // name used for the main site where the module Multisites is allowed
+$PNConfig['Multisites']['siteDNSEndText'] = 'site'; // Internet address http://host.domain/siteDNS/this_parameter
 
 
 // site information
-$PNConfig['Multisites']['filesRealPath'] = '$filesRealPath'; // path of the site files root in server
-$PNConfig['Multisites']['siteTempFilesFolder'] = '$siteTempFilesFolder'; // name for the temporal files' folder
-$PNConfig['Multisites']['siteFilesFolder'] = '$siteFilesFolder'; // name for the files' folder
-$PNConfig['Multisites']['wwwroot'] = '$wwwroot'; // set the root for the multizikula installation
-$PNConfig['Multisites']['siteDNS'] = '$basePath' . '/' . $siteDNS . '/' . $PNConfig['Multisites']['siteDNSEndText'];
+$PNConfig['Multisites']['filesRealPath'] = '/home/c0d3/msdata'; // path of the site files root in server
+$PNConfig['Multisites']['siteTempFilesFolder'] = '/pnTemp'; // name for the temporal files' folder
+$PNConfig['Multisites']['siteFilesFolder'] = '/Data'; // name for the files' folder
+$PNConfig['Multisites']['wwwroot'] = 'http://www.c0d3.me'; // set the root for the multizikula installation
+$PNConfig['Multisites']['siteDNS'] = ($basedOnDomains == 1) ? '' : '' . '/' . $siteDNS . '/' . $PNConfig['Multisites']['siteDNSEndText'];
+$PNConfig['Multisites']['basedOnDomains'] = $basedOnDomains;
 
 //****** DON'T CHANGE AFTER THIS LINE *******
 if ($siteDNS == $PNConfig['Multisites']['mainSiteURL'] || $PNConfig['Multisites']['multi'] == 0) {
@@ -35,7 +35,7 @@ $siteInfo = array();
 if (isset($siteDNS) && $siteDNS != null) {
     // the site dns has been received
     // check if site cookie exists
-    if (isset($_COOKIE['site'])) {
+    if (isset($_COOKIE['site']) && 1==0) {
         $siteArray = $_COOKIE['site'];
         $signingKey = md5($GLOBALS['PNConfig']['DBInfo']['default']['dbhost'] . $GLOBALS['PNConfig']['DBInfo']['default']['dbuname'] . $GLOBALS['PNConfig']['DBInfo']['default']['dbpass']);
         $signedData = unserialize($siteArray);
@@ -79,7 +79,8 @@ $PNConfig['System']['temp'] = $PNConfig['Multisites']['filesRealPath'] . '/' . $
  */
 function getSiteInfo($site)
 {
-    $url = $GLOBALS['PNConfig']['Multisites']['wwwroot'] . '/' . $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] . '/' . $GLOBALS['PNConfig']['Multisites']['siteDNSEndText'] . '/index.php?module=Multisites&func=getSiteAvailability&site=' . $site;
+    $url = ($GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ? $GLOBALS['PNConfig']['Multisites']['wwwroot'] . '/' . $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] . '/' . $GLOBALS['PNConfig']['Multisites']['siteDNSEndText'] : 'http://' . $GLOBALS['PNConfig']['Multisites']['mainSiteURL'];
+    $url .= '/index.php?module=Multisites&func=getSiteAvailability&site=' . $site;
     $curl_handle = curl_init();
     curl_setopt($curl_handle, CURLOPT_URL, $url);
     curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);

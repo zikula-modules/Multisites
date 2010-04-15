@@ -113,7 +113,7 @@ function Multisites_userapi_getSiteAvailability($args)
         return LogUtil::registerError(__('Error! Could not load items.', $dom));
     }
     if ($items[$site]['active'] == 1) {
-        return $items[$site]['siteDNS'];
+        return $items[$site]['siteDB'];
     } else {
         return '';
     }
