@@ -1,61 +1,60 @@
-<!--[include file="Multisites_admin_menu.htm"]-->
-<div class="pn-admincontainer">
-    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='edit.gif' set='icons/large' alt=$templatetitle]--></div>
-    <h2><!--[gt text="Create a new instance"]--></h2>
-    <form name="editInstance" id="editInstance" class="pn-adminform" action="<!--[pnmodurl modname="Multisites" type="admin" func="update"]-->" method="post" >
-        <input type="hidden" name="authid" value="<!--[pnsecgenauthkey module="Multisites"]-->" />
-        <input type="hidden" name="instanceId" value="<!--[$site.instanceId]-->" />
-        <div class="pn-adminformrow">
-            <label for="instanceName"><!--[gt text="Instance name"]--></label>
-            <input type="text" name="instanceName" size="50" maxlength="150" value="<!--[$site.instanceName]-->"/>
+{include file="Multisites_admin_menu.htm"}
+<div class="z-admincontainer">
+    <div class="z-adminpageicon">{img modname='core' src='edit.gif' set='icons/large'}</div>
+    <h2>{gt text="Create a new instance"}</h2>
+    <form id="editInstance" class="z-form" action="{modurl modname="Multisites" type="admin" func="update"}" method="post" >
+        <input type="hidden" name="authid" value="{secgenauthkey module="Multisites"}" />
+        <input type="hidden" name="instanceId" value="{$site.instanceId}" />
+        <div class="z-formrow">
+            <label for="instanceName">{gt text="Instance name"}</label>
+            <input type="text" name="instanceName" size="50" maxlength="150" value="{$site.instanceName}"/>
         </div>
-        <div class="pn-adminformrow">
-            <label for="description"><!--[gt text="Description"]--></label>
-            <input type="text" name="description" size="50" maxlength="255" value="<!--[$site.description]-->"/>
+        <div class="z-formrow">
+            <label for="description">{gt text="Description"}</label>
+            <input type="text" name="description" size="50" maxlength="255" value="{$site.description}"/>
         </div>
-        <div class="pn-adminformrow">
-            <label for="siteName"><!--[gt text="Original site name"]--></label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="siteName" size="50" maxlength="255" value="<!--[$site.siteName]-->"/>
+        <div class="z-formrow">
+            <label for="siteName">{gt text="Original site name"}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" name="siteName" size="50" maxlength="255" value="{$site.siteName}"/>
         </div>
-        <div class="pn-adminformrow">
-            <label for="siteAdminName"><!--[gt text="Original site admin name"]--></label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="siteAdminName" size="15" maxlength="25" value="<!--[$site.siteAdminName]-->"/>
+        <div class="z-formrow">
+            <label for="siteAdminName">{gt text="Original site admin name"}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" name="siteAdminName" size="15" maxlength="25" value="{$site.siteAdminName}"/>
         </div>
-        <div class="pn-adminformrow">
-            <label for="siteAdminPwd"><!--[gt text="Original site admin password"]--></label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="siteAdminPwd" size="15" maxlength="15" value="<!--[$site.siteAdminPwd]-->" />
+        <div class="z-formrow">
+            <label for="siteAdminPwd">{gt text="Original site admin password"}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" name="siteAdminPwd" size="15" maxlength="15" value="{$site.siteAdminPwd}" />
 		</div>
-        <div class="pn-adminformrow">
-            <label for="siteAdminRealName"><!--[gt text="Admin real name"]--></label>
-            <input type="text" name="siteAdminRealName" size="30" maxlength="70" value="<!--[$site.siteAdminRealName]-->" />
+        <div class="z-formrow">
+            <label for="siteAdminRealName">{gt text="Admin real name"}</label>
+            <input type="text" name="siteAdminRealName" size="30" maxlength="70" value="{$site.siteAdminRealName}" />
 		</div>
-        <div class="pn-adminformrow">
-        	<label for="siteAdminEmail"><!--[gt text="Admin email"]--></label>
-            <input type="text" name="siteAdminEmail" size="30" maxlength="30" value="<!--[$site.siteAdminEmail]-->" />
+        <div class="z-formrow">
+        	<label for="siteAdminEmail">{gt text="Admin email"}</label>
+            <input type="text" name="siteAdminEmail" size="30" maxlength="30" value="{$site.siteAdminEmail}" />
 		</div>
-        <div class="pn-adminformrow">
-        	<label for="siteCompany"><!--[gt text="Company"]--></label>
-            <input type="text" name="siteCompany" size="50" maxlength="100" value="<!--[$site.siteCompany]-->" />
+        <div class="z-formrow">
+        	<label for="siteCompany">{gt text="Company"}</label>
+            <input type="text" name="siteCompany" size="50" maxlength="100" value="{$site.siteCompany}" />
         </div>
-        <div class="pn-adminformrow">
-        	<label for="siteDNS"><!--[gt text="Site DNS"]--></label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="siteDNS" size="15" maxlength="20" value="<!--[$site.siteDNS]-->" />
+        <div class="z-formrow">
+        	<label for="siteDNS">{gt text="Site DNS"}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" name="siteDNS" size="15" maxlength="20" value="{$site.siteDNS}" />
         </div>
-        <div class="pn-adminformrow">
-            <label for="siteDNS"><!--[gt text="Based on model"]--></label>
-            <input class="notEditableField" onfocus="blur()" type="text" value="<!--[$site.siteInitModel]-->" />
+        <div class="z-formrow">
+            <label for="siteDNS">{gt text="Based on model"}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" value="{$site.siteInitModel}" />
 		</div>
-        <div class="pn-adminformrow">
-            <label for="active"><!--[gt text="Active"]--></label>
-            <input type="checkbox"<!--[if $site.active eq 1]-->checked<!--[/if]--> name="active" value="1" />
+        <div class="z-formrow">
+            <label for="active">{gt text="Active"}</label>
+            <input type="checkbox"{if $site.active eq 1}checked{/if} name="active" value="1" />
         </div>
-        <div class="formOptions" style="text-align: center;">
+        <div class="z-formbuttons" style="text-align: center;">
 			<a href="javascript:editInstance()">
-				<!--[pnimg modname='core' src='button_ok.gif' set='icons/small' __alt="Edit" __title="Edit"]-->
+				{img modname='core' src='button_ok.gif' set='icons/small' __alt="Edit" __title="Edit"}
 	        </a>
-	        <!--[gt text="Edit"]-->
-	        <a href="<!--[pnmodurl modname="Multisites" type="admin" func="main"]-->">
-	            <!--[pnimg modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"]-->
+	        <a href="{modurl modname="Multisites" type="admin" func="main"}">
+	            {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
 			</a>
         </div>
     </form>

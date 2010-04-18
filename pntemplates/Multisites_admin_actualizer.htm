@@ -1,60 +1,60 @@
-<!--[include file="Multisites_admin_menu.htm"]-->
-<div class="pn-admincontainer">
-    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='package_utilities.gif' set='icons/large' alt=$templatetitle]--></div>
-    <h2><!--[gt text="Upgrade modules"]--></h2>
+{include file="Multisites_admin_menu.htm"}
+<div class="z-admincontainer">
+    <div class="z-adminpageicon">{img modname='core' src='package_utilities.gif' set='icons/large'}</div>
+    <h2>{gt text="Upgrade modules"}</h2>
     <div style="height: 15px;">&nbsp;</div>
     <div name="content" id="content">
-        <form name="actualize" id="actualize" action="<!--[pnmodurl modname="Multisites" type="admin" func="actualizeModules"]-->" method="post" >
-            <input type="hidden" name="authid" value="<!--[pnsecgenauthkey module="Multisites"]-->" />
-        	<h3><!--[gt text="Modules folder"]--></h3>
-			<table class="pn-admintable">
+        <form id="actualize" action="{modurl modname="Multisites" type="admin" func="actualizeModules"}" method="post" >
+            <input type="hidden" name="authid" value="{secgenauthkey module="Multisites"}" />
+        	<h3>{gt text="Modules folder"}</h3>
+			<table class="z-admintable">
                 <tbody>
-                	<!--[if $upgradeNeeded]-->
-	                    <!--[foreach item=module from=$modules]-->
-						    <!--[if $module.numberOfSites > 0]-->
-		                        <tr class="<!--[cycle values="pn-odd,pn-even"]-->">
+                	{if $upgradeNeeded}
+	                    {foreach item=module from=$modules}
+						    {if $module.numberOfSites > 0}
+		                        <tr class="{cycle values="z-odd,z-even"}">
 		                            <td>
-		                                <!--[$module.name]-->
+		                                {$module.name}
 		                            </td>
 		                            <td>
-		                                <!--[$module.description]-->
+		                                {$module.description}
 		                            </td>
 									<td>
-		                                <!--[$module.version]-->
+		                                {$module.version}
 		                            </td>
 		                            <td>
-		                                <!--[$module.numberOfSites]-->
+		                                {$module.numberOfSites}
 		                            </td>
 									<td>
-										<a href="<!--[pnmodurl modname="Multisites" type="admin" func="actualizeModule" moduleName=$module.name]-->">
-										  <!--[pnimg modname='core' src='agt_update-product.gif' set='icons/extrasmall' __alt="Upgrade sites" __title="Upgrade sites"]-->
+										<a href="{modurl modname="Multisites" type="admin" func="actualizeModule" moduleName=$module.name}">
+										    {img modname='core' src='agt_update-product.gif' set='icons/extrasmall' __alt="Upgrade sites" __title="Upgrade sites"}
 										</a>
 									</td>
 		                        </tr>
-							<!--[/if]-->
-	                    <!--[/foreach]-->
-					<!--[else]-->
+							{/if}
+	                    {/foreach}
+					{else}
 					   <tr>
 					   	   <td>
-					   	       <!--[gt text="All the sites and modules are upgraded to the current versions"]-->
+					   	       {gt text="All the sites and modules are upgraded to the current versions"}
 					   	   </td>
 					   </tr>
-					<!--[/if]-->
+					{/if}
                 </tbody>
 			</table>
 			<div style="clear: both;"></div>
-            <div class="formOptions" style="text-align: center;">
+            <div class="z-formbuttons" style="text-align: center;">
                 <a href="javascript:actualize()">
-                    <!--[pnimg modname='core' src='button_ok.gif' set='icons/small' __alt="Upgrade modules" __title="Upgrade modules"]-->
+                    {img modname='core' src='button_ok.gif' set='icons/small' __alt="Upgrade modules" __title="Upgrade modules"}
                 </a>
-                <!--[gt text="Upgrade modules"]-->
-                <a href="<!--[pnmodurl modname="Multisites" type="admin" func="main"]-->">
-            	   <!--[pnimg modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"]-->
+                {gt text="Upgrade modules"}
+                <a href="{modurl modname="Multisites" type="admin" func="main"}">
+            	   {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
                 </a>
             </div>
         </form>
     </div>
 </div>
 <script>
-	var notModulesSelected = '<!--[gt text="Not modules selected"]-->';
+	var notModulesSelected = '{gt text="Not modules selected"}';
 </script>

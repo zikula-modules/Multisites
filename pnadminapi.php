@@ -7,22 +7,240 @@
  */
 function Multisites_adminapi_connectExtDB($args)
 {
-    $database = FormUtil::getPassedValue('database', isset($args['database']) ? $args['database'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
-    global $PNConfig;
-    $PNConfig['DBInfo']['Multisites']['dbname'] = $database;
-    //connect to database
-    $connect = DBConnectionStack::init('Multisites');
-    if (!$connect) {
+    include_once('config/multisites_dbconfig.php');
+    // if it is received $site it is assumed that the database connection values are in the $databaseArray array
+    $siteDBName = (isset($args['site'])) ? $databaseArray[$args['site']][siteDBName] : $args['siteDBName'];
+    $siteDBUname = (isset($args['site'])) ? $databaseArray[$args['site']][siteDBUname] : $args['siteDBUname'];
+    $siteDBPass = (isset($args['site'])) ? $databaseArray[$args['site']][siteDBPass] : $args['siteDBPass'];
+    $siteDBHost = (isset($args['site'])) ? $databaseArray[$args['site']][siteDBHost] : $args['siteDBHost'];
+    $siteDBType = (isset($args['site'])) ? $databaseArray[$args['site']][siteDBType] : $args['siteDBType'];
+    try {
+        $connect = new PDO("$siteDBType:host=$siteDBHost;dbname=$siteDBName", $siteDBUname, $siteDBPass);
+    } catch (PDOException $e) {
         return false;
     }
-    DBConnectionStack::popConnection();
     return $connect;
+}
+
+/**
+ * Create a new database for the new site
+ * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+ * @param:	The database name
+ * @return:	true if success or false otherwise
+ */
+function Multisites_adminapi_createDB($args)
+{
+    // security check
+    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
+        return LogUtil::registerPermissionError();
+    }
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB',
+                            array('siteDBUname' => $args['siteDBUname'],
+                                  'siteDBPass' => $args['siteDBPass'],
+                                  'siteDBHost' => $args['siteDBHost'],
+                                  'siteDBType' => $args['siteDBType']));
+    if (!$connect) {
+        return LogUtil::registerError(__('Error connecting to database', $dom));
+    }
+    try {
+        switch ($args['siteDBType']) {
+            case 'mysql':
+            case 'mysqli':
+                $query = "CREATE DATABASE $args[siteDBName] DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci";
+                break;
+            case 'pgsql':
+                $query = "CREATE DATABASE $args[siteDBName] ENCODING='utf8'";
+                break;
+            case 'oci':
+                $query = "CREATE DATABASE $args[siteDBName] national character set utf8";
+                break;
+        }
+        try {
+            $connect->query($query);
+        } catch (PDOException $e) {
+            return false;
+        }
+    } catch (PDOException $e) {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Create database tables based on the model file
+ * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+ * @param:	The model database that is the same as sitDNS and the model file name
+ * @return:	true if success or false otherwise
+ */
+function Multisites_adminapi_createTables($args)
+{
+    $dom = ZLanguage::getModuleDomain('Multisites');
+    // security check
+    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
+        return LogUtil::registerPermissionError();
+    }
+    //check if the models folders exists and it is writeable
+    $path = pnModGetVar('Multisites', 'modelsFolder');
+    if (!is_dir($path)) {
+        return LogUtil::registerError(__('The model do not exists', $dom));
+    }
+    //check if the file model exists and it is readable
+    $file = $path . '/' . $args['fileName'];
+    if (!file_exists($file) || !is_readable($file)) {
+        return LogUtil::registerError(__('The model file has not been found', $dom));
+    }
+    //read the file
+    $fh = fopen($file, 'r+');
+    if ($fh == false) {
+        return LogUtil::registerError(__('Error opening the model file', $dom));
+    }
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB',
+                            array('siteDBName' => $args['siteDBName'],
+                                  'siteDBUname' => $args['siteDBUname'],
+                                  'siteDBPass' => $args['siteDBPass'],
+                                  'siteDBHost' => $args['siteDBHost'],
+                                  'siteDBType' => $args['siteDBType']));
+    if (!$connect) {
+        return LogUtil::registerError(__('Error connecting to database', $dom));
+    }
+    $lines = file($file);
+    $exec = '';
+    $done = false;
+    foreach ($lines as $line_num => $line) {
+        $line = trim($line);
+        if (empty($line) || strpos($line, '--') === 0)
+            continue;
+        $exec .= $line;
+        if (strrpos($line, ';') === strlen($line) - 1) {
+            if (!$connect->query($exec)) {
+                return LogUtil::registerError(__('Error importing the database in line', $dom) . " " . $line_num . ":<br>" . $exec . "<br>" . mysql_error() . "\n");
+            } else {
+                $done = true;
+            }
+            $exec = '';
+        }
+    }
+    fclose($fh);
+    if (!$done) {
+        return LogUtil::registerError(__('Error importing the database. Perhaps there is a problem with the model file', $dom));
+    }
+    return true;
+}
+
+/**
+ * Update the module vars values for an instance that is being created
+ * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+ * @param:	The site main information
+ * @return:	true if success or false otherwise
+ */
+function Multisites_adminapi_updateConfigValues($args)
+{
+    $dom = ZLanguage::getModuleDomain('Multisites');
+    // security check
+    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
+        return LogUtil::registerPermissionError();
+    }
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB',
+                             array('siteDBName' => $args['siteDBName'],
+                                   'siteDBUname' => $args['siteDBUname'],
+                                   'siteDBPass' => $args['siteDBPass'],
+                                   'siteDBHost' => $args['siteDBHost'],
+                                   'siteDBType' => $args['siteDBType']));
+    if (!$connect) {
+        return LogUtil::registerError(__('Error connecting to database', $dom));
+    }
+    $prefix = $GLOBALS['ZConfig']['System']['prefix'];
+    // modify the site name
+    $value = serialize($args['siteName']);
+    $sql = "UPDATE " . $prefix . "_module_vars set pn_value='$value' WHERE pn_modname='/ZConfig' AND pn_name='sitename'";
+    if (!$connect->query($sql)) {
+        return LogUtil::registerError(__('Error configurating value', $dom) . ":<br />" . $sql  . "\n");
+    }
+    // modify the adminmail
+    $value = serialize($args['siteAdminEmail']);
+    $sql = "UPDATE " . $prefix . "_module_vars set pn_value='$value' WHERE pn_modname='/ZConfig' AND pn_name='adminmail'";
+    if (!$connect->query($sql)) {
+        return LogUtil::registerError(__('Error configurating value', $dom) . ":<br />" . $sql . "\n");
+    }
+    // modify the sessionCookieName
+    $value = serialize('ZKSID_' . $args['siteDBName']);
+    $sql = "UPDATE " . $prefix . "_module_vars set pn_value='$value' WHERE pn_modname='/ZConfig' AND pn_name='sessionname'";
+    if (!$connect->query($sql)) {
+        return LogUtil::registerError(__('Error configurating value', $dom) . ":<br />" . $sql . "\n");
+    }
+    // modify the admin password
+    // get the encript hash method
+    $sql = "SELECT pn_hash_method FROM " . $prefix . "_users WHERE pn_uname='admin'";
+    $rs = $connect->query($sql);
+    $rs = $connect->query($sql)->fetch();
+    if (!$rs) {
+        return LogUtil::registerError(__('Error! Could not load items.', $dom));
+    }
+    $hash_method = $rs['pn_hash_method'];
+    // encript the passed password with the method found
+    $hashmethodsarray = pnModAPIFunc('Users', 'user', 'gethashmethods',
+                                      array('reverse' => true));
+    $password = DataUtil::hash($args['siteAdminPwd'], $hashmethodsarray[$hash_method]);
+    // change admin password
+    $sql = "UPDATE " . $prefix . "_users set pn_pass='$password' WHERE pn_uname='admin'";
+    if (!$connect->query($sql)) {
+        return LogUtil::registerError(__('Error configurating value', $dom) . ":<br />" . $sql . "\n");
+    }
+    return true;
+}
+
+/**
+ * Modify the file multisites_dbconig.php file and add there the new instance
+ * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+ * @param:	The instance DNS and database connexion parameters
+ * @return:	true if success and false otherwise
+ */
+function Multisites_adminapi_updateDBConfig($args)
+{
+    // security check
+    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
+        return LogUtil::registerPermissionError();
+    }
+    // get sites
+    $sites = pnModAPIFunc('Multisites', 'user', 'getAllSites',
+                           array('letter' => $letter,
+                                 'itemsperpage' => -1,
+                                 'startnum' => -1));
+    if ($sites === false) {
+        return false;
+    }
+    foreach ($sites as $site) {
+        $databaseArray[$site['siteDNS']] = array('siteDBName' => $site['siteDBName'],
+                                                 'siteDBHost' => $site['siteDBHost'],
+                                                 'siteDBType' => $site['siteDBType'],
+                                                 'siteDBUname' => $site['siteDBUname'],
+                                                 'siteDBPass' => $site['siteDBPass']);
+    }
+    // add the site that is being created in this moment
+    $databaseArray[$args['siteDNS']] = array('siteDBName' => $args['siteDBName'],
+                                             'siteDBHost' => $args['siteDBHost'],
+                                             'siteDBType' => $args['siteDBType'],
+                                             'siteDBUname' => $args['siteDBUname'],
+                                             'siteDBPass' => $args['siteDBPass']);
+    // write file
+    $dbconfig = var_export($databaseArray, true);
+    $phpCode = "<?php\n\$databaseArray = $dbconfig;";
+    if (!file_put_contents('config/multisites_dbconfig.php', $phpCode)) return false;
+    return true;
 }
 
 /**
@@ -34,47 +252,40 @@ function Multisites_adminapi_connectExtDB($args)
 function Multisites_adminapi_createInstance($args)
 {
     $dom = ZLanguage::getModuleDomain('Multisites');
-    $instanceName = FormUtil::getPassedValue('instanceName', isset($args['instanceName']) ? $args['instanceName'] : null, 'POST');
-    $description = FormUtil::getPassedValue('description', isset($args['description']) ? $args['description'] : null, 'POST');
-    $siteName = FormUtil::getPassedValue('siteName', isset($args['siteName']) ? $args['siteName'] : null, 'POST');
-    $siteAdminName = FormUtil::getPassedValue('siteAdminName', isset($args['siteAdminName']) ? $args['siteAdminName'] : null, 'POST');
-    $siteAdminPwd = FormUtil::getPassedValue('siteAdminPwd', isset($args['siteAdminPwd']) ? $args['siteAdminPwd'] : null, 'POST');
-    $siteAdminRealName = FormUtil::getPassedValue('siteAdminRealName', isset($args['siteAdminRealName']) ? $args['siteAdminRealName'] : null, 'POST');
-    $siteAdminEmail = FormUtil::getPassedValue('siteAdminEmail', isset($args['siteAdminEmail']) ? $args['siteAdminEmail'] : null, 'POST');
-    $siteCompany = FormUtil::getPassedValue('siteCompany', isset($args['siteCompany']) ? $args['siteCompany'] : null, 'POST');
-    $siteDNS = FormUtil::getPassedValue('siteDNS', isset($args['siteDNS']) ? $args['siteDNS'] : null, 'POST');
-    $siteDB = FormUtil::getPassedValue('siteDB', isset($args['siteDB']) ? $args['siteDB'] : null, 'POST');
-    $siteInitModel = FormUtil::getPassedValue('siteInitModel', isset($args['siteInitModel']) ? $args['siteInitModel'] : null, 'POST');
-    $active = FormUtil::getPassedValue('active', isset($args['active']) ? $args['active'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     //Needed arguments
-    if ($siteDNS == null) {
+    if ($args['siteDNS'] == null) {
         return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
     $activationDate = DateUtil::getDatetime(time());
-    $item = array('instanceName' => DataUtil::formatForStore($instanceName),
-			        'description' => DataUtil::formatForStore($description),
-			        'siteName' => DataUtil::formatForStore($siteName),
-			        'siteAdminName' => DataUtil::formatForStore($siteAdminName),
-			        'siteAdminPwd' => DataUtil::formatForStore($siteAdminPwd),
-			        'siteAdminRealName' => DataUtil::formatForStore($siteAdminRealName),
-			        'siteAdminEmail' => DataUtil::formatForStore($siteAdminEmail),
-			        'siteCompany' => DataUtil::formatForStore($siteCompany),
-			        'siteDNS' => DataUtil::formatForStore($siteDNS),
-                    'siteDB' => DataUtil::formatForStore($siteDB),
-			        'siteInitModel' => DataUtil::formatForStore($siteInitModel),
-			        'activationDate' => DataUtil::formatForStore($activationDate),
-			        'active' => DataUtil::formatForStore($active));
+    $item = array('instanceName' => DataUtil::formatForStore($args['instanceName']),
+			        'description' => DataUtil::formatForStore($args['description']),
+			        'siteName' => DataUtil::formatForStore($args['siteName']),
+			        'siteAdminName' => DataUtil::formatForStore($args['siteAdminName']),
+			        'siteAdminPwd' => DataUtil::formatForStore($args['siteAdminPwd']),
+			        'siteAdminRealName' => DataUtil::formatForStore($args['siteAdminRealName']),
+			        'siteAdminEmail' => DataUtil::formatForStore($args['siteAdminEmail']),
+			        'siteCompany' => DataUtil::formatForStore($args['siteCompany']),
+			        'siteDNS' => DataUtil::formatForStore($args['siteDNS']),
+                    'siteDBName' => DataUtil::formatForStore($args['siteDBName']),
+                    'siteDBUname' => DataUtil::formatForStore($args['siteDBUname']),
+                    'siteDBPass' => DataUtil::formatForStore($args['siteDBPass']),
+                    'siteDBHost' => DataUtil::formatForStore($args['siteDBHost']),
+                    'siteDBType' => DataUtil::formatForStore($args['siteDBType']),
+			        'siteInitModel' => DataUtil::formatForStore($args['siteInitModel']),
+			        'activationDate' => DataUtil::formatForStore($args['activationDate']),
+			        'active' => DataUtil::formatForStore($args['active']));
     if (!DBUtil::insertObject($item, 'Multisites_sites', 'instanceId')) {
         return LogUtil::registerError(__('Error! Creation attempt failed.', $dom));
     }
     // Let any hooks know that we have created a new item
-    pnModCallHooks('item', 'create', $item['instanceId'], array('module' => 'Multisites'));
+    pnModCallHooks('item', 'create', $item['instanceId'],
+                    array('module' => 'Multisites'));
     return $item['instanceId'];
 }
 
@@ -93,8 +304,8 @@ function Multisites_adminapi_createModel($args)
     $folders = FormUtil::getPassedValue('folders', isset($args['folders']) ? $args['folders'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     //Needed arguments
@@ -114,91 +325,6 @@ function Multisites_adminapi_createModel($args)
 }
 
 /**
- * Create a new database for the new site
- * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
- * @param:	The database name
- * @return:	true if success or false otherwise
- */
-function Multisites_adminapi_createDB($args)
-{
-    $dom = ZLanguage::getModuleDomain('Multisites');
-    $siteDB = FormUtil::getPassedValue('siteDB', isset($args['siteDB']) ? $args['siteDB'] : null, 'POST');
-    // security check
-    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
-        return LogUtil::registerPermissionError();
-    }
-    // Try to create the database. If it returns false assume that the database is just created
-    if (!DBUtil::createDatabase($siteDB)) {
-        return LogUtil::registerError(__('Create Database failed'), $dom);
-    }
-    return true;
-}
-
-/**
- * Create database tables based on the model file
- * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
- * @param:	The model database that is the same as sitDNS and the model file name
- * @return:	true if success or false otherwise
- */
-function Multisites_adminapi_createTables($args)
-{
-    $dom = ZLanguage::getModuleDomain('Multisites');
-    $fileName = FormUtil::getPassedValue('fileName', isset($args['fileName']) ? $args['fileName'] : null, 'POST');
-    $siteDB = FormUtil::getPassedValue('siteDB', isset($args['siteDB']) ? $args['siteDB'] : null, 'POST');
-    // security check
-    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
-        return LogUtil::registerPermissionError();
-    }
-    //check if the models folders exists and it is writeable
-    $path = pnModGetVar('Multisites', 'modelsFolder');
-    if (!is_dir($path)) {
-        return LogUtil::registerError(__('The model do not exists', $dom));
-    }
-    //check if the file model exists and it is readable
-    $file = $path . '/' . $fileName;
-    if (!file_exists($file) || !is_readable($file)) {
-        return LogUtil::registerError(__('The model file has not been found', $dom));
-    }
-    //read the file
-    $fh = fopen($file, 'r+');
-    if ($fh == false) {
-        return LogUtil::registerError(__('Error opening the model file', $dom));
-    }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $siteDB));
-    if (!$connect) {
-        return LogUtil::registerError(__('Error connecting to database', $dom));
-    }
-    $lines = file($file);
-    $exec = '';
-    $done = false;
-    foreach ($lines as $line_num => $line) {
-        print $line;
-        $line = trim($line);
-        if (empty($line) || strpos($line, '--') === 0)
-            continue;
-        $exec .= $line;
-        if (strrpos($line, ';') === strlen($line) - 1) {
-            if (!$connect->Execute($exec)) {
-                return LogUtil::registerError(__('Error importing the database in line', $dom) . " " . $line_num . ":<br>" . $exec . "<br>" . mysql_error() . "\n");
-            } else {
-                $done = true;
-            }
-            $exec = '';
-        }
-    }
-    fclose($fh);
-    $connect->close();
-    if (!$done) {
-        return LogUtil::registerError(__('Error importing the database. Perhaps there is a problem with the model file', $dom));
-    }
-    return true;
-}
-
-/**
  * Delete a database
  * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	The database name
@@ -207,37 +333,32 @@ function Multisites_adminapi_createTables($args)
 function Multisites_adminapi_deleteDatabase($args)
 {
     $dom = ZLanguage::getModuleDomain('Multisites');
-    $siteDB = FormUtil::getPassedValue('siteDB', isset($args['siteDB']) ? $args['siteDB'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $siteDB));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB',
+                            array('siteDBUname' => $args['siteDBUname'],
+                                  'siteDBPass' => $args['siteDBPass'],
+                                  'siteDBHost' => $args['siteDBHost'],
+                                  'siteDBType' => $args['siteDBType']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    $sql = "DROP DATABASE " . $siteDB . ";";
-    $rs = $connect->Execute($sql);
-    if (!$rs) {
-        $connect->close();
-        return LogUtil::registerError(__('Error deleting database', $dom));
+     try {
+        $sql = "DROP DATABASE $args[siteDBName];";
+        try {
+            $connect->query($sql);
+        } catch (PDOException $e) {
+            return false;
+        }
+    } catch (PDOException $e) {
+        return false;
     }
-    $connect->close();
     return true;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * Delete an instance
@@ -251,8 +372,8 @@ function Multisites_adminapi_deleteInstance($args)
     $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // Needed argument
@@ -260,7 +381,8 @@ function Multisites_adminapi_deleteInstance($args)
         return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
     //Get instance information
-    $instance = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $instance = pnModAPIFunc('Multisites', 'user', 'getSite',
+                              array('instanceId' => $instanceId));
     if ($instance == false) {
         LogUtil::registerError(__('Not site found', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
@@ -270,80 +392,10 @@ function Multisites_adminapi_deleteInstance($args)
         return LogUtil::registerError(__('Error! Sorry! Deletion attempt failed.', $dom));
     }
     // Let any hooks know that we have created a new item
-    pnModCallHooks('item', 'delete', $item['instanceId'], array('module' => 'Multisites'));
+    pnModCallHooks('item', 'delete', $item['instanceId'],
+                    array('module' => 'Multisites'));
     return true;
 }
-
-/**
- * Update the module vars values for an instance that is being created
- * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
- * @param:	The site main information
- * @return:	true if success or false otherwise
- */
-function Multisites_adminapi_updateConfigValues($args)
-{
-    $dom = ZLanguage::getModuleDomain('Multisites');
-    $siteName = FormUtil::getPassedValue('siteName', isset($args['siteName']) ? $args['siteName'] : null, 'POST');
-    $siteAdminName = FormUtil::getPassedValue('siteAdminName', isset($args['siteAdminName']) ? $args['siteAdminName'] : null, 'POST');
-    $siteAdminEmail = FormUtil::getPassedValue('siteAdminEmail', isset($args['siteAdminEmail']) ? $args['siteAdminEmail'] : null, 'POST');
-    $siteAdminPwd = FormUtil::getPassedValue('siteAdminPwd', isset($args['siteAdminPwd']) ? $args['siteAdminPwd'] : null, 'POST');
-    $siteDB = FormUtil::getPassedValue('siteDB', isset($args['siteDB']) ? $args['siteDB'] : null, 'POST');
-    // security check
-    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
-        return LogUtil::registerPermissionError();
-    }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $siteDB));
-    if (!$connect) {
-        return LogUtil::registerError(__('Error connecting to database', $dom));
-    }
-    $prefix = $GLOBALS['PNConfig']['System']['prefix'];
-    // modify the site name
-    $value = serialize($siteName);
-    $sql = "UPDATE " . $prefix . "_module_vars set pn_value='$value' WHERE pn_modname='/PNConfig' AND pn_name='sitename'";
-    if (!$connect->Execute($sql)) {
-        return LogUtil::registerError(__('Error configurating value', $dom) . ":<br />" . $sql . "<br />" . mysql_error() . "\n");
-    }
-    // modify the adminmail
-    $value = serialize($siteAdminEmail);
-    $sql = "UPDATE " . $prefix . "_module_vars set pn_value='$value' WHERE pn_modname='/PNConfig' AND pn_name='adminmail'";
-    if (!$connect->Execute($sql)) {
-        return LogUtil::registerError(__('Error configurating value', $dom) . ":<br />" . $sql . "<br />" . mysql_error() . "\n");
-    }
-    // modify the sessionCookieName
-    $value = serialize('ZKSID_' . $siteDB);
-    $sql = "UPDATE " . $prefix . "_module_vars set pn_value='$value' WHERE pn_modname='/PNConfig' AND pn_name='sessionname'";
-    if (!$connect->Execute($sql)) {
-        return LogUtil::registerError(__('Error configurating value', $dom) . ":<br />" . $sql . "<br />" . mysql_error() . "\n");
-    }
-    // modify the admin password
-    // get the encript hash method
-    $sql = "SELECT pn_hash_method FROM " . $prefix . "_users WHERE pn_uname='admin'";
-    $rs = $connect->Execute($sql);
-    if (!$rs) {
-        return LogUtil::registerError(__('Error! Could not load items.', $dom));
-    }
-    $hash_method = $rs->fields[0];
-    // encript the passed password with the method found
-    $hashmethodsarray = pnModAPIFunc('Users', 'user', 'gethashmethods', array('reverse' => true));
-    $password = DataUtil::hash($siteAdminPwd, $hashmethodsarray[$hash_method]);
-    // change admin password
-    $sql = "UPDATE " . $prefix . "_users set pn_pass='$password' WHERE pn_uname='admin'";
-    if (!$connect->Execute($sql)) {
-        return LogUtil::registerError(__('Error configurating value', $dom) . ":<br />" . $sql . "<br />" . mysql_error() . "\n");
-    }
-    $connect->close();
-    return true;
-}
-
-
-
-
-
-
-
-
 
 /**
  * Get all the modules available
@@ -354,43 +406,81 @@ function Multisites_adminapi_updateConfigValues($args)
 function Multisites_adminapi_getAllSiteModules($args)
 {
     $dom = ZLanguage::getModuleDomain('Multisites');
-    $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
-    $system = FormUtil::getPassedValue('system', isset($args['system']) ? $args['system'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
-    //$type = ($system == null) ? 3 : 1000;
+    //$type = ($args['system'] == null) ? 3 : 1000;
     // Needed argument
-    if ($instanceId == null || !is_numeric($instanceId)) {
+    if ($args['instanceId'] == null || !is_numeric($args['instanceId'])) {
         return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
-    $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $site = pnModAPIFunc('Multisites', 'user', 'getSite',
+                          array('instanceId' => $args['instanceId']));
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB',
+                             array('siteDBName' => $site['siteDBName'],
+                                   'siteDBType' => $site['siteDBType'],
+                                   'siteDBUname' => $site['siteDBUname'],
+                                   'siteDBPass' => $site['siteDBPass'],
+                                   'siteDBHost' => $site['siteDBHost']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    //$sql = "SELECT pn_name, pn_state FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_modules WHERE pn_type<>$type";
-	$sql = "SELECT pn_name, pn_state, pn_version FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_modules";
-    $rs = $connect->Execute($sql);
-    if (!$rs) {
-        return LogUtil::registerError(__('Error! Could not load items.', $dom));
+    //$sql = "SELECT pn_name, pn_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules WHERE pn_type<>$type";
+	$sql = "SELECT pn_name, pn_state, pn_version FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules";
+    foreach ($connect->query($sql) as $row) {
+        $items[$row['pn_name']] = array('name' => $row['pn_name'],
+                                        'state' => $row['pn_state'],
+                                        'version' => $row['pn_version']);
     }
-    $items = array();
-    for (; !$rs->EOF; $rs->MoveNext()) {
-        list ($name, $state, $version) = $rs->fields;
-        $items[$name] = array('name' => $name,
-                                'state' => $state,
-                                'version' => $version);
-    }
-    $connect->close();
     return $items;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Get a site modules information
@@ -405,8 +495,8 @@ function Multisites_adminapi_getSiteModule($args)
     $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // Needed argument
@@ -417,11 +507,11 @@ function Multisites_adminapi_getSiteModule($args)
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    $sql = "SELECT pn_name, pn_state FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_modules WHERE pn_name='$moduleName'";
+    $sql = "SELECT pn_name, pn_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules WHERE pn_name='$moduleName'";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         return LogUtil::registerError(__('Error! Could not load items.', $dom));
@@ -444,8 +534,8 @@ function Multisites_adminapi_getSiteTheme($args)
     $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // Needed argument
@@ -456,11 +546,11 @@ function Multisites_adminapi_getSiteTheme($args)
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    $sql = "SELECT pn_name, pn_state FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_themes WHERE pn_name='$themeName'";
+    $sql = "SELECT pn_name, pn_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes WHERE pn_name='$themeName'";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         return LogUtil::registerError(__('Error! Could not load items.', $dom));
@@ -482,8 +572,8 @@ function Multisites_adminapi_deleteModel($args)
     $modelId = FormUtil::getPassedValue('modelId', isset($args['modelId']) ? $args['modelId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // Needed argument
@@ -517,15 +607,15 @@ function Multisites_adminapi_deleteSiteModule($args)
     $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
@@ -538,7 +628,7 @@ function Multisites_adminapi_deleteSiteModule($args)
     if ($siteModule['state'] == 2) {
         return true;
     }
-    $sql = "DELETE FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_modules WHERE pn_name='$moduleName'";
+    $sql = "DELETE FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules WHERE pn_name='$moduleName'";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         return LogUtil::registerError(__('Error! Sorry! Deletion attempt failed.', $dom));
@@ -560,8 +650,8 @@ function Multisites_adminapi_createSiteModule($args)
     $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
@@ -585,12 +675,12 @@ function Multisites_adminapi_createSiteModule($args)
     // set module state to 1
     $fields .= ',pn_state';
     $values .= ',1';
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
     //create the module in the site
-    $sql = "INSERT INTO " . $GLOBALS['PNConfig']['System']['prefix'] . "_modules
+    $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules
 			($fields)
 			VALUES
 			($values)";
@@ -616,20 +706,20 @@ function Multisites_adminapi_modifyActivation($args)
     $newState = FormUtil::getPassedValue('newState', isset($args['newState']) ? $args['newState'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
     //update the module state in the site
-    $sql = "UPDATE " . $GLOBALS['PNConfig']['System']['prefix'] . "_modules set pn_state = " . $newState . " where pn_name = '" . $moduleName . "'";
+    $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules set pn_state = " . $newState . " where pn_name = '" . $moduleName . "'";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         return LogUtil::registerError(__('Error! Update attempt failed.', $dom));
@@ -650,8 +740,8 @@ function Multisites_adminapi_deleteDir($args)
     $dirName = FormUtil::getPassedValue('dirName', isset($args['dirName']) ? $args['dirName'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     if (file_exists($dirName)) {
@@ -683,8 +773,8 @@ function Multisites_adminapi_getAllThemes()
 {
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // Get all themes on filesystem
@@ -714,8 +804,9 @@ function Multisites_adminapi_getAllThemes()
                 // anything else isn't a theme
                 continue;
             }
+            /*
             // include language file for ML displaynames and descriptions
-            $defaultlang = pnConfigGetVar('language');
+            $defaultlang = ZConfigGetVar('language');
             if (empty($defaultlang)) {
                 $defaultlang = 'eng';
             }
@@ -727,6 +818,7 @@ function Multisites_adminapi_getAllThemes()
                     break;
                 }
             }
+            */
             // Get some defaults in case we don't have a theme version file
             $themeversion['name'] = preg_replace('/_/', ' ', $dir);
             $themeversion['displayname'] = preg_replace('/_/', ' ', $dir);
@@ -796,8 +888,8 @@ function Multisites_adminapi_getAllSiteThemes($args)
     $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // Needed argument
@@ -808,11 +900,11 @@ function Multisites_adminapi_getAllSiteThemes($args)
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    $sql = "SELECT pn_name, pn_state FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_themes";
+    $sql = "SELECT pn_name, pn_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         return LogUtil::registerError(__('Error! Could not load items.', $dom));
@@ -839,19 +931,19 @@ function Multisites_adminapi_deleteSiteTheme($args)
     $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    $sql = "DELETE FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_themes WHERE pn_name='$themeName'";
+    $sql = "DELETE FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes WHERE pn_name='$themeName'";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         return LogUtil::registerError(__('Error! Sorry! Deletion attempt failed.', $dom));
@@ -873,8 +965,8 @@ function Multisites_adminapi_createSiteTheme($args)
     $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
@@ -892,12 +984,12 @@ function Multisites_adminapi_createSiteTheme($args)
     }
     $fields = substr($fields, 0, -1);
     $values = substr($values, 0, -1);
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
     //create the module in the site
-    $sql = "INSERT INTO " . $GLOBALS['PNConfig']['System']['prefix'] . "_themes
+    $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes
 			($fields)
 			VALUES
 			($values)";
@@ -921,19 +1013,19 @@ function Multisites_adminapi_getSiteDefaultTheme($args)
     $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    $sql = "SELECT pn_value FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_module_vars WHERE pn_modname='/PNConfig' AND pn_name='Default_Theme'";
+    $sql = "SELECT pn_value FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars WHERE pn_modname='/ZConfig' AND pn_name='Default_Theme'";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         return LogUtil::registerError(__('Error! Could not load items.', $dom));
@@ -956,8 +1048,8 @@ function Multisites_adminapi_setAsDefaultTheme($args)
     $name = FormUtil::getPassedValue('name', isset($args['name']) ? $args['name'] : null, 'GET');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
@@ -965,11 +1057,11 @@ function Multisites_adminapi_setAsDefaultTheme($args)
         return LogUtil::registerError(__('Not site found', $dom));
     }
     $value = serialize($name);
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    $sql = "UPDATE " . $GLOBALS['PNConfig']['System']['prefix'] . "_module_vars SET pn_value = '$value' WHERE pn_modname='/PNConfig' AND pn_name='Default_Theme'";
+    $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars SET pn_value = '$value' WHERE pn_modname='/ZConfig' AND pn_name='Default_Theme'";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         return LogUtil::registerError(__('Error! Update attempt failed.', $dom));
@@ -991,8 +1083,8 @@ function Multisites_adminapi_updateInstance($args)
     $items = FormUtil::getPassedValue('items', isset($args['items']) ? $args['items'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // get site information
@@ -1022,8 +1114,8 @@ function Multisites_adminapi_updateModel($args)
     $items = FormUtil::getPassedValue('items', isset($args['items']) ? $args['items'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // get model information
@@ -1052,8 +1144,8 @@ function Multisites_adminapi_createAdministrator($args)
     $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // get global administrator parameters
@@ -1069,12 +1161,12 @@ function Multisites_adminapi_createAdministrator($args)
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
     // check if the super administrator exists
-    $sql = "SELECT pn_uid FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_users WHERE `pn_uname`='" . $globalAdminName  . "'";
+    $sql = "SELECT pn_uid FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_users WHERE `pn_uname`='" . $globalAdminName  . "'";
     $rs = $connect->Execute($sql);
     if (!$rs) {
     	$connect->close();
@@ -1088,14 +1180,14 @@ function Multisites_adminapi_createAdministrator($args)
         $methodNumberArray = pnModAPIFunc('Users','user','gethashmethods', array('reverse' => false));
         $methodNumber = $methodNumberArray[$method];
         $password = DataUtil::hash($globalAdminPassword, $method);
-        $sql = "INSERT INTO " . $GLOBALS['PNConfig']['System']['prefix'] . "_users (pn_uname, pn_pass, pn_email, pn_hash_method, pn_activated)
+        $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_users (pn_uname, pn_pass, pn_email, pn_hash_method, pn_activated)
                 VALUES ('$globalAdminName','$password','$globalAdminemail',$methodNumber,1)";
         $rs = $connect->Execute($sql);
         if(!$rs){
         	$connect->close();
             return LogUtil::registerError(__('Error! Creating global administrator.', $dom));
         }
-        $sql = "SELECT pn_uid FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_users WHERE `pn_uname`='" . $globalAdminName  . "'";
+        $sql = "SELECT pn_uid FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_users WHERE `pn_uname`='" . $globalAdminName  . "'";
         $rs = $connect->Execute($sql);
         if (!$rs) {
             $connect->close();
@@ -1104,7 +1196,7 @@ function Multisites_adminapi_createAdministrator($args)
         list ($uid) = $rs->fields;
         if($uid != ''){
             // insert the user into administrators group
-            $sql = "INSERT INTO " . $GLOBALS['PNConfig']['System']['prefix'] . "_group_membership (pn_uid, pn_gid) VALUES ($uid,2)";
+            $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_membership (pn_uid, pn_gid) VALUES ($uid,2)";
             $rs = $connect->Execute($sql);
             if(!$rs){
             	$connect->close();
@@ -1113,7 +1205,7 @@ function Multisites_adminapi_createAdministrator($args)
         }
     } else {
     	// check if the user is administrator
-        $sql = "SELECT pn_gid FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_group_membership
+        $sql = "SELECT pn_gid FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_membership
                 WHERE `pn_uid`=$uid AND pn_gid=2";
         $rs = $connect->Execute($sql);
         if (!$rs) {
@@ -1123,7 +1215,7 @@ function Multisites_adminapi_createAdministrator($args)
         list ($gid) = $rs->fields;
         if($gid == ''){
         	// the user is not administrator and insert the user into administrators group
-            $sql = "INSERT INTO " . $GLOBALS['PNConfig']['System']['prefix'] . "_group_membership (pn_uid, pn_gid) VALUES ($uid,2)";
+            $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_membership (pn_uid, pn_gid) VALUES ($uid,2)";
             $rs = $connect->Execute($sql);
             if(!$rs){
                 $connect->close();
@@ -1147,8 +1239,8 @@ function Multisites_adminapi_recoverAdminSiteControl($args)
     $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // get site information
@@ -1156,19 +1248,19 @@ function Multisites_adminapi_recoverAdminSiteControl($args)
     if ($site == false) {
         return LogUtil::registerError(__('Not site found', $dom));
     }
-    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDB']));
+    $connect = pnModAPIFunc('Multisites', 'admin', 'connectExtDB', array('database' => $site['siteDBName']));
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }  
     //delete the sequence in the first position
-    $sql = "DELETE FROM " . $GLOBALS['PNConfig']['System']['prefix'] . "_group_perms WHERE `pn_sequence` < 1 OR `pn_pid` = 1";
+    $sql = "DELETE FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_perms WHERE `pn_sequence` < 1 OR `pn_pid` = 1";
     $rs = $connect->Execute($sql);
     if(!$rs){
     	$connect->close();
     	return LogUtil::registerError(__('Error! Deleting the sequences with value under 0.', $dom));
     }
     //insert a new sequence
-    $sql = "INSERT INTO " . $GLOBALS['PNConfig']['System']['prefix'] . "_group_perms (pn_gid, pn_sequence, pn_component, pn_instance, pn_level, pn_pid)
+    $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_perms (pn_gid, pn_sequence, pn_component, pn_instance, pn_level, pn_pid)
             VALUES (2,0,'.*','.*',800,1)";
     $rs = $connect->Execute($sql);
     if(!$rs){
@@ -1179,6 +1271,7 @@ function Multisites_adminapi_recoverAdminSiteControl($args)
     return true;
 }
 
+//******* PNN *******
 /**
  * Save the site modules and versions
  * @author: Albert Pérez Monfort (aperezm@xtec.cat)
@@ -1188,26 +1281,27 @@ function Multisites_adminapi_recoverAdminSiteControl($args)
 function Multisites_adminapi_saveSiteModules($args)
 {
     $dom = ZLanguage::getModuleDomain('Multisites');
-    $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // get all the modules available in site
-    $siteModules = pnModAPIFunc('Multisites', 'admin', 'getAllSiteModules', array('instanceId' => $instanceId));
+    $siteModules = pnModAPIFunc('Multisites', 'admin', 'getAllSiteModules',
+                                 array('instanceId' => $args['instanceId']));
     // save all modules in database
     foreach($siteModules as $module){
-        $item = array('instanceId' => $instanceId,
-                        'moduleName' => $module['name'],
-                        'moduleVersion' => $module['version']);
+        $item = array('instanceId' => $args['instanceId'],
+                      'moduleName' => $module['name'],
+                      'moduleVersion' => $module['version']);
         if (!DBUtil::insertObject($item, 'Multisites_sitesModules', 'smId')) {
             return LogUtil::registerError(__('Error! Creation attempt failed.', $dom));
         }
     }
     return true;    
 }
+//*******
 
 /**
  * Delete the site modules information
@@ -1221,8 +1315,8 @@ function Multisites_adminapi_deleteSiteModules($args)
     $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     //delete instance information
@@ -1244,8 +1338,8 @@ function Multisites_adminapi_updateSiteModules($args)
     $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     // get site available modules
@@ -1273,8 +1367,8 @@ function Multisites_adminapi_getNumberOfSites($args)
     $currentVersion = FormUtil::getPassedValue('currentVersion', isset($args['currentVersion']) ? $args['currentVersion'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['PNConfig']['Multisites']['mainSiteURL'] && $GLOBALS['PNConfig']['Multisites']['basedOnDomains'] == 1)) {
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
     $pntable = pnDBGetTables();

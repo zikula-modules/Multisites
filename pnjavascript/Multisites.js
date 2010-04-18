@@ -5,7 +5,7 @@
  * @return:	form sumbition
 */
 function newInstance(){
-	document.newInstance.submit();
+	document.forms['newInstance'].submit();
 }
 
 /**
@@ -25,7 +25,16 @@ function config(){
  * @return:	form sumbition
 */
 function newModel(){
-	document.newModel.submit();
+    var f = document.forms['newModel']
+    if (f.modelName.value == '') {
+        alert(_MULTISITESNOMODELNAME);
+        return;
+    }
+    if (f.modelFile.value == '') {
+        alert(_MULTISITESNOMODELFILE);
+        return;
+    }
+	f.submit();
 }
 /**
  * edit instance
@@ -34,7 +43,7 @@ function newModel(){
  * @return:	form sumbition
 */
 function editInstance(){
-	document.editInstance.submit();
+	document.forms['editInstance'].submit();
 }
 
 /**
@@ -44,7 +53,7 @@ function editInstance(){
  * @return:	form sumbition
 */
 function editModel(){
-	document.editModel.submit();
+	document.forms['editModel'].submit();
 }
 
 /**
@@ -54,7 +63,7 @@ function editModel(){
  * @return:	form sumbition
 */
 function deleteInstance(){
-	document.deleteInstance.submit();
+	document.forms['deleteInstance'].submit();
 }
 
 /**
@@ -156,8 +165,8 @@ function allowTheme_failure(){
 /*
 function actualize(){
 	var modulesString = '';
-	for (var i=0;i<document.actualize.elements.length;i++) {
-		var e = document.actualize.elements[i];
+	for (var i=0;i<document.forms['actualize'].elements.length;i++) {
+		var e = document.forms['actualize'].elements[i];
 		if (e.type == 'checkbox' && e.checked) {
 			var modulesString = modulesString + e.name + '|';
 		}

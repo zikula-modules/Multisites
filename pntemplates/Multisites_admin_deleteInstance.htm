@@ -1,25 +1,32 @@
-<!--[include file="Multisites_admin_menu.htm"]-->
-<div class="pn-admincontainer">
-    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='windowlist.gif' set='icons/large' alt=$templatetitle]--></div>
-    <h2><!--[gt text="Delete instance"]--></h2>
-    <form name="deleteInstance" id="deleteInstance" class="pn-adminform" action="<!--[pnmodurl modname="Multisites" type="admin" func="deleteInstance"]-->" method="post" >
-        <input type="hidden" name="authid" value="<!--[pnsecgenauthkey module="Multisites"]-->" />
+{include file="Multisites_admin_menu.htm"}
+<div class="z-admincontainer">
+    <div class="z-adminpageicon">{img modname='core' src='windowlist.gif' set='icons/large'}</div>
+    <h2>{gt text="Delete instance"}</h2>
+    <form id="deleteInstance" class="z-form" action="{modurl modname="Multisites" type="admin" func="deleteInstance"}" method="post" >
+        <input type="hidden" name="authid" value="{secgenauthkey module="Multisites"}" />
         <input type="hidden" name="confirmation" value="1" />
-        <input type="hidden" name="instanceId" value="<!--[$instance.instanceId]-->" />
-        <div><!--[gt text="Instance name"]-->: <!--[$instance.instanceName]--></div>
-        <div><!--[gt text="Site name"]-->: <!--[$instance.siteName]--></div>
-        <div><!--[gt text="Site DNS"]-->: <!--[$instance.siteDNS]--></div>
+        <input type="hidden" name="instanceId" value="{$instance.instanceId}" />
+        <div>{gt text="Instance name"}: <strong>{$instance.instanceName}</strong></div>
+        <div>{gt text="Site name"}: <strong>{$instance.siteName}</strong></div>
+        <div>{gt text="Site DNS"}: <strong>{$instance.siteDNS}</strong></div>
         <div>&nbsp;</div>
         <div>
-        	<label for="instanceName"><!--[gt text="Confirm the instance deletion. It means delete its database and files."]--></label>
+        	<label for="instanceName">{gt text="Confirm the instance deletion. It means delete its database and files."}</label>
         </div>
-        <div class="formOptions" style="text-align: center;">
+        <div class="z-formrow">
+        	<label for="deleteFiles">{gt text="Delete site files"}</label>
+            <input type="checkbox" name="deleteFiles" value="1" />
+        </div>
+        <div class="z-formrow">
+        	<label for="deleteDB">{gt text="Delete database (only possible if the user of the database has enough permissions)"}</label>
+            <input type="checkbox" name="deleteDB" value="1" />
+        </div> 
+        <div class="z-formbuttons" style="text-align: center;">
             <a href="javascript:deleteInstance()">
-            	<!--[pnimg modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Delete"]-->
+            	{img modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Delete"}
 			</a>
-			<!--[gt text="Delete"]-->
-            <a href="<!--[pnmodurl modname="Multisites" type="admin" func="main"]-->">
-                <!--[pnimg modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"]-->
+            <a href="{modurl modname="Multisites" type="admin" func="main"}">
+                {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
             </a>
         </div>
     </form>

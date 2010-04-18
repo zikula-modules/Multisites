@@ -1,36 +1,40 @@
-<!--[include file="Multisites_admin_menu.htm"]-->
-<div class="pn-admincontainer">
-    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='filenew.gif' set='icons/large' alt=$templatetitle]--></div>
-    <h2><!--[gt text="Create a new model"]--></h2>
-    <form name="newModel" id="newModel" class="pn-adminform" action="<!--[pnmodurl modname="Multisites" type="admin" func="createModel"]-->" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="authid" value="<!--[pnsecgenauthkey module="Multisites"]-->" />
-        <div class="pn-adminformrow">
-            <label for="modelName"><!--[gt text="Model name"]--></label>
+{include file="Multisites_admin_menu.htm"}
+<div class="z-admincontainer">
+    <div class="z-adminpageicon">{img modname='core' src='filenew.gif' set='icons/large'}</div>
+    <h2>{gt text="Create a new model"}</h2>
+    <form id="newModel" class="z-form" action="{modurl modname="Multisites" type="admin" func="createModel"}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="authid" value="{secgenauthkey module="Multisites"}" />
+        <div class="z-formrow">
+            <label for="modelName">{gt text="Model name"}</label>
             <input type="text" name="modelName" size="50" maxlength="150" />
         </div>
-        <div class="pn-adminformrow">
-        	<label for="description"><!--[gt text="Description"]--></label>
+        <div class="z-formrow">
+        	<label for="description">{gt text="Description"}</label>
             <textarea name="description" cols="70" rows="5"></textarea>
         </div>
-        <div class="pn-adminformrow">
-            <label for="modelFile"><!--[gt text="Update model file"]--></label>
+        <div class="z-formrow">
+            <label for="modelFile">{gt text="Update model file"}</label>
             <input type="file" name="modelFile" size="70" />
         </div>
-        <div class="pn-adminformrow">
-            <label for="folders"><!--[gt text="Model folders"]--></label>
+        <div class="z-formrow">
+            <label for="folders">{gt text="Model folders"}</label>
             <input type="text" name="folders" size="50" maxlength="150" />
         </div>
-        <div class="pn-informationmsg">
-        	<!--[gt text='Write the folders that have to be created into the sites files system separated by ",". If you need folder into other folders you can write expressions like "folder/folder"']-->
+        <div class="z-informationmsg">
+        	{gt text='Write the folders that have to be created into the sites files system separated by ",". If you need folder into other folders you can write expressions like "folder/folder"'}
         </div>
-        <div class="formOptions" style="text-align: center;">
+        <div class="z-formbuttons" style="text-align: center;">
             <a href="javascript:newModel()">
-                <!--[pnimg modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Add"]-->
+                {img modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Add"}
             </a>
-			<!--[gt text="Add"]-->
-            <a href="<!--[pnmodurl modname="Multisites" type="admin" func="main"]-->">
-                <!--[pnimg modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"]-->
+			{gt text="Add"}
+            <a href="{modurl modname="Multisites" type="admin" func="main"}">
+                {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
             </a>
         </div>
     </form>
 </div>
+<script language="javascript">
+    var _MULTISITESNOMODELNAME = '{{gt text="No model name defined"}}';
+    var _MULTISITESNOMODELFILE = '{{gt text="No model file selected"}}';
+</script>

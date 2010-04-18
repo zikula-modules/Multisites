@@ -21,7 +21,7 @@ function Multisites_pntables()
 
     // Multisites sites table definition
     $pntable['Multisites_sites'] = DBUtil::getLimitedTablename('Multisites_sites');
-    $pntable['Multisites_sites_column'] = array('instanceId' => 'mzk_instanceId',
+    $pntable['Multisites_sites_column'] = array('instanceId' => 'ms_instanceId',
 										        'instanceName' => 'ms_instanceName',
 										        'description' => 'ms_description',
 										        'siteName' => 'ms_siteName',
@@ -31,28 +31,33 @@ function Multisites_pntables()
 										        'siteAdminEmail' => 'ms_siteAdminEmail',
 										        'siteCompany' => 'ms_siteCompany',
 										        'siteDNS' => 'ms_siteDNS',
-                                                'siteDB' => 'siteDB',
+                                                'siteDBName' => 'ms_siteDBName',
+                                                'siteDBUname' => 'ms_siteDBUname',
+                                                'siteDBPass' => 'ms_siteDBPass',
+                                                'siteDBHost' => 'ms_siteDBHost',
+                                                'siteDBType' => 'ms_siteDBType',
 										        'siteInitModel' => 'ms_siteInitModel',
 										        'activationDate' => 'ms_activationDate',
 										        'active' => 'ms_active');
 
-    $pntable['Multisites_sites_column_def'] = array('instanceId' => "INT(11) NOTNULL AUTOINCREMENT KEY",
-											        'instanceName' => "VARCHAR(150) NOTNULL DEFAULT ''",
-											        'description' => "VARCHAR(255) NOTNULL DEFAULT ''",
-											        'siteName' => "VARCHAR(150) NOTNULL DEFAULT ''",
-											        'siteAdminName' => "VARCHAR(25) NOTNULL DEFAULT ''",
-											        'siteAdminPwd' => "VARCHAR(15) NOTNULL DEFAULT ''",
-											        'siteAdminRealName' => "VARCHAR(70) NOTNULL DEFAULT ''",
-											        'siteAdminEmail' => "VARCHAR(30) NOTNULL DEFAULT ''",
-											        'siteCompany' => "VARCHAR(100) NOTNULL DEFAULT ''",
-											        'siteDNS' => "VARCHAR(20) NOTNULL DEFAULT ''",
-                                                    'siteDB' => "VARCHAR(20) NOTNULL DEFAULT ''",
-											        'siteInitModel' => "VARCHAR(30) NOTNULL DEFAULT ''",
-											        'activationDate' => "DATETIME NOTNULL DEFAULT '0'",
-											        'active' => "TINYINT(1) NOTNULL DEFAULT '0'");
-
-    ObjectUtil::addStandardFieldsToTableDefinition($pntable['Multisites_sites_column']);
-    ObjectUtil::addStandardFieldsToTableDataDefinition($pntable['Multisites_sites_column_def']);
+    $pntable['Multisites_sites_column_def'] = array('instanceId' => "I PRIMARY AUTO",
+											        'instanceName' => "C(150) NOTNULL DEFAULT ''",
+											        'description' => "C(255) NOTNULL DEFAULT ''",
+											        'siteName' => "C(150) NOTNULL DEFAULT ''",
+											        'siteAdminName' => "C(25) NOTNULL DEFAULT ''",
+											        'siteAdminPwd' => "C(15) NOTNULL DEFAULT ''",
+											        'siteAdminRealName' => "C(70) NOTNULL DEFAULT ''",
+											        'siteAdminEmail' => "C(30) NOTNULL DEFAULT ''",
+											        'siteCompany' => "C(100) NOTNULL DEFAULT ''",
+											        'siteDNS' => "C(20) NOTNULL DEFAULT ''",
+                                                    'siteDBName' => "C(25) NOTNULL DEFAULT ''",
+                                                    'siteDBUname' => "C(25) NOTNULL DEFAULT ''",
+                                                    'siteDBPass' => "C(25) NOTNULL DEFAULT ''",
+                                                    'siteDBHost' => "C(25) NOTNULL DEFAULT ''",
+                                                    'siteDBType' => "C(25) NOTNULL DEFAULT ''",
+											        'siteInitModel' => "C(30) NOTNULL DEFAULT ''",
+											        'activationDate' => "T DEFAULT '1970-01-01 00:00:00'",
+											        'active' => "I1 NOTNULL DEFAULT '0'");
 
     // Multisites access table definition
     $pntable['Multisites_access'] = DBUtil::getLimitedTablename('Multisites_access');
@@ -61,13 +66,10 @@ function Multisites_pntables()
                                                     'time' => 'ms_time',
                                                     'ip' => 'ms_ip');
 
-    $pntable['Multisites_access_column_def'] = array('accessId' => "INT(11) NOTNULL AUTOINCREMENT KEY",
-                                                        'siteDNS' => "VARCHAR(15) NOTNULL DEFAULT ''",
-                                                        'time' => "DATETIME NOTNULL DEFAULT '0'",
-                                                        'ip' => "VARCHAR(15) NOTNULL DEFAULT ''");
-
-    ObjectUtil::addStandardFieldsToTableDefinition($pntable['Multisites_access_column']);
-    ObjectUtil::addStandardFieldsToTableDataDefinition($pntable['Multisites_access_column_def']);
+    $pntable['Multisites_access_column_def'] = array('accessId' => "I PRIMARY AUTO",
+                                                        'siteDNS' => "C(15) NOTNULL DEFAULT ''",
+                                                        'time' => "T DEFAULT '1970-01-01 00:00:00'",
+                                                        'ip' => "C(15) NOTNULL DEFAULT ''");
 
     // Multisites models table definition
     $pntable['Multisites_models'] = DBUtil::getLimitedTablename('Multisites_models');
@@ -77,15 +79,12 @@ function Multisites_pntables()
                                                     'fileName' => 'ms_fileName',
                                                     'folders' => 'ms_folders');
 
-    $pntable['Multisites_models_column_def'] = array('modelId' => "INT(11) NOTNULL AUTOINCREMENT KEY",
-                                                        'modelName' => "VARCHAR(150) NOTNULL DEFAULT ''",
-                                                        'description' => "TEXT NOTNULL",
-                                                        'fileName' => "VARCHAR(20) NOTNULL DEFAULT ''",
-                                                        'folders' => "VARCHAR(150) NOTNULL DEFAULT ''");
+    $pntable['Multisites_models_column_def'] = array('modelId' => "I PRIMARY AUTO",
+                                                        'modelName' => "C(150) NOTNULL DEFAULT ''",
+                                                        'description' => "X NOTNULL",
+                                                        'fileName' => "C(20) NOTNULL DEFAULT ''",
+                                                        'folders' => "C(150) NOTNULL DEFAULT ''");
 
-    ObjectUtil::addStandardFieldsToTableDefinition($pntable['Multisites_models_column']);
-    ObjectUtil::addStandardFieldsToTableDataDefinition($pntable['Multisites_models_column_def']);
-    
     // Multisites sites and modules
     $pntable['Multisites_sitesModules'] = DBUtil::getLimitedTablename('Multisites_sitesModules');
     $pntable['Multisites_sitesModules_column'] = array('smId' => 'ms_smId',
@@ -93,14 +92,10 @@ function Multisites_pntables()
                                                         'moduleName' => 'ms_moduleName',
                                                         'moduleVersion' => 'ms_moduleVersion');
 
-    $pntable['Multisites_sitesModules_column_def'] = array('smId' => "INT(11) NOTNULL AUTOINCREMENT KEY",
-                                                            'instanceId' => "INT(11) NOTNULL DEFAULT 0",
-                                                            'moduleName' => "VARCHAR(20) NOTNULL DEFAULT ''",
-                                                            'moduleVersion' => "VARCHAR(5) NOTNULL DEFAULT ''");
-
-    ObjectUtil::addStandardFieldsToTableDefinition($pntable['Multisites_sitesModules_column']);
-    ObjectUtil::addStandardFieldsToTableDataDefinition($pntable['Multisites_sitesModules_column_def']);
-    
+    $pntable['Multisites_sitesModules_column_def'] = array('smId' => "I PRIMARY AUTO",
+                                                            'instanceId' => "I NOTNULL DEFAULT 0",
+                                                            'moduleName' => "C(20) NOTNULL DEFAULT ''",
+                                                            'moduleVersion' => "C(5) NOTNULL DEFAULT ''");
 
     // Return the table information
     return $pntable;

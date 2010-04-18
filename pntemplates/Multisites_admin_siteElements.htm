@@ -1,23 +1,23 @@
-<!--[include file="Multisites_admin_menu.htm"]-->
-<div class="pn-admincontainer">
-	<div class="pn-adminpageicon"><!--[pnimg modname='core' src='configure.gif' set='icons/large' alt=$templatetitle]--></div>
-	<h2><!--[gt text="Site allowed elements"]--></h2>
-	<div><!--[gt text="Site name"]-->: <!--[$site.siteName]--></div>
-	<div><!--[gt text="Site DNS"]-->: <!--[$site.siteDNS]--></div>
-	<table class="pn-admintable">
+{include file="Multisites_admin_menu.htm"}
+<div class="z-admincontainer">
+	<div class="z-adminpageicon">{img modname='core' src='configure.gif' set='icons/large'}</div>
+	<h2>{gt text="Site allowed elements"}</h2>
+	<div>{gt text="Site name"}: {$site.siteName}</div>
+	<div>{gt text="Site DNS"}: {$site.siteDNS}</div>
+	<table class="z-admintable">
 	    <tbody>
-	        <!--[foreach item=module from=$modules]-->
-		        <tr class="<!--[cycle values="pn-odd,pn-even"]-->">
-		            <td><!--[$module.name]--></td>
-		            <td><!--[$module.version]--></td>
-		            <td><!--[$module.description]--></td>
+	        {foreach item=module from=$modules}
+		        <tr class="{cycle values="z-odd,z-even"}">
+		            <td>{$module.name}</td>
+		            <td>{$module.version}</td>
+		            <td>{$module.description}</td>
 		            <td width="80">
-		               <div id="module_<!--[$module.name]-->">
-		                   <!--[$module.icons]-->
+		               <div id="module_{$module.name}">
+		                   {$module.icons}
 		               </div>
 		            </td>
 		        </tr>
-	        <!--[/foreach]-->
+	        {/foreach}
 	    </tbody>
 	</table>
 </div>

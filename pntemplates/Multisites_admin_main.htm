@@ -1,96 +1,97 @@
-<!--[include file="Multisites_admin_menu.htm"]-->
-<div class="pn-admincontainer">
-    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='windowlist.gif' set='icons/large' alt=$templatetitle]--></div>
-    <h2><!--[gt text="List of instances"]--></h2>
+{include file="Multisites_admin_menu.htm"}
+<div class="z-admincontainer">
+    <div class="z-adminpageicon">{img modname='core' src='windowlist.gif' set='icons/large'}</div>
+    <h2>{gt text="List of instances"}</h2>
     <div>
-    	[<!--[pagerabc posvar="letter" forwardvars="module,type,func"]-->
-        | <a href="<!--[pnmodurl modname="Multisites" type="admin" func="main"]-->"><!--[gt text="All"]--></a>]
+    	[{pagerabc posvar="letter" forwardvars="module,type,func"}
+        | <a href="{modurl modname="Multisites" type="admin" func="main"}">{gt text="All"}</a>]
     </div>
-    <table class="pn-admintable">
+    <table class="z-admintable">
         <thead>
             <tr>
-                <th><!--[gt text="Instance name"]--></th>
-                <th><!--[gt text="Description"]--></th>
-                <th><!--[gt text="Site name"]--></th>
-                <th><!--[gt text="Site DNS"]--></th>
-                <th><!--[gt text="Admin real name"]--></th>
-                <th><!--[gt text="Admin email"]--></th>
-                <th><!--[gt text="Company"]--></th>
-                <th><!--[gt text="Features"]--></th>
-                <th><!--[gt text="Options"]--></th>
+                <th>{gt text="Instance name"}</th>
+                <th>{gt text="Description"}</th>
+                <th>{gt text="Site name"}</th>
+                <th>{gt text="Site DNS"}</th>
+                <th>{gt text="Admin real name"}</th>
+                <th>{gt text="Admin email"}</th>
+                <th>{gt text="Company"}</th>
+                <th>{gt text="Features"}</th>
+                <th>{gt text="Options"}</th>
             </tr>
         </thead>
         <tbody>
-            <!--[foreach item=site from=$sites]-->
-                <tr class="<!--[cycle values="pn-odd,pn-even"]-->">
+            {foreach item=site from=$sites}
+                <tr class="{cycle values="z-odd,z-even"}">
 	                <td align="left" valign="top">
-	                    <!--[if $basedOnDomains ==1]-->
-                            <a href="http://<!--[$site.siteDNS]-->/" target="_blank">
-	                		    <!--[$site.instanceName]-->
+	                    {if $basedOnDomains ==1}
+                            <a href="http://{$site.siteDNS}/" target="_blank">
+	                		    {$site.instanceName}
 						    </a>
-                        <!--[else]-->
-                            <a href="<!--[$wwwroot]-->/<!--[$site.siteDNS]-->/<!--[$siteDNSEndText]-->" target="_blank">
-	                		    <!--[$site.instanceName]-->
+                        {else}
+                            <a href="{$wwwroot}/{$site.siteDNS}/{$siteDNSEndText}" target="_blank">
+	                		    {$site.instanceName}
 						    </a>
-                        <!--[/if]-->
+                        {/if}
 					</td>
 	                <td align="left" valign="top">
-	                	<!--[$site.description]-->
+	                	{$site.description}
 	                </td>
 	                <td align="left" valign="top">
-	                	<!--[$site.siteName]-->
+	                	{$site.siteName}
 					</td>
 	                <td align="left" valign="top">
-	                	<!--[$site.siteDNS]-->
+	                	{$site.siteDNS}
 					</td>
 	                <td align="left" valign="top">
-	                	<!--[$site.siteAdminRealName]-->
+	                	{$site.siteAdminRealName}
 	                </td>
 	                <td align="left" valign="top">
-	                	<!--[$site.siteAdminEmail]-->
+	                	{$site.siteAdminEmail}
 	                </td>
 	                <td align="left" valign="top">
-	                	<!--[$site.siteCompany]-->
+	                	{$site.siteCompany}
 	                </td>
 	                <td align="left" valign="top">
-	                    <div><!--[gt text="Based on model"]-->: <!--[$site.siteInitModel]--></div>
-	                    <div><!--[gt text="Creation date"]-->: <!--[$site.activationDate]--></div>
-	                    <div><!--[gt text="Active"]-->: <!--[$site.active]--></div>
+	                    <div>{gt text="Based on model"}: {$site.siteInitModel}</div>
+                        <div>{gt text="Site database"}: {$site.siteDBName}</div>
+	                    <div>{gt text="Creation date"}: {$site.activationDate}</div>
+	                    <div>{gt text="Active"}: {$site.active}</div>
 	                </td>
 	                <td align="right" valign="top">
 	                    <div>
-	                    	<a href="<!--[pnmodurl modname="Multisites" type="admin" func="edit" instanceId=$site.instanceId]-->">
-	                            <!--[pnimg modname='core' src='edit.gif' set='icons/extrasmall' __alt="Edit" __title="Edit"]-->
+	                    	<a href="{modurl modname="Multisites" type="admin" func="edit" instanceId=$site.instanceId}">
+	                            {img modname='core' src='edit.gif' set='icons/extrasmall' __alt="Edit" __title="Edit"}
 	                        </a>
 						</div>
 	                    <div>
-	                    	<a href="<!--[pnmodurl modname="Multisites" type="admin" func="siteElements" instanceId=$site.instanceId]-->">
-	                            <!--[pnimg modname='core' src='blockdevice.gif' set='icons/extrasmall' __alt="Site allowed elements" __title="Site allowed elements"]-->
+	                    	<a href="{modurl modname="Multisites" type="admin" func="siteElements" instanceId=$site.instanceId}">
+	                            {img modname='core' src='blockdevice.gif' set='icons/extrasmall' __alt="Site allowed elements" __title="Site allowed elements"}
 	                        </a>
 						</div>
 	                    <div>
-	                    	<a href="<!--[pnmodurl modname="Multisites" type="admin" func="siteThemes" instanceId=$site.instanceId]-->">
-	                            <!--[pnimg modname='core' src='package_graphics.gif' set='icons/extrasmall' __alt="Site themes" __title="Site themes"]-->
+	                    	<a href="{modurl modname="Multisites" type="admin" func="siteThemes" instanceId=$site.instanceId}">
+	                            {img modname='core' src='package_graphics.gif' set='icons/extrasmall' __alt="Site themes" __title="Site themes"}
 	                        </a>
 						</div>
 	                    <div>
-	                    	<a href="<!--[pnmodurl modname="Multisites" type="admin" func="siteTools" instanceId=$site.instanceId]-->">
-	                            <!--[pnimg modname='core' src='package_settings.gif' set='icons/extrasmall' __alt="Site tools" __title="Site tools"]-->
+	                    	<a href="{modurl modname="Multisites" type="admin" func="siteTools" instanceId=$site.instanceId}">
+	                            {img modname='core' src='package_settings.gif' set='icons/extrasmall' __alt="Site tools" __title="Site tools"}
 	                        </a>
 						</div>
 	                    <div>
-	                    	<a href="<!--[pnmodurl modname="Multisites" type="admin" func="deleteInstance" instanceId=$site.instanceId]-->">
-	                            <!--[pnimg modname='core' src='14_layer_deletelayer.gif' set='icons/extrasmall' __alt="Delete" __title="Delete"]-->
+	                    	<a href="{modurl modname="Multisites" type="admin" func="deleteInstance" instanceId=$site.instanceId}">
+	                            {img modname='core' src='14_layer_deletelayer.gif' set='icons/extrasmall' __alt="Delete" __title="Delete"}
 	                        </a>
 						</div>
 	                </td>
                 </tr>
-            <!--[foreachelse]-->
+            {foreachelse}
                 <tr>
-                    <td colspan="10" align="left"><!--[gt text="Not sites defined"]--></td>
+                    <td colspan="10" align="left">{gt text="Not sites defined"}</td>
                 </tr>
-            <!--[/foreach]-->
+            {/foreach}
         </tbody>
     </table>
-    <!--[pager rowcount=$pager.numitems limit=$pager.itemsperpage posvar=startnum shift=1 img_prev=images/icons/extrasmall/previous.gif img_next=images/icons/extrasmall/next.gif]-->
+    {pager rowcount=$pager.numitems limit=$pager.itemsperpage posvar=startnum shift=1 img_prev=images/icons/extrasmall/previous.gif img_next=images/icons/extrasmall/next.gif}
 </div>

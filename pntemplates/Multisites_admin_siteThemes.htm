@@ -1,23 +1,23 @@
-<!--[include file="Multisites_admin_menu.htm"]-->
-<div class="pn-admincontainer">
-    <div class="pn-adminpageicon"><!--[pnimg modname='core' src='configure.gif' set='icons/large' alt=$templatetitle]--></div>
-    <h2><!--[gt text="Site allowed elements"]--></h2>
-    <div><!--[gt text="Site name"]-->: <!--[$site.siteName]--></div>
-    <div><!--[gt text="Site DNS"]-->: <!--[$site.siteDNS]--></div>
-    <table class="pn-admintable">
+{include file="Multisites_admin_menu.htm"}
+<div class="z-admincontainer">
+    <div class="z-adminpageicon">{img modname='core' src='configure.gif' set='icons/large'}</div>
+    <h2>{gt text="Site allowed elements"}</h2>
+    <div>{gt text="Site name"}: {$site.siteName}</div>
+    <div>{gt text="Site DNS"}: {$site.siteDNS}</div>
+    <table class="z-admintable">
         <tbody>
-            <!--[foreach item=theme from=$themes]-->
-                <tr class="<!--[cycle values="pn-odd,pn-even"]-->">
-                    <td><!--[$theme.name]--></td>
-                    <td><!--[$theme.version]--></td>
-                    <td><!--[$theme.description]--></td>
+            {foreach item=theme from=$themes}
+                <tr class="{cycle values="z-odd,z-even"}">
+                    <td>{$theme.name}</td>
+                    <td>{$theme.version}</td>
+                    <td>{$theme.description}</td>
                     <td width="80">
-                        <div id="theme_<!--[$theme.name]-->">
-                            <!--[$theme.icons]-->
+                        <div id="theme_{$theme.name}">
+                            {$theme.icons}
                         </div>
                     </td>
                 </tr>
-            <!--[/foreach]-->
+            {/foreach}
         </tbody>
     </table>
 </div>
