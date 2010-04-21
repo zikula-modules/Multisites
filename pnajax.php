@@ -5,7 +5,6 @@
  * @param:	args   Array with the module name and the instance identity
  * @return:	Delete a database record
  */
-
 function Multisites_ajax_modifyActivation($args)
 {
     $dom = ZLanguage::getModuleDomain('Multisites');
@@ -31,23 +30,32 @@ function Multisites_ajax_modifyActivation($args)
         AjaxUtil::output();
     }
 
-    $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $site = pnModAPIFunc('Multisites', 'user', 'getSite',
+                          array('instanceId' => $instanceId));
     if ($site == false) {
         LogUtil::registerError(__('Not site found', $dom));
         AjaxUtil::output();
     }
-
-    if (!pnModAPIFunc('Multisites', 'admin', 'modifyActivation', array('instanceId' => $instanceId, 'moduleName' => $moduleName, 'newState' => $newState))) {
+    if (!pnModAPIFunc('Multisites', 'admin', 'modifyActivation',
+                       array('instanceId' => $instanceId,
+                             'moduleName' => $moduleName,
+                             'newState' => $newState))) {
         LogUtil::registerError('error changing module state');
         AjaxUtil::output();
     }
 
-    $siteModules = pnModAPIFunc('Multisites', 'admin', 'getAllSiteModules', array('instanceId' => $instanceId));
+    $siteModules = pnModAPIFunc('Multisites', 'admin', 'getAllSiteModules',
+                                 array('instanceId' => $instanceId));
 
     $available = (array_key_exists($moduleName, $siteModules)) ? 1 : 0;
-    $icons = pnModFunc('Multisites', 'admin', 'siteElementsIcons', array('name' => $moduleName, 'available' => $available, 'siteModules' => $siteModules, 'instanceId' => $instanceId));
+    $icons = pnModFunc('Multisites', 'admin', 'siteElementsIcons',
+                        array('name' => $moduleName,
+                              'available' => $available,
+                              'siteModules' => $siteModules,
+                              'instanceId' => $instanceId));
 
-    AjaxUtil::output(array('content' => $icons, 'moduleName' => $moduleName));
+    AjaxUtil::output(array('content' => $icons,
+                           'moduleName' => $moduleName));
 }
 
 /**
@@ -72,42 +80,61 @@ function Multisites_ajax_allowModule($args)
         LogUtil::registerError('no module name received');
         AjaxUtil::output();
     }
-    $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $site = pnModAPIFunc('Multisites', 'user', 'getSite',
+                          array('instanceId' => $instanceId));
     if ($site == false) {
         LogUtil::registerError(__('Not site found', $dom));
         AjaxUtil::output();
     }
     //get site module
-    $module = pnModAPIFunc('Multisites', 'admin', 'getSiteModule', array('instanceId' => $instanceId, 'moduleName' => $moduleName));
+    $module = pnModAPIFunc('Multisites', 'admin', 'getSiteModule',
+                            array('instanceId' => $instanceId,
+                                  'moduleName' => $moduleName));
     if ($module['state'] == 6) {
         //set the module as desactivated
-        if (!pnModAPIFunc('Multisites', 'admin', 'modifyActivation', array('instanceId' => $instanceId, 'moduleName' => $moduleName, 'newState' => 2))) {
+        if (!pnModAPIFunc('Multisites', 'admin', 'modifyActivation',
+                           array('instanceId' => $instanceId,
+                                 'moduleName' => $moduleName,
+                                 'newState' => 2))) {
             LogUtil::registerError('error changing module state');
             AjaxUtil::output();
         }
     } elseif ($module['state'] == 2 || $module['state'] == 3) {
         //set the module as not allowed
-        if (!pnModAPIFunc('Multisites', 'admin', 'modifyActivation', array('instanceId' => $instanceId, 'moduleName' => $moduleName, 'newState' => 6))) {
+        if (!pnModAPIFunc('Multisites', 'admin', 'modifyActivation',
+                           array('instanceId' => $instanceId,
+                                 'moduleName' => $moduleName,
+                                 'newState' => 6))) {
             LogUtil::registerError('error changing module state');
             AjaxUtil::output();
         }
     } elseif ($module['state'] == '') {
         //create module
-        if (!pnModAPIFunc('Multisites', 'admin', 'createSiteModule', array('instanceId' => $instanceId, 'moduleName' => $moduleName))) {
+        if (!pnModAPIFunc('Multisites', 'admin', 'createSiteModule',
+                           array('instanceId' => $instanceId,
+                                 'moduleName' => $moduleName))) {
             LogUtil::registerError('error creating module');
             AjaxUtil::output();
         }
     } else {
         //get site module
-        if (!pnModAPIFunc('Multisites', 'admin', 'deleteSiteModule', array('instanceId' => $instanceId, 'moduleName' => $moduleName))) {
+        if (!pnModAPIFunc('Multisites', 'admin', 'deleteSiteModule',
+                           array('instanceId' => $instanceId,
+                                 'moduleName' => $moduleName))) {
             LogUtil::registerError('error deleting module');
             AjaxUtil::output();
         }
     }
-    $siteModules = pnModAPIFunc('Multisites', 'admin', 'getAllSiteModules', array('instanceId' => $instanceId));
+    $siteModules = pnModAPIFunc('Multisites', 'admin', 'getAllSiteModules',
+                                 array('instanceId' => $instanceId));
     $available = (array_key_exists($moduleName, $siteModules)) ? 1 : 0;
-    $icons = pnModFunc('Multisites', 'admin', 'siteElementsIcons', array('name' => $moduleName, 'available' => $available, 'siteModules' => $siteModules, 'instanceId' => $instanceId));
-    AjaxUtil::output(array('content' => $icons, 'moduleName' => $moduleName));
+    $icons = pnModFunc('Multisites', 'admin', 'siteElementsIcons',
+                        array('name' => $moduleName,
+                              'available' => $available,
+                              'siteModules' => $siteModules,
+                              'instanceId' => $instanceId));
+    AjaxUtil::output(array('content' => $icons,
+                           'moduleName' => $moduleName));
 }
 
 /**
@@ -132,28 +159,41 @@ function Multisites_ajax_allowTheme($args)
         LogUtil::registerError('no theme name received');
         AjaxUtil::output();
     }
-    $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $site = pnModAPIFunc('Multisites', 'user', 'getSite',
+                          array('instanceId' => $instanceId));
     if ($site == false) {
         LogUtil::registerError(__('Not site found', $dom));
         AjaxUtil::output();
     }
     //get site module
-    $theme = pnModAPIFunc('Multisites', 'admin', 'getSiteTheme', array('instanceId' => $instanceId, 'themeName' => $themeName));
+    $theme = pnModAPIFunc('Multisites', 'admin', 'getSiteTheme',
+                           array('instanceId' => $instanceId,
+                                 'themeName' => $themeName));
     if ($theme['name'] == '') {
         //create theme
-        if (!pnModAPIFunc('Multisites', 'admin', 'createSiteTheme', array('instanceId' => $instanceId, 'themeName' => $themeName))) {
+        if (!pnModAPIFunc('Multisites', 'admin', 'createSiteTheme',
+                           array('instanceId' => $instanceId,
+                                 'themeName' => $themeName))) {
             LogUtil::registerError('error creating theme');
             AjaxUtil::output();
         }
     } else {
         //get site module
-        if (!pnModAPIFunc('Multisites', 'admin', 'deleteSiteTheme', array('instanceId' => $instanceId, 'themeName' => $themeName))) {
+        if (!pnModAPIFunc('Multisites', 'admin', 'deleteSiteTheme',
+                           array('instanceId' => $instanceId,
+                                  'themeName' => $themeName))) {
             LogUtil::registerError('error deleting theme');
             AjaxUtil::output();
         }
     }
-    $siteThemes = pnModAPIFunc('Multisites', 'admin', 'getAllSiteThemes', array('instanceId' => $instanceId));
+    $siteThemes = pnModAPIFunc('Multisites', 'admin', 'getAllSiteThemes',
+                                array('instanceId' => $instanceId));
     $available = (array_key_exists($themeName, $siteThemes)) ? 1 : 0;
-    $icons = pnModFunc('Multisites', 'admin', 'siteThemesIcons', array('name' => $themeName, 'available' => $available, 'siteThemes' => $siteThemes, 'instanceId' => $instanceId));
-    AjaxUtil::output(array('content' => $icons, 'themeName' => $themeName));
+    $icons = pnModFunc('Multisites', 'admin', 'siteThemesIcons',
+                        array('name' => $themeName,
+                              'available' => $available,
+                              'siteThemes' => $siteThemes,
+                              'instanceId' => $instanceId));
+    AjaxUtil::output(array('content' => $icons,
+                           'themeName' => $themeName));
 }

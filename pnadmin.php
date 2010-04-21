@@ -30,13 +30,13 @@ function Multisites_admin_main($args)
     $pager = array('numitems' => $numSites,
                    'itemsperpage' => $itemsperpage);
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('sites', $sites);
-    $pnRender->assign('pager', $pager);
-    $pnRender->assign('wwwroot', $GLOBALS['ZConfig']['Multisites']['wwwroot']);
-    $pnRender->assign('siteDNSEndText', $GLOBALS['ZConfig']['Multisites']['siteDNSEndText']);
-    $pnRender->assign('basedOnDomains', $GLOBALS['ZConfig']['Multisites']['basedOnDomains']);
-    return $pnRender->fetch('Multisites_admin_main.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('sites', $sites);
+    $render->assign('pager', $pager);
+    $render->assign('wwwroot', $GLOBALS['ZConfig']['Multisites']['wwwroot']);
+    $render->assign('siteDNSEndText', $GLOBALS['ZConfig']['Multisites']['siteDNSEndText']);
+    $render->assign('basedOnDomains', $GLOBALS['ZConfig']['Multisites']['basedOnDomains']);
+    return $render->fetch('Multisites_admin_main.htm');
 }
 
 /**
@@ -60,9 +60,9 @@ function Multisites_admin_newInstance()
         return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('models', $models);
-    return $pnRender->fetch('Multisites_admin_new.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('models', $models);
+    return $render->fetch('Multisites_admin_new.htm');
 }
 
 /**
@@ -261,9 +261,9 @@ function Multisites_admin_deleteInstance($args)
     }
     if ($confirmation == null) {
         // create output object
-        $pnRender = pnRender::getInstance('Multisites', false);
-        $pnRender->assign('instance', $site);
-        return $pnRender->fetch('Multisites_admin_deleteInstance.htm');
+        $render = pnRender::getInstance('Multisites', false);
+        $render->assign('instance', $site);
+        return $render->fetch('Multisites_admin_deleteInstance.htm');
     }
     // confirm authorisation code
     if (!SecurityUtil::confirmAuthKey()) {
@@ -308,99 +308,32 @@ function Multisites_admin_deleteInstance($args)
     return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * Load the icons that identify the modules availability for a site
+ * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+ * @param:	The instance identity and the modules state
+ * @return:	Returns the needed icons
+ */
+function Multisites_admin_siteElementsIcons($args)
+{
+    $name = FormUtil::getPassedValue('name', isset($args['name']) ? $args['name'] : null, 'POST');
+    $available = FormUtil::getPassedValue('available', isset($args['available']) ? $args['available'] : null, 'POST');
+    $siteModules = FormUtil::getPassedValue('siteModules', isset($args['siteModules']) ? $args['siteModules'] : null, 'POST');
+    $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
+    // security check
+    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
+	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
+	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
+        return LogUtil::registerPermissionError();
+    }
+    // create output object
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('name', $name);
+    $render->assign('available', $available);
+    $render->assign('siteModules', $siteModules);
+    $render->assign('instanceId', $instanceId);
+    return $render->fetch('Multisites_admin_siteElementsIcons.htm');
+}
 
 /**
  * Edit an instance
@@ -419,11 +352,12 @@ function Multisites_admin_edit($args)
         return LogUtil::registerPermissionError();
     }
     // get site information
-    $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $site = pnModAPIFunc('Multisites', 'user', 'getSite',
+                          array('instanceId' => $instanceId));
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('site', $site);
-    return $pnRender->fetch('Multisites_admin_edit.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('site', $site);
+    return $render->fetch('Multisites_admin_edit.htm');
 }
 
 /**
@@ -453,7 +387,8 @@ function Multisites_admin_update($args)
         return LogUtil::registerAuthidError(pnModURL('Multisites', 'admin', 'main'));
     }
     // get site information
-    $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $site = pnModAPIFunc('Multisites', 'user', 'getSite',
+                          array('instanceId' => $instanceId));
     if ($site == false) {
         LogUtil::registerError(__('Not site found', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
@@ -461,11 +396,11 @@ function Multisites_admin_update($args)
     $edited = pnModAPIFunc('Multisites', 'admin', 'updateInstance', array(
         'instanceId' => $instanceId,
         'items' => array('instanceName' => $instanceName,
-                            'description' => $description,
-                            'siteAdminRealName' => $siteAdminRealName,
-                            'siteAdminEmail' => $siteAdminEmail,
-                            'siteCompany' => $siteCompany,
-                            'active' => $active)));
+                         'description' => $description,
+                         'siteAdminRealName' => $siteAdminRealName,
+                         'siteAdminEmail' => $siteAdminEmail,
+                         'siteCompany' => $siteCompany,
+                         'active' => $active)));
     if (!$edited) {
         LogUtil::registerError(__('Error editing instance', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
@@ -493,15 +428,16 @@ function Multisites_admin_editModel($args)
         return LogUtil::registerPermissionError();
     }
     // get model information
-    $model = pnModAPIFunc('Multisites', 'user', 'getModelById', array('modelId' => $modelId));
+    $model = pnModAPIFunc('Multisites', 'user', 'getModelById',
+                           array('modelId' => $modelId));
     if ($model == false) {
         LogUtil::registerError(__('Model not found', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('model', $model);
-    return $pnRender->fetch('Multisites_admin_editModel.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('model', $model);
+    return $render->fetch('Multisites_admin_editModel.htm');
 }
 
 /**
@@ -528,15 +464,17 @@ function Multisites_admin_updateModel($args)
         return LogUtil::registerAuthidError(pnModURL('Multisites', 'admin', 'manageModels'));
     }
     // get model information
-    $model = pnModAPIFunc('Multisites', 'user', 'getModelById', array('modelId' => $modelId));
+    $model = pnModAPIFunc('Multisites', 'user', 'getModelById',
+                           array('modelId' => $modelId));
     if ($model == false) {
         LogUtil::registerError(__('Model not found', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
     }
-    $edited = pnModAPIFunc('Multisites', 'admin', 'updateModel', array('instanceId' => $instanceId,
-                                                                        'items' => array('modelName' => $modelName,
-                                                                                            'description' => $description,
-                                                                                            'folders' => $folders)));
+    $edited = pnModAPIFunc('Multisites', 'admin', 'updateModel',
+                            array('instanceId' => $instanceId,
+                                  'items' => array('modelName' => $modelName,
+                                  'description' => $description,
+                                  'folders' => $folders)));
     if (!$edited) {
         LogUtil::registerError(__('Error editing model', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
@@ -562,13 +500,13 @@ function Multisites_admin_config()
         return LogUtil::registerPermissionError();
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('modelsFolder', pnModGetVar('Multisites', 'modelsFolder'));
-    $pnRender->assign('tempAccessFileContent', pnModGetVar('Multisites', 'tempAccessFileContent'));
-    $pnRender->assign('globalAdminName', pnModGetVar('Multisites', 'globalAdminName'));
-    $pnRender->assign('globalAdminPassword', pnModGetVar('Multisites', 'globalAdminPassword'));
-    $pnRender->assign('globalAdminemail', pnModGetVar('Multisites', 'globalAdminemail'));
-    return $pnRender->fetch('Multisites_admin_config.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('modelsFolder', pnModGetVar('Multisites', 'modelsFolder'));
+    $render->assign('tempAccessFileContent', pnModGetVar('Multisites', 'tempAccessFileContent'));
+    $render->assign('globalAdminName', pnModGetVar('Multisites', 'globalAdminName'));
+    $render->assign('globalAdminPassword', pnModGetVar('Multisites', 'globalAdminPassword'));
+    $render->assign('globalAdminemail', pnModGetVar('Multisites', 'globalAdminemail'));
+    return $render->fetch('Multisites_admin_config.htm');
 }
 
 /**
@@ -621,9 +559,9 @@ function Multisites_admin_manageModels()
     }
     $models = pnModAPIFunc('Multisites', 'user', 'getAllModels');
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('modelsArray', $models);
-    return $pnRender->fetch('Multisites_admin_manageModels.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('modelsArray', $models);
+    return $render->fetch('Multisites_admin_manageModels.htm');
 }
 
 /**
@@ -653,8 +591,8 @@ function Multisites_admin_createNewModel()
         return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    return $pnRender->fetch('Multisites_admin_newModel.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    return $render->fetch('Multisites_admin_newModel.htm');
 }
 
 /**
@@ -713,10 +651,11 @@ function Multisites_admin_createModel($args)
         return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
     }
     //Update model information
-    $created = pnModAPIFunc('Multisites', 'admin', 'createModel', array('modelName' => $modelName,
-                                                                        'description' => $description,
-                                                                        'fileName' => $fileName,
-                                                                        'folders' => $folders));
+    $created = pnModAPIFunc('Multisites', 'admin', 'createModel',
+                             array('modelName' => $modelName,
+                                   'description' => $description,
+                                   'fileName' => $fileName,
+                                   'folders' => $folders));
     if (!$created) {
         // delete the model file
         unlink($path . '/' . $fileName);
@@ -745,7 +684,8 @@ function Multisites_admin_siteElements($args)
 	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
-    $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $site = pnModAPIFunc('Multisites', 'user', 'getSite',
+                          array('instanceId' => $instanceId));
     if ($site == false) {
         LogUtil::registerError(__('Not site found', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
@@ -754,15 +694,17 @@ function Multisites_admin_siteElements($args)
     $modules = pnModAPIFunc('Modules', 'admin', 'getfilemodules');
     sort($modules);
     // get all the modules available in site
-    $siteModules = pnModAPIFunc('Multisites', 'admin', 'getAllSiteModules', array('instanceId' => $instanceId));
+    $siteModules = pnModAPIFunc('Multisites', 'admin', 'getAllSiteModules',
+                                 array('instanceId' => $instanceId));
     foreach ($modules as $mod) {
         if ($mod['type'] != 3) {
             // if module exists in instance database
             $available = (array_key_exists($mod['name'], $siteModules)) ? 1 : 0;
-            $icons = pnModFunc('Multisites', 'admin', 'siteElementsIcons', array('instanceId' => $instanceId,
-                                                                                    'name' => $mod['name'],
-                                                                                    'available' => $available,
-                                                                                    'siteModules' => $siteModules));
+            $icons = pnModFunc('Multisites', 'admin', 'siteElementsIcons',
+                                array('instanceId' => $instanceId,
+                                      'name' => $mod['name'],
+                                      'available' => $available,
+                                      'siteModules' => $siteModules));
             $modulesArray[] = array('id' => $mod['id'],
                                     'name' => $mod['name'],
                                     'version' => $mod['version'],
@@ -771,10 +713,10 @@ function Multisites_admin_siteElements($args)
         }
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('site', $site);
-    $pnRender->assign('modules', $modulesArray);
-    return $pnRender->fetch('Multisites_admin_siteElements.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('site', $site);
+    $render->assign('modules', $modulesArray);
+    return $render->fetch('Multisites_admin_siteElements.htm');
 }
 
 /**
@@ -794,16 +736,17 @@ function Multisites_admin_deleteModel($args)
 	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
-    $model = pnModAPIFunc('Multisites', 'user', 'getModelById', array('modelId' => $modelId));
+    $model = pnModAPIFunc('Multisites', 'user', 'getModelById',
+                           array('modelId' => $modelId));
     if ($model == false) {
         LogUtil::registerError(__('Model not found', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
     }
     if ($confirmation == null) {
         // create output object
-        $pnRender = pnRender::getInstance('Multisites', false);
-        $pnRender->assign('model', $model);
-        return $pnRender->fetch('Multisites_admin_deleteModel.htm');
+        $render = pnRender::getInstance('Multisites', false);
+        $render->assign('model', $model);
+        return $render->fetch('Multisites_admin_deleteModel.htm');
     }
     // confirm authorisation code
     if (!SecurityUtil::confirmAuthKey()) {
@@ -823,33 +766,6 @@ function Multisites_admin_deleteModel($args)
 }
 
 /**
- * Load the icons that identify the modules availability for a site
- * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
- * @param:	The instance identity and the modules state
- * @return:	Returns the needed icons
- */
-function Multisites_admin_siteElementsIcons($args)
-{
-    $name = FormUtil::getPassedValue('name', isset($args['name']) ? $args['name'] : null, 'POST');
-    $available = FormUtil::getPassedValue('available', isset($args['available']) ? $args['available'] : null, 'POST');
-    $siteModules = FormUtil::getPassedValue('siteModules', isset($args['siteModules']) ? $args['siteModules'] : null, 'POST');
-    $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
-    // security check
-    if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
-	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
-        return LogUtil::registerPermissionError();
-    }
-    // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('name', $name);
-    $pnRender->assign('available', $available);
-    $pnRender->assign('siteModules', $siteModules);
-    $pnRender->assign('instanceId', $instanceId);
-    return $pnRender->fetch('Multisites_admin_siteElementsIcons.htm');
-}
-
-/**
  * Show the themes available for a site and allow to manage this feature
  * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	The instance identity
@@ -865,7 +781,8 @@ function Multisites_admin_siteThemes($args)
 	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
-    $site = pnModAPIFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
+    $site = pnModAPIFunc('Multisites', 'user', 'getSite',
+                          array('instanceId' => $instanceId));
     if ($site == false) {
         LogUtil::registerError(__('Not site found', $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
@@ -873,19 +790,22 @@ function Multisites_admin_siteThemes($args)
     // get all the themes available in themes directory
     $themes = pnModAPIFunc('Multisites', 'admin', 'getAllThemes');
     // get all the themes  inserted in site or instance database
-    $siteThemes = pnModAPIFunc('Multisites', 'admin', 'getAllSiteThemes', array('instanceId' => $instanceId));
-    $defaultTheme = pnModAPIFunc('Multisites', 'admin', 'getSiteDefaultTheme', array('instanceId' => $instanceId));
+    $siteThemes = pnModAPIFunc('Multisites', 'admin', 'getAllSiteThemes',
+                                array('instanceId' => $instanceId));
+    $defaultTheme = pnModAPIFunc('Multisites', 'admin', 'getSiteDefaultTheme',
+                                  array('instanceId' => $instanceId));
     $pos = strpos($defaultTheme, '"');
     $defaultTheme = substr($defaultTheme, $pos + 1, -2);
     foreach ($themes as $theme) {
         // if module exists in instance database
         $available = (array_key_exists($theme['name'], $siteThemes)) ? 1 : 0;
         $isDefaultTheme = (strtolower($theme['name']) == strtolower($defaultTheme)) ? 1 : 0;
-        $icons = pnModFunc('Multisites', 'admin', 'siteThemesIcons', array('instanceId' => $instanceId,
-                                                                            'name' => $theme['name'],
-                                                                            'available' => $available,
-                                                                            'isDefaultTheme' => $isDefaultTheme,
-                                                                            'siteThemes' => $siteThemes));
+        $icons = pnModFunc('Multisites', 'admin', 'siteThemesIcons',
+                            array('instanceId' => $instanceId,
+                                  'name' => $theme['name'],
+                                  'available' => $available,
+                                  'isDefaultTheme' => $isDefaultTheme,
+                                  'siteThemes' => $siteThemes));
         $themesArray[] = array('id' => $theme['id'],
                                 'name' => $theme['name'],
                                 'version' => $theme['version'],
@@ -893,10 +813,10 @@ function Multisites_admin_siteThemes($args)
                                 'icons' => $icons);
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('site', $site);
-    $pnRender->assign('themes', $themesArray);
-    return $pnRender->fetch('Multisites_admin_siteThemes.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('site', $site);
+    $render->assign('themes', $themesArray);
+    return $render->fetch('Multisites_admin_siteThemes.htm');
 }
 
 /**
@@ -919,13 +839,13 @@ function Multisites_admin_siteThemesIcons($args)
         return LogUtil::registerPermissionError();
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('name', $name);
-    $pnRender->assign('available', $available);
-    $pnRender->assign('isDefaultTheme', $isDefaultTheme);
-    $pnRender->assign('siteThemes', $siteThemes);
-    $pnRender->assign('instanceId', $instanceId);
-    return $pnRender->fetch('Multisites_admin_siteThemesIcons.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('name', $name);
+    $render->assign('available', $available);
+    $render->assign('isDefaultTheme', $isDefaultTheme);
+    $render->assign('siteThemes', $siteThemes);
+    $render->assign('instanceId', $instanceId);
+    return $render->fetch('Multisites_admin_siteThemesIcons.htm');
 }
 
 /**
@@ -944,10 +864,12 @@ function Multisites_admin_setThemeAsDefault($args)
 	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
-    $defaultTheme = pnModAPIFunc('Multisites', 'admin', 'setAsDefaultTheme', array('instanceId' => $instanceId,
-                                                                                    'name' => $name));
+    $defaultTheme = pnModAPIFunc('Multisites', 'admin', 'setAsDefaultTheme',
+                                  array('instanceId' => $instanceId,
+                                        'name' => $name));
     // redirect to the admin main page
-    return pnRedirect(pnModURL('Multisites', 'admin', 'siteThemes', array('instanceId' => $instanceId)));
+    return pnRedirect(pnModURL('Multisites', 'admin', 'siteThemes',
+                                array('instanceId' => $instanceId)));
 }
 
 /**
@@ -972,9 +894,9 @@ function Multisites_admin_siteTools($args)
         return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('site', $site);
-    return $pnRender->fetch('Multisites_admin_siteTools.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('site', $site);
+    return $render->fetch('Multisites_admin_siteTools.htm');
 }
 
 /**
@@ -1015,7 +937,8 @@ function Multisites_admin_executeSiteTool($args)
         default:
             LogUtil::registerError(__('Not tool selected', $dom));
     }
-    return pnRedirect(pnModURL('Multisites', 'admin', 'siteTools', array('instanceId' => $instanceId)));
+    return pnRedirect(pnModURL('Multisites', 'admin', 'siteTools',
+                                array('instanceId' => $instanceId)));
 }
 
 /**
@@ -1038,8 +961,9 @@ function Multisites_admin_actualizer(){
     $upgradeNeeded = false;
     foreach($modules as $module){
         // get the number of sites which have an old version
-        $numberOfSites = pnModAPIFunc('Multisites', 'admin', 'getNumberOfSites', array('moduleName' => $module['name'],
-                                                                                        'currentVersion' => $module['version']));
+        $numberOfSites = pnModAPIFunc('Multisites', 'admin', 'getNumberOfSites',
+                                       array('moduleName' => $module['name'],
+                                             'currentVersion' => $module['version']));
         if($numberOfSites > 0){
         	$upgradeNeeded = true;
         }
@@ -1047,10 +971,10 @@ function Multisites_admin_actualizer(){
         $i++;
     }
     // create output object
-    $pnRender = pnRender::getInstance('Multisites', false);
-    $pnRender->assign('modules', $modules);
-    $pnRender->assign('upgradeNeeded', $upgradeNeeded);
-    return $pnRender->fetch('Multisites_admin_actualizer.htm');
+    $render = pnRender::getInstance('Multisites', false);
+    $render->assign('modules', $modules);
+    $render->assign('upgradeNeeded', $upgradeNeeded);
+    return $render->fetch('Multisites_admin_actualizer.htm');
 }
 
 /**
@@ -1082,8 +1006,9 @@ function Multisites_admin_actualizer(){
     }
     $currentVersion = $moduleSelected['version'];
     // get the sites that need upgrade
-    $sites = pnModAPIFunc('Multisites', 'admin', 'getSitesThatNeedUpgrade', array('moduleName' => $moduleName,
-                                                                                    'currentVersion' => $currentVersion));
+    $sites = pnModAPIFunc('Multisites', 'admin', 'getSitesThatNeedUpgrade',
+                           array('moduleName' => $moduleName,
+                                 'currentVersion' => $currentVersion));
     if(!$sites){
     	LogUtil::registerError(__f("Not sites found that needs upgrade in module <strong>%s</strong>", $moduleName, $dom));
         return pnRedirect(pnModURL('Multisites', 'admin', 'actualizer'));
