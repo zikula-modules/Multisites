@@ -86,7 +86,7 @@ Allow from env=object_is_js');
 /**
  * Initialise the interactive install system for the Multisites module
  * @author Albert Pérez Monfort (aperezm@xtec.cat)
- * @return If the file multisites_config.php is not created pnRedirect to the step0 otherwise pnpnRedirect to step 4
+ * @return If the file multisites_config.php is not created pnRedirect to the step0 otherwise pnRedirect to step 4
  */
 function Multisites_init_interactiveinit()
 {
@@ -155,7 +155,7 @@ function Multisites_init_step1()
 /**
  * Step 2 - Check if the files folder exists and ask for the physical path
  * @author Albert Pérez Monfort (aperezm@xtec.cat)
- * @param  the physical folder name in case it does not exists and the user is pnpnRedirect to this step
+ * @param  the physical folder name in case it does not exists and the user is pnRedirect to this step
  * @return post the pysical folder path
  */
 function Multisites_init_step2($args)
@@ -180,7 +180,7 @@ function Multisites_init_step2($args)
  * Get the physical folder path and write the value in the config/multisites_config.php file
  * @author Albert Pérez Monfort (aperezm@xtec.cat)
  * @param  the physical files folder
- * @return if the folder exists and it is writeable user is pnpnRedirected to the step 3 otherwise the user is pnpnRedirected to the step 2
+ * @return if the folder exists and it is writeable user is pnRedirected to the step 3 otherwise the user is pnRedirected to the step 2
  */
 function Multisites_init_step21($args)
 {
@@ -191,16 +191,16 @@ function Multisites_init_step21($args)
 	}
     if ($filesRealPath == '') {
         LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Please, define it.', $dom));
-        return pnpnRedirect(pnModURL('Multisites', 'init', 'step2'));
+        return pnRedirect(pnModURL('Multisites', 'init', 'step2'));
     }
     if (!file_exists($filesRealPath)) {
         LogUtil::registerError (__('The directory where the sites files have to be created does not exists. Please, create it.', $dom));
-        return pnpnRedirect(pnModURL('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
+        return pnRedirect(pnModURL('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
     }
     // check if the sitesFilesFolder is writeable
 	if (!is_writeable($filesRealPath)) {
 		LogUtil::registerError (__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.', $dom));
-		return pnpnRedirect(pnModURL('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
+		return pnRedirect(pnModURL('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
 	}
 	// the folder exists and it is writeable
 	// write this parameter in the multisites_config.php file
