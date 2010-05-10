@@ -5,86 +5,94 @@
     <form id="newInstance" class="z-form" action="{modurl modname="Multisites" type="admin" func="createInstance"}" method="post" >
         <input type="hidden" name="authid" value="{secgenauthkey module="Multisites"}" />
         <div class="z-formrow">
-            <label for="instanceName">{gt text="Instance name"}</label>
-            <input type="text" name="instanceName" size="50" maxlength="150" />
+            <label for="instanceName">{gt text="Instance name"} <span class="mandatoryField">*</span></label>
+            <input type="text" name="instanceName" size="50" maxlength="150" value="{$instanceName}"/>
         </div>
         <div class="z-formrow">
             <label for="description">{gt text="Description"}</label>
-            <input type="text" name="description" size="50" maxlength="255" />
+            <input type="text" name="description" size="50" maxlength="255" value="{$description}" />
         </div>
         <div class="z-formrow">
         	<label for="siteName">{gt text="Site name"}</label>
-            <input type="text" name="siteName" size="50" maxlength="255" />
+            <input type="text" name="siteName" size="50" maxlength="255" value="{$siteName}"/>
         </div>
         <div class="z-formrow">
-            <label for="siteAdminName">{gt text="Site admin name"}</label>
-            <input type="text" name="siteAdminName" size="15" maxlength="25" value="admin" />
+            <label for="siteAdminName">{gt text="Site admin name"} <span class="mandatoryField">*</span></label>
+            <input type="text" name="siteAdminName" size="15" maxlength="25" value="{if $siteAdminName eq ''}admin{else}{$siteAdminName}{/if}" />
         </div>
         <div class="z-formrow">
-            <label for="siteAdminPwd">{gt text="Site admin password"}</label>
-            <input type="text" name="siteAdminPwd" size="15" maxlength="15" />
+            <label for="siteAdminPwd">{gt text="Site admin password"} <span class="mandatoryField">*</span></label>
+            <input type="password" name="siteAdminPwd" size="15" maxlength="15" />
         </div>
         <div class="z-formrow">
             <label for="siteAdminRealName">{gt text="Admin real name"}</label>
-            <input type="text" name="siteAdminRealName" size="30" maxlength="70" />
+            <input type="text" name="siteAdminRealName" size="30" maxlength="70" value="{$siteAdminRealName}"/>
         </div>
         <div class="z-formrow">
-        	<label for="siteAdminEmail">{gt text="Admin email"}</label>
-            <input type="text" name="siteAdminEmail" size="30" maxlength="30" />
+        	<label for="siteAdminEmail">{gt text="Admin email"} <span class="mandatoryField">*</span></label>
+            <input type="text" name="siteAdminEmail" size="30" maxlength="30" value="{$siteAdminEmail}"/>
         </div>
         <div class="z-formrow">
             <label for="siteCompany">{gt text="Company"}</label>
-            <input type="text" name="siteCompany" size="50" maxlength="100" />
+            <input type="text" name="siteCompany" size="50" maxlength="100" value="{$siteCompany}"/>
         </div>
         <div class="z-formrow">
-        	<label for="siteDNS">{gt text="Site DNS"}</label>
-            <input type="text" name="siteDNS" size="15" maxlength="20" />
+        	<label for="siteDNS">{gt text="Site domain"} <span class="mandatoryField">*</span></label>
+            <input type="text" name="siteDNS" size="15" maxlength="20" value="{$siteDNS}" />
         </div>
+        <fieldset>
+            <legend>Data base information</legend>
+            <div class="z-formrow">
+            	<label for="siteDBHost">{gt text="Site database type"}</label>
+                <select name="siteDBType">
+                    <option value="mysql" {if $siteDBType eq 'mysql'}selected{/if}>MySQL</option>
+                    <option value="mysqli" {if $siteDBType eq 'mysqli'}selected{/if}>MySQL Improved</option>
+                    <option value="postgres" {if $siteDBType eq 'postgres'}selected{/if}>PostgreSQL</option>
+                </select>
+            </div>
+            <div class="z-formrow">
+            	<label for="siteDBHost">{gt text="Site database host"} <span class="mandatoryField">*</span></label>
+                <input type="text" name="siteDBHost" size="15" maxlength="20" value="{$siteDBHost}"/>
+            </div>
+            <div class="z-formrow">
+            	<label for="siteDBName">{gt text="Site database"} <span class="mandatoryField">*</span></label>
+                <input type="text" name="siteDBName" size="15" maxlength="20" value="{$siteDBName}"/>
+            </div>
+            <div class="z-formrow">
+            	<label for="siteDBUname">{gt text="Site database username"} <span class="mandatoryField">*</span></label>
+                <input type="text" name="siteDBUname" size="15" maxlength="20" value="{$siteDBUname}"/>
+            </div>
+            <div class="z-formrow">
+            	<label for="siteDBPass">{gt text="Site database password"} <span class="mandatoryField">*</span></label>
+                <input type="password" name="siteDBPass" size="15" maxlength="20" />
+            </div>
+            <div class="z-formrow">
+            	<label for="siteDBPrefix">{gt text="Site database prefix"} <span class="mandatoryField">*</span></label>
+                <input type="text" name="siteDBPrefix" size="15" maxlength="5" value="{if $siteAdminName eq ''}z{else}{$siteDBPrefix}{/if}"/>
+            </div>        
+            <div class="z-formrow">
+            	<label for="createDB">{gt text="Create database"}</label>
+                <input type="checkbox" name="createDB" {if $createDB eq 1}checked{/if} value="1" />
+            </div>
+        </fieldset>
         <div class="z-formrow">
-        	<label for="siteDBHost">{gt text="Site database type"}</label>
-            <select name="siteDBType">
-                <option value="mysql">MySQL</option>
-                <option value="mysqli">MySQL Improved</option>
-                <option value="postgres">PostgreSQL</option>
-            </select>
-        </div>
-        <div class="z-formrow">
-        	<label for="siteDBHost">{gt text="Site database host"}</label>
-            <input type="text" name="siteDBHost" size="15" maxlength="20" />
-        </div>
-        <div class="z-formrow">
-        	<label for="siteDBName">{gt text="Site database"}</label>
-            <input type="text" name="siteDBName" size="15" maxlength="20" />
-        </div>
-        <div class="z-formrow">
-        	<label for="siteDBUname">{gt text="Site database username"}</label>
-            <input type="text" name="siteDBUname" size="15" maxlength="20" />
-        </div>
-        <div class="z-formrow">
-        	<label for="siteDBPass">{gt text="Site database password"}</label>
-            <input type="text" name="siteDBPass" size="15" maxlength="20" />
-        </div>
-        <div class="z-formrow">
-        	<label for="createDB">{gt text="Create database"}</label>
-            <input type="checkbox" name="createDB" value="1" />
-        </div>
-        <div class="z-formrow">
-            <label for="siteDNS">{gt text="Based on model"}</label>
+            <label for="siteDNS">{gt text="Based on model"} <span class="mandatoryField">*</span></label>
             <select name="siteInitModel">
                 <option value="">{gt text="Choose a model..."}</option>
                 {foreach item="model" from=$models}
-                    <option value="{$model.modelName}">{$model.modelName}</option>
+                    <option {if $siteInitModel eq $model.modelName}selected{/if} value="{$model.modelName}">{$model.modelName}</option>
                 {/foreach}
             </select>
         </div>
         <div class="z-formrow">
             <label for="active">{gt text="Active"}</label>
-            <input type="checkbox" name="active" value="1" />
+            <input type="checkbox" name="active" {if $active eq 1}checked{/if} value="1" />
+        </div>
+        <div class="z-formrow">
+            <label for="mandatory"><span class="mandatoryField">*</span> {gt text="Mandatory fields"}</label>
         </div>
         <div class="z-formbuttons">
-            <a href="javascript:newInstance()">
-            	{img modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Add"}
-			</a>
+            {button src='button_ok.gif' set='icons/small' __alt="Add" __title="Add"}
             <a href="{modurl modname="Multisites" type="admin" func="main"}">
                 {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
             </a>

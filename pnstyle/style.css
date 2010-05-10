@@ -1,3 +1,7 @@
 .notEditableField {
     background-color: #ddd;
 }
+
+.mandatoryField {
+    color: red;
+}

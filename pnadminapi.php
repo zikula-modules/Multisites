@@ -116,13 +116,17 @@ function Multisites_adminapi_createTables($args)
     $lines = file($file);
     $exec = '';
     $done = false;
+    
+    //if (!DBUtil::executeSQL(str_replace('z_', $dbprefix . '_', $exec))) {
+        
+        
     foreach ($lines as $line_num => $line) {
         $line = trim($line);
         if (empty($line) || strpos($line, '--') === 0)
             continue;
         $exec .= $line;
         if (strrpos($line, ';') === strlen($line) - 1) {
-            if (!$connect->query($exec)) {
+            if (!$connect->query(str_replace($args['modelDBTablesPrefix'] . '_', $args['siteDBPrefix'] . '_', $exec))) {
                 return LogUtil::registerError(__('Error importing the database in line', $dom) . " " . $line_num . ":<br>" . $exec . "<br>" . mysql_error() . "\n");
             } else {
                 $done = true;
@@ -161,7 +165,7 @@ function Multisites_adminapi_updateConfigValues($args)
     if (!$connect) {
         return LogUtil::registerError(__('Error connecting to database', $dom));
     }
-    $prefix = $GLOBALS['ZConfig']['System']['prefix'];
+    $prefix = $args['siteDBPrefix'];
     // modify the site name
     $value = serialize($args['siteName']);
     $sql = "UPDATE " . $prefix . "_module_vars set pn_value='$value' WHERE pn_modname='/PNConfig' AND pn_name='sitename'";
@@ -228,14 +232,16 @@ function Multisites_adminapi_updateDBConfig($args)
                                                  'siteDBHost' => $site['siteDBHost'],
                                                  'siteDBType' => $site['siteDBType'],
                                                  'siteDBUname' => $site['siteDBUname'],
-                                                 'siteDBPass' => $site['siteDBPass']);
+                                                 'siteDBPass' => $site['siteDBPass'],
+                                                 'siteDBPrefix' => $site['siteDBPrefix']);
     }
     // add the site that is being created in this moment
     $databaseArray[$args['siteDNS']] = array('siteDBName' => $args['siteDBName'],
                                              'siteDBHost' => $args['siteDBHost'],
                                              'siteDBType' => $args['siteDBType'],
                                              'siteDBUname' => $args['siteDBUname'],
-                                             'siteDBPass' => $args['siteDBPass']);
+                                             'siteDBPass' => $args['siteDBPass'],
+                                             'siteDBPrefix' => $args['siteDBPrefix']);
     // write file
     $dbconfig = var_export($databaseArray, true);
     $phpCode = "<?php\n\$databaseArray = $dbconfig;";
@@ -277,6 +283,7 @@ function Multisites_adminapi_createInstance($args)
                     'siteDBPass' => DataUtil::formatForStore($args['siteDBPass']),
                     'siteDBHost' => DataUtil::formatForStore($args['siteDBHost']),
                     'siteDBType' => DataUtil::formatForStore($args['siteDBType']),
+                    'siteDBPrefix' => DataUtil::formatForStore($args['siteDBPrefix']),
 			        'siteInitModel' => DataUtil::formatForStore($args['siteInitModel']),
 			        'activationDate' => DataUtil::formatForStore($args['activationDate']),
 			        'active' => DataUtil::formatForStore($args['active']));
@@ -298,24 +305,17 @@ function Multisites_adminapi_createInstance($args)
 function Multisites_adminapi_createModel($args)
 {
     $dom = ZLanguage::getModuleDomain('Multisites');
-    $modelName = FormUtil::getPassedValue('modelName', isset($args['modelName']) ? $args['modelName'] : null, 'POST');
-    $description = FormUtil::getPassedValue('description', isset($args['description']) ? $args['description'] : null, 'POST');
-    $fileName = FormUtil::getPassedValue('fileName', isset($args['fileName']) ? $args['fileName'] : null, 'POST');
-    $folders = FormUtil::getPassedValue('folders', isset($args['folders']) ? $args['folders'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
 	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
 	    ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
         return LogUtil::registerPermissionError();
     }
-    //Needed arguments
-    if ($modelName == null) {
-        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
-    }
-    $item = array('modelName' => $modelName,
-                    'description' => $description,
-                    'fileName' => $fileName,
-                    'folders' => $folders);
+    $item = array('modelName' => $args['modelName'],
+                    'description' => $args['description'],
+                    'fileName' => $args['fileName'],
+                    'folders' => $args['folders'],
+                    'modelDBTablesPrefix' => $args['modelDBTablesPrefix']);
     if (!DBUtil::insertObject($item, 'Multisites_models', 'modelId')) {
         return LogUtil::registerError(__('Error! Creation attempt failed.', $dom));
     }

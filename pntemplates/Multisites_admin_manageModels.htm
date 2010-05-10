@@ -9,6 +9,7 @@
                 <th>{gt text="Description"}</th>
                 <th>{gt text="Model file name"}</th>
                 <th>{gt text="Model folders"}</th>
+                <th>{gt text="BD tables prefix"}</th>
                 <th>{gt text="Options"}</th>
             </tr>
         </thead>
@@ -19,6 +20,7 @@
                 <td align="left" valign="top">{$model.description}</td>
                 <td align="left" valign="top">{$model.fileName}</td>
                 <td align="left" valign="top">{$model.folders|replace:',':'<br />'}</td>
+                <td align="left" valign="top">{$model.modelDBTablesPrefix}</td>
                 <td align="right" valign="top">
                     <div>
                         <a href="{modurl modname="Multisites" type="admin" func="editModel" modelId=$model.modelId}">

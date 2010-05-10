@@ -1,7 +1,6 @@
 <?php
 // DON'T CHANGE - start
-$siteDNS = (isset($_GET['siteDNS'])) ? DataUtil::formatForOS($_GET['siteDNS']) : $_SERVER['HTTP_HOST'];
-$basedOnDomains = (isset($_GET['siteDNS'])) ? 0 : 1;
+$siteDNS = $_SERVER['HTTP_HOST'];
 // DON'T CHANGE - end
 
 $ZConfig['DBInfo']['Multisites']['dbtabletype'] = 'myisam';
@@ -11,13 +10,11 @@ $ZConfig['DBInfo']['Multisites']['dbcollate'] = 'utf8_general_ci';
 // multi Zikula information
 $ZConfig['Multisites']['multi'] = 0; // inform about if it is a multiple Zikula installation
 $ZConfig['Multisites']['mainSiteURL'] = '$mainSiteURL'; // name used for the main site where the module Multisites is allowed
-$ZConfig['Multisites']['siteDNSEndText'] = '$siteDNSEndText'; // Internet address http://host.domain/siteDNS/this_parameter
 $ZConfig['Multisites']['filesRealPath'] = '$filesRealPath'; // path of the site files root in server
 $ZConfig['Multisites']['siteTempFilesFolder'] = '$siteTempFilesFolder'; // name for the temporal files' folder
 $ZConfig['Multisites']['siteFilesFolder'] = '$siteFilesFolder'; // name for the files' folder
 $ZConfig['Multisites']['wwwroot'] = '$wwwroot'; // set the root for the multizikula installation
-$ZConfig['Multisites']['siteDNS'] = ($basedOnDomains == 1) ? '' : '$basePath' . '/' . $siteDNS . '/' . $ZConfig['Multisites']['siteDNSEndText'];
-$ZConfig['Multisites']['basedOnDomains'] = $basedOnDomains;
+$ZConfig['Multisites']['basedOnDomains'] = 1;
 
 //****** DON'T CHANGE AFTER THIS LINE *******
 if ($siteDNS == $ZConfig['Multisites']['mainSiteURL'] || $ZConfig['Multisites']['multi'] == 0) {
@@ -31,7 +28,8 @@ if (!$databaseArray[$siteDNS] ||
      $databaseArray[$siteDNS]['siteDBUname'] == '' ||
      $databaseArray[$siteDNS]['siteDBPass'] == '' ||
      $databaseArray[$siteDNS]['siteDBType'] == '' ||
-     $databaseArray[$siteDNS]['siteDBHost'] == '') {
+     $databaseArray[$siteDNS]['siteDBHost'] == '' ||
+     $databaseArray[$siteDNS]['siteDBPrefix'] == '') {
     // if the site doesn't exists user is sended to an error page
     header('location: ' . $ZConfig['Multisites']['wwwroot'] . '/' . 'error.php?s=' . $ZConfig['Multisites']['siteDNSEndText'] . '&dns=' . $siteDNS);
     exit();
@@ -41,6 +39,8 @@ $siteDBUname = $databaseArray[$siteDNS]['siteDBUname'];
 $siteDBPass = $databaseArray[$siteDNS]['siteDBPass'];
 $siteDBHost = $databaseArray[$siteDNS]['siteDBHost'];
 $siteDBName = $databaseArray[$siteDNS]['siteDBName'];
+$siteDBPrefix = $databaseArray[$siteDNS]['siteDBPrefix'];
 // set the correct connection values to site 
 $ZConfig['DBInfo']['default']['dsn'] = "$siteDBType://$siteDBUname:$siteDBPass@$siteDBHost/$siteDBName";
+$ZConfig['System']['prefix'] = $siteDBPrefix;
 $ZConfig['System']['temp'] = $ZConfig['Multisites']['filesRealPath'] . '/' . $siteDBName . '/' . $ZConfig['Multisites']['siteTempFilesFolder'];

@@ -44,9 +44,25 @@ function Multisites_admin_main($args)
  * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
  * @return:	The form needed to create a new instance
  */
-function Multisites_admin_newInstance()
+function Multisites_admin_newInstance($args)
 {
     $dom = ZLanguage::getModuleDomain('Multisites');
+    $instanceName = FormUtil::getPassedValue('instanceName', isset($args['instanceName']) ? $args['instanceName'] : null, 'GET');
+    $description = FormUtil::getPassedValue('description', isset($args['description']) ? $args['description'] : null, 'GET');
+    $siteName = FormUtil::getPassedValue('siteName', isset($args['siteName']) ? $args['siteName'] : null, 'GET');
+    $siteAdminName = FormUtil::getPassedValue('siteAdminName', isset($args['siteAdminName']) ? $args['siteAdminName'] : null, 'GET');
+    $siteAdminRealName = FormUtil::getPassedValue('siteAdminRealName', isset($args['siteAdminRealName']) ? $args['siteAdminRealName'] : null, 'GET');
+    $siteAdminEmail = FormUtil::getPassedValue('siteAdminEmail', isset($args['siteAdminEmail']) ? $args['siteAdminEmail'] : null, 'GET');
+    $siteCompany = FormUtil::getPassedValue('siteCompany', isset($args['siteCompany']) ? $args['siteCompany'] : null, 'GET');
+    $siteDNS = FormUtil::getPassedValue('siteDNS', isset($args['siteDNS']) ? $args['siteDNS'] : null, 'GET');
+    $siteDBName = FormUtil::getPassedValue('siteDBName', isset($args['siteDBName']) ? $args['siteDBName'] : null, 'GET');
+    $siteDBUname = FormUtil::getPassedValue('siteDBUname', isset($args['siteDBUname']) ? $args['siteDBUname'] : null, 'GET');
+    $siteDBHost = FormUtil::getPassedValue('siteDBHost', isset($args['siteDBHost']) ? $args['siteDBHost'] : null, 'GET');
+    $siteDBType = FormUtil::getPassedValue('siteDBType', isset($args['siteDBType']) ? $args['siteDBType'] : null, 'GET');
+    $siteDBPrefix = FormUtil::getPassedValue('siteDBPrefix', isset($args['siteDBPrefix']) ? $args['siteDBPrefix'] : null, 'GET');
+    $createDB = FormUtil::getPassedValue('createDB', isset($args['createDB']) ? $args['createDB'] : 0, 'GET');
+    $siteInitModel = FormUtil::getPassedValue('siteInitModel', isset($args['siteInitModel']) ? $args['siteInitModel'] : null, 'GET');
+    $active = FormUtil::getPassedValue('active', isset($args['active']) ? $args['active'] : 0, 'GET');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
 	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -61,7 +77,24 @@ function Multisites_admin_newInstance()
     }
     // create output object
     $render = pnRender::getInstance('Multisites', false);
+    
     $render->assign('models', $models);
+    $render->assign('instanceName', $instanceName);
+    $render->assign('description', $description);
+    $render->assign('siteName', $siteName);
+    $render->assign('siteAdminName', $siteAdminName);
+    $render->assign('siteAdminRealName', $siteAdminRealName);
+    $render->assign('siteAdminEmail', $siteAdminEmail);
+    $render->assign('siteCompany', $siteCompany);
+    $render->assign('siteDNS', $siteDNS);
+    $render->assign('siteDBName', $siteDBName);
+    $render->assign('siteDBUname', $siteDBUname);
+    $render->assign('siteDBHost', $siteDBHost);
+    $render->assign('siteDBType', $siteDBType);
+    $render->assign('siteDBPrefix', $siteDBPrefix);
+    $render->assign('createDB', $createDB);
+    $render->assign('siteInitModel', $siteInitModel);
+    $render->assign('active', $active);
     return $render->fetch('Multisites_admin_new.htm');
 }
 
@@ -79,7 +112,7 @@ function Multisites_admin_createInstance($args)
     $siteName = FormUtil::getPassedValue('siteName', isset($args['siteName']) ? $args['siteName'] : null, 'POST');
     $siteAdminName = FormUtil::getPassedValue('siteAdminName', isset($args['siteAdminName']) ? $args['siteAdminName'] : null, 'POST');
     $siteAdminPwd = FormUtil::getPassedValue('siteAdminPwd', isset($args['siteAdminPwd']) ? $args['siteAdminPwd'] : null, 'POST');
-    $siteAdminRealName = FormUtil::getPassedValue('adminRealName', isset($args['adminRealName']) ? $args['adminRealName'] : null, 'POST');
+    $siteAdminRealName = FormUtil::getPassedValue('siteAdminRealName', isset($args['siteAdminRealName']) ? $args['siteAdminRealName'] : null, 'POST');
     $siteAdminEmail = FormUtil::getPassedValue('siteAdminEmail', isset($args['siteAdminEmail']) ? $args['siteAdminEmail'] : null, 'POST');
     $siteCompany = FormUtil::getPassedValue('siteCompany', isset($args['siteCompany']) ? $args['siteCompany'] : null, 'POST');
     $siteDNS = FormUtil::getPassedValue('siteDNS', isset($args['siteDNS']) ? $args['siteDNS'] : null, 'POST');
@@ -88,9 +121,10 @@ function Multisites_admin_createInstance($args)
     $siteDBPass = FormUtil::getPassedValue('siteDBPass', isset($args['siteDBPass']) ? $args['siteDBPass'] : null, 'POST');
     $siteDBHost = FormUtil::getPassedValue('siteDBHost', isset($args['siteDBHost']) ? $args['siteDBHost'] : null, 'POST');
     $siteDBType = FormUtil::getPassedValue('siteDBType', isset($args['siteDBType']) ? $args['siteDBType'] : null, 'POST');
+    $siteDBPrefix = FormUtil::getPassedValue('siteDBPrefix', isset($args['siteDBPrefix']) ? $args['siteDBPrefix'] : null, 'POST');
     $createDB = FormUtil::getPassedValue('createDB', isset($args['createDB']) ? $args['createDB'] : 0, 'POST');
     $siteInitModel = FormUtil::getPassedValue('siteInitModel', isset($args['siteInitModel']) ? $args['siteInitModel'] : null, 'POST');
-    $active = FormUtil::getPassedValue('active', isset($args['active']) ? $args['active'] : null, 'POST');
+    $active = FormUtil::getPassedValue('active', isset($args['active']) ? $args['active'] : 0, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
 	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -101,25 +135,84 @@ function Multisites_admin_createInstance($args)
     if (!SecurityUtil::confirmAuthKey()) {
         return LogUtil::registerAuthidError(pnModURL('Multisites', 'admin', 'main'));
     }
-    // needed arguments
-    if ($siteDNS == null || $siteDBName == null || $siteDBUname == null || $siteDBPass == null || $siteDBHost == null || $siteDBType == null || $siteInitModel == null || $siteInitModel == '') {
-        LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
+    $errorMsg = '';
+    if ($instanceName == null || $instanceName == '') {
+        $errorMsg = __('Error! Please provide an instance name. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteAdminName == null || $siteAdminName == '') {
+        $errorMsg .= __('Error! Please provide an admin\'s site name. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteAdminPwd == null || $siteAdminPwd == '') {
+        $errorMsg .= __('Error! Please provide an admin\'s site password. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteAdminEmail == null || $siteAdminEmail == '') {
+        $errorMsg .= __('Error! Please provide an admin\'s site email. It is a mandatory field. <br />', $dom);
+    }
+    if ($siteDNS == null || $siteDNS == '') {
+        $errorMsg .= __('Error! Please provide the site domain. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteDBHost == null || $siteDBHost == '') {
+        $errorMsg .= __('Error! Please provide the site database host. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteDBHost == null || $siteDBHost == '') {
+        $errorMsg .= __('Error! Please provide the site database host. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteDBName == null || $siteDBName == '') {
+        $errorMsg .= __('Error! Please provide the site database name. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteDBUname == null || $siteDBUname == '') {
+        $errorMsg .= __('Error! Please provide the site database user name. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteDBPass == null || $siteDBPass == '') {
+        $errorMsg .= __('Error! Please provide the site database user password. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteDBPrefix == null || $siteDBPrefix == '') {
+        $errorMsg .= __('Error! Please provide the site database prefix. It is a mandatory field.<br />', $dom);
+    }
+    if ($siteInitModel == null || $siteInitModel == '') {
+        $errorMsg .= __('Error! Please provide the model on the site will be based. It is a mandatory field.<br />', $dom);
     }
     // check that the siteDNS exists and if it exists return error
     if (pnModAPIFunc('Multisites', 'user', 'getSiteInfo',
                       array('site' => $siteDNS))) {
-        LogUtil::registerError(__('This site just exists. The site DNS must be unique.', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
+        $errorMsg .= __('This site just exists. The site DNS must be unique.', $dom);
     }
     // get model information
     $model = pnModAPIFunc('Multisites', 'user', 'getModel',
                            array('modelName' => $siteInitModel));
     if ($model == false) {
-        LogUtil::registerError(__('Model note found', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
+        $errorMsg .= __('Model note found', $dom);
     }
-    if ($createDB == 1) {
+    if ($errorMsg == '') {
+        // create the instance directories
+        $initDir = $GLOBALS['ZConfig']['Multisites']['filesRealPath'] . '/' . $siteDBName;
+        $initTemp = $initDir . $GLOBALS['ZConfig']['Multisites']['siteTempFilesFolder'];
+        $dirArray = array($initDir,
+    				      $initDir . $GLOBALS['ZConfig']['Multisites']['siteFilesFolder'],
+    				      $initTemp,
+    				      $initTemp . '/error_logs',
+    				      $initTemp . '/idsTmp',
+    				      $initTemp . '/purifierCache',
+    			          $initTemp . '/Renderer_cache',
+    		              $initTemp . '/Renderer_compiled',
+    				      $initTemp . '/Theme_cache',
+    				      $initTemp . '/Theme_compiled',
+                          $initTemp . '/Theme_Config');
+    				      $modelFoldersArray = explode(',', $model['folders']);
+        foreach ($modelFoldersArray as $folder) {
+            if ($folder != '') {
+                $dirArray[] = $initDir . $GLOBALS['ZConfig']['Multisites']['siteFilesFolder'] . '/' . trim($folder);
+            }
+        }
+        foreach ($dirArray as $dir) {
+            if (!file_exists($dir)) {
+                if (!mkdir($dir, 0777)) {
+                    $errorMsg = __('Error creating site directories', $dom) . ': ' . $dir;
+                }
+            } else if (!is_writeable($dir)) $errorMsg = __f('Error with the folder <strong>%s</strong> because it is not writeable.', array($dir), $dom);
+        }
+    }
+    if ($createDB == 1 && $errorMsg == '') {
         // create a new database if it doesn't exist
         if (!pnModAPIFunc('Multisites', 'admin', 'createDB',
                           array('siteDBName' => $siteDBName,
@@ -127,100 +220,102 @@ function Multisites_admin_createInstance($args)
                                 'siteDBPass' => $siteDBPass,
                                 'siteDBType' => $siteDBType,
                                 'siteDBHost' => $siteDBHost))) {
-            LogUtil::registerError(__('The database creation has failed', $dom));
-            return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
+            $errorMsg = __('The database creation has failed', $dom);
         }
     }
-    // created the database tables based on the model file
-    if (!pnModAPIFunc('Multisites', 'admin', 'createTables',
-                       array('fileName' => $model['fileName'],
-                             'siteDBName' => $siteDBName,
-                             'siteDBPass' => $siteDBPass,
-                             'siteDBUname' => $siteDBUname,
-                             'siteDBHost' => $siteDBHost,
-                             'siteDBType' => $siteDBType))) {
-        LogUtil::registerError(__('The tables creation has failed', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
-    }   
-    // update instance values like admin name, admin password, cookie name, site name...
-    if (!pnModAPIFunc('Multisites', 'admin', 'updateConfigValues',
-                       array('siteAdminName' => $siteAdminName,
-                             'siteAdminPwd' => $siteAdminPwd,
-                             'siteAdminEmail' => $siteAdminEmail,
-                             'siteName' => $siteName,
-                             'siteDBName' => $siteDBName,
-                             'siteDBPass' => $siteDBPass,
-                             'siteDBUname' => $siteDBUname,
-                             'siteDBHost' => $siteDBHost,
-                             'siteDBType' => $siteDBType))) {
-        LogUtil::registerError(__('The site configuration has failed.', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
-    }
-    // modify multisites_dbconfig files
-    if (!pnModAPIFunc('Multisites', 'admin', 'updateDBConfig',
-                       array('siteDNS' => $siteDNS,
-                             'siteDBName' => $siteDBName,
-                             'siteDBPass' => $siteDBPass,
-                             'siteDBUname' => $siteDBUname,
-                             'siteDBHost' => $siteDBHost,
-                             'siteDBType' => $siteDBType))) {
-        LogUtil::registerError(__('Error updating the file multisites_dbconfig.php.', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
-    }
-    // create the instance directories
-    $initDir = $GLOBALS['ZConfig']['Multisites']['filesRealPath'] . '/' . $siteDBName;
-    $initTemp = $initDir . $GLOBALS['ZConfig']['Multisites']['siteTempFilesFolder'];
-    $dirArray = array($initDir,
-				      $initDir . $GLOBALS['ZConfig']['Multisites']['siteFilesFolder'],
-				      $initTemp,
-				      $initTemp . '/error_logs',
-				      $initTemp . '/idsTmp',
-				      $initTemp . '/purifierCache',
-			          $initTemp . '/Renderer_cache',
-		              $initTemp . '/Renderer_compiled',
-				      $initTemp . '/Theme_cache',
-				      $initTemp . '/Theme_compiled',
-                      $initTemp . '/Theme_Config');
-				      $modelFoldersArray = explode(',', $model['folders']);
-    foreach ($modelFoldersArray as $folder) {
-        if ($folder != '') {
-            $dirArray[] = $initDir . $GLOBALS['ZConfig']['Multisites']['siteFilesFolder'] . '/' . trim($folder);
+    if ($errorMsg == '') {
+        // created the database tables based on the model file
+        if (!pnModAPIFunc('Multisites', 'admin', 'createTables',
+                           array('fileName' => $model['fileName'],
+                                 'modelDBTablesPrefix' => $model['modelDBTablesPrefix'],
+                                 'siteDBName' => $siteDBName,
+                                 'siteDBPass' => $siteDBPass,
+                                 'siteDBUname' => $siteDBUname,
+                                 'siteDBHost' => $siteDBHost,
+                                 'siteDBType' => $siteDBType,
+                                 'siteDBPrefix' => $siteDBPrefix))) {
+            $errorMsg = __('The tables creation has failed', $dom);
         }
     }
-    foreach ($dirArray as $dir) {
-        if (!mkdir($dir, 0777)) {
-            LogUtil::registerError(__('Error creating site directories', $dom) . ': ' . $dir);
-            return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
+    if ($errorMsg == '') {
+        // update instance values like admin name, admin password, cookie name, site name...
+        if (!pnModAPIFunc('Multisites', 'admin', 'updateConfigValues',
+                           array('siteAdminName' => $siteAdminName,
+                                 'siteAdminPwd' => $siteAdminPwd,
+                                 'siteAdminEmail' => $siteAdminEmail,
+                                 'siteName' => $siteName,
+                                 'siteDBName' => $siteDBName,
+                                 'siteDBPass' => $siteDBPass,
+                                 'siteDBUname' => $siteDBUname,
+                                 'siteDBHost' => $siteDBHost,
+                                 'siteDBType' => $siteDBType,
+                                 'siteDBPrefix' => $siteDBPrefix))) {
+            $errorMsg = __('The site configuration has failed.', $dom);
         }
     }
-    // create a .htaccess file in the temporal folder
-    $tempAccessFileContent = pnModGetVar('Multisites', 'tempAccessFileContent');
-    if ($tempAccessFileContent != '') {
-        // create file
-        $file = $initTemp . '/.htaccess';
-        file_put_contents($file, $tempAccessFileContent);
+    if ($errorMsg == '') {
+        // modify multisites_dbconfig file
+        if (!pnModAPIFunc('Multisites', 'admin', 'updateDBConfig',
+                           array('siteDNS' => $siteDNS,
+                                 'siteDBName' => $siteDBName,
+                                 'siteDBPass' => $siteDBPass,
+                                 'siteDBUname' => $siteDBUname,
+                                 'siteDBHost' => $siteDBHost,
+                                 'siteDBType' => $siteDBType,
+                                 'siteDBPrefix' => $siteDBPrefix))) {
+            $errorMsg = __('Error updating the file multisites_dbconfig.php.', $dom);
+        }
     }
-    // create the instance
-    $created = pnModAPIFunc('Multisites', 'admin', 'createInstance',
-                             array('instanceName' => $instanceName,
-    						        'description' => $description,
-    						        'siteName' => $siteName,
-    						        'siteAdminName' => $siteAdminName,
-    						        'siteAdminPwd' => $siteAdminPwd,
-    						        'siteAdminRealName' => $siteAdminRealName,
-    						        'siteAdminEmail' => $siteAdminEmail,
-    						        'siteCompany' => $siteCompany,
-    						        'siteDNS' => $siteDNS,
-                                    'siteDBName' => $siteDBName,
-                                    'siteDBUname' => $siteDBUname,
-                                    'siteDBPass' => $siteDBPass,
-                                    'siteDBHost' => $siteDBHost,
-                                    'siteDBType' => $siteDBType,
-    						        'siteInitModel' => $siteInitModel,
-    						        'active' => $active));
-    if ($created == false) {
-        LogUtil::registerError(__('Creation instance error', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
+    if ($errorMsg == '') {
+        // create a .htaccess file in the temporal folder
+        $tempAccessFileContent = pnModGetVar('Multisites', 'tempAccessFileContent');
+        if ($tempAccessFileContent != '') {
+            // create file
+            $file = $initTemp . '/.htaccess';
+            file_put_contents($file, $tempAccessFileContent);
+        }
+        // create the instance
+        $created = pnModAPIFunc('Multisites', 'admin', 'createInstance',
+                                 array('instanceName' => $instanceName,
+        						       'description' => $description,
+        						       'siteName' => $siteName,
+        						       'siteAdminName' => $siteAdminName,
+        						       'siteAdminPwd' => $siteAdminPwd,
+        						       'siteAdminRealName' => $siteAdminRealName,
+        						       'siteAdminEmail' => $siteAdminEmail,
+        						       'siteCompany' => $siteCompany,
+        						       'siteDNS' => $siteDNS,
+                                       'siteDBName' => $siteDBName,
+                                       'siteDBUname' => $siteDBUname,
+                                       'siteDBPass' => $siteDBPass,
+                                       'siteDBHost' => $siteDBHost,
+                                       'siteDBType' => $siteDBType,
+                                       'siteDBPrefix' => $siteDBPrefix,
+                                       'siteInitModel' => $siteInitModel,
+                                       'active' => $active));
+        if ($created == false) {
+            $errorMsg = __('Creation instance error', $dom);
+        }
+    }
+    if ($errorMsg != '') {
+        LogUtil::registerError($errorMsg);
+        return pnRedirect(pnModURL('Multisites', 'admin', 'newInstance',
+                                    array('instanceName' => $instanceName,
+                                          'description' => $description,
+                                          'siteName' => $siteName,
+                                          'siteAdminName' => $siteAdminName,
+                                          'siteAdminRealName' => $siteAdminRealName,
+                                          'siteAdminEmail' => $siteAdminEmail,
+                                          'siteCompany' => $siteCompany,
+                                          'siteDNS' => $siteDNS,
+                                          'siteDBType' => $siteDBType,
+                                          'siteDBHost' => $siteDBHost,
+                                          'siteDBName' => $siteDBName,
+                                          'siteDBUname' => $siteDBUname,
+                                          'siteDBPrefix' => $siteDBPrefix,
+                                          'createDB' => $createDB,
+                                          'siteInitModel' => $siteInitModel,
+                                          'active' => $active)));        
     }
     //******* PNN *******
     // save the site module in database
@@ -453,6 +548,7 @@ function Multisites_admin_updateModel($args)
     $modelName = FormUtil::getPassedValue('modelName', isset($args['modelName']) ? $args['modelName'] : null, 'POST');
     $description = FormUtil::getPassedValue('description', isset($args['description']) ? $args['description'] : null, 'POST');
     $folders = FormUtil::getPassedValue('folders', isset($args['folders']) ? $args['folders'] : null, 'POST');
+    $modelDBTablesPrefix = FormUtil::getPassedValue('modelDBTablesPrefix', isset($args['modelDBTablesPrefix']) ? $args['modelDBTablesPrefix'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
 	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -463,21 +559,34 @@ function Multisites_admin_updateModel($args)
     if (!SecurityUtil::confirmAuthKey()) {
         return LogUtil::registerAuthidError(pnModURL('Multisites', 'admin', 'manageModels'));
     }
+    $errorMsg = '';
+    if ($modelName == null || $modelName == '') {
+        $errorMsg = __('Error! Please provide a model name. It is a mandatory field.<br />', $dom);
+    }
+    if ($modelDBTablesPrefix == null || $modelDBTablesPrefix == '') {
+        $errorMsg .= __('Error! Please provide the model database tables prefix. It is a mandatory field.<br />', $dom);
+    }
     // get model information
     $model = pnModAPIFunc('Multisites', 'user', 'getModelById',
                            array('modelId' => $modelId));
     if ($model == false) {
-        LogUtil::registerError(__('Model not found', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
+        $errorMsg = __('Model not found', $dom);
     }
-    $edited = pnModAPIFunc('Multisites', 'admin', 'updateModel',
-                            array('instanceId' => $instanceId,
-                                  'items' => array('modelName' => $modelName,
-                                  'description' => $description,
-                                  'folders' => $folders)));
-    if (!$edited) {
-        LogUtil::registerError(__('Error editing model', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
+    if ($errorMsg == '') {
+        $edited = pnModAPIFunc('Multisites', 'admin', 'updateModel',
+                                array('instanceId' => $instanceId,
+                                      'items' => array('modelName' => $modelName,
+                                      'description' => $description,
+                                      'folders' => $folders,
+                                      'modelDBTablesPrefix' => $modelDBTablesPrefix)));
+        if (!$edited) {
+            $errorMsg = __('Error editing model', $dom);
+        }
+    }
+    if ($errorMsg != '') {
+        LogUtil::registerError($errorMsg);
+        return pnRedirect(pnModURL('Multisites', 'admin', 'editModel',
+                                    array('modelId' => $modelId)));        
     }
     // success
     LogUtil::registerStatus(__('Model edited', $dom));
@@ -569,9 +678,13 @@ function Multisites_admin_manageModels()
  * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
  * @return:	Form fields
  */
-function Multisites_admin_createNewModel()
+function Multisites_admin_createNewModel($args)
 {
     $dom = ZLanguage::getModuleDomain('Multisites');
+    $modelName = FormUtil::getPassedValue('modelName', isset($args['modelName']) ? $args['modelName'] : null, 'GET');
+    $description = FormUtil::getPassedValue('description', isset($args['description']) ? $args['description'] : null, 'GET');
+    $folders = FormUtil::getPassedValue('folders', isset($args['folders']) ? $args['folders'] : null, 'GET');
+    $modelDBTablesPrefix = FormUtil::getPassedValue('modelDBTablesPrefix', isset($args['modelDBTablesPrefix']) ? $args['modelDBTablesPrefix'] : null, 'GET');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
 	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -592,6 +705,10 @@ function Multisites_admin_createNewModel()
     }
     // create output object
     $render = pnRender::getInstance('Multisites', false);
+    $render->assign('modelName', $modelName);
+    $render->assign('modelDBTablesPrefix', $modelDBTablesPrefix);
+    $render->assign('description', $description);
+    $render->assign('folders', $folders);
     return $render->fetch('Multisites_admin_newModel.htm');
 }
 
@@ -607,6 +724,8 @@ function Multisites_admin_createModel($args)
     $modelName = FormUtil::getPassedValue('modelName', isset($args['modelName']) ? $args['modelName'] : null, 'POST');
     $description = FormUtil::getPassedValue('description', isset($args['description']) ? $args['description'] : null, 'POST');
     $folders = FormUtil::getPassedValue('folders', isset($args['folders']) ? $args['folders'] : null, 'POST');
+    $modelFile = FormUtil::getPassedValue('modelFile', isset($args['modelFile']) ? $args['modelFile'] : null, 'FILES');
+    $modelDBTablesPrefix = FormUtil::getPassedValue('modelDBTablesPrefix', isset($args['modelDBTablesPrefix']) ? $args['modelDBTablesPrefix'] : null, 'POST');
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
 	    (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -617,50 +736,69 @@ function Multisites_admin_createModel($args)
     if (!SecurityUtil::confirmAuthKey()) {
         return LogUtil::registerAuthidError(pnModURL('Multisites', 'admin', 'main'));
     }
-    // gets the attached file array
-    $file = $_FILES['modelFile'];
     // security check
     if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
     }
+    $errorMsg = '';
+    if ($modelName == null || $modelName == '') {
+        $errorMsg = __('Error! Please provide a model name. It is a mandatory field.<br />', $dom);
+    }
+    if ($modelDBTablesPrefix == null || $modelDBTablesPrefix == '') {
+        $errorMsg .= __('Error! Please provide the model database tables prefix. It is a mandatory field.<br />', $dom);
+    }
+    if ($modelFile == null || $modelFile['name'] == '') {
+        $errorMsg .= __('Error! Please provide the model file. It is a mandatory field.<br />', $dom);
+    }
     // check if the models folders exists and it is writeable
     $path = pnModGetVar('Multisites', 'modelsFolder');
     if (!is_writeable($path)) {
-        LogUtil::registerError(__('The models folder does not exists', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
+        $errorMsg .= __('The models folder does not exists', $dom);
     }
-    // check if the extension of the file is allowed
-    $file_extension = strtolower(substr(strrchr($file['name'], "."), 1));
-    if ($file_extension != 'txt' && $file_extension != 'sql') {
-        LogUtil::registerError(__('The model file extension is not allowed. The only allowed extensions are txt and sql', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
+    if ($errorMsg == '') {
+         // check if the extension of the file is allowed
+        $file_extension = strtolower(substr(strrchr($modelFile['name'], "."), 1));
+        if ($file_extension != 'txt' && $file_extension != 'sql') {
+            $errorMsg = __('The model file extension is not allowed. The only allowed extensions are txt and sql', $dom);
+        }
     }
-    // prepare file name
-    // replace spaces with _
-    // check if file name exists into the folder. In this case change the name
-    $fileName = str_replace(' ', '_', $file['name']);
-    $fitxer = $fileName;
-    $i = 1;
-    while (file_exists($path . '/' . $fileName)) {
-        $fileName = substr($fitxer, 0, strlen($fitxer) - strlen($file_extension) - (1)) . $i . '.' . $file_extension;
-        $i++;
+    if ($errorMsg == '') {
+        // prepare file name
+        // replace spaces with _
+        // check if file name exists into the folder. In this case change the name
+        $fileName = str_replace(' ', '_', $modelFile['name']);
+        $fitxer = $fileName;
+        $i = 1;
+        while (file_exists($path . '/' . $fileName)) {
+            $fileName = substr($fitxer, 0, strlen($fitxer) - strlen($file_extension) - (1)) . $i . '.' . $file_extension;
+            $i++;
+        }
+        // update the file
+        if (!move_uploaded_file($modelFile['tmp_name'], $path . '/' . $fileName)) {
+            $errorMsg = __(' Error updating file', $dom);
+        }
     }
-    // update the file
-    if (!move_uploaded_file($file['tmp_name'], $path . '/' . $fileName)) {
-        LogUtil::registerError(__(' Error updating file', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
+    if ($errorMsg == '') {
+        //Update model information
+        $created = pnModAPIFunc('Multisites', 'admin', 'createModel',
+                                 array('modelName' => $modelName,
+                                       'description' => $description,
+                                       'fileName' => $fileName,
+                                       'folders' => $folders,
+                                       'modelDBTablesPrefix' => $modelDBTablesPrefix));
+        if (!$created) {
+            // delete the model file
+            unlink($path . '/' . $fileName);
+            $errorMsg = __('Error creating model', $dom);
+        }
     }
-    //Update model information
-    $created = pnModAPIFunc('Multisites', 'admin', 'createModel',
-                             array('modelName' => $modelName,
-                                   'description' => $description,
-                                   'fileName' => $fileName,
-                                   'folders' => $folders));
-    if (!$created) {
-        // delete the model file
-        unlink($path . '/' . $fileName);
-        LogUtil::registerError(__('Error creating model', $dom));
-        return pnRedirect(pnModURL('Multisites', 'admin', 'manageModels'));
+    if ($errorMsg != '') {
+        LogUtil::registerError($errorMsg);
+        return pnRedirect(pnModURL('Multisites', 'admin', 'createNewModel',
+                                    array('modelName' => $modelName,
+                                          'modelDBTablesPrefix' => $modelDBTablesPrefix,
+                                          'description' => $description,
+                                          'folders' => $folders)));        
     }
     // success
     LogUtil::registerStatus(__('A new model has been created', $dom));

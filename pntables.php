@@ -36,6 +36,7 @@ function Multisites_pntables()
                                                 'siteDBPass' => 'ms_siteDBPass',
                                                 'siteDBHost' => 'ms_siteDBHost',
                                                 'siteDBType' => 'ms_siteDBType',
+                                                'siteDBPrefix' => 'ms_siteDBPrefix',
 										        'siteInitModel' => 'ms_siteInitModel',
 										        'activationDate' => 'ms_activationDate',
 										        'active' => 'ms_active');
@@ -55,6 +56,7 @@ function Multisites_pntables()
                                                     'siteDBPass' => "C(25) NOTNULL DEFAULT ''",
                                                     'siteDBHost' => "C(25) NOTNULL DEFAULT ''",
                                                     'siteDBType' => "C(25) NOTNULL DEFAULT ''",
+                                                    'siteDBPrefix' => "C(5) NOTNULL DEFAULT ''",
 											        'siteInitModel' => "C(30) NOTNULL DEFAULT ''",
 											        'activationDate' => "T DEFAULT '1970-01-01 00:00:00'",
 											        'active' => "I1 NOTNULL DEFAULT '0'");
@@ -77,13 +79,15 @@ function Multisites_pntables()
                                                     'modelName' => 'ms_modelName',
                                                     'description' => 'ms_description',
                                                     'fileName' => 'ms_fileName',
-                                                    'folders' => 'ms_folders');
+                                                    'folders' => 'ms_folders',
+                                                    'modelDBTablesPrefix' => 'ms_modelDBTablesPrefix');
 
     $pntable['Multisites_models_column_def'] = array('modelId' => "I PRIMARY AUTO",
                                                         'modelName' => "C(150) NOTNULL DEFAULT ''",
-                                                        'description' => "X NOTNULL",
+                                                        'description' => "C(250) NOTNULL DEFAULT ''",
                                                         'fileName' => "C(20) NOTNULL DEFAULT ''",
-                                                        'folders' => "C(150) NOTNULL DEFAULT ''");
+                                                        'folders' => "C(150) NOTNULL DEFAULT ''",
+                                                        'modelDBTablesPrefix' => "C(5) NOTNULL DEFAULT ''");
 
     // Multisites sites and modules
     $pntable['Multisites_sitesModules'] = DBUtil::getLimitedTablename('Multisites_sitesModules');

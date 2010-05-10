@@ -7,49 +7,36 @@
 	<h2>{gt text="Multisites system installation. Version RC1"}</h2>
 	{if $step eq 0}
 		<div>
-			<h3>{gt text="Multisites can work in two ways"}:</h3>
-		</div>
-		<div>
-			<ol>
-				<li>{gt text="Using multiple domains like http://domain1.com or http://domain2.net - Multiple Domain System (MDS)."}</li>
-				<li>{gt text="With an alone domain and using different urls like http://domain.ext/foo1/site or http://domain.ext/foo2/site - Multiple Sites System (MSS)."}</li>
-			</ol>
-		</div>
-		<div>
 			<h3>{gt text="The installation of the Multisites require 5 steps"}:</h3>
 		</div>
 		<div>
 			<ol>
-				<li>{gt text="Copy the files <strong>multisites_config.php</strong>, <strong>multisites_dbconfig.php</strong> and <strong>.htaccess</strong> in the correct places and set they as writeable (chmod770 or chmod660)."}</li>
+				<li>{gt text="Copy the files <strong>multisites_config.php</strong> and <strong>multisites_dbconfig.php</strong> in the folder config and set they as writeable (chmod770 or chmod660)."}</li>
 				<li>{gt text="Create a writeable directory in your server and type which is its fisical path."}</li>
-				<li>{gt text="Write the configurable values in the files <strong>multisites_config.php</strong> and <strong>.htaccess</strong>."}</li>
-				<li>{gt text="Set the files <strong>multisites_config.php</strong> and <strong>.htaccess</strong> as read only (chmod 644 or 444)."}</li>
+				<li>{gt text="Write the configurable values in the files <strong>multisites_config.php</strong>."}</li>
+				<li>{gt text="Set the file <strong>multisites_config.php</strong> as read only (chmod 644 or 444)."}</li>
 				<li>{gt text="Proceed with the module installation."}</li>
 			</ol>
 		</div>
 		<div class="z-warningmsg">
-			{gt text="<strong>ATTENTION</strong>: With the MSS between the steps 3 and 4 you will be redirected to the new address.
-			If it works correctly the multisites system will be installed. If you have had any problem you can recover the system to the previous state
-			deleting the files <strong>config/multisites_config.php</strong>, <strong>multisites_dbconfig.php</strong> and <strong>.htaccess</strong>
-			copied during the installation process."}
+			{gt text="<strong>ATTENTION</strong>: If you have any problem you can recover the system to the previous state
+			deleting the files <strong>config/multisites_config.php</strong> and <strong>multisites_dbconfig.php</strong> copied during the installation process."}
 		</div>
 		<div class="z-informationmsg">
 			{gt text="This module makes possible to run several instances of Zikula sharing the core files.
 			<br />
-			To run the module three special files are required: <strong>config/multisites_config.php</strong>, <strong>multisites_dbconfig.php</strong> and <strong>.htaccess</strong>"}
+			To run the module two special files are required: <strong>config/multisites_config.php</strong> and <strong>multisites_dbconfig.php</strong>."}
 		</div>
 		<div style="margin: 10px 0px 0px 20px;">
 			<a href="{modurl modname="Multisites" type="init" func="step1"}">{gt text="Go on with the installation"}</a>
 		</div>
 	{elseif $step eq 1}
 		<div>
-			<h3>{gt text="Step 1 - Checking the correct location of the files multisites_config.php, multisites_dbconfig.php and .htaccess"}</h3>
+			<h3>{gt text="Step 1 - Checking the correct location of the files multisites_config.php and multisites_dbconfig.php"}</h3>
 		</div>
 		{if !$file1 or !$file2 or !$fileWriteable1 or !$fileWriteable2}
 			<div class="z-informationmsg">
-				{gt text="You have to locate the files <strong>config/multisites_config.php</strong> and <strong>multisites_dbconfig.php</strong> into the directory <strong>config</strong> of Zikula and give them writeable permissions.
-				<br />
-				You have to locate the file <strong>.htaccess</strong> file in the same level as the Zikula directory."}
+				{gt text="You have to locate the files <strong>config/multisites_config.php</strong> and <strong>multisites_dbconfig.php</strong> into the directory <strong>config</strong> of Zikula and give them writeable permissions."}
 			</div>
 		{/if}
 		<div style="margin: 20px;">
@@ -75,7 +62,7 @@
 					</div>
 				{/if}
 			{/if}
-			{if !$file3}
+			{if !$file2}
 				<div>
 					{img modname='core' src='error.gif' set='icons/extrasmall'}
 					{gt text="The file <strong>config/multisites_dbconfig.php</strong> has not been found in the directory <strong>config</strong>."}
@@ -85,7 +72,7 @@
 					{img modname='core' src='button_ok.gif' set='icons/extrasmall'}
 					{gt text="The file <strong>config/multisites_dbconfig.php</strong> is located in the correct place."}
 				</div>
-				{if !$fileWriteable3}
+				{if !$fileWriteable2}
 					<div>
 						{img modname='core' src='error.gif' set='icons/extrasmall'}
 						{gt text="The file <strong>config/multisites_dbconfig.php</strong> is not writeable and it should be."}
@@ -94,28 +81,6 @@
 					<div>
 						{img modname='core' src='button_ok.gif' set='icons/extrasmall'}
 						{gt text="The file <strong>config/multisites_dbconfig.php</strong> is writeable."}
-					</div>
-				{/if}
-			{/if}
-			{if !$file2}
-				<div>
-					{img modname='core' src='error.gif' set='icons/extrasmall'}
-					{gt text="The file <strong>.htaccess</strong> has not been found in the same level as the Zikula installation directory."}
-				</div>
-			{else}
-				<div>
-					{img modname='core' src='button_ok.gif' set='icons/extrasmall'}
-					{gt text="The file <strong>.htaccess</strong> is located in the correct place."}
-				</div>
-				{if !$fileWriteable2}
-					<div>
-						{img modname='core' src='error.gif' set='icons/extrasmall'}
-						{gt text="The file <strong>.htaccess</strong> is not writeable and it should be."}
-					</div>
-				{else}
-					<div>
-						{img modname='core' src='button_ok.gif' set='icons/extrasmall'}
-						{gt text="The file <strong>.htaccess</strong> is writeable."}
 					</div>
 				{/if}
 			{/if}
@@ -149,71 +114,41 @@
 					<label for="filesRealPath">{gt text="Write the physical location of the directory in the server"}:</label>
 					<input type="text" name="filesRealPath" size="30" maxlength="50" value="{$filesRealPath}" />
 				</div>
-                <div class="z-formbuttons" style="text-align: center;">
+                <div class="z-formbuttons">
 				    <input type="submit" value="{gt text="Accept"}" />
                 </div>
 			</form>
 		</div>
 	{elseif $step eq 3}
 		<h3>{gt text="Step 3 - Writing the correct parameters in the file <strong>multisites_config.php</strong>"}</h3>
-		<div class="z-informationmsg">
-		    <strong>{gt text="Only for MSS"}</strong>
-            <br />
-			{gt text="Write the asked values. All the sites will use the URL typed below:
-			<br />
-			<strong>$wwwroot/siteDNS/site_DNS_end</strong>"}
-		</div>
-		<div class="z-warningmsg">
-		    <strong>{gt text="Only for MSS"}</strong>
-            <br />
-			{gt text="<strong>ATTENTION</strong>: After having accepted this values you will be redirected to the new address.
-			If it works correctly the multisites system is installed.
-			<br />
-			<strong>IMPORTANT</strong>: The Multisites modules will not be installed yet. You are going to need to login again and install it."}
-		</div>
         <div class="z-warningmsg">
             {gt text="If you have had any problem you can delete the
-    			files <strong>config/multisites_config.php</strong>, <strong>config/multisites_dbconfig.php</strong> and <strong>.htaccess</strong> copied during the installation process to recover the system to the previous state."}
+    			files <strong>config/multisites_config.php</strong> and <strong>config/multisites_dbconfig.php</strong> copied during the installation process to recover the system to the previous state."}
         </div>
-		<form method="POST" action="{modurl modname="Multisites" type="init" func="step31"}">
-			<fieldset>
-				<legend>{gt text="Multisites information"}</legend>
-				<div class="z-formrow">
-					<label for="mainSiteURL">{gt text="Main site or main domain"}:</label>
-					<input type="text" name="mainSiteURL" size="50" maxlength="50" value = "mainSite"/>
-				</div>
-				<div class="z-formrow">
-					<label for="siteDNSEndText">{gt text="Site DNS end (in MDS let this parameter empty)"}:</label>
-					<input type="text" name="siteDNSEndText" size="50" maxlength="50" value = "site"/>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>{gt text="Server paths"}</legend>
-				<div class="z-formrow">
-					<label for="siteTempFilesFolder">{gt text="Sites temporal directory"}:</label>
-					<input type="text" name="siteTempFilesFolder" size="50" maxlength="50" value = "{$siteTempFilesFolder}"/>
-				</div>
-				<div class="z-formrow">
-					<label for="siteFilesFolder">{gt text="Sites data directory"}:</label>
-					<input type="text" name="siteFilesFolder" size="50" maxlength="50" value = "Data"/>
-				</div>
-			</fieldset>
-            <div class="z-formbuttons" style="text-align: center;">
+		<form class="z-form" method="POST" action="{modurl modname="Multisites" type="init" func="step31"}">
+			<div class="z-formrow">
+				<label for="mainSiteURL">{gt text="Main domain"}:</label>
+				<input type="text" name="mainSiteURL" size="50" maxlength="50" value = "{$mainHost}"/>
+			</div>
+			<div class="z-formrow">
+				<label for="siteTempFilesFolder">{gt text="Sites temporal directory"}:</label>
+				<input type="text" name="siteTempFilesFolder" size="50" maxlength="50" value = "{$siteTempFilesFolder}"/>
+			</div>
+			<div class="z-formrow">
+				<label for="siteFilesFolder">{gt text="Sites data directory"}:</label>
+				<input type="text" name="siteFilesFolder" size="50" maxlength="50" value = "Data"/>
+			</div>
+            <div class="z-formbuttons">
 			    <input type="submit" value="{gt text="Accept"}" />
             </div>
 		</form>
 	{elseif $step eq 4}
-		<h3>{gt text="Step 4 - Check if the files multisites_config.php and .htaccess are writeable"}</h3>
-		{if $fileWriteable1 or $fileWriteable2}
-			<div class="z-informationmsg">
-				{gt text="The files <strong>config/multisites_config.php</strong> and <strong>.htaccess</strong> should not be writeable"}
-			</div>
-		{/if}
+		<h3>{gt text="Step 4 - Check if the file multisites_config.php is not writeable"}</h3>
 		<div style="margin: 20px;">
-			{if $fileWriteable1}
+			{if $fileWriteable}
 				<div>
 					{img modname='core' src='error.gif' set='icons/extrasmall'}
-					{gt text="The file <strong>config/multisites_config.php</strong> is writeable and it should not be."}
+					{gt text="The file <strong>config/multisites_config.php</strong> is writeable and it should not be. Please set this file as not writeable."}
 				</div>
 			{else}
 				<div>
@@ -221,19 +156,8 @@
 					{gt text="The file <strong>config/multisites_config.php</strong> is not writeable."}
 				</div>
 			{/if}
-			{if $fileWriteable2}
-				<div>
-					{img modname='core' src='error.gif' set='icons/extrasmall'}
-					{gt text="The file <strong>.htaccess</strong> is writeable and it should not be."}
-				</div>
-			{else}
-				<div>
-					{img modname='core' src='button_ok.gif' set='icons/extrasmall'}
-					{gt text="The file <strong>.htaccess</strong> is not writeable."}
-				</div>
-			{/if}
 			<div style="text-align: center;">
-				{if !$fileWriteable1 AND !$fileWriteable2}
+				{if !$fileWriteable}
 					<form class="z-form" action="{modurl modname="Modules" type="admin" func="initialise"}" method="post" enctype="application/x-www-form-urlencoded">
 						<div>
 							<input type="hidden" name="authid" value="{secgenauthkey module="Modules"}" />
@@ -241,7 +165,7 @@
                             <input type="hidden" name="filesRealPath" value="{$filesRealPath}" />
                             <input type="hidden" name="usersFolder" value="{$usersFolder}" />
 							<br />
-							<div class="z-formbuttons" style="text-align: center;">
+							<div class="z-formbuttons">
 								<input name="submit" type="submit" value="{gt text="Proceed with the module installation"}" />
 							</div>
 						</div>

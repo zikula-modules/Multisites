@@ -5,35 +5,36 @@
     <form id="newModel" class="z-form" action="{modurl modname="Multisites" type="admin" func="createModel"}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="authid" value="{secgenauthkey module="Multisites"}" />
         <div class="z-formrow">
-            <label for="modelName">{gt text="Model name"}</label>
-            <input type="text" name="modelName" size="50" maxlength="150" />
+            <label for="modelName">{gt text="Model name"} <span class="mandatoryField">*</span></label>
+            <input type="text" name="modelName" size="50" maxlength="150" value="{$modelName}"/>
+        </div>
+        <div class="z-formrow">
+            <label for="modelDBTablesPrefix">{gt text="Model database table prefix"} <span class="mandatoryField">*</span></label>
+            <input type="text" name="modelDBTablesPrefix" size="50" maxlength="5" value="{if $modelDBTablesPrefix eq ''}z{else}{$modelDBTablesPrefix}{/if}"/>
         </div>
         <div class="z-formrow">
         	<label for="description">{gt text="Description"}</label>
-            <textarea name="description" cols="70" rows="5"></textarea>
+            <input type="text" name="description" size="50" maxlength="250" value="{$description}" />
         </div>
         <div class="z-formrow">
-            <label for="modelFile">{gt text="Update model file"}</label>
-            <input type="file" name="modelFile" size="70" />
+            <label for="modelFile">{gt text="Update model file"} <span class="mandatoryField">*</span></label>
+            <input type="file" name="modelFile" size="50" />
         </div>
         <div class="z-formrow">
             <label for="folders">{gt text="Model folders"}</label>
-            <input type="text" name="folders" size="50" maxlength="150" />
+            <input type="text" name="folders" size="50" maxlength="150" value="{$folders}"/>
         </div>
         <div class="z-informationmsg">
         	{gt text='Write the folders that have to be created into the sites files system separated by ",". If you need folder into other folders you can write expressions like "folder/folder"'}
         </div>
+         <div class="z-formrow">
+            <label for="mandatory"><span class="mandatoryField">*</span> {gt text="Mandatory fields"}</label>
+        </div>
         <div class="z-formbuttons">
-            <a href="javascript:newModel()">
-                {img modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Add"}
-            </a>
+            {button src='button_ok.gif' set='icons/small' __alt="Add" __title="Add"}
             <a href="{modurl modname="Multisites" type="admin" func="main"}">
                 {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
             </a>
         </div>
     </form>
 </div>
-<script language="javascript">
-    var _MULTISITESNOMODELNAME = '{{gt text="No model name defined"}}';
-    var _MULTISITESNOMODELFILE = '{{gt text="No model file selected"}}';
-</script>
