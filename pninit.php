@@ -184,6 +184,7 @@ function Multisites_init_step2($args)
  */
 function Multisites_init_step21($args)
 {
+    $dom = ZLanguage::getModuleDomain('Multisites');
 	$filesRealPath = FormUtil::getPassedValue('filesRealPath', isset($args['filesRealPath']) ? $args['filesRealPath'] : null, 'POST');
 	// Check permissions
 	if (!pnSecauthaction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
@@ -263,6 +264,7 @@ function Multisites_init_step3()
  */
 function Multisites_init_step31($args)
 {
+    $dom = ZLanguage::getModuleDomain('Multisites');
 	$mainSiteURL = FormUtil::getPassedValue('mainSiteURL', isset($args['mainSiteURL']) ? $args['mainSiteURL'] : null, 'POST');
 	$siteDNSEndText = FormUtil::getPassedValue('siteDNSEndText', isset($args['siteDNSEndText']) ? $args['siteDNSEndText'] : null, 'POST');
 	$siteTempFilesFolder = FormUtil::getPassedValue('siteTempFilesFolder', isset($args['siteTempFilesFolder']) ? $args['siteTempFilesFolder'] : null, 'POST');
