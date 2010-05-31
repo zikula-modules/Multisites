@@ -70,16 +70,16 @@ function Multisites_init()
         return false;
     }
     //Create module vars
-    pnModsetvar('Multisites', 'modelsFolder', $path);
-    pnModsetvar('Multisites', 'tempAccessFileContent','SetEnvIf Request_URI "\.css$" object_is_css=css
+    ModUtil::setVar('Multisites', 'modelsFolder', $path);
+    ModUtil::setVar('Multisites', 'tempAccessFileContent','SetEnvIf Request_URI "\.css$" object_is_css=css
 SetEnvIf Request_URI "\.js$" object_is_js=js
 Order deny,allow
 Deny from all
 Allow from env=object_is_css
 Allow from env=object_is_js');
-    pnModsetvar('Multisites', 'globalAdminName', '');
-    pnModsetvar('Multisites', 'globalAdminPassword', '');
-    pnModsetvar('Multisites', 'globalAdminemail', '');
+    ModUtil::setVar('Multisites', 'globalAdminName', '');
+    ModUtil::setVar('Multisites', 'globalAdminPassword', '');
+    ModUtil::setVar('Multisites', 'globalAdminemail', '');
     return true;
 }
 
@@ -94,10 +94,10 @@ function Multisites_init_interactiveinit()
     // This function is called automatically if present.
     // In this case we simply show a welcome screen.
     // Check permissions
-	if (!pnSecauthaction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
+	if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 		return LogUtil::registerPermissionError();
 	}
-	$pnRender = pnRender::getInstance('Multisites', false);
+	$pnRender = Renderer::getInstance('Multisites', false);
 	if ($GLOBALS['ZConfig']['Multisites']['multi'] == 1) {
 		// check if the files multisites_config.php and .htaccess are writeable
 		$fileWriteable1 = false;
@@ -128,7 +128,7 @@ function Multisites_init_interactiveinit()
 function Multisites_init_step1()
 {
 	// Check permissions
-	if (!pnSecauthaction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
+	if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 		return LogUtil::registerPermissionError();
 	}
 	// check if the needed files are located in the correct places and they are writeable
@@ -142,8 +142,8 @@ function Multisites_init_step1()
 	$path = 'config/multisites_dbconfig.php';
     if (file_exists($path)) $file2 = true;
 	if (is_writeable($path)) $fileWriteable2 = true;
-	pnModLoad('Modules', 'admin');
-	$pnRender = pnRender::getInstance('Multisites', false);
+	ModUtil::load('Modules', 'admin');
+	$pnRender = Renderer::getInstance('Multisites', false);
 	$pnRender->assign('step', 1);
 	$pnRender->assign('file1', $file1);
 	$pnRender->assign('file2', $file2);
@@ -162,14 +162,14 @@ function Multisites_init_step2($args)
 {
 	$filesRealPath = FormUtil::getPassedValue('filesRealPath', isset($args['filesRealPath']) ? $args['filesRealPath'] : null, 'GET');
 	// Check permissions
-	if (!pnSecauthaction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
+	if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 		return LogUtil::registerPermissionError();
 	}
 	if ($filesRealPath == null) $filesRealPath = substr($_SERVER['DOCUMENT_ROOT'], 0 ,  strrpos($_SERVER['DOCUMENT_ROOT'], '/')) . '/msdata';
 	$scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0 ,  strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
 	// ask for the correct location for the sites folder where the Temp folders will be created.
-	pnModLoad('Modules', 'admin');
-	$pnRender = pnRender::getInstance('Multisites', false);
+	ModUtil::load('Modules', 'admin');
+	$pnRender = Renderer::getInstance('Multisites', false);
 	$pnRender->assign('step', 2);
 	$pnRender->assign('filesRealPath', $filesRealPath);
 	$pnRender->assign('scriptRealPath', $scriptRealPath);
@@ -187,21 +187,21 @@ function Multisites_init_step21($args)
     $dom = ZLanguage::getModuleDomain('Multisites');
 	$filesRealPath = FormUtil::getPassedValue('filesRealPath', isset($args['filesRealPath']) ? $args['filesRealPath'] : null, 'POST');
 	// Check permissions
-	if (!pnSecauthaction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
+	if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 		return LogUtil::registerPermissionError();
 	}
     if ($filesRealPath == '') {
         LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Please, define it.', $dom));
-        return pnRedirect(pnModURL('Multisites', 'init', 'step2'));
+        return pnRedirect(ModUtil::url('Multisites', 'init', 'step2'));
     }
     if (!file_exists($filesRealPath)) {
         LogUtil::registerError (__('The directory where the sites files have to be created does not exists. Please, create it.', $dom));
-        return pnRedirect(pnModURL('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
+        return System::redirect(ModUtil::url('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
     }
     // check if the sitesFilesFolder is writeable
 	if (!is_writeable($filesRealPath)) {
 		LogUtil::registerError (__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.', $dom));
-		return pnRedirect(pnModURL('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
+		return System::redirect(ModUtil::url('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
 	}
 	// the folder exists and it is writeable
 	// write this parameter in the multisites_config.php file
@@ -210,7 +210,7 @@ function Multisites_init_step21($args)
 	if ($fh == false) {
 		fclose($fh);
         LogUtil::registerError(__('Error: File multisites_config.php not found', $dom));
-		return pnRedirect(pnModURL('Multisites', 'init', 'step1'));
+		return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
 	}
 	$lines = file($file);
 	$final_file = "";
@@ -223,11 +223,11 @@ function Multisites_init_step21($args)
 	if (!fwrite($fh,$final_file)) {
 		fclose($fh);
         LogUtil::registerError(__('Error: the multiple_config.php not writted', $dom));
-        return pnRedirect(pnModURL('Multisites', 'init', 'step1'));
+        return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
 	}
 	fclose($fh);
 	// pnRedirect user to step 3
-	return pnRedirect(pnModURL('Multisites', 'init', 'step3'));
+	return System::redirect(ModUtil::url('Multisites', 'init', 'step3'));
 }
 
 /**
@@ -238,14 +238,14 @@ function Multisites_init_step21($args)
 function Multisites_init_step3()
 {
 	// Check permissions
-	if (!pnSecauthaction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
+	if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 		return LogUtil::registerPermissionError();
 	}
 	// get server zikula folder installation
 	$path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
 	$basePath = substr($path, 0 ,  strrpos($path, '/'));
 	$wwwroot = 'http://' . $_SERVER['HTTP_HOST'] . $basePath;
-	pnModLoad('Modules', 'admin');
+	ModUtil::load('Modules', 'admin');
 	$pnRender = pnRender::getInstance('Multisites', false);
 	$pnRender->assign('step', 3);
 	//$pnRender->assign('dbhost', $GLOBALS['ZConfig']['DBInfo']['default']['dbhost']);
@@ -264,13 +264,12 @@ function Multisites_init_step3()
  */
 function Multisites_init_step31($args)
 {
-    $dom = ZLanguage::getModuleDomain('Multisites');
 	$mainSiteURL = FormUtil::getPassedValue('mainSiteURL', isset($args['mainSiteURL']) ? $args['mainSiteURL'] : null, 'POST');
 	$siteDNSEndText = FormUtil::getPassedValue('siteDNSEndText', isset($args['siteDNSEndText']) ? $args['siteDNSEndText'] : null, 'POST');
 	$siteTempFilesFolder = FormUtil::getPassedValue('siteTempFilesFolder', isset($args['siteTempFilesFolder']) ? $args['siteTempFilesFolder'] : null, 'POST');
 	$siteFilesFolder = FormUtil::getPassedValue('siteFilesFolder', isset($args['siteFilesFolder']) ? $args['siteFilesFolder'] : null, 'POST');
     // Check permissions
-	if (!pnSecauthaction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
+	if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 		return LogUtil::registerPermissionError();
 	}
 	// get server zikula folder installation
@@ -283,7 +282,7 @@ function Multisites_init_step31($args)
 	if ($fh == false) {
 		fclose($fh);
         LogUtil::registerError(__('Error: File multisites_config.php not found', $dom));
-        return pnRedirect(pnModURL('Multisites', 'init', 'step1'));
+        return pnRedirect(ModUtil::url('Multisites', 'init', 'step1'));
 	}
 	$lines = file($file);
 	$final_file = "";
@@ -309,14 +308,14 @@ function Multisites_init_step31($args)
 	if (!fwrite($fh,$final_file)) {
 		fclose($fh);
         LogUtil::registerError(__('Error: the file multisites_config.php has not been writen', $dom));
-        return pnRedirect(pnModURL('Multisites', 'init', 'step1'));
+        return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
 	}
 	fclose($fh);
     //TODO: write rule to convert domains from www.foo.dom to foo.dom
 	$path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
 	$basePath = substr($path, 0 ,  strrpos($path, '/'));
 	$wwwroot = 'http://' . $_SERVER['HTTP_HOST'] . $basePath;
-    return pnRedirect(pnModURL('Multisites', 'init', 'step4'));
+    return System::redirect(ModUtil::url('Multisites', 'init', 'step4'));
 }
 
 /**
@@ -327,15 +326,15 @@ function Multisites_init_step31($args)
 function Multisites_init_step4()
 {
 	// Check permissions
-	if (!pnSecauthaction(0, 'Multisites::', '::', ACCESS_ADMIN)) {
+	if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 		return LogUtil::registerPermissionError();
 	}
 	// check if the files multisites_config.php and .htaccess are writeable
 	$fileWriteable = false;
 	$path = 'config/multisites_config.php';
 	if (is_writeable($path)) $fileWriteable = true;
-	pnModLoad('Modules', 'admin');
-	$pnRender = pnRender::getInstance('Multisites', false);
+	ModUtil::load('Modules', 'admin');
+	$pnRender = Renderer::getInstance('Multisites', false);
 	$pnRender->assign('step', 4);
 	$pnRender->assign('fileWriteable', $fileWriteable);
     return $pnRender->fetch('Multisites_admin_init.htm');
@@ -355,11 +354,11 @@ function Multisites_delete()
     DBUtil::dropTable('Multisites_sitesModules');
 
     //Delete module vars
-    pnModDelVar('Multisites', 'modelsFolder');
-    pnModDelVar('Multisites', 'tempAccessFileContent');
-    pnModDelVar('Multisites', 'globalAdminName');
-    pnModDelVar('Multisites', 'globalAdminPassword');
-    pnModDelVar('Multisites', 'globalAdminemail');
+    ModUtil::delVar('Multisites', 'modelsFolder');
+    ModUtil::delVar('Multisites', 'tempAccessFileContent');
+    ModUtil::delVar('Multisites', 'globalAdminName');
+    ModUtil::delVar('Multisites', 'globalAdminPassword');
+    ModUtil::delVar('Multisites', 'globalAdminemail');
 
     //Deletion successfull
     return true;
