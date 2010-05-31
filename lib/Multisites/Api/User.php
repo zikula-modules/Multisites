@@ -10,7 +10,7 @@ class Multisites_Api_User extends AbstractApi
      */
     public function getAllSites($args)
     {
-        $dom = ZLanguage::getModuleDomain('Multisites');
+        
         // Security check
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
@@ -24,7 +24,7 @@ class Multisites_Api_User extends AbstractApi
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
-            return LogUtil::registerError(__('Error! Could not load items.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
         // Return the items
         return $items;
@@ -38,7 +38,7 @@ class Multisites_Api_User extends AbstractApi
      */
     public function getSite($args)
     {
-        $dom = ZLanguage::getModuleDomain('Multisites');
+        
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // Security check
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
@@ -46,13 +46,13 @@ class Multisites_Api_User extends AbstractApi
         }
         // Needed argument
         if ($instanceId == null || !is_numeric($instanceId)) {
-            return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $items = DBUtil::selectObjectByID('Multisites_sites', $instanceId, 'instanceId');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
-            return LogUtil::registerError(__('Error! Could not load items.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
         // Return the items
         return $items;
@@ -66,12 +66,12 @@ class Multisites_Api_User extends AbstractApi
      */
     public function getSiteInfo($args)
     {
-        $dom = ZLanguage::getModuleDomain('Multisites');
+        
         $site = FormUtil::getPassedValue('site', isset($args['site']) ? $args['site'] : null, 'POST');
 
         // Needed argument
         if ($site == null) {
-            return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
 
         $pntable = System::dbGetTables();
@@ -86,7 +86,7 @@ class Multisites_Api_User extends AbstractApi
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
-            return LogUtil::registerError(__('Error! Could not load items.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
 
         // Return the items
@@ -104,7 +104,7 @@ class Multisites_Api_User extends AbstractApi
         $site = FormUtil::getPassedValue('site', isset($args['site']) ? $args['site'] : null, 'POST');
         // Needed argument
         if ($site == null) {
-            return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $pntable = System::dbGetTables();
         $c = $pntable['Multisites_sites_column'];
@@ -114,7 +114,7 @@ class Multisites_Api_User extends AbstractApi
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
-            return LogUtil::registerError(__('Error! Could not load items.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
         if ($items[$site]['active'] == 1) {
             return $items[$site]['siteDB'];
@@ -130,7 +130,7 @@ class Multisites_Api_User extends AbstractApi
      */
     public function getAllModels()
     {
-        $dom = ZLanguage::getModuleDomain('Multisites');
+        
         // Security check
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
@@ -144,7 +144,7 @@ class Multisites_Api_User extends AbstractApi
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
-            return LogUtil::registerError(__('Error! Could not load items.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
         // Return the items
         return $items;
@@ -158,11 +158,11 @@ class Multisites_Api_User extends AbstractApi
      */
     public function getModel($args)
     {
-        $dom = ZLanguage::getModuleDomain('Multisites');
+        
         $modelName = FormUtil::getPassedValue('modelName', isset($args['modelName']) ? $args['modelName'] : null, 'POST');
         // Needed argument
         if ($modelName == null) {
-            return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $pntable = System::dbGetTables();
         $c = $pntable['Multisites_models_column'];
@@ -172,7 +172,7 @@ class Multisites_Api_User extends AbstractApi
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
-            return LogUtil::registerError(__('Error! Could not load items.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
         // Return the items
         return $items[$modelName];
@@ -186,12 +186,12 @@ class Multisites_Api_User extends AbstractApi
      */
     public function getModelById($args)
     {
-        $dom = ZLanguage::getModuleDomain('Multisites');
+        
         $modelId = FormUtil::getPassedValue('modelId', isset($args['modelId']) ? $args['modelId'] : null, 'POST');
 
         // Needed argument
         if ($modelId == null) {
-            return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
 
         $pntable = System::dbGetTables();
@@ -206,7 +206,7 @@ class Multisites_Api_User extends AbstractApi
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
-            return LogUtil::registerError(__('Error! Could not load items.', $dom));
+            return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
 
         // Return the items

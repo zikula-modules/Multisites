@@ -15,28 +15,28 @@
  */
 function Multisites_init()
 {
-    $dom = ZLanguage::getModuleDomain('Multisites');
+    
     // create the models folder
     // check if the sitesFilesFolder exists
     $path = (isset($GLOBALS['ZConfig']['Multisites']['filesRealPath']) ? $GLOBALS['ZConfig']['Multisites']['filesRealPath'] : '');
     if ($path == '') {
-        LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Check your configuration values.', $dom));
+        LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Check your configuration values.'));
         return false;
     }
     if (!file_exists($path)) {
-        LogUtil::registerError (__('The directory where the sites files have to be created does not exists.', $dom));
+        LogUtil::registerError (__('The directory where the sites files have to be created does not exists.'));
         return false;
     }
     // check if the sitesFilesFolder is writeable
 	if (!is_writeable($path)) {
-		LogUtil::registerError (__('The directory where the sites files have to be created is not writeable.', $dom));
+		LogUtil::registerError (__('The directory where the sites files have to be created is not writeable.'));
 		return false;
 	}
 	// create the main site folder
 	$path .= '/' . FormUtil::getPassedValue(siteDNS, null, 'GET');
 	if (!file_exists($path)) {
         if (!mkdir($path, 0777)) {
-            LogUtil::registerError (__('Error creating the directory.', $dom) . ': ' . $path);
+            LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
             return false;
         }
     }
@@ -44,7 +44,7 @@ function Multisites_init()
     $path .= $GLOBALS['ZConfig']['Multisites']['siteFilesFolder'];
     if (!file_exists($path)) {
         if (!mkdir($path, 0777)) {
-            LogUtil::registerError (__('Error creating the directory.', $dom) . ': ' . $path);
+            LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
             return false;
         }
     }
@@ -52,7 +52,7 @@ function Multisites_init()
     $path .= '/models';
     if (!file_exists($path)) {
         if (!mkdir($path, 0777)) {
-            LogUtil::registerError (__('Error creating the directory.', $dom) . ': ' . $path);
+            LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
             return false;
         }
     }
@@ -184,23 +184,23 @@ function Multisites_init_step2($args)
  */
 function Multisites_init_step21($args)
 {
-    $dom = ZLanguage::getModuleDomain('Multisites');
+    
 	$filesRealPath = FormUtil::getPassedValue('filesRealPath', isset($args['filesRealPath']) ? $args['filesRealPath'] : null, 'POST');
 	// Check permissions
 	if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 		return LogUtil::registerPermissionError();
 	}
     if ($filesRealPath == '') {
-        LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Please, define it.', $dom));
+        LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Please, define it.'));
         return pnRedirect(ModUtil::url('Multisites', 'init', 'step2'));
     }
     if (!file_exists($filesRealPath)) {
-        LogUtil::registerError (__('The directory where the sites files have to be created does not exists. Please, create it.', $dom));
+        LogUtil::registerError (__('The directory where the sites files have to be created does not exists. Please, create it.'));
         return System::redirect(ModUtil::url('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
     }
     // check if the sitesFilesFolder is writeable
 	if (!is_writeable($filesRealPath)) {
-		LogUtil::registerError (__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.', $dom));
+		LogUtil::registerError (__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.'));
 		return System::redirect(ModUtil::url('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
 	}
 	// the folder exists and it is writeable
@@ -209,7 +209,7 @@ function Multisites_init_step21($args)
 	$fh = @fopen($file, 'r+');
 	if ($fh == false) {
 		fclose($fh);
-        LogUtil::registerError(__('Error: File multisites_config.php not found', $dom));
+        LogUtil::registerError(__('Error: File multisites_config.php not found'));
 		return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
 	}
 	$lines = file($file);
@@ -222,7 +222,7 @@ function Multisites_init_step21($args)
 	$fh = @fopen($file, 'w+');
 	if (!fwrite($fh,$final_file)) {
 		fclose($fh);
-        LogUtil::registerError(__('Error: the multiple_config.php not writted', $dom));
+        LogUtil::registerError(__('Error: the multiple_config.php not writted'));
         return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
 	}
 	fclose($fh);
@@ -281,7 +281,7 @@ function Multisites_init_step31($args)
 	$fh = @fopen($file, 'r+');
 	if ($fh == false) {
 		fclose($fh);
-        LogUtil::registerError(__('Error: File multisites_config.php not found', $dom));
+        LogUtil::registerError(__('Error: File multisites_config.php not found'));
         return pnRedirect(ModUtil::url('Multisites', 'init', 'step1'));
 	}
 	$lines = file($file);
@@ -307,7 +307,7 @@ function Multisites_init_step31($args)
 	$fh = @fopen($file, 'w');
 	if (!fwrite($fh,$final_file)) {
 		fclose($fh);
-        LogUtil::registerError(__('Error: the file multisites_config.php has not been writen', $dom));
+        LogUtil::registerError(__('Error: the file multisites_config.php has not been writen'));
         return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
 	}
 	fclose($fh);
