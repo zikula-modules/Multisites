@@ -829,7 +829,7 @@ class Multisites_Admin extends AbstractController
             if ($mod['type'] != 3) {
                 // if module exists in instance database
                 $available = (array_key_exists($mod['name'], $siteModules)) ? 1 : 0;
-                $icons = pnModFunc('Multisites', 'admin', 'siteElementsIcons',
+                $icons = ModUtil::func('Multisites', 'admin', 'siteElementsIcons',
                         array('instanceId' => $instanceId,
                         'name' => $mod['name'],
                         'available' => $available,
@@ -927,7 +927,7 @@ class Multisites_Admin extends AbstractController
             // if module exists in instance database
             $available = (array_key_exists($theme['name'], $siteThemes)) ? 1 : 0;
             $isDefaultTheme = (strtolower($theme['name']) == strtolower($defaultTheme)) ? 1 : 0;
-            $icons = pnModFunc('Multisites', 'admin', 'siteThemesIcons',
+            $icons = ModUtil::func('Multisites', 'admin', 'siteThemesIcons',
                     array('instanceId' => $instanceId,
                     'name' => $theme['name'],
                     'available' => $available,

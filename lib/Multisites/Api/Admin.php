@@ -295,7 +295,7 @@ class Multisites_Api_Admin extends AbstractApi
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        pnModCallHooks('item', 'create', $item['instanceId'],
+        ModUtil::callHooks('item', 'create', $item['instanceId'],
                 array('module' => 'Multisites'));
         return $item['instanceId'];
     }
@@ -324,7 +324,7 @@ class Multisites_Api_Admin extends AbstractApi
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        pnModCallHooks('item', 'create', $item['modelId'], array('module' => 'Multisites'));
+        ModUtil::callHooks('item', 'create', $item['modelId'], array('module' => 'Multisites'));
         return $item['modelId'];
     }
 
@@ -389,14 +389,14 @@ class Multisites_Api_Admin extends AbstractApi
                 array('instanceId' => $instanceId));
         if ($instance == false) {
             LogUtil::registerError($this->__('Not site found'));
-            return pnRedirect(pnModURL('Multisites', 'admin', 'main'));
+            return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
         }
         //delete instance information
         if (!DBUtil::deleteObjectByID('Multisites_sites', $instanceId, 'instanceId')) {
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        pnModCallHooks('item', 'delete', $item['instanceId'],
+        ModUtil::callHooks('item', 'delete', $item['instanceId'],
                 array('module' => 'Multisites'));
         return true;
     }
@@ -606,7 +606,7 @@ class Multisites_Api_Admin extends AbstractApi
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        pnModCallHooks('item', 'delete', $item['modelId'],
+        ModUtil::callHooks('item', 'delete', $item['modelId'],
                 array('module' => 'Multisites'));
         return true;
     }
@@ -807,7 +807,7 @@ class Multisites_Api_Admin extends AbstractApi
             if (empty($defaultlang)) {
                 $defaultlang = 'eng';
             }
-            $currentlang = DataUtil::formatForOS(pnUserGetLang());
+            $currentlang = DataUtil::formatForOS(UserUtil::getLang());
             $possiblelanguagefiles = array("themes/$dir/lang/$currentlang/version.php", "themes/$dir/lang/$defaultlang/version.php", "themes/$dir/lang/eng/version.php");
             foreach ($possiblelanguagefiles as $languagefile) {
                 if (file_exists($languagefile) && is_readable($languagefile)) {

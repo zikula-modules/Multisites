@@ -19,12 +19,12 @@ function smarty_function_multisitesadminmenulinks()
     $multisitesadminmenulinks = "<span class=\"" . $params['class'] . "\">" . $params['start'] . " ";
 
     if (SecurityUtil::checkPermission('Multisites::', "::", ACCESS_ADMIN)) {
-        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(pnModURL('Multisites', 'admin', 'main')) . "\">" . __('View instances', $dom) . "</a> " . $params['seperator'];
-        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(pnModURL('Multisites', 'admin', 'newInstance')) . "\">" . __('New Instance', $dom) . "</a> " . $params['seperator'];
-        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(pnModURL('Multisites', 'admin', 'manageModels')) . "\">" . __('View Models', $dom) . "</a> " . $params['seperator'];
-        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(pnModURL('Multisites', 'admin', 'createNewModel')) . "\">" . __('Create New Model', $dom) . "</a> " . $params['seperator'];
-        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(pnModURL('Multisites', 'admin', 'actualizer')) . "\">" . __('Actualise Modules', $dom) . "</a> " . $params['seperator'];
-        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(pnModURL('Multisites', 'admin', 'config')) . "\">" . __('Configuration', $dom) . "</a> ";
+        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(ModUtil::url('Multisites', 'admin', 'main')) . "\">" . __('View instances', $dom) . "</a> " . $params['seperator'];
+        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(ModUtil::url('Multisites', 'admin', 'newInstance')) . "\">" . __('New Instance', $dom) . "</a> " . $params['seperator'];
+        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(ModUtil::url('Multisites', 'admin', 'manageModels')) . "\">" . __('View Models', $dom) . "</a> " . $params['seperator'];
+        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(ModUtil::url('Multisites', 'admin', 'createNewModel')) . "\">" . __('Create New Model', $dom) . "</a> " . $params['seperator'];
+        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(ModUtil::url('Multisites', 'admin', 'actualizer')) . "\">" . __('Actualise Modules', $dom) . "</a> " . $params['seperator'];
+        $multisitesadminmenulinks .= " <a href=\"" . DataUtil::formatForDisplayHTML(ModUtil::url('Multisites', 'admin', 'config')) . "\">" . __('Configuration', $dom) . "</a> ";
     }
 
     $multisitesadminmenulinks .= $params['end'] . "</span>\n";
