@@ -1,6 +1,6 @@
 <?php
 
-class Multisites_Api_User extends AbstractApi
+class Multisites_Api_User extends Zikula_Api
 {
 
     /**

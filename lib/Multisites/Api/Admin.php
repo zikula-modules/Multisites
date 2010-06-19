@@ -1,6 +1,6 @@
 <?php
 
-class Multisites_Api_Admin extends AbstractApi
+class Multisites_Api_Admin extends Zikula_Api
 {
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-class Multisites_Admin extends AbstractController
+class Multisites_Admin extends Zikula_Controller
 {
     /**
      * Show the list of sites created

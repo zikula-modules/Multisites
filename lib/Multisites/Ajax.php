@@ -1,8 +1,7 @@
 <?php
 
-class Multisites_Ajax extends AbstractController
+class Multisites_Ajax extends Zikula_Controller
 {
-
     /**
      * Delete a module from a given site
      * @author: Albert Pérez Monfort (aperezm@xtec.cat)
