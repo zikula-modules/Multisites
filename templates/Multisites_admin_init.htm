@@ -28,7 +28,7 @@
 			To run the module two special files are required: <strong>config/multisites_config.php</strong> and <strong>multisites_dbconfig.php</strong>."}
 		</div>
 		<div style="margin: 10px 0px 0px 20px;">
-			<a href="{modurl modname="Multisites" type="init" func="step1"}">{gt text="Go on with the installation"}</a>
+			<a href="{modurl modname="Multisites" type="interactiveinstaller" func="step1"}">{gt text="Go on with the installation"}</a>
 		</div>
 	{elseif $step eq 1}
 		<div>
@@ -87,11 +87,11 @@
 		</div>
 		<div style="text-align: center;">
 			{if !$file1 or !$file2 or !$fileWriteable1 or !$fileWriteable2}
-				<a href="{modurl modname="Multisites" type="init" func="step1"}">
+				<a href="{modurl modname="Multisites" type="interactiveinstaller" func="step1"}">
 					{gt text="Check again"}
 				</a>
 			{else}
-				<a href="{modurl modname="Multisites" type="init" func="step2"}">
+				<a href="{modurl modname="Multisites" type="interactiveinstaller" func="step2"}">
 					{gt text="Go on with the step 2"}
 				</a>
 			{/if}
@@ -105,7 +105,7 @@
 			We recommend to locate this directory out of the public HTTP."}
 		</div>
 		<div style="margin: 20px;">
-			<form method="POST" action="{modurl modname="Multisites" type="init" func="step21"}">
+			<form method="POST" action="{modurl modname="Multisites" type="interactiveinstaller" func="step21"}">
 				<div class="z-formrow">
                     <label for="filesRealPath">{gt text="Script Real Path"}:</label>
                     <span>{$scriptRealPath}</span>
@@ -125,7 +125,7 @@
             {gt text="If you have had any problem you can delete the
     			files <strong>config/multisites_config.php</strong> and <strong>config/multisites_dbconfig.php</strong> copied during the installation process to recover the system to the previous state."}
         </div>
-		<form class="z-form" method="POST" action="{modurl modname="Multisites" type="init" func="step31"}">
+		<form class="z-form" method="POST" action="{modurl modname="Multisites" type="interactiveinstaller" func="step31"}">
 			<div class="z-formrow">
 				<label for="mainSiteURL">{gt text="Main domain"}:</label>
 				<input type="text" name="mainSiteURL" size="50" maxlength="50" value = "{$mainHost}"/>
@@ -171,7 +171,7 @@
 						</div>
 					</form>
 				{else}
-					<a href="{modurl modname="Multisites" type="init" func="step4"}">
+					<a href="{modurl modname="Multisites" type="interactiveinstaller" func="step4"}">
 						{gt text="Check again"}
 					</a>
 				{/if}

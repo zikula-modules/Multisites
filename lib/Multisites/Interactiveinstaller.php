@@ -56,7 +56,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
 	 * @return if they exist and are writeable user can jump to step 2
 	 */
-	public function init_step1()
+	public function step1()
 	{
 		// Check permissions
 		if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
@@ -89,7 +89,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	 * @param  the physical folder name in case it does not exists and the user is pnRedirect to this step
 	 * @return post the pysical folder path
 	 */
-	public function init_step2($args)
+	public function step2($args)
 	{
 		$filesRealPath = FormUtil::getPassedValue('filesRealPath', isset($args['filesRealPath']) ? $args['filesRealPath'] : null, 'GET');
 		// Check permissions
@@ -113,7 +113,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	 * @param  the physical files folder
 	 * @return if the folder exists and it is writeable user is pnRedirected to the step 3 otherwise the user is pnRedirected to the step 2
 	 */
-	public function init_step21($args)
+	public function step21($args)
 	{
 	    
 		$filesRealPath = FormUtil::getPassedValue('filesRealPath', isset($args['filesRealPath']) ? $args['filesRealPath'] : null, 'POST');
@@ -123,16 +123,16 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		}
 	    if ($filesRealPath == '') {
 	        LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Please, define it.'));
-	        return pnRedirect(ModUtil::url('Multisites', 'init', 'step2'));
+	        return pnRedirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step2'));
 	    }
 	    if (!file_exists($filesRealPath)) {
 	        LogUtil::registerError (__('The directory where the sites files have to be created does not exists. Please, create it.'));
-	        return System::redirect(ModUtil::url('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
+	        return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step2', array('filesRealPath' => $filesRealPath)));
 	    }
 	    // check if the sitesFilesFolder is writeable
 		if (!is_writeable($filesRealPath)) {
 			LogUtil::registerError (__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.'));
-			return System::redirect(ModUtil::url('Multisites', 'init', 'step2', array('filesRealPath' => $filesRealPath)));
+			return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step2', array('filesRealPath' => $filesRealPath)));
 		}
 		// the folder exists and it is writeable
 		// write this parameter in the multisites_config.php file
@@ -141,7 +141,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		if ($fh == false) {
 			fclose($fh);
 	        LogUtil::registerError(__('Error: File multisites_config.php not found'));
-			return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
+			return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step1'));
 		}
 		$lines = file($file);
 		$final_file = "";
@@ -154,11 +154,11 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		if (!fwrite($fh,$final_file)) {
 			fclose($fh);
 	        LogUtil::registerError(__('Error: the multiple_config.php not writted'));
-	        return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
+	        return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step1'));
 		}
 		fclose($fh);
 		// pnRedirect user to step 3
-		return System::redirect(ModUtil::url('Multisites', 'init', 'step3'));
+		return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step3'));
 	}
 	
 	/**
@@ -166,7 +166,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
 	 * @return show the form with the needed fields
 	 */
-	public function init_step3()
+	public function step3()
 	{
 		// Check permissions
 		if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
@@ -193,7 +193,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	 * @param  the main multisites system parameters
 	 * @return pnRedirect the user to the new URL according with the multisites parameters
 	 */
-	public function init_step31($args)
+	public function step31($args)
 	{
 		$mainSiteURL = FormUtil::getPassedValue('mainSiteURL', isset($args['mainSiteURL']) ? $args['mainSiteURL'] : null, 'POST');
 		$siteDNSEndText = FormUtil::getPassedValue('siteDNSEndText', isset($args['siteDNSEndText']) ? $args['siteDNSEndText'] : null, 'POST');
@@ -213,7 +213,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		if ($fh == false) {
 			fclose($fh);
 	        LogUtil::registerError(__('Error: File multisites_config.php not found'));
-	        return pnRedirect(ModUtil::url('Multisites', 'init', 'step1'));
+	        return pnRedirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step1'));
 		}
 		$lines = file($file);
 		$final_file = "";
@@ -239,14 +239,14 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		if (!fwrite($fh,$final_file)) {
 			fclose($fh);
 	        LogUtil::registerError(__('Error: the file multisites_config.php has not been writen'));
-	        return System::redirect(ModUtil::url('Multisites', 'init', 'step1'));
+	        return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step1'));
 		}
 		fclose($fh);
 	    //TODO: write rule to convert domains from www.foo.dom to foo.dom
 		$path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
 		$basePath = substr($path, 0 ,  strrpos($path, '/'));
 		$wwwroot = 'http://' . $_SERVER['HTTP_HOST'] . $basePath;
-	    return System::redirect(ModUtil::url('Multisites', 'init', 'step4'));
+	    return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step4'));
 	}
 	
 	/**
@@ -254,7 +254,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
 	 * @return if they exist and they are not writeable user can install the Multisites module
 	 */
-	public function init_step4()
+	public function step4()
 	{
 		// Check permissions
 		if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
@@ -271,7 +271,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	    return $pnRender->fetch('Multisites_admin_init.htm');
 	}
 	
-    public function last_step ()
+    public function laststep ()
     {
         // create the models folder
 	    // check if the sitesFilesFolder exists
@@ -369,7 +369,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
 	 * @return bool true if successful, false otherwise
 	 */
-	public function upgrade($oldversion)
+	public function upgrade(array $oldversion)
 	{
 	    if (!DBUtil::changeTable('Multisites_sites')) return false;
 	    if (!DBUtil::changeTable('Multisites_access')) return false;
