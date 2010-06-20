@@ -271,8 +271,13 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	    return $pnRender->fetch('Multisites_admin_init.htm');
 	}
 	
-    public function laststep ()
+    public function laststep()
     {
+        // Check permissions
+		if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
+			return LogUtil::registerPermissionError();
+		}
+        
         // create the models folder
 	    // check if the sitesFilesFolder exists
 	    $path = (isset($GLOBALS['ZConfig']['Multisites']['filesRealPath']) ? $GLOBALS['ZConfig']['Multisites']['filesRealPath'] : '');
@@ -339,42 +344,4 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	    ModUtil::setVar('Multisites', 'globalAdminemail', '');
 	    return true;
     }
-    
-	/**
-	 * Delete the Multisites module
-	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
-	 * @return bool true if successful, false otherwise
-	 */
-	public function uninstall()
-	{
-	    // Delete module table
-	    DBUtil::dropTable('Multisites_sites');
-	    DBUtil::dropTable('Multisites_access');
-	    DBUtil::dropTable('Multisites_models');
-	    DBUtil::dropTable('Multisites_sitesModules');
-	
-	    //Delete module vars
-	    ModUtil::delVar('Multisites', 'modelsFolder');
-	    ModUtil::delVar('Multisites', 'tempAccessFileContent');
-	    ModUtil::delVar('Multisites', 'globalAdminName');
-	    ModUtil::delVar('Multisites', 'globalAdminPassword');
-	    ModUtil::delVar('Multisites', 'globalAdminemail');
-	
-	    //Deletion successfull
-	    return true;
-	}
-	
-	/**
-	 * Update the Multisites module
-	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
-	 * @return bool true if successful, false otherwise
-	 */
-	public function upgrade(array $oldversion)
-	{
-	    if (!DBUtil::changeTable('Multisites_sites')) return false;
-	    if (!DBUtil::changeTable('Multisites_access')) return false;
-	    if (!DBUtil::changeTable('Multisites_models')) return false;
-	    if (!DBUtil::changeTable('Multisites_sitesModules')) return false;
-	    return true;
-	}
 }
