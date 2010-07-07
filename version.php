@@ -2,13 +2,13 @@
 /**
  * Load the module version information
  *
- * @author		Albert Pérez Monfort (aperezm@xtec.cat)
- * @return		The version information
+ * @author      Albert Pérez Monfort (aperezm@xtec.cat)
+ * @return      The version information
  */
 
 $dom = ZLanguage::getModuleDomain('Multisites');
 $modversion['name'] = 'Multisites';
-$modversion['version'] = '1.0';
+$modversion['version'] = '1.0.0';
 $modversion['description'] = __('Zikula Multisites module', $dom);
 $modversion['displayname'] = __('Multisites manager', $dom);
 $modversion['credits'] = 'pndocs/credits.txt';

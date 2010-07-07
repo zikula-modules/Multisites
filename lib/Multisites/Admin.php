@@ -33,7 +33,7 @@ class Multisites_Admin extends Zikula_Controller
         $pager = array('numitems' => $numSites,
                 'itemsperpage' => $itemsperpage);
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('sites', $sites);
         $render->assign('pager', $pager);
         $render->assign('wwwroot', $GLOBALS['ZConfig']['Multisites']['wwwroot']);
@@ -78,7 +78,7 @@ class Multisites_Admin extends Zikula_Controller
             return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
 
         $render->assign('models', $models);
         $render->assign('instanceName', $instanceName);
@@ -356,7 +356,7 @@ class Multisites_Admin extends Zikula_Controller
         }
         if ($confirmation == null) {
             // create output object
-            $render = Renderer::getInstance('Multisites', false);
+            $render = Zikula_View::getInstance('Multisites', false);
             $render->assign('instance', $site);
             return $render->fetch('Multisites_admin_deleteInstance.htm');
         }
@@ -422,7 +422,7 @@ class Multisites_Admin extends Zikula_Controller
             return LogUtil::registerPermissionError();
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('name', $name);
         $render->assign('available', $available);
         $render->assign('siteModules', $siteModules);
@@ -449,7 +449,7 @@ class Multisites_Admin extends Zikula_Controller
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                 array('instanceId' => $instanceId));
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('site', $site);
         return $render->fetch('Multisites_admin_edit.htm');
     }
@@ -527,7 +527,7 @@ class Multisites_Admin extends Zikula_Controller
             return System::redirect(ModUtil::url('Multisites', 'admin', 'manageModels'));
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('model', $model);
         return $render->fetch('Multisites_admin_editModel.htm');
     }
@@ -604,7 +604,7 @@ class Multisites_Admin extends Zikula_Controller
             return LogUtil::registerPermissionError();
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('modelsFolder', ModUtil::getVar('Multisites', 'modelsFolder'));
         $render->assign('tempAccessFileContent', ModUtil::getVar('Multisites', 'tempAccessFileContent'));
         $render->assign('globalAdminName', ModUtil::getVar('Multisites', 'globalAdminName'));
@@ -662,7 +662,7 @@ class Multisites_Admin extends Zikula_Controller
         }
         $models = ModUtil::apiFunc('Multisites', 'user', 'getAllModels');
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('modelsArray', $models);
         return $render->fetch('Multisites_admin_manageModels.htm');
     }
@@ -697,7 +697,7 @@ class Multisites_Admin extends Zikula_Controller
             return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('modelName', $modelName);
         $render->assign('modelDBTablesPrefix', $modelDBTablesPrefix);
         $render->assign('description', $description);
@@ -842,7 +842,7 @@ class Multisites_Admin extends Zikula_Controller
             }
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('site', $site);
         $render->assign('modules', $modulesArray);
         return $render->fetch('Multisites_admin_siteElements.htm');
@@ -872,7 +872,7 @@ class Multisites_Admin extends Zikula_Controller
         }
         if ($confirmation == null) {
             // create output object
-            $render = Renderer::getInstance('Multisites', false);
+            $render = Zikula_View::getInstance('Multisites', false);
             $render->assign('model', $model);
             return $render->fetch('Multisites_admin_deleteModel.htm');
         }
@@ -940,7 +940,7 @@ class Multisites_Admin extends Zikula_Controller
                     'icons' => $icons);
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('site', $site);
         $render->assign('themes', $themesArray);
         return $render->fetch('Multisites_admin_siteThemes.htm');
@@ -966,7 +966,7 @@ class Multisites_Admin extends Zikula_Controller
             return LogUtil::registerPermissionError();
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('name', $name);
         $render->assign('available', $available);
         $render->assign('isDefaultTheme', $isDefaultTheme);
@@ -1020,7 +1020,7 @@ class Multisites_Admin extends Zikula_Controller
             return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('site', $site);
         return $render->fetch('Multisites_admin_siteTools.htm');
     }
@@ -1096,7 +1096,7 @@ class Multisites_Admin extends Zikula_Controller
             $i++;
         }
         // create output object
-        $render = Renderer::getInstance('Multisites', false);
+        $render = Zikula_View::getInstance('Multisites', false);
         $render->assign('modules', $modules);
         $render->assign('upgradeNeeded', $upgradeNeeded);
         return $render->fetch('Multisites_admin_actualizer.htm');

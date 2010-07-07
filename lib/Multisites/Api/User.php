@@ -15,7 +15,7 @@ class Multisites_Api_User extends Zikula_Api
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_sites_column'];
         $where = "$c[instanceName] LIKE '$args[letter]%'";
         $orderby = "$c[instanceName]";
@@ -74,7 +74,7 @@ class Multisites_Api_User extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
 
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
 
         $c = $pntable['Multisites_sites_column'];
 
@@ -106,7 +106,7 @@ class Multisites_Api_User extends Zikula_Api
         if ($site == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_sites_column'];
         $where = "$c[siteDNS] = '$site'";
         // get the objects from the db
@@ -135,7 +135,7 @@ class Multisites_Api_User extends Zikula_Api
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_models_column'];
         $where = '';
         $orderby = "$c[modelId]";
@@ -164,7 +164,7 @@ class Multisites_Api_User extends Zikula_Api
         if ($modelName == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_models_column'];
         $where = "$c[modelName] = '$modelName'";
         // get the objects from the db
@@ -194,7 +194,7 @@ class Multisites_Api_User extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
 
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
 
         $c = $pntable['Multisites_models_column'];
 

@@ -17,7 +17,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	/**
 	 * Initialise the interactive install system for the Multisites module
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
-	 * @return If the file multisites_config.php is not created pnRedirect to the step0 otherwise pnRedirect to step 4
+	 * @return If the file multisites_config.php is not created System::redirect to the step0 otherwise System::redirect to step 4
 	 */
 	public function install()
 	{
@@ -28,7 +28,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 			return LogUtil::registerPermissionError();
 		}
-		$pnRender = Renderer::getInstance('Multisites', false);
+		$view = Zikula_View::getInstance('Multisites', false);
 		if ($GLOBALS['ZConfig']['Multisites']['multi'] == 1) {
 			// check if the files multisites_config.php and .htaccess are writeable
 			$fileWriteable1 = false;
@@ -42,13 +42,13 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 				$fileWriteable2 = true;
 			}
 			$step = 4;
-			$pnRender->assign('fileWriteable1', $fileWriteable1);
-			$pnRender->assign('fileWriteable2', $fileWriteable2);
+			$view->assign('fileWriteable1', $fileWriteable1);
+			$view->assign('fileWriteable2', $fileWriteable2);
 		}else{
 			$step = 0;
 		}
-		$pnRender->assign('step', $step);
-	    return $pnRender->fetch('Multisites_admin_init.htm');
+		$view->assign('step', $step);
+	    return $view->fetch('Multisites_admin_init.htm');
 	}
 	
 	/**
@@ -74,19 +74,19 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	    if (file_exists($path)) $file2 = true;
 		if (is_writeable($path)) $fileWriteable2 = true;
 		ModUtil::load('Modules', 'admin');
-		$pnRender = Renderer::getInstance('Multisites', false);
-		$pnRender->assign('step', 1);
-		$pnRender->assign('file1', $file1);
-		$pnRender->assign('file2', $file2);
-		$pnRender->assign('fileWriteable1', $fileWriteable1);
-		$pnRender->assign('fileWriteable2', $fileWriteable2);
-	    return $pnRender->fetch('Multisites_admin_init.htm');
+		$view = Zikula_View::getInstance('Multisites', false);
+		$view->assign('step', 1);
+		$view->assign('file1', $file1);
+		$view->assign('file2', $file2);
+		$view->assign('fileWriteable1', $fileWriteable1);
+		$view->assign('fileWriteable2', $fileWriteable2);
+	    return $view->fetch('Multisites_admin_init.htm');
 	}
 	
 	/**
 	 * Step 2 - Check if the files folder exists and ask for the physical path
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
-	 * @param  the physical folder name in case it does not exists and the user is pnRedirect to this step
+	 * @param  the physical folder name in case it does not exists and the user is System::redirect to this step
 	 * @return post the pysical folder path
 	 */
 	public function step2($args)
@@ -100,18 +100,18 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		$scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0 ,  strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
 		// ask for the correct location for the sites folder where the Temp folders will be created.
 		ModUtil::load('Modules', 'admin');
-		$pnRender = Renderer::getInstance('Multisites', false);
-		$pnRender->assign('step', 2);
-		$pnRender->assign('filesRealPath', $filesRealPath);
-		$pnRender->assign('scriptRealPath', $scriptRealPath);
-	    return $pnRender->fetch('Multisites_admin_init.htm');
+		$view = Zikula_View::getInstance('Multisites', false);
+		$view->assign('step', 2);
+		$view->assign('filesRealPath', $filesRealPath);
+		$view->assign('scriptRealPath', $scriptRealPath);
+	    return $view->fetch('Multisites_admin_init.htm');
 	}
 	
 	/**
 	 * Get the physical folder path and write the value in the config/multisites_config.php file
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
 	 * @param  the physical files folder
-	 * @return if the folder exists and it is writeable user is pnRedirected to the step 3 otherwise the user is pnRedirected to the step 2
+	 * @return if the folder exists and it is writeable user is System::redirected to the step 3 otherwise the user is System::redirected to the step 2
 	 */
 	public function step21($args)
 	{
@@ -123,7 +123,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		}
 	    if ($filesRealPath == '') {
 	        LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Please, define it.'));
-	        return pnRedirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step2'));
+	        return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step2'));
 	    }
 	    if (!file_exists($filesRealPath)) {
 	        LogUtil::registerError (__('The directory where the sites files have to be created does not exists. Please, create it.'));
@@ -157,7 +157,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	        return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step1'));
 		}
 		fclose($fh);
-		// pnRedirect user to step 3
+		// System::redirect user to step 3
 		return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step3'));
 	}
 	
@@ -177,21 +177,21 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		$basePath = substr($path, 0 ,  strrpos($path, '/'));
 		$wwwroot = 'http://' . $_SERVER['HTTP_HOST'] . $basePath;
 		ModUtil::load('Modules', 'admin');
-		$pnRender = pnRender::getInstance('Multisites', false);
-		$pnRender->assign('step', 3);
-		//$pnRender->assign('dbhost', $GLOBALS['ZConfig']['DBInfo']['default']['dbhost']);
-		//$pnRender->assign('dbuname', $GLOBALS['ZConfig']['DBInfo']['default']['dbuname']);
-		$pnRender->assign('siteTempFilesFolder', $GLOBALS['ZConfig']['System']['temp']);
-	    $pnRender->assign('mainHost', $_SERVER['HTTP_HOST']);
-		$pnRender->assign('wwwroot', $wwwroot);
-	    return $pnRender->fetch('Multisites_admin_init.htm');
+		$view = Zikula_View::getInstance('Multisites', false);
+		$view->assign('step', 3);
+		//$view->assign('dbhost', $GLOBALS['ZConfig']['DBInfo']['default']['dbhost']);
+		//$view->assign('dbuname', $GLOBALS['ZConfig']['DBInfo']['default']['dbuname']);
+		$view->assign('siteTempFilesFolder', $GLOBALS['ZConfig']['System']['temp']);
+	    $view->assign('mainHost', $_SERVER['HTTP_HOST']);
+		$view->assign('wwwroot', $wwwroot);
+	    return $view->fetch('Multisites_admin_init.htm');
 	}
 	
 	/**
 	 * Get the multisites system parameters and write the value in the config/multisites_config.php file
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
 	 * @param  the main multisites system parameters
-	 * @return pnRedirect the user to the new URL according with the multisites parameters
+	 * @return System::redirect the user to the new URL according with the multisites parameters
 	 */
 	public function step31($args)
 	{
@@ -213,7 +213,7 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		if ($fh == false) {
 			fclose($fh);
 	        LogUtil::registerError(__('Error: File multisites_config.php not found'));
-	        return pnRedirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step1'));
+	        return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step1'));
 		}
 		$lines = file($file);
 		$final_file = "";
@@ -265,10 +265,10 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		$path = 'config/multisites_config.php';
 		if (is_writeable($path)) $fileWriteable = true;
 		ModUtil::load('Modules', 'admin');
-		$pnRender = Renderer::getInstance('Multisites', false);
-		$pnRender->assign('step', 4);
-		$pnRender->assign('fileWriteable', $fileWriteable);
-	    return $pnRender->fetch('Multisites_admin_init.htm');
+		$view = Zikula_View::getInstance('Multisites', false);
+		$view->assign('step', 4);
+		$view->assign('fileWriteable', $fileWriteable);
+	    return $view->fetch('Multisites_admin_init.htm');
 	}
 	
     public function laststep()

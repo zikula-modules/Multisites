@@ -14,7 +14,7 @@
  * @author Albert Pérez Monfort (aperezm@xtec.cat)
  * @return module tables information
  */
-function Multisites_pntables()
+function Multisites_tables()
 {
     // Initialise table array
     $pntable = array();

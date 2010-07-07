@@ -793,7 +793,7 @@ class Multisites_Api_Admin extends Zikula_Api
                     $themetype = 3;
                 } elseif (file_exists("themes/$dir/xaninit.php") && file_exists("themes/$dir/theme.php")) {
                     // xanthia 2.0 themes will need upgrading so set the theme state to inactive
-                    $themeversion['state'] = PNTHEME_STATE_INACTIVE;
+                    $themeversion['state'] = ThemeUtil::STATE_INACTIVE;
                     $themetype = 2;
                 } elseif (file_exists("themes/$dir/theme.php")) {
                     $themetype = 1;
@@ -854,7 +854,7 @@ class Multisites_Api_Admin extends Zikula_Api
                         'admin' => (isset($themeversion['admin']) ? (int) $themeversion['admin'] : '0'),
                         'user' => (isset($themeversion['user']) ? (int) $themeversion['user'] : '1'),
                         'system' => (isset($themeversion['system']) ? (int) $themeversion['system'] : '0'),
-                        'state' => (isset($themeversion['state']) ? $themeversion['state'] : PNTHEME_STATE_ACTIVE),
+                        'state' => (isset($themeversion['state']) ? $themeversion['state'] : ThemeUtil::STATE_ACTIVE),
                         'official' => (isset($themeversion['offical']) ? (int) $themeversion['offical'] : '0'),
                         'author' => (isset($themeversion['author']) ? $themeversion['author'] : ''),
                         'contact' => (isset($themeversion['contact']) ? $themeversion['contact'] : ''),
@@ -1112,7 +1112,7 @@ class Multisites_Api_Admin extends Zikula_Api
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_sites_column'];
         $where = "$c[instanceId] = $instanceId";
         if (!DBUTil::updateObject($items, 'Multisites_sites', $where)) {
@@ -1144,7 +1144,7 @@ class Multisites_Api_Admin extends Zikula_Api
         if ($model == false) {
             return LogUtil::registerError($this->__('Model not found'));
         }
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_models_column'];
         $where = "$c[modelId] = $modelId";
         if (!DBUTil::updateObject($items, 'Multisites_models', $where)) {
@@ -1394,7 +1394,7 @@ class Multisites_Api_Admin extends Zikula_Api
                 ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_sitesModules_column'];
         $where = "$c[moduleName] = '$moduleName' AND $c[moduleVersion] < '$currentVersion'";
         $numberOfItems = DBUtil::selectObjectCount('Multisites_sitesModules', $where);
@@ -1415,7 +1415,7 @@ class Multisites_Api_Admin extends Zikula_Api
 
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         $currentVersion = FormUtil::getPassedValue('currentVersion', isset($args['currentVersion']) ? $args['currentVersion'] : null, 'POST');
-        $pntable = System::dbGetTables();
+        $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_sitesModules_column'];
         $where = "$c[moduleName] = '$moduleName' AND $c[moduleVersion] < $currentVersion";
         $sites = DBUtil::selectObjectArray('Multisites_sitesModules', $where);
