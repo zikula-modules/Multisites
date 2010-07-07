@@ -14,6 +14,10 @@
 
 class Multisites_Installer extends Zikula_Installer
 {
+    public function install()
+	{
+    }
+
 	/**
 	 * Delete the Multisites module
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
