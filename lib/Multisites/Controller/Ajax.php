@@ -1,7 +1,12 @@
 <?php
 
-class Multisites_Ajax extends Zikula_Controller
+class Multisites_Controller_Ajax extends Zikula_Controller
 {
+    public function _postSetup()
+    {
+        // no need for a Zikula_View so override it.
+    }
+
     /**
      * Delete a module from a given site
      * @author: Albert Pérez Monfort (aperezm@xtec.cat)

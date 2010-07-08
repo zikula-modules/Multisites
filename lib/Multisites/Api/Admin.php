@@ -295,7 +295,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        ModUtil::callHooks('item', 'create', $item['instanceId'],
+        $this->callHooks('item', 'create', $item['instanceId'],
                 array('module' => 'Multisites'));
         return $item['instanceId'];
     }
@@ -324,7 +324,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        ModUtil::callHooks('item', 'create', $item['modelId'], array('module' => 'Multisites'));
+        $this->callHooks('item', 'create', $item['modelId'], array('module' => 'Multisites'));
         return $item['modelId'];
     }
 
@@ -396,7 +396,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        ModUtil::callHooks('item', 'delete', $item['instanceId'],
+        $this->callHooks('item', 'delete', $item['instanceId'],
                 array('module' => 'Multisites'));
         return true;
     }
@@ -606,7 +606,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        ModUtil::callHooks('item', 'delete', $item['modelId'],
+        $this->callHooks('item', 'delete', $item['modelId'],
                 array('module' => 'Multisites'));
         return true;
     }

@@ -5,7 +5,7 @@
  * This work is contributed to the Zikula Foundation under one or more
  * Contributor Agreements and licensed to You under the following license:
  *
- * @license GNU/LGPLv2.1 (or at your option, any later version).
+ * @license GNU/LGPLv3 (or at your option, any later version).
  * @package Multisites
  *
  * Please see the NOTICE file distributed with this source code for further
@@ -14,10 +14,6 @@
 
 class Multisites_Installer extends Zikula_Installer
 {
-    public function install()
-	{
-    }
-
 	/**
 	 * Delete the Multisites module
 	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
@@ -32,11 +28,11 @@ class Multisites_Installer extends Zikula_Installer
 	    DBUtil::dropTable('Multisites_sitesModules');
 	
 	    //Delete module vars
-	    ModUtil::delVar('Multisites', 'modelsFolder');
-	    ModUtil::delVar('Multisites', 'tempAccessFileContent');
-	    ModUtil::delVar('Multisites', 'globalAdminName');
-	    ModUtil::delVar('Multisites', 'globalAdminPassword');
-	    ModUtil::delVar('Multisites', 'globalAdminemail');
+	    $this->delVar('modelsFolder');
+	    $this->delVar('tempAccessFileContent');
+	    $this->delVar('globalAdminName');
+	    $this->delVar('globalAdminPassword');
+	    $this->delVar('globalAdminemail');
 	
 	    //Deletion successfull
 	    return true;

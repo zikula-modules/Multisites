@@ -12,7 +12,7 @@
  * information regarding copyright and licensing.
  */
 
-class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
+class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInstaller
 {
 	/**
 	 * Initialise the interactive install system for the Multisites module
@@ -28,8 +28,8 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
 			return LogUtil::registerPermissionError();
 		}
-		$view = Zikula_View::getInstance('Multisites', false);
-		if ($GLOBALS['ZConfig']['Multisites']['multi'] == 1) {
+
+        if ($GLOBALS['ZConfig']['Multisites']['multi'] == 1) {
 			// check if the files multisites_config.php and .htaccess are writeable
 			$fileWriteable1 = false;
 			$fileWriteable2 = false;
@@ -42,13 +42,13 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 				$fileWriteable2 = true;
 			}
 			$step = 4;
-			$view->assign('fileWriteable1', $fileWriteable1);
-			$view->assign('fileWriteable2', $fileWriteable2);
+			$this->view->assign('fileWriteable1', $fileWriteable1);
+			$this->view->assign('fileWriteable2', $fileWriteable2);
 		}else{
 			$step = 0;
 		}
-		$view->assign('step', $step);
-	    return $view->fetch('Multisites_admin_init.htm');
+		$this->view->assign('step', $step);
+	    return $this->view->fetch('Multisites_admin_init.htm');
 	}
 	
 	/**
@@ -74,13 +74,12 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	    if (file_exists($path)) $file2 = true;
 		if (is_writeable($path)) $fileWriteable2 = true;
 		ModUtil::load('Modules', 'admin');
-		$view = Zikula_View::getInstance('Multisites', false);
-		$view->assign('step', 1);
-		$view->assign('file1', $file1);
-		$view->assign('file2', $file2);
-		$view->assign('fileWriteable1', $fileWriteable1);
-		$view->assign('fileWriteable2', $fileWriteable2);
-	    return $view->fetch('Multisites_admin_init.htm');
+		$this->view->assign('step', 1);
+		$this->view->assign('file1', $file1);
+		$this->view->assign('file2', $file2);
+		$this->view->assign('fileWriteable1', $fileWriteable1);
+		$this->view->assign('fileWriteable2', $fileWriteable2);
+	    return $this->view->fetch('Multisites_admin_init.htm');
 	}
 	
 	/**
@@ -100,11 +99,10 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		$scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0 ,  strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
 		// ask for the correct location for the sites folder where the Temp folders will be created.
 		ModUtil::load('Modules', 'admin');
-		$view = Zikula_View::getInstance('Multisites', false);
-		$view->assign('step', 2);
-		$view->assign('filesRealPath', $filesRealPath);
-		$view->assign('scriptRealPath', $scriptRealPath);
-	    return $view->fetch('Multisites_admin_init.htm');
+		$this->view->assign('step', 2);
+		$this->view->assign('filesRealPath', $filesRealPath);
+		$this->view->assign('scriptRealPath', $scriptRealPath);
+	    return $this->view->fetch('Multisites_admin_init.htm');
 	}
 	
 	/**
@@ -177,14 +175,13 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		$basePath = substr($path, 0 ,  strrpos($path, '/'));
 		$wwwroot = 'http://' . $_SERVER['HTTP_HOST'] . $basePath;
 		ModUtil::load('Modules', 'admin');
-		$view = Zikula_View::getInstance('Multisites', false);
-		$view->assign('step', 3);
-		//$view->assign('dbhost', $GLOBALS['ZConfig']['DBInfo']['default']['dbhost']);
-		//$view->assign('dbuname', $GLOBALS['ZConfig']['DBInfo']['default']['dbuname']);
-		$view->assign('siteTempFilesFolder', $GLOBALS['ZConfig']['System']['temp']);
-	    $view->assign('mainHost', $_SERVER['HTTP_HOST']);
-		$view->assign('wwwroot', $wwwroot);
-	    return $view->fetch('Multisites_admin_init.htm');
+		$this->view->assign('step', 3);
+		//$this->view->assign('dbhost', $GLOBALS['ZConfig']['DBInfo']['default']['dbhost']);
+		//$this->view->assign('dbuname', $GLOBALS['ZConfig']['DBInfo']['default']['dbuname']);
+		$this->view->assign('siteTempFilesFolder', $GLOBALS['ZConfig']['System']['temp']);
+	    $this->view->assign('mainHost', $_SERVER['HTTP_HOST']);
+		$this->view->assign('wwwroot', $wwwroot);
+	    return $this->view->fetch('Multisites_admin_init.htm');
 	}
 	
 	/**
@@ -265,10 +262,9 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 		$path = 'config/multisites_config.php';
 		if (is_writeable($path)) $fileWriteable = true;
 		ModUtil::load('Modules', 'admin');
-		$view = Zikula_View::getInstance('Multisites', false);
-		$view->assign('step', 4);
-		$view->assign('fileWriteable', $fileWriteable);
-	    return $view->fetch('Multisites_admin_init.htm');
+		$this->view->assign('step', 4);
+		$this->view->assign('fileWriteable', $fileWriteable);
+	    return $this->view->fetch('Multisites_admin_init.htm');
 	}
 	
     public function laststep()
@@ -332,16 +328,16 @@ class Multisites_Interactiveinstaller extends Zikula_InteractiveInstaller
 	        return false;
 	    }
 	    //Create module vars
-	    ModUtil::setVar('Multisites', 'modelsFolder', $path);
-	    ModUtil::setVar('Multisites', 'tempAccessFileContent','SetEnvIf Request_URI "\.css$" object_is_css=css
+	    $this->setVar('modelsFolder', $path);
+	    $this->setVar('tempAccessFileContent','SetEnvIf Request_URI "\.css$" object_is_css=css
 	SetEnvIf Request_URI "\.js$" object_is_js=js
 	Order deny,allow
 	Deny from all
 	Allow from env=object_is_css
 	Allow from env=object_is_js');
-	    ModUtil::setVar('Multisites', 'globalAdminName', '');
-	    ModUtil::setVar('Multisites', 'globalAdminPassword', '');
-	    ModUtil::setVar('Multisites', 'globalAdminemail', '');
+	    $this->setVar('globalAdminName', '');
+	    $this->setVar('globalAdminPassword', '');
+	    $this->setVar('globalAdminemail', '');
 	    return true;
     }
 }
