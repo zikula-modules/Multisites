@@ -14,8 +14,7 @@ class Multisites_Version extends Zikula_Version
         $meta['version'] = '1.0.0';
         $meta['description'] = $this->__('Zikula Multisites module');
         $meta['displayname'] = $this->__('Multisites manager');
-        $meta['url'] = 'multisites';
-        $meta['contact'] = 'Albert Pérez Monfort <aperezm@xtec.cat>';
+        $meta['url'] = $this->__('multisites');
         $meta['securityschema'] = array('Multisites::' => '::');
         return $meta;
     }
