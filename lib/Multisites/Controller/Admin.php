@@ -9,8 +9,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Show the list of sites created
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @return:	The list of sites
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return: The list of sites
      */
     public function main($args)
     {
@@ -48,8 +48,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Show the form needed to create a new instance
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @return:	The form needed to create a new instance
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return: The form needed to create a new instance
      */
     public function newInstance($args)
     {
@@ -104,9 +104,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Create a new instance
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The instance properties received from the creation form
-     * @return:	Returns user to administrator main page
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The instance properties received from the creation form
+     * @return: Returns user to administrator main page
      */
     public function createInstance($args)
     {
@@ -196,8 +196,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
                     $initTemp . '/error_logs',
                     $initTemp . '/idsTmp',
                     $initTemp . '/purifierCache',
-                    $initTemp . '/Renderer_cache',
-                    $initTemp . '/Renderer_compiled',
+                    $initTemp . '/view_cache',
+                    $initTemp . '/view_compiled',
                     $initTemp . '/Theme_cache',
                     $initTemp . '/Theme_compiled',
                     $initTemp . '/Theme_Config');
@@ -333,9 +333,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Delete an instance
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The instance identity
-     * @return:	Returns true if success and false otherwise
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The instance identity
+     * @return: Returns true if success and false otherwise
      */
     public function deleteInstance($args)
     {
@@ -406,9 +406,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Load the icons that identify the modules availability for a site
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The instance identity and the modules state
-     * @return:	Returns the needed icons
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The instance identity and the modules state
+     * @return: Returns the needed icons
      */
     public function siteElementsIcons($args)
     {
@@ -431,9 +431,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Edit an instance
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
      * @param: The instance identity
-     * @return:	The form fields prepared to edit
+     * @return: The form fields prepared to edit
      */
     public function edit($args)
     {
@@ -454,9 +454,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Update and instance
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
      * @param: The instance information
-     * @return:	Return to admin main page
+     * @return: Return to admin main page
      */
     public function update($args)
     {
@@ -504,9 +504,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Edit a model
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
      * @param: The model identity
-     * @return:	The form fields prepared to edit
+     * @return: The form fields prepared to edit
      */
     public function editModel($args)
     {
@@ -532,9 +532,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Update and instance
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
      * @param: The instance information
-     * @return:	Return to admin main page
+     * @return: Return to admin main page
      */
     public function updateModel($args)
     {
@@ -590,8 +590,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Show the form with the configurable parameters for the module
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @return:	The form fields
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return: The form fields
      */
     public function config()
     {
@@ -612,9 +612,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Modify module configuration
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The module parameter values
-     * @return:	return user to config page
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The module parameter values
+     * @return: return user to config page
      */
     public function updateConfig($args)
     {
@@ -646,8 +646,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Show the models availables
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @return:	The list of models
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return: The list of models
      */
     public function manageModels()
     {
@@ -665,8 +665,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Show the form needed to create a new model
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @return:	Form fields
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return: Form fields
      */
     public function createNewModel($args)
     {
@@ -701,9 +701,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Create a new model and upload the model SQL file to the server
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The model properties and the file with the SQL
-     * @return:	Returns true if success and false otherwise
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The model properties and the file with the SQL
+     * @return: Returns true if success and false otherwise
      */
     public function createModel($args)
     {
@@ -794,9 +794,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Show the modules available for a site and allow to manage this feature
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The instance identity
-     * @return:	The list of modules and its state in the site
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The instance identity
+     * @return: The list of modules and its state in the site
      */
     public function siteElements($args)
     {
@@ -842,9 +842,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Delete a model
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The model identity
-     * @return:	Redirect user to the models page
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The model identity
+     * @return: Redirect user to the models page
      */
     public function deleteModel($args)
     {
@@ -887,9 +887,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Show the themes available for a site and allow to manage this feature
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The instance identity
-     * @return:	The list of themes and its state in the site
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The instance identity
+     * @return: The list of themes and its state in the site
      */
     public function siteThemes($args)
     {
@@ -940,9 +940,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Load the icons that identify the themes availability for a site
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The instance identity and the modules state
-     * @return:	Returns the needed icons
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The instance identity and the modules state
+     * @return: Returns the needed icons
      */
     public function siteThemesIcons($args)
     {
@@ -967,9 +967,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Set a theme as default
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The instance identity and the theme name
-     * @return:	Change the default theme
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The instance identity and the theme name
+     * @return: Change the default theme
      */
     public function setThemeAsDefault($args)
     {
@@ -991,9 +991,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Give access to some tools
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
      * @param: Instance identity
-     * @return:	The list of available tools
+     * @return: The list of available tools
      */
     public function siteTools($args)
     {
@@ -1015,9 +1015,9 @@ class Multisites_Controller_Admin extends Zikula_Controller
 
     /**
      * Execute some actions with administration tools
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
      * @param: Instance identity, tool to use
-     * @return:	The list of available tools
+     * @return: The list of available tools
      */
     public function executeSiteTool($args)
     {
