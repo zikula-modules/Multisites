@@ -26,8 +26,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
         // get sites
         $sites = ModUtil::apiFunc('Multisites', 'user', 'getAllSites',
                 array('letter' => $letter,
-                'itemsperpage' => $itemsperpage,
-                'startnum' => $startnum));
+		              'itemsperpage' => $itemsperpage,
+		              'startnum' => $startnum));
         // get total sites
         if ($letter == null) {
             $numSites = count(ModUtil::apiFunc('Multisites', 'user', 'getAllSites'));
@@ -36,12 +36,11 @@ class Multisites_Controller_Admin extends Zikula_Controller
                     array('letter' => $letter)));
         }
         $pager = array('numitems' => $numSites,
-                'itemsperpage' => $itemsperpage);
+                       'itemsperpage' => $itemsperpage);
         // create output object
         $this->view->assign('sites', $sites);
         $this->view->assign('pager', $pager);
         $this->view->assign('wwwroot', $GLOBALS['ZConfig']['Multisites']['wwwroot']);
-        $this->view->assign('siteDNSEndText', $GLOBALS['ZConfig']['Multisites']['siteDNSEndText']);
         $this->view->assign('basedOnDomains', $GLOBALS['ZConfig']['Multisites']['basedOnDomains']);
         return $this->view->fetch('Multisites_admin_main.htm');
     }
@@ -51,7 +50,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
      * @author: Albert Pérez Monfort (aperezm@xtec.cat)
      * @return: The form needed to create a new instance
      */
-    public function newInstance($args)
+    public function newIns($args)
     {
         $instanceName = FormUtil::getPassedValue('instanceName', isset($args['instanceName']) ? $args['instanceName'] : null, 'GET');
         $description = FormUtil::getPassedValue('description', isset($args['description']) ? $args['description'] : null, 'GET');
@@ -78,7 +77,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
         // get all the models for new instances
         $models = ModUtil::apiFunc('Multisites', 'user', 'getAllModels');
         if (!$models) {
-            LogUtil::registerError($this->__('There is not any module defined'));
+            LogUtil::registerError($this->__('There is not any model defined'));
             return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
         }
 
@@ -302,7 +301,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
         }
         if ($errorMsg != '') {
             LogUtil::registerError($errorMsg);
-            return System::redirect(ModUtil::url('Multisites', 'admin', 'newInstance',
+            return System::redirect(ModUtil::url('Multisites', 'admin', 'newIns',
                     array('instanceName' => $instanceName,
                     'description' => $description,
                     'siteName' => $siteName,
@@ -828,8 +827,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
                         'name' => $mod['name'],
                         'available' => $available,
                         'siteModules' => $siteModules));
-                $modulesArray[] = array('id' => $mod['id'],
-                        'name' => $mod['name'],
+                $modulesArray[] = array('name' => $mod['name'],
                         'version' => $mod['version'],
                         'description' => $mod['description'],
                         'icons' => $icons);
@@ -920,16 +918,15 @@ class Multisites_Controller_Admin extends Zikula_Controller
             $available = (array_key_exists($theme['name'], $siteThemes)) ? 1 : 0;
             $isDefaultTheme = (strtolower($theme['name']) == strtolower($defaultTheme)) ? 1 : 0;
             $icons = ModUtil::func('Multisites', 'admin', 'siteThemesIcons',
-                    array('instanceId' => $instanceId,
-                    'name' => $theme['name'],
-                    'available' => $available,
-                    'isDefaultTheme' => $isDefaultTheme,
-                    'siteThemes' => $siteThemes));
-            $themesArray[] = array('id' => $theme['id'],
-                    'name' => $theme['name'],
-                    'version' => $theme['version'],
-                    'description' => $theme['description'],
-                    'icons' => $icons);
+                                    array('instanceId' => $instanceId,
+                                          'name' => $theme['name'],
+                                          'available' => $available,
+                                          'isDefaultTheme' => $isDefaultTheme,
+                                          'siteThemes' => $siteThemes));
+            $themesArray[] = array('name' => $theme['name'],
+				                   'version' => $theme['version'],
+				                   'description' => $theme['description'],
+				                   'icons' => $icons);
         }
         // create output object
         $render = Zikula_View::getInstance('Multisites', false);
@@ -1044,7 +1041,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
             case 'adminSiteControl':
                 $recoverAdminSiteControl = ModUtil::apiFunc('Multisites', 'admin', 'recoverAdminSiteControl', array('instanceId' => $instanceId));
                 if ($recoverAdminSiteControl) {
-                    LogUtil::registerStatus($this->__('The administration control had been recovered'));
+                    LogUtil::registerStatus($this->__('The administration control has been recovered'));
                 }
                 break;
             default:

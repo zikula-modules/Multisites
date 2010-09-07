@@ -29,7 +29,7 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
 			return LogUtil::registerPermissionError();
 		}
 
-        if ($GLOBALS['ZConfig']['Multisites']['multi'] == 1) {
+        if (isset($GLOBALS['ZConfig']['Multisites']['multi']) && $GLOBALS['ZConfig']['Multisites']['multi'] == 1) {
 			// check if the files multisites_config.php and .htaccess are writeable
 			$fileWriteable1 = false;
 			$fileWriteable2 = false;
@@ -266,78 +266,4 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
 		$this->view->assign('fileWriteable', $fileWriteable);
 	    return $this->view->fetch('Multisites_admin_init.htm');
 	}
-	
-    public function laststep()
-    {
-        // Check permissions
-		if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-			return LogUtil::registerPermissionError();
-		}
-        
-        // create the models folder
-	    // check if the sitesFilesFolder exists
-	    $path = (isset($GLOBALS['ZConfig']['Multisites']['filesRealPath']) ? $GLOBALS['ZConfig']['Multisites']['filesRealPath'] : '');
-	    if ($path == '') {
-	        LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Check your configuration values.'));
-	        return false;
-	    }
-	    if (!file_exists($path)) {
-	        LogUtil::registerError (__('The directory where the sites files have to be created does not exists.'));
-	        return false;
-	    }
-	    // check if the sitesFilesFolder is writeable
-		if (!is_writeable($path)) {
-			LogUtil::registerError (__('The directory where the sites files have to be created is not writeable.'));
-			return false;
-		}
-		// create the main site folder
-		$path .= '/' . FormUtil::getPassedValue(siteDNS, null, 'GET');
-		if (!file_exists($path)) {
-	        if (!mkdir($path, 0777)) {
-	            LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
-	            return false;
-	        }
-	    }
-	    // create the data folder
-	    $path .= $GLOBALS['ZConfig']['Multisites']['siteFilesFolder'];
-	    if (!file_exists($path)) {
-	        if (!mkdir($path, 0777)) {
-	            LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
-	            return false;
-	        }
-	    }
-	    // create the models folder
-	    $path .= '/models';
-	    if (!file_exists($path)) {
-	        if (!mkdir($path, 0777)) {
-	            LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
-	            return false;
-	        }
-	    }
-	    // Create module table
-	    if (!DBUtil::createTable('Multisites_sites')) {
-	        return false;
-	    }
-	    if (!DBUtil::createTable('Multisites_access')) {
-	        return false;
-	    }
-	    if (!DBUtil::createTable('Multisites_models')) {
-	        return false;
-	    }
-	    if (!DBUtil::createTable('Multisites_sitesModules')) {
-	        return false;
-	    }
-	    //Create module vars
-	    $this->setVar('modelsFolder', $path);
-	    $this->setVar('tempAccessFileContent','SetEnvIf Request_URI "\.css$" object_is_css=css
-	SetEnvIf Request_URI "\.js$" object_is_js=js
-	Order deny,allow
-	Deny from all
-	Allow from env=object_is_css
-	Allow from env=object_is_js');
-	    $this->setVar('globalAdminName', '');
-	    $this->setVar('globalAdminPassword', '');
-	    $this->setVar('globalAdminemail', '');
-	    return true;
-    }
 }

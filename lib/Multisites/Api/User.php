@@ -10,17 +10,18 @@ class Multisites_Api_User extends Zikula_Api
      */
     public function getAllSites($args)
     {
-        
         // Security check
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
         $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_sites_column'];
-        $where = "$c[instanceName] LIKE '$args[letter]%'";
+        $where = (isset($args['letter'])) ? "$c[instanceName] LIKE '$args[letter]%'" : "";
+        $startnum = (isset($args['startnum'])) ? $args['startnum'] : 0;
+        $itemsperpage = (isset($args['itemsperpage'])) ? $args['itemsperpage'] : -1;
         $orderby = "$c[instanceName]";
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_sites', $where, $orderby, $args['startnum'] - 1, $args['itemsperpage'], 'instanceId');
+        $items = DBUtil::selectObjectArray('Multisites_sites', $where, $orderby, $startnum - 1, $itemsperpage, 'instanceId');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
@@ -90,7 +91,7 @@ class Multisites_Api_User extends Zikula_Api
         }
 
         // Return the items
-        return $items[$site];
+        return $items;
     }
 
     /**

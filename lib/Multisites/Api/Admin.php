@@ -19,11 +19,11 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         include_once('config/multisites_dbconfig.php');
         // if it is received the parameter "site" it is assumed that the database connection values are in the $databaseArray array
-        $siteDBName = $args['siteDBName'];
-        $siteDBUname = $args['siteDBUname'];
-        $siteDBPass = $args['siteDBPass'];
-        $siteDBHost = $args['siteDBHost'];
-        $siteDBType = $args['siteDBType'];
+        $siteDBName = (isset($args['siteDBName'])) ? $args['siteDBName'] : null;
+        $siteDBUname = (isset($args['siteDBUname'])) ? $args['siteDBUname'] : null;
+        $siteDBPass = (isset($args['siteDBPass'])) ? $args['siteDBPass'] : null;
+        $siteDBHost = (isset($args['siteDBHost'])) ? $args['siteDBHost'] : null;
+        $siteDBType = (isset($args['siteDBType'])) ? $args['siteDBType'] : null;
         try {
             $connect = new PDO("$siteDBType:host=$siteDBHost;dbname=$siteDBName", $siteDBUname, $siteDBPass);
         } catch (PDOException $e) {
@@ -86,7 +86,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function createTables($args)
     {
-
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
                 (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -153,7 +152,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function updateConfigValues($args)
     {
-
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
                 (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -161,50 +159,65 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $args['siteDBName'],
-                'siteDBUname' => $args['siteDBUname'],
-                'siteDBPass' => $args['siteDBPass'],
-                'siteDBHost' => $args['siteDBHost'],
-                'siteDBType' => $args['siteDBType']));
+					                 array('siteDBName' => $args['siteDBName'],
+							               'siteDBUname' => $args['siteDBUname'],
+							               'siteDBPass' => $args['siteDBPass'],
+							               'siteDBHost' => $args['siteDBHost'],
+							               'siteDBType' => $args['siteDBType']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
         $prefix = $args['siteDBPrefix'];
         // modify the site name
         $value = serialize($args['siteName']);
-        $sql = "UPDATE " . $prefix . "_module_vars set pn_value='$value' WHERE pn_modname='/PNConfig' AND z_name='sitename'";
+        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='sitename'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql  . "\n");
         }
         // modify the adminmail
         $value = serialize($args['siteAdminEmail']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/PNConfig' AND z_name='adminmail'";
+        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='adminmail'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql . "\n");
         }
         // modify the sessionCookieName
         $value = serialize('ZKSID_' . $args['siteDBName']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/PNConfig' AND z_name='sessionname'";
+        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='sessionname'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql . "\n");
         }
-        // modify the admin password
-        // get the encript hash method
-        $sql = "SELECT z_hash_method FROM " . $prefix . "_users WHERE z_uname='admin'";
-        $rs = $connect->query($sql);
+        // checks if the user that has been give as administrator exists
+        $sql = "SELECT z_uname,z_uid FROM " . $prefix . "_users WHERE z_uname='" . $args['siteAdminName'] . "'";
         $rs = $connect->query($sql)->fetch();
-        if (!$rs) {
-            return LogUtil::registerError($this->__('Error! Could not load items.'));
+        $password = UserUtil::getHashedPassword($args['siteAdminPwd']);
+        if ($rs['z_uname'] == '') {
+            $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
+            $nowUTCStr = $nowUTC->format(UserUtil::DATETIME_FORMAT);
+            // create administrator
+            $sql = "INSERT INTO " . $prefix . "_users (z_uname,z_email,z_pass,z_approved_date,z_user_regdate,z_activated) VALUES ('$args[siteAdminName]','$args[siteAdminEmail]','$password','$nowUTCStr','$nowUTCStr',1)";
+	        if (!$connect->query($sql)) {
+	            return LogUtil::registerError($this->__('Error creating the site administrator') . ":<br />" . $sql . "\n");
+	        }
+	        $sql = "SELECT z_uid FROM " . $prefix . "_users WHERE z_uname='" . $args['siteAdminName'] . "'";
+	        $rs = $connect->query($sql)->fetch();
+	        $uid = $rs['z_uid'];
+        } else {
+            // modify administrator password and email
+            $sql = "UPDATE " . $prefix . "_users SET z_pass='$password', z_email='$args[siteAdminEmail]' WHERE z_uname='$rs[z_uname]'";
+            if (!$connect->query($sql)) {
+                return LogUtil::registerError($this->__('Error creating the site administrator') . ":<br />" . $sql . "\n");
+            }
+            $uid = $rs['z_uid'];
         }
-        $hash_method = $rs['z_hash_method'];
-        // encript the passed password with the method found
-        $hashmethodsarray = ModUtil::apiFunc('Users', 'user', 'gethashmethods',
-                array('reverse' => true));
-        $password = DataUtil::hash($args['siteAdminPwd'], $hashmethodsarray[$hash_method]);
-        // change admin password
-        $sql = "UPDATE " . $prefix . "_users set z_pass='$password' WHERE z_uname='admin'";
-        if (!$connect->query($sql)) {
-            return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql . "\n");
+        // insert administrator in administrators group if it is not in it
+        $sql = "SELECT z_uid FROM " . $prefix . "_group_membership WHERE z_uid=$uid AND z_gid=2";
+        $rs = $connect->query($sql)->fetch();
+        if ($rs['z_uid'] == '') {
+            // user is not administrator and add it to the administrators group
+            $sql = "INSERT INTO " . $prefix . "_group_membership (z_uid,z_gid) VALUES ($uid,2)";
+            if (!$connect->query($sql)) {
+                return LogUtil::registerError($this->__('Error creating the site administrator') . ":<br />" . $sql . "\n");
+            }
         }
         return true;
     }
@@ -261,7 +274,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function createInstance($args)
     {
-
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
                 (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -272,7 +284,9 @@ class Multisites_Api_Admin extends Zikula_Api
         if ($args['siteDNS'] == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
-        $activationDate = DateUtil::getDatetime(time());
+        $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
+        $activationDate = $nowUTC->format(UserUtil::DATETIME_FORMAT);
+
         $item = array('instanceName' => DataUtil::formatForStore($args['instanceName']),
                 'description' => DataUtil::formatForStore($args['description']),
                 'siteName' => DataUtil::formatForStore($args['siteName']),
@@ -289,7 +303,7 @@ class Multisites_Api_Admin extends Zikula_Api
                 'siteDBType' => DataUtil::formatForStore($args['siteDBType']),
                 'siteDBPrefix' => DataUtil::formatForStore($args['siteDBPrefix']),
                 'siteInitModel' => DataUtil::formatForStore($args['siteInitModel']),
-                'activationDate' => DataUtil::formatForStore($args['activationDate']),
+                'activationDate' => DataUtil::formatForStore($activationDate),
                 'active' => DataUtil::formatForStore($args['active']));
         if (!DBUtil::insertObject($item, 'Multisites_sites', 'instanceId')) {
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
@@ -308,7 +322,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function createModel($args)
     {
-
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
                 (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -336,7 +349,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function deleteDatabase($args)
     {
-
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
                 (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -372,7 +384,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function deleteInstance($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -409,7 +420,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function getAllSiteModules($args)
     {
-
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
                 (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -453,7 +463,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function getSiteModule($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         // security check
@@ -485,8 +494,8 @@ class Multisites_Api_Admin extends Zikula_Api
         if (!$rs) {
             //return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
-        $item = array('name' => $rs[z_name],
-                'state' => $rs[z_state]);
+        $item = array('name' => $rs['z_name'],
+                      'state' => $rs['z_state']);
         return $item;
     }
 
@@ -498,7 +507,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function modifyActivation($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         $newState = FormUtil::getPassedValue('newState', isset($args['newState']) ? $args['newState'] : null, 'POST');
@@ -539,7 +547,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function getSiteTheme($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
         // security check
@@ -583,7 +590,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function deleteModel($args)
     {
-
         $modelId = FormUtil::getPassedValue('modelId', isset($args['modelId']) ? $args['modelId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -619,7 +625,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function deleteSiteModule($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         // security check
@@ -672,7 +677,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function createSiteModule($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         // security check
@@ -687,9 +691,21 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Not site found'));
         }
         $filemodules = ModUtil::apiFunc('Modules', 'admin', 'getfilemodules');
-        $module = $filemodules['modules/' . $moduleName];
-        $textual = array('url','name', 'displayname', 'description', 'directory', 'version', 'author', 'contact', 'credits', 'help', 'changelog', 'license', 'securityschema');
-        $exclude = array('oldnames', 'i18n', 'moddependencies', 'core_min', 'core_max',);
+        $fields = '';
+        $values = '';
+        $module = $filemodules[$moduleName];       
+        $textual = array('name',
+                         'displayname',
+                         'url',
+                         'description',
+                         'directory',
+                         'version',
+                         'capabilities',
+                         'securityschema',
+                         'core_min',
+                         'core_max',
+                         );
+        $exclude = array('oldnames', 'dependencies');
         foreach ($module as $key => $value) {
             if (!in_array($key, $exclude)) {
                 $fields .= 'z_' . $key . ',';
@@ -719,7 +735,7 @@ class Multisites_Api_Admin extends Zikula_Api
             ($values)";
         $rs = $connect->query($sql);
         if (!$rs) {
-            return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
+            return LogUtil::registerError($this->__('Error! Creation attempt failed.' . $sql));
         }
         return true;
     }
@@ -732,7 +748,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function deleteDir($args)
     {
-
         $dirName = FormUtil::getPassedValue('dirName', isset($args['dirName']) ? $args['dirName'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -881,7 +896,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function getAllSiteThemes($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -899,11 +913,11 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+					                 array('siteDBName' => $site['siteDBName'],
+					                       'siteDBHost' => $site['siteDBHost'],
+					                       'siteDBType' => $site['siteDBType'],
+					                       'siteDBUname' => $site['siteDBUname'],
+					                       'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -925,7 +939,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function deleteSiteTheme($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
         // security check
@@ -964,7 +977,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function createSiteTheme($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
         // security check
@@ -980,21 +992,33 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         $themes = ModUtil::apiFunc('Multisites', 'admin', 'getAllThemes');
         $theme = $themes[$themeName];
-        $textual = array('name', 'displayname', 'description', 'directory', 'version', 'author', 'contact', 'credits', 'help', 'changelog', 'license');
+        $textual = array('name',
+                         'displayname',
+                         'description',
+                         'directory',
+                         'version',
+                         'contact',
+                         );
+        $fields = '';
+        $values = '';
+        $exclude = array('official', 'author', 'credits', 'help', 'changelog', 'license');
         foreach ($theme as $key => $value) {
-            $fields .= 'z_' . $key . ',';
-            $apos = (in_array($key, $textual)) ? "'" : '';
-            $valueString = ($value == '') ? "''" : $apos . DataUtil::formatForStore($value) . $apos;
-            $values .= $valueString . ',';
+	        if (!in_array($key, $exclude)) {
+	            $fields .= 'z_' . $key . ',';
+	            $apos = (in_array($key, $textual)) ? "'" : '';
+	            $valueString = ($value == '') ? "''" : $apos . DataUtil::formatForStore($value) . $apos;
+	            $values .= $valueString . ',';
+	        }
         }
+
         $fields = substr($fields, 0, -1);
         $values = substr($values, 0, -1);
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -1005,7 +1029,7 @@ class Multisites_Api_Admin extends Zikula_Api
             ($values)";
         $rs = $connect->query($sql);
         if (!$rs) {
-            return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
+            return LogUtil::registerError($this->__('Error! Creation attempt failed.' . $sql));
         }
         return true;
     }
@@ -1018,7 +1042,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function getSiteDefaultTheme($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -1040,10 +1063,10 @@ class Multisites_Api_Admin extends Zikula_Api
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
-        $sql = "SELECT z_value FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars WHERE z_modname='/PNConfig' AND z_name='Default_Theme'";
+        $sql = "SELECT z_value FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars WHERE z_modname='/Config' AND z_name='Default_Theme'";
         $rs = $connect->query($sql)->fetch();
         if (!$rs) {
-            //return LogUtil::registerError($this->__('Error! Could not load items.'));
+            return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
         $defaultTheme = $rs['z_value'];
         return $defaultTheme;
@@ -1057,7 +1080,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function setAsDefaultTheme($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $name = FormUtil::getPassedValue('name', isset($args['name']) ? $args['name'] : null, 'GET');
         // security check
@@ -1081,7 +1103,7 @@ class Multisites_Api_Admin extends Zikula_Api
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
-        $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars SET z_value = '$value' WHERE z_modname='/PNConfig' AND z_name='Default_Theme'";
+        $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars SET z_value = '$value' WHERE z_modname='/Config' AND z_name='Default_Theme'";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
@@ -1097,7 +1119,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function updateInstance($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         $items = FormUtil::getPassedValue('items', isset($args['items']) ? $args['items'] : null, 'POST');
         // security check
@@ -1112,8 +1133,8 @@ class Multisites_Api_Admin extends Zikula_Api
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
-        $pntable = DBUtil::getTables();
-        $c = $pntable['Multisites_sites_column'];
+        $table = DBUtil::getTables();
+        $c = $table['Multisites_sites_column'];
         $where = "$c[instanceId] = $instanceId";
         if (!DBUTil::updateObject($items, 'Multisites_sites', $where)) {
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
@@ -1129,7 +1150,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function updateModel($args)
     {
-
         $modelId = FormUtil::getPassedValue('modelId', isset($args['modelId']) ? $args['modelId'] : null, 'POST');
         $items = FormUtil::getPassedValue('items', isset($args['items']) ? $args['items'] : null, 'POST');
         // security check
@@ -1144,8 +1164,8 @@ class Multisites_Api_Admin extends Zikula_Api
         if ($model == false) {
             return LogUtil::registerError($this->__('Model not found'));
         }
-        $pntable = DBUtil::getTables();
-        $c = $pntable['Multisites_models_column'];
+        $table = DBUtil::getTables();
+        $c = $table['Multisites_models_column'];
         $where = "$c[modelId] = $modelId";
         if (!DBUTil::updateObject($items, 'Multisites_models', $where)) {
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
@@ -1161,7 +1181,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function createAdministrator($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -1194,20 +1213,16 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // check if the super administrator exists
         $sql = "SELECT z_uid FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_users WHERE `z_uname`='" . $globalAdminName  . "'";
-        $rs = $connect->Execute($sql)->fetch();
-        if (!$rs) {
-            return LogUtil::registerError($this->__('Error! Getting global administrator values.'));
-        }
+        $rs = $connect->query($sql)->fetch();
         $uid = $rs['z_uid'];
+        // encript the password with the hash method
+        $password = UserUtil::getHashedPassword($globalAdminPassword);
         if ($uid == '') {
             // the user doesn't exists and create it
-            // get hash method and encript the password with the hash method
-            $method = ModUtil::getVar('Users', 'hash_method');
-            $methodNumberArray = ModUtil::apiFunc('Users','user','gethashmethods', array('reverse' => false));
-            $methodNumber = $methodNumberArray[$method];
-            $password = DataUtil::hash($globalAdminPassword, $method);
-            $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_users (z_uname, z_pass, z_email, z_hash_method, z_activated)
-                VALUES ('$globalAdminName','$password','$globalAdminemail',$methodNumber,1)";
+            $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
+            $nowUTCStr = $nowUTC->format(UserUtil::DATETIME_FORMAT);
+            $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_users (z_uname, z_pass, z_email, z_approved_date, z_user_regdate, z_activated)
+                    VALUES ('$globalAdminName','$password','$globalAdminemail','$nowUTCStr','$nowUTCStr',1)";
             $rs = $connect->query($sql);
             if (!$rs) {
                 return LogUtil::registerError($this->__('Error! Creating global administrator.'));
@@ -1243,6 +1258,12 @@ class Multisites_Api_Admin extends Zikula_Api
                     return LogUtil::registerError($this->__('Error! Adding global administrator as administrators group membership.'));
                 }
             }
+            // update global administrator password
+            $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_users SET z_pass='$password' WHERE z_uid=$uid";
+            $rs = $connect->query($sql);
+            if (!$rs) {
+               return LogUtil::registerError($this->__('Error! Updating global administrator password.'));
+            }
         }
         return true;
     }
@@ -1255,7 +1276,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function recoverAdminSiteControl($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -1303,7 +1323,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function saveSiteModules($args)
     {
-
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
                 (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -1334,7 +1353,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function deleteSiteModules($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -1357,7 +1375,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function updateSiteModules($args)
     {
-
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
@@ -1385,7 +1402,6 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function getNumberOfSites($args)
     {
-
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         $currentVersion = FormUtil::getPassedValue('currentVersion', isset($args['currentVersion']) ? $args['currentVersion'] : null, 'POST');
         // security check
@@ -1394,8 +1410,8 @@ class Multisites_Api_Admin extends Zikula_Api
                 ($_SERVER['HTTP_HOST'] != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
-        $pntable = DBUtil::getTables();
-        $c = $pntable['Multisites_sitesModules_column'];
+        $table = DBUtil::getTables();
+        $c = $table['Multisites_sitesModules_column'];
         $where = "$c[moduleName] = '$moduleName' AND $c[moduleVersion] < '$currentVersion'";
         $numberOfItems = DBUtil::selectObjectCount('Multisites_sitesModules', $where);
         if ($numberOfItems === false) {
@@ -1412,11 +1428,10 @@ class Multisites_Api_Admin extends Zikula_Api
      */
     public function getSitesThatNeedUpgrade($args)
     {
-
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         $currentVersion = FormUtil::getPassedValue('currentVersion', isset($args['currentVersion']) ? $args['currentVersion'] : null, 'POST');
-        $pntable = DBUtil::getTables();
-        $c = $pntable['Multisites_sitesModules_column'];
+        $table = DBUtil::getTables();
+        $c = $table['Multisites_sitesModules_column'];
         $where = "$c[moduleName] = '$moduleName' AND $c[moduleVersion] < $currentVersion";
         $sites = DBUtil::selectObjectArray('Multisites_sitesModules', $where);
         if ($sites === false) {

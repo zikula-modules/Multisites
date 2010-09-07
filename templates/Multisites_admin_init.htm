@@ -145,7 +145,7 @@
 	{elseif $step eq 4}
 		<h3>{gt text="Step 4 - Check if the file multisites_config.php is not writeable"}</h3>
 		<div style="margin: 20px;">
-			{if $fileWriteable}
+			{if isset($fileWriteable) AND $fileWriteable}
 				<div>
 					{img modname='core' src='error.gif' set='icons/extrasmall'}
 					{gt text="The file <strong>config/multisites_config.php</strong> is writeable and it should not be. Please set this file as not writeable."}
@@ -157,7 +157,7 @@
 				</div>
 			{/if}
 			<div style="text-align: center;">
-				{if !$fileWriteable}
+				{if !isset($fileWriteable) OR !$fileWriteable}
 					<form class="z-form" action="{modurl modname="Modules" type="admin" func="initialise"}" method="post" enctype="application/x-www-form-urlencoded">
 						<div>
 							<input type="hidden" name="authid" value="{secgenauthkey module="Modules"}" />
