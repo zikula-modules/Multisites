@@ -691,10 +691,19 @@ class Multisites_Controller_Admin extends Zikula_Controller
             LogUtil::registerError($this->__('The models folder is not writeable'));
             return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
         }
+        // get all the models for new instances
+        $models = ModUtil::apiFunc('Multisites', 'user', 'getAllModels');
+        $modelsFiles = array();
+        foreach ($models as $model) {
+            if (!in_array($model['fileName'], $modelsFiles)) {
+                $modelsFiles[$model['modelId']] = $model['fileName'];
+            }
+        }
         $this->view->assign('modelName', $modelName);
         $this->view->assign('modelDBTablesPrefix', $modelDBTablesPrefix);
         $this->view->assign('description', $description);
         $this->view->assign('folders', $folders);
+        $this->view->assign('modelsFiles', $modelsFiles);
         return $this->view->fetch('Multisites_admin_newModel.htm');
     }
 
@@ -711,6 +720,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
         $folders = FormUtil::getPassedValue('folders', isset($args['folders']) ? $args['folders'] : null, 'POST');
         $modelFile = FormUtil::getPassedValue('modelFile', isset($args['modelFile']) ? $args['modelFile'] : null, 'FILES');
         $modelDBTablesPrefix = FormUtil::getPassedValue('modelDBTablesPrefix', isset($args['modelDBTablesPrefix']) ? $args['modelDBTablesPrefix'] : null, 'POST');
+        $modelFileSelected = FormUtil::getPassedValue('modelFileSelected', isset($args['modelFileSelected']) ? $args['modelFileSelected'] : 0, 'POST');
+        
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
                 (FormUtil::getPassedValue('siteDNS', '', 'GET') != $GLOBALS['ZConfig']['Multisites']['mainSiteURL'] && $GLOBALS['ZConfig']['Multisites']['basedOnDomains'] == 0) ||
@@ -732,7 +743,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
         if ($modelDBTablesPrefix == null || $modelDBTablesPrefix == '') {
             $errorMsg .= $this->__('Error! Please provide the model database tables prefix. It is a mandatory field.<br />');
         }
-        if ($modelFile == null || $modelFile['name'] == '') {
+        if (($modelFile == null || $modelFile['name'] == '') && $modelFileSelected == '0') {
             $errorMsg .= $this->__('Error! Please provide the model file. It is a mandatory field.<br />');
         }
         // check if the models folders exists and it is writeable
@@ -740,28 +751,32 @@ class Multisites_Controller_Admin extends Zikula_Controller
         if (!is_writeable($path)) {
             $errorMsg .= $this->__('The models folder does not exists');
         }
-        if ($errorMsg == '') {
-            // check if the extension of the file is allowed
-            $file_extension = strtolower(substr(strrchr($modelFile['name'], "."), 1));
-            if ($file_extension != 'txt' && $file_extension != 'sql') {
-                $errorMsg = $this->__('The model file extension is not allowed. The only allowed extensions are txt and sql');
-            }
-        }
-        if ($errorMsg == '') {
-            // prepare file name
-            // replace spaces with _
-            // check if file name exists into the folder. In this case change the name
-            $fileName = str_replace(' ', '_', $modelFile['name']);
-            $fitxer = $fileName;
-            $i = 1;
-            while (file_exists($path . '/' . $fileName)) {
-                $fileName = substr($fitxer, 0, strlen($fitxer) - strlen($file_extension) - (1)) . $i . '.' . $file_extension;
-                $i++;
-            }
-            // update the file
-            if (!move_uploaded_file($modelFile['tmp_name'], $path . '/' . $fileName)) {
-                $errorMsg = $this->__(' Error updating file');
-            }
+        if ($modelFileSelected == '0') {
+	        if ($errorMsg == '') {
+	            // check if the extension of the file is allowed
+	            $file_extension = strtolower(substr(strrchr($modelFile['name'], "."), 1));
+	            if ($file_extension != 'txt' && $file_extension != 'sql') {
+	                $errorMsg = $this->__('The model file extension is not allowed. The only allowed extensions are txt and sql');
+	            }
+	        }
+	        if ($errorMsg == '') {
+	            // prepare file name
+	            // replace spaces with _
+	            // check if file name exists into the folder. In this case change the name
+	            $fileName = str_replace(' ', '_', $modelFile['name']);
+	            $fitxer = $fileName;
+	            $i = 1;
+	            while (file_exists($path . '/' . $fileName)) {
+	                $fileName = substr($fitxer, 0, strlen($fitxer) - strlen($file_extension) - (1)) . $i . '.' . $file_extension;
+	                $i++;
+	            }
+	            // update the file
+	            if (!move_uploaded_file($modelFile['tmp_name'], $path . '/' . $fileName)) {
+	                $errorMsg = $this->__(' Error updating file');
+	            }
+	        }
+        } else {
+            $fileName = $modelFileSelected;
         }
         if ($errorMsg == '') {
             //Update model information
@@ -870,8 +885,18 @@ class Multisites_Controller_Admin extends Zikula_Controller
         if (!SecurityUtil::confirmAuthKey()) {
             return LogUtil::registerAuthidError(ModUtil::url('Multisites', 'admin', 'main'));
         }
-        // delete file
-        $deleted = unlink($this->getVar('modelsFolder') . '/' . $model['fileName']);
+        // delete file if it is not needed for any model
+        // get all the models for new instances
+        $fileNeeded = false;
+        $models = ModUtil::apiFunc('Multisites', 'user', 'getAllModels');
+        foreach ($models as $m) {
+            if ($m['fileName'] == $model['fileName'] && $m['modelId'] != $model['modelId']) {
+                $fileNeeded = true;
+            }
+        }
+        if (!$fileNeeded) {
+            $deleted = unlink($this->getVar('modelsFolder') . '/' . $model['fileName']);
+        }
         // delete model information
         if (!ModUtil::apiFunc('Multisites', 'admin', 'deleteModel', array('modelId' => $model['modelId']))) {
             LogUtil::registerError($this->__('Error deleting the model'));
