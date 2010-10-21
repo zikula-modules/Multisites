@@ -47,10 +47,10 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBUname' => $args['siteDBUname'],
-                'siteDBPass' => $args['siteDBPass'],
-                'siteDBHost' => $args['siteDBHost'],
-                'siteDBType' => $args['siteDBType']));
+                                     array('siteDBUname' => $args['siteDBUname'],
+                                           'siteDBPass' => $args['siteDBPass'],
+                                           'siteDBHost' => $args['siteDBHost'],
+                                           'siteDBType' => $args['siteDBType']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -108,21 +108,17 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error opening the model file'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $args['siteDBName'],
-                'siteDBUname' => $args['siteDBUname'],
-                'siteDBPass' => $args['siteDBPass'],
-                'siteDBHost' => $args['siteDBHost'],
-                'siteDBType' => $args['siteDBType']));
+                                     array('siteDBName' => $args['siteDBName'],
+                                           'siteDBUname' => $args['siteDBUname'],
+                                           'siteDBPass' => $args['siteDBPass'],
+                                           'siteDBHost' => $args['siteDBHost'],
+                                           'siteDBType' => $args['siteDBType']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
         $lines = file($file);
         $exec = '';
         $done = false;
-
-        //if (!DBUtil::executeSQL(str_replace('z_', $dbprefix . '_', $exec))) {
-
-
         foreach ($lines as $line_num => $line) {
             $line = trim($line);
             if (empty($line) || strpos($line, '--') === 0)
@@ -171,6 +167,12 @@ class Multisites_Api_Admin extends Zikula_Api
         // modify the site name
         $value = serialize($args['siteName']);
         $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='sitename'";
+        if (!$connect->query($sql)) {
+            return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql  . "\n");
+        }
+        // modify the site description
+        $value = serialize($args['siteDescription']);
+        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='slogan'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql  . "\n");
         }
@@ -238,27 +240,27 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // get sites
         $sites = ModUtil::apiFunc('Multisites', 'user', 'getAllSites',
-                array('letter' => $letter,
-                'itemsperpage' => -1,
-                'startnum' => -1));
+                                   array('letter' => $letter,
+                                         'itemsperpage' => -1,
+                                         'startnum' => -1));
         if ($sites === false) {
             return false;
         }
         foreach ($sites as $site) {
             $databaseArray[$site['siteDNS']] = array('siteDBName' => $site['siteDBName'],
-                    'siteDBHost' => $site['siteDBHost'],
-                    'siteDBType' => $site['siteDBType'],
-                    'siteDBUname' => $site['siteDBUname'],
-                    'siteDBPass' => $site['siteDBPass'],
-                    'siteDBPrefix' => $site['siteDBPrefix']);
+                                                     'siteDBHost' => $site['siteDBHost'],
+                                                     'siteDBType' => $site['siteDBType'],
+                                                     'siteDBUname' => $site['siteDBUname'],
+                                                     'siteDBPass' => $site['siteDBPass'],
+                                                     'siteDBPrefix' => $site['siteDBPrefix']);
         }
         // add the site that is being created in this moment
         $databaseArray[$args['siteDNS']] = array('siteDBName' => $args['siteDBName'],
-                'siteDBHost' => $args['siteDBHost'],
-                'siteDBType' => $args['siteDBType'],
-                'siteDBUname' => $args['siteDBUname'],
-                'siteDBPass' => $args['siteDBPass'],
-                'siteDBPrefix' => $args['siteDBPrefix']);
+                                                 'siteDBHost' => $args['siteDBHost'],
+                                                 'siteDBType' => $args['siteDBType'],
+                                                 'siteDBUname' => $args['siteDBUname'],
+                                                 'siteDBPass' => $args['siteDBPass'],
+                                                 'siteDBPrefix' => $args['siteDBPrefix']);
         // write file
         $dbconfig = var_export($databaseArray, true);
         $phpCode = "<?php\n\$databaseArray = $dbconfig;";
@@ -288,29 +290,30 @@ class Multisites_Api_Admin extends Zikula_Api
         $activationDate = $nowUTC->format(UserUtil::DATETIME_FORMAT);
 
         $item = array('instanceName' => DataUtil::formatForStore($args['instanceName']),
-                'description' => DataUtil::formatForStore($args['description']),
-                'siteName' => DataUtil::formatForStore($args['siteName']),
-                'siteAdminName' => DataUtil::formatForStore($args['siteAdminName']),
-                'siteAdminPwd' => DataUtil::formatForStore($args['siteAdminPwd']),
-                'siteAdminRealName' => DataUtil::formatForStore($args['siteAdminRealName']),
-                'siteAdminEmail' => DataUtil::formatForStore($args['siteAdminEmail']),
-                'siteCompany' => DataUtil::formatForStore($args['siteCompany']),
-                'siteDNS' => DataUtil::formatForStore($args['siteDNS']),
-                'siteDBName' => DataUtil::formatForStore($args['siteDBName']),
-                'siteDBUname' => DataUtil::formatForStore($args['siteDBUname']),
-                'siteDBPass' => DataUtil::formatForStore($args['siteDBPass']),
-                'siteDBHost' => DataUtil::formatForStore($args['siteDBHost']),
-                'siteDBType' => DataUtil::formatForStore($args['siteDBType']),
-                'siteDBPrefix' => DataUtil::formatForStore($args['siteDBPrefix']),
-                'siteInitModel' => DataUtil::formatForStore($args['siteInitModel']),
-                'activationDate' => DataUtil::formatForStore($activationDate),
-                'active' => DataUtil::formatForStore($args['active']));
+                      'description' => DataUtil::formatForStore($args['description']),
+                      'siteName' => DataUtil::formatForStore($args['siteName']),
+                      'siteDescription' => DataUtil::formatForStore($args['siteDescription']),
+                      'siteAdminName' => DataUtil::formatForStore($args['siteAdminName']),
+                      'siteAdminPwd' => DataUtil::formatForStore($args['siteAdminPwd']),
+                      'siteAdminRealName' => DataUtil::formatForStore($args['siteAdminRealName']),
+                      'siteAdminEmail' => DataUtil::formatForStore($args['siteAdminEmail']),
+                      'siteCompany' => DataUtil::formatForStore($args['siteCompany']),
+                      'siteDNS' => DataUtil::formatForStore($args['siteDNS']),
+                      'siteDBName' => DataUtil::formatForStore($args['siteDBName']),
+                      'siteDBUname' => DataUtil::formatForStore($args['siteDBUname']),
+                      'siteDBPass' => DataUtil::formatForStore($args['siteDBPass']),
+                      'siteDBHost' => DataUtil::formatForStore($args['siteDBHost']),
+                      'siteDBType' => DataUtil::formatForStore($args['siteDBType']),
+                      'siteDBPrefix' => DataUtil::formatForStore($args['siteDBPrefix']),
+                      'siteInitModel' => DataUtil::formatForStore($args['siteInitModel']),
+                      'activationDate' => DataUtil::formatForStore($activationDate),
+                      'active' => DataUtil::formatForStore($args['active']));
         if (!DBUtil::insertObject($item, 'Multisites_sites', 'instanceId')) {
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
         }
         // Let any hooks know that we have created a new item
         $this->callHooks('item', 'create', $item['instanceId'],
-                array('module' => 'Multisites'));
+                          array('module' => 'Multisites'));
         return $item['instanceId'];
     }
 
@@ -329,15 +332,16 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $item = array('modelName' => $args['modelName'],
-                'description' => $args['description'],
-                'fileName' => $args['fileName'],
-                'folders' => $args['folders'],
-                'modelDBTablesPrefix' => $args['modelDBTablesPrefix']);
+                      'description' => $args['description'],
+                      'fileName' => $args['fileName'],
+                      'folders' => $args['folders'],
+                      'modelDBTablesPrefix' => $args['modelDBTablesPrefix']);
         if (!DBUtil::insertObject($item, 'Multisites_models', 'modelId')) {
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
         }
         // Let any hooks know that we have created a new item
-        $this->callHooks('item', 'create', $item['modelId'], array('module' => 'Multisites'));
+        $this->callHooks('item', 'create', $item['modelId'],
+                          array('module' => 'Multisites'));
         return $item['modelId'];
     }
 
@@ -356,10 +360,10 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBUname' => $args['siteDBUname'],
-                'siteDBPass' => $args['siteDBPass'],
-                'siteDBHost' => $args['siteDBHost'],
-                'siteDBType' => $args['siteDBType']));
+                                     array('siteDBUname' => $args['siteDBUname'],
+                                           'siteDBPass' => $args['siteDBPass'],
+                                           'siteDBHost' => $args['siteDBHost'],
+                                           'siteDBType' => $args['siteDBType']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -397,7 +401,7 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         //Get instance information
         $instance = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                      array('instanceId' => $instanceId));
         if ($instance == false) {
             LogUtil::registerError($this->__('Not site found'));
             return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
@@ -408,7 +412,7 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // Let any hooks know that we have created a new item
         $this->callHooks('item', 'delete', $item['instanceId'],
-                array('module' => 'Multisites'));
+                          array('module' => 'Multisites'));
         return true;
     }
 
@@ -432,16 +436,16 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $args['instanceId']));
+                                  array('instanceId' => $args['instanceId']));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass'],
-                'siteDBHost' => $site['siteDBHost']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass'],
+                                           'siteDBHost' => $site['siteDBHost']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -449,8 +453,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $sql = "SELECT z_name, z_state, z_version FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules";
         foreach ($connect->query($sql) as $row) {
             $items[$row['z_name']] = array('name' => $row['z_name'],
-                    'state' => $row['z_state'],
-                    'version' => $row['z_version']);
+                                           'state' => $row['z_state'],
+                                           'version' => $row['z_version']);
         }
         return $items;
     }
@@ -476,16 +480,16 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -517,16 +521,16 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -564,11 +568,11 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -578,7 +582,7 @@ class Multisites_Api_Admin extends Zikula_Api
             //return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
         $item = array('name' => $rs['z_name'],
-                'state' => $rs['z_state']);
+                      'state' => $rs['z_state']);
         return $item;
     }
 
@@ -603,7 +607,7 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         //Get instance information
         $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById',
-                array('modelId' => $modelId));
+                                   array('modelId' => $modelId));
         if ($model == false) {
             return LogUtil::registerError($this->__('Model not found'));
         }
@@ -613,7 +617,7 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // Let any hooks know that we have created a new item
         $this->callHooks('item', 'delete', $item['modelId'],
-                array('module' => 'Multisites'));
+                          array('module' => 'Multisites'));
         return true;
     }
 
@@ -634,28 +638,28 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
         //get module information
         $siteModule = ModUtil::apiFunc('Multisites', 'admin', 'getSiteModule',
-                array('moduleName' => $moduleName,
-                'instanceId' => $instanceId));
+                                        array('moduleName' => $moduleName,
+                                              'instanceId' => $instanceId));
         if ($siteModule['state'] == 3) {
             ModUtil::apiFunc('Multisites', 'admin', 'modifyActivation',
-                    array('moduleName' => $moduleName,
-                    'instanceId' => $instanceId,
-                    'newState' => 2));
+                              array('moduleName' => $moduleName,
+                                    'instanceId' => $instanceId,
+                                    'newState' => 2));
             return true;
         }
         if ($siteModule['state'] == 2) {
@@ -686,7 +690,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
@@ -705,7 +709,8 @@ class Multisites_Api_Admin extends Zikula_Api
                          'core_min',
                          'core_max',
                          );
-        $exclude = array('oldnames', 'dependencies');
+        $exclude = array('oldnames',
+                         'dependencies');
         foreach ($module as $key => $value) {
             if (!in_array($key, $exclude)) {
                 $fields .= 'z_' . $key . ',';
@@ -720,11 +725,11 @@ class Multisites_Api_Admin extends Zikula_Api
         $fields .= ',z_state';
         $values .= ',1';
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -761,7 +766,7 @@ class Multisites_Api_Admin extends Zikula_Api
                 if ($file != '.' && $file != '..') {
                     if (is_dir($dirName . '/' . $file)) {
                         ModUtil::apiFunc('Multisites', 'admin', 'deleteDir',
-                                array('dirName' => $dirName . '/' . $file));
+                                          array('dirName' => $dirName . '/' . $file));
                     } else {
                         if (!@unlink($dirName . '/' . $file)) {
                             return LogUtil::registerError($this->__('Error deleting file') . ': ' . $dirName . '/' . $file);
@@ -816,21 +821,6 @@ class Multisites_Api_Admin extends Zikula_Api
                     // anything else isn't a theme
                     continue;
                 }
-                /*
-            // include language file for ML displaynames and descriptions
-            $defaultlang = ZConfigGetVar('language');
-            if (empty($defaultlang)) {
-                $defaultlang = 'eng';
-            }
-            $currentlang = DataUtil::formatForOS(UserUtil::getLang());
-            $possiblelanguagefiles = array("themes/$dir/lang/$currentlang/version.php", "themes/$dir/lang/$defaultlang/version.php", "themes/$dir/lang/eng/version.php");
-            foreach ($possiblelanguagefiles as $languagefile) {
-                if (file_exists($languagefile) && is_readable($languagefile)) {
-                    include_once $languagefile;
-                    break;
-                }
-            }
-                */
                 // Get some defaults in case we don't have a theme version file
                 $themeversion['name'] = preg_replace('/_/', ' ', $dir);
                 $themeversion['displayname'] = preg_replace('/_/', ' ', $dir);
@@ -908,7 +898,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
@@ -948,16 +938,16 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -986,7 +976,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
@@ -1001,7 +991,12 @@ class Multisites_Api_Admin extends Zikula_Api
                          );
         $fields = '';
         $values = '';
-        $exclude = array('official', 'author', 'credits', 'help', 'changelog', 'license');
+        $exclude = array('official',
+                         'author',
+                         'credits',
+                         'help',
+                         'changelog',
+                         'license');
         foreach ($theme as $key => $value) {
 	        if (!in_array($key, $exclude)) {
 	            $fields .= 'z_' . $key . ',';
@@ -1050,16 +1045,16 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -1089,17 +1084,17 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $value = serialize($name);
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -1129,7 +1124,7 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // get site information
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
@@ -1160,7 +1155,7 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // get model information
         $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById',
-                array('modelId' => $modelId));
+                                   array('modelId' => $modelId));
         if ($model == false) {
             return LogUtil::registerError($this->__('Model not found'));
         }
@@ -1198,16 +1193,16 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // get site information
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -1285,16 +1280,16 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // get site information
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+                                  array('instanceId' => $instanceId));
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
-                array('siteDBName' => $site['siteDBName'],
-                'siteDBHost' => $site['siteDBHost'],
-                'siteDBType' => $site['siteDBType'],
-                'siteDBUname' => $site['siteDBUname'],
-                'siteDBPass' => $site['siteDBPass']));
+                                     array('siteDBName' => $site['siteDBName'],
+                                           'siteDBHost' => $site['siteDBHost'],
+                                           'siteDBType' => $site['siteDBType'],
+                                           'siteDBUname' => $site['siteDBUname'],
+                                           'siteDBPass' => $site['siteDBPass']));
         if (!$connect) {
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
@@ -1331,12 +1326,12 @@ class Multisites_Api_Admin extends Zikula_Api
         }
         // get all the modules available in site
         $siteModules = ModUtil::apiFunc('Multisites', 'admin', 'getAllSiteModules',
-                array('instanceId' => $args['instanceId']));
+                                         array('instanceId' => $args['instanceId']));
         // save all modules in database
         foreach($siteModules as $module) {
             $item = array('instanceId' => $args['instanceId'],
-                    'moduleName' => $module['name'],
-                    'moduleVersion' => $module['version']);
+                          'moduleName' => $module['name'],
+                          'moduleVersion' => $module['version']);
             if (!DBUtil::insertObject($item, 'Multisites_sitesModules', 'smId')) {
                 return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
             }

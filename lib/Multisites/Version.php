@@ -11,7 +11,7 @@ class Multisites_Version extends Zikula_Version
     public function getMetaData()
     {
         $meta = array();
-        $meta['version'] = '1.0.0';
+        $meta['version'] = '1.0.1';
         $meta['description'] = $this->__('Zikula Multisites module');
         $meta['displayname'] = $this->__('Multisites manager');
         $meta['url'] = $this->__('multisites');
