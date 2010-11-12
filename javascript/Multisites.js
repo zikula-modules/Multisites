@@ -5,26 +5,26 @@
  * @return:	site module state information
 */
 function modifyActivation(moduleName,instanceId,newState){
-	var pars = "module=Multisites&func=modifyActivation&moduleName=" + moduleName + "&instanceId=" + instanceId + "&newState=" + newState;
-	Element.update('module_' + moduleName, '<img src="images/ajax/circle-ball-dark-antialiased.gif">');
-	var myAjax = new Ajax.Request("ajax.php", 
-	{
-		method: 'get', 
-		parameters: pars, 
-		onComplete: modifyActivation_response,
-		onFailure: modifyActivation_failure
-	});
+    var pars = "module=Multisites&func=modifyActivation&moduleName=" + moduleName + "&instanceId=" + instanceId + "&newState=" + newState;
+    Element.update('module_' + moduleName, '<img src="images/ajax/circle-ball-dark-antialiased.gif">');
+    var myAjax = new Zikula.Ajax.Request("ajax.php",
+    {
+        method: 'post',
+        parameters: pars,
+        onComplete: modifyActivation_response,
+        onFailure: modifyActivation_failure
+    });
 }
 
 function modifyActivation_response(req){
     // show error if necessary
-	if (req.status != 200 ) { 
-		pnshowajaxerror(req.responseText);
-		return;
-	}
-	var json = pndejsonize(req.responseText);
-	
-	Element.update('module_' + json.moduleName, json.content);
+    if (req.status != 200 ) {
+        pnshowajaxerror(req.responseText);
+        return;
+    }
+    var json = pndejsonize(req.responseText);
+
+    Element.update('module_' + json.moduleName, json.content);
 }
 
 function modifyActivation_failure(){
@@ -37,26 +37,25 @@ function modifyActivation_failure(){
  * @return:	site module state information
 */
 function allowModule(moduleName,instanceId){
-	var pars = "module=Multisites&func=allowModule&moduleName=" + moduleName + "&instanceId=" + instanceId;
-	Element.update('module_' + moduleName, '<img src="images/ajax/circle-ball-dark-antialiased.gif">');
-	var myAjax = new Ajax.Request("ajax.php", 
-	{
-		method: 'get', 
-		parameters: pars, 
-		onComplete: allowModule_response,
-		onFailure: allowModule_failure
-	});
+    var pars = "module=Multisites&func=allowModule&moduleName=" + moduleName + "&instanceId=" + instanceId;
+    Element.update('module_' + moduleName, '<img src="images/ajax/circle-ball-dark-antialiased.gif">');
+    var myAjax = new Zikula.Ajax.Request("ajax.php",
+    {
+        method: 'post',
+        parameters: pars,
+        onComplete: allowModule_response,
+        onFailure: allowModule_failure
+    });
 }
 
 function allowModule_response(req){
     // show error if necessary
-	if (req.status != 200 ) { 
-		pnshowajaxerror(req.responseText);
-		return;
-	}
-	var json = pndejsonize(req.responseText);
-	
-	Element.update('module_' + json.moduleName, json.content);
+    if (req.status != 200 ) {
+        pnshowajaxerror(req.responseText);
+        return;
+    }
+    var json = pndejsonize(req.responseText);
+    Element.update('module_' + json.moduleName, json.content);
 }
 
 function allowModule_failure(){
@@ -69,26 +68,26 @@ function allowModule_failure(){
  * @return:	site theme state information
 */
 function allowTheme(themeName,instanceId){
-	var pars = "module=Multisites&func=allowTheme&themeName=" + themeName + "&instanceId=" + instanceId;
-	Element.update('theme_' + themeName, '<img src="images/ajax/circle-ball-dark-antialiased.gif">');
-	var myAjax = new Ajax.Request("ajax.php", 
-	{
-		method: 'get', 
-		parameters: pars, 
-		onComplete: allowTheme_response,
-		onFailure: allowTheme_failure
-	});
+    var pars = "module=Multisites&func=allowTheme&themeName=" + themeName + "&instanceId=" + instanceId;
+    Element.update('theme_' + themeName, '<img src="images/ajax/circle-ball-dark-antialiased.gif">');
+    var myAjax = new Zikula.Ajax.Request("ajax.php",
+    {
+        method: 'post',
+        parameters: pars,
+        onComplete: allowTheme_response,
+        onFailure: allowTheme_failure
+    });
 }
 
 function allowTheme_response(req){
     // show error if necessary
-	if (req.status != 200 ) { 
-		pnshowajaxerror(req.responseText);
-		return;
-	}
-	var json = pndejsonize(req.responseText);
-	
-	Element.update('theme_' + json.themeName, json.content);
+    if (req.status != 200 ) {
+        pnshowajaxerror(req.responseText);
+        return;
+    }
+    var json = pndejsonize(req.responseText);
+
+    Element.update('theme_' + json.themeName, json.content);
 }
 
 function allowTheme_failure(){
@@ -109,9 +108,9 @@ function actualize(){
 	}
 	var pars = "module=Multisites&func=actualize&modules=" + modulesString;
 	//Element.update('theme_' + themeName, '<img src="images/ajax/circle-ball-dark-antialiased.gif">');
-	var myAjax = new Ajax.Request("ajax.php", 
+	var myAjax = new Zikula.Ajax.Request("ajax.php",
 	{
-		method: 'get', 
+		method: 'post',
 		parameters: pars, 
 		onComplete: actualize_response,
 		onFailure: actualize_failure
@@ -128,8 +127,8 @@ function actualize_response(req){
 	Element.update('content', json.content);
 	if (json.stop != 1) {
 		var pars = "module=Multisites&func=actualize&modules=" + json.modules + "&id=" + json.id;
-		var myAjax = new Ajax.Request("ajax.php", {
-			method: 'get',
+		var myAjax = new Zikula.Ajax.Request("ajax.php", {
+			method: 'post',
 			parameters: pars,
 			onComplete: actualize_response,
 			onFailure: actualize_failure

@@ -1,7 +1,7 @@
 {include file="Multisites_admin_menu.htm"}
 <div class="z-admincontainer">
     <div class="z-adminpageicon">{img modname='core' src='edit.gif' set='icons/large'}</div>
-    <h2>{gt text="Create a new instance"}</h2>
+    <h2>{gt text="Edit an instance"}</h2>
     <form id="editInstance" class="z-form" action="{modurl modname="Multisites" type="admin" func="update"}" method="post" >
         <input type="hidden" name="authid" value="{secgenauthkey module="Multisites"}" />
         <input type="hidden" name="instanceId" value="{$site.instanceId}" />
@@ -44,18 +44,16 @@
         <div class="z-formrow">
             <label for="siteDNS">{gt text="Based on model"}</label>
             <input class="notEditableField" onfocus="blur()" type="text" value="{$site.siteInitModel}" />
-		</div>
+        </div>
         <div class="z-formrow">
             <label for="active">{gt text="Active"}</label>
             <input type="checkbox"{if $site.active eq 1}checked{/if} name="active" value="1" />
         </div>
         <div class="z-formbuttons">
-			<a href="javascript:editInstance()">
-				{img modname='core' src='button_ok.gif' set='icons/small' __alt="Edit" __title="Edit"}
-	        </a>
-	        <a href="{modurl modname="Multisites" type="admin" func="main"}">
-	            {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
-			</a>
+        {button src='button_ok.gif' set='icons/small' __alt="Edit" __title="Edit"}
+        <a href="{modurl modname="Multisites" type="admin" func="main"}">
+            {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
+        </a>
         </div>
     </form>
 </div>

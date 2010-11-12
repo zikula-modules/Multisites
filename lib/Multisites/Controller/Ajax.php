@@ -16,39 +16,40 @@ class Multisites_Controller_Ajax extends Zikula_Controller
     public function modifyActivation($args)
     {
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            AjaxUtil::error(DataUtil::formatForDisplayHTML($this->__('Sorry! No authorization to access this module.')));
+            LogUtil::registerPermissionError(null,true);
+            throw new Zikula_Exception_Forbidden();
         }
-
-        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'GET');
+/*
+        if (!SecurityUtil::confirmAuthKey()) {
+            LogUtil::registerAuthidError();
+            throw new Zikula_Exception_Fatal();
+        }
+*/
+        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'POST');
         if ($instanceId == -1) {
-            LogUtil::registerError('no instanceId value received');
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('no instanceId value received.'));
         }
 
-        $moduleName = FormUtil::getPassedValue('moduleName', -1, 'GET');
+        $moduleName = FormUtil::getPassedValue('moduleName', -1, 'POST');
         if ($moduleName == -1) {
-            LogUtil::registerError('no module name received');
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('no module name received.'));
         }
 
-        $newState = FormUtil::getPassedValue('newState', -1, 'GET');
+        $newState = FormUtil::getPassedValue('newState', -1, 'POST');
         if ($newState == -1) {
-            LogUtil::registerError('none new state received');
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('none new state received.'));
         }
 
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                 array('instanceId' => $instanceId));
         if ($site == false) {
-            LogUtil::registerError($this->__('Not site found'));
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('Not site found.'));
         }
         if (!ModUtil::apiFunc('Multisites', 'admin', 'modifyActivation',
         array('instanceId' => $instanceId,
         'moduleName' => $moduleName,
         'newState' => $newState))) {
-            LogUtil::registerError('error changing module state');
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('error changing module state.'));
         }
 
         $siteModules = ModUtil::apiFunc('Multisites', 'admin', 'getAllSiteModules',
@@ -61,8 +62,8 @@ class Multisites_Controller_Ajax extends Zikula_Controller
                 'siteModules' => $siteModules,
                 'instanceId' => $instanceId));
 
-        AjaxUtil::output(array('content' => $icons,
-                'moduleName' => $moduleName));
+        return new Zikula_Response_Ajax(array('content' => $icons,
+                                              'moduleName' => $moduleName));
     }
 
     /**
@@ -74,23 +75,22 @@ class Multisites_Controller_Ajax extends Zikula_Controller
     public function allowModule($args)
     {
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            AjaxUtil::error(DataUtil::formatForDisplayHTML($this->__('Sorry! No authorization to access this module.')));
+            LogUtil::registerPermissionError(null,true);
+            throw new Zikula_Exception_Forbidden();
         }
-        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'GET');
+
+        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'POST');
         if ($instanceId == -1) {
-            LogUtil::registerError('no instanceId value received');
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('no instanceId value received.'));
         }
-        $moduleName = FormUtil::getPassedValue('moduleName', -1, 'GET');
+        $moduleName = FormUtil::getPassedValue('moduleName', -1, 'POST');
         if ($moduleName == -1) {
-            LogUtil::registerError('no module name received');
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('no module name received.'));
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                 array('instanceId' => $instanceId));
         if ($site == false) {
-            LogUtil::registerError($this->__('Not site found'));
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('Not site found.'));
         }
         //get site module
         $module = ModUtil::apiFunc('Multisites', 'admin', 'getSiteModule',
@@ -102,8 +102,7 @@ class Multisites_Controller_Ajax extends Zikula_Controller
             array('instanceId' => $instanceId,
             'moduleName' => $moduleName,
             'newState' => 2))) {
-                LogUtil::registerError('error changing module state');
-                AjaxUtil::output();
+                AjaxUtil::error($this->__('error changing module state.'));
             }
         } elseif ($module['state'] == 2 || $module['state'] == 3) {
             //set the module as not allowed
@@ -111,24 +110,21 @@ class Multisites_Controller_Ajax extends Zikula_Controller
             array('instanceId' => $instanceId,
             'moduleName' => $moduleName,
             'newState' => 6))) {
-                LogUtil::registerError('error changing module state');
-                AjaxUtil::output();
+                AjaxUtil::error($this->__('error changing module state.'));
             }
         } elseif ($module['state'] == '') {
             //create module
             if (!ModUtil::apiFunc('Multisites', 'admin', 'createSiteModule',
             array('instanceId' => $instanceId,
             'moduleName' => $moduleName))) {
-                LogUtil::registerError('error creating module');
-                AjaxUtil::output();
+                AjaxUtil::error($this->__('error creating module.'));
             }
         } else {
             //get site module
             if (!ModUtil::apiFunc('Multisites', 'admin', 'deleteSiteModule',
             array('instanceId' => $instanceId,
             'moduleName' => $moduleName))) {
-                LogUtil::registerError('error deleting module');
-                AjaxUtil::output();
+                AjaxUtil::error($this->__('error deleting module.'));
             }
         }
         $siteModules = ModUtil::apiFunc('Multisites', 'admin', 'getAllSiteModules',
@@ -139,8 +135,9 @@ class Multisites_Controller_Ajax extends Zikula_Controller
                 'available' => $available,
                 'siteModules' => $siteModules,
                 'instanceId' => $instanceId));
-        AjaxUtil::output(array('content' => $icons,
-                'moduleName' => $moduleName));
+
+        return new Zikula_Response_Ajax(array('content' => $icons,
+                                              'moduleName' => $moduleName));
     }
 
     /**
@@ -152,23 +149,22 @@ class Multisites_Controller_Ajax extends Zikula_Controller
     public function allowTheme($args)
     {
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            AjaxUtil::error(DataUtil::formatForDisplayHTML($this->__('Sorry! No authorization to access this module.')));
+            LogUtil::registerPermissionError(null,true);
+            throw new Zikula_Exception_Forbidden();
         }
-        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'GET');
+
+        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'POST');
         if ($instanceId == -1) {
-            LogUtil::registerError('no instanceId value received');
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('no instanceId value received.'));
         }
-        $themeName = FormUtil::getPassedValue('themeName', -1, 'GET');
+        $themeName = FormUtil::getPassedValue('themeName', -1, 'POST');
         if ($themeName == -1) {
-            LogUtil::registerError('no theme name received');
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('no theme name received.'));
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                 array('instanceId' => $instanceId));
         if ($site == false) {
-            LogUtil::registerError($this->__('Not site found'));
-            AjaxUtil::output();
+            AjaxUtil::error($this->__('Not site found.'));
         }
         //get site module
         $theme = ModUtil::apiFunc('Multisites', 'admin', 'getSiteTheme',
@@ -179,16 +175,14 @@ class Multisites_Controller_Ajax extends Zikula_Controller
             if (!ModUtil::apiFunc('Multisites', 'admin', 'createSiteTheme',
             array('instanceId' => $instanceId,
             'themeName' => $themeName))) {
-                LogUtil::registerError('error creating theme');
-                AjaxUtil::output();
+                AjaxUtil::error($this->__('error creating theme.'));
             }
         } else {
             //get site module
             if (!ModUtil::apiFunc('Multisites', 'admin', 'deleteSiteTheme',
             array('instanceId' => $instanceId,
             'themeName' => $themeName))) {
-                LogUtil::registerError('error deleting theme');
-                AjaxUtil::output();
+                AjaxUtil::error($this->__('error deleting theme.'));
             }
         }
         $siteThemes = ModUtil::apiFunc('Multisites', 'admin', 'getAllSiteThemes',
@@ -199,7 +193,8 @@ class Multisites_Controller_Ajax extends Zikula_Controller
                 'available' => $available,
                 'siteThemes' => $siteThemes,
                 'instanceId' => $instanceId));
-        AjaxUtil::output(array('content' => $icons,
-                'themeName' => $themeName));
+
+        return new Zikula_Response_Ajax(array('content' => $icons,
+                                              'themeName' => $themeName));
     }
 }
