@@ -25,10 +25,10 @@ class Multisites_Installer extends Zikula_Installer
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        
+
         // create the models folder
         // check if the sitesFilesFolder exists
-        $path = (isset($GLOBALS['ZConfig']['Multisites']['filesRealPath']) ? $GLOBALS['ZConfig']['Multisites']['filesRealPath'] : '');
+        $path = (isset($this->serviceManager['multisites.filesRealPath']) ? $this->serviceManager['multisites.filesRealPath'] : '');
         if ($path == '') {
             LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Check your configuration values.'));
             return false;
@@ -51,7 +51,7 @@ class Multisites_Installer extends Zikula_Installer
             }
         }
         // create the data folder
-        $path .= $GLOBALS['ZConfig']['Multisites']['siteFilesFolder'];
+        $path .= $this->serviceManager['multisites.siteFilesFolder'];
         if (!file_exists($path)) {
             if (!mkdir($path, 0777)) {
                 LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
@@ -92,41 +92,41 @@ class Multisites_Installer extends Zikula_Installer
         $this->setVar('globalAdminemail', '');
         return true;
     }
-	/**
-	 * Delete the Multisites module
-	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
-	 * @return bool true if successful, false otherwise
-	 */
-	public function uninstall()
-	{
-	    // Delete module table
-	    DBUtil::dropTable('Multisites_sites');
-	    DBUtil::dropTable('Multisites_access');
-	    DBUtil::dropTable('Multisites_models');
-	    DBUtil::dropTable('Multisites_sitesModules');
-	
-	    //Delete module vars
-	    $this->delVar('modelsFolder');
-	    $this->delVar('tempAccessFileContent');
-	    $this->delVar('globalAdminName');
-	    $this->delVar('globalAdminPassword');
-	    $this->delVar('globalAdminemail');
-	
-	    //Deletion successfull
-	    return true;
-	}
-	
-	/**
-	 * Update the Multisites module
-	 * @author Albert Pérez Monfort (aperezm@xtec.cat)
-	 * @return bool true if successful, false otherwise
-	 */
-	public function upgrade($oldversion)
-	{
-	    if (!DBUtil::changeTable('Multisites_sites')) return false;
-	    if (!DBUtil::changeTable('Multisites_access')) return false;
-	    if (!DBUtil::changeTable('Multisites_models')) return false;
-	    if (!DBUtil::changeTable('Multisites_sitesModules')) return false;
-	    return true;
-	}
+    /**
+     * Delete the Multisites module
+     * @author Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return bool true if successful, false otherwise
+     */
+    public function uninstall()
+    {
+        // Delete module table
+        DBUtil::dropTable('Multisites_sites');
+        DBUtil::dropTable('Multisites_access');
+        DBUtil::dropTable('Multisites_models');
+        DBUtil::dropTable('Multisites_sitesModules');
+
+        //Delete module vars
+        $this->delVar('modelsFolder');
+        $this->delVar('tempAccessFileContent');
+        $this->delVar('globalAdminName');
+        $this->delVar('globalAdminPassword');
+        $this->delVar('globalAdminemail');
+
+        //Deletion successfull
+        return true;
+    }
+
+    /**
+     * Update the Multisites module
+     * @author Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return bool true if successful, false otherwise
+     */
+    public function upgrade($oldversion)
+    {
+        if (!DBUtil::changeTable('Multisites_sites')) return false;
+        if (!DBUtil::changeTable('Multisites_access')) return false;
+        if (!DBUtil::changeTable('Multisites_models')) return false;
+        if (!DBUtil::changeTable('Multisites_sitesModules')) return false;
+        return true;
+    }
 }
