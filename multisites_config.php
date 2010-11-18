@@ -15,9 +15,10 @@ $ZConfig['Multisites']['multisites.siteTempFilesFolder'] = '$siteTempFilesFolder
 $ZConfig['Multisites']['multisites.siteFilesFolder'] = '$siteFilesFolder'; // name for the files' folder
 $ZConfig['Multisites']['multisites.wwwroot'] = '$wwwroot'; // set the root for the multizikula installation
 $ZConfig['Multisites']['multisites.basedOnDomains'] = 1;
+$ZConfig['Multisites']['multisites.sitedns'] = '';
 
 //****** DON'T CHANGE AFTER THIS LINE *******
-if ($siteDNS == $ZConfig['Multisites']['mainSiteURL'] || $ZConfig['Multisites']['multisites.enabled'] == 0) {
+if ($siteDNS == $ZConfig['Multisites']['multisites.mainSiteURL'] || $ZConfig['Multisites']['multisites.enabled'] == 0) {
     // it is the main site or it is not a multiple installation. Any more information it is needed
     return;
 }
