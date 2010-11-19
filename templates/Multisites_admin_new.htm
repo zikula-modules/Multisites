@@ -41,8 +41,8 @@
             <input type="text" name="siteCompany" size="50" maxlength="100" value="{$siteCompany}"/>
         </div>
         <div class="z-formrow">
-        	<label for="siteDNS">{gt text="Site domain"} <span class="mandatoryField">*</span></label>
-            <input type="text" name="siteDNS" size="15" maxlength="20" value="{$siteDNS}" />
+        	<label for="sitedns">{gt text="Site domain"} <span class="mandatoryField">*</span></label>
+            <input type="text" name="sitedns" size="15" maxlength="20" value="{$sitedns}" />
         </div>
         <fieldset>
             <legend>Data base information</legend>
@@ -80,7 +80,7 @@
             </div>
         </fieldset>
         <div class="z-formrow">
-            <label for="siteDNS">{gt text="Based on model"} <span class="mandatoryField">*</span></label>
+            <label for="sitedns">{gt text="Based on model"} <span class="mandatoryField">*</span></label>
             <select name="siteInitModel">
                 <option value="">{gt text="Choose a model..."}</option>
                 {foreach item="model" from=$models}

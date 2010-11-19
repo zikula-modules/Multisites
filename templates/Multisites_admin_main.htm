@@ -24,12 +24,12 @@
             {foreach item=site from=$sites}
                 <tr class="{cycle values="z-odd,z-even"}">
 	                <td align="left" valign="top">
-	                    {if $basedOnDomains ==1}
-                            <a href="http://{$site.siteDNS}/" target="_blank">
+	                    {if $based_on_domains == 1}
+                            <a href="http://{$site.sitedns}/" target="_blank">
 	                		    {$site.instanceName}
 						    </a>
                         {else}
-                            <a href="{$wwwroot}/{$site.siteDNS}/{$siteDNSEndText}" target="_blank">
+                            <a href="{$wwwroot}/{$site.sitedns}/{$sitednsEndText}" target="_blank">
 	                		    {$site.instanceName}
 						    </a>
                         {/if}
@@ -41,7 +41,7 @@
 	                	{$site.siteName}
 					</td>
 	                <td align="left" valign="top">
-	                	{$site.siteDNS}
+	                	{$site.sitedns}
 					</td>
 	                <td align="left" valign="top">
 	                	{$site.siteAdminRealName}

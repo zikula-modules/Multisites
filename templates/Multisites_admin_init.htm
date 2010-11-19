@@ -107,12 +107,12 @@
 		<div style="margin: 20px;">
 			<form method="POST" action="{modurl modname="Multisites" type="interactiveinstaller" func="step21"}">
 				<div class="z-formrow">
-                    <label for="filesRealPath">{gt text="Script Real Path"}:</label>
+                    <label for="files_real_path">{gt text="Script Real Path"}:</label>
                     <span>{$scriptRealPath}</span>
                 </div>
 				<div class="z-formrow">
-					<label for="filesRealPath">{gt text="Write the physical location of the directory in the server"}:</label>
-					<input type="text" name="filesRealPath" size="30" maxlength="50" value="{$filesRealPath}" />
+					<label for="files_real_path">{gt text="Write the physical location of the directory in the server"}:</label>
+					<input type="text" name="files_real_path" size="30" maxlength="50" value="{$files_real_path}" />
 				</div>
                 <div class="z-formbuttons">
 				    <input type="submit" value="{gt text="Accept"}" />
@@ -127,16 +127,16 @@
         </div>
 		<form class="z-form" method="POST" action="{modurl modname="Multisites" type="interactiveinstaller" func="step31"}">
 			<div class="z-formrow">
-				<label for="mainSiteURL">{gt text="Main domain"}:</label>
-				<input type="text" name="mainSiteURL" size="50" maxlength="50" value = "{$mainHost}"/>
+				<label for="mainsiteurl">{gt text="Main domain"}:</label>
+				<input type="text" name="mainsiteurl" size="50" maxlength="50" value = "{$mainHost}"/>
 			</div>
 			<div class="z-formrow">
-				<label for="siteTempFilesFolder">{gt text="Sites temporal directory"}:</label>
-				<input type="text" name="siteTempFilesFolder" size="50" maxlength="50" value = "{$siteTempFilesFolder}"/>
+				<label for="site_temp_files_folder">{gt text="Sites temporal directory"}:</label>
+				<input type="text" name="site_temp_files_folder" size="50" maxlength="50" value = "{$site_temp_files_folder}"/>
 			</div>
 			<div class="z-formrow">
-				<label for="siteFilesFolder">{gt text="Sites data directory"}:</label>
-				<input type="text" name="siteFilesFolder" size="50" maxlength="50" value = "Data"/>
+				<label for="site_files_folder">{gt text="Sites data directory"}:</label>
+				<input type="text" name="site_files_folder" size="50" maxlength="50" value = "Data"/>
 			</div>
             <div class="z-formbuttons">
 			    <input type="submit" value="{gt text="Accept"}" />
@@ -162,7 +162,7 @@
 						<div>
 							<input type="hidden" name="authid" value="{secgenauthkey module="Modules"}" />
 							<input type="hidden" name="activate" value="1" />
-                            <input type="hidden" name="filesRealPath" value="{$filesRealPath}" />
+                            <input type="hidden" name="files_real_path" value="{$files_real_path}" />
                             <input type="hidden" name="usersFolder" value="{$usersFolder}" />
 							<br />
 							<div class="z-formbuttons">

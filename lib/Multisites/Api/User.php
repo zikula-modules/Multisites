@@ -79,10 +79,10 @@ class Multisites_Api_User extends Zikula_Api
 
         $c = $pntable['Multisites_sites_column'];
 
-        $where = "$c[siteDNS] = '$site'";
+        $where = "$c[sitedns] = '$site'";
 
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_sites', $where, '', '-1', '-1', 'siteDNS');
+        $items = DBUtil::selectObjectArray('Multisites_sites', $where, '', '-1', '-1', 'sitedns');
 
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
@@ -95,10 +95,10 @@ class Multisites_Api_User extends Zikula_Api
     }
 
     /**
-     * Get the siteDNS if it is available or active
+     * Get the sitedns if it is available or active
      * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The siteDNS
-     * @return: The siteDNS if it is active or nothing otherwise
+     * @param:	The sitedns
+     * @return: The sitedns if it is active or nothing otherwise
      */
     public function getSiteAvailability($args)
     {
@@ -109,9 +109,9 @@ class Multisites_Api_User extends Zikula_Api
         }
         $pntable = DBUtil::getTables();
         $c = $pntable['Multisites_sites_column'];
-        $where = "$c[siteDNS] = '$site'";
+        $where = "$c[sitedns] = '$site'";
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_sites', $where, '', '-1', '-1', 'siteDNS');
+        $items = DBUtil::selectObjectArray('Multisites_sites', $where, '', '-1', '-1', 'sitedns');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {

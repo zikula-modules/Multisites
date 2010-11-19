@@ -13,8 +13,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         include_once('config/multisites_dbconfig.php');
@@ -42,8 +42,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
@@ -88,8 +88,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         //check if the models folders exists and it is writeable
@@ -150,8 +150,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
@@ -234,8 +234,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // get sites
@@ -247,7 +247,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return false;
         }
         foreach ($sites as $site) {
-            $databaseArray[$site['siteDNS']] = array('siteDBName' => $site['siteDBName'],
+            $databaseArray[$site['sitedns']] = array('siteDBName' => $site['siteDBName'],
                                                      'siteDBHost' => $site['siteDBHost'],
                                                      'siteDBType' => $site['siteDBType'],
                                                      'siteDBUname' => $site['siteDBUname'],
@@ -255,7 +255,7 @@ class Multisites_Api_Admin extends Zikula_Api
                                                      'siteDBPrefix' => $site['siteDBPrefix']);
         }
         // add the site that is being created in this moment
-        $databaseArray[$args['siteDNS']] = array('siteDBName' => $args['siteDBName'],
+        $databaseArray[$args['sitedns']] = array('siteDBName' => $args['siteDBName'],
                                                  'siteDBHost' => $args['siteDBHost'],
                                                  'siteDBType' => $args['siteDBType'],
                                                  'siteDBUname' => $args['siteDBUname'],
@@ -278,12 +278,12 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // needed arguments
-        if ($args['siteDNS'] == null) {
+        if ($args['sitedns'] == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
@@ -298,7 +298,7 @@ class Multisites_Api_Admin extends Zikula_Api
                       'siteAdminRealName' => DataUtil::formatForStore($args['siteAdminRealName']),
                       'siteAdminEmail' => DataUtil::formatForStore($args['siteAdminEmail']),
                       'siteCompany' => DataUtil::formatForStore($args['siteCompany']),
-                      'siteDNS' => DataUtil::formatForStore($args['siteDNS']),
+                      'sitedns' => DataUtil::formatForStore($args['sitedns']),
                       'siteDBName' => DataUtil::formatForStore($args['siteDBName']),
                       'siteDBUname' => DataUtil::formatForStore($args['siteDBUname']),
                       'siteDBPass' => DataUtil::formatForStore($args['siteDBPass']),
@@ -327,8 +327,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $item = array('modelName' => $args['modelName'],
@@ -355,8 +355,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
@@ -391,8 +391,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // Needed argument
@@ -426,8 +426,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         //$type = ($args['system'] == null) ? 3 : 1000;
@@ -471,8 +471,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // Needed argument
@@ -516,8 +516,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $newState = FormUtil::getPassedValue('newState', isset($args['newState']) ? $args['newState'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
@@ -555,8 +555,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // Needed argument
@@ -597,8 +597,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $modelId = FormUtil::getPassedValue('modelId', isset($args['modelId']) ? $args['modelId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // Needed argument
@@ -633,8 +633,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
@@ -685,8 +685,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $moduleName = FormUtil::getPassedValue('moduleName', isset($args['moduleName']) ? $args['moduleName'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
@@ -756,8 +756,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $dirName = FormUtil::getPassedValue('dirName', isset($args['dirName']) ? $args['dirName'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         if (file_exists($dirName)) {
@@ -790,8 +790,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // Get all themes on filesystem
@@ -889,8 +889,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // Needed argument
@@ -933,8 +933,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
@@ -971,8 +971,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $themeName = FormUtil::getPassedValue('themeName', isset($args['themeName']) ? $args['themeName'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
@@ -1040,8 +1040,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
@@ -1079,8 +1079,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $name = FormUtil::getPassedValue('name', isset($args['name']) ? $args['name'] : null, 'GET');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
@@ -1118,8 +1118,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $items = FormUtil::getPassedValue('items', isset($args['items']) ? $args['items'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // get site information
@@ -1149,8 +1149,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $items = FormUtil::getPassedValue('items', isset($args['items']) ? $args['items'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // get model information
@@ -1179,8 +1179,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // get global administrator parameters
@@ -1274,8 +1274,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // get site information
@@ -1320,8 +1320,8 @@ class Multisites_Api_Admin extends Zikula_Api
     {
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // get all the modules available in site
@@ -1351,8 +1351,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         //delete instance information
@@ -1373,8 +1373,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         // get site available modules
@@ -1401,8 +1401,8 @@ class Multisites_Api_Admin extends Zikula_Api
         $currentVersion = FormUtil::getPassedValue('currentVersion', isset($args['currentVersion']) ? $args['currentVersion'] : null, 'POST');
         // security check
         if (!SecurityUtil::checkPermission('Multisites', '::', ACCESS_ADMIN) ||
-                (FormUtil::getPassedValue('siteDNS', '', 'GET') != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 0) ||
-                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainSiteURL'] && $this->serviceManager['multisites.basedOnDomains'] == 1)) {
+                (FormUtil::getPassedValue('sitedns', '', 'GET') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
         $table = DBUtil::getTables();

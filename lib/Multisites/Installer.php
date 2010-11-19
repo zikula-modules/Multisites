@@ -28,7 +28,7 @@ class Multisites_Installer extends Zikula_Installer
 
         // create the models folder
         // check if the sitesFilesFolder exists
-        $path = (isset($this->serviceManager['multisites.filesRealPath']) ? $this->serviceManager['multisites.filesRealPath'] : '');
+        $path = (isset($this->serviceManager['multisites.files_real_path']) ? $this->serviceManager['multisites.files_real_path'] : '');
         if ($path == '') {
             LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Check your configuration values.'));
             return false;
@@ -43,7 +43,7 @@ class Multisites_Installer extends Zikula_Installer
             return false;
         }
         // create the main site folder
-        $path .= '/' . FormUtil::getPassedValue(siteDNS, null, 'GET');
+        $path .= '/' . FormUtil::getPassedValue(sitedns, null, 'GET');
         if (!file_exists($path)) {
             if (!mkdir($path, 0777)) {
                 LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
@@ -51,7 +51,7 @@ class Multisites_Installer extends Zikula_Installer
             }
         }
         // create the data folder
-        $path .= $this->serviceManager['multisites.siteFilesFolder'];
+        $path .= $this->serviceManager['multisites.site_files_folder'];
         if (!file_exists($path)) {
             if (!mkdir($path, 0777)) {
                 LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
