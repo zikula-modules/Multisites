@@ -18,6 +18,10 @@
             <input class="notEditableField" onfocus="blur()" type="text" name="siteName" size="50" maxlength="255" value="{$site.siteName}"/>
         </div>
         <div class="z-formrow">
+            <label for="siteDescription">{gt text="Site description"}</label>
+            <input type="text" name="siteDescription" size="50" maxlength="255" value="{$site.siteDescription}" />
+        </div>
+        <div class="z-formrow">
             <label for="siteAdminName">{gt text="Original site admin name"}</label>
             <input class="notEditableField" onfocus="blur()" type="text" name="siteAdminName" size="15" maxlength="25" value="{$site.siteAdminName}"/>
         </div>
