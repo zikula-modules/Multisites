@@ -13,7 +13,7 @@
             <input type="text" name="description" size="50" maxlength="255" value="{$description}" />
         </div>
         <div class="z-formrow">
-        	<label for="siteName">{gt text="Site name"}</label>
+            <label for="siteName">{gt text="Site name"}</label>
             <input type="text" name="siteName" size="50" maxlength="255" value="{$siteName}"/>
         </div>
         <div class="z-formrow">
@@ -33,7 +33,7 @@
             <input type="text" name="siteAdminRealName" size="30" maxlength="70" value="{$siteAdminRealName}"/>
         </div>
         <div class="z-formrow">
-        	<label for="siteAdminEmail">{gt text="Admin email"} <span class="mandatoryField">*</span></label>
+            <label for="siteAdminEmail">{gt text="Admin email"} <span class="mandatoryField">*</span></label>
             <input type="text" name="siteAdminEmail" size="30" maxlength="30" value="{$siteAdminEmail}"/>
         </div>
         <div class="z-formrow">
@@ -41,13 +41,13 @@
             <input type="text" name="siteCompany" size="50" maxlength="100" value="{$siteCompany}"/>
         </div>
         <div class="z-formrow">
-        	<label for="sitedns">{gt text="Site domain"} <span class="mandatoryField">*</span></label>
+            <label for="sitedns">{gt text="Site domain"} <span class="mandatoryField">*</span></label>
             <input type="text" name="sitedns" size="15" maxlength="20" value="{$sitedns}" />
         </div>
         <fieldset>
             <legend>Data base information</legend>
             <div class="z-formrow">
-            	<label for="siteDBHost">{gt text="Site database type"}</label>
+                <label for="siteDBHost">{gt text="Site database type"}</label>
                 <select name="siteDBType">
                     <option value="mysql" {if $siteDBType eq 'mysql'}selected{/if}>MySQL</option>
                     <option value="mysqli" {if $siteDBType eq 'mysqli'}selected{/if}>MySQL Improved</option>
@@ -55,27 +55,27 @@
                 </select>
             </div>
             <div class="z-formrow">
-            	<label for="siteDBHost">{gt text="Site database host"} <span class="mandatoryField">*</span></label>
+                <label for="siteDBHost">{gt text="Site database host"} <span class="mandatoryField">*</span></label>
                 <input type="text" name="siteDBHost" size="15" maxlength="20" value="{$siteDBHost}"/>
             </div>
             <div class="z-formrow">
-            	<label for="siteDBName">{gt text="Site database"} <span class="mandatoryField">*</span></label>
+                <label for="siteDBName">{gt text="Site database"} <span class="mandatoryField">*</span></label>
                 <input type="text" name="siteDBName" size="15" maxlength="20" value="{$siteDBName}"/>
             </div>
             <div class="z-formrow">
-            	<label for="siteDBUname">{gt text="Site database username"} <span class="mandatoryField">*</span></label>
+                <label for="siteDBUname">{gt text="Site database username"} <span class="mandatoryField">*</span></label>
                 <input type="text" name="siteDBUname" size="15" maxlength="20" value="{$siteDBUname}"/>
             </div>
             <div class="z-formrow">
-            	<label for="siteDBPass">{gt text="Site database password"} <span class="mandatoryField">*</span></label>
+                <label for="siteDBPass">{gt text="Site database password"} <span class="mandatoryField">*</span></label>
                 <input type="password" name="siteDBPass" size="15" maxlength="20" />
             </div>
             <div class="z-formrow">
-            	<label for="siteDBPrefix">{gt text="Site database prefix"} <span class="mandatoryField">*</span></label>
+                <label for="siteDBPrefix">{gt text="Site database prefix"} <span class="mandatoryField">*</span></label>
                 <input type="text" name="siteDBPrefix" size="15" maxlength="5" value="{if $siteAdminName eq ''}z{else}{$siteDBPrefix}{/if}"/>
             </div>        
             <div class="z-formrow">
-            	<label for="createDB">{gt text="Create database"}</label>
+                <label for="createDB">{gt text="Create database"}</label>
                 <input type="checkbox" name="createDB" {if $createDB eq 1}checked{/if} value="1" />
             </div>
         </fieldset>

@@ -1,6 +1,6 @@
 {include file="Multisites_admin_menu.htm"}
 <div class="z-admincontainer">
-	<div class="z-adminpageicon">{img modname='core' src='package_settings.gif' set='icons/large'}</div>
+    <div class="z-adminpageicon">{img modname='core' src='package_settings.gif' set='icons/large'}</div>
     <h2>{gt text="Site tools"}</h2>
     <div>
         {gt text="Site name"}: {$site.siteName}
@@ -10,7 +10,7 @@
     <div><a href="{modurl modname="Multisites" type="admin" func="executeSiteTool" tool=createAdministrator instanceId=$site.instanceId}">
         {gt text="Create global administrator"}</a>
     </div>
-	<div>
+    <div>
         <a href="{modurl modname="Multisites" type="admin" func="executeSiteTool" tool=adminSiteControl instanceId=$site.instanceId}">
             {gt text="Recover administrators site control"}
         </a>

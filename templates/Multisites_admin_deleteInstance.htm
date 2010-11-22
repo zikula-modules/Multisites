@@ -11,20 +11,20 @@
         <div>{gt text="Site DNS"}: <strong>{$instance.sitedns}</strong></div>
         <div>&nbsp;</div>
         <div>
-        	<label for="instanceName">{gt text="Confirm the instance deletion. It means delete its database and files."}</label>
+            <label for="instanceName">{gt text="Confirm the instance deletion. It means delete its database and files."}</label>
         </div>
         <div class="z-formrow">
-        	<label for="deleteFiles">{gt text="Delete site files"}</label>
+            <label for="deleteFiles">{gt text="Delete site files"}</label>
             <input type="checkbox" name="deleteFiles" value="1" />
         </div>
         <div class="z-formrow">
-        	<label for="deleteDB">{gt text="Delete database (only possible if the user of the database has enough permissions)"}</label>
+            <label for="deleteDB">{gt text="Delete database (only possible if the user of the database has enough permissions)"}</label>
             <input type="checkbox" name="deleteDB" value="1" />
         </div> 
         <div class="z-formbuttons">
             <a href="javascript:document.forms['deleteInstance'].submit();">
-            	{img modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Delete"}
-			</a>
+                {img modname='core' src='button_ok.gif' set='icons/small' __alt="Add" __title="Delete"}
+            </a>
             <a href="{modurl modname="Multisites" type="admin" func="main"}">
                 {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
             </a>

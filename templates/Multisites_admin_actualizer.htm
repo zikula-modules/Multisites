@@ -6,54 +6,54 @@
     <div name="content" id="content">
         <form id="actualize" action="{modurl modname="Multisites" type="admin" func="actualizeModules"}" method="post" >
             <input type="hidden" name="authid" value="{secgenauthkey module="Multisites"}" />
-        	<h3>{gt text="Modules folder"}</h3>
-			<table class="z-admintable">
+            <h3>{gt text="Modules folder"}</h3>
+            <table class="z-admintable">
                 <tbody>
-                	{if $upgradeNeeded}
-	                    {foreach item=module from=$modules}
-						    {if $module.numberOfSites > 0}
-		                        <tr class="{cycle values="z-odd,z-even"}">
-		                            <td>
-		                                {$module.name}
-		                            </td>
-		                            <td>
-		                                {$module.description}
-		                            </td>
-									<td>
-		                                {$module.version}
-		                            </td>
-		                            <td>
-		                                {$module.numberOfSites}
-		                            </td>
-									<td>
-										<a href="{modurl modname="Multisites" type="admin" func="actualizeModule" moduleName=$module.name}">
-										    {img modname='core' src='agt_update-product.gif' set='icons/extrasmall' __alt="Upgrade sites" __title="Upgrade sites"}
-										</a>
-									</td>
-		                        </tr>
-							{/if}
-	                    {/foreach}
-					{else}
-					   <tr>
-					   	   <td>
-					   	       {gt text="All the sites and modules are upgraded to the current versions"}
-					   	   </td>
-					   </tr>
-					{/if}
+                    {if $upgradeNeeded}
+                        {foreach item=module from=$modules}
+                            {if $module.numberOfSites > 0}
+                                <tr class="{cycle values="z-odd,z-even"}">
+                                    <td>
+                                        {$module.name}
+                                    </td>
+                                    <td>
+                                        {$module.description}
+                                    </td>
+                                    <td>
+                                        {$module.version}
+                                    </td>
+                                    <td>
+                                        {$module.numberOfSites}
+                                    </td>
+                                    <td>
+                                        <a href="{modurl modname="Multisites" type="admin" func="actualizeModule" moduleName=$module.name}">
+                                            {img modname='core' src='agt_update-product.gif' set='icons/extrasmall' __alt="Upgrade sites" __title="Upgrade sites"}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {/if}
+                        {/foreach}
+                    {else}
+                       <tr>
+                              <td>
+                                  {gt text="All the sites and modules are upgraded to the current versions"}
+                              </td>
+                       </tr>
+                    {/if}
                 </tbody>
-			</table>
-			<div style="clear: both;"></div>
+            </table>
+            <div style="clear: both;"></div>
             <div class="z-formbuttons">
                 <a href="javascript:actualize()">
                     {img modname='core' src='button_ok.gif' set='icons/small' __alt="Upgrade modules" __title="Upgrade modules"}
                 </a>
                 <a href="{modurl modname="Multisites" type="admin" func="main"}">
-            	   {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
+                   {img modname='core' src='button_cancel.gif' set='icons/small' __alt="Cancel" __title="Cancel"}
                 </a>
             </div>
         </form>
     </div>
 </div>
 <script>
-	var notModulesSelected = '{gt text="Not modules selected"}';
+    var notModulesSelected = '{gt text="Not modules selected"}';
 </script>
