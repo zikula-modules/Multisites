@@ -14,8 +14,8 @@ class Multisites_Api_User extends Zikula_Api
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        $pntable = DBUtil::getTables();
-        $c = $pntable['Multisites_sites_column'];
+        $table = DBUtil::getTables();
+        $c = $table['Multisites_sites_column'];
         $where = (isset($args['letter'])) ? "$c[instanceName] LIKE '$args[letter]%'" : "";
         $startnum = (isset($args['startnum'])) ? $args['startnum'] : 0;
         $itemsperpage = (isset($args['itemsperpage'])) ? $args['itemsperpage'] : -1;
@@ -39,7 +39,6 @@ class Multisites_Api_User extends Zikula_Api
      */
     public function getSite($args)
     {
-        
         $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // Security check
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
@@ -67,7 +66,6 @@ class Multisites_Api_User extends Zikula_Api
      */
     public function getSiteInfo($args)
     {
-        
         $site = FormUtil::getPassedValue('site', isset($args['site']) ? $args['site'] : null, 'POST');
 
         // Needed argument
@@ -75,9 +73,9 @@ class Multisites_Api_User extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
 
-        $pntable = DBUtil::getTables();
+        $table = DBUtil::getTables();
 
-        $c = $pntable['Multisites_sites_column'];
+        $c = $table['Multisites_sites_column'];
 
         $where = "$c[sitedns] = '$site'";
 
@@ -107,8 +105,8 @@ class Multisites_Api_User extends Zikula_Api
         if ($site == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
-        $pntable = DBUtil::getTables();
-        $c = $pntable['Multisites_sites_column'];
+        $table = DBUtil::getTables();
+        $c = $table['Multisites_sites_column'];
         $where = "$c[sitedns] = '$site'";
         // get the objects from the db
         $items = DBUtil::selectObjectArray('Multisites_sites', $where, '', '-1', '-1', 'sitedns');
@@ -131,13 +129,12 @@ class Multisites_Api_User extends Zikula_Api
      */
     public function getAllModels()
     {
-        
         // Security check
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
-        $pntable = DBUtil::getTables();
-        $c = $pntable['Multisites_models_column'];
+        $table = DBUtil::getTables();
+        $c = $table['Multisites_models_column'];
         $where = '';
         $orderby = "$c[modelId]";
         // get the objects from the db
@@ -159,14 +156,13 @@ class Multisites_Api_User extends Zikula_Api
      */
     public function getModel($args)
     {
-        
         $modelName = FormUtil::getPassedValue('modelName', isset($args['modelName']) ? $args['modelName'] : null, 'POST');
         // Needed argument
         if ($modelName == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
-        $pntable = DBUtil::getTables();
-        $c = $pntable['Multisites_models_column'];
+        $table = DBUtil::getTables();
+        $c = $table['Multisites_models_column'];
         $where = "$c[modelName] = '$modelName'";
         // get the objects from the db
         $items = DBUtil::selectObjectArray('Multisites_models', $where, '', '-1', '-1', 'modelName');
@@ -187,7 +183,6 @@ class Multisites_Api_User extends Zikula_Api
      */
     public function getModelById($args)
     {
-        
         $modelId = FormUtil::getPassedValue('modelId', isset($args['modelId']) ? $args['modelId'] : null, 'POST');
 
         // Needed argument
@@ -195,9 +190,9 @@ class Multisites_Api_User extends Zikula_Api
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
 
-        $pntable = DBUtil::getTables();
+        $table = DBUtil::getTables();
 
-        $c = $pntable['Multisites_models_column'];
+        $c = $table['Multisites_models_column'];
 
         $where = "$c[modelId] = $modelId";
 
