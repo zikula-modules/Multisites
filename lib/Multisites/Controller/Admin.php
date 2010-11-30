@@ -621,7 +621,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
                    ->assign('tempAccessFileContent', $this->getVar('tempAccessFileContent'))
                    ->assign('globalAdminName', $this->getVar('globalAdminName'))
                    ->assign('globalAdminPassword', $this->getVar('globalAdminPassword'))
-                   ->assign('globalAdminemail', $this->getVar('globalAdminemail'))
+                   ->assign('globalAdminemail', $this->getVar('globalAdminemail'));
         return $this->view->fetch('Multisites_admin_config.htm');
     }
 
