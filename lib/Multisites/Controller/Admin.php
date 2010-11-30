@@ -29,19 +29,19 @@ class Multisites_Controller_Admin extends Zikula_Controller
                                          'itemsperpage' => $itemsperpage,
                                          'startnum' => $startnum));
         // get total sites
-        if ($letter == null) {
-            $numSites = count(ModUtil::apiFunc('Multisites', 'user', 'getAllSites'));
-        } else {
-            $numSites = count(ModUtil::apiFunc('Multisites', 'user', 'getAllSites',
-                                                array('letter' => $letter)));
+        $apiArgs = array();
+        if (!is_null($letter)) {
+            $apiArgs['letter'] = $letter;
         }
+        $numSites = count(ModUtil::apiFunc('Multisites', 'user', 'getAllSites', $apiArgs));
+
         $pager = array('numitems' => $numSites,
                        'itemsperpage' => $itemsperpage);
         // create output object
-        $this->view->assign('sites', $sites);
-        $this->view->assign('pager', $pager);
-        $this->view->assign('wwwroot', $this->serviceManager['multisites.wwwroot']);
-        $this->view->assign('based_on_domains', $this->serviceManager['multisites.based_on_domains']);
+        $this->view->assign('sites', $sites)
+                   ->assign('pager', $pager)
+                   ->assign('wwwroot', $this->serviceManager['multisites.wwwroot'])
+                   ->assign('based_on_domains', $this->serviceManager['multisites.based_on_domains']);
         return $this->view->fetch('Multisites_admin_main.htm');
     }
 
@@ -88,24 +88,24 @@ class Multisites_Controller_Admin extends Zikula_Controller
             $this->view->assign('configFileWriteable', $configFileWriteable);
             return $this->view->fetch('Multisites_admin_newNotPossible.htm');
         }
-        $this->view->assign('models', $models);
-        $this->view->assign('instanceName', $instanceName);
-        $this->view->assign('description', $description);
-        $this->view->assign('siteName', $siteName);
-        $this->view->assign('siteDescription', $siteDescription);
-        $this->view->assign('siteAdminName', $siteAdminName);
-        $this->view->assign('siteAdminRealName', $siteAdminRealName);
-        $this->view->assign('siteAdminEmail', $siteAdminEmail);
-        $this->view->assign('siteCompany', $siteCompany);
-        $this->view->assign('sitedns', $sitedns);
-        $this->view->assign('siteDBName', $siteDBName);
-        $this->view->assign('siteDBUname', $siteDBUname);
-        $this->view->assign('siteDBHost', $siteDBHost);
-        $this->view->assign('siteDBType', $siteDBType);
-        $this->view->assign('siteDBPrefix', $siteDBPrefix);
-        $this->view->assign('createDB', $createDB);
-        $this->view->assign('siteInitModel', $siteInitModel);
-        $this->view->assign('active', $active);
+        $this->view->assign('models', $models)
+                   ->assign('instanceName', $instanceName)
+                   ->assign('description', $description)
+                   ->assign('siteName', $siteName)
+                   ->assign('siteDescription', $siteDescription)
+                   ->assign('siteAdminName', $siteAdminName)
+                   ->assign('siteAdminRealName', $siteAdminRealName)
+                   ->assign('siteAdminEmail', $siteAdminEmail)
+                   ->assign('siteCompany', $siteCompany)
+                   ->assign('sitedns', $sitedns)
+                   ->assign('siteDBName', $siteDBName)
+                   ->assign('siteDBUname', $siteDBUname)
+                   ->assign('siteDBHost', $siteDBHost)
+                   ->assign('siteDBType', $siteDBType)
+                   ->assign('siteDBPrefix', $siteDBPrefix)
+                   ->assign('createDB', $createDB)
+                   ->assign('siteInitModel', $siteInitModel)
+                   ->assign('active', $active);
         return $this->view->fetch('Multisites_admin_new.htm');
     }
 
@@ -437,10 +437,10 @@ class Multisites_Controller_Admin extends Zikula_Controller
                 ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
-        $this->view->assign('name', $name);
-        $this->view->assign('available', $available);
-        $this->view->assign('siteModules', $siteModules);
-        $this->view->assign('instanceId', $instanceId);
+        $this->view->assign('name', $name)
+                   ->assign('available', $available)
+                   ->assign('siteModules', $siteModules)
+                   ->assign('instanceId', $instanceId);
         return $this->view->fetch('Multisites_admin_siteElementsIcons.htm');
     }
 
@@ -617,11 +617,11 @@ class Multisites_Controller_Admin extends Zikula_Controller
             return LogUtil::registerPermissionError();
         }
         // create output object
-        $this->view->assign('modelsFolder', $this->getVar('modelsFolder'));
-        $this->view->assign('tempAccessFileContent', $this->getVar('tempAccessFileContent'));
-        $this->view->assign('globalAdminName', $this->getVar('globalAdminName'));
-        $this->view->assign('globalAdminPassword', $this->getVar('globalAdminPassword'));
-        $this->view->assign('globalAdminemail', $this->getVar('globalAdminemail'));
+        $this->view->assign('modelsFolder', $this->getVar('modelsFolder'))
+                   ->assign('tempAccessFileContent', $this->getVar('tempAccessFileContent'))
+                   ->assign('globalAdminName', $this->getVar('globalAdminName'))
+                   ->assign('globalAdminPassword', $this->getVar('globalAdminPassword'))
+                   ->assign('globalAdminemail', $this->getVar('globalAdminemail'))
         return $this->view->fetch('Multisites_admin_config.htm');
     }
 
@@ -715,11 +715,11 @@ class Multisites_Controller_Admin extends Zikula_Controller
                 $modelsFiles[$model['modelId']] = $model['fileName'];
             }
         }
-        $this->view->assign('modelName', $modelName);
-        $this->view->assign('modelDBTablesPrefix', $modelDBTablesPrefix);
-        $this->view->assign('description', $description);
-        $this->view->assign('folders', $folders);
-        $this->view->assign('modelsFiles', $modelsFiles);
+        $this->view->assign('modelName', $modelName)
+                   ->assign('modelDBTablesPrefix', $modelDBTablesPrefix)
+                   ->assign('description', $description)
+                   ->assign('folders', $folders)
+                   ->assign('modelsFiles', $modelsFiles);
         return $this->view->fetch('Multisites_admin_newModel.htm');
     }
 
@@ -972,8 +972,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
         }
         // create output object
         $render = Zikula_View::getInstance('Multisites', false);
-        $this->view->assign('site', $site);
-        $this->view->assign('themes', $themesArray);
+        $this->view->assign('site', $site)
+                   ->assign('themes', $themesArray);
         return $this->view->fetch('Multisites_admin_siteThemes.htm');
     }
 
@@ -996,11 +996,11 @@ class Multisites_Controller_Admin extends Zikula_Controller
                 ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
             return LogUtil::registerPermissionError();
         }
-        $this->view->assign('name', $name);
-        $this->view->assign('available', $available);
-        $this->view->assign('isDefaultTheme', $isDefaultTheme);
-        $this->view->assign('siteThemes', $siteThemes);
-        $this->view->assign('instanceId', $instanceId);
+        $this->view->assign('name', $name)
+                   ->assign('available', $available)
+                   ->assign('isDefaultTheme', $isDefaultTheme)
+                   ->assign('siteThemes', $siteThemes)
+                   ->assign('instanceId', $instanceId);
         return $this->view->fetch('Multisites_admin_siteThemesIcons.htm');
     }
 
@@ -1125,8 +1125,8 @@ class Multisites_Controller_Admin extends Zikula_Controller
             $modules[$i]['numberOfSites'] = $numberOfSites;
             $i++;
         }
-        $this->view->assign('modules', $modules);
-        $this->view->assign('upgradeNeeded', $upgradeNeeded);
+        $this->view->assign('modules', $modules)
+                   ->assign('upgradeNeeded', $upgradeNeeded);
         return $this->view->fetch('Multisites_admin_actualizer.htm');
     }
 

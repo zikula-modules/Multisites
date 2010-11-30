@@ -44,7 +44,7 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
             $step = 4;
             $this->view->assign('fileWriteable1', $fileWriteable1);
             $this->view->assign('fileWriteable2', $fileWriteable2);
-        }else{
+        } else {
             $step = 0;
         }
         $this->view->assign('step', $step);
@@ -69,16 +69,17 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
         $fileWriteable2 = false;
         $path = 'config/multisites_config.php';
         if (file_exists($path)) $file1 = true;
-        if (is_writeable($path)) $fileWriteable1 = true;
+        if ($file1 === true && is_writeable($path)) $fileWriteable1 = true;
         $path = 'config/multisites_dbconfig.php';
         if (file_exists($path)) $file2 = true;
-        if (is_writeable($path)) $fileWriteable2 = true;
+        if ($file2 === true && is_writeable($path)) $fileWriteable2 = true;
+
         ModUtil::load('Modules', 'admin');
-        $this->view->assign('step', 1);
-        $this->view->assign('file1', $file1);
-        $this->view->assign('file2', $file2);
-        $this->view->assign('fileWriteable1', $fileWriteable1);
-        $this->view->assign('fileWriteable2', $fileWriteable2);
+        $this->view->assign('step', 1)
+                   ->assign('file1', $file1)
+                   ->assign('file2', $file2)
+                   ->assign('fileWriteable1', $fileWriteable1)
+                   ->assign('fileWriteable2', $fileWriteable2);
         return $this->view->fetch('Multisites_admin_init.htm');
     }
 
@@ -99,9 +100,9 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
         $scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0 ,  strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
         // ask for the correct location for the sites folder where the Temp folders will be created.
         ModUtil::load('Modules', 'admin');
-        $this->view->assign('step', 2);
-        $this->view->assign('files_real_path', $files_real_path);
-        $this->view->assign('scriptRealPath', $scriptRealPath);
+        $this->view->assign('step', 2)
+                   ->assign('files_real_path', $files_real_path)
+                   ->assign('scriptRealPath', $scriptRealPath);
         return $this->view->fetch('Multisites_admin_init.htm');
     }
 
@@ -113,12 +114,12 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
      */
     public function step21($args)
     {
-
-        $files_real_path = FormUtil::getPassedValue('files_real_path', isset($args['files_real_path']) ? $args['files_real_path'] : null, 'POST');
         // Check permissions
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
+
+        $files_real_path = FormUtil::getPassedValue('files_real_path', isset($args['files_real_path']) ? $args['files_real_path'] : null, 'POST');
         if ($files_real_path == '') {
             LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Please, define it.'));
             return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step2'));
@@ -170,17 +171,18 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
+
         // get server zikula folder installation
         $path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
         $basePath = substr($path, 0 ,  strrpos($path, '/'));
         $wwwroot = 'http://' . $_SERVER['HTTP_HOST'] . $basePath;
         ModUtil::load('Modules', 'admin');
-        $this->view->assign('step', 3);
-        //$this->view->assign('dbhost', $GLOBALS['ZConfig']['DBInfo']['default']['dbhost']);
-        //$this->view->assign('dbuname', $GLOBALS['ZConfig']['DBInfo']['default']['dbuname']);
-        $this->view->assign('site_temp_files_folder', $GLOBALS['ZConfig']['System']['temp']);
-        $this->view->assign('mainHost', $_SERVER['HTTP_HOST']);
-        $this->view->assign('wwwroot', $wwwroot);
+        $this->view->assign('step', 3)
+        //      ->assign('dbhost', $GLOBALS['ZConfig']['DBInfo']['default']['dbhost']);
+        //      ->assign('dbuname', $GLOBALS['ZConfig']['DBInfo']['default']['dbuname']);
+                ->assign('site_temp_files_folder', $GLOBALS['ZConfig']['System']['temp'])
+                ->assign('mainHost', $_SERVER['HTTP_HOST'])
+                ->assign('wwwroot', $wwwroot);
         return $this->view->fetch('Multisites_admin_init.htm');
     }
 
@@ -192,14 +194,16 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
      */
     public function step31($args)
     {
-        $mainsiteurl = FormUtil::getPassedValue('mainsiteurl', isset($args['mainsiteurl']) ? $args['mainsiteurl'] : null, 'POST');
-        $sitednsEndText = FormUtil::getPassedValue('sitednsEndText', isset($args['sitednsEndText']) ? $args['sitednsEndText'] : null, 'POST');
-        $site_temp_files_folder = FormUtil::getPassedValue('site_temp_files_folder', isset($args['site_temp_files_folder']) ? $args['site_temp_files_folder'] : null, 'POST');
-        $site_files_folder = FormUtil::getPassedValue('site_files_folder', isset($args['site_files_folder']) ? $args['site_files_folder'] : null, 'POST');
         // Check permissions
         if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
+
+        $mainsiteurl = FormUtil::getPassedValue('mainsiteurl', isset($args['mainsiteurl']) ? $args['mainsiteurl'] : null, 'POST');
+        $sitednsEndText = FormUtil::getPassedValue('sitednsEndText', isset($args['sitednsEndText']) ? $args['sitednsEndText'] : null, 'POST');
+        $site_temp_files_folder = FormUtil::getPassedValue('site_temp_files_folder', isset($args['site_temp_files_folder']) ? $args['site_temp_files_folder'] : null, 'POST');
+        $site_files_folder = FormUtil::getPassedValue('site_files_folder', isset($args['site_files_folder']) ? $args['site_files_folder'] : null, 'POST');
+
         // get server zikula folder installation
         $path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
         $basePath = substr($path, 0 ,  strrpos($path, '/'));
@@ -214,19 +218,20 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
         }
         $lines = file($file);
         $final_file = "";
+        $configPrefix = "ZConfig['Multisites']";
         // Loop through our array, show HTML source as HTML source; and line numbers too.
         foreach ($lines as $line_num => $line) {
-            if (strpos($line, "ZConfig['Multisites']['multisites.enabled']") && !strpos($line, "ZConfig['Multisites']['multisites.mainsiteurl']")) {
+            if (strpos($line, $configPrefix . "['multisites.enabled']") && !strpos($line, "ZConfig['Multisites']['multisites.mainsiteurl']")) {
                 $line =  str_replace('= 0','= 1',$line);
-            }else if (strpos($line, "ZConfig['Multisites']['multisites.mainsiteurl']")) {
+            }else if (strpos($line, $configPrefix . "['multisites.mainsiteurl']")) {
                 $line =  str_replace('$mainsiteurl',$mainsiteurl,$line);
-            }else if (strpos($line, "ZConfig['Multisites']['multisites.site_temp_files_folder']")) {
+            }else if (strpos($line, $configPrefix . "['multisites.site_temp_files_folder']")) {
                 $line = str_replace('$site_temp_files_folder','/' . $site_temp_files_folder,$line);
-            }else if (strpos($line, "ZConfig['Multisites']['multisites.site_files_folder']")) {
+            }else if (strpos($line, $configPrefix . "['multisites.site_files_folder']")) {
                 $line = str_replace('$site_files_folder','/' . $site_files_folder,$line);
-            }else if (strpos($line, "ZConfig['Multisites']['multisites.wwwroot']")) {
+            }else if (strpos($line, $configPrefix . "['multisites.wwwroot']")) {
                 $line = str_replace('$wwwroot',$wwwroot,$line);
-            }else if (strpos($line, "ZConfig['Multisites']['multisites.sitedns']")) {
+            }else if (strpos($line, $configPrefix . "['multisites.sitedns']")) {
                 $line = str_replace('$basePath',$basePath,$line);
             }
             //print $line . '<br />';
@@ -235,14 +240,16 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
         $fh = @fopen($file, 'w');
         if (!fwrite($fh,$final_file)) {
             fclose($fh);
-            LogUtil::registerError(__('Error: the file multisites_config.php has not been writen'));
+            LogUtil::registerError(__('Error: the file multisites_config.php has not been written'));
             return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step1'));
         }
         fclose($fh);
-        //TODO: write rule to convert domains from www.foo.dom to foo.dom
+
+        /** TODO: write rule to convert domains from www.foo.dom to foo.dom */
         $path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
         $basePath = substr($path, 0 ,  strrpos($path, '/'));
         $wwwroot = 'http://' . $_SERVER['HTTP_HOST'] . $basePath;
+
         return System::redirect(ModUtil::url('Multisites', 'interactiveinstaller', 'step4'));
     }
 
@@ -262,8 +269,8 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInsta
         $path = 'config/multisites_config.php';
         if (is_writeable($path)) $fileWriteable = true;
         ModUtil::load('Modules', 'admin');
-        $this->view->assign('step', 4);
-        $this->view->assign('fileWriteable', $fileWriteable);
+        $this->view->assign('step', 4)
+                   ->assign('fileWriteable', $fileWriteable);
         return $this->view->fetch('Multisites_admin_init.htm');
     }
 }
