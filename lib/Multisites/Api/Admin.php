@@ -166,25 +166,25 @@ class Multisites_Api_Admin extends Zikula_Api
         $prefix = $args['siteDBPrefix'];
         // modify the site name
         $value = serialize($args['siteName']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='sitename'";
+        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='sitename'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql  . "\n");
         }
         // modify the site description
         $value = serialize($args['siteDescription']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='slogan'";
+        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='slogan'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql  . "\n");
         }
         // modify the adminmail
         $value = serialize($args['siteAdminEmail']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='adminmail'";
+        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='adminmail'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql . "\n");
         }
         // modify the sessionCookieName
         $value = serialize('ZKSID_' . $args['siteDBName']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='/Config' AND z_name='sessionname'";
+        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='sessionname'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql . "\n");
         }
@@ -1011,7 +1011,7 @@ class Multisites_Api_Admin extends Zikula_Api
             return LogUtil::registerError($this->__('Error connecting to database'));
         }
 
-        $sql = "SELECT z_value FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars WHERE z_modname='/Config' AND z_name='Default_Theme'";
+        $sql = "SELECT z_value FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars WHERE z_modname='ZConfig' AND z_name='Default_Theme'";
         $rs = $connect->query($sql)->fetch();
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Could not load items.'));
@@ -1048,7 +1048,7 @@ class Multisites_Api_Admin extends Zikula_Api
         }
 
         $value = serialize($name);
-        $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars SET z_value = '$value' WHERE z_modname='/Config' AND z_name='Default_Theme'";
+        $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars SET z_value = '$value' WHERE z_modname='ZConfig' AND z_name='Default_Theme'";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
