@@ -844,7 +844,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
             return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
         }
         // get all the modules located in modules folder
-        $modules = ModUtil::apiFunc('Modules', 'admin', 'getfilemodules');
+        $modules = ModUtil::apiFunc('Extensions', 'admin', 'getfilemodules');
         sort($modules);
         // get all the modules available in site
         $siteModules = ModUtil::apiFunc('Multisites', 'admin', 'getAllSiteModules',
@@ -1109,7 +1109,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
             return LogUtil::registerPermissionError();
         }
         // get all the modules located in modules folder
-        $modules = ModUtil::apiFunc('Modules', 'admin', 'getfilemodules');
+        $modules = ModUtil::apiFunc('Extensions', 'admin', 'getfilemodules');
         sort($modules);
         // checks if any module needs actualization for any site
         $i = 0;
@@ -1149,7 +1149,7 @@ class Multisites_Controller_Admin extends Zikula_Controller
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         // get all the modules located in modules folder
-        $modules = ModUtil::apiFunc('Modules', 'admin', 'getfilemodules');
+        $modules = ModUtil::apiFunc('Extensions', 'admin', 'getfilemodules');
         // get the module current version
         foreach($modules as $module){
             if($module['name'] == $moduleName){

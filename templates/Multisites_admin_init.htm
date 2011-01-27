@@ -158,9 +158,9 @@
             {/if}
             <div style="text-align: center;">
                 {if !isset($fileWriteable) OR !$fileWriteable}
-                    <form class="z-form" action="{modurl modname="Modules" type="admin" func="initialise"}" method="post" enctype="application/x-www-form-urlencoded">
+                    <form class="z-form" action="{modurl modname="Extensions" type="admin" func="initialise"}" method="post" enctype="application/x-www-form-urlencoded">
                         <div>
-                            <input type="hidden" name="authid" value="{secgenauthkey module="Modules"}" />
+                            <input type="hidden" name="authid" value="{secgenauthkey module="Extensions"}" />
                             <input type="hidden" name="activate" value="1" />
                             <input type="hidden" name="files_real_path" value="{$files_real_path}" />
                             <input type="hidden" name="usersFolder" value="{$usersFolder}" />

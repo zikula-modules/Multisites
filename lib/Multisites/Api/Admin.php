@@ -660,7 +660,7 @@ class Multisites_Api_Admin extends Zikula_Api
         if ($site == false) {
             return LogUtil::registerError($this->__('Not site found'));
         }
-        $filemodules = ModUtil::apiFunc('Modules', 'admin', 'getfilemodules');
+        $filemodules = ModUtil::apiFunc('Extensions', 'admin', 'getfilemodules');
         $fields = '';
         $values = '';
         $module = $filemodules[$moduleName];
