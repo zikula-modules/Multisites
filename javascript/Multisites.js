@@ -16,15 +16,13 @@ function modifyActivation(moduleName,instanceId,newState){
     });
 }
 
-function modifyActivation_response(req){
-    // show error if necessary
-    if (req.status != 200 ) {
-        pnshowajaxerror(req.responseText);
+function modifyActivation_response(req) {
+    if (!req.isSuccess()) {
+        Zikula.showajaxerror(req.getMessage());
         return;
     }
-    var json = pndejsonize(req.responseText);
-
-    Element.update('module_' + json.moduleName, json.content);
+    var data = req.getData();
+    Element.update('module_' + data.moduleName, data.content);
 }
 
 function modifyActivation_failure(){
@@ -49,13 +47,12 @@ function allowModule(moduleName,instanceId){
 }
 
 function allowModule_response(req){
-    // show error if necessary
-    if (req.status != 200 ) {
-        pnshowajaxerror(req.responseText);
+    if (!req.isSuccess()) {
+        Zikula.showajaxerror(req.getMessage());
         return;
     }
-    var json = pndejsonize(req.responseText);
-    Element.update('module_' + json.moduleName, json.content);
+    var data = req.getData();
+    Element.update('module_' + data.moduleName, data.content);
 }
 
 function allowModule_failure(){
@@ -80,14 +77,12 @@ function allowTheme(themeName,instanceId){
 }
 
 function allowTheme_response(req){
-    // show error if necessary
-    if (req.status != 200 ) {
-        pnshowajaxerror(req.responseText);
+    if (!req.isSuccess()) {
+        Zikula.showajaxerror(req.getMessage());
         return;
     }
-    var json = pndejsonize(req.responseText);
-
-    Element.update('theme_' + json.themeName, json.content);
+    var data = req.getData();
+    Element.update('theme_' + data.themeName, data.content);
 }
 
 function allowTheme_failure(){
