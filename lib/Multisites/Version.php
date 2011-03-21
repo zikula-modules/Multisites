@@ -6,7 +6,7 @@
  * @return      The version information
  */
 
-class Multisites_Version extends Zikula_Version
+class Multisites_Version extends Zikula_AbstractVersion
 {
     public function getMetaData()
     {

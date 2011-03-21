@@ -12,7 +12,7 @@
  * information regarding copyright and licensing.
  */
 
-class Multisites_Installer extends Zikula_Installer
+class Multisites_Installer extends Zikula_AbstractInstaller
 {
     /**
      * Installs the Multisites module

@@ -1,12 +1,12 @@
 <?php
 
-class Multisites_Api_User extends Zikula_Api
+class Multisites_Api_User extends Zikula_AbstractApi
 {
 
     /**
      * Get all zikula instances that had been created
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @return:	Returns an array with all the instances
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return: Returns an array with all the instances
      */
     public function getAllSites($args)
     {
@@ -33,9 +33,9 @@ class Multisites_Api_User extends Zikula_Api
 
     /**
      * Get a instance information
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The instance identity and the modules state
-     * @return:	Returns the instance information
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The instance identity and the modules state
+     * @return: Returns the instance information
      */
     public function getSite($args)
     {
@@ -60,8 +60,8 @@ class Multisites_Api_User extends Zikula_Api
 
     /**
      * Get a site information
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The site name
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The site name
      * @return: The site information
      */
     public function getSiteInfo($args)
@@ -94,8 +94,8 @@ class Multisites_Api_User extends Zikula_Api
 
     /**
      * Get the sitedns if it is available or active
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The sitedns
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The sitedns
      * @return: The sitedns if it is active or nothing otherwise
      */
     public function getSiteAvailability($args)
@@ -124,8 +124,8 @@ class Multisites_Api_User extends Zikula_Api
 
     /**
      * Get all the models available
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @return:	An array with the models available
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @return: An array with the models available
      */
     public function getAllModels()
     {
@@ -150,9 +150,9 @@ class Multisites_Api_User extends Zikula_Api
 
     /**
      * Get a module
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The model identity
-     * @return:	The model name
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The model identity
+     * @return: The model name
      */
     public function getModel($args)
     {
@@ -177,9 +177,9 @@ class Multisites_Api_User extends Zikula_Api
 
     /**
      * Get a model information
-     * @author:	Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	The model indentity
-     * @return:	The model information
+     * @author: Albert Pérez Monfort (aperezm@xtec.cat)
+     * @param:  The model indentity
+     * @return: The model information
      */
     public function getModelById($args)
     {

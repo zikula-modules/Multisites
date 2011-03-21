@@ -12,7 +12,7 @@
  * information regarding copyright and licensing.
  */
 
-class Multisites_Controller_Interactiveinstaller extends Zikula_InteractiveInstaller
+class Multisites_Controller_Interactiveinstaller extends Zikula_AbstractInteractiveInstaller
 {
     /**
      * Initialise the interactive install system for the Multisites module

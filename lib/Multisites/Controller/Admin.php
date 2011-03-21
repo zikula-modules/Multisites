@@ -1,6 +1,6 @@
 <?php
 
-class Multisites_Controller_Admin extends Zikula_Controller
+class Multisites_Controller_Admin extends Zikula_AbstractController
 {
     public function postInitialize()
     {

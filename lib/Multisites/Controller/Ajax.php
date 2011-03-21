@@ -1,6 +1,6 @@
 <?php
 
-class Multisites_Controller_Ajax extends Zikula_Controller
+class Multisites_Controller_Ajax extends Zikula_AbstractController
 {
     public function _postSetup()
     {
@@ -10,8 +10,8 @@ class Multisites_Controller_Ajax extends Zikula_Controller
     /**
      * Delete a module from a given site
      * @author: Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	args   Array with the module name and the instance identity
-     * @return:	Delete a database record
+     * @param:  args   Array with the module name and the instance identity
+     * @return: Delete a database record
      */
     public function modifyActivation($args)
     {
@@ -69,8 +69,8 @@ class Multisites_Controller_Ajax extends Zikula_Controller
     /**
      * Set a module as allowed or not allowed for a site
      * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	args   Array with the module name and instance identity
-     * @return:	Create or delete a database record depending on the initial state
+     * @param:  args   Array with the module name and instance identity
+     * @return: Create or delete a database record depending on the initial state
      */
     public function allowModule($args)
     {
@@ -143,8 +143,8 @@ class Multisites_Controller_Ajax extends Zikula_Controller
     /**
      * Set a theme as allowed or not allowed for a site
      * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
-     * @param:	args   Array with the theme name and instance identity
-     * @return:	Create or delete a database record depending on the initial state
+     * @param:  args   Array with the theme name and instance identity
+     * @return: Create or delete a database record depending on the initial state
      */
     public function allowTheme($args)
     {
