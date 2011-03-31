@@ -43,7 +43,7 @@
         </div>
         <div class="z-formrow">
             <label for="sitedns">{gt text='Site domain'}</label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="sitedns" size="15" maxlength="60" value="{$site.sitedns}" />
+            <input class="notEditableField" onfocus="blur()" type="text" name="sitedns" size="15" maxlength="70" value="{$site.sitedns}" />
         </div>
         <div class="z-formrow">
             <label for="sitedns">{gt text='Based on model'}</label>
