@@ -42,8 +42,8 @@
             <input type="text" name="siteCompany" size="50" maxlength="100" value="{$site.siteCompany}" />
         </div>
         <div class="z-formrow">
-            <label for="sitedns">{gt text='Site DNS'}</label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="sitedns" size="15" maxlength="20" value="{$site.sitedns}" />
+            <label for="sitedns">{gt text='Site domain'}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" name="sitedns" size="15" maxlength="60" value="{$site.sitedns}" />
         </div>
         <div class="z-formrow">
             <label for="sitedns">{gt text='Based on model'}</label>

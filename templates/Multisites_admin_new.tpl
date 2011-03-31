@@ -42,7 +42,7 @@
         </div>
         <div class="z-formrow">
             <label for="sitedns">{gt text='Site domain'} <span class="mandatoryField">*</span></label>
-            <input type="text" name="sitedns" size="15" maxlength="20" value="{$sitedns}" />
+            <input type="text" name="sitedns" size="15" maxlength="60" value="{$sitedns}" />
         </div>
         <fieldset>
             <legend>{gt text='Database information'}</legend>

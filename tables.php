@@ -52,7 +52,7 @@ function Multisites_tables()
                                                   'siteAdminRealName' => "C(70) NOTNULL DEFAULT ''",
                                                   'siteAdminEmail' => "C(30) NOTNULL DEFAULT ''",
                                                   'siteCompany' => "C(100) NOTNULL DEFAULT ''",
-                                                  'sitedns' => "C(20) NOTNULL DEFAULT ''",
+                                                  'sitedns' => "C(60) NOTNULL DEFAULT ''",
                                                   'siteDBName' => "C(25) NOTNULL DEFAULT ''",
                                                   'siteDBUname' => "C(25) NOTNULL DEFAULT ''",
                                                   'siteDBPass' => "C(25) NOTNULL DEFAULT ''",
