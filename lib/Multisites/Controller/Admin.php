@@ -444,10 +444,10 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $name = $this->request-getPost()->get('name', isset($args['name']) ? $args['name'] : null);
-        $available = $this->request-getPost()->get('available', isset($args['available']) ? $args['available'] : null);
-        $siteModules = $this->request-getPost()->get('siteModules', isset($args['siteModules']) ? $args['siteModules'] : null);
-        $instanceId = $this->request-getPost()->get('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null);
+        $name = $this->request->getPost()->get('name', isset($args['name']) ? $args['name'] : null);
+        $available = $this->request->getPost()->get('available', isset($args['available']) ? $args['available'] : null);
+        $siteModules = $this->request->getPost()->get('siteModules', isset($args['siteModules']) ? $args['siteModules'] : null);
+        $instanceId = $this->request->getPost()->get('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null);
 
         $this->view->assign('name', $name)
                    ->assign('available', $available)
@@ -498,13 +498,13 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $instanceId = $this->request-getPost()->get('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null);
-        $instanceName = $this->request-getPost()->get('instanceName', isset($args['instanceName']) ? $args['instanceName'] : null);
-        $description = $this->request-getPost()->get('description', isset($args['description']) ? $args['description'] : null);
-        $siteAdminRealName = $this->request-getPost()->get('siteAdminRealName', isset($args['siteAdminRealName']) ? $args['siteAdminRealName'] : null);
-        $siteAdminEmail = $this->request-getPost()->get('siteAdminEmail', isset($args['siteAdminEmail']) ? $args['siteAdminEmail'] : null);
-        $siteCompany = $this->request-getPost()->get('siteCompany', isset($args['siteCompany']) ? $args['siteCompany'] : null);
-        $active = $this->request-getPost()->get('active', isset($args['active']) ? $args['active'] : 0);
+        $instanceId = $this->request->getPost()->get('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null);
+        $instanceName = $this->request->getPost()->get('instanceName', isset($args['instanceName']) ? $args['instanceName'] : null);
+        $description = $this->request->getPost()->get('description', isset($args['description']) ? $args['description'] : null);
+        $siteAdminRealName = $this->request->getPost()->get('siteAdminRealName', isset($args['siteAdminRealName']) ? $args['siteAdminRealName'] : null);
+        $siteAdminEmail = $this->request->getPost()->get('siteAdminEmail', isset($args['siteAdminEmail']) ? $args['siteAdminEmail'] : null);
+        $siteCompany = $this->request->getPost()->get('siteCompany', isset($args['siteCompany']) ? $args['siteCompany'] : null);
+        $active = $this->request->getPost()->get('active', isset($args['active']) ? $args['active'] : 0);
 
         // get site information
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
@@ -578,11 +578,11 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modelId = $this->request-getPost()->get('modelId', isset($args['modelId']) ? $args['modelId'] : null);
-        $modelName = $this->request-getPost()->get('modelName', isset($args['modelName']) ? $args['modelName'] : null);
-        $description = $this->request-getPost()->get('description', isset($args['description']) ? $args['description'] : null);
-        $folders = $this->request-getPost()->get('folders', isset($args['folders']) ? $args['folders'] : null);
-        $modelDBTablesPrefix = $this->request-getPost()->get('modelDBTablesPrefix', isset($args['modelDBTablesPrefix']) ? $args['modelDBTablesPrefix'] : null);
+        $modelId = $this->request->getPost()->get('modelId', isset($args['modelId']) ? $args['modelId'] : null);
+        $modelName = $this->request->getPost()->get('modelName', isset($args['modelName']) ? $args['modelName'] : null);
+        $description = $this->request->getPost()->get('description', isset($args['description']) ? $args['description'] : null);
+        $folders = $this->request->getPost()->get('folders', isset($args['folders']) ? $args['folders'] : null);
+        $modelDBTablesPrefix = $this->request->getPost()->get('modelDBTablesPrefix', isset($args['modelDBTablesPrefix']) ? $args['modelDBTablesPrefix'] : null);
 
         $errorMsg = '';
         if ($modelName == null || $modelName == '') {
@@ -659,11 +659,11 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modelsFolder = $this->request-getPost()->get('modelsFolder', isset($args['modelsFolder']) ? $args['modelsFolder'] : null);
-        $tempAccessFileContent = $this->request-getPost()->get('tempAccessFileContent', isset($args['tempAccessFileContent']) ? $args['tempAccessFileContent'] : null);
-        $globalAdminName = $this->request-getPost()->get('globalAdminName', isset($args['globalAdminName']) ? $args['globalAdminName'] : null);
-        $globalAdminPassword = $this->request-getPost()->get('globalAdminPassword', isset($args['globalAdminPassword']) ? $args['globalAdminPassword'] : null);
-        $globalAdminemail = $this->request-getPost()->get('globalAdminemail', isset($args['globalAdminemail']) ? $args['globalAdminemail'] : null);
+        $modelsFolder = $this->request->getPost()->get('modelsFolder', isset($args['modelsFolder']) ? $args['modelsFolder'] : null);
+        $tempAccessFileContent = $this->request->getPost()->get('tempAccessFileContent', isset($args['tempAccessFileContent']) ? $args['tempAccessFileContent'] : null);
+        $globalAdminName = $this->request->getPost()->get('globalAdminName', isset($args['globalAdminName']) ? $args['globalAdminName'] : null);
+        $globalAdminPassword = $this->request->getPost()->get('globalAdminPassword', isset($args['globalAdminPassword']) ? $args['globalAdminPassword'] : null);
+        $globalAdminemail = $this->request->getPost()->get('globalAdminemail', isset($args['globalAdminemail']) ? $args['globalAdminemail'] : null);
 
         $this->setVar('modelsFolder', $modelsFolder);
         $this->setVar('tempAccessFileContent', $tempAccessFileContent);
@@ -760,12 +760,12 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modelName = $this->request-getPost()->get('modelName', isset($args['modelName']) ? $args['modelName'] : null);
-        $description = $this->request-getPost()->get('description', isset($args['description']) ? $args['description'] : null);
-        $folders = $this->request-getPost()->get('folders', isset($args['folders']) ? $args['folders'] : null);
-        $modelFile = $this->request-getFiles()->get('modelFile', isset($args['modelFile']) ? $args['modelFile'] : null);
-        $modelDBTablesPrefix = $this->request-getPost()->get('modelDBTablesPrefix', isset($args['modelDBTablesPrefix']) ? $args['modelDBTablesPrefix'] : null);
-        $modelFileSelected = $this->request-getPost()->get('modelFileSelected', isset($args['modelFileSelected']) ? $args['modelFileSelected'] : 0);
+        $modelName = $this->request->getPost()->get('modelName', isset($args['modelName']) ? $args['modelName'] : null);
+        $description = $this->request->getPost()->get('description', isset($args['description']) ? $args['description'] : null);
+        $folders = $this->request->getPost()->get('folders', isset($args['folders']) ? $args['folders'] : null);
+        $modelFile = $this->request->getFiles()->get('modelFile', isset($args['modelFile']) ? $args['modelFile'] : null);
+        $modelDBTablesPrefix = $this->request->getPost()->get('modelDBTablesPrefix', isset($args['modelDBTablesPrefix']) ? $args['modelDBTablesPrefix'] : null);
+        $modelFileSelected = $this->request->getPost()->get('modelFileSelected', isset($args['modelFileSelected']) ? $args['modelFileSelected'] : 0);
 
         $errorMsg = '';
         if ($modelName == null || $modelName == '') {
