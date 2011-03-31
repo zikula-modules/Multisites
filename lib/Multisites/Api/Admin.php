@@ -1404,4 +1404,44 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
         return $sites;
     }
+
+    /**
+     * get available Admin panel links
+     *
+     * @return array Array of admin links
+     */
+    public function getlinks()
+    {
+        $links = array();
+
+        if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
+            return $links;
+        }
+
+        $links[] = array('url'   => ModUtil::url('Multisites', 'admin', 'main'),
+            'text'  => $this->__('View instances'),
+            'title' => $this->__('View instances'));
+
+        $links[] = array('url'   => ModUtil::url('Multisites', 'admin', 'newIns'),
+            'text'  => $this->__('New Instance'),
+            'title' => $this->__('New Instance'));
+
+        $links[] = array('url'   => ModUtil::url('Multisites', 'admin', 'manageModels'),
+            'text'  => $this->__('View Models'),
+            'title' => $this->__('View Models'));
+
+        $links[] = array('url'   => ModUtil::url('Multisites', 'admin', 'createNewModel'),
+            'text'  => $this->__('Create New Model'),
+            'title' => $this->__('Create New Model'));
+
+        $links[] = array('url'   => ModUtil::url('Multisites', 'admin', 'actualizer'),
+            'text'  => $this->__('Actualise Modules'),
+            'title' => $this->__('Actualise Modules'));
+
+        $links[] = array('url'   => ModUtil::url('Multisites', 'admin', 'config'),
+            'text'  => $this->__('Configuration'),
+            'title' => $this->__('Configuration'));
+
+        return $links;
+    }
 }
