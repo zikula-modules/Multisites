@@ -41,7 +41,12 @@ $siteDBPass = $databaseArray[$sitedns]['siteDBPass'];
 $siteDBHost = $databaseArray[$sitedns]['siteDBHost'];
 $siteDBName = $databaseArray[$sitedns]['siteDBName'];
 $siteDBPrefix = $databaseArray[$sitedns]['siteDBPrefix'];
+
 // set the correct connection values to site
-$ZConfig['DBInfo']['default']['dsn'] = "$siteDBType://$siteDBUname:$siteDBPass@$siteDBHost/$siteDBName";
+$ZConfig['DBInfo']['databases']['default']['host'] = $siteDBHost;
+$ZConfig['DBInfo']['databases']['default']['user'] = $siteDBUname;
+$ZConfig['DBInfo']['databases']['default']['password'] = $siteDBPass;
+$ZConfig['DBInfo']['databases']['default']['dbname'] = $siteDBName;
+$ZConfig['DBInfo']['databases']['default']['dbdriver'] = $siteDBType;
 $ZConfig['System']['prefix'] = $siteDBPrefix;
 $ZConfig['System']['temp'] = $ZConfig['Multisites']['multisites.files_real_path'] . '/' . $siteDBName . '/' . $ZConfig['Multisites']['multisites.site_temp_files_folder'];
