@@ -1,9 +1,9 @@
-{include file="Multisites_admin_menu.htm"}
+{include file='Multisites_admin_menu.tpl'}
 <div class="z-admincontainer">
-    <div class="z-adminpageicon">{img modname='core' src='windowlist.gif' set='icons/large'}</div>
-    <h2>{gt text="List of instances"}</h2>
+    <div class="z-adminpageicon">{icon type='view' size='large' __alt='List of instances'}</div>
+    <h2>{gt text='List of instances'}</h2>
     <div>
-        [{pagerabc posvar="letter" forwardvars="module,type,func"}
+        [{pagerabc posvar='letter' forwardvars='module,type,func'}
         | <a href="{modurl modname='Multisites' type='admin' func='main'}">{gt text='All'}</a>]
     </div>
     <table class="z-admintable">
@@ -19,8 +19,8 @@
             </tr>
         </thead>
         <tbody>
-            {foreach item=site from=$sites}
-                <tr class="{cycle values="z-odd,z-even"}">
+            {foreach item='site' from=$sites}
+                <tr class="{cycle values='z-odd,z-even'}">
                     <td align="left" valign="top">
                     {if $based_on_domains eq 1}
                         <a href="http://{$site.sitedns}/" target="_blank">
@@ -53,7 +53,7 @@
                     <td align="right" valign="top">
                         <div>
                             <a href="{modurl modname='Multisites' type='admin' func='edit' instanceId=$site.instanceId}">
-                                {img modname='core' src='edit.gif' set='icons/extrasmall' __alt='Edit' __title='Edit'}
+                                {icon type='edit' size='extrasmall' __alt='Edit' __title='Edit'}
                             </a>
                         </div>
                         <div>
@@ -73,7 +73,7 @@
                         </div>
                         <div>
                             <a href="{modurl modname='Multisites' type='admin' func='deleteInstance' instanceId=$site.instanceId}">
-                                {img modname='core' src='14_layer_deletelayer.gif' set='icons/extrasmall' __alt='Delete' __title='Delete'}
+                                {icon type='delete' size='extrasmall' __alt='Delete' __title='Delete'}
                             </a>
                         </div>
                     </td>
@@ -85,5 +85,5 @@
             {/foreach}
         </tbody>
     </table>
-    {pager rowcount=$pager.numitems limit=$pager.itemsperpage posvar=startnum shift=1 img_prev=images/icons/extrasmall/previous.gif img_next=images/icons/extrasmall/next.gif}
+    {pager rowcount=$pager.numitems limit=$pager.itemsperpage posvar=startnum shift=1 img_prev='images/icons/extrasmall/previous.png' img_next='images/icons/extrasmall/next.png'}
 </div>

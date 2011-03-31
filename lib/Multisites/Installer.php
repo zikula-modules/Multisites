@@ -30,43 +30,38 @@ class Multisites_Installer extends Zikula_AbstractInstaller
         // check if the sitesFilesFolder exists
         $path = (isset($this->serviceManager['multisites.files_real_path']) ? $this->serviceManager['multisites.files_real_path'] : '');
         if ($path == '') {
-            LogUtil::registerError (__('The directory where the sites files have to be created is not defined. Check your configuration values.'));
-            return false;
+            return LogUtil::registerError(__('The directory where the sites files have to be created is not defined. Check your configuration values.'));
         }
         if (!file_exists($path)) {
-            LogUtil::registerError (__('The directory where the sites files have to be created does not exists.'));
-            return false;
+            return LogUtil::registerError(__('The directory where the sites files have to be created does not exists.'));
         }
         // check if the sitesFilesFolder is writeable
         if (!is_writeable($path)) {
-            LogUtil::registerError (__('The directory where the sites files have to be created is not writeable.'));
-            return false;
+            return LogUtil::registerError(__('The directory where the sites files have to be created is not writeable.'));
         }
         // create the main site folder
         $path .= '/' . FormUtil::getPassedValue(sitedns, null, 'GET');
         if (!file_exists($path)) {
             if (!mkdir($path, 0777)) {
-                LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
-                return false;
+                return LogUtil::registerError(__('Error creating the directory.') . ': ' . $path);
             }
         }
         // create the data folder
         $path .= $this->serviceManager['multisites.site_files_folder'];
         if (!file_exists($path)) {
             if (!mkdir($path, 0777)) {
-                LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
-                return false;
+                return LogUtil::registerError(__('Error creating the directory.') . ': ' . $path);
             }
         }
         // create the models folder
         $path .= '/models';
         if (!file_exists($path)) {
             if (!mkdir($path, 0777)) {
-                LogUtil::registerError (__('Error creating the directory.') . ': ' . $path);
-                return false;
+                return LogUtil::registerError(__('Error creating the directory.') . ': ' . $path);
             }
         }
-        // Create module table
+
+        // Create module tables
         if (!DBUtil::createTable('Multisites_sites')) {
             return false;
         }
@@ -79,17 +74,19 @@ class Multisites_Installer extends Zikula_AbstractInstaller
         if (!DBUtil::createTable('Multisites_sitesModules')) {
             return false;
         }
-        //Create module vars
+
+        // Create module vars
         $this->setVar('modelsFolder', $path);
-        $this->setVar('tempAccessFileContent','SetEnvIf Request_URI "\.css$" object_is_css=css
-    SetEnvIf Request_URI "\.js$" object_is_js=js
-    Order deny,allow
-    Deny from all
-    Allow from env=object_is_css
-    Allow from env=object_is_js');
+        $this->setVar('tempAccessFileContent', 'SetEnvIf Request_URI "\.css$" object_is_css=css
+SetEnvIf Request_URI "\.js$" object_is_js=js
+Order deny,allow
+Deny from all
+Allow from env=object_is_css
+Allow from env=object_is_js');
         $this->setVar('globalAdminName', '');
         $this->setVar('globalAdminPassword', '');
         $this->setVar('globalAdminemail', '');
+
         return true;
     }
     /**

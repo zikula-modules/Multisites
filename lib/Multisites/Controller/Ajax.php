@@ -15,48 +15,43 @@ class Multisites_Controller_Ajax extends Zikula_AbstractController
      */
     public function modifyActivation($args)
     {
-        if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            LogUtil::registerPermissionError(null,true);
-            throw new Zikula_Exception_Forbidden();
-        }
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 /*
         if (!SecurityUtil::confirmAuthKey()) {
             LogUtil::registerAuthidError();
             throw new Zikula_Exception_Fatal();
         }
 */
-        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'POST');
+        $instanceId = $this->request->getPost()->get('instanceId', -1);
         if ($instanceId == -1) {
-            AjaxUtil::error($this->__('no instanceId value received.'));
+            AjaxUtil::error($this->__('No instanceId value received.'));
         }
 
-        $moduleName = FormUtil::getPassedValue('moduleName', -1, 'POST');
+        $moduleName = $this->request->getPost()->get('moduleName', -1);
         if ($moduleName == -1) {
-            AjaxUtil::error($this->__('no module name received.'));
+            AjaxUtil::error($this->__('No module name received.'));
         }
 
-        $newState = FormUtil::getPassedValue('newState', -1, 'POST');
+        $newState = $this->request->getPost()->get('newState', -1);
         if ($newState == -1) {
-            AjaxUtil::error($this->__('none new state received.'));
+            AjaxUtil::error($this->__('No new state received.'));
         }
 
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+        $site = ModUtil::apiFunc($this->name, 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
             AjaxUtil::error($this->__('Not site found.'));
         }
-        if (!ModUtil::apiFunc('Multisites', 'admin', 'modifyActivation',
-        array('instanceId' => $instanceId,
-        'moduleName' => $moduleName,
-        'newState' => $newState))) {
-            AjaxUtil::error($this->__('error changing module state.'));
+        if (!ModUtil::apiFunc($this->name, 'admin', 'modifyActivation',
+                                                            array('instanceId' => $instanceId,
+                                                                  'moduleName' => $moduleName,
+                                                                  'newState' => $newState))) {
+            AjaxUtil::error($this->__('Error changing module state.'));
         }
 
-        $siteModules = ModUtil::apiFunc('Multisites', 'admin', 'getAllSiteModules',
-                array('instanceId' => $instanceId));
+        $siteModules = ModUtil::apiFunc($this->name, 'admin', 'getAllSiteModules', array('instanceId' => $instanceId));
 
         $available = (array_key_exists($moduleName, $siteModules)) ? 1 : 0;
-        $icons = ModUtil::func('Multisites', 'admin', 'siteElementsIcons',
+        $icons = ModUtil::func($this->name, 'admin', 'siteElementsIcons',
                 array('name' => $moduleName,
                 'available' => $available,
                 'siteModules' => $siteModules,
@@ -74,67 +69,62 @@ class Multisites_Controller_Ajax extends Zikula_AbstractController
      */
     public function allowModule($args)
     {
-        if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            LogUtil::registerPermissionError(null,true);
-            throw new Zikula_Exception_Forbidden();
-        }
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 
-        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'POST');
+        $instanceId = $this->request->getPost()->get('instanceId', -1);
         if ($instanceId == -1) {
-            AjaxUtil::error($this->__('no instanceId value received.'));
+            AjaxUtil::error($this->__('No instanceId value received.'));
         }
-        $moduleName = FormUtil::getPassedValue('moduleName', -1, 'POST');
+        $moduleName = $this->request->getPost()->get('moduleName', -1);
         if ($moduleName == -1) {
-            AjaxUtil::error($this->__('no module name received.'));
+            AjaxUtil::error($this->__('No module name received.'));
         }
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            AjaxUtil::error($this->__('Not site found.'));
+            AjaxUtil::error($this->__('No site found.'));
         }
         //get site module
-        $module = ModUtil::apiFunc('Multisites', 'admin', 'getSiteModule',
-                array('instanceId' => $instanceId,
-                'moduleName' => $moduleName));
+        $module = ModUtil::apiFunc($this->name, 'admin', 'getSiteModule',
+                                                                array('instanceId' => $instanceId,
+                                                                      'moduleName' => $moduleName));
         if ($module['state'] == 6) {
             //set the module as desactivated
-            if (!ModUtil::apiFunc('Multisites', 'admin', 'modifyActivation',
-            array('instanceId' => $instanceId,
-            'moduleName' => $moduleName,
-            'newState' => 2))) {
-                AjaxUtil::error($this->__('error changing module state.'));
+            if (!ModUtil::apiFunc($this->name, 'admin', 'modifyActivation',
+                                                                array('instanceId' => $instanceId,
+                                                                      'moduleName' => $moduleName,
+                                                                      'newState' => 2))) {
+                AjaxUtil::error($this->__('Error changing module state.'));
             }
         } elseif ($module['state'] == 2 || $module['state'] == 3) {
             //set the module as not allowed
-            if (!ModUtil::apiFunc('Multisites', 'admin', 'modifyActivation',
-            array('instanceId' => $instanceId,
-            'moduleName' => $moduleName,
-            'newState' => 6))) {
-                AjaxUtil::error($this->__('error changing module state.'));
+            if (!ModUtil::apiFunc($this->name, 'admin', 'modifyActivation',
+                                                                array('instanceId' => $instanceId,
+                                                                      'moduleName' => $moduleName,
+                                                                      'newState' => 6))) {
+                AjaxUtil::error($this->__('Error changing module state.'));
             }
         } elseif ($module['state'] == '') {
             //create module
-            if (!ModUtil::apiFunc('Multisites', 'admin', 'createSiteModule',
-            array('instanceId' => $instanceId,
-            'moduleName' => $moduleName))) {
-                AjaxUtil::error($this->__('error creating module.'));
+            if (!ModUtil::apiFunc($this->name, 'admin', 'createSiteModule',
+                                                                array('instanceId' => $instanceId,
+                                                                      'moduleName' => $moduleName))) {
+                AjaxUtil::error($this->__('Error creating module.'));
             }
         } else {
             //get site module
-            if (!ModUtil::apiFunc('Multisites', 'admin', 'deleteSiteModule',
-            array('instanceId' => $instanceId,
-            'moduleName' => $moduleName))) {
-                AjaxUtil::error($this->__('error deleting module.'));
+            if (!ModUtil::apiFunc($this->name, 'admin', 'deleteSiteModule',
+                                                                array('instanceId' => $instanceId,
+                                                                      'moduleName' => $moduleName))) {
+                AjaxUtil::error($this->__('Error deleting module.'));
             }
         }
-        $siteModules = ModUtil::apiFunc('Multisites', 'admin', 'getAllSiteModules',
-                array('instanceId' => $instanceId));
+        $siteModules = ModUtil::apiFunc($this->name, 'admin', 'getAllSiteModules', array('instanceId' => $instanceId));
         $available = (array_key_exists($moduleName, $siteModules)) ? 1 : 0;
-        $icons = ModUtil::func('Multisites', 'admin', 'siteElementsIcons',
-                array('name' => $moduleName,
-                'available' => $available,
-                'siteModules' => $siteModules,
-                'instanceId' => $instanceId));
+        $icons = ModUtil::func($this->name, 'admin', 'siteElementsIcons',
+                                                                array('name' => $moduleName,
+                                                                      'available' => $available,
+                                                                      'siteModules' => $siteModules,
+                                                                      'instanceId' => $instanceId));
 
         return new Zikula_Response_Ajax(array('content' => $icons,
                                               'moduleName' => $moduleName));
@@ -148,51 +138,46 @@ class Multisites_Controller_Ajax extends Zikula_AbstractController
      */
     public function allowTheme($args)
     {
-        if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            LogUtil::registerPermissionError(null,true);
-            throw new Zikula_Exception_Forbidden();
-        }
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 
-        $instanceId = FormUtil::getPassedValue('instanceId', -1, 'POST');
+        $instanceId = $this->request->getPost()->get('instanceId', -1);
         if ($instanceId == -1) {
-            AjaxUtil::error($this->__('no instanceId value received.'));
+            AjaxUtil::error($this->__('No instanceId value received.'));
         }
-        $themeName = FormUtil::getPassedValue('themeName', -1, 'POST');
+        $themeName = $this->request->getPost()->get('themeName', -1);
         if ($themeName == -1) {
-            AjaxUtil::error($this->__('no theme name received.'));
+            AjaxUtil::error($this->__('No theme name received.'));
         }
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                array('instanceId' => $instanceId));
+        $site = ModUtil::apiFunc($this->name, 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            AjaxUtil::error($this->__('Not site found.'));
+            AjaxUtil::error($this->__('No site found.'));
         }
         //get site module
-        $theme = ModUtil::apiFunc('Multisites', 'admin', 'getSiteTheme',
-                array('instanceId' => $instanceId,
-                'themeName' => $themeName));
+        $theme = ModUtil::apiFunc($this->name, 'admin', 'getSiteTheme',
+                                                                array('instanceId' => $instanceId,
+                                                                      'themeName' => $themeName));
         if ($theme['name'] == '') {
             //create theme
-            if (!ModUtil::apiFunc('Multisites', 'admin', 'createSiteTheme',
-            array('instanceId' => $instanceId,
-            'themeName' => $themeName))) {
-                AjaxUtil::error($this->__('error creating theme.'));
+            if (!ModUtil::apiFunc($this->name, 'admin', 'createSiteTheme',
+                                                                array('instanceId' => $instanceId,
+                                                                      'themeName' => $themeName))) {
+                AjaxUtil::error($this->__('Error creating theme.'));
             }
         } else {
             //get site module
-            if (!ModUtil::apiFunc('Multisites', 'admin', 'deleteSiteTheme',
-            array('instanceId' => $instanceId,
-            'themeName' => $themeName))) {
-                AjaxUtil::error($this->__('error deleting theme.'));
+            if (!ModUtil::apiFunc($this->name, 'admin', 'deleteSiteTheme',
+                                                                array('instanceId' => $instanceId,
+                                                                      'themeName' => $themeName))) {
+                AjaxUtil::error($this->__('Error deleting theme.'));
             }
         }
-        $siteThemes = ModUtil::apiFunc('Multisites', 'admin', 'getAllSiteThemes',
-                array('instanceId' => $instanceId));
+        $siteThemes = ModUtil::apiFunc($this->name, 'admin', 'getAllSiteThemes', array('instanceId' => $instanceId));
         $available = (array_key_exists($themeName, $siteThemes)) ? 1 : 0;
-        $icons = ModUtil::func('Multisites', 'admin', 'siteThemesIcons',
-                array('name' => $themeName,
-                'available' => $available,
-                'siteThemes' => $siteThemes,
-                'instanceId' => $instanceId));
+        $icons = ModUtil::func($this->name, 'admin', 'siteThemesIcons',
+                                                                array('name' => $themeName,
+                                                                      'available' => $available,
+                                                                      'siteThemes' => $siteThemes,
+                                                                      'instanceId' => $instanceId));
 
         return new Zikula_Response_Ajax(array('content' => $icons,
                                               'themeName' => $themeName));

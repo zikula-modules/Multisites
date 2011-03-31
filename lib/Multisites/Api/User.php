@@ -11,9 +11,8 @@ class Multisites_Api_User extends Zikula_AbstractApi
     public function getAllSites($args)
     {
         // Security check
-        if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            return LogUtil::registerPermissionError();
-        }
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
+
         $table = DBUtil::getTables();
         $c = $table['Multisites_sites_column'];
         $where = (isset($args['letter'])) ? "$c[instanceName] LIKE '$args[letter]%'" : "";
@@ -39,11 +38,11 @@ class Multisites_Api_User extends Zikula_AbstractApi
      */
     public function getSite($args)
     {
-        $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
         // Security check
-        if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            return LogUtil::registerPermissionError();
-        }
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
+
+        $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
+
         // Needed argument
         if ($instanceId == null || !is_numeric($instanceId)) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
@@ -130,9 +129,8 @@ class Multisites_Api_User extends Zikula_AbstractApi
     public function getAllModels()
     {
         // Security check
-        if (!SecurityUtil::checkPermission('Multisites::', '::', ACCESS_ADMIN)) {
-            return LogUtil::registerPermissionError();
-        }
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
+
         $table = DBUtil::getTables();
         $c = $table['Multisites_models_column'];
         $where = '';
