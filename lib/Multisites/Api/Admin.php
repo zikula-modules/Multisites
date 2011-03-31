@@ -198,7 +198,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $password = UserUtil::getHashedPassword($args['siteAdminPwd']);
         if ($rs['z_uname'] == '') {
             $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
-            $nowUTCStr = $nowUTC->format(UserUtil::DATETIME_FORMAT);
+            $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
             // create administrator
             $sql = "INSERT INTO " . $prefix . "_users (z_uname,z_email,z_pass,z_approved_date,z_user_regdate,z_activated) VALUES ('$args[siteAdminName]','$args[siteAdminEmail]','$password','$nowUTCStr','$nowUTCStr',1)";
             if (!$connect->query($sql)) {
@@ -243,11 +243,14 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerPermissionError();
         }
 
+        $apiArgs = array('itemsperpage' => -1, 'startnum' => -1);
+        $letter = (isset($args['letter']) && !empty($args['letter'])) ? $args['letter'] : '';
+        if (!empty($letter)) {
+            $apiArgs['letter'] = $letter;
+        }
+
         // get sites
-        $sites = ModUtil::apiFunc('Multisites', 'user', 'getAllSites',
-                                   array('letter' => $letter,
-                                         'itemsperpage' => -1,
-                                         'startnum' => -1));
+        $sites = ModUtil::apiFunc('Multisites', 'user', 'getAllSites', $apiArgs);
         if ($sites === false) {
             return false;
         }
@@ -294,7 +297,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
 
         $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
-        $args['activationDate'] = $nowUTC->format(UserUtil::DATETIME_FORMAT);
+        $args['activationDate'] = $nowUTC->format('Y-m-d H:i:s');
         $item = DataUtil::formatForStore($args);
         if (!DBUtil::insertObject($item, 'Multisites_sites', 'instanceId')) {
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
@@ -1183,7 +1186,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         if ($uid == '') {
             // the user doesn't exists and create it
             $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
-            $nowUTCStr = $nowUTC->format(UserUtil::DATETIME_FORMAT);
+            $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
             $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_users (z_uname, z_pass, z_email, z_approved_date, z_user_regdate, z_activated)
                     VALUES ('$globalAdminName','$password','$globalAdminemail','$nowUTCStr','$nowUTCStr',1)";
             $rs = $connect->query($sql);
