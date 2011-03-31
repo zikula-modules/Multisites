@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Zikula component\n"
+"Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-03 19:21-0400\n"
+"POT-Creation-Date: 2011-03-31 14:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,485 +16,1127 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pnuserapi.php:23 pnuserapi.php:51 pnuserapi.php:85 pnuserapi.php:113
-#: pnuserapi.php:141 pnuserapi.php:175 pnadminapi.php:288 pnadminapi.php:335
-#: pnadminapi.php:377 pnadminapi.php:415 pnadminapi.php:756 pnadminapi.php:874
+#: lib/Multisites/Api/User.php:27 lib/Multisites/Api/User.php:54
+#: lib/Multisites/Api/User.php:87 lib/Multisites/Api/User.php:115
+#: lib/Multisites/Api/User.php:143 lib/Multisites/Api/User.php:170
+#: lib/Multisites/Api/User.php:203 lib/Multisites/Api/Admin.php:1038
 msgid "Error! Could not load items."
 msgstr ""
 
-#: pnuserapi.php:45 pnuserapi.php:70 pnuserapi.php:131 pnuserapi.php:160
-#: pnadminapi.php:52 pnadminapi.php:95 pnadminapi.php:223 pnadminapi.php:321
-#: pnadminapi.php:363 pnadminapi.php:401 pnadminapi.php:438 pnadminapi.php:742
-#: pnadmin.php:88
+#: lib/Multisites/Api/User.php:48 lib/Multisites/Api/User.php:72
+#: lib/Multisites/Api/User.php:105 lib/Multisites/Api/User.php:160
+#: lib/Multisites/Api/User.php:188 lib/Multisites/Api/Admin.php:296
+#: lib/Multisites/Api/Admin.php:390 lib/Multisites/Api/Admin.php:428
+#: lib/Multisites/Api/Admin.php:471 lib/Multisites/Api/Admin.php:550
+#: lib/Multisites/Api/Admin.php:591 lib/Multisites/Api/Admin.php:881
+#: lib/Multisites/Controller/Admin.php:1200
 msgid "Error! Could not do what you wanted. Please check your input."
 msgstr ""
 
-#: pnversion.php:12
-msgid "Zikula Multisites module"
+#: lib/Multisites/Api/Admin.php:57 lib/Multisites/Api/Admin.php:120
+#: lib/Multisites/Api/Admin.php:168 lib/Multisites/Api/Admin.php:357
+#: lib/Multisites/Api/Admin.php:439 lib/Multisites/Api/Admin.php:481
+#: lib/Multisites/Api/Admin.php:560 lib/Multisites/Api/Admin.php:633
+#: lib/Multisites/Api/Admin.php:713 lib/Multisites/Api/Admin.php:892
+#: lib/Multisites/Api/Admin.php:930 lib/Multisites/Api/Admin.php:994
+#: lib/Multisites/Api/Admin.php:1032 lib/Multisites/Api/Admin.php:1068
+#: lib/Multisites/Api/Admin.php:1177 lib/Multisites/Api/Admin.php:1262
+msgid "Error! Connecting to the database failed."
 msgstr ""
 
-#: pnversion.php:13
-msgid "Multisites manager"
+#: lib/Multisites/Api/Admin.php:101
+msgid "Error! The model does not exist."
 msgstr ""
 
-#: pnadminapi.php:69 pnadminapi.php:99 pnadminapi.php:542 pnadminapi.php:842
+#: lib/Multisites/Api/Admin.php:106
+msgid "Error! The model file has not been found."
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:111
+msgid "Error! Opening the model file failed."
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:132
+msgid "Error importing the database in line"
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:141
+msgid ""
+"Error! Importing the database failed. Perhaps there is a problem with the "
+"model file."
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:175 lib/Multisites/Api/Admin.php:181
+#: lib/Multisites/Api/Admin.php:187 lib/Multisites/Api/Admin.php:193
+msgid "Error! Setting configurating value failed."
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:205 lib/Multisites/Api/Admin.php:214
+#: lib/Multisites/Api/Admin.php:225
+msgid "Error! Creating the site administrator failed."
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:303 lib/Multisites/Api/Admin.php:332
+#: lib/Multisites/Api/Admin.php:723 lib/Multisites/Api/Admin.php:1004
+#: lib/Multisites/Api/Admin.php:1306
 msgid "Error! Creation attempt failed."
 msgstr ""
 
-#: pnadminapi.php:121
-msgid "Create Database failed"
+#: lib/Multisites/Api/Admin.php:396 lib/Multisites/Api/Admin.php:434
+#: lib/Multisites/Api/Admin.php:476 lib/Multisites/Api/Admin.php:514
+#: lib/Multisites/Api/Admin.php:555 lib/Multisites/Api/Admin.php:628
+#: lib/Multisites/Api/Admin.php:678 lib/Multisites/Api/Admin.php:887
+#: lib/Multisites/Api/Admin.php:925 lib/Multisites/Api/Admin.php:961
+#: lib/Multisites/Api/Admin.php:1027 lib/Multisites/Api/Admin.php:1063
+#: lib/Multisites/Api/Admin.php:1100 lib/Multisites/Api/Admin.php:1172
+#: lib/Multisites/Api/Admin.php:1257
+msgid "Error! No site could be found."
 msgstr ""
 
-#: pnadminapi.php:144 pnadmin.php:49
-msgid "The model do not exists"
-msgstr ""
-
-#: pnadminapi.php:149
-msgid "The model file has not been found"
-msgstr ""
-
-#: pnadminapi.php:154
-msgid "Error opening the model file"
-msgstr ""
-
-#: pnadminapi.php:158 pnadminapi.php:195 pnadminapi.php:260 pnadminapi.php:330
-#: pnadminapi.php:372 pnadminapi.php:410 pnadminapi.php:477 pnadminapi.php:533
-#: pnadminapi.php:571 pnadminapi.php:751 pnadminapi.php:789 pnadminapi.php:833
-#: pnadminapi.php:869 pnadminapi.php:905
-msgid "Error connecting to database"
-msgstr ""
-
-#: pnadminapi.php:201 pnadmin.php:510
-msgid "Error deleting database"
-msgstr ""
-
-#: pnadminapi.php:228 pnadminapi.php:325 pnadminapi.php:367 pnadminapi.php:405
-#: pnadminapi.php:472 pnadminapi.php:514 pnadminapi.php:566 pnadminapi.php:746
-#: pnadminapi.php:784 pnadminapi.php:817 pnadminapi.php:864 pnadminapi.php:898
-#: pnadminapi.php:934 pnadminapi.php:990 pnadmin.php:228 pnadmin.php:495
-#: pnadmin.php:542 pnadmin.php:649 pnadmin.php:735 pnadmin.php:762
-#: pnajax.php:36 pnajax.php:77 pnajax.php:137
-msgid "Not site found"
-msgstr ""
-
-#: pnadminapi.php:233 pnadminapi.php:448 pnadminapi.php:491 pnadminapi.php:794
+#: lib/Multisites/Api/Admin.php:402 lib/Multisites/Api/Admin.php:601
+#: lib/Multisites/Api/Admin.php:653 lib/Multisites/Api/Admin.php:936
+#: lib/Multisites/Api/Admin.php:1331
 msgid "Error! Sorry! Deletion attempt failed."
 msgstr ""
 
-#: pnadminapi.php:443 pnadminapi.php:963 pnadmin.php:261 pnadmin.php:294
-#: pnadmin.php:582
-msgid "Model not found"
+#: lib/Multisites/Api/Admin.php:519
+msgid "Error! connecting to the database failed."
 msgstr ""
 
-#: pnadminapi.php:577 pnadminapi.php:910 pnadminapi.php:940 pnadminapi.php:969
+#: lib/Multisites/Api/Admin.php:526 lib/Multisites/Api/Admin.php:1075
+#: lib/Multisites/Api/Admin.php:1107 lib/Multisites/Api/Admin.php:1139
 msgid "Error! Update attempt failed."
 msgstr ""
 
-#: pnadminapi.php:605 pnadminapi.php:612
+#: lib/Multisites/Api/Admin.php:597 lib/Multisites/Controller/Admin.php:201
+#: lib/Multisites/Controller/Admin.php:923
+msgid "Model not found"
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:753 lib/Multisites/Api/Admin.php:760
 msgid "Error deleting file"
 msgstr ""
 
-#: pnadminapi.php:995
+#: lib/Multisites/Api/Admin.php:815 lib/Multisites/Api/Admin.php:819
+#: lib/Multisites/Api/Admin.php:827
+#, php-format
+msgid "Error! Could not include %s"
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:1133 lib/Multisites/Controller/Admin.php:555
+#: lib/Multisites/Controller/Admin.php:598
+msgid "Error! Model could not be found."
+msgstr ""
+
+#: lib/Multisites/Api/Admin.php:1166
 msgid ""
 "You have not defined the global administrator name or password. Check the "
 "module configuration"
 msgstr ""
 
-#: pnadmin.php:93
-msgid "This site just exists. The site DNS must be unique."
+#: lib/Multisites/Api/Admin.php:1194
+msgid "Error! Creating global administrator failed."
 msgstr ""
 
-#: pnadmin.php:99
-msgid "Model note found"
+#: lib/Multisites/Api/Admin.php:1199
+msgid "Error! Getting global administrator values failed."
 msgstr ""
 
-#: pnadmin.php:104
-msgid "The database creation has failed"
+#: lib/Multisites/Api/Admin.php:1207 lib/Multisites/Api/Admin.php:1224
+msgid "Error! Adding global administrator to admin group failed."
 msgstr ""
 
-#: pnadmin.php:110
-msgid "The tables creation has failed"
+#: lib/Multisites/Api/Admin.php:1216
+msgid "Error! Getting global administrator group failed."
 msgstr ""
 
-#: pnadmin.php:116
-msgid "The site configuration has failed."
+#: lib/Multisites/Api/Admin.php:1231
+msgid "Error! Updating global administrator password failed."
 msgstr ""
 
-#: pnadmin.php:170
-msgid "Creation instance error"
+#: lib/Multisites/Api/Admin.php:1269
+msgid "Error! Deleting the sequences with value under 0 failed."
 msgstr ""
 
-#: pnadmin.php:174
-msgid "A new instance has been created"
+#: lib/Multisites/Api/Admin.php:1276
+msgid "Error! Creating the sequence failed."
 msgstr ""
 
-#: pnadmin.php:235
-msgid "Error editing instance"
+#: lib/Multisites/Api/Admin.php:1386
+#, php-format
+msgid ""
+"Error! Getting number of sites where the module <strong>%s</strong> need to "
+"be upgraded."
 msgstr ""
 
-#: pnadmin.php:239
-msgid "The site information has been edited"
+#: lib/Multisites/Api/Admin.php:1406
+#, php-format
+msgid ""
+"Error! Getting sites where the module <strong>%s</strong> need to be "
+"upgraded."
 msgstr ""
 
-#: pnadmin.php:299
-msgid "Error editing model"
+#: lib/Multisites/Api/Admin.php:1425 lib/Multisites/Api/Admin.php:1426
+msgid "View instances"
 msgstr ""
 
-#: pnadmin.php:303
-msgid "Model edited"
-msgstr ""
-
-#: pnadmin.php:358
-msgid "The module configuration has been modified"
-msgstr ""
-
-#: pnadmin.php:397 pnadmin.php:439
-msgid "The models folder does not exists"
-msgstr ""
-
-#: pnadmin.php:402
-msgid "The models folder is not writeable"
-msgstr ""
-
-#: pnadmin.php:445
-msgid "The model file extension is not allowed"
-msgstr ""
-
-#: pnadmin.php:460
-msgid " Error updating file"
-msgstr ""
-
-#: pnadmin.php:468
-msgid "Error creating model"
-msgstr ""
-
-#: pnadmin.php:472
-msgid "A new model has been created"
-msgstr ""
-
-#: pnadmin.php:517
-msgid "The instance deletion has failed"
-msgstr ""
-
-#: pnadmin.php:521
-msgid "The instance has been deleted"
-msgstr ""
-
-#: pnadmin.php:603
-msgid "Model deleted"
-msgstr ""
-
-#: pnadmin.php:769
-msgid "A global administrator has been created"
-msgstr ""
-
-#: pnadmin.php:773
-msgid "Not tool selected"
-msgstr ""
-
-#: pnajax.php:13 pnajax.php:63 pnajax.php:123
-msgid "Sorry! No authorization to access this module."
-msgstr ""
-
-#: pntemplates/plugins/function.multizkadminmenulinks.php:22
-msgid "View"
-msgstr ""
-
-#: pntemplates/plugins/function.multizkadminmenulinks.php:23
+#: lib/Multisites/Api/Admin.php:1429 lib/Multisites/Api/Admin.php:1430
 msgid "New Instance"
 msgstr ""
 
-#: pntemplates/plugins/function.multizkadminmenulinks.php:24
+#: lib/Multisites/Api/Admin.php:1433 lib/Multisites/Api/Admin.php:1434
 msgid "View Models"
 msgstr ""
 
-#: pntemplates/plugins/function.multizkadminmenulinks.php:25
-msgid "Create New Module"
+#: lib/Multisites/Api/Admin.php:1437 lib/Multisites/Api/Admin.php:1438
+msgid "Create New Model"
 msgstr ""
 
-#: pntemplates/plugins/function.multizkadminmenulinks.php:26
-msgid "Actualise New Model"
+#: lib/Multisites/Api/Admin.php:1441 lib/Multisites/Api/Admin.php:1442
+msgid "Actualise Modules"
 msgstr ""
 
-#: pntemplates/plugins/function.multizkadminmenulinks.php:27
-msgid "Config"
+#: lib/Multisites/Api/Admin.php:1445 lib/Multisites/Api/Admin.php:1446
+msgid "Configuration"
 msgstr ""
 
-#: pntemplates/Multizk_admin_siteTools.htm:4
-#: pntemplates/Multizk_admin_main.htm:56
-msgid "Site tools"
+#: lib/Multisites/Installer.php:33
+msgid ""
+"The directory where the sites files have to be created is not defined. Check "
+"your configuration values."
 msgstr ""
 
-#: pntemplates/Multizk_admin_siteTools.htm:5
-#: pntemplates/Multizk_admin_deleteInstance.htm:13
-#: pntemplates/Multizk_admin_siteElements.htm:5
-#: pntemplates/Multizk_admin_new.htm:13
-#: pntemplates/Multizk_admin_siteThemes.htm:5
-#: pntemplates/Multizk_admin_main.htm:13
-msgid "Site name"
+#: lib/Multisites/Installer.php:36
+msgid "The directory where the sites files have to be created does not exists."
 msgstr ""
 
-#: pntemplates/Multizk_admin_siteTools.htm:8
-msgid "Available tools"
+#: lib/Multisites/Installer.php:40
+msgid ""
+"The directory where the sites files have to be created is not writeable."
 msgstr ""
 
-#: pntemplates/Multizk_admin_siteTools.htm:9
-msgid "Create global administrator"
+#: lib/Multisites/Installer.php:46 lib/Multisites/Installer.php:53
+#: lib/Multisites/Installer.php:60
+msgid "Error creating the directory."
 msgstr ""
 
-#: pntemplates/Multizk_admin_siteTools.htm:11
-msgid "Recover administrators site control"
+#: lib/Multisites/Controller/Admin.php:84
+msgid "There is not any model defined"
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteInstance.htm:4
-msgid "Delete instance"
+#: lib/Multisites/Controller/Admin.php:154
+msgid "Error! Please provide an instance name. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteInstance.htm:11
-#: pntemplates/Multizk_admin_new.htm:9 pntemplates/Multizk_admin_main.htm:11
-#: pntemplates/Multizk_admin_edit.htm:10
-msgid "Instance name"
+#: lib/Multisites/Controller/Admin.php:157
+msgid "Error! Please provide an admin's site name. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteInstance.htm:15
-#: pntemplates/Multizk_admin_siteElements.htm:6
-#: pntemplates/Multizk_admin_new.htm:27
-#: pntemplates/Multizk_admin_siteThemes.htm:6
-#: pntemplates/Multizk_admin_main.htm:14 pntemplates/Multizk_admin_edit.htm:37
-msgid "Site DNS"
+#: lib/Multisites/Controller/Admin.php:160
+msgid ""
+"Error! Please provide an admin's site password. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteInstance.htm:18
-msgid "Confirm the instance deletion. It means delete its database and files."
+#: lib/Multisites/Controller/Admin.php:163
+msgid "Error! Please provide an admin's site email. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteInstance.htm:22
-#: pntemplates/Multizk_admin_new.htm:40
-#: pntemplates/Multizk_admin_deleteModel.htm:15
-#: pntemplates/Multizk_admin_newModel.htm:21
-msgid "Add"
+#: lib/Multisites/Controller/Admin.php:166
+msgid "Error! Please provide the site domain. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteInstance.htm:22
-#: pntemplates/Multizk_admin_deleteModel.htm:15
-#: pntemplates/Multizk_admin_manageModels.htm:29
-#: pntemplates/Multizk_admin_main.htm:59
-msgid "Delete"
+#: lib/Multisites/Controller/Admin.php:169
+#: lib/Multisites/Controller/Admin.php:172
+msgid "Error! Please provide the site database host. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteInstance.htm:23
-#: pntemplates/Multizk_admin_new.htm:41
-#: pntemplates/Multizk_admin_deleteModel.htm:16
-#: pntemplates/Multizk_admin_editModel.htm:26
-#: pntemplates/Multizk_admin_config.htm:26
-#: pntemplates/Multizk_admin_newModel.htm:22
-#: pntemplates/Multizk_admin_actualizer.htm:25
-#: pntemplates/Multizk_admin_edit.htm:49
-msgid "Cancel"
+#: lib/Multisites/Controller/Admin.php:175
+msgid "Error! Please provide the site database name. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_siteElements.htm:4
-#: pntemplates/Multizk_admin_siteThemes.htm:4
-#: pntemplates/Multizk_admin_main.htm:50
-msgid "Site allowed elements"
+#: lib/Multisites/Controller/Admin.php:178
+msgid ""
+"Error! Please provide the site database user name. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_menu.htm:4
-msgid "Multiple Zikula"
+#: lib/Multisites/Controller/Admin.php:181
+msgid ""
+"Error! Please provide the site database user password. It is a mandatory "
+"field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:4 pntemplates/Multizk_admin_edit.htm:4
-msgid "Create a new instance"
+#: lib/Multisites/Controller/Admin.php:184
+msgid ""
+"Error! Please provide the site database prefix. It is a mandatory field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:11
-#: pntemplates/Multizk_admin_manageModels.htm:9
-#: pntemplates/Multizk_admin_editModel.htm:14
-#: pntemplates/Multizk_admin_newModel.htm:12
-#: pntemplates/Multizk_admin_main.htm:12 pntemplates/Multizk_admin_edit.htm:13
-msgid "Description"
+#: lib/Multisites/Controller/Admin.php:187
+msgid ""
+"Error! Please provide the model on the site will be based. It is a mandatory "
+"field."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:15
-msgid "Site admin name"
+#: lib/Multisites/Controller/Admin.php:193
+msgid "This site just exists. The site DNS must be unique."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:18
-msgid "Site admin password"
+#: lib/Multisites/Controller/Admin.php:228
+msgid "Error! Creating site directories failed"
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:20 pntemplates/Multizk_admin_main.htm:15
-#: pntemplates/Multizk_admin_edit.htm:28
-msgid "Admin real name"
+#: lib/Multisites/Controller/Admin.php:230
+#, php-format
+msgid "Error with the folder <strong>%s</strong> because it is not writeable."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:23 pntemplates/Multizk_admin_main.htm:16
-#: pntemplates/Multizk_admin_edit.htm:31
-msgid "Admin email"
+#: lib/Multisites/Controller/Admin.php:241
+msgid "Error! Creation of database failed."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:25 pntemplates/Multizk_admin_main.htm:17
-#: pntemplates/Multizk_admin_edit.htm:34
-msgid "Company"
+#: lib/Multisites/Controller/Admin.php:255
+msgid "Error! Creation of database tables failed."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:30 pntemplates/Multizk_admin_main.htm:40
-#: pntemplates/Multizk_admin_edit.htm:41
-msgid "Based on model"
+#: lib/Multisites/Controller/Admin.php:272
+msgid "Error! Updating the site configuration failed."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:32
-msgid "Choose a model..."
+#: lib/Multisites/Controller/Admin.php:285
+#: lib/Multisites/Controller/Admin.php:423
+msgid "Error! Updating the file multisites_dbconfig.php failed."
 msgstr ""
 
-#: pntemplates/Multizk_admin_new.htm:37 pntemplates/Multizk_admin_main.htm:42
-#: pntemplates/Multizk_admin_edit.htm:44
-msgid "Active"
+#: lib/Multisites/Controller/Admin.php:317
+msgid "Error! Creation of the instance failed."
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteModel.htm:4
-msgid "Delete model"
+#: lib/Multisites/Controller/Admin.php:347
+msgid "Done! A new instance has been created."
 msgstr ""
 
-#: pntemplates/Multizk_admin_deleteModel.htm:12
-msgid "Confirm model deletion"
+#: lib/Multisites/Controller/Admin.php:382
+#: lib/Multisites/Controller/Admin.php:513
+msgid "Error! Site could not be found."
 msgstr ""
 
-#: pntemplates/Multizk_admin_manageModels.htm:4
-msgid "List of models"
+#: lib/Multisites/Controller/Admin.php:401
+msgid "Error deleting database"
 msgstr ""
 
-#: pntemplates/Multizk_admin_manageModels.htm:8
-#: pntemplates/Multizk_admin_editModel.htm:11
-#: pntemplates/Multizk_admin_newModel.htm:10
+#: lib/Multisites/Controller/Admin.php:412
+msgid "The instance deletion has failed"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:427
+msgid "Done! The instance has been deleted."
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:525
+msgid "Error! Updating the instance failed."
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:529
+msgid "Done! The site information has been updated."
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:589
+msgid "Error! Please provide a model name. It is a mandatory field."
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:592
+msgid ""
+"Error! Please provide the model database tables prefix. It is a mandatory "
+"field."
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:608
+msgid "Error! Updating the model failed."
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:617
+msgid "Done! Model updated."
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:674
+msgid "The module configuration has been modified"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:722
+#: lib/Multisites/Controller/Admin.php:783
+msgid "The models folder does not exists"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:727
+msgid "The models folder is not writeable"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:772
+msgid "Error! Please provide a model name. It is a mandatory field.<br />"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:775
+msgid ""
+"Error! Please provide the model database tables prefix. It is a mandatory "
+"field.<br />"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:778
+msgid "Error! Please provide the model file. It is a mandatory field.<br />"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:790
+msgid ""
+"The model file extension is not allowed. The only allowed extensions are txt "
+"and sql"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:806
+msgid " Error updating file"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:823
+msgid "Error creating model"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:835
+msgid "A new model has been created"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:866
+#: lib/Multisites/Controller/Admin.php:985
+#: lib/Multisites/Controller/Admin.php:1093
+#: lib/Multisites/Controller/Admin.php:1121
+msgid "Not site found"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:950
+msgid "Error deleting the model"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:954
+msgid "Model deleted"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:1129
+msgid "A global administrator has been created"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:1136
+msgid "The administration control has been recovered"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:1140
+msgid "Not tool selected"
+msgstr ""
+
+#: lib/Multisites/Controller/Admin.php:1217
+#, php-format
+msgid ""
+"Error! No sites could be found that needs an upgrade of module <strong>%s</"
+"strong>."
+msgstr ""
+
+#: lib/Multisites/Controller/Interactiveinstaller.php:122
+msgid ""
+"The directory where the sites files have to be created is not defined. "
+"Please, define it."
+msgstr ""
+
+#: lib/Multisites/Controller/Interactiveinstaller.php:126
+msgid ""
+"The directory where the sites files have to be created does not exists. "
+"Please, create it."
+msgstr ""
+
+#: lib/Multisites/Controller/Interactiveinstaller.php:131
+msgid ""
+"The directory where the sites files have to be created is not writeable. "
+"Please, set it as writeable."
+msgstr ""
+
+#: lib/Multisites/Controller/Interactiveinstaller.php:141
+#: lib/Multisites/Controller/Interactiveinstaller.php:214
+msgid "Error: File multisites_config.php not found"
+msgstr ""
+
+#: lib/Multisites/Controller/Interactiveinstaller.php:157
+msgid "Error: the multiple_config.php not writted"
+msgstr ""
+
+#: lib/Multisites/Controller/Interactiveinstaller.php:241
+msgid "Error: the file multisites_config.php has not been written"
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:27 lib/Multisites/Controller/Ajax.php:76
+#: lib/Multisites/Controller/Ajax.php:145
+msgid "No instanceId value received."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:32 lib/Multisites/Controller/Ajax.php:80
+msgid "No module name received."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:37
+msgid "No new state received."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:42
+msgid "Not site found."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:48 lib/Multisites/Controller/Ajax.php:96
+#: lib/Multisites/Controller/Ajax.php:104
+msgid "Error changing module state."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:84
+#: lib/Multisites/Controller/Ajax.php:153
+msgid "No site found."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:111
+msgid "Error creating module."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:118
+msgid "Error deleting module."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:149
+msgid "No theme name received."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:164
+msgid "Error creating theme."
+msgstr ""
+
+#: lib/Multisites/Controller/Ajax.php:171
+msgid "Error deleting theme."
+msgstr ""
+
+#: lib/Multisites/Version.php:15
+msgid "Zikula Multisites module"
+msgstr ""
+
+#: lib/Multisites/Version.php:16
+msgid "Multisites manager"
+msgstr ""
+
+#: lib/Multisites/Version.php:17
+msgid "multisites"
+msgstr ""
+
+#: templates/Multisites_admin_editModel.tpl:3
+#: templates/Multisites_admin_editModel.tpl:4
+msgid "Edit model"
+msgstr ""
+
+#: templates/Multisites_admin_editModel.tpl:9
+#: templates/Multisites_admin_newModel.tpl:8
+#: templates/Multisites_admin_manageModels.tpl:16
 msgid "Model name"
 msgstr ""
 
-#: pntemplates/Multizk_admin_manageModels.htm:10
-msgid "Model file name"
+#: templates/Multisites_admin_editModel.tpl:13
+msgid "Model database table prefix"
 msgstr ""
 
-#: pntemplates/Multizk_admin_manageModels.htm:11
-#: pntemplates/Multizk_admin_editModel.htm:19
-#: pntemplates/Multizk_admin_newModel.htm:16
+#: templates/Multisites_admin_editModel.tpl:17
+#: templates/Multisites_admin_edit.tpl:13
+#: templates/Multisites_admin_newModel.tpl:16
+#: templates/Multisites_admin_siteThemes.tpl:18
+#: templates/Multisites_admin_siteElements.tpl:18
+#: templates/Multisites_admin_manageModels.tpl:17
+#: templates/Multisites_admin_main.tpl:13
+msgid "Description"
+msgstr ""
+
+#: templates/Multisites_admin_editModel.tpl:21
+msgid "Model file"
+msgstr ""
+
+#: templates/Multisites_admin_editModel.tpl:25
+#: templates/Multisites_admin_newModel.tpl:35
+#: templates/Multisites_admin_manageModels.tpl:19
 msgid "Model folders"
 msgstr ""
 
-#: pntemplates/Multizk_admin_manageModels.htm:12
-#: pntemplates/Multizk_admin_main.htm:19
-msgid "Options"
-msgstr ""
-
-#: pntemplates/Multizk_admin_manageModels.htm:26
-#: pntemplates/Multizk_admin_editModel.htm:25
-#: pntemplates/Multizk_admin_main.htm:47 pntemplates/Multizk_admin_edit.htm:48
-msgid "Edit"
-msgstr ""
-
-#: pntemplates/Multizk_admin_manageModels.htm:35
-msgid "No models available. You must define models before create instances."
-msgstr ""
-
-#: pntemplates/Multizk_admin_editModel.htm:4
-#: pntemplates/Multizk_admin_newModel.htm:4
-msgid "Create a new model"
-msgstr ""
-
-#: pntemplates/Multizk_admin_editModel.htm:17
-#: pntemplates/Multizk_admin_newModel.htm:14
-msgid "Update model file"
-msgstr ""
-
-#: pntemplates/Multizk_admin_editModel.htm:22
-msgid ""
-"Write the folders that have to be created into the sites files system "
-"separated by "
-msgstr ""
-
-#: pntemplates/Multizk_admin_config.htm:4
-msgid "Module configuration"
-msgstr ""
-
-#: pntemplates/Multizk_admin_config.htm:9
-msgid "Model files folder"
-msgstr ""
-
-#: pntemplates/Multizk_admin_config.htm:12
-msgid "Temporal folder access file content"
-msgstr ""
-
-#: pntemplates/Multizk_admin_config.htm:15
-msgid "Global admin name"
-msgstr ""
-
-#: pntemplates/Multizk_admin_config.htm:18
-msgid "Global admin password"
-msgstr ""
-
-#: pntemplates/Multizk_admin_config.htm:21
-msgid "Global admin e-mail"
-msgstr ""
-
-#: pntemplates/Multizk_admin_config.htm:25
-msgid "Modify"
-msgstr ""
-
-#: pntemplates/Multizk_admin_newModel.htm:18
+#: templates/Multisites_admin_editModel.tpl:29
 msgid ""
 "Write the folders that have to be created into the sites files system "
 "separated by \",\". If you need folder into other folders you can write "
-"expressions like \"folder/folder\""
+"expressions like \"folder/folder\"."
 msgstr ""
 
-#: pntemplates/Multizk_admin_actualizer.htm:4
-#: pntemplates/Multizk_admin_actualizer.htm:24
-msgid "Upgrade modules"
+#: templates/Multisites_admin_editModel.tpl:32
+#: templates/Multisites_admin_newModel.tpl:43
+#: templates/Multisites_admin_new.tpl:96
+msgid "Mandatory fields"
 msgstr ""
 
-#: pntemplates/Multizk_admin_actualizer.htm:9
-msgid "Modules folder"
+#: templates/Multisites_admin_editModel.tpl:35
+#: templates/Multisites_admin_edit.tpl:57
+#: templates/Multisites_admin_manageModels.tpl:35
+#: templates/Multisites_admin_main.tpl:56
+msgid "Edit"
 msgstr ""
 
-#: pntemplates/Multizk_admin_actualizer.htm:16
-msgid "System folder"
+#: templates/Multisites_admin_editModel.tpl:37
+#: templates/Multisites_admin_edit.tpl:59
+#: templates/Multisites_admin_newModel.tpl:48
+#: templates/Multisites_admin_new.tpl:101
+#: templates/Multisites_admin_deleteModel.tpl:15
+#: templates/Multisites_admin_actualizer.tpl:43
+#: templates/Multisites_admin_deleteInstance.tpl:29
+#: templates/Multisites_admin_config.tpl:30
+msgid "Cancel"
 msgstr ""
 
-#: pntemplates/Multizk_admin_actualizer.htm:31
-msgid "Not modules selected"
+#: templates/Multisites_admin_menu.tpl:4
+msgid "Multiple Zikula"
 msgstr ""
 
-#: pntemplates/Multizk_admin_main.htm:4
-msgid "List of instances"
+#: templates/Multisites_admin_edit.tpl:3 templates/Multisites_admin_edit.tpl:4
+msgid "Edit an instance"
 msgstr ""
 
-#: pntemplates/Multizk_admin_main.htm:6
-msgid "All"
+#: templates/Multisites_admin_edit.tpl:9 templates/Multisites_admin_new.tpl:8
+#: templates/Multisites_admin_deleteInstance.tpl:9
+#: templates/Multisites_admin_main.tpl:12
+msgid "Instance name"
 msgstr ""
 
-#: pntemplates/Multizk_admin_main.htm:18
-msgid "Features"
-msgstr ""
-
-#: pntemplates/Multizk_admin_main.htm:41
-msgid "Creation date"
-msgstr ""
-
-#: pntemplates/Multizk_admin_main.htm:53
-msgid "Site themes"
-msgstr ""
-
-#: pntemplates/Multizk_admin_main.htm:65
-msgid "Not sites defined"
-msgstr ""
-
-#: pntemplates/Multizk_admin_edit.htm:16
+#: templates/Multisites_admin_edit.tpl:17
 msgid "Original site name"
 msgstr ""
 
-#: pntemplates/Multizk_admin_edit.htm:20
+#: templates/Multisites_admin_edit.tpl:21
+#: templates/Multisites_admin_new.tpl:20
+msgid "Site description"
+msgstr ""
+
+#: templates/Multisites_admin_edit.tpl:25
 msgid "Original site admin name"
 msgstr ""
 
-#: pntemplates/Multizk_admin_edit.htm:24
+#: templates/Multisites_admin_edit.tpl:29
 msgid "Original site admin password"
+msgstr ""
+
+#: templates/Multisites_admin_edit.tpl:33
+#: templates/Multisites_admin_new.tpl:32
+msgid "Admin real name"
+msgstr ""
+
+#: templates/Multisites_admin_edit.tpl:37
+#: templates/Multisites_admin_new.tpl:36
+msgid "Admin email"
+msgstr ""
+
+#: templates/Multisites_admin_edit.tpl:41
+#: templates/Multisites_admin_new.tpl:40
+#: templates/Multisites_admin_main.tpl:45
+msgid "Company"
+msgstr ""
+
+#: templates/Multisites_admin_edit.tpl:45
+#: templates/Multisites_admin_new.tpl:44
+msgid "Site domain"
+msgstr ""
+
+#: templates/Multisites_admin_edit.tpl:49
+#: templates/Multisites_admin_new.tpl:83
+#: templates/Multisites_admin_main.tpl:48
+msgid "Based on model"
+msgstr ""
+
+#: templates/Multisites_admin_edit.tpl:53
+#: templates/Multisites_admin_new.tpl:92
+#: templates/Multisites_admin_main.tpl:51
+msgid "Active"
+msgstr ""
+
+#: templates/Multisites_admin_siteTools.tpl:4
+#: templates/Multisites_admin_main.tpl:71
+msgid "Site tools"
+msgstr ""
+
+#: templates/Multisites_admin_siteTools.tpl:5
+#: templates/Multisites_admin_siteThemes.tpl:5
+#: templates/Multisites_admin_siteElements.tpl:5
+#: templates/Multisites_admin_new.tpl:16
+#: templates/Multisites_admin_deleteInstance.tpl:10
+#: templates/Multisites_admin_main.tpl:14
+msgid "Site name"
+msgstr ""
+
+#: templates/Multisites_admin_siteTools.tpl:7
+msgid "Available tools"
+msgstr ""
+
+#: templates/Multisites_admin_siteTools.tpl:11
+msgid "Create global administrator"
+msgstr ""
+
+#: templates/Multisites_admin_siteTools.tpl:16
+msgid "Recover administrators site control"
+msgstr ""
+
+#: templates/Multisites_admin_siteElementsIcons.tpl:4
+#: templates/Multisites_admin_siteThemesIcons.tpl:4
+msgid "Allowed"
+msgstr ""
+
+#: templates/Multisites_admin_siteElementsIcons.tpl:6
+#: templates/Multisites_admin_siteThemesIcons.tpl:6
+msgid "Not allowed"
+msgstr ""
+
+#: templates/Multisites_admin_siteElementsIcons.tpl:8
+msgid "Add module"
+msgstr ""
+
+#: templates/Multisites_admin_newModel.tpl:3
+#: templates/Multisites_admin_newModel.tpl:4
+msgid "Create a new model"
+msgstr ""
+
+#: templates/Multisites_admin_newModel.tpl:12
+msgid "Model database tables prefix"
+msgstr ""
+
+#: templates/Multisites_admin_newModel.tpl:20
+msgid "Upload model file"
+msgstr ""
+
+#: templates/Multisites_admin_newModel.tpl:23
+msgid "The possible extensions are sql and txt."
+msgstr ""
+
+#: templates/Multisites_admin_newModel.tpl:25
+msgid "or select a file"
+msgstr ""
+
+#: templates/Multisites_admin_newModel.tpl:27
+msgid "Select a file..."
+msgstr ""
+
+#: templates/Multisites_admin_newModel.tpl:38
+msgid ""
+"Write the folders that have to be created into the sites files system "
+"separated by commas. If you need a folder into another folder you can write "
+"expressions like \"folder/folder\"."
+msgstr ""
+
+#: templates/Multisites_admin_newModel.tpl:46
+#: templates/Multisites_admin_new.tpl:99
+msgid "Add"
+msgstr ""
+
+#: templates/Multisites_admin_siteThemes.tpl:3
+#: templates/Multisites_admin_siteThemes.tpl:4
+#: templates/Multisites_admin_siteThemes.tpl:7
+msgid "Site allowed themes"
+msgstr ""
+
+#: templates/Multisites_admin_siteThemes.tpl:6
+#: templates/Multisites_admin_siteElements.tpl:6
+#: templates/Multisites_admin_deleteInstance.tpl:11
+#: templates/Multisites_admin_main.tpl:15
+msgid "Site DNS"
+msgstr ""
+
+#: templates/Multisites_admin_siteThemes.tpl:16
+#: templates/Multisites_admin_siteElements.tpl:16
+msgid "Name"
+msgstr ""
+
+#: templates/Multisites_admin_siteThemes.tpl:17
+#: templates/Multisites_admin_siteElements.tpl:17
+msgid "Version"
+msgstr ""
+
+#: templates/Multisites_admin_siteThemes.tpl:19
+#: templates/Multisites_admin_siteElements.tpl:19
+msgid "Actions"
+msgstr ""
+
+#: templates/Multisites_admin_siteElements.tpl:3
+#: templates/Multisites_admin_siteElements.tpl:4
+#: templates/Multisites_admin_siteElements.tpl:7
+msgid "Site allowed extensions"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:3 templates/Multisites_admin_new.tpl:4
+#: templates/Multisites_admin_newNotPossible.tpl:3
+#: templates/Multisites_admin_newNotPossible.tpl:4
+msgid "Create a new instance"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:12
+msgid "Description (internal)"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:24
+msgid "Site admin name"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:28
+msgid "Site admin password"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:48
+msgid "Database information"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:50
+msgid "Site database type"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:58
+msgid "Site database host"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:62
+#: templates/Multisites_admin_main.tpl:49
+msgid "Site database"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:66
+msgid "Site database username"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:70
+msgid "Site database password"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:74
+msgid "Site database prefix"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:78
+msgid "Create database"
+msgstr ""
+
+#: templates/Multisites_admin_new.tpl:85
+msgid "Choose a model..."
+msgstr ""
+
+#: templates/Multisites_admin_deleteModel.tpl:3
+#: templates/Multisites_admin_deleteModel.tpl:4
+msgid "Delete model"
+msgstr ""
+
+#: templates/Multisites_admin_deleteModel.tpl:10
+msgid "Confirm model deletion"
+msgstr ""
+
+#: templates/Multisites_admin_deleteModel.tpl:13
+#: templates/Multisites_admin_manageModels.tpl:40
+#: templates/Multisites_admin_deleteInstance.tpl:26
+#: templates/Multisites_admin_main.tpl:76
+msgid "Delete"
+msgstr ""
+
+#: templates/Multisites_admin_manageModels.tpl:3
+#: templates/Multisites_admin_manageModels.tpl:4
+msgid "List of models"
+msgstr ""
+
+#: templates/Multisites_admin_manageModels.tpl:18
+msgid "Model file name"
+msgstr ""
+
+#: templates/Multisites_admin_manageModels.tpl:20
+msgid "DB tables prefix"
+msgstr ""
+
+#: templates/Multisites_admin_manageModels.tpl:21
+#: templates/Multisites_admin_main.tpl:18
+msgid "Options"
+msgstr ""
+
+#: templates/Multisites_admin_manageModels.tpl:47
+msgid "No models available. You must define models before create instances."
+msgstr ""
+
+#: templates/Multisites_admin_actualizer.tpl:3
+#: templates/Multisites_admin_actualizer.tpl:4
+msgid "Upgrade extensions"
+msgstr ""
+
+#: templates/Multisites_admin_actualizer.tpl:9
+msgid "Modules folder"
+msgstr ""
+
+#: templates/Multisites_admin_actualizer.tpl:22
+msgid "Upgrade sites"
+msgstr ""
+
+#: templates/Multisites_admin_actualizer.tpl:31
+msgid "All the sites and modules are upgraded to the current versions"
+msgstr ""
+
+#: templates/Multisites_admin_actualizer.tpl:40
+msgid "Upgrade modules"
+msgstr ""
+
+#: templates/Multisites_admin_actualizer.tpl:50
+msgid "Not modules selected"
+msgstr ""
+
+#: templates/Multisites_admin_deleteInstance.tpl:3
+#: templates/Multisites_admin_deleteInstance.tpl:4
+msgid "Delete instance"
+msgstr ""
+
+#: templates/Multisites_admin_deleteInstance.tpl:14
+msgid "Confirm the instance deletion. It means delete its database and files."
+msgstr ""
+
+#: templates/Multisites_admin_deleteInstance.tpl:17
+msgid "Delete site files"
+msgstr ""
+
+#: templates/Multisites_admin_deleteInstance.tpl:21
+msgid ""
+"Delete database (only possible if the user of the database has enough "
+"permissions)"
+msgstr ""
+
+#: templates/Multisites_admin_newNotPossible.tpl:6
+msgid ""
+"Create a new instance is not possible because the file <b>config/"
+"multisites_dbconfig.php</b> does not exists or it is not writeable."
+msgstr ""
+
+#: templates/Multisites_admin_siteThemesIcons.tpl:8
+msgid "Add theme"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:3 templates/Multisites_admin_main.tpl:4
+msgid "List of instances"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:7
+msgid "All"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:16
+msgid "Admin details"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:17
+msgid "Features"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:43
+msgid "Real name"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:44
+msgid "Email"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:50
+msgid "Creation date"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:61
+msgid "Site allowed elements"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:66
+msgid "Site themes"
+msgstr ""
+
+#: templates/Multisites_admin_main.tpl:83
+msgid "No sites defined"
+msgstr ""
+
+#: templates/Multisites_admin_config.tpl:3
+#: templates/Multisites_admin_config.tpl:4
+msgid "Module configuration"
+msgstr ""
+
+#: templates/Multisites_admin_config.tpl:8
+msgid "Model files folder"
+msgstr ""
+
+#: templates/Multisites_admin_config.tpl:12
+msgid "Temporal folder .htaccess file content"
+msgstr ""
+
+#: templates/Multisites_admin_config.tpl:16
+msgid "Global admin name"
+msgstr ""
+
+#: templates/Multisites_admin_config.tpl:20
+msgid "Global admin password"
+msgstr ""
+
+#: templates/Multisites_admin_config.tpl:24
+msgid "Global admin e-mail"
+msgstr ""
+
+#: templates/Multisites_admin_config.tpl:28
+msgid "Modify"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:2
+msgid "Multiple Zikula installations"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:5
+msgid "Multisites system installation. Version RC1"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:8
+msgid "The installation of Multisites requires 5 steps"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:12
+msgid ""
+"Copy the files <strong>multisites_config.php</strong> and "
+"<strong>multisites_dbconfig.php</strong> in the folder config and set them "
+"to writeable (chmod770 or chmod660)."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:13
+msgid ""
+"Create a writeable directory in your server and note down its physical path."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:15
+msgid ""
+"Set the file <strong>multisites_config.php</strong> as read only (chmod 644 "
+"or 444)."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:16
+msgid "Proceed with the module installation."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:29
+msgid "Go on with the installation"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:33
+msgid ""
+"Step 1 - Checking the correct location of the files multisites_config.php "
+"and multisites_dbconfig.php"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:37
+msgid ""
+"You have to locate the files <strong>config/multisites_config.php</strong> "
+"and <strong>multisites_dbconfig.php</strong> into the directory "
+"<strong>config</strong> of Zikula and give them writeable permissions."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:44
+msgid ""
+"The file <strong>config/multisites_config.php</strong> has not been found in "
+"the directory <strong>config</strong>."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:49
+msgid ""
+"The file <strong>config/multisites_config.php</strong> is located in the "
+"correct place."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:54
+msgid ""
+"The file <strong>config/multisites_config.php</strong> is not writeable, but "
+"it should be."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:59
+msgid "The file <strong>config/multisites_config.php</strong> is writeable."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:66
+msgid ""
+"The file <strong>config/multisites_dbconfig.php</strong> has not been found "
+"in the directory <strong>config</strong>."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:71
+msgid ""
+"The file <strong>config/multisites_dbconfig.php</strong> is located in the "
+"correct place."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:76
+msgid ""
+"The file <strong>config/multisites_dbconfig.php</strong> is not writeable, "
+"but it should be."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:81
+msgid "The file <strong>config/multisites_dbconfig.php</strong> is writeable."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:89
+#: templates/Multisites_admin_init.tpl:173
+msgid "Check again"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:93
+msgid "Go on with the step 2"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:98
+msgid "Step 2 - Checking the sites files directory existence"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:108
+msgid "Script Real Path"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:112
+msgid "Write the physical location of the directory in the server"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:116
+#: templates/Multisites_admin_init.tpl:140
+msgid "Accept"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:121
+msgid ""
+"Step 3 - Writing the correct parameters in the file "
+"<strong>multisites_config.php</strong>"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:128
+msgid "Main domain"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:132
+msgid "Sites temporal directory"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:136
+msgid "Sites data directory"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:144
+msgid "Step 4 - Check if the file multisites_config.php is not writeable"
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:149
+msgid ""
+"The file <strong>config/multisites_config.php</strong> is writeable, but it "
+"should not be. Please set this file as not writeable."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:154
+msgid ""
+"The file <strong>config/multisites_config.php</strong> is not writeable."
+msgstr ""
+
+#: templates/Multisites_admin_init.tpl:167
+msgid "Proceed with the module installation"
 msgstr ""

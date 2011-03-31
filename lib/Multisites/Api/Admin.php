@@ -54,7 +54,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                                            'siteDBHost' => $args['siteDBHost'],
                                            'siteDBType' => $args['siteDBType']));
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
         try {
             switch ($args['siteDBType']) {
@@ -98,17 +98,17 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         //check if the models folders exists and it is writeable
         $path = ModUtil::getVar('Multisites', 'modelsFolder');
         if (!is_dir($path)) {
-            return LogUtil::registerError($this->__('The model do not exists'));
+            return LogUtil::registerError($this->__('Error! The model does not exist.'));
         }
         //check if the file model exists and it is readable
         $file = $path . '/' . $args['fileName'];
         if (!file_exists($file) || !is_readable($file)) {
-            return LogUtil::registerError($this->__('The model file has not been found'));
+            return LogUtil::registerError($this->__('Error! The model file has not been found.'));
         }
         //read the file
         $fh = fopen($file, 'r+');
         if ($fh == false) {
-            return LogUtil::registerError($this->__('Error opening the model file'));
+            return LogUtil::registerError($this->__('Error! Opening the model file failed.'));
         }
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
                                      array('siteDBName' => $args['siteDBName'],
@@ -117,7 +117,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                                            'siteDBHost' => $args['siteDBHost'],
                                            'siteDBType' => $args['siteDBType']));
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
         $lines = file($file);
         $exec = '';
@@ -138,7 +138,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
         fclose($fh);
         if (!$done) {
-            return LogUtil::registerError($this->__('Error importing the database. Perhaps there is a problem with the model file'));
+            return LogUtil::registerError($this->__('Error! Importing the database failed. Perhaps there is a problem with the model file.'));
         }
         return true;
     }
@@ -165,32 +165,32 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                                            'siteDBHost' => $args['siteDBHost'],
                                            'siteDBType' => $args['siteDBType']));
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
         $prefix = $args['siteDBPrefix'];
         // modify the site name
         $value = serialize($args['siteName']);
         $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='sitename'";
         if (!$connect->query($sql)) {
-            return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql  . "\n");
+            return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql  . "\n");
         }
         // modify the site description
         $value = serialize($args['siteDescription']);
         $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='slogan'";
         if (!$connect->query($sql)) {
-            return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql  . "\n");
+            return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql  . "\n");
         }
         // modify the adminmail
         $value = serialize($args['siteAdminEmail']);
         $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='adminmail'";
         if (!$connect->query($sql)) {
-            return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql . "\n");
+            return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql . "\n");
         }
         // modify the sessionCookieName
         $value = serialize('ZKSID_' . $args['siteDBName']);
         $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='sessionname'";
         if (!$connect->query($sql)) {
-            return LogUtil::registerError($this->__('Error configurating value') . ":<br />" . $sql . "\n");
+            return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql . "\n");
         }
         // checks if the user that has been give as administrator exists
         $sql = "SELECT z_uname,z_uid FROM " . $prefix . "_users WHERE z_uname='" . $args['siteAdminName'] . "'";
@@ -202,7 +202,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             // create administrator
             $sql = "INSERT INTO " . $prefix . "_users (z_uname,z_email,z_pass,z_approved_date,z_user_regdate,z_activated) VALUES ('$args[siteAdminName]','$args[siteAdminEmail]','$password','$nowUTCStr','$nowUTCStr',1)";
             if (!$connect->query($sql)) {
-                return LogUtil::registerError($this->__('Error creating the site administrator') . ":<br />" . $sql . "\n");
+                return LogUtil::registerError($this->__('Error! Creating the site administrator failed.') . ":<br />" . $sql . "\n");
             }
             $sql = "SELECT z_uid FROM " . $prefix . "_users WHERE z_uname='" . $args['siteAdminName'] . "'";
             $rs = $connect->query($sql)->fetch();
@@ -211,7 +211,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             // modify administrator password and email
             $sql = "UPDATE " . $prefix . "_users SET z_pass='$password', z_email='$args[siteAdminEmail]' WHERE z_uname='$rs[z_uname]'";
             if (!$connect->query($sql)) {
-                return LogUtil::registerError($this->__('Error creating the site administrator') . ":<br />" . $sql . "\n");
+                return LogUtil::registerError($this->__('Error! Creating the site administrator failed.') . ":<br />" . $sql . "\n");
             }
             $uid = $rs['z_uid'];
         }
@@ -222,7 +222,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             // user is not administrator and add it to the administrators group
             $sql = "INSERT INTO " . $prefix . "_group_membership (z_uid,z_gid) VALUES ($uid,2)";
             if (!$connect->query($sql)) {
-                return LogUtil::registerError($this->__('Error creating the site administrator') . ":<br />" . $sql . "\n");
+                return LogUtil::registerError($this->__('Error! Creating the site administrator failed.') . ":<br />" . $sql . "\n");
             }
         }
         return true;
@@ -354,7 +354,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $args);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
         try {
             $sql = "DROP DATABASE $args[siteDBName];";
@@ -393,7 +393,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         //Get instance information
         $instance = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($instance == false) {
-            LogUtil::registerError($this->__('Not site found'));
+            LogUtil::registerError($this->__('Error! No site could be found.'));
             return System::redirect(ModUtil::url('Multisites', 'admin', 'main'));
         }
 
@@ -431,12 +431,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                                   array('instanceId' => $args['instanceId']));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         //$sql = "SELECT z_name, z_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules WHERE z_type<>$type";
@@ -473,12 +473,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         $sql = "SELECT z_name, z_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules WHERE z_name='$moduleName'";
@@ -511,12 +511,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! connecting to the database failed.'));
         }
 
         //update the module state in the site
@@ -552,12 +552,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         $sql = "SELECT z_name, z_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes WHERE z_name='$themeName'";
@@ -625,12 +625,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         //get module information
@@ -675,7 +675,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                                   array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
         $filemodules = ModUtil::apiFunc('Extensions', 'admin', 'getfilemodules');
         $fields = '';
@@ -710,7 +710,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         //create the module in the site
@@ -812,11 +812,11 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                 // manipulate the theme version information
                 if (file_exists($file = "themes/$dir/version.php")) {
                     if (!include ($file)) {
-                        LogUtil::registerError(pnML('_THEME_COULDNOTINCLUDE', array('file' => $file)));
+                        LogUtil::registerError($this->__f('Error! Could not include %s', $file));
                     }
                 } else if ($themetype == 4 && file_exists($file = "themes/$dir/theme.cfg")) {
                     if (!include ($file)) {
-                        LogUtil::registerError(pnML('_THEME_COULDNOTINCLUDE', array('file' => $file)));
+                        LogUtil::registerError($this->__f('Error! Could not include %s', $file));
                     }
                     if (!isset($themeversion['name'])) {
                         $themeversion['name'] = $dir;
@@ -824,7 +824,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                     $themeversion['displayname'] = $themeversion['name'];
                 } else if ($themetype == 2 && file_exists($file = "themes/$dir/xaninfo.php")) {
                     if (!include ($file)) {
-                        LogUtil::registerError(pnML('_THEME_COULDNOTINCLUDE', array('file' => $file)));
+                        LogUtil::registerError($this->__f('Error! Could not include %s', $file));
                     }
                     $themeversion['author'] = $themeinfo['author'];
                     $themeversion['contact'] = $themeinfo['download'];
@@ -884,12 +884,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                                   array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         $sql = "SELECT z_name, z_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes";
@@ -922,12 +922,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                                   array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         $sql = "DELETE FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes WHERE z_name='$themeName'";
@@ -958,7 +958,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                                   array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
         $themes = ModUtil::apiFunc('Multisites', 'admin', 'getAllThemes');
         $theme = $themes[$themeName];
@@ -991,7 +991,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         //create the module in the site
@@ -1024,12 +1024,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         $sql = "SELECT z_value FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars WHERE z_modname='ZConfig' AND z_name='Default_Theme'";
@@ -1060,12 +1060,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
 
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         $value = serialize($name);
@@ -1097,7 +1097,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         // get site information
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $table = DBUtil::getTables();
@@ -1130,7 +1130,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById',
                                    array('modelId' => $modelId));
         if ($model == false) {
-            return LogUtil::registerError($this->__('Model not found'));
+            return LogUtil::registerError($this->__('Error! Model could not be found.'));
         }
         $table = DBUtil::getTables();
         $c = $table['Multisites_models_column'];
@@ -1169,12 +1169,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         // get site information
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         // check if the super administrator exists
@@ -1191,12 +1191,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                     VALUES ('$globalAdminName','$password','$globalAdminemail','$nowUTCStr','$nowUTCStr',1)";
             $rs = $connect->query($sql);
             if (!$rs) {
-                return LogUtil::registerError($this->__('Error! Creating global administrator.'));
+                return LogUtil::registerError($this->__('Error! Creating global administrator failed.'));
             }
             $sql = "SELECT z_uid FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_users WHERE `z_uname`='" . $globalAdminName  . "'";
             $rs = $connect->query($sql)->fetch();
             if (!$rs) {
-                return LogUtil::registerError($this->__('Error! Getting global administrator values.'));
+                return LogUtil::registerError($this->__('Error! Getting global administrator values failed.'));
             }
             $uid = $rs['z_uid'];
             if ($uid != '') {
@@ -1204,7 +1204,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                 $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_membership (z_uid, z_gid) VALUES ($uid,2)";
                 $rs = $connect->query($sql);
                 if (!$rs) {
-                    return LogUtil::registerError($this->__('Error! Adding global administrator as administrators group membership.'));
+                    return LogUtil::registerError($this->__('Error! Adding global administrator to admin group failed.'));
                 }
             }
         } else {
@@ -1213,7 +1213,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                 WHERE `z_uid`=$uid AND z_gid=2";
             $rs = $connect->query($sql)->fetch();
             if (!$rs) {
-                return LogUtil::registerError($this->__('Error! Getting global administrator group.'));
+                return LogUtil::registerError($this->__('Error! Getting global administrator group failed.'));
             }
             $gid = $rs['z_gid'];
             if ($gid == '') {
@@ -1221,14 +1221,14 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                 $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_membership (z_uid, z_gid) VALUES ($uid,2)";
                 $rs = $connect->query($sql);
                 if (!$rs) {
-                    return LogUtil::registerError($this->__('Error! Adding global administrator as administrators group membership.'));
+                    return LogUtil::registerError($this->__('Error! Adding global administrator to admin group failed.'));
                 }
             }
             // update global administrator password
             $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_users SET z_pass='$password' WHERE z_uid=$uid";
             $rs = $connect->query($sql);
             if (!$rs) {
-               return LogUtil::registerError($this->__('Error! Updating global administrator password.'));
+               return LogUtil::registerError($this->__('Error! Updating global administrator password failed.'));
             }
         }
         return true;
@@ -1254,26 +1254,26 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                                   array('instanceId' => $instanceId));
         if ($site == false) {
-            return LogUtil::registerError($this->__('Not site found'));
+            return LogUtil::registerError($this->__('Error! No site could be found.'));
         }
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
         if (!$connect) {
-            return LogUtil::registerError($this->__('Error connecting to database'));
+            return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
         //delete the sequence in the first position
         $sql = "DELETE FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_perms WHERE `z_sequence` < 1 OR `z_pid` = 1";
         $rs = $connect->query($sql);
         if (!$rs) {
-            return LogUtil::registerError($this->__('Error! Deleting the sequences with value under 0.'));
+            return LogUtil::registerError($this->__('Error! Deleting the sequences with value under 0 failed.'));
         }
         //insert a new sequence
         $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_perms (z_gid, z_sequence, z_component, z_instance, z_level, z_pid)
             VALUES (2,0,'.*','.*',800,1)";
         $rs = $connect->query($sql);
         if (!$rs) {
-            return LogUtil::registerError($this->__('Error! Creating the sequence.'));
+            return LogUtil::registerError($this->__('Error! Creating the sequence failed.'));
         }
         return true;
     }

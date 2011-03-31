@@ -151,40 +151,40 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
 
         $errorMsg = '';
         if ($instanceName == null || $instanceName == '') {
-            $errorMsg = $this->__('Error! Please provide an instance name. It is a mandatory field.<br />');
+            $errorMsg = $this->__('Error! Please provide an instance name. It is a mandatory field.') . '<br />';
         }
         if ($siteAdminName == null || $siteAdminName == '') {
-            $errorMsg .= $this->__('Error! Please provide an admin\'s site name. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide an admin\'s site name. It is a mandatory field.') . '<br />';
         }
         if ($siteAdminPwd == null || $siteAdminPwd == '') {
-            $errorMsg .= $this->__('Error! Please provide an admin\'s site password. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide an admin\'s site password. It is a mandatory field.') . '<br />';
         }
         if ($siteAdminEmail == null || $siteAdminEmail == '') {
-            $errorMsg .= $this->__('Error! Please provide an admin\'s site email. It is a mandatory field. <br />');
+            $errorMsg .= $this->__('Error! Please provide an admin\'s site email. It is a mandatory field.') . '<br />';
         }
         if ($sitedns == null || $sitedns == '') {
-            $errorMsg .= $this->__('Error! Please provide the site domain. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the site domain. It is a mandatory field.') . '<br />';
         }
         if ($siteDBHost == null || $siteDBHost == '') {
-            $errorMsg .= $this->__('Error! Please provide the site database host. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the site database host. It is a mandatory field.') . '<br />';
         }
         if ($siteDBHost == null || $siteDBHost == '') {
-            $errorMsg .= $this->__('Error! Please provide the site database host. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the site database host. It is a mandatory field.') . '<br />';
         }
         if ($siteDBName == null || $siteDBName == '') {
-            $errorMsg .= $this->__('Error! Please provide the site database name. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the site database name. It is a mandatory field.') . '<br />';
         }
         if ($siteDBUname == null || $siteDBUname == '') {
-            $errorMsg .= $this->__('Error! Please provide the site database user name. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the site database user name. It is a mandatory field.') . '<br />';
         }
         if ($siteDBPass == null || $siteDBPass == '') {
-            $errorMsg .= $this->__('Error! Please provide the site database user password. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the site database user password. It is a mandatory field.') . '<br />';
         }
         if ($siteDBPrefix == null || $siteDBPrefix == '') {
-            $errorMsg .= $this->__('Error! Please provide the site database prefix. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the site database prefix. It is a mandatory field.') . '<br />';
         }
         if ($siteInitModel == null || $siteInitModel == '') {
-            $errorMsg .= $this->__('Error! Please provide the model on the site will be based. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the model on the site will be based. It is a mandatory field.') . '<br />';
         }
         if ($sitedns != null) {
             // check that the sitedns exists and if it exists return error
@@ -225,7 +225,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             foreach ($dirArray as $dir) {
                 if (!file_exists($dir)) {
                     if (!mkdir($dir, 0777)) {
-                        $errorMsg = $this->__('Error creating site directories') . ': ' . $dir;
+                        $errorMsg = $this->__('Error! Creating site directories failed') . ': ' . $dir;
                     }
                 } else if (!is_writeable($dir)) $errorMsg = $this->__f('Error with the folder <strong>%s</strong> because it is not writeable.', array($dir));
             }
@@ -238,7 +238,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                          'siteDBPass' => $siteDBPass,
                                          'siteDBType' => $siteDBType,
                                          'siteDBHost' => $siteDBHost))) {
-                $errorMsg = $this->__('The database creation has failed');
+                $errorMsg = $this->__('Error! Creation of database failed.');
             }
         }
         if ($errorMsg == '') {
@@ -252,7 +252,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                          'siteDBHost' => $siteDBHost,
                                          'siteDBType' => $siteDBType,
                                          'siteDBPrefix' => $siteDBPrefix))) {
-                $errorMsg = $this->__('The tables creation has failed');
+                $errorMsg = $this->__('Error! Creation of database tables failed.');
             }
         }
         if ($errorMsg == '') {
@@ -269,7 +269,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                          'siteDBHost' => $siteDBHost,
                                          'siteDBType' => $siteDBType,
                                          'siteDBPrefix' => $siteDBPrefix))) {
-                $errorMsg = $this->__('The site configuration has failed.');
+                $errorMsg = $this->__('Error! Updating the site configuration failed.');
             }
         }
         if ($errorMsg == '') {
@@ -282,7 +282,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                          'siteDBHost' => $siteDBHost,
                                          'siteDBType' => $siteDBType,
                                          'siteDBPrefix' => $siteDBPrefix))) {
-                $errorMsg = $this->__('Error updating the file multisites_dbconfig.php.');
+                $errorMsg = $this->__('Error! Updating the file multisites_dbconfig.php failed.');
             }
         }
         if ($errorMsg == '') {
@@ -314,7 +314,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                                'siteInitModel' => $siteInitModel,
                                                'active' => $active));
             if ($created == false) {
-                $errorMsg = $this->__('Creation instance error');
+                $errorMsg = $this->__('Error! Creation of the instance failed.');
             }
         }
         if ($errorMsg != '') {
@@ -344,7 +344,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                          array('instanceId' => $created));
         //*******
         // success
-        LogUtil::registerStatus($this->__('A new instance has been created'));
+        LogUtil::registerStatus($this->__('Done! A new instance has been created.'));
         //  redirect to the admin main page
         return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
     }
@@ -379,7 +379,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                                   array('instanceId' => $instanceId));
         if ($site == false) {
-            LogUtil::registerError($this->__('Not site found'));
+            LogUtil::registerError($this->__('Error! Site could not be found.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
         }
         if ($confirmation == null) {
@@ -420,11 +420,11 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                      'siteDBUname' => $siteDBUname,
                                      'siteDBHost' => $siteDBHost,
                                      'siteDBType' => $siteDBType))) {
-            LogUtil::registerError($this->__('Error updating the file multisites_dbconfig.php.'));
+            LogUtil::registerError($this->__('Error! Updating the file multisites_dbconfig.php failed.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
         }
         // success
-        LogUtil::registerStatus($this->__('The instance has been deleted'));
+        LogUtil::registerStatus($this->__('Done! The instance has been deleted.'));
         // redirect to the admin main page
         return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
     }
@@ -510,7 +510,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
                                   array('instanceId' => $instanceId));
         if ($site == false) {
-            LogUtil::registerError($this->__('Not site found'));
+            LogUtil::registerError($this->__('Error! Site could not be found.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
         }
         $edited = ModUtil::apiFunc('Multisites', 'admin', 'updateInstance',
@@ -522,11 +522,11 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                           'siteCompany' => $siteCompany,
                                           'active' => $active)));
         if (!$edited) {
-            LogUtil::registerError($this->__('Error editing instance'));
+            LogUtil::registerError($this->__('Error! Updating the instance failed.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
         }
         // success
-        LogUtil::registerStatus($this->__('The site information has been edited'));
+        LogUtil::registerStatus($this->__('Done! The site information has been updated.'));
         // redirect to the admin main page
         return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
     }
@@ -552,7 +552,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById',
                                    array('modelId' => $modelId));
         if ($model == false) {
-            LogUtil::registerError($this->__('Model not found'));
+            LogUtil::registerError($this->__('Error! Model could not be found.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'manageModels'));
         }
         // create output object
@@ -586,16 +586,16 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
 
         $errorMsg = '';
         if ($modelName == null || $modelName == '') {
-            $errorMsg = $this->__('Error! Please provide a model name. It is a mandatory field.<br />');
+            $errorMsg = $this->__('Error! Please provide a model name. It is a mandatory field.') . '<br />';
         }
         if ($modelDBTablesPrefix == null || $modelDBTablesPrefix == '') {
-            $errorMsg .= $this->__('Error! Please provide the model database tables prefix. It is a mandatory field.<br />');
+            $errorMsg .= $this->__('Error! Please provide the model database tables prefix. It is a mandatory field.') . '<br />';
         }
         // get model information
         $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById',
                                    array('modelId' => $modelId));
         if ($model == false) {
-            $errorMsg = $this->__('Model not found');
+            $errorMsg = $this->__('Error! Model could not be found.');
         }
         if ($errorMsg == '') {
             $edited = ModUtil::apiFunc('Multisites', 'admin', 'updateModel',
@@ -605,7 +605,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                               'folders' => $folders,
                                               'modelDBTablesPrefix' => $modelDBTablesPrefix)));
             if (!$edited) {
-                $errorMsg = $this->__('Error editing model');
+                $errorMsg = $this->__('Error! Updating the model failed.');
             }
         }
         if ($errorMsg != '') {
@@ -614,7 +614,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                                   array('modelId' => $modelId)));
         }
         // success
-        LogUtil::registerStatus($this->__('Model edited'));
+        LogUtil::registerStatus($this->__('Done! Model updated.'));
         // redirect to the admin main page
         return $this->redirect(ModUtil::url($this->name, 'admin', 'manageModels'));
     }
@@ -1214,7 +1214,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
                                    array('moduleName' => $moduleName,
                                          'currentVersion' => $currentVersion));
         if (!$sites) {
-            LogUtil::registerError($this->__f("Not sites found that needs upgrade in module <strong>%s</strong>", $moduleName));
+            LogUtil::registerError($this->__f('Error! No sites could be found that needs an upgrade of module <strong>%s</strong>.', $moduleName));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'actualizer'));
         }
 
