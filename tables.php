@@ -87,7 +87,7 @@ function Multisites_tables()
     $table['Multisites_models_column_def'] = array('modelId' => "I PRIMARY AUTO",
                                                    'modelName' => "C(150) NOTNULL DEFAULT ''",
                                                    'description' => "C(250) NOTNULL DEFAULT ''",
-                                                   'fileName' => "C(20) NOTNULL DEFAULT ''",
+                                                   'fileName' => "C(100) NOTNULL DEFAULT ''",
                                                    'folders' => "C(150) NOTNULL DEFAULT ''",
                                                    'modelDBTablesPrefix' => "C(5) NOTNULL DEFAULT ''");
 
