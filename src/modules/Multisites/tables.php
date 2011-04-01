@@ -20,9 +20,9 @@ function Multisites_tables()
     $table = array();
 
     // Multisites sites table definition
-    $table['Multisites_sites'] = DBUtil::getLimitedTablename('Multisites_sites');
+    $table['multisitessites'] = DBUtil::getLimitedTablename('multisitessites');
 
-    $table['Multisites_sites_column_def'] = array('instanceid' => "I PRIMARY AUTO",
+    $table['multisitessites_column_def'] = array('instanceid' => "I PRIMARY AUTO",
                                                   'instancename' => "C(150) NOTNULL DEFAULT ''",
                                                   'description' => "C(255) NOTNULL DEFAULT ''",
                                                   'sitename' => "C(150) NOTNULL DEFAULT ''",

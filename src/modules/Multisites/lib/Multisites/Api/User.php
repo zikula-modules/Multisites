@@ -14,13 +14,13 @@ class Multisites_Api_User extends Zikula_AbstractApi
         $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 
         $table = DBUtil::getTables();
-        $c = $table['Multisites_sites_column'];
+        $c = $table['multisitessites_column'];
         $where = (isset($args['letter'])) ? "$c[instancename] LIKE '$args[letter]%'" : "";
         $startnum = (isset($args['startnum'])) ? $args['startnum'] : 0;
         $itemsperpage = (isset($args['itemsperpage'])) ? $args['itemsperpage'] : -1;
         $orderby = "$c[instancename]";
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_sites', $where, $orderby, $startnum - 1, $itemsperpage, 'instanceid');
+        $items = DBUtil::selectObjectArray('multisitessites', $where, $orderby, $startnum - 1, $itemsperpage, 'instanceid');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
@@ -47,7 +47,7 @@ class Multisites_Api_User extends Zikula_AbstractApi
         if ($instanceid == null || !is_numeric($instanceid)) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
-        $items = DBUtil::selectObjectByID('Multisites_sites', $instanceid, 'instanceid');
+        $items = DBUtil::selectObjectByID('multisitessites', $instanceid, 'instanceid');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
@@ -74,12 +74,12 @@ class Multisites_Api_User extends Zikula_AbstractApi
 
         $table = DBUtil::getTables();
 
-        $c = $table['Multisites_sites_column'];
+        $c = $table['multisitessites_column'];
 
         $where = "$c[sitedns] = '$site'";
 
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_sites', $where, '', '-1', '-1', 'sitedns');
+        $items = DBUtil::selectObjectArray('multisitessites', $where, '', '-1', '-1', 'sitedns');
 
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
@@ -105,10 +105,10 @@ class Multisites_Api_User extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $table = DBUtil::getTables();
-        $c = $table['Multisites_sites_column'];
+        $c = $table['multisitessites_column'];
         $where = "$c[sitedns] = '$site'";
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_sites', $where, '', '-1', '-1', 'sitedns');
+        $items = DBUtil::selectObjectArray('multisitessites', $where, '', '-1', '-1', 'sitedns');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {

@@ -299,7 +299,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
         $args['activationdate'] = $nowUTC->format('Y-m-d H:i:s');
         $item = DataUtil::formatForStore($args);
-        if (!DBUtil::insertObject($item, 'Multisites_sites', 'instanceid')) {
+        if (!DBUtil::insertObject($item, 'multisitessites', 'instanceid')) {
             return LogUtil::registerError($this->__('Error! Creation attempt failed.'));
         }
         // Let any hooks know that we have created a new item
@@ -398,7 +398,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
 
         //delete instance information
-        if (!DBUtil::deleteObjectByID('Multisites_sites', $instanceid, 'instanceid')) {
+        if (!DBUtil::deleteObjectByID('multisitessites', $instanceid, 'instanceid')) {
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
         }
         // Let any hooks know that we have created a new item
@@ -1101,9 +1101,9 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
 
         $table = DBUtil::getTables();
-        $c = $table['Multisites_sites_column'];
+        $c = $table['multisitessites_column'];
         $where = "$c[instanceid] = $instanceid";
-        if (!DBUTil::updateObject($items, 'Multisites_sites', $where)) {
+        if (!DBUTil::updateObject($items, 'multisitessites', $where)) {
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
         }
         return true;

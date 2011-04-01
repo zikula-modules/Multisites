@@ -62,7 +62,7 @@ class Multisites_Installer extends Zikula_AbstractInstaller
         }
 
         // Create module tables
-        if (!DBUtil::createTable('Multisites_sites')) {
+        if (!DBUtil::createTable('multisitessites')) {
             return false;
         }
         if (!DBUtil::createTable('multisitesaccess')) {
@@ -97,7 +97,7 @@ Allow from env=object_is_js');
     public function uninstall()
     {
         // Delete module table
-        DBUtil::dropTable('Multisites_sites');
+        DBUtil::dropTable('multisitessites');
         DBUtil::dropTable('multisitesaccess');
         DBUtil::dropTable('multisitesmodels');
         DBUtil::dropTable('multisitessitemodules');
@@ -120,7 +120,7 @@ Allow from env=object_is_js');
      */
     public function upgrade($oldversion)
     {
-        if (!DBUtil::changeTable('Multisites_sites')) return false;
+        if (!DBUtil::changeTable('multisitessites')) return false;
         if (!DBUtil::changeTable('multisitesaccess')) return false;
         if (!DBUtil::changeTable('multisitesmodels')) return false;
         if (!DBUtil::changeTable('multisitessitemodules')) return false;
