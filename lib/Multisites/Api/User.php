@@ -15,12 +15,12 @@ class Multisites_Api_User extends Zikula_AbstractApi
 
         $table = DBUtil::getTables();
         $c = $table['Multisites_sites_column'];
-        $where = (isset($args['letter'])) ? "$c[instanceName] LIKE '$args[letter]%'" : "";
+        $where = (isset($args['letter'])) ? "$c[instancename] LIKE '$args[letter]%'" : "";
         $startnum = (isset($args['startnum'])) ? $args['startnum'] : 0;
         $itemsperpage = (isset($args['itemsperpage'])) ? $args['itemsperpage'] : -1;
-        $orderby = "$c[instanceName]";
+        $orderby = "$c[instancename]";
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_sites', $where, $orderby, $startnum - 1, $itemsperpage, 'instanceId');
+        $items = DBUtil::selectObjectArray('Multisites_sites', $where, $orderby, $startnum - 1, $itemsperpage, 'instanceid');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
@@ -41,13 +41,13 @@ class Multisites_Api_User extends Zikula_AbstractApi
         // Security check
         $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 
-        $instanceId = FormUtil::getPassedValue('instanceId', isset($args['instanceId']) ? $args['instanceId'] : null, 'POST');
+        $instanceid = FormUtil::getPassedValue('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null, 'POST');
 
         // Needed argument
-        if ($instanceId == null || !is_numeric($instanceId)) {
+        if ($instanceid == null || !is_numeric($instanceid)) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
-        $items = DBUtil::selectObjectByID('Multisites_sites', $instanceId, 'instanceId');
+        $items = DBUtil::selectObjectByID('Multisites_sites', $instanceid, 'instanceid');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
@@ -132,11 +132,11 @@ class Multisites_Api_User extends Zikula_AbstractApi
         $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 
         $table = DBUtil::getTables();
-        $c = $table['Multisites_models_column'];
+        $c = $table['multisitesmodels_column'];
         $where = '';
-        $orderby = "$c[modelId]";
+        $orderby = "$c[modelid]";
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_models', $where, $orderby, '-1', '-1', 'modelId');
+        $items = DBUtil::selectObjectArray('multisitesmodels', $where, $orderby, '-1', '-1', 'modelid');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
@@ -154,23 +154,23 @@ class Multisites_Api_User extends Zikula_AbstractApi
      */
     public function getModel($args)
     {
-        $modelName = FormUtil::getPassedValue('modelName', isset($args['modelName']) ? $args['modelName'] : null, 'POST');
+        $modelname = FormUtil::getPassedValue('modelname', isset($args['modelname']) ? $args['modelname'] : null, 'POST');
         // Needed argument
-        if ($modelName == null) {
+        if ($modelname == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
         $table = DBUtil::getTables();
-        $c = $table['Multisites_models_column'];
-        $where = "$c[modelName] = '$modelName'";
+        $c = $table['multisitesmodels_column'];
+        $where = "$c[modelname] = '$modelname'";
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_models', $where, '', '-1', '-1', 'modelName');
+        $items = DBUtil::selectObjectArray('multisitesmodels', $where, '', '-1', '-1', 'modelname');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($items === false) {
             return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
         // Return the items
-        return $items[$modelName];
+        return $items[$modelname];
     }
 
     /**
@@ -181,21 +181,21 @@ class Multisites_Api_User extends Zikula_AbstractApi
      */
     public function getModelById($args)
     {
-        $modelId = FormUtil::getPassedValue('modelId', isset($args['modelId']) ? $args['modelId'] : null, 'POST');
+        $modelid = FormUtil::getPassedValue('modelid', isset($args['modelid']) ? $args['modelid'] : null, 'POST');
 
         // Needed argument
-        if ($modelId == null) {
+        if ($modelid == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));
         }
 
         $table = DBUtil::getTables();
 
-        $c = $table['Multisites_models_column'];
+        $c = $table['multisitesmodels_column'];
 
-        $where = "$c[modelId] = $modelId";
+        $where = "$c[modelid] = $modelid";
 
         // get the objects from the db
-        $items = DBUtil::selectObjectArray('Multisites_models', $where, '', '-1', '-1', 'modelId');
+        $items = DBUtil::selectObjectArray('multisitesmodels', $where, '', '-1', '-1', 'modelid');
 
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
@@ -204,6 +204,6 @@ class Multisites_Api_User extends Zikula_AbstractApi
         }
 
         // Return the items
-        return $items[$modelId];
+        return $items[$modelid];
     }
 }

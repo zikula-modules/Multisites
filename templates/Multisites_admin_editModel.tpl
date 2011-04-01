@@ -4,14 +4,14 @@
     <h2>{gt text='Edit model'}</h2>
     <form id="editModel" class="z-form" action="{modurl modname='Multisites' type='admin' func='updateModel'}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
-        <input type="hidden" name="modelId" value="{$model.modelId}" />
+        <input type="hidden" name="modelid" value="{$model.modelid}" />
         <div class="z-formrow">
-            <label for="modelName">{gt text='Model name'} <span class="mandatoryField">*</span></label>
-            <input type="text" name="modelName" size="50" maxlength="150" value="{$model.modelName}" />
+            <label for="modelname">{gt text='Model name'} <span class="mandatoryField">*</span></label>
+            <input type="text" name="modelname" size="50" maxlength="150" value="{$model.modelname}" />
         </div>
         <div class="z-formrow">
-            <label for="modelDBTablesPrefix">{gt text='Model database table prefix'} <span class="mandatoryField">*</span></label>
-            <input type="text" name="modelDBTablesPrefix" size="50" maxlength="5" value="{$model.modelDBTablesPrefix}"/>
+            <label for="modeldbtablesprefix">{gt text='Model database table prefix'} <span class="mandatoryField">*</span></label>
+            <input type="text" name="modeldbtablesprefix" size="50" maxlength="5" value="{$model.modeldbtablesprefix}"/>
         </div>
         <div class="z-formrow">
             <label for="description">{gt text='Description'}</label>
@@ -19,7 +19,7 @@
         </div>
         <div class="z-formrow">
             <label for="modelFile">{gt text='Model file'}</label>
-            <span>{$model.fileName}</span>
+            <span>{$model.filename}</span>
         </div>
         <div class="z-formrow">
             <label for="folders">{gt text='Model folders'}</label>

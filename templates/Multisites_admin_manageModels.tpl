@@ -24,19 +24,19 @@
         <tbody>
         {foreach item='model' from=$modelsArray}
             <tr class="{cycle values='z-odd,z-even'}">
-                <td headers="hname" align="left" valign="top">{$model.modelName}</td>
+                <td headers="hname" align="left" valign="top">{$model.modelname}</td>
                 <td headers="hdescription" align="left" valign="top">{$model.description}</td>
-                <td headers="hmodelfile" align="left" valign="top">{$model.fileName}</td>
+                <td headers="hmodelfile" align="left" valign="top">{$model.filename}</td>
                 <td headers="hmodelfolders" align="left" valign="top">{$model.folders|replace:',':'<br />'}</td>
-                <td headers="hdbprefix" align="left" valign="top">{$model.modelDBTablesPrefix}</td>
+                <td headers="hdbprefix" align="left" valign="top">{$model.modeldbtablesprefix}</td>
                 <td headers="hoptions" align="right" valign="top">
                     <div>
-                        <a href="{modurl modname='Multisites' type='admin' func='editModel' modelId=$model.modelId}">
+                        <a href="{modurl modname='Multisites' type='admin' func='editModel' modelid=$model.modelid}">
                             {icon type='edit' size='extrasmall' __alt='Edit' __title='Edit'}
                         </a>
                     </div>
                     <div>
-                        <a href="{modurl modname='Multisites' type='admin' func='deleteModel' modelId=$model.modelId}">
+                        <a href="{modurl modname='Multisites' type='admin' func='deleteModel' modelid=$model.modelid}">
                             {icon type='delete' size='extrasmall' __alt='Delete' __title='Delete'}
                         </a>
                     </div>

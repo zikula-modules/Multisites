@@ -5,12 +5,12 @@
     <form id="newModel" class="z-form" action="{modurl modname='Multisites' type='admin' func='createModel'}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <div class="z-formrow">
-            <label for="modelName">{gt text='Model name'} <span class="mandatoryField">*</span></label>
-            <input type="text" name="modelName" size="50" maxlength="150" value="{$modelName}"/>
+            <label for="modelname">{gt text='Model name'} <span class="mandatoryField">*</span></label>
+            <input type="text" name="modelname" size="50" maxlength="150" value="{$modelname}"/>
         </div>
         <div class="z-formrow">
-            <label for="modelDBTablesPrefix">{gt text='Model database tables prefix'} <span class="mandatoryField">*</span></label>
-            <input type="text" name="modelDBTablesPrefix" size="50" maxlength="5" value="{if $modelDBTablesPrefix eq ''}z{else}{$modelDBTablesPrefix}{/if}"/>
+            <label for="modeldbtablesprefix">{gt text='Model database tables prefix'} <span class="mandatoryField">*</span></label>
+            <input type="text" name="modeldbtablesprefix" size="50" maxlength="5" value="{if $modeldbtablesprefix eq ''}z{else}{$modeldbtablesprefix}{/if}"/>
         </div>
         <div class="z-formrow">
             <label for="description">{gt text='Description'}</label>

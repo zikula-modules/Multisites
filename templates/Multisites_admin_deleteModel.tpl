@@ -5,9 +5,9 @@
     <form id="deleteInstance" class="z-form" action="{modurl modname='Multisites' type='admin' func='deleteModel'}" method="post" >
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="confirmation" value="1" />
-        <input type="hidden" name="modelId" value="{$model.modelId}" />
+        <input type="hidden" name="modelid" value="{$model.modelid}" />
         <div>
-            <label for="instanceName">{gt text='Confirm model deletion'}</label>
+            <label for="instancename">{gt text='Confirm model deletion'}</label>
         </div>
         <div class="z-formbuttons">
             {button src='button_ok.png' set='icons/small' __alt='Delete' __title='Delete'}

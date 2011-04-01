@@ -25,28 +25,28 @@ if ($sitedns == $ZConfig['Multisites']['multisites.mainsiteurl'] || $ZConfig['Mu
 // get site database connection information
 include_once('multisites_dbconfig.php');
 if (!$databaseArray[$sitedns] ||
-     $databaseArray[$sitedns]['siteDBName'] == '' ||
-     $databaseArray[$sitedns]['siteDBUname'] == '' ||
-     $databaseArray[$sitedns]['siteDBPass'] == '' ||
-     $databaseArray[$sitedns]['siteDBType'] == '' ||
-     $databaseArray[$sitedns]['siteDBHost'] == '' ||
-     $databaseArray[$sitedns]['siteDBPrefix'] == '') {
+     $databaseArray[$sitedns]['sitedbname'] == '' ||
+     $databaseArray[$sitedns]['sitedbuname'] == '' ||
+     $databaseArray[$sitedns]['sitedbpass'] == '' ||
+     $databaseArray[$sitedns]['sitedbtype'] == '' ||
+     $databaseArray[$sitedns]['sitedbhost'] == '' ||
+     $databaseArray[$sitedns]['sitedbprefix'] == '') {
     // if the site doesn't exists user is sended to an error page
     header('location: ' . $ZConfig['Multisites']['multisites.wwwroot'] . '/' . 'error.php?s=' . $ZConfig['Multisites']['multisites.sitednsEndText'] . '&dns=' . $sitedns);
     exit();
 }
-$siteDBType = $databaseArray[$sitedns]['siteDBType'];
-$siteDBUname = $databaseArray[$sitedns]['siteDBUname'];
-$siteDBPass = $databaseArray[$sitedns]['siteDBPass'];
-$siteDBHost = $databaseArray[$sitedns]['siteDBHost'];
-$siteDBName = $databaseArray[$sitedns]['siteDBName'];
-$siteDBPrefix = $databaseArray[$sitedns]['siteDBPrefix'];
+$sitedbtype = $databaseArray[$sitedns]['sitedbtype'];
+$sitedbuname = $databaseArray[$sitedns]['sitedbuname'];
+$sitedbpass = $databaseArray[$sitedns]['sitedbpass'];
+$sitedbhost = $databaseArray[$sitedns]['sitedbhost'];
+$sitedbname = $databaseArray[$sitedns]['sitedbname'];
+$sitedbprefix = $databaseArray[$sitedns]['sitedbprefix'];
 
 // set the correct connection values to site
-$ZConfig['DBInfo']['databases']['default']['host'] = $siteDBHost;
-$ZConfig['DBInfo']['databases']['default']['user'] = $siteDBUname;
-$ZConfig['DBInfo']['databases']['default']['password'] = $siteDBPass;
-$ZConfig['DBInfo']['databases']['default']['dbname'] = $siteDBName;
-$ZConfig['DBInfo']['databases']['default']['dbdriver'] = $siteDBType;
-$ZConfig['System']['prefix'] = $siteDBPrefix;
-$ZConfig['System']['temp'] = $ZConfig['Multisites']['multisites.files_real_path'] . '/' . $siteDBName . '/' . $ZConfig['Multisites']['multisites.site_temp_files_folder'];
+$ZConfig['DBInfo']['databases']['default']['host'] = $sitedbhost;
+$ZConfig['DBInfo']['databases']['default']['user'] = $sitedbuname;
+$ZConfig['DBInfo']['databases']['default']['password'] = $sitedbpass;
+$ZConfig['DBInfo']['databases']['default']['dbname'] = $sitedbname;
+$ZConfig['DBInfo']['databases']['default']['dbdriver'] = $sitedbtype;
+$ZConfig['System']['prefix'] = $sitedbprefix;
+$ZConfig['System']['temp'] = $ZConfig['Multisites']['multisites.files_real_path'] . '/' . $sitedbname . '/' . $ZConfig['Multisites']['multisites.site_temp_files_folder'];

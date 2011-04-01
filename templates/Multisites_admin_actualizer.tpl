@@ -18,7 +18,7 @@
                                     <td>{$module.version}</td>
                                     <td>{$module.numberOfSites}</td>
                                     <td>
-                                        <a href="{modurl modname='Multisites' type='admin' func='actualizeModule' moduleName=$module.name}">
+                                        <a href="{modurl modname='Multisites' type='admin' func='actualizeModule' modulename=$module.name}">
                                             {icon type='regenerate' size='extrasmall' __alt='Upgrade sites' __title='Upgrade sites'}
                                         </a>
                                     </td>

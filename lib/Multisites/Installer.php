@@ -65,13 +65,13 @@ class Multisites_Installer extends Zikula_AbstractInstaller
         if (!DBUtil::createTable('Multisites_sites')) {
             return false;
         }
-        if (!DBUtil::createTable('Multisites_access')) {
+        if (!DBUtil::createTable('multisitesaccess')) {
             return false;
         }
-        if (!DBUtil::createTable('Multisites_models')) {
+        if (!DBUtil::createTable('multisitesmodels')) {
             return false;
         }
-        if (!DBUtil::createTable('Multisites_sitesModules')) {
+        if (!DBUtil::createTable('multisitessitemodules')) {
             return false;
         }
 
@@ -98,9 +98,9 @@ Allow from env=object_is_js');
     {
         // Delete module table
         DBUtil::dropTable('Multisites_sites');
-        DBUtil::dropTable('Multisites_access');
-        DBUtil::dropTable('Multisites_models');
-        DBUtil::dropTable('Multisites_sitesModules');
+        DBUtil::dropTable('multisitesaccess');
+        DBUtil::dropTable('multisitesmodels');
+        DBUtil::dropTable('multisitessitemodules');
 
         //Delete module vars
         $this->delVar('modelsFolder');
@@ -121,9 +121,9 @@ Allow from env=object_is_js');
     public function upgrade($oldversion)
     {
         if (!DBUtil::changeTable('Multisites_sites')) return false;
-        if (!DBUtil::changeTable('Multisites_access')) return false;
-        if (!DBUtil::changeTable('Multisites_models')) return false;
-        if (!DBUtil::changeTable('Multisites_sitesModules')) return false;
+        if (!DBUtil::changeTable('multisitesaccess')) return false;
+        if (!DBUtil::changeTable('multisitesmodels')) return false;
+        if (!DBUtil::changeTable('multisitessitemodules')) return false;
         return true;
     }
 }

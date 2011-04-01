@@ -4,50 +4,50 @@
     <h2>{gt text='Edit an instance'}</h2>
     <form id="editInstance" class="z-form" action="{modurl modname='Multisites' type='admin' func='update'}" method="post" >
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
-        <input type="hidden" name="instanceId" value="{$site.instanceId}" />
+        <input type="hidden" name="instanceid" value="{$site.instanceid}" />
         <div class="z-formrow">
-            <label for="instanceName">{gt text='Instance name'}</label>
-            <input type="text" name="instanceName" size="50" maxlength="150" value="{$site.instanceName}"/>
+            <label for="instancename">{gt text='Instance name'}</label>
+            <input type="text" name="instancename" size="50" maxlength="150" value="{$site.instancename}"/>
         </div>
         <div class="z-formrow">
             <label for="description">{gt text='Description'}</label>
             <input type="text" name="description" size="50" maxlength="255" value="{$site.description}"/>
         </div>
         <div class="z-formrow">
-            <label for="siteName">{gt text='Original site name'}</label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="siteName" size="50" maxlength="255" value="{$site.siteName}"/>
+            <label for="sitename">{gt text='Original site name'}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" name="sitename" size="50" maxlength="255" value="{$site.sitename}"/>
         </div>
         <div class="z-formrow">
             <label for="siteDescription">{gt text='Site description'}</label>
             <input type="text" name="siteDescription" size="50" maxlength="255" value="{$site.siteDescription}" />
         </div>
         <div class="z-formrow">
-            <label for="siteAdminName">{gt text='Original site admin name'}</label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="siteAdminName" size="15" maxlength="25" value="{$site.siteAdminName}"/>
+            <label for="siteadminname">{gt text='Original site admin name'}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" name="siteadminname" size="15" maxlength="25" value="{$site.siteadminname}"/>
         </div>
         <div class="z-formrow">
-            <label for="siteAdminPwd">{gt text='Original site admin password'}</label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="siteAdminPwd" size="15" maxlength="15" value="{$site.siteAdminPwd}" />
+            <label for="siteadminpwd">{gt text='Original site admin password'}</label>
+            <input class="notEditableField" onfocus="blur()" type="text" name="siteadminpwd" size="15" maxlength="15" value="{$site.siteadminpwd}" />
         </div>
         <div class="z-formrow">
-            <label for="siteAdminRealName">{gt text='Admin real name'}</label>
-            <input type="text" name="siteAdminRealName" size="30" maxlength="70" value="{$site.siteAdminRealName}" />
+            <label for="siteadminrealname">{gt text='Admin real name'}</label>
+            <input type="text" name="siteadminrealname" size="30" maxlength="70" value="{$site.siteadminrealname}" />
         </div>
         <div class="z-formrow">
-            <label for="siteAdminEmail">{gt text='Admin email'}</label>
-            <input type="text" name="siteAdminEmail" size="30" maxlength="30" value="{$site.siteAdminEmail}" />
+            <label for="siteadminemail">{gt text='Admin email'}</label>
+            <input type="text" name="siteadminemail" size="30" maxlength="30" value="{$site.siteadminemail}" />
         </div>
         <div class="z-formrow">
-            <label for="siteCompany">{gt text='Company'}</label>
-            <input type="text" name="siteCompany" size="50" maxlength="100" value="{$site.siteCompany}" />
+            <label for="sitecompany">{gt text='Company'}</label>
+            <input type="text" name="sitecompany" size="50" maxlength="100" value="{$site.sitecompany}" />
         </div>
         <div class="z-formrow">
             <label for="sitedns">{gt text='Site domain'}</label>
-            <input class="notEditableField" onfocus="blur()" type="text" name="sitedns" size="15" maxlength="70" value="{$site.sitedns}" />
+            <input class="notEditableField" onfocus="blur()" type="text" name="sitedns" size="15" maxlength="255" value="{$site.sitedns}" />
         </div>
         <div class="z-formrow">
             <label for="sitedns">{gt text='Based on model'}</label>
-            <input class="notEditableField" onfocus="blur()" type="text" value="{$site.siteInitModel}" />
+            <input class="notEditableField" onfocus="blur()" type="text" value="{$site.siteinitmodel}" />
         </div>
         <div class="z-formrow">
             <label for="active">{gt text='Active'}</label>

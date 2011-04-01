@@ -469,7 +469,7 @@ msgstr ""
 
 #: lib/Multisites/Controller/Ajax.php:27 lib/Multisites/Controller/Ajax.php:76
 #: lib/Multisites/Controller/Ajax.php:145
-msgid "No instanceId value received."
+msgid "No instanceid value received."
 msgstr ""
 
 #: lib/Multisites/Controller/Ajax.php:32 lib/Multisites/Controller/Ajax.php:80

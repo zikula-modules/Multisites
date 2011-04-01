@@ -5,13 +5,13 @@
     <form id="deleteInstance" class="z-form" action="{modurl modname='Multisites' type='admin' func='deleteInstance'}" method="post" >
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="confirmation" value="1" />
-        <input type="hidden" name="instanceId" value="{$instance.instanceId}" />
-        <div>{gt text='Instance name'}: <strong>{$instance.instanceName}</strong></div>
-        <div>{gt text='Site name'}: <strong>{$instance.siteName}</strong></div>
+        <input type="hidden" name="instanceid" value="{$instance.instanceid}" />
+        <div>{gt text='Instance name'}: <strong>{$instance.instancename}</strong></div>
+        <div>{gt text='Site name'}: <strong>{$instance.sitename}</strong></div>
         <div>{gt text='Site DNS'}: <strong>{$instance.sitedns}</strong></div>
         <div>&nbsp;</div>
         <div>
-            <label for="instanceName">{gt text='Confirm the instance deletion. It means delete its database and files.'}</label>
+            <label for="instancename">{gt text='Confirm the instance deletion. It means delete its database and files.'}</label>
         </div>
         <div class="z-formrow">
             <label for="deleteFiles">{gt text='Delete site files'}</label>

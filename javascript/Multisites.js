@@ -4,10 +4,10 @@
  * @param:
  * @return: site module state information
  */
-function modifyActivation(moduleName, instanceId, newState)
+function modifyActivation(modulename, instanceid, newState)
 {
-    var pars = 'module=Multisites&func=modifyActivation&moduleName=' + moduleName + '&instanceId=' + instanceId + '&newState=' + newState;
-    $('module_' + moduleName).update('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
+    var pars = 'module=Multisites&func=modifyActivation&modulename=' + modulename + '&instanceid=' + instanceid + '&newState=' + newState;
+    $('module_' + modulename).update('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
     var myAjax = new Zikula.Ajax.Request('ajax.php',
     {
         method: 'post',
@@ -23,7 +23,7 @@ function modifyActivation_response(req) {
         return;
     }
     var data = req.getData();
-    $('module_' + data.moduleName).update(data.content);
+    $('module_' + data.modulename).update(data.content);
 }
 
 function modifyActivation_failure()
@@ -36,10 +36,10 @@ function modifyActivation_failure()
  * @param:
  * @return: site module state information
 */
-function allowModule(moduleName,instanceId)
+function allowModule(modulename,instanceid)
 {
-    var pars = 'module=Multisites&func=allowModule&moduleName=' + moduleName + '&instanceId=' + instanceId;
-    $('module_' + moduleName).update('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
+    var pars = 'module=Multisites&func=allowModule&modulename=' + modulename + '&instanceid=' + instanceid;
+    $('module_' + modulename).update('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
     var myAjax = new Zikula.Ajax.Request('ajax.php',
     {
         method: 'post',
@@ -56,7 +56,7 @@ function allowModule_response(req)
         return;
     }
     var data = req.getData();
-    Element.update('module_' + data.moduleName, data.content);
+    Element.update('module_' + data.modulename, data.content);
 }
 
 function allowModule_failure()
@@ -69,9 +69,9 @@ function allowModule_failure()
  * @param:
  * @return: site theme state information
 */
-function allowTheme(themeName,instanceId)
+function allowTheme(themeName,instanceid)
 {
-    var pars = 'module=Multisites&func=allowTheme&themeName=' + themeName + '&instanceId=' + instanceId;
+    var pars = 'module=Multisites&func=allowTheme&themeName=' + themeName + '&instanceid=' + instanceid;
     $('theme_' + themeName).update('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
     var myAjax = new Zikula.Ajax.Request('ajax.php',
     {

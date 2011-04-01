@@ -2,7 +2,7 @@
 <div class="z-admincontainer">
     <div class="z-adminpageicon">{icon type='config' size='large' __alt='Site allowed themes'}</div>
     <h2>{gt text='Site allowed themes'}</h2>
-    <div>{gt text='Site name'}: {$site.siteName}</div>
+    <div>{gt text='Site name'}: {$site.sitename}</div>
     <div>{gt text='Site DNS'}: {$site.sitedns}</div>
     <table class="z-admintable" summary="{gt text='Site allowed themes'}">
         <colgroup>

@@ -27,52 +27,52 @@
                     {else}
                         <a href="{$wwwroot}/{$site.sitedns}/{$sitednsEndText}" target="_blank">
                     {/if}
-                            {$site.instanceName}
+                            {$site.instancename}
                         </a>
                     </td>
                     <td align="left" valign="top">
                         {$site.description}
                     </td>
                     <td align="left" valign="top">
-                        {$site.siteName}
+                        {$site.sitename}
                     </td>
                     <td align="left" valign="top">
                         {$site.sitedns}
                     </td>
                     <td align="left" valign="top">
-                        <div>{gt text='Real name'}: {$site.siteAdminRealName}</div>
-                        <div>{gt text='Email'}: {$site.siteAdminEmail}</div>
-                        <div>{gt text='Company'}: {$site.siteCompany}</div>
+                        <div>{gt text='Real name'}: {$site.siteadminrealname}</div>
+                        <div>{gt text='Email'}: {$site.siteadminemail}</div>
+                        <div>{gt text='Company'}: {$site.sitecompany}</div>
                     </td>
                     <td align="left" valign="top">
-                        <div>{gt text="Based on model"}: {$site.siteInitModel}</div>
-                        <div>{gt text="Site database"}: {$site.siteDBName}</div>
-                        <div>{gt text="Creation date"}: {$site.activationDate}</div>
+                        <div>{gt text="Based on model"}: {$site.siteinitmodel}</div>
+                        <div>{gt text="Site database"}: {$site.sitedbname}</div>
+                        <div>{gt text="Creation date"}: {$site.activationdate}</div>
                         <div>{gt text="Active"}: {$site.active}</div>
                     </td>
                     <td align="right" valign="top">
                         <div>
-                            <a href="{modurl modname='Multisites' type='admin' func='edit' instanceId=$site.instanceId}">
+                            <a href="{modurl modname='Multisites' type='admin' func='edit' instanceid=$site.instanceid}">
                                 {icon type='edit' size='extrasmall' __alt='Edit' __title='Edit'}
                             </a>
                         </div>
                         <div>
-                            <a href="{modurl modname='Multisites' type='admin' func='siteElements' instanceId=$site.instanceId}">
+                            <a href="{modurl modname='Multisites' type='admin' func='siteElements' instanceid=$site.instanceid}">
                                 {img modname='core' src='blockdevice.gif' set='icons/extrasmall' __alt='Site allowed elements' __title='Site allowed elements'}
                             </a>
                         </div>
                         <div>
-                            <a href="{modurl modname='Multisites' type='admin' func='siteThemes' instanceId=$site.instanceId}">
+                            <a href="{modurl modname='Multisites' type='admin' func='siteThemes' instanceid=$site.instanceid}">
                                 {img modname='core' src='package_graphics.gif' set='icons/extrasmall' __alt='Site themes' __title='Site themes'}
                             </a>
                         </div>
                         <div>
-                            <a href="{modurl modname='Multisites' type='admin' func='siteTools' instanceId=$site.instanceId}">
+                            <a href="{modurl modname='Multisites' type='admin' func='siteTools' instanceid=$site.instanceid}">
                                 {img modname='core' src='package_settings.gif' set='icons/extrasmall' __alt='Site tools' __title='Site tools'}
                             </a>
                         </div>
                         <div>
-                            <a href="{modurl modname='Multisites' type='admin' func='deleteInstance' instanceId=$site.instanceId}">
+                            <a href="{modurl modname='Multisites' type='admin' func='deleteInstance' instanceid=$site.instanceid}">
                                 {icon type='delete' size='extrasmall' __alt='Delete' __title='Delete'}
                             </a>
                         </div>
