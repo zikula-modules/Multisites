@@ -203,7 +203,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
         if ($errorMsg == '') {
             // create the instance directories
-            $initDir = $this->serviceManager['multisites.files_real_path'] . '/' . $sitedbname;
+            $initDir = $this->serviceManager['multisites.files_real_path'] . '/' . /*$sitedbname*/$sitedns;
             $initTemp = $initDir . $this->serviceManager['multisites.site_temp_files_folder'];
             $dirArray = array($initDir,
                               $initDir . $this->serviceManager['multisites.site_files_folder'],
