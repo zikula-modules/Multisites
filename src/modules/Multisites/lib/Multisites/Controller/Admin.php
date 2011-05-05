@@ -224,7 +224,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             }
             foreach ($dirArray as $dir) {
                 if (!file_exists($dir)) {
-                    if (!mkdir($dir, 0777)) {
+                    if (!mkdir($dir, 0777, true)) {
                         $errorMsg = $this->__('Error! Creating site directories failed') . ': ' . $dir;
                     }
                 } else if (!is_writeable($dir)) $errorMsg = $this->__f('Error with the folder <strong>%s</strong> because it is not writeable.', array($dir));
