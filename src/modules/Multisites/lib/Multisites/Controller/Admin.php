@@ -203,7 +203,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
         if ($errorMsg == '') {
             // create the instance directories
-            $initDir = $this->serviceManager['multisites.files_real_path'] . '/' . /*$sitedbname*/$sitedns;
+            $initDir = $this->serviceManager['multisites.files_real_path'] . '/' . $sitedns;
             $initTemp = $initDir . $this->serviceManager['multisites.site_temp_files_folder'];
             $dirArray = array($initDir,
                               $initDir . $this->serviceManager['multisites.site_files_folder'],
@@ -1219,5 +1219,109 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
 
         print_r($sites);die();
+    }
+
+
+    /**
+     * Process desired changes for multiple sites
+     *
+     * This function processes the sites selected in the admin view page
+     * and performs a given action for all of them.
+     *
+     * @param  sites         the ids of the items to be processed
+     * @param  action        the action to be executed
+     * @return bool true on sucess, false on failure
+     */
+    public function handleselectedsites($args)
+    {
+        // security check
+        if (!SecurityUtil::checkPermission($this->name, '::', ACCESS_ADMIN) ||
+                ($this->request->getGet()->get('sitedns', '') != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 0) ||
+                ($_SERVER['HTTP_HOST'] != $this->serviceManager['multisites.mainsiteurl'] && $this->serviceManager['multisites.based_on_domains'] == 1)) {
+            return LogUtil::registerPermissionError();
+        }
+
+        $allowedActions = array('cleartemplates');
+        $returnUrl = ModUtil::url($this->name, 'admin', 'main');
+
+        // Confirm authorisation code.
+        if (!SecurityUtil::confirmAuthKey()) {
+            return LogUtil::registerAuthidError($returnUrl);
+        }
+
+        // Get parameters
+        $sites = isset($args['sites']) ? $args['sites'] : $this->request->getPost()->get('sites', null);
+        $action = isset($args['action']) ? $args['action'] : $this->request->getPost()->get('action', null);
+
+        if (!in_array($action, $allowedActions)) {
+            return LogUtil::registerError($this->__('Error! Invalid action received.'), null, $returnUrl);
+        }
+
+        // Initialize and prepare the action
+        $needsDatabaseAccess = false;
+        switch ($action) {
+            case 'cleartemplates':
+                            // Backup temp folder setting of main site
+                            $originalTempFolder = $GLOBALS['ZConfig']['System']['temp'];
+                            break;
+            case 'anotherOne':
+                            // This one needs the database
+                            $needsDatabaseAccess = true;
+                            break;
+        }
+
+        $siteBasePath = $this->serviceManager['multisites.files_real_path'];
+        $zikula = ServiceUtil::getService('zikula');
+
+        // process each site
+        foreach ($sites as $instanceid) {
+            // Reboot the core for this site
+            //$zikula->reboot();
+            //$zikula->init();
+
+            // Get instance information
+            $instance = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceid' => $instanceid));
+            if ($instance == false) {
+                LogUtil::registerError($this->__('Error! No site could be found.'));
+                continue;
+            }
+
+            if ($needsDatabaseAccess) {
+                $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB',
+                                            array('sitedbname' => $instance['sitedbname'],
+                                                  'sitedbuname' => $instance['sitedbuname'],
+                                                  'sitedbpass' => $instance['sitedbpass'],
+                                                  'sitedbhost' => $instance['sitedbhost'],
+                                                  'sitedbtype' => $instance['sitedbtype']));
+                if (!$connect) {
+                    return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
+                }
+            }
+
+            // Execute action for current site
+            switch ($action) {
+                case 'cleartemplates':
+                            // Set temp folder for this site instance
+                            $siteTempDirectory = $siteBasePath . '/' . $instance['sitedns'] . '/' . $this->serviceManager['multisites.site_temp_files_folder'];
+                            $GLOBALS['ZConfig']['System']['temp'] = $siteTempDirectory;
+
+                            ModUtil::apiFunc('Settings', 'admin', 'clearallcompiledcaches');
+                            LogUtil::registerStatus($this->__('Done! Cleared all cache and compile directories.'));
+                            break;
+            }
+        }
+
+        // Cleanup
+        $needsDatabaseAccess = false;
+        switch ($action) {
+            case 'cleartemplates':
+                            // Restore temp folder setting for main site
+                            $GLOBALS['ZConfig']['System']['temp'] = $originalTempFolder;
+                            break;
+            case 'anotherOne':
+                            break;
+        }
+
+        return System::redirect($returnUrl);
     }
 }

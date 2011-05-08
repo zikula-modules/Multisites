@@ -2,7 +2,7 @@
 <div class="z-admincontainer">
     <div class="z-adminpageicon">{img modname='core' src='blockdevice.gif' set='icons/large' __alt='List of models'}</div>
     <h2>{gt text='List of models'}</h2>
-    <table class="z-admintable">
+    <table class="z-datatable">
         <colgroup>
             <col id="cname" />
             <col id="cdescription" />

@@ -49,4 +49,4 @@ $ZConfig['DBInfo']['databases']['default']['password'] = $sitedbpass;
 $ZConfig['DBInfo']['databases']['default']['dbname'] = $sitedbname;
 $ZConfig['DBInfo']['databases']['default']['dbdriver'] = $sitedbtype;
 $ZConfig['System']['prefix'] = $sitedbprefix;
-$ZConfig['System']['temp'] = $ZConfig['Multisites']['multisites.files_real_path'] . '/' . /*$sitedbname*/$sitedns . '/' . $ZConfig['Multisites']['multisites.site_temp_files_folder'];
+$ZConfig['System']['temp'] = $ZConfig['Multisites']['multisites.files_real_path'] . '/' . $sitedns . '/' . $ZConfig['Multisites']['multisites.site_temp_files_folder'];
