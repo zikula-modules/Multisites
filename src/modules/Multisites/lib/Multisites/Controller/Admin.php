@@ -1271,7 +1271,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
 
         $siteBasePath = $this->serviceManager['multisites.files_real_path'];
-        $zikula = ServiceUtil::getService('zikula');
+        $zikula = $this->getService('zikula');
 
         // process each site
         foreach ($sites as $instanceid) {
