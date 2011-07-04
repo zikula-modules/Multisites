@@ -59,7 +59,7 @@ function Multisites_tables()
                                                    'description' => "C(250) NOTNULL DEFAULT ''",
                                                    'filename' => "C(100) NOTNULL DEFAULT ''",
                                                    'folders' => "C(150) NOTNULL DEFAULT ''",
-                                                   'modeldbtablesprefix' => "C(5) NOTNULL DEFAULT ''");
+                                                   'modeldbtablesprefix' => "C(5) NOTNULL DEFAULT ''"); // prefix field is deprecated
 
     // Multisites sites and modules
     $table['multisitessitemodules'] = DBUtil::getLimitedTablename('multisitessitemodules');
