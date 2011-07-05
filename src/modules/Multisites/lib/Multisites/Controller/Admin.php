@@ -588,9 +588,9 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         if ($modelname == null || $modelname == '') {
             $errorMsg = $this->__('Error! Please provide a model name. It is a mandatory field.') . '<br />';
         }
-        if ($modeldbtablesprefix == null || $modeldbtablesprefix == '') {
+        /*if ($modeldbtablesprefix == null || $modeldbtablesprefix == '') {
             $errorMsg .= $this->__('Error! Please provide the model database tables prefix. It is a mandatory field.') . '<br />';
-        }
+        }*/
         // get model information
         $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById',
                                    array('modelid' => $modelid));
@@ -771,9 +771,9 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         if ($modelname == null || $modelname == '') {
             $errorMsg = $this->__('Error! Please provide a model name. It is a mandatory field.<br />');
         }
-        if ($modeldbtablesprefix == null || $modeldbtablesprefix == '') {
+        /*if ($modeldbtablesprefix == null || $modeldbtablesprefix == '') {
             $errorMsg .= $this->__('Error! Please provide the model database tables prefix. It is a mandatory field.<br />');
-        }
+        }*/
         if (($modelFile == null || $modelFile['name'] == '') && $modelFileSelected == '0') {
             $errorMsg .= $this->__('Error! Please provide the model file. It is a mandatory field.<br />');
         }

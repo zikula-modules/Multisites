@@ -9,8 +9,8 @@
             <input type="text" name="modelname" size="50" maxlength="150" value="{$modelname}"/>
         </div>
         <div class="z-formrow">
-            <label for="modeldbtablesprefix">{gt text='Model database tables prefix'} <span class="mandatoryField">*</span></label>
-            <input type="text" name="modeldbtablesprefix" size="50" maxlength="5" value="{if $modeldbtablesprefix eq ''}z{else}{$modeldbtablesprefix}{/if}"/>
+            <label for="modeldbtablesprefix">{gt text='Model database tables prefix'} ({gt text='deprecated'})</label>
+            <input type="text" name="modeldbtablesprefix" size="50" maxlength="5" value="{$modeldbtablesprefix|default:''}"/>
         </div>
         <div class="z-formrow">
             <label for="description">{gt text='Description'}</label>

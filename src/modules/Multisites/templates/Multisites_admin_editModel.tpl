@@ -10,7 +10,7 @@
             <input type="text" name="modelname" size="50" maxlength="150" value="{$model.modelname}" />
         </div>
         <div class="z-formrow">
-            <label for="modeldbtablesprefix">{gt text='Model database table prefix'} <span class="mandatoryField">*</span></label>
+            <label for="modeldbtablesprefix">{gt text='Model database table prefix'} ({gt text='deprecated'})</label>
             <input type="text" name="modeldbtablesprefix" size="50" maxlength="5" value="{$model.modeldbtablesprefix}"/>
         </div>
         <div class="z-formrow">
