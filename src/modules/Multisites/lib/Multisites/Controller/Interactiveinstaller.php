@@ -197,10 +197,10 @@ class Multisites_Controller_Interactiveinstaller extends Zikula_Controller_Abstr
     {
         $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 
-        $mainsiteurl = $this->request->getPost->get('mainsiteurl', isset($args['mainsiteurl']) ? $args['mainsiteurl'] : null);
-        $sitednsEndText = $this->request->getPost->get('sitednsEndText', isset($args['sitednsEndText']) ? $args['sitednsEndText'] : null);
-        $site_temp_files_folder = $this->request->getPost->get('site_temp_files_folder', isset($args['site_temp_files_folder']) ? $args['site_temp_files_folder'] : null);
-        $site_files_folder = $this->request->getPost->get('site_files_folder', isset($args['site_files_folder']) ? $args['site_files_folder'] : null);
+        $mainsiteurl = $this->request->getPost()->get('mainsiteurl', isset($args['mainsiteurl']) ? $args['mainsiteurl'] : null);
+        $sitednsEndText = $this->request->getPost()->get('sitednsEndText', isset($args['sitednsEndText']) ? $args['sitednsEndText'] : null);
+        $site_temp_files_folder = $this->request->getPost()->get('site_temp_files_folder', isset($args['site_temp_files_folder']) ? $args['site_temp_files_folder'] : null);
+        $site_files_folder = $this->request->getPost()->get('site_files_folder', isset($args['site_files_folder']) ? $args['site_files_folder'] : null);
 
         // get server zikula folder installation
         $path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
