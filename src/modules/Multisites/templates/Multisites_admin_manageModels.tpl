@@ -1,6 +1,6 @@
 {include file='Multisites_admin_menu.tpl'}
 <div class="z-admincontainer">
-    <div class="z-adminpageicon">{img modname='core' src='blockdevice.gif' set='icons/large' __alt='List of models'}</div>
+    <div class="z-adminpageicon">{img modname='core' src='blockdevice.png' set='icons/large' __alt='List of models'}</div>
     <h2>{gt text='List of models'}</h2>
     <table class="z-datatable">
         <colgroup>
