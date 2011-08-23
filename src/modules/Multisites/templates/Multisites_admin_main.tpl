@@ -75,17 +75,17 @@
                         </div>
                         <div>
                             <a href="{modurl modname='Multisites' type='admin' func='siteElements' instanceid=$site.instanceid}">
-                                {img modname='core' src='blockdevice.gif' set='icons/extrasmall' __alt='Site allowed elements' __title='Site allowed elements'}
+                                {img modname='core' src='blockdevice.png' set='icons/extrasmall' __alt='Site allowed elements' __title='Site allowed elements'}
                             </a>
                         </div>
                         <div>
                             <a href="{modurl modname='Multisites' type='admin' func='siteThemes' instanceid=$site.instanceid}">
-                                {img modname='core' src='package_graphics.gif' set='icons/extrasmall' __alt='Site themes' __title='Site themes'}
+                                {img modname='core' src='package_graphics.png' set='icons/extrasmall' __alt='Site themes' __title='Site themes'}
                             </a>
                         </div>
                         <div>
                             <a href="{modurl modname='Multisites' type='admin' func='siteTools' instanceid=$site.instanceid}">
-                                {img modname='core' src='package_settings.gif' set='icons/extrasmall' __alt='Site tools' __title='Site tools'}
+                                {img modname='core' src='package_settings.png' set='icons/extrasmall' __alt='Site tools' __title='Site tools'}
                             </a>
                         </div>
                         <div>
