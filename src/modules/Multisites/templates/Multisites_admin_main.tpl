@@ -8,7 +8,7 @@
     </div>
     <form class="z-form" id="sites_view" action="{modurl modname='Multisites' type='admin' func='handleselectedsites'}" method="post">
         <div>
-            <input type="hidden" name="authid" value="{insert name='generateauthkey' module='Multisites'}" />
+            <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
     <table class="z-datatable">
         <colgroup>
             <col id="cselect" />
