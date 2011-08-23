@@ -181,7 +181,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             $errorMsg .= $this->__('Error! Please provide the site database user password. It is a mandatory field.') . '<br />';
         }
         if ($sitedbprefix == null || $sitedbprefix == '') {
-            $errorMsg .= $this->__('Error! Please provide the site database prefix. It is a mandatory field.') . '<br />';
+            $sitedbprefix = '';
         }
         if ($siteinitmodel == null || $siteinitmodel == '') {
             $errorMsg .= $this->__('Error! Please provide the model on the site will be based. It is a mandatory field.') . '<br />';

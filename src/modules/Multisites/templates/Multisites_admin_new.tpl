@@ -71,8 +71,9 @@
                 <input type="password" name="sitedbpass" size="15" maxlength="20" />
             </div>
             <div class="z-formrow">
-                <label for="sitedbprefix">{gt text='Site database prefix'} <span class="mandatoryField">*</span></label>
-                <input type="text" name="sitedbprefix" size="15" maxlength="5" value="{if $siteadminname eq ''}z{else}{$sitedbprefix}{/if}"/>
+                <label for="sitedbprefix">{gt text='Site database prefix'}</label>
+                <input type="text" name="sitedbprefix" size="15" maxlength="5" value="{if $siteadminname ne ''}{$sitedbprefix}{/if}"/>
+                <p class="z-formnote">{gt text='This setting is obsolete. It is recommended to use it only for legacy databases.'}</p>
             </div>        
             <div class="z-formrow">
                 <label for="createDB">{gt text='Create database'}</label>

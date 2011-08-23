@@ -167,60 +167,60 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         if (!$connect) {
             return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
-        $prefix = $args['sitedbprefix'];
+        $prefix = (($args['sitedbprefix'] != '') ? $args['sitedbprefix'] . '_' : '');
         // modify the site name
         $value = serialize($args['sitename']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='sitename'";
+        $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name='sitename'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql  . "\n");
         }
         // modify the site description
         $value = serialize($args['siteDescription']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='slogan'";
+        $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name='slogan'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql  . "\n");
         }
         // modify the adminmail
         $value = serialize($args['siteadminemail']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='adminmail'";
+        $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name='adminmail'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql . "\n");
         }
         // modify the sessionCookieName
         $value = serialize('ZKSID_' . $args['sitedbname']);
-        $sql = "UPDATE " . $prefix . "_module_vars set z_value='$value' WHERE z_modname='ZConfig' AND z_name='sessionname'";
+        $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name='sessionname'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql . "\n");
         }
         // checks if the user that has been give as administrator exists
-        $sql = "SELECT z_uname,z_uid FROM " . $prefix . "_users WHERE z_uname='" . $args['siteadminname'] . "'";
+        $sql = "SELECT uname, uid FROM " . $prefix . "users WHERE uname='" . $args['siteadminname'] . "'";
         $rs = $connect->query($sql)->fetch();
         $password = UserUtil::getHashedPassword($args['siteadminpwd']);
-        if ($rs['z_uname'] == '') {
+        if ($rs['uname'] == '') {
             $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
             $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
             // create administrator
-            $sql = "INSERT INTO " . $prefix . "_users (z_uname,z_email,z_pass,z_approved_date,z_user_regdate,z_activated) VALUES ('$args[siteadminname]','$args[siteadminemail]','$password','$nowUTCStr','$nowUTCStr',1)";
+            $sql = "INSERT INTO " . $prefix . "users (uname,email,pass,approved_date,user_regdate,activated) VALUES ('$args[siteadminname]','$args[siteadminemail]','$password','$nowUTCStr','$nowUTCStr',1)";
             if (!$connect->query($sql)) {
                 return LogUtil::registerError($this->__('Error! Creating the site administrator failed.') . ":<br />" . $sql . "\n");
             }
-            $sql = "SELECT z_uid FROM " . $prefix . "_users WHERE z_uname='" . $args['siteadminname'] . "'";
+            $sql = "SELECT uid FROM " . $prefix . "users WHERE uname='" . $args['siteadminname'] . "'";
             $rs = $connect->query($sql)->fetch();
-            $uid = $rs['z_uid'];
+            $uid = $rs['uid'];
         } else {
             // modify administrator password and email
-            $sql = "UPDATE " . $prefix . "_users SET z_pass='$password', z_email='$args[siteadminemail]' WHERE z_uname='$rs[z_uname]'";
+            $sql = "UPDATE " . $prefix . "users SET pass='$password', email='$args[siteadminemail]' WHERE uname='$rs[uname]'";
             if (!$connect->query($sql)) {
                 return LogUtil::registerError($this->__('Error! Creating the site administrator failed.') . ":<br />" . $sql . "\n");
             }
-            $uid = $rs['z_uid'];
+            $uid = $rs['uid'];
         }
         // insert administrator in administrators group if it is not in it
-        $sql = "SELECT z_uid FROM " . $prefix . "_group_membership WHERE z_uid=$uid AND z_gid=2";
+        $sql = "SELECT uid FROM " . $prefix . "group_membership WHERE uid=$uid AND gid=2";
         $rs = $connect->query($sql)->fetch();
-        if ($rs['z_uid'] == '') {
+        if ($rs['uid'] == '') {
             // user is not administrator and add it to the administrators group
-            $sql = "INSERT INTO " . $prefix . "_group_membership (z_uid,z_gid) VALUES ($uid,2)";
+            $sql = "INSERT INTO " . $prefix . "group_membership (uid,gid) VALUES ($uid,2)";
             if (!$connect->query($sql)) {
                 return LogUtil::registerError($this->__('Error! Creating the site administrator failed.') . ":<br />" . $sql . "\n");
             }
@@ -229,7 +229,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
     }
 
     /**
-     * Modify the file multisites_dbconig.php file and add there the new instance
+     * Modify the file multisites_dbconfig.php file and add there the new instance
      * @author: Albert Pérez Monfort (aperezm@xtec.cat)
      * @param:  The instance DNS and database connexion parameters
      * @return: true if success and false otherwise
@@ -439,12 +439,14 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
-        //$sql = "SELECT z_name, z_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules WHERE z_type<>$type";
-        $sql = "SELECT z_name, z_state, z_version FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+
+        //$sql = "SELECT name, state FROM " . $prefix . "modules WHERE type<>$type";
+        $sql = "SELECT name, state, version FROM " . $prefix . "modules";
         foreach ($connect->query($sql) as $row) {
-            $items[$row['z_name']] = array('name' => $row['z_name'],
-                                           'state' => $row['z_state'],
-                                           'version' => $row['z_version']);
+            $items[$row['name']] = array('name' => $row['name'],
+                                           'state' => $row['state'],
+                                           'version' => $row['version']);
         }
         return $items;
     }
@@ -481,13 +483,15 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
-        $sql = "SELECT z_name, z_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules WHERE z_name='$modulename'";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+
+        $sql = "SELECT name, state FROM " . $prefix . "modules WHERE name='$modulename'";
         $rs = $connect->query($sql)->fetch();
         if (!$rs) {
             //return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
-        $item = array('name' => $rs['z_name'],
-                      'state' => $rs['z_state']);
+        $item = array('name' => $rs['name'],
+                      'state' => $rs['state']);
         return $item;
     }
 
@@ -520,7 +524,8 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
 
         //update the module state in the site
-        $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules set z_state = " . $newState . " where z_name = '" . $modulename . "'";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "UPDATE " . $prefix . "modules set state = " . $newState . " WHERE name = '" . $modulename . "'";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
@@ -560,13 +565,14 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
-        $sql = "SELECT z_name, z_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes WHERE z_name='$themeName'";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "SELECT name, state FROM " . $prefix . "themes WHERE name='$themeName'";
         $rs = $connect->query($sql)->fetch();
         if (!$rs) {
             //return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
-        $item = array('name' => $rs['z_name'],
-                      'state' => $rs['z_state']);
+        $item = array('name' => $rs['name'],
+                      'state' => $rs['state']);
         return $item;
     }
 
@@ -647,7 +653,8 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         if ($siteModule['state'] == 2) {
             return true;
         }
-        $sql = "DELETE FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules WHERE z_name='$modulename'";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "DELETE FROM " . $prefix . "modules WHERE name='$modulename'";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
@@ -696,7 +703,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                          'dependencies');
         foreach ($module as $key => $value) {
             if (!in_array($key, $exclude)) {
-                $fields .= 'z_' . $key . ',';
+                $fields .= /*'z_' . */$key . ',';
                 $apos = (in_array($key, $textual)) ? "'" : '';
                 $valueString = ($value == '') ? "''" : $apos . DataUtil::formatForStore($value) . $apos;
                 $values .= $valueString . ',';
@@ -705,7 +712,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $fields = substr($fields, 0, -1);
         $values = substr($values, 0, -1);
         // set module state to 1
-        $fields .= ',z_state';
+        $fields .= ',state';
         $values .= ',1';
 
         $connect = ModUtil::apiFunc('Multisites', 'admin', 'connectExtDB', $site);
@@ -714,7 +721,8 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
 
         //create the module in the site
-        $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_modules
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "INSERT INTO " . $prefix . "modules
             ($fields)
             VALUES
             ($values)";
@@ -892,11 +900,12 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
-        $sql = "SELECT z_name, z_state FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "SELECT name, state FROM " . $prefix . "themes";
 
         foreach ($connect->query($sql) as $row) {
-            $items[$row['z_name']] = array('name' => $row['z_name'],
-                    'state' => $row['z_state']);
+            $items[$row['name']] = array('name' => $row['name'],
+                    'state' => $row['state']);
         }
 
         return $items;
@@ -930,7 +939,8 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
-        $sql = "DELETE FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes WHERE z_name='$themeName'";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "DELETE FROM " . $prefix . "themes WHERE name='$themeName'";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
@@ -979,7 +989,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                          'license');
         foreach ($theme as $key => $value) {
             if (!in_array($key, $exclude)) {
-                $fields .= 'z_' . $key . ',';
+                $fields .= /*'z_' . */$key . ',';
                 $apos = (in_array($key, $textual)) ? "'" : '';
                 $valueString = ($value == '') ? "''" : $apos . DataUtil::formatForStore($value) . $apos;
                 $values .= $valueString . ',';
@@ -995,10 +1005,8 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
 
         //create the module in the site
-        $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_themes
-            ($fields)
-            VALUES
-            ($values)";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "INSERT INTO " . $prefix . "themes ($fields) VALUES ($values)";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Creation attempt failed.' . $sql));
@@ -1032,12 +1040,13 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
-        $sql = "SELECT z_value FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars WHERE z_modname='ZConfig' AND z_name='Default_Theme'";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "SELECT value FROM " . $prefix . "module_vars WHERE modname='ZConfig' AND name='Default_Theme'";
         $rs = $connect->query($sql)->fetch();
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Could not load items.'));
         }
-        $defaultTheme = $rs['z_value'];
+        $defaultTheme = $rs['value'];
         return $defaultTheme;
     }
 
@@ -1069,7 +1078,8 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
 
         $value = serialize($name);
-        $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_module_vars SET z_value = '$value' WHERE z_modname='ZConfig' AND z_name='Default_Theme'";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "UPDATE " . $prefix . "module_vars SET value = '$value' WHERE modname='ZConfig' AND name='Default_Theme'";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
@@ -1178,30 +1188,31 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         }
 
         // check if the super administrator exists
-        $sql = "SELECT z_uid FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_users WHERE `z_uname`='" . $globalAdminName  . "'";
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
+        $sql = "SELECT uid FROM " . $prefix . "users WHERE `uname`='" . $globalAdminName  . "'";
         $rs = $connect->query($sql)->fetch();
-        $uid = $rs['z_uid'];
+        $uid = $rs['uid'];
         // encript the password with the hash method
         $password = UserUtil::getHashedPassword($globalAdminPassword);
         if ($uid == '') {
             // the user doesn't exists and create it
             $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
             $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
-            $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_users (z_uname, z_pass, z_email, z_approved_date, z_user_regdate, z_activated)
+            $sql = "INSERT INTO " . $prefix . "users (uname, pass, email, approved_date, user_regdate, activated)
                     VALUES ('$globalAdminName','$password','$globalAdminemail','$nowUTCStr','$nowUTCStr',1)";
             $rs = $connect->query($sql);
             if (!$rs) {
                 return LogUtil::registerError($this->__('Error! Creating global administrator failed.'));
             }
-            $sql = "SELECT z_uid FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_users WHERE `z_uname`='" . $globalAdminName  . "'";
+            $sql = "SELECT uid FROM " . $prefix . "users WHERE `uname`='" . $globalAdminName  . "'";
             $rs = $connect->query($sql)->fetch();
             if (!$rs) {
                 return LogUtil::registerError($this->__('Error! Getting global administrator values failed.'));
             }
-            $uid = $rs['z_uid'];
+            $uid = $rs['uid'];
             if ($uid != '') {
                 // insert the user into administrators group
-                $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_membership (z_uid, z_gid) VALUES ($uid,2)";
+                $sql = "INSERT INTO " . $prefix . "group_membership (uid, gid) VALUES ($uid,2)";
                 $rs = $connect->query($sql);
                 if (!$rs) {
                     return LogUtil::registerError($this->__('Error! Adding global administrator to admin group failed.'));
@@ -1209,23 +1220,22 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             }
         } else {
             // check if the user is administrator
-            $sql = "SELECT z_gid FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_membership
-                WHERE `z_uid`=$uid AND z_gid=2";
+            $sql = "SELECT gid FROM " . $prefix . "group_membership WHERE `uid`=$uid AND gid=2";
             $rs = $connect->query($sql)->fetch();
             if (!$rs) {
                 return LogUtil::registerError($this->__('Error! Getting global administrator group failed.'));
             }
-            $gid = $rs['z_gid'];
+            $gid = $rs['gid'];
             if ($gid == '') {
                 // the user is not administrator and insert the user into administrators group
-                $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_membership (z_uid, z_gid) VALUES ($uid,2)";
+                $sql = "INSERT INTO " . $prefix . "group_membership (uid, gid) VALUES ($uid,2)";
                 $rs = $connect->query($sql);
                 if (!$rs) {
                     return LogUtil::registerError($this->__('Error! Adding global administrator to admin group failed.'));
                 }
             }
             // update global administrator password
-            $sql = "UPDATE " . $GLOBALS['ZConfig']['System']['prefix'] . "_users SET z_pass='$password' WHERE z_uid=$uid";
+            $sql = "UPDATE " . $prefix . "users SET pass='$password' WHERE uid=$uid";
             $rs = $connect->query($sql);
             if (!$rs) {
                return LogUtil::registerError($this->__('Error! Updating global administrator password failed.'));
@@ -1262,15 +1272,15 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Connecting to the database failed.'));
         }
 
+        $prefix = (($GLOBALS['ZConfig']['System']['prefix'] != '') ? $GLOBALS['ZConfig']['System']['prefix'] . '_' : '');
         //delete the sequence in the first position
-        $sql = "DELETE FROM " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_perms WHERE `z_sequence` < 1 OR `z_pid` = 1";
+        $sql = "DELETE FROM " . $prefix . "group_perms WHERE `sequence` < 1 OR `pid` = 1";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Deleting the sequences with value under 0 failed.'));
         }
         //insert a new sequence
-        $sql = "INSERT INTO " . $GLOBALS['ZConfig']['System']['prefix'] . "_group_perms (z_gid, z_sequence, z_component, z_instance, z_level, z_pid)
-            VALUES (2,0,'.*','.*',800,1)";
+        $sql = "INSERT INTO " . $prefix . "group_perms (gid, sequence, component, instance, level, pid) VALUES (2, 0, '.*', '.*', 800, 1)";
         $rs = $connect->query($sql);
         if (!$rs) {
             return LogUtil::registerError($this->__('Error! Creating the sequence failed.'));
