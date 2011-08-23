@@ -110,7 +110,7 @@
                 </div>
                 <div class="z-formrow">
                     <label for="files_real_path">{gt text='Write the physical location of the directory in the server'}:</label>
-                    <input type="text" name="files_real_path" size="30" maxlength="50" value="{$files_real_path}" />
+                    <input type="text" name="files_real_path" size="30" maxlength="80" value="{$files_real_path}" />
                 </div>
                 <div class="z-formbuttons">
                     <input type="submit" value="{gt text='Accept'}" />
