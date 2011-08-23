@@ -790,9 +790,10 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             $dh = opendir('themes');
             $dirArray = array();
             while ($dir = readdir($dh)) {
-                if ($dir != '.' && $dir != '..' && $dir != '.svn' && $dir != 'CVS' && $dir != 'index.html' && $dir != 'index.htm') {
-                    $dirArray[] = $dir;
+                if (in_array($dir, array('.', '..', '.svn', 'CVS', 'index.html', 'index.htm', '.htaccess'))) {
+                    continue;
                 }
+                $dirArray[] = $dir;
             }
             closedir($dh);
             foreach ($dirArray as $dir) {
