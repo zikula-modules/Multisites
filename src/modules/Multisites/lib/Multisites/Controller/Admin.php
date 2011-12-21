@@ -21,8 +21,8 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $letter = $this->request->getGet()->get('letter', isset($args['letter']) ? $args['letter'] : null);
-        $startnum = $this->request->getGet()->get('startnum', isset($args['startnum']) ? $args['startnum'] : 1);
+        $letter = isset($args['letter']) ? $args['letter'] : $this->request->getGet()->get('letter', null);
+        $startnum = isset($args['startnum']) ? $args['startnum'] : $this->request->getGet()->get('startnum', 1);
         $itemsperpage = 10;
         // get sites
         $sites = ModUtil::apiFunc('Multisites', 'user', 'getAllSites',
@@ -60,23 +60,23 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $instancename = $this->request->getGet()->get('instancename', isset($args['instancename']) ? $args['instancename'] : null);
-        $description = $this->request->getGet()->get('description', isset($args['description']) ? $args['description'] : null);
-        $sitename = $this->request->getGet()->get('sitename', isset($args['sitename']) ? $args['sitename'] : null);
-        $siteDescription = $this->request->getGet()->get('siteDescription', isset($args['siteDescription']) ? $args['siteDescription'] : null);
-        $siteadminname = $this->request->getGet()->get('siteadminname', isset($args['siteadminname']) ? $args['siteadminname'] : null);
-        $siteadminrealname = $this->request->getGet()->get('siteadminrealname', isset($args['siteadminrealname']) ? $args['siteadminrealname'] : null);
-        $siteadminemail = $this->request->getGet()->get('siteadminemail', isset($args['siteadminemail']) ? $args['siteadminemail'] : null);
-        $sitecompany = $this->request->getGet()->get('sitecompany', isset($args['sitecompany']) ? $args['sitecompany'] : null);
-        $sitedns = $this->request->getGet()->get('sitedns', isset($args['sitedns']) ? $args['sitedns'] : null);
-        $sitedbname = $this->request->getGet()->get('sitedbname', isset($args['sitedbname']) ? $args['sitedbname'] : null);
-        $sitedbuname = $this->request->getGet()->get('sitedbuname', isset($args['sitedbuname']) ? $args['sitedbuname'] : null);
-        $sitedbhost = $this->request->getGet()->get('sitedbhost', isset($args['sitedbhost']) ? $args['sitedbhost'] : null);
-        $sitedbtype = $this->request->getGet()->get('sitedbtype', isset($args['sitedbtype']) ? $args['sitedbtype'] : null);
-        $sitedbprefix = $this->request->getGet()->get('sitedbprefix', isset($args['sitedbprefix']) ? $args['sitedbprefix'] : null);
-        $createDB = $this->request->getGet()->get('createDB', isset($args['createDB']) ? $args['createDB'] : 0);
-        $siteinitmodel = $this->request->getGet()->get('siteinitmodel', isset($args['siteinitmodel']) ? $args['siteinitmodel'] : null);
-        $active = $this->request->getGet()->get('active', isset($args['active']) ? $args['active'] : 0);
+        $instancename = isset($args['instancename']) ? $args['instancename'] : $this->request->getGet()->get('instancename', null);
+        $description = isset($args['description']) ? $args['description'] : $this->request->getGet()->get('description', null);
+        $sitename = isset($args['sitename']) ? $args['sitename'] : $this->request->getGet()->get('sitename', null);
+        $siteDescription = isset($args['siteDescription']) ? $args['siteDescription'] : $this->request->getGet()->get('siteDescription', null);
+        $siteadminname = isset($args['siteadminname']) ? $args['siteadminname'] : $this->request->getGet()->get('siteadminname', null);
+        $siteadminrealname = isset($args['siteadminrealname']) ? $args['siteadminrealname'] : $this->request->getGet()->get('siteadminrealname', null);
+        $siteadminemail = isset($args['siteadminemail']) ? $args['siteadminemail'] : $this->request->getGet()->get('siteadminemail', null);
+        $sitecompany = isset($args['sitecompany']) ? $args['sitecompany'] : $this->request->getGet()->get('sitecompany', null);
+        $sitedns = isset($args['sitedns']) ? $args['sitedns'] : $this->request->getGet()->get('sitedns', null);
+        $sitedbname = isset($args['sitedbname']) ? $args['sitedbname'] : $this->request->getGet()->get('sitedbname', null);
+        $sitedbuname = isset($args['sitedbuname']) ? $args['sitedbuname'] : $this->request->getGet()->get('sitedbuname', null);
+        $sitedbhost = isset($args['sitedbhost']) ? $args['sitedbhost'] : $this->request->getGet()->get('sitedbhost', null);
+        $sitedbtype = isset($args['sitedbtype']) ? $args['sitedbtype'] : $this->request->getGet()->get('sitedbtype', null);
+        $sitedbprefix = isset($args['sitedbprefix']) ? $args['sitedbprefix'] : $this->request->getGet()->get('sitedbprefix', null);
+        $createDB = isset($args['createDB']) ? $args['createDB'] : $this->request->getGet()->get('createDB', 0);
+        $siteinitmodel = isset($args['siteinitmodel']) ? $args['siteinitmodel'] : $this->request->getGet()->get('siteinitmodel', null);
+        $active = isset($args['active']) ? $args['active'] : $this->request->getGet()->get('active', 0);
 
         // get all the models for new instances
         $models = ModUtil::apiFunc('Multisites', 'user', 'getAllModels');
@@ -129,29 +129,33 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $instancename = $this->request->getPost()->get('instancename', isset($args['instancename']) ? $args['instancename'] : null);
-        $description = $this->request->getPost()->get('description', isset($args['description']) ? $args['description'] : null);
-        $sitename = $this->request->getPost()->get('sitename', isset($args['sitename']) ? $args['sitename'] : null);
-        $siteDescription = $this->request->getPost()->get('siteDescription', isset($args['siteDescription']) ? $args['siteDescription'] : null);
-        $siteadminname = $this->request->getPost()->get('siteadminname', isset($args['siteadminname']) ? $args['siteadminname'] : null);
-        $siteadminpwd = $this->request->getPost()->get('siteadminpwd', isset($args['siteadminpwd']) ? $args['siteadminpwd'] : null);
-        $siteadminrealname = $this->request->getPost()->get('siteadminrealname', isset($args['siteadminrealname']) ? $args['siteadminrealname'] : null);
-        $siteadminemail = $this->request->getPost()->get('siteadminemail', isset($args['siteadminemail']) ? $args['siteadminemail'] : null);
-        $sitecompany = $this->request->getPost()->get('sitecompany', isset($args['sitecompany']) ? $args['sitecompany'] : null);
-        $sitedns = $this->request->getPost()->get('sitedns', isset($args['sitedns']) ? $args['sitedns'] : null);
-        $sitedbname = $this->request->getPost()->get('sitedbname', isset($args['sitedbname']) ? $args['sitedbname'] : null);
-        $sitedbuname = $this->request->getPost()->get('sitedbuname', isset($args['sitedbuname']) ? $args['sitedbuname'] : null);
-        $sitedbpass = $this->request->getPost()->get('sitedbpass', isset($args['sitedbpass']) ? $args['sitedbpass'] : null);
-        $sitedbhost = $this->request->getPost()->get('sitedbhost', isset($args['sitedbhost']) ? $args['sitedbhost'] : null);
-        $sitedbtype = $this->request->getPost()->get('sitedbtype', isset($args['sitedbtype']) ? $args['sitedbtype'] : null);
-        $sitedbprefix = $this->request->getPost()->get('sitedbprefix', isset($args['sitedbprefix']) ? $args['sitedbprefix'] : null);
-        $createDB = $this->request->getPost()->get('createDB', isset($args['createDB']) ? $args['createDB'] : 0);
-        $siteinitmodel = $this->request->getPost()->get('siteinitmodel', isset($args['siteinitmodel']) ? $args['siteinitmodel'] : null);
-        $active = $this->request->getPost()->get('active', isset($args['active']) ? $args['active'] : 0);
+        $instancename = isset($args['instancename']) ? $args['instancename'] : $this->request->getPost()->get('instancename', null);
+        $description = isset($args['description']) ? $args['description'] : $this->request->getPost()->get('description', null);
+        $alias = isset($args['alias']) ? $args['alias'] : $this->request->getPost()->get('alias', null);
+        $sitename = isset($args['sitename']) ? $args['sitename'] : $this->request->getPost()->get('sitename', null);
+        $siteDescription = isset($args['siteDescription']) ? $args['siteDescription'] : $this->request->getPost()->get('siteDescription', null);
+        $siteadminname = isset($args['siteadminname']) ? $args['siteadminname'] : $this->request->getPost()->get('siteadminname', null);
+        $siteadminpwd = isset($args['siteadminpwd']) ? $args['siteadminpwd'] : $this->request->getPost()->get('siteadminpwd', null);
+        $siteadminrealname = isset($args['siteadminrealname']) ? $args['siteadminrealname'] : $this->request->getPost()->get('siteadminrealname', null);
+        $siteadminemail = isset($args['siteadminemail']) ? $args['siteadminemail'] : $this->request->getPost()->get('siteadminemail', null);
+        $sitecompany = isset($args['sitecompany']) ? $args['sitecompany'] : $this->request->getPost()->get('sitecompany', null);
+        $sitedns = isset($args['sitedns']) ? $args['sitedns'] : $this->request->getPost()->get('sitedns', null);
+        $sitedbname = isset($args['sitedbname']) ? $args['sitedbname'] : $this->request->getPost()->get('sitedbname', null);
+        $sitedbuname = isset($args['sitedbuname']) ? $args['sitedbuname'] : $this->request->getPost()->get('sitedbuname', null);
+        $sitedbpass = isset($args['sitedbpass']) ? $args['sitedbpass'] : $this->request->getPost()->get('sitedbpass', null);
+        $sitedbhost = isset($args['sitedbhost']) ? $args['sitedbhost'] : $this->request->getPost()->get('sitedbhost', null);
+        $sitedbtype = isset($args['sitedbtype']) ? $args['sitedbtype'] : $this->request->getPost()->get('sitedbtype', null);
+        $sitedbprefix = isset($args['sitedbprefix']) ? $args['sitedbprefix'] : $this->request->getPost()->get('sitedbprefix', null);
+        $createDB = isset($args['createDB']) ? $args['createDB'] : $this->request->getPost()->get('createDB', 0);
+        $siteinitmodel = isset($args['siteinitmodel']) ? $args['siteinitmodel'] : $this->request->getPost()->get('siteinitmodel', null);
+        $active = isset($args['active']) ? $args['active'] : $this->request->getPost()->get('active', 0);
 
         $errorMsg = '';
         if ($instancename == null || $instancename == '') {
             $errorMsg = $this->__('Error! Please provide an instance name. It is a mandatory field.') . '<br />';
+        }
+        if ($alias == null || $alias == '') {
+            $errorMsg = $this->__('Error! Please provide a site alias. It is a mandatory field.') . '<br />';
         }
         if ($siteadminname == null || $siteadminname == '') {
             $errorMsg .= $this->__('Error! Please provide an admin\'s site name. It is a mandatory field.') . '<br />';
@@ -275,7 +279,8 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         if ($errorMsg == '') {
             // modify multisites_dbconfig file
             if (!ModUtil::apiFunc('Multisites', 'admin', 'updateDBConfig',
-                                   array('sitedns' => $sitedns,
+                                   array('alias' => $alias,
+                                         'sitedns' => $sitedns,
                                          'sitedbname' => $sitedbname,
                                          'sitedbpass' => $sitedbpass,
                                          'sitedbuname' => $sitedbuname,
@@ -365,19 +370,19 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
 
         $instanceid = null;
-        if ($this->request->getPost()->has('instanceid')) {
-            $instanceid = $this->request->getPost()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
+        if (isset($args['instanceid'])) {
+            $instanceid = $args['instanceid'];
+        } elseif ($this->request->getPost()->has('instanceid')) {
+            $instanceid = $this->request->getPost()->get('instanceid', null);
+        } elseif ($this->request->getGet()->has('instanceid')) {
+            $instanceid = $this->request->getGet()->get('instanceid', null);
         }
-        elseif ($this->request->getGet()->has('instanceid')) {
-            $instanceid = $this->request->getGet()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
-        }
-        $confirmation = $this->request->getPost()->get('confirmation', isset($args['confirmation']) ? $args['confirmation'] : null);
-        $deleteDB = $this->request->getPost()->get('deleteDB', isset($args['deleteDB']) ? $args['deleteDB'] : 0);
-        $deleteFiles = $this->request->getPost()->get('deleteFiles', isset($args['deleteFiles']) ? $args['deleteFiles'] : 0);
+        $confirmation = isset($args['confirmation']) ? $args['confirmation'] : $this->request->getPost()->get('confirmation', null);
+        $deleteDB = isset($args['deleteDB']) ? $args['deleteDB'] : $this->request->getPost()->get('deleteDB', 0);
+        $deleteFiles = isset($args['deleteFiles']) ? $args['deleteFiles'] : $this->request->getPost()->get('deleteFiles', 0);
 
         // get site information
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                                  array('instanceid' => $instanceid));
+        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceid' => $instanceid));
         if ($site == false) {
             LogUtil::registerError($this->__('Error! Site could not be found.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
@@ -414,12 +419,13 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
         // modify multisites_dbconfig files
         if (!ModUtil::apiFunc('Multisites', 'admin', 'updateDBConfig',
-                               array('sitedns' => $sitedns,
-                                     'sitedbname' => $sitedbname,
-                                     'sitedbpass' => $sitedbpass,
-                                     'sitedbuname' => $sitedbuname,
-                                     'sitedbhost' => $sitedbhost,
-                                     'sitedbtype' => $sitedbtype))) {
+                               array('alias' => $site['alias'],
+                                     'sitedns' => $site['sitedns'],
+                                     'sitedbname' => $site['sitedbname'],
+                                     'sitedbpass' => $site['sitedbpass'],
+                                     'sitedbuname' => $site['sitedbuname'],
+                                     'sitedbhost' => $site['sitedbhost'],
+                                     'sitedbtype' => $site['sitedbtype']))) {
             LogUtil::registerError($this->__('Error! Updating the file multisites_dbconfig.php failed.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
         }
@@ -444,10 +450,10 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $name = $this->request->getPost()->get('name', isset($args['name']) ? $args['name'] : null);
-        $available = $this->request->getPost()->get('available', isset($args['available']) ? $args['available'] : null);
-        $siteModules = $this->request->getPost()->get('siteModules', isset($args['siteModules']) ? $args['siteModules'] : null);
-        $instanceid = $this->request->getPost()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
+        $name = isset($args['name']) ? $args['name'] : $this->request->getPost()->get('name', null);
+        $available = isset($args['available']) ? $args['available'] : $this->request->getPost()->get('available', null);
+        $siteModules = isset($args['siteModules']) ? $args['siteModules'] : $this->request->getPost()->get('siteModules', null);
+        $instanceid = isset($args['instanceid']) ? $args['instanceid'] : $this->request->getPost()->get('instanceid', null);
 
         $this->view->assign('name', $name)
                    ->assign('available', $available)
@@ -471,11 +477,10 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $instanceid = $this->request->getGet()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
+        $instanceid = isset($args['instanceid']) ? $args['instanceid'] : $this->request->getGet()->get('instanceid', null);
 
         // get site information
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                                  array('instanceid' => $instanceid));
+        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceid' => $instanceid));
         // create output object
         $this->view->assign('site', $site);
         return $this->view->fetch('Multisites_admin_edit.tpl');
@@ -498,17 +503,16 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $instanceid = $this->request->getPost()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
-        $instancename = $this->request->getPost()->get('instancename', isset($args['instancename']) ? $args['instancename'] : null);
-        $description = $this->request->getPost()->get('description', isset($args['description']) ? $args['description'] : null);
-        $siteadminrealname = $this->request->getPost()->get('siteadminrealname', isset($args['siteadminrealname']) ? $args['siteadminrealname'] : null);
-        $siteadminemail = $this->request->getPost()->get('siteadminemail', isset($args['siteadminemail']) ? $args['siteadminemail'] : null);
-        $sitecompany = $this->request->getPost()->get('sitecompany', isset($args['sitecompany']) ? $args['sitecompany'] : null);
-        $active = $this->request->getPost()->get('active', isset($args['active']) ? $args['active'] : 0);
+        $instanceid = isset($args['instanceid']) ? $args['instanceid'] : $this->request->getPost()->get('instanceid', null);
+        $instancename = isset($args['instancename']) ? $args['instancename'] : $this->request->getPost()->get('instancename', null);
+        $description = isset($args['description']) ? $args['description'] : $this->request->getPost()->get('description', null);
+        $siteadminrealname = isset($args['siteadminrealname']) ? $args['siteadminrealname'] : $this->request->getPost()->get('siteadminrealname', null);
+        $siteadminemail = isset($args['siteadminemail']) ? $args['siteadminemail'] : $this->request->getPost()->get('siteadminemail', null);
+        $sitecompany = isset($args['sitecompany']) ? $args['sitecompany'] : $this->request->getPost()->get('sitecompany', null);
+        $active = isset($args['active']) ? $args['active'] : $this->request->getPost()->get('active', 0);
 
         // get site information
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                                  array('instanceid' => $instanceid));
+        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceid' => $instanceid));
         if ($site == false) {
             LogUtil::registerError($this->__('Error! Site could not be found.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
@@ -546,11 +550,10 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modelid = $this->request->getGet()->get('modelid', isset($args['modelid']) ? $args['modelid'] : null);
+        $modelid = isset($args['modelid']) ? $args['modelid'] : $this->request->getGet()->get('modelid', null);
 
         // get model information
-        $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById',
-                                   array('modelid' => $modelid));
+        $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById', array('modelid' => $modelid));
         if ($model == false) {
             LogUtil::registerError($this->__('Error! Model could not be found.'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'manageModels'));
@@ -578,11 +581,11 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modelid = $this->request->getPost()->get('modelid', isset($args['modelid']) ? $args['modelid'] : null);
-        $modelname = $this->request->getPost()->get('modelname', isset($args['modelname']) ? $args['modelname'] : null);
-        $description = $this->request->getPost()->get('description', isset($args['description']) ? $args['description'] : null);
-        $folders = $this->request->getPost()->get('folders', isset($args['folders']) ? $args['folders'] : null);
-        $modeldbtablesprefix = $this->request->getPost()->get('modeldbtablesprefix', isset($args['modeldbtablesprefix']) ? $args['modeldbtablesprefix'] : null);
+        $modelid = isset($args['modelid']) ? $args['modelid'] : $this->request->getPost()->get('modelid', null);
+        $modelname = isset($args['modelname']) ? $args['modelname'] : $this->request->getPost()->get('modelname', null);
+        $description = isset($args['description']) ? $args['description'] : $this->request->getPost()->get('description', null);
+        $folders = isset($args['folders']) ? $args['folders'] : $this->request->getPost()->get('folders', null);
+        $modeldbtablesprefix = isset($args['modeldbtablesprefix']) ? $args['modeldbtablesprefix'] : $this->request->getPost()->get('modeldbtablesprefix', null);
 
         $errorMsg = '';
         if ($modelname == null || $modelname == '') {
@@ -659,11 +662,11 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modelsFolder = $this->request->getPost()->get('modelsFolder', isset($args['modelsFolder']) ? $args['modelsFolder'] : null);
-        $tempAccessFileContent = $this->request->getPost()->get('tempAccessFileContent', isset($args['tempAccessFileContent']) ? $args['tempAccessFileContent'] : null);
-        $globalAdminName = $this->request->getPost()->get('globalAdminName', isset($args['globalAdminName']) ? $args['globalAdminName'] : null);
-        $globalAdminPassword = $this->request->getPost()->get('globalAdminPassword', isset($args['globalAdminPassword']) ? $args['globalAdminPassword'] : null);
-        $globalAdminemail = $this->request->getPost()->get('globalAdminemail', isset($args['globalAdminemail']) ? $args['globalAdminemail'] : null);
+        $modelsFolder = isset($args['modelsFolder']) ? $args['modelsFolder'] : $this->request->getPost()->get('modelsFolder', null);
+        $tempAccessFileContent = isset($args['tempAccessFileContent']) ? $args['tempAccessFileContent'] : $this->request->getPost()->get('tempAccessFileContent', null);
+        $globalAdminName = isset($args['globalAdminName']) ? $args['globalAdminName'] : $this->request->getPost()->get('globalAdminName', null);
+        $globalAdminPassword = isset($args['globalAdminPassword']) ? $args['globalAdminPassword'] : $this->request->getPost()->get('globalAdminPassword', null);
+        $globalAdminemail = isset($args['globalAdminemail']) ? $args['globalAdminemail'] : $this->request->getPost()->get('globalAdminemail', null);
 
         $this->setVar('modelsFolder', $modelsFolder);
         $this->setVar('tempAccessFileContent', $tempAccessFileContent);
@@ -710,10 +713,10 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modelname = $this->request->getGet()->get('modelname', isset($args['modelname']) ? $args['modelname'] : null);
-        $description = $this->request->getGet()->get('description', isset($args['description']) ? $args['description'] : null);
-        $folders = $this->request->getGet()->get('folders', isset($args['folders']) ? $args['folders'] : null);
-        $modeldbtablesprefix = $this->request->getGet()->get('modeldbtablesprefix', isset($args['modeldbtablesprefix']) ? $args['modeldbtablesprefix'] : null);
+        $modelname = isset($args['modelname']) ? $args['modelname'] : $this->request->getGet()->get('modelname', null);
+        $description = isset($args['description']) ? $args['description'] : $this->request->getGet()->get('description', null);
+        $folders = isset($args['folders']) ? $args['folders'] : $this->request->getGet()->get('folders', null);
+        $modeldbtablesprefix = isset($args['modeldbtablesprefix']) ? $args['modeldbtablesprefix'] : $this->request->getGet()->get('modeldbtablesprefix', null);
 
         // check if the models folders exists and it is writeable
         $path = $this->getVar('modelsFolder');
@@ -760,12 +763,12 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modelname = $this->request->getPost()->get('modelname', isset($args['modelname']) ? $args['modelname'] : null);
-        $description = $this->request->getPost()->get('description', isset($args['description']) ? $args['description'] : null);
-        $folders = $this->request->getPost()->get('folders', isset($args['folders']) ? $args['folders'] : null);
-        $modelFile = $this->request->getFiles()->get('modelFile', isset($args['modelFile']) ? $args['modelFile'] : null);
-        $modeldbtablesprefix = $this->request->getPost()->get('modeldbtablesprefix', isset($args['modeldbtablesprefix']) ? $args['modeldbtablesprefix'] : null);
-        $modelFileSelected = $this->request->getPost()->get('modelFileSelected', isset($args['modelFileSelected']) ? $args['modelFileSelected'] : 0);
+        $modelname = isset($args['modelname']) ? $args['modelname'] : $this->request->getPost()->get('modelname', null);
+        $description = isset($args['description']) ? $args['description'] : $this->request->getPost()->get('description', null);
+        $folders = isset($args['folders']) ? $args['folders'] : $this->request->getPost()->get('folders', null);
+        $modelFile = isset($args['modelFile']) ? $args['modelFile'] : $this->request->getFiles()->get('modelFile', null);
+        $modeldbtablesprefix = isset($args['modeldbtablesprefix']) ? $args['modeldbtablesprefix'] : $this->request->getPost()->get('modeldbtablesprefix', null);
+        $modelFileSelected = isset($args['modelFileSelected']) ? $args['modelFileSelected'] : $this->request->getPost()->get('modelFileSelected', 0);
 
         $errorMsg = '';
         if ($modelname == null || $modelname == '') {
@@ -853,15 +856,15 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
 
         $instanceid = null;
-        if ($this->request->getPost()->has('instanceid')) {
-            $instanceid = $this->request->getPost()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
-        }
-        elseif ($this->request->getGet()->has('instanceid')) {
-            $instanceid = $this->request->getGet()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
+        if (isset($args['instanceid'])) {
+            $instanceid = $args['instanceid'];
+        } elseif ($this->request->getPost()->has('instanceid')) {
+            $instanceid = $this->request->getPost()->get('instanceid', null);
+        } elseif ($this->request->getGet()->has('instanceid')) {
+            $instanceid = $this->request->getGet()->get('instanceid', null);
         }
 
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                                  array('instanceid' => $instanceid));
+        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceid' => $instanceid));
         if ($site == false) {
             LogUtil::registerError($this->__('Not site found'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
@@ -908,17 +911,18 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
 
         $modelid = null;
-        if ($this->request->getPost()->has('modelid')) {
-            $modelid = $this->request->getPost()->get('modelid', isset($args['modelid']) ? $args['modelid'] : null);
+        if (isset($args['modelid'])) {
+            $modelid = $args['modelid'];
+        } elseif ($this->request->getPost()->has('modelid')) {
+            $modelid = $this->request->getPost()->get('modelid', null);
         }
         elseif ($this->request->getGet()->has('modelid')) {
-            $modelid = $this->request->getGet()->get('modelid', isset($args['modelid']) ? $args['modelid'] : null);
+            $modelid = $this->request->getGet()->get('modelid', null);
         }
 
-        $confirmation = $this->request->getPost()->get('confirmation', isset($args['confirmation']) ? $args['confirmation'] : null);
+        $confirmation = isset($args['confirmation']) ? $args['confirmation'] : $this->request->getPost()->get('confirmation', null);
 
-        $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById',
-                                   array('modelid' => $modelid));
+        $model = ModUtil::apiFunc('Multisites', 'user', 'getModelById', array('modelid' => $modelid));
         if ($model == false) {
             LogUtil::registerError($this->__('Model not found'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'manageModels'));
@@ -972,15 +976,15 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         }
 
         $instanceid = null;
-        if ($this->request->getPost()->has('instanceid')) {
-            $instanceid = $this->request->getPost()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
-        }
-        elseif ($this->request->getGet()->has('instanceid')) {
-            $instanceid = $this->request->getGet()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
+        if (isset($args['instanceid'])) {
+            $instanceid = $args['instanceid'];
+        } elseif ($this->request->getPost()->has('instanceid')) {
+            $instanceid = $this->request->getPost()->get('instanceid', null);
+        } elseif ($this->request->getGet()->has('instanceid')) {
+            $instanceid = $this->request->getGet()->get('instanceid', null);
         }
 
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                                  array('instanceid' => $instanceid));
+        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceid' => $instanceid));
         if ($site == false) {
             LogUtil::registerError($this->__('Not site found'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
@@ -1031,11 +1035,11 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $name = $this->request->getPost()->get('name', isset($args['name']) ? $args['name'] : null);
-        $available = $this->request->getPost()->get('available', isset($args['available']) ? $args['available'] : null);
-        $siteThemes = $this->request->getPost()->get('siteThemes', isset($args['siteThemes']) ? $args['siteThemes'] : null);
-        $instanceid = $this->request->getPost()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
-        $isDefaultTheme = $this->request->getPost()->get('isDefaultTheme', isset($args['isDefaultTheme']) ? $args['isDefaultTheme'] : null);
+        $name = isset($args['name']) ? $args['name'] : $this->request->getPost()->get('name', null);
+        $available = isset($args['available']) ? $args['available'] : $this->request->getPost()->get('available', null);
+        $siteThemes = isset($args['siteThemes']) ? $args['siteThemes'] : $this->request->getPost()->get('siteThemes', null);
+        $instanceid = isset($args['instanceid']) ? $args['instanceid'] : $this->request->getPost()->get('instanceid', null);
+        $isDefaultTheme = isset($args['isDefaultTheme']) ? $args['isDefaultTheme'] : $this->request->getPost()->get('isDefaultTheme', null);
 
         $this->view->assign('name', $name)
                    ->assign('available', $available)
@@ -1060,12 +1064,12 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $name = $this->request->getGet()->get('name', isset($args['name']) ? $args['name'] : null);
-        $instanceid = $this->request->getGet()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
+        $name = isset($args['name']) ? $args['name'] : $this->request->getGet()->get('name', null);
+        $instanceid = isset($args['instanceid']) ? $args['instanceid'] : $this->request->getGet()->get('instanceid', null);
 
         $defaultTheme = ModUtil::apiFunc('Multisites', 'admin', 'setAsDefaultTheme',
                                           array('instanceid' => $instanceid,
-                'name' => $name));
+                                                'name' => $name));
         // redirect to the admin main page
         return $this->redirect(ModUtil::url($this->name, 'admin', 'siteThemes',
                                               array('instanceid' => $instanceid)));
@@ -1086,7 +1090,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $instanceid = $this->request->getGet()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
+        $instanceid = isset($args['instanceid']) ? $args['instanceid'] : $this->request->getGet()->get('instanceid', null);
 
         $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceid' => $instanceid));
         if ($site == false) {
@@ -1112,11 +1116,10 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $instanceid = $this->request->getGet()->get('instanceid', isset($args['instanceid']) ? $args['instanceid'] : null);
-        $tool = $this->request->getGet()->get('tool', isset($args['tool']) ? $args['tool'] : null);
+        $instanceid = isset($args['instanceid']) ? $args['instanceid'] : $this->request->getGet()->get('instanceid', null);
+        $tool = isset($args['tool']) ? $args['tool'] : $this->request->getGet()->get('tool', null);
 
-        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite',
-                                  array('instanceid' => $instanceid));
+        $site = ModUtil::apiFunc('Multisites', 'user', 'getSite', array('instanceid' => $instanceid));
         if ($site == false) {
             LogUtil::registerError($this->__('Not site found'));
             return $this->redirect(ModUtil::url($this->name, 'admin', 'main'));
@@ -1194,7 +1197,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
-        $modulename = $this->request->getGet()->get('modulename', isset($args['modulename']) ? $args['modulename'] : null);
+        $modulename = isset($args['modulename']) ? $args['modulename'] : $this->request->getGet()->get('modulename', null);
 
         if ($modulename == null) {
             return LogUtil::registerError($this->__('Error! Could not do what you wanted. Please check your input.'));

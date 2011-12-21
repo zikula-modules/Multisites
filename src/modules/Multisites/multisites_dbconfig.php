@@ -2,6 +2,7 @@
 $databaseArray = array (
   'myhost.net' => 
   array (
+    'alias' => 'myhost',
     'sitedbname' => 'first77',
     'sitedbhost' => 'localhost',
     'sitedbtype' => 'mysql',

@@ -10,8 +10,13 @@
             <input type="text" name="instancename" size="50" maxlength="150" value="{$site.instancename}"/>
         </div>
         <div class="z-formrow">
-            <label for="description">{gt text='Description'}</label>
+            <label for="description">{gt text='Description (internal)'}</label>
             <input type="text" name="description" size="50" maxlength="255" value="{$site.description}"/>
+        </div>
+        <div class="z-formrow">
+            <label for="alias">{gt text='Alias'}</label>
+            <input type="text" name="alias" size="50" maxlength="10" value="{$site.alias}" />
+            <p class="z-formnote">{gt text='The alias should be a lower case, unique string containing only letters.'}</p>
         </div>
         <div class="z-formrow">
             <label for="sitename">{gt text='Original site name'}</label>

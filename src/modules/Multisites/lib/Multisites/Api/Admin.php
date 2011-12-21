@@ -255,7 +255,8 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return false;
         }
         foreach ($sites as $site) {
-            $databaseArray[$site['sitedns']] = array('sitedbname' => $site['sitedbname'],
+            $databaseArray[$site['sitedns']] = array('alias' => $site['alias'],
+                                                     'sitedbname' => $site['sitedbname'],
                                                      'sitedbhost' => $site['sitedbhost'],
                                                      'sitedbtype' => $site['sitedbtype'],
                                                      'sitedbuname' => $site['sitedbuname'],
@@ -263,7 +264,8 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                                                      'sitedbprefix' => $site['sitedbprefix']);
         }
         // add the site that is being created in this moment
-        $databaseArray[$args['sitedns']] = array('sitedbname' => $args['sitedbname'],
+        $databaseArray[$args['sitedns']] = array('alias' => $args['alias'],
+                                                 'sitedbname' => $args['sitedbname'],
                                                  'sitedbhost' => $args['sitedbhost'],
                                                  'sitedbtype' => $args['sitedbtype'],
                                                  'sitedbuname' => $args['sitedbuname'],
