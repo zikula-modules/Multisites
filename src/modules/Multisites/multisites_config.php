@@ -29,8 +29,8 @@ if (!$databaseArray[$sitedns] ||
      $databaseArray[$sitedns]['sitedbuname'] == '' ||
      $databaseArray[$sitedns]['sitedbpass'] == '' ||
      $databaseArray[$sitedns]['sitedbtype'] == '' ||
-     $databaseArray[$sitedns]['sitedbhost'] == '' ||
-     $databaseArray[$sitedns]['sitedbprefix'] == '') {
+     $databaseArray[$sitedns]['sitedbhost'] == ''/* ||
+     $databaseArray[$sitedns]['sitedbprefix'] == ''*/) {
     // if the site doesn't exists user is sended to an error page
     header('location: ' . $ZConfig['Multisites']['multisites.wwwroot'] . '/' . 'error.php?s=' . $ZConfig['Multisites']['multisites.sitednsEndText'] . '&dns=' . $sitedns);
     exit();
@@ -51,3 +51,4 @@ $ZConfig['DBInfo']['databases']['default']['dbname'] = $sitedbname;
 $ZConfig['DBInfo']['databases']['default']['dbdriver'] = $sitedbtype;
 $ZConfig['System']['prefix'] = $sitedbprefix;
 $ZConfig['System']['temp'] = $ZConfig['Multisites']['multisites.files_real_path'] . '/' . $alias . '/' . $ZConfig['Multisites']['multisites.site_temp_files_folder'];
+$ZConfig['Multisites']['multisites.sitealias'] = $alias;
