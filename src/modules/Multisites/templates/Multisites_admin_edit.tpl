@@ -15,7 +15,7 @@
         </div>
         <div class="z-formrow">
             <label for="alias">{gt text='Alias'}</label>
-            <input type="text" name="alias" size="50" maxlength="10" value="{$site.alias}" />
+            <input type="text" name="alias" size="50" maxlength="20" value="{$site.alias}" />
             <p class="z-formnote">{gt text='The alias should be a lower case, unique string containing only letters.'}</p>
         </div>
         <div class="z-formrow">

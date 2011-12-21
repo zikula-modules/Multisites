@@ -12,6 +12,7 @@
     <table class="z-datatable">
         <colgroup>
             <col id="cselect" />
+            <col id="calias" />
             <col id="cinstancename" />
             <col id="cdescription" />
             <col id="csitename" />
@@ -23,6 +24,7 @@
         <thead>
             <tr>
                 <th id="hselect" scope="col" align="center" valign="middle"><input type="checkbox" id="toggle_sites" /></th>
+                <th id="halias" scope="col">{gt text='Alias'}</th>
                 <th id="hinstancename" scope="col">{gt text='Instance name'}</th>
                 <th id="hdescription" scope="col">{gt text='Description'}</th>
                 <th id="hsitename" scope="col">{gt text='Site name'}</th>
@@ -37,6 +39,9 @@
                 <tr class="{cycle values='z-odd,z-even'}">
                     <td headers="hselect" align="center" valign="top">
                         <input type="checkbox" name="sites[]" value="{$site.instanceid}" class="sites_checkbox" />
+                    </td>
+                    <td headers="halias" align="left" valign="top">
+                        {$site.alias}
                     </td>
                     <td headers="hinstancename" align="left" valign="top">
                     {if $based_on_domains eq 1}
@@ -97,7 +102,7 @@
                 </tr>
             {foreachelse}
                 <tr class="z-admintableempty">
-                    <td colspan="8" align="left">{gt text='No sites defined'}</td>
+                    <td colspan="9" align="left">{gt text='No sites defined'}</td>
                 </tr>
             {/foreach}
         </tbody>

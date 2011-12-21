@@ -25,7 +25,7 @@ function Multisites_tables()
     $table['multisitessites_column_def'] = array('instanceid' => "I PRIMARY AUTO",
                                                   'instancename' => "C(150) NOTNULL DEFAULT ''",
                                                   'description' => "C(255) NOTNULL DEFAULT ''",
-                                                  'alias' => "C(10) NOTNULL DEFAULT ''",
+                                                  'alias' => "C(20) NOTNULL DEFAULT ''",
                                                   'sitename' => "C(150) NOTNULL DEFAULT ''",
                                                   'sitedescription' => "C(255) NOTNULL DEFAULT ''",
                                                   'siteadminname' => "C(25) NOTNULL DEFAULT ''",
