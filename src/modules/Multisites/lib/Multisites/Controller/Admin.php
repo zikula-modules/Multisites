@@ -62,6 +62,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
 
         $instancename = isset($args['instancename']) ? $args['instancename'] : $this->request->getGet()->get('instancename', null);
         $description = isset($args['description']) ? $args['description'] : $this->request->getGet()->get('description', null);
+        $alias = isset($args['alias']) ? $args['alias'] : $this->request->getGet()->get('alias', null);
         $sitename = isset($args['sitename']) ? $args['sitename'] : $this->request->getGet()->get('sitename', null);
         $siteDescription = isset($args['siteDescription']) ? $args['siteDescription'] : $this->request->getGet()->get('siteDescription', null);
         $siteadminname = isset($args['siteadminname']) ? $args['siteadminname'] : $this->request->getGet()->get('siteadminname', null);
@@ -94,6 +95,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         $this->view->assign('models', $models)
                    ->assign('instancename', $instancename)
                    ->assign('description', $description)
+                   ->assign('alias', $alias)
                    ->assign('sitename', $sitename)
                    ->assign('siteDescription', $siteDescription)
                    ->assign('siteadminname', $siteadminname)
@@ -302,6 +304,7 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             $created = ModUtil::apiFunc('Multisites', 'admin', 'createInstance',
                                          array('instancename' => $instancename,
                                                'description' => $description,
+                                               'alias' => $alias,
                                                'sitename' => $sitename,
                                                'siteDescription' => $siteDescription,
                                                'siteadminname' => $siteadminname,
