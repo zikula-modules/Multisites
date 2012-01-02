@@ -1247,13 +1247,10 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError();
         }
 
+        $this->checkCsrfToken();
+
         $allowedActions = array('cleartemplates');
         $returnUrl = ModUtil::url($this->name, 'admin', 'main');
-
-        // Confirm authorisation code.
-        if (!SecurityUtil::confirmAuthKey()) {
-            return LogUtil::registerAuthidError($returnUrl);
-        }
 
         // Get parameters
         $sites = isset($args['sites']) ? $args['sites'] : $this->request->getPost()->get('sites', null);
