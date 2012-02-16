@@ -61,19 +61,19 @@
             </div>
             <div class="z-formrow">
                 <label for="sitedbhost">{gt text='Site database host'} <span class="mandatoryField">*</span></label>
-                <input type="text" name="sitedbhost" size="15" maxlength="20" value="{$sitedbhost}"/>
+                <input type="text" name="sitedbhost" size="15" maxlength="25" value="{$sitedbhost}"/>
             </div>
             <div class="z-formrow">
                 <label for="sitedbname">{gt text='Site database'} <span class="mandatoryField">*</span></label>
-                <input type="text" name="sitedbname" size="15" maxlength="20" value="{$sitedbname}"/>
+                <input type="text" name="sitedbname" size="15" maxlength="25" value="{$sitedbname}"/>
             </div>
             <div class="z-formrow">
                 <label for="sitedbuname">{gt text='Site database username'} <span class="mandatoryField">*</span></label>
-                <input type="text" name="sitedbuname" size="15" maxlength="20" value="{$sitedbuname}"/>
+                <input type="text" name="sitedbuname" size="15" maxlength="25" value="{$sitedbuname}"/>
             </div>
             <div class="z-formrow">
                 <label for="sitedbpass">{gt text='Site database password'} <span class="mandatoryField">*</span></label>
-                <input type="password" name="sitedbpass" size="15" maxlength="20" />
+                <input type="password" name="sitedbpass" size="15" maxlength="25" />
             </div>
             <div class="z-formrow">
                 <label for="sitedbprefix">{gt text='Site database prefix'}</label>
