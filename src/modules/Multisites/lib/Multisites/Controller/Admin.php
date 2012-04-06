@@ -264,7 +264,8 @@ class Multisites_Controller_Admin extends Zikula_AbstractController
         if ($errorMsg == '') {
             // update instance values like admin name, admin password, cookie name, site name...
             if (!ModUtil::apiFunc('Multisites', 'admin', 'updateConfigValues',
-                                   array('siteadminname' => $siteadminname,
+                                   array('alias' => $alias,
+                                         'siteadminname' => $siteadminname,
                                          'siteadminpwd' => $siteadminpwd,
                                          'siteadminemail' => $siteadminemail,
                                          'sitename' => $sitename,

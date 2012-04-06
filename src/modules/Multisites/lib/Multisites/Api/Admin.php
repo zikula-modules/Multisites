@@ -170,13 +170,13 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
         $prefix = (($args['sitedbprefix'] != '') ? $args['sitedbprefix'] . '_' : '');
         // modify the site name
         $value = serialize($args['sitename']);
-        $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name='sitename'";
+        $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name IN ('sitename', 'defaultpagetitle')";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql  . "\n");
         }
         // modify the site description
         $value = serialize($args['siteDescription']);
-        $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name='slogan'";
+        $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name IN ('slogan', 'defaultmetadescription')";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql  . "\n");
         }
