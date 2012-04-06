@@ -22,17 +22,17 @@ class Multisites_Controller_Ajax extends Zikula_AbstractController
             throw new Zikula_Exception_Fatal();
         }
 */
-        $instanceid = $this->request->getPost()->get('instanceid', -1);
+        $instanceid = $this->request->request->get('instanceid', -1);
         if ($instanceid == -1) {
             AjaxUtil::error($this->__('No instanceid value received.'));
         }
 
-        $modulename = $this->request->getPost()->get('modulename', -1);
+        $modulename = $this->request->request->get('modulename', -1);
         if ($modulename == -1) {
             AjaxUtil::error($this->__('No module name received.'));
         }
 
-        $newState = $this->request->getPost()->get('newState', -1);
+        $newState = $this->request->request->get('newState', -1);
         if ($newState == -1) {
             AjaxUtil::error($this->__('No new state received.'));
         }
@@ -71,11 +71,11 @@ class Multisites_Controller_Ajax extends Zikula_AbstractController
     {
         $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 
-        $instanceid = $this->request->getPost()->get('instanceid', -1);
+        $instanceid = $this->request->request->get('instanceid', -1);
         if ($instanceid == -1) {
             AjaxUtil::error($this->__('No instanceid value received.'));
         }
-        $modulename = $this->request->getPost()->get('modulename', -1);
+        $modulename = $this->request->request->get('modulename', -1);
         if ($modulename == -1) {
             AjaxUtil::error($this->__('No module name received.'));
         }
@@ -140,11 +140,11 @@ class Multisites_Controller_Ajax extends Zikula_AbstractController
     {
         $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
 
-        $instanceid = $this->request->getPost()->get('instanceid', -1);
+        $instanceid = $this->request->request->get('instanceid', -1);
         if ($instanceid == -1) {
             AjaxUtil::error($this->__('No instanceid value received.'));
         }
-        $themeName = $this->request->getPost()->get('themeName', -1);
+        $themeName = $this->request->request->get('themeName', -1);
         if ($themeName == -1) {
             AjaxUtil::error($this->__('No theme name received.'));
         }
