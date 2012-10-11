@@ -868,6 +868,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
                 unset($themetype);
             }
         }
+        ksort($filethemes);
         return $filethemes;
     }
 
