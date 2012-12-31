@@ -1,4 +1,0 @@
-RewriteEngine on
-RewriteBase /
-RewriteRule ^([^/]*)/site$ $1/site/ [QSA,R=permanent,L]
-RewriteRule ^([^/]*)/site/(.*)$ zikula12/$2?sitedns=$1 [QSA,L]
