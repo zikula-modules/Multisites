@@ -1430,7 +1430,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
      *
      * @return array Array of admin links
      */
-    public function getlinks()
+    public function getLinks()
     {
         $links = array();
 
