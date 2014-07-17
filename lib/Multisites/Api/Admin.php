@@ -187,7 +187,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql . "\n");
         }
         // modify the sessionCookieName
-        $value = serialize('ZKSID_' . $args['sitedbname']);
+        $value = serialize('ZKSID_' . strtoupper($args['alias']));
         $sql = "UPDATE " . $prefix . "module_vars set value='$value' WHERE modname='ZConfig' AND name='sessionname'";
         if (!$connect->query($sql)) {
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ":<br />" . $sql . "\n");
@@ -793,6 +793,9 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
             $dirArray = array();
             while ($dir = readdir($dh)) {
                 if (in_array($dir, array('.', '..', '.svn', 'CVS', 'index.html', 'index.htm', '.htaccess'))) {
+                    continue;
+                }
+                if (!is_dir('themes/' . $dir)) {
                     continue;
                 }
                 $dirArray[] = $dir;
@@ -1427,7 +1430,7 @@ class Multisites_Api_Admin extends Zikula_AbstractApi
      *
      * @return array Array of admin links
      */
-    public function getLinks()
+    public function getlinks()
     {
         $links = array();
 
