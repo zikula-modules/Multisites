@@ -624,7 +624,7 @@ class Multisites_Util_System extends Zikula_AbstractBase
 
         // read in manually entered values
         if (is_array($site['parametersArray']) && count($site['parametersArray']) > 0) {
-            foreach ($site['parametersArray']) as $siteParam) {
+            foreach ($site['parametersArray'] as $siteParam) {
                 $paramParts = explode(': ', $siteParam);
                 if (count($paramParts) != 2) {
                     continue;
