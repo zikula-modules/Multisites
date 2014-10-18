@@ -588,7 +588,7 @@ class Multisites_Util_System extends Zikula_AbstractBase
      *
      * @return array Built list of parameters.
      */
-    protected function processParameters(Multisites_Entity_Site $site)
+    protected function determineParameters(Multisites_Entity_Site $site)
     {
         $parameters = array();
 
