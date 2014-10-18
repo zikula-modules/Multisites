@@ -1,0 +1,151 @@
+/* view pages */
+div#z-maincontent.z-module-multisites table tbody tr td {
+    vertical-align: top;
+}
+
+/* display pages */
+.multisites-display.with-rightbox div.z-panel-content {
+    float: left;
+    width: 79%;
+}
+.multisites-display div.multisites-rightbox {
+    float: right;
+    margin: 0 1em;
+    padding: .5em;
+    width: 20%;
+    /*border: 1px solid #666;*/
+}
+
+.multisites-display div.multisites-rightbox h3 {
+    color: #333;
+    font-weight: 400;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 8px;
+}
+
+.multisites-display div.multisites-rightbox p.managelink {
+    margin-left: 18px;
+}
+/* validation */
+div.z-formrow input.required, div.z-formrow textarea.required {
+    border: 1px solid #00a8e6;
+}
+div.z-formrow input.validation-failed, div.z-formrow textarea.validation-failed {
+    border: 1px solid #f30;
+    color: #f30;
+}
+div.z-formrow input.validation-passed, div.z-formrow textarea.validation-passed {
+    border: 1px solid #0c0;
+    color: #000;
+}
+
+.validation-advice {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #f90;
+    color: #fff;
+    font-weight: 700;
+}
+
+/* edit pages */
+form.z-form select.z-form-dropdownlist,
+form.z-form input.z-form-upload {
+    float: left;
+}
+div.multisites-relation-leftside {
+    float: left;
+    width: 25%;
+}
+
+div.multisites-relation-rightside {
+    float: right;
+    width: 65%;
+}
+
+/* hide legends if z-panels are used as both contain the same labels */
+div.multisites-edit .z-panel-content legend {
+    display: none;
+}
+
+
+div.multisites-autocomplete,
+div.multisites-autocomplete-withimage {
+    position: relative !important;
+    top: 2px !important;
+    width: 191px !important;
+    background-color: #fff;
+    border: 1px solid #888;
+    margin: 0;
+    padding: 0;
+}
+
+div.multisites-autocomplete,
+div.multisites-autocomplete-with-image {
+    left: 0 !important;
+}
+div.multisites-autocomplete ul,
+div.multisites-autocomplete-with-image ul {
+    margin: 0;
+    padding: 0;
+}
+
+div.multisites-autocomplete ul li,
+div.multisites-autocomplete-with-image ul li {
+    margin: 0;
+    padding: 0.2em 0 0.2em 20px;
+    list-style-type: none;
+    line-height: 1.4em;
+    cursor: pointer;
+    display: block;
+    background-position: 2px 2px;
+    background-repeat: no-repeat;
+}
+
+div.multisites-autocomplete ul li {
+    background-image: url("../../../images/icons/extrasmall/tab_right.png");
+}
+div.multisites-autocomplete-with-image ul li {
+    background-image: url("../../../images/icons/extrasmall/agt_Multimedia.png");
+}
+
+div.multisites-autocomplete ul li.selected,
+div.multisites-autocomplete-with-image ul li.selected {
+    background-color: #ffb;
+}
+
+div.multisites-autocomplete ul li div.itemtitle,
+div.multisites-autocomplete-with-image ul li div.itemtitle {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1.2em;
+}
+div.multisites-autocomplete ul li div.itemdesc,
+div.multisites-autocomplete-with-image ul li div.itemdesc {
+    font-size: 10px;
+    color: #888;
+}
+
+button.multisites-inline-button {
+    margin-top: 1em;
+}
+
+div.multisites-view form.multisites-quicknav {
+    margin: 10px 0;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+}
+
+div.multisites-view form.multisites-quicknav fieldset {
+    padding: 3px 10px;
+    margin-bottom: 0;
+}
+
+div.multisites-view form.multisites-quicknav fieldset h3 {
+    margin-top: 0;
+    display: none;
+}
+
+div.multisites-view form.multisites-quicknav fieldset #num {
+    width: 50px;
+    text-align: right;
+}
