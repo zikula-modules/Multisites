@@ -8,7 +8,6 @@ Changes in Multisites 2.0.0
 * Added project table for grouping sites by client or topic.
 * Put basic settings into two different sections (general settings and security-related options).
 * Added custom action for exporting an existing site database into a new template.
-* Added new site field for a whitelist of languages per site.
 * Added support for template parameters (variable information to be defined for each site).
 * Templates can export a csv file for their parameters which can be used for new sites.
 * Added two parameter fields to the site table (csv upload, array for manual form-based input).
