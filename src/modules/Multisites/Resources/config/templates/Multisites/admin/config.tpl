@@ -26,10 +26,6 @@
                         <p class="z-confirmationmsg">{gt text='Here you can define general settings.'|nl2br}</p>
                     
                         <div class="z-formrow">
-                            {formlabel for='modelsFolder' __text='Models folder' cssClass=''}
-                            {formtextinput id='modelsFolder' group='config' maxLength=255 __title='Enter the models folder.'}
-                        </div>
-                        <div class="z-formrow">
                             {formlabel for='tempAccessFileContent' __text='Temporal folder .htaccess file content' cssClass=''}
                             {formtextinput textMode='multiline' id='tempAccessFileContent' group='config' __title='Enter the temp access file content.' rows=7}
                         </div>
