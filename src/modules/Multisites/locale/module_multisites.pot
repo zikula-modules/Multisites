@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula component\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-18 11:37+0200\n"
+"POT-Creation-Date: 2014-11-03 14:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,36 +28,36 @@ msgstr ""
 msgid "Imported"
 msgstr ""
 
-#: lib/Multisites/Installer.php:190
+#: lib/Multisites/Installer.php:194
 #, php-format
 msgid ""
 "The site \"%1$s\" does have a table prefix set which is not supported "
 "anymore. You need to rename tables in the \"%2$s\" database accordingly."
 msgstr ""
 
-#: lib/Multisites/Installer.php:265 lib/Multisites/Base/Installer.php:38
+#: lib/Multisites/Installer.php:269 lib/Multisites/Base/Installer.php:38
 #: lib/Multisites/Base/Installer.php:119
 msgid "Doctrine Exception: "
 msgstr ""
 
-#: lib/Multisites/Installer.php:267 lib/Multisites/Base/Installer.php:40
+#: lib/Multisites/Installer.php:271 lib/Multisites/Base/Installer.php:40
 #, php-format
 msgid ""
 "An error was encountered while creating the tables for the %s extension."
 msgstr ""
 
-#: lib/Multisites/Installer.php:269 lib/Multisites/Base/Installer.php:42
+#: lib/Multisites/Installer.php:273 lib/Multisites/Base/Installer.php:42
 msgid ""
 "Please enable the development mode by editing the /config/config.php file in "
 "order to reveal the error details."
 msgstr ""
 
-#: lib/Multisites/Installer.php:323
+#: lib/Multisites/Installer.php:327
 #, php-format
 msgid "Could not delete the %s folder. Please remove it manually."
 msgstr ""
 
-#: lib/Multisites/Installer.php:376
+#: lib/Multisites/Installer.php:380
 #, php-format
 msgid ""
 "Could not update the %1$s file automatically. Please compare it with %2$s "
@@ -239,9 +239,9 @@ msgid "No results found!"
 msgstr ""
 
 #: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:152
-#: Resources/config/templates/Multisites/template/edit.tpl:157
+#: Resources/config/templates/Multisites/template/edit.tpl:158
 #: Resources/config/templates/Multisites/template/reapply.tpl:43
-#: Resources/config/templates/Multisites/admin/config.tpl:63
+#: Resources/config/templates/Multisites/admin/config.tpl:59
 #: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:74
 #: Resources/config/templates/Multisites/project/edit.tpl:95
 #: Resources/config/templates/Multisites/site/edit.tpl:344
@@ -1559,7 +1559,11 @@ msgid ""
 "accordingly."
 msgstr ""
 
-#: Resources/config/templates/Multisites/template/edit.tpl:136
+#: Resources/config/templates/Multisites/template/edit.tpl:110
+msgid "Placeholder syntax: ###PARAMETERNAME###"
+msgstr ""
+
+#: Resources/config/templates/Multisites/template/edit.tpl:137
 #: Resources/config/templates/Multisites/project/edit.tpl:74
 #: Resources/config/templates/Multisites/site/edit.tpl:323
 #: templates/template/edit.tpl:112 templates/project/edit.tpl:74
@@ -1567,7 +1571,7 @@ msgstr ""
 msgid "Return control"
 msgstr ""
 
-#: Resources/config/templates/Multisites/template/edit.tpl:138
+#: Resources/config/templates/Multisites/template/edit.tpl:139
 #: Resources/config/templates/Multisites/project/edit.tpl:76
 #: Resources/config/templates/Multisites/site/edit.tpl:325
 #: templates/template/edit.tpl:114 templates/project/edit.tpl:76
@@ -1575,7 +1579,7 @@ msgstr ""
 msgid "Create another item after save"
 msgstr ""
 
-#: Resources/config/templates/Multisites/template/edit.tpl:151
+#: Resources/config/templates/Multisites/template/edit.tpl:152
 msgid ""
 "Really delete this template? This includes deletion of assigned parameters "
 "and sites, too!"
@@ -1860,63 +1864,55 @@ msgid "Here you can define general settings."
 msgstr ""
 
 #: Resources/config/templates/Multisites/admin/config.tpl:29
-msgid "Models folder"
-msgstr ""
-
-#: Resources/config/templates/Multisites/admin/config.tpl:30
-msgid "Enter the models folder."
-msgstr ""
-
-#: Resources/config/templates/Multisites/admin/config.tpl:33
 msgid "Temporal folder .htaccess file content"
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:34
+#: Resources/config/templates/Multisites/admin/config.tpl:30
 #: templates/admin/config.tpl:25
 msgid "Enter the temp access file content."
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:38
+#: Resources/config/templates/Multisites/admin/config.tpl:34
 #: templates/admin/config.tpl:29
 msgid "Security settings"
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:43
+#: Resources/config/templates/Multisites/admin/config.tpl:39
 #: templates/admin/config.tpl:34
 msgid "Here you can define security-related settings."
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:46
+#: Resources/config/templates/Multisites/admin/config.tpl:42
 #: templates/admin/config.tpl:37
 msgid "Global admin name"
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:47
+#: Resources/config/templates/Multisites/admin/config.tpl:43
 #: templates/admin/config.tpl:38
 msgid "Enter the global admin name."
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:50
+#: Resources/config/templates/Multisites/admin/config.tpl:46
 #: templates/admin/config.tpl:41
 msgid "Global admin password"
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:51
+#: Resources/config/templates/Multisites/admin/config.tpl:47
 #: templates/admin/config.tpl:42
 msgid "Enter the global admin password."
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:54
+#: Resources/config/templates/Multisites/admin/config.tpl:50
 #: templates/admin/config.tpl:45
 msgid "Global admin email"
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:55
+#: Resources/config/templates/Multisites/admin/config.tpl:51
 #: templates/admin/config.tpl:46
 msgid "Enter the global admin email."
 msgstr ""
 
-#: Resources/config/templates/Multisites/admin/config.tpl:62
+#: Resources/config/templates/Multisites/admin/config.tpl:58
 #: templates/admin/config.tpl:53
 msgid "Update configuration"
 msgstr ""
