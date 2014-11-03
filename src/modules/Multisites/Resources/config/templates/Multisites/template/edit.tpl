@@ -107,6 +107,7 @@
             {formlabel for='parameters' __text='Parameters' mandatorySym='0' cssClass=''}
             {multisitesArrayInput group='template' id='parameters' mandatory=false readOnly=false __title='Enter required parameter names for this template' rows=7 cssClass=''}
             <span class="z-informationmsg z-formnote">{gt text='Enter parameter names separated by line breaks. Each parameter represents a variable information which is being replaced by concrete values when creating a new site or reapplying the template on existing sites. The parameter names can be used as placeholders anywhere in the template data accordingly.'}</span>
+            <span class="z-informationmsg z-formnote">{gt text='Placeholder syntax: ###PARAMETERNAME###'}</span>
         </div>
     </fieldset>
 

@@ -185,6 +185,7 @@ class Multisites_Listener_Theme extends Multisites_Listener_Base_Theme
             return;
         }
 
+        $delimiter = '###';
         $output = $event->getData();
 
         foreach ($parameters as $paramName => $paramValue) {
@@ -193,7 +194,7 @@ class Multisites_Listener_Theme extends Multisites_Listener_Base_Theme
                 continue;
             }
 
-            $placeholder = strtoupper(str_replace('parameterValue', '', $paramName));
+            $placeholder = $delimiter . strtoupper(str_replace('parameterValue', '', $paramName)) . $delimiter;
             $output = str_replace($placeholder, $paramValue, $output);
         }
 
