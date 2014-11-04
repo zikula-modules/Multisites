@@ -140,7 +140,9 @@ class Multisites_Util_System extends Zikula_AbstractBase
         $dbHost = isset($args['dbhost']) ? $args['dbhost'] : null;
         $dbType = isset($args['dbtype']) ? $args['dbtype'] : null;
         try {
-            $connect = new PDO("$dbType:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
+            $connect = new PDO("$dbType:host=$dbHost;dbname=$dbName", $dbUser, $dbPass,
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
+            );
         } catch (PDOException $e) {
             return LogUtil::registerError($e->getMessage());
         }
