@@ -109,7 +109,7 @@ class Multisites_Form_Handler_Site_Edit extends Multisites_Form_Handler_Site_Bas
 
                     // save entity reference for later reuse
                     $this->entityRef = $entity;
-                } elseif ($isDecoupledSite && !is_null($entity['template'])) {
+                } elseif (!is_null($entity['template'])) {
                     // couple again
 
                     // insert database content
