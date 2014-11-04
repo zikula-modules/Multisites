@@ -122,7 +122,7 @@ class Multisites_Util_SiteExtensionHandler extends Zikula_AbstractBase
             $success = $workflowHelper->executeAction($entity, 'submit');
         }
 
-        $success = $workflowHelper->executeAction($site, 'update');
+        //$success = $workflowHelper->executeAction($site, 'update');
 
         return true;
     }
