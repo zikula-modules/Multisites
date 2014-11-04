@@ -111,7 +111,7 @@
         <div class="z-form">
             <fieldset>
                 <div>
-                    {img modname='core' src='error.gif' set='icons/extrasmall'}
+                    {img modname='core' src='error.png' set='icons/extrasmall'}
                     {gt text='The <strong>%s</strong> file is writeable, but it should not be. Please set this file as not writeable.' tag1=$configFile}
                 </div>
                 <br />
