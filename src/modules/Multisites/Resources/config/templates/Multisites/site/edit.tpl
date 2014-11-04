@@ -33,6 +33,9 @@
     {else}
         <h2>{$templateTitle}</h2>
     {/if}
+{if $mode ne 'create'}
+    <p class="z-errormsg z-bold">{gt text='Caution: updating a site causes reapplying the template data again to it. All database tables except excluded ones will be dropped and recreated.'}</p>
+{/if}
 {form enctype='multipart/form-data' cssClass='z-form'}
     {* add validation summary and a <div> element for styling the form *}
     {multisitesFormFrame}

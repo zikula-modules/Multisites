@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula component\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-03 14:24+0100\n"
+"POT-Creation-Date: 2014-11-04 17:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -244,7 +244,7 @@ msgstr ""
 #: Resources/config/templates/Multisites/admin/config.tpl:59
 #: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:74
 #: Resources/config/templates/Multisites/project/edit.tpl:95
-#: Resources/config/templates/Multisites/site/edit.tpl:344
+#: Resources/config/templates/Multisites/site/edit.tpl:347
 #: Resources/config/templates/Multisites/site/delete.tpl:69
 #: templates/template/edit.tpl:133 templates/admin/config.tpl:54
 #: templates/project/edit.tpl:95 templates/site/edit.tpl:270
@@ -538,11 +538,11 @@ msgstr ""
 #: lib/Multisites/Util/SiteExtensionHandler.php:563
 #: lib/Multisites/Util/SiteExtensionHandler.php:589
 #: lib/Multisites/Util/SiteExtensionHandler.php:620
-#: lib/Multisites/Util/System.php:174 lib/Multisites/Util/System.php:271
-#: lib/Multisites/Util/System.php:326 lib/Multisites/Util/System.php:359
-#: lib/Multisites/Util/System.php:438 lib/Multisites/Util/System.php:489
-#: lib/Multisites/Util/System.php:656 lib/Multisites/Util/System.php:752
-#: lib/Multisites/Util/System.php:901 lib/Multisites/Util/System.php:992
+#: lib/Multisites/Util/System.php:176 lib/Multisites/Util/System.php:273
+#: lib/Multisites/Util/System.php:328 lib/Multisites/Util/System.php:361
+#: lib/Multisites/Util/System.php:440 lib/Multisites/Util/System.php:491
+#: lib/Multisites/Util/System.php:658 lib/Multisites/Util/System.php:754
+#: lib/Multisites/Util/System.php:903 lib/Multisites/Util/System.php:994
 #: lib/Multisites/Controller/Site.php:391
 #: lib/Multisites/Controller/Admin.php:485
 #, php-format
@@ -737,123 +737,123 @@ msgid ""
 "that."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:195 lib/Multisites/Util/System.php:288
+#: lib/Multisites/Util/System.php:197 lib/Multisites/Util/System.php:290
 msgid "DB Query error."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:199 lib/Multisites/Util/System.php:302
-#: lib/Multisites/Util/System.php:335 lib/Multisites/Util/System.php:408
+#: lib/Multisites/Util/System.php:201 lib/Multisites/Util/System.php:304
+#: lib/Multisites/Util/System.php:337 lib/Multisites/Util/System.php:410
 msgid "Connection error, because:"
 msgstr ""
 
-#: lib/Multisites/Util/System.php:228
+#: lib/Multisites/Util/System.php:230
 msgid "Error! Deletion of old database tables failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:233 lib/Multisites/Util/System.php:243
+#: lib/Multisites/Util/System.php:235 lib/Multisites/Util/System.php:245
 msgid "Error! Renaming of excluded database tables failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:238
+#: lib/Multisites/Util/System.php:240
 msgid "Error! Creation of database tables failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:248
+#: lib/Multisites/Util/System.php:250
 msgid "Error! Updating the site configuration failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:253
+#: lib/Multisites/Util/System.php:255
 msgid "Error! Updating the site parameters failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:426
+#: lib/Multisites/Util/System.php:428
 msgid "Error! The template sql file could not be found."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:432
+#: lib/Multisites/Util/System.php:434
 msgid "Error! Opening the template sql file failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:454
+#: lib/Multisites/Util/System.php:456
 msgid "Error importing the database in line"
 msgstr ""
 
-#: lib/Multisites/Util/System.php:471
+#: lib/Multisites/Util/System.php:473
 msgid ""
 "Error! Importing the database failed. Perhaps there is a problem with the "
 "template file."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:498 lib/Multisites/Util/System.php:507
-#: lib/Multisites/Util/System.php:516 lib/Multisites/Util/System.php:525
+#: lib/Multisites/Util/System.php:500 lib/Multisites/Util/System.php:509
+#: lib/Multisites/Util/System.php:518 lib/Multisites/Util/System.php:527
 msgid "Error! Setting configurating value failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:544 lib/Multisites/Util/System.php:559
-#: lib/Multisites/Util/System.php:577
+#: lib/Multisites/Util/System.php:546 lib/Multisites/Util/System.php:561
+#: lib/Multisites/Util/System.php:579
 msgid "Error! Creating the site administrator failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:667
+#: lib/Multisites/Util/System.php:669
 msgid "Error! Deleting old parameters failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:680 lib/Multisites/Util/System.php:689
-#: lib/Multisites/Util/System.php:696
+#: lib/Multisites/Util/System.php:682 lib/Multisites/Util/System.php:691
+#: lib/Multisites/Util/System.php:698
 #, php-format
 msgid "Error! Creating parameter \"%s\" failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:790 lib/Multisites/Util/System.php:797
+#: lib/Multisites/Util/System.php:792 lib/Multisites/Util/System.php:799
 msgid "Error deleting file:"
 msgstr ""
 
-#: lib/Multisites/Util/System.php:854
+#: lib/Multisites/Util/System.php:856
 msgid "Error! Could not find MySQL program directory."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:858
+#: lib/Multisites/Util/System.php:860
 msgid "Error! The \"mysqldump\" program is not installed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:874
+#: lib/Multisites/Util/System.php:876
 msgid ""
 "Error! The database dump failed. Please ensure that the database user %1%s "
 "has the \"LOCK_TABLES\" permission and the web service may write into the "
 "%2$s folder."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:895
+#: lib/Multisites/Util/System.php:897
 msgid ""
 "You have not defined the global administrator name or password. Check the "
 "module configuration."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:923
+#: lib/Multisites/Util/System.php:925
 msgid "Error! Creating global administrator failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:933
+#: lib/Multisites/Util/System.php:935
 msgid "Error! Getting global administrator values failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:941 lib/Multisites/Util/System.php:963
+#: lib/Multisites/Util/System.php:943 lib/Multisites/Util/System.php:965
 msgid "Error! Adding global administrator to admin group failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:955
+#: lib/Multisites/Util/System.php:957
 msgid "Error! Getting global administrator group failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:973
+#: lib/Multisites/Util/System.php:975
 msgid "Error! Updating global administrator password failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:1001
+#: lib/Multisites/Util/System.php:1003
 msgid "Error! Deleting the permission sequences having a value below 0 failed."
 msgstr ""
 
-#: lib/Multisites/Util/System.php:1009
+#: lib/Multisites/Util/System.php:1011
 msgid "Error! Creating the new permission sequence failed."
 msgstr ""
 
@@ -907,14 +907,14 @@ msgid "Error! Please select at least one database type."
 msgstr ""
 
 #: lib/Multisites/Controller/Admin.php:478
-#: Resources/config/templates/Multisites/site/edit.tpl:56
+#: Resources/config/templates/Multisites/site/edit.tpl:59
 #: templates/site/edit.tpl:56 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:91 templates/site/view_quickNav.tpl:76
 msgid "Site alias"
 msgstr ""
 
 #: lib/Multisites/Controller/Admin.php:478
-#: Resources/config/templates/Multisites/site/edit.tpl:167
+#: Resources/config/templates/Multisites/site/edit.tpl:170
 #: Resources/config/templates/Multisites/site/delete.tpl:42
 #: Resources/config/templates/Multisites/site/manageExtensions.tpl:16
 #: Resources/config/templates/Multisites/site/manageThemes.tpl:16
@@ -1457,27 +1457,27 @@ msgid "Sql file"
 msgstr ""
 
 #: Resources/config/templates/Multisites/template/edit.tpl:63
-#: Resources/config/templates/Multisites/site/edit.tpl:207
-#: Resources/config/templates/Multisites/site/edit.tpl:234
-#: Resources/config/templates/Multisites/site/edit.tpl:268
+#: Resources/config/templates/Multisites/site/edit.tpl:210
+#: Resources/config/templates/Multisites/site/edit.tpl:237
+#: Resources/config/templates/Multisites/site/edit.tpl:271
 #: templates/template/edit.tpl:65 templates/site/edit.tpl:140
 #: templates/site/edit.tpl:167 templates/site/edit.tpl:194
 msgid "Reset to empty value"
 msgstr ""
 
 #: Resources/config/templates/Multisites/template/edit.tpl:66
-#: Resources/config/templates/Multisites/site/edit.tpl:209
-#: Resources/config/templates/Multisites/site/edit.tpl:236
-#: Resources/config/templates/Multisites/site/edit.tpl:270
+#: Resources/config/templates/Multisites/site/edit.tpl:212
+#: Resources/config/templates/Multisites/site/edit.tpl:239
+#: Resources/config/templates/Multisites/site/edit.tpl:273
 #: templates/template/edit.tpl:68 templates/site/edit.tpl:142
 #: templates/site/edit.tpl:169 templates/site/edit.tpl:196
 msgid "Allowed file extensions:"
 msgstr ""
 
 #: Resources/config/templates/Multisites/template/edit.tpl:71
-#: Resources/config/templates/Multisites/site/edit.tpl:213
-#: Resources/config/templates/Multisites/site/edit.tpl:240
-#: Resources/config/templates/Multisites/site/edit.tpl:274
+#: Resources/config/templates/Multisites/site/edit.tpl:216
+#: Resources/config/templates/Multisites/site/edit.tpl:243
+#: Resources/config/templates/Multisites/site/edit.tpl:277
 #: templates/template/edit.tpl:72 templates/site/edit.tpl:146
 #: templates/site/edit.tpl:173 templates/site/edit.tpl:200
 msgid "Current file"
@@ -1485,9 +1485,9 @@ msgstr ""
 
 #: Resources/config/templates/Multisites/template/edit.tpl:76
 #: Resources/config/templates/Multisites/template/view.tpl:117
-#: Resources/config/templates/Multisites/site/edit.tpl:218
-#: Resources/config/templates/Multisites/site/edit.tpl:245
-#: Resources/config/templates/Multisites/site/edit.tpl:279
+#: Resources/config/templates/Multisites/site/edit.tpl:221
+#: Resources/config/templates/Multisites/site/edit.tpl:248
+#: Resources/config/templates/Multisites/site/edit.tpl:282
 #: Resources/config/templates/Multisites/site/view.tpl:127
 #: templates/template/edit.tpl:77 templates/template/view.tpl:97
 #: templates/site/edit.tpl:151 templates/site/edit.tpl:178
@@ -1565,7 +1565,7 @@ msgstr ""
 
 #: Resources/config/templates/Multisites/template/edit.tpl:137
 #: Resources/config/templates/Multisites/project/edit.tpl:74
-#: Resources/config/templates/Multisites/site/edit.tpl:323
+#: Resources/config/templates/Multisites/site/edit.tpl:326
 #: templates/template/edit.tpl:112 templates/project/edit.tpl:74
 #: templates/site/edit.tpl:249
 msgid "Return control"
@@ -1573,7 +1573,7 @@ msgstr ""
 
 #: Resources/config/templates/Multisites/template/edit.tpl:139
 #: Resources/config/templates/Multisites/project/edit.tpl:76
-#: Resources/config/templates/Multisites/site/edit.tpl:325
+#: Resources/config/templates/Multisites/site/edit.tpl:328
 #: templates/template/edit.tpl:114 templates/project/edit.tpl:76
 #: templates/site/edit.tpl:251
 msgid "Create another item after save"
@@ -2162,38 +2162,44 @@ msgstr ""
 msgid "Edit site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:42
-msgid "Basic data"
+#: Resources/config/templates/Multisites/site/edit.tpl:37
+msgid ""
+"Caution: updating a site causes reapplying the template data again to it. "
+"All database tables except excluded ones will be dropped and recreated."
 msgstr ""
 
 #: Resources/config/templates/Multisites/site/edit.tpl:45
+msgid "Basic data"
+msgstr ""
+
+#: Resources/config/templates/Multisites/site/edit.tpl:48
 msgid "Name (internal)"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:46
+#: Resources/config/templates/Multisites/site/edit.tpl:49
 #: templates/site/edit.tpl:46
 msgid "Enter the name of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:51
+#: Resources/config/templates/Multisites/site/edit.tpl:54
 msgid "Description (internal)"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:52
+#: Resources/config/templates/Multisites/site/edit.tpl:55
 #: templates/site/edit.tpl:52
 msgid "Enter the description of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:57
+#: Resources/config/templates/Multisites/site/edit.tpl:60
 #: templates/site/edit.tpl:57
 msgid "Enter the site alias of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:59
+#: Resources/config/templates/Multisites/site/edit.tpl:62
 msgid "The alias must be a lower case, unique string containing only letters."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:64
+#: Resources/config/templates/Multisites/site/edit.tpl:67
 #: Resources/config/templates/Multisites/site/delete.tpl:32
 #: Resources/config/templates/Multisites/site/manageExtensions.tpl:14
 #: Resources/config/templates/Multisites/site/manageThemes.tpl:14
@@ -2204,33 +2210,33 @@ msgstr ""
 msgid "Site name"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:65
 #: Resources/config/templates/Multisites/site/edit.tpl:68
+#: Resources/config/templates/Multisites/site/edit.tpl:71
 #: templates/site/edit.tpl:63
 msgid "Enter the site name of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:67
+#: Resources/config/templates/Multisites/site/edit.tpl:70
 msgid "Original site name"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:74
+#: Resources/config/templates/Multisites/site/edit.tpl:77
 #: Resources/config/templates/Multisites/site/view.tpl:92
 #: templates/site/edit.tpl:68 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:97 templates/site/view_quickNav.tpl:78
 msgid "Site description"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:75
+#: Resources/config/templates/Multisites/site/edit.tpl:78
 #: templates/site/edit.tpl:69
 msgid "Enter the site description of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:79
+#: Resources/config/templates/Multisites/site/edit.tpl:82
 msgid "Site host or folder"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:82
+#: Resources/config/templates/Multisites/site/edit.tpl:85
 #: Resources/config/templates/Multisites/site/delete.tpl:37
 #: Resources/config/templates/Multisites/site/manageExtensions.tpl:15
 #: Resources/config/templates/Multisites/site/manageThemes.tpl:15
@@ -2241,18 +2247,18 @@ msgstr ""
 msgid "Site dns"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:84
-#: Resources/config/templates/Multisites/site/edit.tpl:86
+#: Resources/config/templates/Multisites/site/edit.tpl:87
+#: Resources/config/templates/Multisites/site/edit.tpl:89
 #: templates/site/edit.tpl:103
 msgid "Enter the site dns of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:89
+#: Resources/config/templates/Multisites/site/edit.tpl:92
 msgid ""
 "This is the domain or folder name under which this site should be reachable."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:93
+#: Resources/config/templates/Multisites/site/edit.tpl:96
 #: Resources/config/templates/Multisites/site/view.tpl:107
 #: templates/site/edit.tpl:219 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:142 templates/site/view_quickNav.tpl:95
@@ -2260,260 +2266,260 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:94
+#: Resources/config/templates/Multisites/site/edit.tpl:97
 #: templates/site/edit.tpl:220
 msgid "active ?"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:98
+#: Resources/config/templates/Multisites/site/edit.tpl:101
 msgid "Management information"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:102
+#: Resources/config/templates/Multisites/site/edit.tpl:105
 #: templates/site/edit.tpl:73 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:100 templates/site/view_quickNav.tpl:79
 msgid "Site admin name"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:103
-#: Resources/config/templates/Multisites/site/edit.tpl:107
+#: Resources/config/templates/Multisites/site/edit.tpl:106
+#: Resources/config/templates/Multisites/site/edit.tpl:110
 #: templates/site/edit.tpl:74
 msgid "Enter the site admin name of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:104
+#: Resources/config/templates/Multisites/site/edit.tpl:107
 msgid ""
 "User names can contain letters, numbers, underscores, periods, or dashes."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:106
+#: Resources/config/templates/Multisites/site/edit.tpl:109
 msgid "Original site admin name"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:114
+#: Resources/config/templates/Multisites/site/edit.tpl:117
 #: templates/site/edit.tpl:79 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:103 templates/site/view_quickNav.tpl:80
 msgid "Site admin password"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:115
 #: Resources/config/templates/Multisites/site/edit.tpl:118
+#: Resources/config/templates/Multisites/site/edit.tpl:121
 #: templates/site/edit.tpl:80
 msgid "Enter the site admin password of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:117
+#: Resources/config/templates/Multisites/site/edit.tpl:120
 msgid "Original site admin password"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:124
+#: Resources/config/templates/Multisites/site/edit.tpl:127
 #: templates/site/edit.tpl:85 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:106 templates/site/view_quickNav.tpl:81
 msgid "Site admin real name"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:125
+#: Resources/config/templates/Multisites/site/edit.tpl:128
 #: templates/site/edit.tpl:86
 msgid "Enter the site admin real name of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:130
+#: Resources/config/templates/Multisites/site/edit.tpl:133
 #: templates/site/edit.tpl:90 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:109 templates/site/view_quickNav.tpl:82
 msgid "Site admin email"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:131
 #: Resources/config/templates/Multisites/site/edit.tpl:134
+#: Resources/config/templates/Multisites/site/edit.tpl:137
 #: templates/site/edit.tpl:91
 msgid "Enter the site admin email of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:133
+#: Resources/config/templates/Multisites/site/edit.tpl:136
 msgid "Original site admin email"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:141
+#: Resources/config/templates/Multisites/site/edit.tpl:144
 #: templates/site/edit.tpl:97 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:112 templates/site/view_quickNav.tpl:83
 msgid "Site company"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:142
+#: Resources/config/templates/Multisites/site/edit.tpl:145
 #: templates/site/edit.tpl:98
 msgid "Enter the site company of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:146
+#: Resources/config/templates/Multisites/site/edit.tpl:149
 msgid "Database data"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:149
+#: Resources/config/templates/Multisites/site/edit.tpl:152
 msgid ""
 "Caution: the database is emptied, so choose one which is not used by any "
 "other applications. All tables which are defined as excluded in the template "
 "are kept though."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:151
+#: Resources/config/templates/Multisites/site/edit.tpl:154
 msgid "Change these values only if database credentials actually changed."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:155
+#: Resources/config/templates/Multisites/site/edit.tpl:158
 #: templates/site/edit.tpl:132 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:130 templates/site/view_quickNav.tpl:89
 msgid "Database type"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:156
+#: Resources/config/templates/Multisites/site/edit.tpl:159
 msgid "Choose the database type of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:161
+#: Resources/config/templates/Multisites/site/edit.tpl:164
 #: templates/site/edit.tpl:126 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:127 templates/site/view_quickNav.tpl:88
 msgid "Database host"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:162
+#: Resources/config/templates/Multisites/site/edit.tpl:165
 #: templates/site/edit.tpl:127
 msgid "Enter the database host of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:168
+#: Resources/config/templates/Multisites/site/edit.tpl:171
 #: templates/site/edit.tpl:109
 msgid "Enter the database name of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:173
+#: Resources/config/templates/Multisites/site/edit.tpl:176
 #: templates/site/edit.tpl:114 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:121 templates/site/view_quickNav.tpl:86
 msgid "Database user name"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:174
+#: Resources/config/templates/Multisites/site/edit.tpl:177
 #: templates/site/edit.tpl:115
 msgid "Enter the database user name of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:179
+#: Resources/config/templates/Multisites/site/edit.tpl:182
 #: templates/site/edit.tpl:120 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:124 templates/site/view_quickNav.tpl:87
 msgid "Database password"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:180
+#: Resources/config/templates/Multisites/site/edit.tpl:183
 #: templates/site/edit.tpl:121
 msgid "Enter the database password of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:186
+#: Resources/config/templates/Multisites/site/edit.tpl:189
 msgid "Create database"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:187
+#: Resources/config/templates/Multisites/site/edit.tpl:190
 msgid "Check this if the database does not exist yet."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:188
+#: Resources/config/templates/Multisites/site/edit.tpl:191
 #: Resources/config/templates/Multisites/site/delete.tpl:57
 msgid ""
 "Expert option! Only possible if the database user has sufficient permissions."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:189
+#: Resources/config/templates/Multisites/site/edit.tpl:192
 msgid "Note: the database user must exist already for this to work."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:202
+#: Resources/config/templates/Multisites/site/edit.tpl:205
 msgid "Individualisation"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:205
+#: Resources/config/templates/Multisites/site/edit.tpl:208
 #: Resources/config/templates/Multisites/site/view.tpl:77
 #: templates/site/edit.tpl:138 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:133 templates/site/view_quickNav.tpl:90
 msgid "Logo"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:223
+#: Resources/config/templates/Multisites/site/edit.tpl:226
 #: templates/site/edit.tpl:156
 msgid "Delete logo ?"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:224
-#: Resources/config/templates/Multisites/site/edit.tpl:251
-#: Resources/config/templates/Multisites/site/edit.tpl:285
+#: Resources/config/templates/Multisites/site/edit.tpl:227
+#: Resources/config/templates/Multisites/site/edit.tpl:254
+#: Resources/config/templates/Multisites/site/edit.tpl:288
 #: templates/site/edit.tpl:157 templates/site/edit.tpl:184
 #: templates/site/edit.tpl:211
 msgid "Delete existing file"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:232
+#: Resources/config/templates/Multisites/site/edit.tpl:235
 #: templates/site/edit.tpl:165 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:136 templates/site/view_quickNav.tpl:91
 msgid "Fav icon"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:250
+#: Resources/config/templates/Multisites/site/edit.tpl:253
 #: templates/site/edit.tpl:183
 msgid "Delete fav icon ?"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:259
+#: Resources/config/templates/Multisites/site/edit.tpl:262
 #: Resources/config/templates/Multisites/site/view.tpl:104
 #: templates/site/view.csv.tpl:3 templates/site/view_quickNav.tpl:92
 msgid "Allowed locales"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:260
+#: Resources/config/templates/Multisites/site/edit.tpl:263
 msgid "Enter the allowed locales of the site"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:261
+#: Resources/config/templates/Multisites/site/edit.tpl:264
 msgid ""
 "Expert option! Per default all locales available in the system will be made "
 "available for the site."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:262
+#: Resources/config/templates/Multisites/site/edit.tpl:265
 msgid "This feature has not been implemented yet (issue #17)."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:266
+#: Resources/config/templates/Multisites/site/edit.tpl:269
 #: templates/site/edit.tpl:192 templates/site/view.csv.tpl:3
 #: templates/site/view.tpl:139 templates/site/view_quickNav.tpl:93
 msgid "Parameters csv file"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:284
+#: Resources/config/templates/Multisites/site/edit.tpl:287
 #: templates/site/edit.tpl:210
 msgid "Delete parameters csv file ?"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:289
+#: Resources/config/templates/Multisites/site/edit.tpl:292
 msgid "Note: you should use semicolon as delimiter and UTF-8 as encoding."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:293
+#: Resources/config/templates/Multisites/site/edit.tpl:296
 msgid "or enter them manually"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:294
+#: Resources/config/templates/Multisites/site/edit.tpl:297
 msgid "Enter values for the template parameters"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:295
+#: Resources/config/templates/Multisites/site/edit.tpl:298
 msgid "Derive placeholders from template"
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:296
+#: Resources/config/templates/Multisites/site/edit.tpl:299
 msgid ""
 "Enter values for all parameters specified by the selected template separated "
 "by line breaks."
 msgstr ""
 
-#: Resources/config/templates/Multisites/site/edit.tpl:383
+#: Resources/config/templates/Multisites/site/edit.tpl:386
 msgid "None (decouple site from template)"
 msgstr ""
 
