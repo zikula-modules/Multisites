@@ -11,9 +11,10 @@ Documentation
   3. [Installation](#installation)
   4. [Upgrading](#upgrading)
   5. [Configuration](#configuration)
-  6. [Structure and management](#structure)
-  7. [Creating and adapting sites](#siteoperations)
-  8. [Questions, bugs and contributing](#contributing)
+  6. [FileUtil change](#fileutilchange)
+  7. [Structure and management](#structure)
+  8. [Creating and adapting sites](#siteoperations)
+  9. [Questions, bugs and contributing](#contributing)
 
 
 <a name="introduction" />
@@ -63,6 +64,63 @@ Configuration
 
 When entering the Multisites administration area you will be redirected to a configuration wizard
 automatically.
+
+
+<a name="fileutilchange" />
+FileUtil change
+---------------
+
+At the moment you are required to edit the _/lib/util/FileUtil.php_ file and change the _getDataDirectory()_ method as follows:
+
+```
+    /**
+     * Get system data directory path.
+     *
+     * @return string The path to the data directory.
+     */
+    public static function getDataDirectory()
+    {
+        global $ZConfig;
+
+        $path = DataUtil::formatForOS(System::getVar('datadir'));
+
+        // return if this is a normal Zikula installation
+        if (!isset($ZConfig['Multisites']) || !isset($ZConfig['Multisites']['multisites.enabled']) || $ZConfig['Multisites']['multisites.enabled'] != 1) {
+            // strip prepending slash
+            $path = substr($path, 1, (strlen($path)-1));
+
+            return $path;
+        }
+
+        // this is a Multisites installation
+        $msConfig = $ZConfig['Multisites'];
+
+        $scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0, strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
+        $dataFolderSegment = $msConfig['multisites.site_files_folder'];
+
+        $absoluteDataPath = $msConfig['multisites.files_real_path'] . $dataFolderSegment;
+        $relativeDataPath = str_replace($scriptRealPath, '', $absoluteDataPath);
+
+        // check whether this is the main site
+        $sitedns = $_SERVER['HTTP_HOST'];
+        if ($sitedns == $msConfig['multisites.mainsiteurl']) {
+            $path = $relativeDataPath;
+        } else {
+            // amend path to point to the site folder
+            $path = $relativeDataPath;
+            $pos = strrpos($path, $dataFolderSegment);
+            if ($pos !== false) {
+                $path = substr_replace($path, '', $pos, strlen($dataFolderSegment));
+            }
+            $path .= '/' . $msConfig['multisites.sitealias'] . $dataFolderSegment;
+        }
+
+        // strip prepending slash
+        $path = substr($path, 1, (strlen($path)-1));
+
+        return $path;
+    }
+```
 
 
 <a name="structure" />
