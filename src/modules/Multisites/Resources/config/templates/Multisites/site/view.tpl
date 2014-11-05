@@ -77,22 +77,22 @@
                     {gt text='Logo'}
                 </th>
                 <th id="hSiteAlias" scope="col" class="z-left">
-                    {sortlink __linktext='Alias' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAlias' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Alias' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAlias' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hName" scope="col" class="z-left">
-                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hDescription" scope="col" class="z-left">
-                    {sortlink __linktext='Description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='description' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='description' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteName" scope="col" class="z-left">
-                    {sortlink __linktext='Site name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
 {*                <th id="hSiteDescription" scope="col" class="z-left">
-                    {sortlink __linktext='Site description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDescription' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDescription' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>*}
                 <th id="hSiteDns" scope="col" class="z-left">
-                    {sortlink __linktext='Site dns' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDns' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site dns' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDns' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteAdminName" scope="col" class="z-left">
                     {gt text='Admin details'}
@@ -104,7 +104,7 @@
                     {gt text='Allowed locales'}
                 </th>*}
                 <th id="hActive" scope="col" class="z-center">
-                    {sortlink __linktext='Active' currentsort=$sort modname='Multisites' type=$lct func='view' sort='active' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Active' currentsort=$sort modname='Multisites' type=$lct func='view' sort='active' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hItemActions" scope="col" class="z-right z-order-unsorted">{gt text='Actions'}</th>
             </tr>

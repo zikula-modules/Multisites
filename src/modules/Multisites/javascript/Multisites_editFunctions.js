@@ -60,7 +60,9 @@ function multisitesResetUploadField(fieldName)
  */
 function multisitesInitUploadField(fieldName)
 {
-    var fieldNameCapitalised = fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
+    var fieldNameCapitalised;
+
+    fieldNameCapitalised = fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
     if ($('reset' + fieldNameCapitalised + 'Val') != null) {
         $('reset' + fieldNameCapitalised + 'Val').observe('click', function (evt) {
             evt.preventDefault();
@@ -87,7 +89,9 @@ function multisitesResetDateField(fieldName)
  */
 function multisitesInitDateField(fieldName)
 {
-    var fieldNameCapitalised = fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
+    var fieldNameCapitalised;
+
+    fieldNameCapitalised = fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
     if ($('reset' + fieldNameCapitalised + 'Val') != null) {
         $('reset' + fieldNameCapitalised + 'Val').observe('click', function (evt) {
             evt.preventDefault();

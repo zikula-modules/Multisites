@@ -69,7 +69,7 @@ class Multisites_Entity_Repository_Project extends Multisites_Entity_Repository_
                    ->setParameter('categories', $v);
                  */
                 $qb = ModUtil::apiFunc('Multisites', 'category', 'buildFilterClauses', array('qb' => $qb, 'ot' => 'project', 'catids' => $v));
-            } elseif ($k == 'searchterm') {
+            } elseif (in_array($k, array('q', 'searchterm'))) {
                 // quick search
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter($qb, $v);

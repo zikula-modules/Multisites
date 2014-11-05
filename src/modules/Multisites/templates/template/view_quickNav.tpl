@@ -22,7 +22,7 @@
         {/if}
         {if !isset($searchFilter) || $searchFilter eq true}
                 <label for="searchTerm">{gt text='Search'}</label>
-                <input type="text" id="searchTerm" name="searchterm" value="{$searchterm}" />
+                <input type="text" id="searchTerm" name="q" value="{$q}" />
         {/if}
         {if !isset($sorting) || $sorting eq true}
                 <label for="sortBy">{gt text='Sort by'}</label>

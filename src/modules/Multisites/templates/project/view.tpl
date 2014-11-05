@@ -61,7 +61,7 @@
                     </th>
                 {/if}
                 <th id="hName" scope="col" class="z-left">
-                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize ot='project'}
+                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own workflowState=$workflowState q=$q pageSize=$pageSize ot='project'}
                 </th>
                 <th id="hItemActions" scope="col" class="z-right z-order-unsorted">{gt text='Actions'}</th>
             </tr>

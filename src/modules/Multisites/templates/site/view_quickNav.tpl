@@ -15,9 +15,9 @@
                 <label for="template">{gt text='Templates'}</label>
                 {php}
                     $mainSearchTerm = '';
-                    if (isset($_GET['searchterm'])) {
-                        $mainSearchTerm = $_GET['searchterm'];
-                        unset($_GET['searchterm']);
+                    if (isset($_GET['q'])) {
+                        $mainSearchTerm = $_GET['q'];
+                        unset($_GET['q']);
                     }
                 {/php}
                 {modapifunc modname='Multisites' type='selection' func='getEntities' ot='template' useJoins=false assign='listEntries'}
@@ -30,7 +30,7 @@
                 </select>
                 {php}
                     if (!empty($mainSearchTerm)) {
-                        $_GET['searchterm'] = $mainSearchTerm;
+                        $_GET['q'] = $mainSearchTerm;
                     }
                 {/php}
         {/if}
@@ -38,9 +38,9 @@
                 <label for="project">{gt text='Projects'}</label>
                 {php}
                     $mainSearchTerm = '';
-                    if (isset($_GET['searchterm'])) {
-                        $mainSearchTerm = $_GET['searchterm'];
-                        unset($_GET['searchterm']);
+                    if (isset($_GET['q'])) {
+                        $mainSearchTerm = $_GET['q'];
+                        unset($_GET['q']);
                     }
                 {/php}
                 {modapifunc modname='Multisites' type='selection' func='getEntities' ot='project' useJoins=false assign='listEntries'}
@@ -53,7 +53,7 @@
                 </select>
                 {php}
                     if (!empty($mainSearchTerm)) {
-                        $_GET['searchterm'] = $mainSearchTerm;
+                        $_GET['q'] = $mainSearchTerm;
                     }
                 {/php}
         {/if}
@@ -68,7 +68,7 @@
         {/if}
         {if !isset($searchFilter) || $searchFilter eq true}
                 <label for="searchTerm">{gt text='Search'}</label>
-                <input type="text" id="searchTerm" name="searchterm" value="{$searchterm}" />
+                <input type="text" id="searchTerm" name="q" value="{$q}" />
         {/if}
         {if !isset($sorting) || $sorting eq true}
                 <label for="sortBy">{gt text='Sort by'}</label>

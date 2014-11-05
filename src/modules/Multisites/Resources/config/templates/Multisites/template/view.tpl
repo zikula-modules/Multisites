@@ -68,13 +68,13 @@
                     </th>
                 {/if*}
                 <th id="hName" scope="col" class="z-left">
-                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize ot='template'}
+                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own workflowState=$workflowState q=$q pageSize=$pageSize ot='template'}
                 </th>
                 <th id="hDescription" scope="col" class="z-left">
-                    {sortlink __linktext='Description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='description' sortdir=$sdir all=$all own=$own workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize ot='template'}
+                    {sortlink __linktext='Description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='description' sortdir=$sdir all=$all own=$own workflowState=$workflowState q=$q pageSize=$pageSize ot='template'}
                 </th>
                 <th id="hSqlFile" scope="col" class="z-left">
-                    {sortlink __linktext='Sql file' currentsort=$sort modname='Multisites' type=$lct func='view' sort='sqlFile' sortdir=$sdir all=$all own=$own workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize ot='template'}
+                    {sortlink __linktext='Sql file' currentsort=$sort modname='Multisites' type=$lct func='view' sort='sqlFile' sortdir=$sdir all=$all own=$own workflowState=$workflowState q=$q pageSize=$pageSize ot='template'}
                 </th>
                 <th id="hProjects" scope="col" class="z-left">
                     {gt text='Projects'}

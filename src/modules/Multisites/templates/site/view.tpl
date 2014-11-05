@@ -82,70 +82,70 @@
                     </th>
                 {/if}
                 <th id="hName" scope="col" class="z-left">
-                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hDescription" scope="col" class="z-left">
-                    {sortlink __linktext='Description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='description' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='description' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteAlias" scope="col" class="z-left">
-                    {sortlink __linktext='Site alias' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAlias' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site alias' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAlias' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteName" scope="col" class="z-left">
-                    {sortlink __linktext='Site name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteDescription" scope="col" class="z-left">
-                    {sortlink __linktext='Site description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDescription' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDescription' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteAdminName" scope="col" class="z-left">
-                    {sortlink __linktext='Site admin name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAdminName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site admin name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAdminName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteAdminPassword" scope="col" class="z-left">
-                    {sortlink __linktext='Site admin password' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAdminPassword' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site admin password' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAdminPassword' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteAdminRealName" scope="col" class="z-left">
-                    {sortlink __linktext='Site admin real name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAdminRealName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site admin real name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAdminRealName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteAdminEmail" scope="col" class="z-left">
-                    {sortlink __linktext='Site admin email' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAdminEmail' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site admin email' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteAdminEmail' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteCompany" scope="col" class="z-left">
-                    {sortlink __linktext='Site company' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteCompany' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site company' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteCompany' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hSiteDns" scope="col" class="z-left">
-                    {sortlink __linktext='Site dns' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDns' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Site dns' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDns' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hDatabaseName" scope="col" class="z-left">
-                    {sortlink __linktext='Database name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databaseName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Database name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databaseName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hDatabaseUserName" scope="col" class="z-left">
-                    {sortlink __linktext='Database user name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databaseUserName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Database user name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databaseUserName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hDatabasePassword" scope="col" class="z-left">
-                    {sortlink __linktext='Database password' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databasePassword' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Database password' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databasePassword' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hDatabaseHost" scope="col" class="z-left">
-                    {sortlink __linktext='Database host' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databaseHost' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Database host' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databaseHost' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hDatabaseType" scope="col" class="z-left">
-                    {sortlink __linktext='Database type' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databaseType' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Database type' currentsort=$sort modname='Multisites' type=$lct func='view' sort='databaseType' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hLogo" scope="col" class="z-left">
-                    {sortlink __linktext='Logo' currentsort=$sort modname='Multisites' type=$lct func='view' sort='logo' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Logo' currentsort=$sort modname='Multisites' type=$lct func='view' sort='logo' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hFavIcon" scope="col" class="z-left">
-                    {sortlink __linktext='Fav icon' currentsort=$sort modname='Multisites' type=$lct func='view' sort='favIcon' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Fav icon' currentsort=$sort modname='Multisites' type=$lct func='view' sort='favIcon' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hParametersCsvFile" scope="col" class="z-left">
-                    {sortlink __linktext='Parameters csv file' currentsort=$sort modname='Multisites' type=$lct func='view' sort='parametersCsvFile' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Parameters csv file' currentsort=$sort modname='Multisites' type=$lct func='view' sort='parametersCsvFile' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hActive" scope="col" class="z-center">
-                    {sortlink __linktext='Active' currentsort=$sort modname='Multisites' type=$lct func='view' sort='active' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Active' currentsort=$sort modname='Multisites' type=$lct func='view' sort='active' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hTemplate" scope="col" class="z-left">
-                    {sortlink __linktext='Template' currentsort=$sort modname='Multisites' type=$lct func='view' sort='template' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Template' currentsort=$sort modname='Multisites' type=$lct func='view' sort='template' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hProject" scope="col" class="z-left">
-                    {sortlink __linktext='Project' currentsort=$sort modname='Multisites' type=$lct func='view' sort='project' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState searchterm=$searchterm pageSize=$pageSize active=$active ot='site'}
+                    {sortlink __linktext='Project' currentsort=$sort modname='Multisites' type=$lct func='view' sort='project' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
                 <th id="hItemActions" scope="col" class="z-right z-order-unsorted">{gt text='Actions'}</th>
             </tr>

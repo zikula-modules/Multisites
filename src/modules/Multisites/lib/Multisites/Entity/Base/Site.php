@@ -1424,7 +1424,7 @@ abstract class Multisites_Entity_Base_Site extends Zikula_EntityAccess
                 return LogUtil::registerError($e->getMessage());
             }
         
-            $fullPath = $basePath .  $this['favIcon'];
+            $fullPath = $basePath . $this['favIcon'];
             $this['favIconFullPath'] = $fullPath;
             $this['favIconFullPathURL'] = System::getBaseUrl() . $fullPath;
         
@@ -1442,7 +1442,7 @@ abstract class Multisites_Entity_Base_Site extends Zikula_EntityAccess
                 return LogUtil::registerError($e->getMessage());
             }
         
-            $fullPath = $basePath .  $this['parametersCsvFile'];
+            $fullPath = $basePath . $this['parametersCsvFile'];
             $this['parametersCsvFileFullPath'] = $fullPath;
             $this['parametersCsvFileFullPathURL'] = System::getBaseUrl() . $fullPath;
         

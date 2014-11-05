@@ -58,16 +58,16 @@
                     </th>
                 {/if}
                 <th id="hName" scope="col" class="z-left">
-                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own site=$site workflowState=$workflowState extensionType=$extensionType searchterm=$searchterm pageSize=$pageSize ot='siteExtension'}
+                    {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own site=$site workflowState=$workflowState extensionType=$extensionType q=$q pageSize=$pageSize ot='siteExtension'}
                 </th>
                 <th id="hExtensionVersion" scope="col" class="z-left">
-                    {sortlink __linktext='Extension version' currentsort=$sort modname='Multisites' type=$lct func='view' sort='extensionVersion' sortdir=$sdir all=$all own=$own site=$site workflowState=$workflowState extensionType=$extensionType searchterm=$searchterm pageSize=$pageSize ot='siteExtension'}
+                    {sortlink __linktext='Extension version' currentsort=$sort modname='Multisites' type=$lct func='view' sort='extensionVersion' sortdir=$sdir all=$all own=$own site=$site workflowState=$workflowState extensionType=$extensionType q=$q pageSize=$pageSize ot='siteExtension'}
                 </th>
                 <th id="hExtensionType" scope="col" class="z-left">
-                    {sortlink __linktext='Extension type' currentsort=$sort modname='Multisites' type=$lct func='view' sort='extensionType' sortdir=$sdir all=$all own=$own site=$site workflowState=$workflowState extensionType=$extensionType searchterm=$searchterm pageSize=$pageSize ot='siteExtension'}
+                    {sortlink __linktext='Extension type' currentsort=$sort modname='Multisites' type=$lct func='view' sort='extensionType' sortdir=$sdir all=$all own=$own site=$site workflowState=$workflowState extensionType=$extensionType q=$q pageSize=$pageSize ot='siteExtension'}
                 </th>
                 <th id="hSite" scope="col" class="z-left">
-                    {sortlink __linktext='Site' currentsort=$sort modname='Multisites' type=$lct func='view' sort='site' sortdir=$sdir all=$all own=$own site=$site workflowState=$workflowState extensionType=$extensionType searchterm=$searchterm pageSize=$pageSize ot='siteExtension'}
+                    {sortlink __linktext='Site' currentsort=$sort modname='Multisites' type=$lct func='view' sort='site' sortdir=$sdir all=$all own=$own site=$site workflowState=$workflowState extensionType=$extensionType q=$q pageSize=$pageSize ot='siteExtension'}
                 </th>
                 <th id="hItemActions" scope="col" class="z-right z-order-unsorted">{gt text='Actions'}</th>
             </tr>

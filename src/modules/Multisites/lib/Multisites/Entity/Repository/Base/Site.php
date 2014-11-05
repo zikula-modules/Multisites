@@ -237,7 +237,10 @@ class Multisites_Entity_Repository_Base_Site extends EntityRepository
         $parameters['template'] = isset($this->controllerArguments['template']) ? $this->controllerArguments['template'] : FormUtil::getPassedValue('template', 0, 'GET');
         $parameters['project'] = isset($this->controllerArguments['project']) ? $this->controllerArguments['project'] : FormUtil::getPassedValue('project', 0, 'GET');
         $parameters['workflowState'] = isset($this->controllerArguments['workflowState']) ? $this->controllerArguments['workflowState'] : FormUtil::getPassedValue('workflowState', '', 'GET');
-        $parameters['searchterm'] = isset($this->controllerArguments['searchterm']) ? $this->controllerArguments['searchterm'] : FormUtil::getPassedValue('searchterm', '', 'GET');
+        $parameters['q'] = isset($this->controllerArguments['q']) ? $this->controllerArguments['q'] :
+            (isset($this->controllerArguments['searchterm']) ? $this->controllerArguments['searchterm'] :
+                FormUtil::getPassedValue('q', FormUtil::getPassedValue('searchterm', '', 'GET'), 'GET')
+            );
         
         $parameters['active'] = isset($this->controllerArguments['active']) ? $this->controllerArguments['active'] : FormUtil::getPassedValue('active', '', 'GET');
     
@@ -596,7 +599,7 @@ class Multisites_Entity_Repository_Base_Site extends EntityRepository
                    ->setParameter('categories', $v);
                  */
                 $qb = ModUtil::apiFunc('Multisites', 'category', 'buildFilterClauses', array('qb' => $qb, 'ot' => 'site', 'catids' => $v));
-            } elseif ($k == 'searchterm') {
+            } elseif (in_array($k, array('q', 'searchterm'))) {
                 // quick search
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter($qb, $v);
@@ -699,7 +702,8 @@ class Multisites_Entity_Repository_Base_Site extends EntityRepository
         if ($fragment == '') {
             return $qb;
         }
-    
+
+        $fragment = str_replace('\'', '', \DataUtil::formatForStore($fragment));    
         $fragmentIsNumeric = is_numeric($fragment);
     
         $where = '';

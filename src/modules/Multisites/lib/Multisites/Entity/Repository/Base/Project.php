@@ -204,7 +204,10 @@ class Multisites_Entity_Repository_Base_Project extends EntityRepository
     
         $parameters = array();
         $parameters['workflowState'] = isset($this->controllerArguments['workflowState']) ? $this->controllerArguments['workflowState'] : FormUtil::getPassedValue('workflowState', '', 'GET');
-        $parameters['searchterm'] = isset($this->controllerArguments['searchterm']) ? $this->controllerArguments['searchterm'] : FormUtil::getPassedValue('searchterm', '', 'GET');
+        $parameters['q'] = isset($this->controllerArguments['q']) ? $this->controllerArguments['q'] :
+            (isset($this->controllerArguments['searchterm']) ? $this->controllerArguments['searchterm'] :
+                FormUtil::getPassedValue('q', FormUtil::getPassedValue('searchterm', '', 'GET'), 'GET')
+            );
         
     
         // in the concrete child class you could do something like
@@ -562,7 +565,7 @@ class Multisites_Entity_Repository_Base_Project extends EntityRepository
                    ->setParameter('categories', $v);
                  */
                 $qb = ModUtil::apiFunc('Multisites', 'category', 'buildFilterClauses', array('qb' => $qb, 'ot' => 'project', 'catids' => $v));
-            } elseif ($k == 'searchterm') {
+            } elseif (in_array($k, array('q', 'searchterm'))) {
                 // quick search
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter($qb, $v);
@@ -658,7 +661,8 @@ class Multisites_Entity_Repository_Base_Project extends EntityRepository
         if ($fragment == '') {
             return $qb;
         }
-    
+
+        $fragment = str_replace('\'', '', \DataUtil::formatForStore($fragment));
         $fragmentIsNumeric = is_numeric($fragment);
     
         $where = '';

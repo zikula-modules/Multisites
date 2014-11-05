@@ -209,7 +209,10 @@ class Multisites_Entity_Repository_Base_SiteExtension extends EntityRepository
         $parameters['site'] = isset($this->controllerArguments['site']) ? $this->controllerArguments['site'] : FormUtil::getPassedValue('site', 0, 'GET');
         $parameters['workflowState'] = isset($this->controllerArguments['workflowState']) ? $this->controllerArguments['workflowState'] : FormUtil::getPassedValue('workflowState', '', 'GET');
         $parameters['extensionType'] = isset($this->controllerArguments['extensionType']) ? $this->controllerArguments['extensionType'] : FormUtil::getPassedValue('extensionType', '', 'GET');
-        $parameters['searchterm'] = isset($this->controllerArguments['searchterm']) ? $this->controllerArguments['searchterm'] : FormUtil::getPassedValue('searchterm', '', 'GET');
+        $parameters['q'] = isset($this->controllerArguments['q']) ? $this->controllerArguments['q'] :
+            (isset($this->controllerArguments['searchterm']) ? $this->controllerArguments['searchterm'] :
+                FormUtil::getPassedValue('q', FormUtil::getPassedValue('searchterm', '', 'GET'), 'GET')
+            );
         
     
         // in the concrete child class you could do something like
@@ -567,7 +570,7 @@ class Multisites_Entity_Repository_Base_SiteExtension extends EntityRepository
                    ->setParameter('categories', $v);
                  */
                 $qb = ModUtil::apiFunc('Multisites', 'category', 'buildFilterClauses', array('qb' => $qb, 'ot' => 'siteExtension', 'catids' => $v));
-            } elseif ($k == 'searchterm') {
+            } elseif (in_array($k, array('q', 'searchterm'))) {
                 // quick search
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter($qb, $v);
@@ -663,7 +666,8 @@ class Multisites_Entity_Repository_Base_SiteExtension extends EntityRepository
         if ($fragment == '') {
             return $qb;
         }
-    
+
+        $fragment = str_replace('\'', '', \DataUtil::formatForStore($fragment));
         $fragmentIsNumeric = is_numeric($fragment);
     
         $where = '';
