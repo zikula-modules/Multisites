@@ -34,7 +34,8 @@ if (!isset($databaseArray[$sitedns]) ||
      !isset($databaseArray[$sitedns]['dbhost']) || empty($databaseArray[$sitedns]['dbhost'])
     ) {
     // if the site doesn't exist the user is sent to the main page
-    header('location: ' . $ZConfig['Multisites']['multisites.mainsiteurl']);
+    header("HTTP/1.1 301 Moved Permanently");
+    header('location: http://' . $ZConfig['Multisites']['multisites.mainsiteurl']);
     exit();
 }
 
