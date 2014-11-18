@@ -134,11 +134,12 @@
                 </td>
                 <td headers="hParameters" class="z-left">
                     {if count($template.parameters) gt 0}
-                        <ul>
+                        {$template.parameters|@count}
+                        {*<ul>
                         {foreach item='parameter' from=$template.parameters}
                             <li>{$parameter|safetext}</li>
                         {/foreach}
-                        </ul>
+                        </ul>*}
                     {else}
                         {gt text='None'}
                     {/if}
