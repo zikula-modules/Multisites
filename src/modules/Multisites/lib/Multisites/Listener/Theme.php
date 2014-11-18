@@ -177,27 +177,5 @@ class Multisites_Listener_Theme extends Multisites_Listener_Base_Theme
         
         // the currently handled request
         // $request = $event->getRequest();
-
-
-        // replace parameter placeholders by concrete values
-        $parameters = ModUtil::getVar('Multisites');
-        if (count($parameters) < 1) {
-            return;
-        }
-
-        $delimiter = '###';
-        $output = $event->getData();
-
-        foreach ($parameters as $paramName => $paramValue) {
-            if (strpos($paramName, 'parameterValue') === false) {
-                // normal modvar
-                continue;
-            }
-
-            $placeholder = $delimiter . strtoupper(str_replace('parameterValue', '', $paramName)) . $delimiter;
-            $output = str_replace($placeholder, $paramValue, $output);
-        }
-
-        $event->setData($output);
     }
 }

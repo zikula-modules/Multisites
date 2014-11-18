@@ -47,8 +47,7 @@ application Multisites {
         "
         markFiles "
             docs/overridesTemplate_config.yml,
-            docs/overridesTemplate_theme.yml,
-            lib/Multisites/Listener/Theme.php
+            docs/overridesTemplate_theme.yml
         "
     }
     entities {

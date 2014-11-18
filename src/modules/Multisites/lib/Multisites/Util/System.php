@@ -678,7 +678,7 @@ class Multisites_Util_System extends Zikula_AbstractBase
         if (count($parameters) > 0) {
             foreach ($parameters as $parameterName => $parameterValue) {
                 $stmt = $connect->prepare($sql);
-                if (!$stmt->execute(array(':name' => $parameterPrefix . ucfirst($parameterName), ':value' => $parameterValue))) {
+                if (!$stmt->execute(array(':name' => $parameterPrefix . ucfirst($parameterName), ':value' => serialize($parameterValue)))) {
                     return LogUtil::registerError($this->__f('Error! Creating parameter "%s" failed.', array(ucfirst($parameterName))));
                 }
             }
@@ -687,14 +687,14 @@ class Multisites_Util_System extends Zikula_AbstractBase
         // add logo path as parameter
         $logo = ($site['logo'] !== null && $site['logo'] != '' && file_exists($site['logoFullPath'])) ? $site['logoFullPath'] : '';
         $stmt = $connect->prepare($sql);
-        if (!$stmt->execute(array(':name' => $parameterPrefix . 'Logo', ':value' => $logo))) {
+        if (!$stmt->execute(array(':name' => $parameterPrefix . 'Logo', ':value' => serialize($logo)))) {
             return LogUtil::registerError($this->__f('Error! Creating parameter "%s" failed.', array('Logo')));
         }
 
         // add favicon path as parameter
         $favIcon = ($site['favIcon'] !== null && $site['favIcon'] != '' && file_exists($site['favIconFullPath'])) ? $site['favIconFullPath'] : '';
         $stmt = $connect->prepare($sql);
-        if (!$stmt->execute(array(':name' => $parameterPrefix . 'FavIcon', ':value' => $favIcon))) {
+        if (!$stmt->execute(array(':name' => $parameterPrefix . 'FavIcon', ':value' => serialize($favIcon)))) {
             return LogUtil::registerError($this->__f('Error! Creating parameter "%s" failed.', array('FavIcon')));
         }
 
