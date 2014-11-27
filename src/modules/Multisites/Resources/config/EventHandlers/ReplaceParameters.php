@@ -41,6 +41,10 @@ class Multisites_EventHandlers_ReplaceParameters extends Zikula_AbstractEventHan
             return;
         }
 
+        if (FormUtil::getPassedValue('type', 'user') == 'admin') {
+            return;
+        }
+
         $delimiter = '###';
         $output = $event->getData();
 
