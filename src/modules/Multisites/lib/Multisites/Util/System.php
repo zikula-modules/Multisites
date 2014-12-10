@@ -290,9 +290,34 @@ class Multisites_Util_System extends Zikula_AbstractBase
                 return LogUtil::registerError($this->__('DB Query error.') . ':<br />' . $sql  . "\n");;
             }
 
+            $excludedTablesWithWildCards = array();
+            foreach ($excludedTables as $excludedTable) {
+                if (strpos($excludedTable, '*') === false) {
+                    // no wildcard here
+                    continue;
+                }
+                $excludedTablesWithWildCards[] = $excludedTable;
+            }
+
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $tableName = $row['tableName'];
+                $excluded = false;
                 if (in_array($tableName, $excludedTables)) {
+                    // table is excluded (e.g. content_content)
+                    $excluded = true;
+                } else {
+                    // check if a wildcard affects $tableName
+                    foreach ($excludedTablesWithWildCards as $excludedTable) {
+                        $excludedTableParts = explode('*', $excludedTable);
+                        $length = strlen($excludedTableParts[0]);
+                        if (substr($tableName, 0, $length) === $excludedTableParts[0]) {
+                            $excluded = true;
+                            break;
+                        }
+                    }
+                }
+
+                if ($excluded === true) {
                     // rename
                     $backupTables[] = $tableName;
                 } else {
