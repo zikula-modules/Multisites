@@ -216,7 +216,8 @@ Creating and adapting sites
   It is possible to reapply a site template which has been updated before to all sites based on this template.
   After approving a confirmation question the initialisation process is performed again for all affected sites ("reset").
   This includes overriding of existing content, unless specific database tables have been added to the list of table names
-  to be excluded in the template data.
+  to be excluded in the template data. You can even use wildcards here, for example you can exclude all Content tables
+  by using "content_*".
 
   It is also possible to decouple selected sites from their template. As soon as the assignment is removed this
   site is not affected anymore when the template is reapplied, but is independently configured and maintained.
