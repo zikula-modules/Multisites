@@ -118,7 +118,7 @@
         
         <div class="z-formrow">
             {formlabel for='databasePassword' __text='Database password' mandatorysym='1' cssClass=''}
-            {formtextinput group='site' id='databasePassword' mandatory=true readOnly=false __title='Enter the database password of the site' textMode='password' maxLength=25 cssClass='required' }
+            {formtextinput group='site' id='databasePassword' mandatory=true readOnly=false __title='Enter the database password of the site' textMode='password' maxLength=50 cssClass='required' }
             {multisitesValidationError id='databasePassword' class='required'}
         </div>
         

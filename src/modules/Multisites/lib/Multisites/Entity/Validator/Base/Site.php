@@ -123,8 +123,8 @@ class Multisites_Entity_Validator_Base_Site extends Multisites_Validator
             $errorInfo['message'] = __f('Error! Field value must not be empty (%s).', array('database user name'), $dom);
             return $errorInfo;
         }
-        if (!$this->isStringNotLongerThan('databasePassword', 25)) {
-            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('database password', 25), $dom);
+        if (!$this->isStringNotLongerThan('databasePassword', 50)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('database password', 50), $dom);
             return $errorInfo;
         }
         if (!$this->isStringNotEmpty('databasePassword')) {

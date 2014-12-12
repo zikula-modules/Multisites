@@ -147,7 +147,7 @@ abstract class Multisites_Entity_Base_Site extends Zikula_EntityAccess
     protected $databaseUserName = '';
     
     /**
-     * @ORM\Column(length=25)
+     * @ORM\Column(length=50)
      * @var string $databasePassword.
      */
     protected $databasePassword = '';
