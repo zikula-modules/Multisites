@@ -106,7 +106,7 @@ class Multisites_Controller_Admin extends Multisites_Controller_Base_Admin
 
         // check whether the global administrator has already been configured
         $globalAdminStatus = '';
-        if (empty($this->getVar('globalAdminName', '')) || empty($this->getVar('globalAdminPassword', '')) || empty($this->getVar('globalAdminEmail', ''))) {
+        if ($this->getVar('globalAdminName', '') == '' || $this->getVar('globalAdminPassword', '') == '' || $this->getVar('globalAdminEmail', '') == '') {
             $globalAdminStatus = $this->__('Please configure the global administrator settings.');
         }
         SessionUtil::setVar('globalAdminStatus', $globalAdminStatus);
