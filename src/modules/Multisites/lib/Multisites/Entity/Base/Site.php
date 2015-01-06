@@ -1807,13 +1807,13 @@ abstract class Multisites_Entity_Base_Site extends Zikula_EntityAccess
     
         $currentLegacyControllerType = FormUtil::getPassedValue('lct', 'user', 'GETPOST', FILTER_SANITIZE_STRING);
         $currentFunc = FormUtil::getPassedValue('func', 'main', 'GETPOST', FILTER_SANITIZE_STRING);
+        $component = 'Multisites:Site:';
+        $instance = $this->id . '::';
         $dom = ZLanguage::getModuleDomain('Multisites');
         if ($currentLegacyControllerType == 'admin') {
             if (in_array($currentFunc, array('main', 'view'))) {
             }
             if (in_array($currentFunc, array('main', 'view', 'display'))) {
-                $component = 'Multisites:Site:';
-                $instance = $this->id . '::';
                 if (SecurityUtil::checkPermission($component, $instance, ACCESS_EDIT)) {
                     $this->_actions[] = array(
                         'url' => array('type' => 'admin', 'func' => 'edit', 'arguments' => array('ot' => 'site', 'id' => $this['id'])),
