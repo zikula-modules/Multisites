@@ -539,7 +539,12 @@ class Multisites_Util_System extends Zikula_AbstractBase
             SET `value` = :value
             WHERE `modname` = \'ZConfig\'
             AND `name` = \'adminmail\'');
-        if (!$stmt->execute(array(':value' => serialize($site->getSiteAdminEmail())))) {
+        $adminEmail = $site->getSiteAdminEmail();
+        // decode possibly encoded mail addresses (#201)
+        if (strpos($adminEmail, '&#') !== false) {
+            $adminEmail = html_entity_decode($adminEmail);
+        }
+        if (!$stmt->execute(array(':value' => serialize($adminEmail)))) {
             return LogUtil::registerError($this->__('Error! Setting configurating value failed.') . ':<br />' . $sql . "\n");
         }
 
