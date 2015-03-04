@@ -405,6 +405,20 @@ class Multisites_Controller_Admin extends Multisites_Controller_Base_Admin
         $databases = array();
         $databaseTypes = array();
         $databaseHosts = array();
+
+        // add main site
+        global $ZConfig;
+        $mainDbSettings = $ZConfig['DBInfo']['databases']['default'];
+        $databases[] = array(
+            'alias' => 'multisitesMainSiteAlias',
+            'dbname' => $mainDbSettings['dbname'],
+            'dbhost' => $mainDbSettings['host'],
+            'dbtype' => $mainDbSettings['dbdriver'],
+            'dbuname' => $mainDbSettings['user'],
+            'dbpass' => $mainDbSettings['password']
+        );
+
+        // add child sites
         foreach ($sites as $site) {
             $dbHost = $site->getDatabaseHost();
             $dbType = $site->getDatabaseType();
