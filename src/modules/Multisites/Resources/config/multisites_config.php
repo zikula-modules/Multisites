@@ -1,6 +1,9 @@
 <?php
 // DON'T CHANGE - start
-$sitedns = $_SERVER['HTTP_HOST'];
+$sitedns = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null;
+if (is_null($sitedns)) {
+    return;
+}
 // DON'T CHANGE - end
 
 $ZConfig['DBInfo']['Multisites']['dbtabletype'] = 'myisam';
