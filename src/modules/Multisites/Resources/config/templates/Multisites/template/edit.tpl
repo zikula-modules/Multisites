@@ -101,7 +101,7 @@
         <div class="z-formrow">
             {formlabel for='excludedTables' __text='Excluded tables' cssClass=''}
             {multisitesArrayInput group='template' id='excludedTables' mandatory=false readOnly=false __title='Enter table names to be excluded from reapplications' rows=7 cssClass=''}
-            <span class="z-informationmsg z-formnote">{gt text='Enter the names of database tables which should be skipped during template reapplications separated by line breaks. With this you can for example avoid overriding your local user table.'}</span>
+            <span class="z-informationmsg z-formnote">{gt text='Enter the names of database tables which should be skipped during template reapplications separated by line breaks. With this you can for example avoid overriding your local user table. Note you can use * as a placeholder, like content_* for all Content tables for only * for all tables; ensure to use this if you want to use a template for different sites without any parameters, otherwise you will end up with overriding your data later on when the template is reapplied.'}</span>
         </div>
         <div class="z-formrow">
             {formlabel for='parameters' __text='Parameters' mandatorySym='0' cssClass=''}

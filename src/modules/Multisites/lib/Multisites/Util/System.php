@@ -291,7 +291,12 @@ class Multisites_Util_System extends Zikula_AbstractBase
             }
 
             $excludedTablesWithWildCards = array();
+            $excludeAll = false;
             foreach ($excludedTables as $excludedTable) {
+                if ($excludedTable == '*') {
+                    $excludeAll = true;
+                    break;
+                }
                 if (strpos($excludedTable, '*') === false) {
                     // no wildcard here
                     continue;
@@ -301,8 +306,11 @@ class Multisites_Util_System extends Zikula_AbstractBase
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $tableName = $row['tableName'];
+
                 $excluded = false;
-                if (in_array($tableName, $excludedTables)) {
+                if ($excludeAll === true) {
+                    $excluded = true;
+                } elseif (in_array($tableName, $excludedTables)) {
                     // table is excluded (e.g. content_content)
                     $excluded = true;
                 } else {
