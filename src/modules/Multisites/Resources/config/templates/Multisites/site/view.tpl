@@ -57,9 +57,8 @@
                 <col id="cLogo" />
                 <col id="cSiteAlias" />
                 <col id="cName" />
-                <col id="cDescription" />
                 <col id="cSiteName" />
-                <col id="cSiteDns" />
+{*                <col id="cSiteDns" />*}
                 <col id="cSiteAdminName" />
                 <col id="cFeatures" />
 {*                <col id="cAllowedLocales" />*}
@@ -82,18 +81,12 @@
                 <th id="hName" scope="col" class="z-left">
                     {sortlink __linktext='Name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='name' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
-                <th id="hDescription" scope="col" class="z-left">
-                    {sortlink __linktext='Description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='description' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
-                </th>
                 <th id="hSiteName" scope="col" class="z-left">
                     {sortlink __linktext='Site name' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteName' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
                 </th>
-{*                <th id="hSiteDescription" scope="col" class="z-left">
-                    {sortlink __linktext='Site description' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDescription' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
-                </th>*}
-                <th id="hSiteDns" scope="col" class="z-left">
+{*                <th id="hSiteDns" scope="col" class="z-left">
                     {sortlink __linktext='Site dns' currentsort=$sort modname='Multisites' type=$lct func='view' sort='siteDns' sortdir=$sdir all=$all own=$own template=$template project=$project workflowState=$workflowState q=$q pageSize=$pageSize active=$active ot='site'}
-                </th>
+                </th>*}
                 <th id="hSiteAdminName" scope="col" class="z-left">
                     {gt text='Admin details'}
                 </th>
@@ -138,19 +131,19 @@
                     {else}
                         <a href="{$wwwroot}/{$site.siteDns}/" title="{gt text='Visit this site'}" class="sitelink">{$site.name|notifyfilters:'multisites.filterhook.sites'}</a>
                     {/if}
-                </td>
-                <td headers="hDescription" class="z-left">
-                    {$site.description}
+                    {if $site.description ne ''}
+                        <br /><span class="z-sub">{$site.description}</span>
+                    {/if}
                 </td>
                 <td headers="hSiteName" class="z-left">
                     {$site.siteName}
+                    {if $site.siteDescription ne ''}
+                        <br /><span class="z-sub">{$site.siteDescription}</span>
+                    {/if}
                 </td>
-{*                <td headers="hSiteDescription" class="z-left">
-                    {$site.siteDescription}
-                </td>*}
-                <td headers="hSiteDns" class="z-left">
+{*                <td headers="hSiteDns" class="z-left">
                     {$site.siteDns}
-                </td>
+                </td>*}
                 <td headers="hSiteAdminName" class="z-left">
                     <ul class="z-sub">
                         <li>{gt text='User'}: {$site.siteAdminName}</li>
@@ -212,7 +205,7 @@
             </tr>
         {foreachelse}
             <tr class="z-{if $lct eq 'admin'}admin{else}data{/if}tableempty">
-              <td class="z-left" colspan="{if $lct eq 'admin'}11{else}10{/if}">
+              <td class="z-left" colspan="{if $lct eq 'admin'}9{else}8{/if}">
             {gt text='No sites found.'}
               </td>
             </tr>
