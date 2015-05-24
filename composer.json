@@ -13,7 +13,7 @@
     },
     "require-dev": {
         "phploc/phploc": "*",
-        "pdepend/pdepend": "2.1.*",
+        "pdepend/pdepend": "2.*",
         "squizlabs/php_codesniffer": "1.*",
         "phpunit/phpunit": "4.2.*",
         "theseer/phpdox": "*",
