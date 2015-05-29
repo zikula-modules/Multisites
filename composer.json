@@ -17,7 +17,7 @@
         "squizlabs/php_codesniffer": "1.*",
         "phpunit/phpunit": "4.2.*",
         "theseer/phpdox": "*",
-        "phpmd/phpmd": "2.0.*",
+        "phpmd/phpmd": "2.*",
         "sebastian/phpcpd": "*"
     },
     "suggest": {
