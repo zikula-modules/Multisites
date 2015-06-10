@@ -106,11 +106,11 @@ application Multisites {
                 },
                 string databaseName {
                     defaultValue ""
-                    length 25
+                    length 50
                 },
                 string databaseUserName {
                     defaultValue ""
-                    length 25
+                    length 50
                 },
                 string databasePassword password {
                     defaultValue ""
@@ -118,7 +118,7 @@ application Multisites {
                 },
                 string databaseHost {
                     defaultValue localhost
-                    length 25
+                    length 50
                 },
                 string databaseType {
                     defaultValue ""

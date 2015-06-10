@@ -135,13 +135,13 @@ abstract class Multisites_Entity_Base_Site extends Zikula_EntityAccess
     protected $siteDns = '';
     
     /**
-     * @ORM\Column(length=25)
+     * @ORM\Column(length=50)
      * @var string $databaseName.
      */
     protected $databaseName = '';
     
     /**
-     * @ORM\Column(length=25)
+     * @ORM\Column(length=50)
      * @var string $databaseUserName.
      */
     protected $databaseUserName = '';
@@ -153,7 +153,7 @@ abstract class Multisites_Entity_Base_Site extends Zikula_EntityAccess
     protected $databasePassword = '';
     
     /**
-     * @ORM\Column(length=25)
+     * @ORM\Column(length=50)
      * @var string $databaseHost.
      */
     protected $databaseHost = 'localhost';

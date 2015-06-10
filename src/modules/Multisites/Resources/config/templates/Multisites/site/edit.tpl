@@ -162,19 +162,19 @@
 
         <div class="z-formrow">
             {formlabel for='databaseHost' __text='Database host' mandatorysym='1' cssClass=''}
-            {formtextinput group='site' id='databaseHost' mandatory=true readOnly=false __title='Enter the database host of the site' textMode='singleline' maxLength=25 cssClass='required' }
+            {formtextinput group='site' id='databaseHost' mandatory=true readOnly=false __title='Enter the database host of the site' textMode='singleline' maxLength=50 cssClass='required' }
             {multisitesValidationError id='databaseHost' class='required'}
         </div>
 
         <div class="z-formrow">
             {formlabel for='databaseName' __text='Database name' mandatorysym='1' cssClass=''}
-            {formtextinput group='site' id='databaseName' mandatory=true readOnly=false __title='Enter the database name of the site' textMode='singleline' maxLength=25 cssClass='required' }
+            {formtextinput group='site' id='databaseName' mandatory=true readOnly=false __title='Enter the database name of the site' textMode='singleline' maxLength=50 cssClass='required' }
             {multisitesValidationError id='databaseName' class='required'}
         </div>
         
         <div class="z-formrow">
             {formlabel for='databaseUserName' __text='Database user name' mandatorysym='1' cssClass=''}
-            {formtextinput group='site' id='databaseUserName' mandatory=true readOnly=false __title='Enter the database user name of the site' textMode='singleline' maxLength=25 cssClass='required' }
+            {formtextinput group='site' id='databaseUserName' mandatory=true readOnly=false __title='Enter the database user name of the site' textMode='singleline' maxLength=50 cssClass='required' }
             {multisitesValidationError id='databaseUserName' class='required'}
         </div>
         
