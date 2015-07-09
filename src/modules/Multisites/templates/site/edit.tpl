@@ -54,7 +54,7 @@
         
         <div class="z-formrow">
             {formlabel for='siteAlias' __text='Site alias' mandatorysym='1' cssClass=''}
-            {formtextinput group='site' id='siteAlias' mandatory=true readOnly=false __title='Enter the site alias of the site' textMode='singleline' maxLength=20 cssClass='required' }
+            {formtextinput group='site' id='siteAlias' mandatory=true readOnly=false __title='Enter the site alias of the site' textMode='singleline' maxLength=80 cssClass='required' }
             {multisitesValidationError id='siteAlias' class='required'}
         </div>
         

@@ -43,8 +43,8 @@ class Multisites_Entity_Validator_Base_Site extends Multisites_Validator
             $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('description', 255), $dom);
             return $errorInfo;
         }
-        if (!$this->isStringNotLongerThan('siteAlias', 20)) {
-            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('site alias', 20), $dom);
+        if (!$this->isStringNotLongerThan('siteAlias', 80)) {
+            $errorInfo['message'] = __f('Error! Length of field value must not be higher than %2$s (%1$s).', array('site alias', 80), $dom);
             return $errorInfo;
         }
         if (!$this->isStringNotEmpty('siteAlias')) {

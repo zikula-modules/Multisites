@@ -81,7 +81,7 @@ abstract class Multisites_Entity_Base_Site extends Zikula_EntityAccess
     protected $description = '';
     
     /**
-     * @ORM\Column(length=20)
+     * @ORM\Column(length=80)
      * @var string $siteAlias.
      */
     protected $siteAlias = '';

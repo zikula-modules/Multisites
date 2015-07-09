@@ -69,7 +69,7 @@ application Multisites {
                 },
                 string siteAlias {
                     defaultValue ""
-                    length 20
+                    length 80
                 },
                 string siteName {
                     defaultValue ""
