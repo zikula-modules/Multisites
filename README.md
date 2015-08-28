@@ -173,7 +173,7 @@ Structure and management
 6. Modules
 
   1. Examples: _News_, _Forums_, _Guestbook_, etc.
-  2. New layouts are placed in a central place in the system (themes/ folder).
+  2. New modules are placed in a central place in the system (modules/ folder).
   3. Modules can centrally inspected and activated for each site.
   4. Which modules are available and their states for a site is controlled as part of the underlying site template.
 
