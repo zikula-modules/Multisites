@@ -200,9 +200,9 @@ Creating and adapting sites
 
 3. Change templates
 
-  To amend a site template create a new site using this template. Now edit the site's structure and content
-  until it meets your requirements. Afterwards the database is exported again and the resulting sql file
-  is uploaded into the site template.
+  To amend a site template change the site which was used to create the template initially. Edit the site's structure
+  and content until it meets your requirements. Afterwards the database is exported again and the resulting sql file
+  is uploaded again into the site template.
 
 
 4. Copy templates
