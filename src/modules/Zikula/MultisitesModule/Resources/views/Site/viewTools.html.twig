@@ -1,0 +1,11 @@
+{# purpose of this template: show output of view tools action in site area #}
+{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{% block title %}
+    {{ __('View tools') }}
+{% endblock %}
+{% block adminPageIcon %}square{% endblock %}
+{% block content %}
+    <div class="zikulamultisitesmodule-viewtools zikulamultisitesmodule-viewtools">
+        <p>Please override this template by moving it from <em>/modules/ZikulaMultisitesModule/Resources/views/Site/viewTools.tpl</em> to either your <em>/themes/YourTheme/Resources/views/modules/ZikulaMultisitesModule/Site/viewTools.tpl</em> or <em>/config/templates/ZikulaMultisitesModule/Site/viewTools.tpl</em>.</p>
+    </div>
+{% endblock %}

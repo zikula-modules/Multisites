@@ -1,0 +1,9 @@
+{# purpose of this template: inclusion template for display of related sites #}
+{% set hasAdminPermission = hasPermission('ZikulaMultisitesModule:Site:', '::', 'ACCESS_EDIT') %}
+<h4>
+    {{ item.getTitleFromDisplayPattern() }}
+</h4>
+<br />
+{% if item.logo != '' and item.logoFullPath is defined and item.logoMeta.isImage %}
+    {{ zikulamultisitesmodule_thumb({ image: item.logoFullPath, objectid: 'site-' ~ item.id ~ '', preset: relationThumbPreset, tag: true, img_alt: item.getTitleFromDisplayPattern(), img_class: 'img-rounded' }) }}
+{% endif %}

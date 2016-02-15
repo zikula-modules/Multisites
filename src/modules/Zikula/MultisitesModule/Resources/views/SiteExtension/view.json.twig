@@ -1,0 +1,7 @@
+{# purpose of this template: site extensions view json view #}
+{{ zikulamultisitesmodule_templateHeaders(contentType='application/json') }}[
+{% for siteExtension in items %}
+    {% if not loop.first %},{% endif %}
+    {{ siteExtension.toJson() }}
+{/foreach}
+]

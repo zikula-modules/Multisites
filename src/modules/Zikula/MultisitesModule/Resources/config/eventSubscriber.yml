@@ -1,0 +1,72 @@
+services:
+    # Event subscriber and listener classes
+    zikula_multisites_module.core_listener:
+        class: Zikula\MultisitesModule\Listener\CoreListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.kernel_listener:
+        class: Zikula\MultisitesModule\Listener\KernelListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.installer_listener:
+        class: Zikula\MultisitesModule\Listener\InstallerListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.moduledispatch_listener:
+        class: Zikula\MultisitesModule\Listener\ModuleDispatchListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.mailer_listener:
+        class: Zikula\MultisitesModule\Listener\MailerListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.page_listener:
+        class: Zikula\MultisitesModule\Listener\PageListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.theme_listener:
+        class: Zikula\MultisitesModule\Listener\ThemeListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.view_listener:
+        class: Zikula\MultisitesModule\Listener\ViewListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.userlogin_listener:
+        class: Zikula\MultisitesModule\Listener\UserLoginListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.userlogout_listener:
+        class: Zikula\MultisitesModule\Listener\UserLogoutListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.user_listener:
+        class: Zikula\MultisitesModule\Listener\UserListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.userregistration_listener:
+        class: Zikula\MultisitesModule\Listener\UserRegistrationListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.users_listener:
+        class: Zikula\MultisitesModule\Listener\UsersListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    zikula_multisites_module.group_listener:
+        class: Zikula\MultisitesModule\Listener\GroupListener
+        tags:
+            - { name: kernel.event_subscriber }
+    

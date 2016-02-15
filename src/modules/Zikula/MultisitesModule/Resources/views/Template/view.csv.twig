@@ -1,0 +1,25 @@
+{* purpose of this template: templates view csv view *}
+{{ zikulamultisitesmodule_templateHeaders(contentType='text/comma-separated-values; charset=iso-8859-15', asAttachment=true, fileName='Templates.csv') }}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Sql file') }}";"{{ __('Parameters') }}";"{{ __('Folders') }}";"{{ __('Excluded tables') }}";"{{ __('Workflow state') }}"
+;"{{ __('Projects') }}"
+;"{{ __('Sites') }}"
+{% endspaceless %}
+{% for template in items %}
+{% spaceless %}
+    "{{ template.name }}";"{{ template.description }}";"{{ template.sqlFile }}";"{{ template.parameters }}";"{{ template.folders }}";"{{ template.excludedTables }}";"{{ template.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
+    ;"
+    {% if template.Projects|default %}
+        {% for relatedItem in template.Projects %}
+        {{ relatedItem.getTitleFromDisplayPattern() }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
+    ;"
+    {% if template.Sites|default %}
+        {% for relatedItem in template.Sites %}
+        {{ relatedItem.getTitleFromDisplayPattern() }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
+{% endspaceless %}
+{% endfor %}

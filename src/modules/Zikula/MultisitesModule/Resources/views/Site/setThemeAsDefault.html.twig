@@ -1,0 +1,11 @@
+{# purpose of this template: show output of set theme as default action in site area #}
+{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{% block title %}
+    {{ __('Set theme as default') }}
+{% endblock %}
+{% block adminPageIcon %}square{% endblock %}
+{% block content %}
+    <div class="zikulamultisitesmodule-setthemeasdefault zikulamultisitesmodule-setthemeasdefault">
+        <p>Please override this template by moving it from <em>/modules/ZikulaMultisitesModule/Resources/views/Site/setThemeAsDefault.tpl</em> to either your <em>/themes/YourTheme/Resources/views/modules/ZikulaMultisitesModule/Site/setThemeAsDefault.tpl</em> or <em>/config/templates/ZikulaMultisitesModule/Site/setThemeAsDefault.tpl</em>.</p>
+    </div>
+{% endblock %}

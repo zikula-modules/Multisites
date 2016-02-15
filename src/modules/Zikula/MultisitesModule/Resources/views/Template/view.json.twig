@@ -1,0 +1,7 @@
+{# purpose of this template: templates view json view #}
+{{ zikulamultisitesmodule_templateHeaders(contentType='application/json') }}[
+{% for template in items %}
+    {% if not loop.first %},{% endif %}
+    {{ template.toJson() }}
+{/foreach}
+]

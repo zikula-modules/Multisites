@@ -1,0 +1,88 @@
+{# purpose of this template: show output of multiply queries action in admin area #}
+{% extends 'ZikulaMultisitesModule::adminBase.html.twig' %}
+{% block title __('Multiply queries') %}
+{% block admin_page_icon 'database' %}
+{% block content %}
+    <div class="zikulamultisitesmodule-multiplyqueries">
+        <p class="alert alert-warning">{{ __('This is an expert function! Use it only if you know about the effects.') }}</p>
+
+        <form action="{{ path('zikulamultisitesmodule_admin_multiplyqueries') }}" method="post" enctype="multipart/form-data" role="form" class="form">
+            <div>
+                <fieldset>
+                    <legend>{{ __('Input data') }}</legend>
+                    <p class="alert alert-info">{{ __('Use <strong>`###DBNAME###`</strong> as a placeholder for the database name.') }}</p>
+
+                    <div class="form-group">
+                        <label for="inputquery" class="control-label col-sm-3">{{ __('Sql query') }}</label>
+                        <div class="col-sm-9">
+                            <textarea id="inputquery" name="inputquery" class="form-control" rows="7">{{ sqlInput }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="queryfile" class="control-label col-sm-3">{{ __('or sql file') }}</label>
+                        <div class="col-sm-9">
+                            <input type="file" id="queryfile" name="queryfile" class="form-control">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>{{ __('Options') }}</legend>
+
+                    <div class="form-group{# % if databaseHosts|length < 2} hidden{% endif % #}">
+                        <label for="dbHosts" class="control-label col-sm-3">{{ __('Database hosts') }}</label>
+                        <div class="col-sm-9">
+                            <select id="dbHosts" name="dbhosts[]" class="form-control" multiple="multiple">
+                                {% for dbHost in databaseHosts %}
+                                    <option value="{{ dbHost }}"{% for selectedHost in databaseHostsSelected %}{% if dbHost == selectedHost %} selected="selected"{% endif %}{% endfor %}>{{ dbHost }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group{# % if databaseTypes|length < 2} hidden{% endif % #}">
+                        <label for="dbTypes" class="control-label col-sm-3">{{ __('Database types') }}</label>
+                        <div class="col-sm-9">
+                            <select id="dbTypes" name="dbtypes[]" class="form-control" multiple="multiple">
+                                {% for dbType in databaseTypes %}
+                                    <option value="{{ dbType }}"{% for selectedType in databaseTypesSelected %}{% if dbType == selectedType %} selected="selected"{% endif %}{% endfor %}>{{ dbType }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="opMode" class="control-label col-sm-3">{{ __('Operation mode') }}</label>
+                        <div class="col-sm-9">
+                            <select id="opMode" name="opmode" class="form-control">
+                                <option value="show" selected="selected">{{ __('Show output sql') }}</option>
+                                <option value="execute">{{ __('Execute sql directly') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                {% if sqlOutput not empty %}
+                    <fieldset>
+                        <legend>{{ __('Output data') }}</legend>
+
+                        <div class="form-group">
+                            <label for="output" class="control-label col-sm-3">{{ __('Output') }}</label>
+                            <div class="col-sm-9">
+                                <textarea id="output" name="output" class="form-control" readonly="readonly" rows="7">{{ sqlOutput }}</textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                {% endif %}
+
+                <div class="form-group form-buttons">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        {% set startTitle = __('Start') %}
+                        <button title="{{ startTitle }}" name="submit" type="submit" class="btn btn-success"><i class="fa fa-check"></i> {{ startTitle }}</button>
+                        <a href="{{ path('zikulamultisitesmodule_site_adminview') }}"><i class="fa fa-times"></i> {{ __('Cancel') }}</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

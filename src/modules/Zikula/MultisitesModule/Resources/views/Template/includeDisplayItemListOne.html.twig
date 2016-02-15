@@ -1,0 +1,5 @@
+{# purpose of this template: inclusion template for display of related templates #}
+{% set hasAdminPermission = hasPermission('ZikulaMultisitesModule:Template:', '::', 'ACCESS_EDIT') %}
+<h4>
+    {{ item.getTitleFromDisplayPattern() }}
+</h4>

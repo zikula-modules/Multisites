@@ -1,0 +1,15 @@
+{# purpose of this template: inclusion template for display of related template #}
+{% set removeImage = '<span class="fa fa-trash-o"></span>' %}
+
+<input type="hidden" id="{{ idPrefix }}" name="{{ idPrefix }}" value="{% if item is defined and item is iterable and item.id is defined %}{{ item.id }}{% endif %}" />
+<input type="hidden" id="{{ idPrefix }}Mode" name="{{ idPrefix }}Mode" value="0" />
+
+<ul id="{{ idPrefix }}ReferenceList">
+{% if item is defined and item is iterable and item.id is defined %}
+{% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.id %}
+<li id="{{ idPrefixItem }}">
+    {{ item.getTitleFromDisplayPattern() }}
+     <a id="{{ idPrefixItem }}Remove" href="javascript:multisitesRemoveRelatedItem('{{ idPrefix }}', '{{ item.id }}');">{{ removeImage }}</a>
+</li>
+{% endif %}
+</ul>

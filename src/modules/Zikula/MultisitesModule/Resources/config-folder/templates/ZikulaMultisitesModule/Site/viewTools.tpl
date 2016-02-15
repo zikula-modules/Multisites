@@ -1,0 +1,24 @@
+{# purpose of this template: show output of view tools action in site area #}
+{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{% block title %}
+    {{ __('Site tools') }}
+{% endblock %}
+{% block adminPageIcon %}briefcase{% endblock %}
+{% block content %}
+    <div class="zikulamultisitesmodule-viewtools">
+        <p>{{ __('Name') }}: {{ site.name }}<br />
+        {{ __('Site name') }}: {{ site.siteName }}<br />
+        {{ __('Site dns') }}: {{ site.siteDns }}<br />
+        {{ __('Database name') }}: {{ site.databaseName }}</p>
+
+        <h3>{{ __('Available tools') }}</h3>
+        <dl>
+            <dt><a href="{{ path('zikulamultisitesmodule_site_executetool', { tool: 'createAdministrator', id: site.id }) }}" title="{{ __('Create global administrator') }}">{{ __('Create global administrator') }}</a></dt>
+            <dd>{{ __('This ensures that the global administrator exists. Note that if the site admin and the global admin have the same user name, the global admin will override the original site admin.') }}</dd>
+            <dt><a href="{{ path('zikulamultisitesmodule_site_executetool', { tool: 'adminSiteControl', id: site.id }) }}" title="{{ __('Recover administrators site control') }}">{{ __('Recover administrators site control') }}</a></dt>
+            <dd>{{ __('This removes the first permission rule and inserts the default one instead, ensuring that the original site administrator belongs to the admin group again.') }}</dd>
+        </dl>
+
+        <p><a href="javascript:history.back()" title="{{ __('Back to site list') }}" class="fa fa-arrow-left">{{ __('Back to site list') }}</a></p>
+    </div>
+{% endblock %}

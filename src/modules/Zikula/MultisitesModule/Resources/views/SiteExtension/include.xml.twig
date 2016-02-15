@@ -1,0 +1,9 @@
+{# purpose of this template: site extensions xml inclusion template #}
+<siteextension id="{{ siteExtension.id }}" createdon="{{ siteExtension.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ siteExtension.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ siteExtension.id }}</id>
+    <name><![CDATA[{{ siteExtension.name }}]]></name>
+    <extensionVersion><![CDATA[{{ siteExtension.extensionVersion }}]]></extensionVersion>
+    <extensionType>{{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension':'extensionType') }}</extensionType>
+    <workflowState>{{ siteExtension.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
+    <site>{% if siteExtension.Site|default %}{{ siteExtension.Site.getTitleFromDisplayPattern() }}{% endif %}</site>
+</siteextension>

@@ -1,0 +1,42 @@
+{# purpose of this template: inclusion template for managing related project #}
+{% displayMode is not defined or displayMode is empty %}
+    {% set displayMode = 'choices' %}
+{% endif %}
+{% if allowEditing is not defined or allowEditing is empty %}
+    {% set allowEditing = false %}
+{% endif %}
+{% if panel|default(false) == true %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseProject">{{ __('Project') }}</a></h3>
+        </div>
+        <div id="collapseProject" class="panel-collapse collapse in">
+            <div class="panel-body">
+{% else %}
+    <fieldset class="project">
+{% endif %}
+    <legend>{{ __('Project') }}</legend>
+    {% if displayMode == 'choices' %}
+        {{ form_row(form.project) }}
+    {% elseif displayMode == 'autocomplete' %}
+        {% set createUrl = allowEditing ? path('zikulamultisitesmodule_project_' ~ routeArea ~ 'edit') : '' %}
+        {{ form_row(form.project) }}
+        <div class="zikulamultisitesmodule-relation-leftside">
+            {% if attribute(linkingItem, alias) is defined %}
+                {{ include(
+                    'Project/includeSelectItemListOne.html.twig',
+                    { item: attribute(linkingItem, alias) }
+                ) }}
+            {% else %}
+                {{ include('Project/includeSelectItemListOne.html.twig') }}
+            {% endif %}
+        </div>
+        <br style="clear: both" />
+    {% endif %}
+{% if panel|default(false) == true %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    </fieldset>
+{% endif %}

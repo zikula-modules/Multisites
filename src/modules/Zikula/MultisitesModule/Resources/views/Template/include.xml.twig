@@ -1,0 +1,25 @@
+{# purpose of this template: templates xml inclusion template #}
+<template id="{{ template.id }}" createdon="{{ template.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ template.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ template.id }}</id>
+    <name><![CDATA[{{ template.name }}]]></name>
+    <description><![CDATA[{{ template.description }}]]></description>
+    <sqlFile{% if template.sqlFile is not empty %} extension="{{ template.sqlFileMeta.extension }}" size="{{ template.sqlFileMeta.size }}" isImage="{% if template.sqlFileMeta.isImage %}true{% else %}false{% endif %}"{% if template.sqlFileMeta.isImage %} width="{{ template.sqlFileMeta.width }}" height="{{ template.sqlFileMeta.height }}" format="{{ template.sqlFileMeta.format }}"{% endif %}{% endif %}>{{ template.sqlFile }}</sqlFile>
+    <parameters>{{ template.parameters }}</parameters>
+    <folders>{{ template.folders }}</folders>
+    <excludedTables>{{ template.excludedTables }}</excludedTables>
+    <workflowState>{{ template.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
+    <projects>
+    {% if template.Projects|default %}
+        {% for relatedItem in template.Projects %}
+        <project>{{ relatedItem.getTitleFromDisplayPattern() }}</project>
+        {% endfor %}
+    {% endif %}
+    </projects>
+    <sites>
+    {% if template.Sites|default %}
+        {% for relatedItem in template.Sites %}
+        <site>{{ relatedItem.getTitleFromDisplayPattern() }}</site>
+        {% endfor %}
+    {% endif %}
+    </sites>
+</template>

@@ -1,0 +1,344 @@
+{# purpose of this template: sites list view #}
+{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{% block title __('Site list') %}
+{% block admin_page_icon 'list-alt' %}
+{% block content %}
+<div class="zikulamultisitesmodule-site zikulamultisitesmodule-view">
+
+    <p class="alert alert-info">{{ __('Each site is assigned to a project and instance of a certain site template.') }}</p>
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { all: all, own: own, workflowStateFilter: false }) }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="sitesViewForm" class="form-horizontal" role="form">
+        <div>
+    {/if}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cName" />
+                <col id="cDescription" />
+                <col id="cSiteAlias" />
+                <col id="cSiteName" />
+                <col id="cSiteDescription" />
+                <col id="cSiteAdminName" />
+                <col id="cSiteAdminPassword" />
+                <col id="cSiteAdminRealName" />
+                <col id="cSiteAdminEmail" />
+                <col id="cSiteCompany" />
+                <col id="cSiteDns" />
+                <col id="cDatabaseName" />
+                <col id="cDatabaseUserName" />
+                <col id="cDatabasePassword" />
+                <col id="cDatabaseHost" />
+                <col id="cDatabaseType" />
+                <col id="cLogo" />
+                <col id="cFavIcon" />
+                <col id="cParametersCsvFile" />
+                <col id="cActive" />
+                <col id="cTemplate" />
+                <col id="cProject" />
+                <col id="cItemActions" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" align="center" valign="middle">
+                        <input type="checkbox" id="toggleSites" />
+                    </th>
+                {% endif %}
+                <th id="hName" scope="col" class="text-left">
+                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', 'name') }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                </th>
+                <th id="hDescription" scope="col" class="text-left">
+                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', 'description') }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
+                </th>
+                <th id="hSiteAlias" scope="col" class="text-left">
+                    <a href="{{ sort.siteAlias.url }}" title="{{ __f('Sort by %s', 'site alias') }}" class="{{ sort.siteAlias.class }}">{{ __('Site alias') }}</a>
+                </th>
+                <th id="hSiteName" scope="col" class="text-left">
+                    <a href="{{ sort.siteName.url }}" title="{{ __f('Sort by %s', 'site name') }}" class="{{ sort.siteName.class }}">{{ __('Site name') }}</a>
+                </th>
+                <th id="hSiteDescription" scope="col" class="text-left">
+                    <a href="{{ sort.siteDescription.url }}" title="{{ __f('Sort by %s', 'site description') }}" class="{{ sort.siteDescription.class }}">{{ __('Site description') }}</a>
+                </th>
+                <th id="hSiteAdminName" scope="col" class="text-left">
+                    <a href="{{ sort.siteAdminName.url }}" title="{{ __f('Sort by %s', 'site admin name') }}" class="{{ sort.siteAdminName.class }}">{{ __('Site admin name') }}</a>
+                </th>
+                <th id="hSiteAdminPassword" scope="col" class="text-left">
+                    <a href="{{ sort.siteAdminPassword.url }}" title="{{ __f('Sort by %s', 'site admin password') }}" class="{{ sort.siteAdminPassword.class }}">{{ __('Site admin password') }}</a>
+                </th>
+                <th id="hSiteAdminRealName" scope="col" class="text-left">
+                    <a href="{{ sort.siteAdminRealName.url }}" title="{{ __f('Sort by %s', 'site admin real name') }}" class="{{ sort.siteAdminRealName.class }}">{{ __('Site admin real name') }}</a>
+                </th>
+                <th id="hSiteAdminEmail" scope="col" class="text-left">
+                    <a href="{{ sort.siteAdminEmail.url }}" title="{{ __f('Sort by %s', 'site admin email') }}" class="{{ sort.siteAdminEmail.class }}">{{ __('Site admin email') }}</a>
+                </th>
+                <th id="hSiteCompany" scope="col" class="text-left">
+                    <a href="{{ sort.siteCompany.url }}" title="{{ __f('Sort by %s', 'site company') }}" class="{{ sort.siteCompany.class }}">{{ __('Site company') }}</a>
+                </th>
+                <th id="hSiteDns" scope="col" class="text-left">
+                    <a href="{{ sort.siteDns.url }}" title="{{ __f('Sort by %s', 'site dns') }}" class="{{ sort.siteDns.class }}">{{ __('Site dns') }}</a>
+                </th>
+                <th id="hDatabaseName" scope="col" class="text-left">
+                    <a href="{{ sort.databaseName.url }}" title="{{ __f('Sort by %s', 'database name') }}" class="{{ sort.databaseName.class }}">{{ __('Database name') }}</a>
+                </th>
+                <th id="hDatabaseUserName" scope="col" class="text-left">
+                    <a href="{{ sort.databaseUserName.url }}" title="{{ __f('Sort by %s', 'database user name') }}" class="{{ sort.databaseUserName.class }}">{{ __('Database user name') }}</a>
+                </th>
+                <th id="hDatabasePassword" scope="col" class="text-left">
+                    <a href="{{ sort.databasePassword.url }}" title="{{ __f('Sort by %s', 'database password') }}" class="{{ sort.databasePassword.class }}">{{ __('Database password') }}</a>
+                </th>
+                <th id="hDatabaseHost" scope="col" class="text-left">
+                    <a href="{{ sort.databaseHost.url }}" title="{{ __f('Sort by %s', 'database host') }}" class="{{ sort.databaseHost.class }}">{{ __('Database host') }}</a>
+                </th>
+                <th id="hDatabaseType" scope="col" class="text-left">
+                    <a href="{{ sort.databaseType.url }}" title="{{ __f('Sort by %s', 'database type') }}" class="{{ sort.databaseType.class }}">{{ __('Database type') }}</a>
+                </th>
+                <th id="hLogo" scope="col" class="text-left">
+                    <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', 'logo') }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
+                </th>
+                <th id="hFavIcon" scope="col" class="text-left">
+                    <a href="{{ sort.favIcon.url }}" title="{{ __f('Sort by %s', 'fav icon') }}" class="{{ sort.favIcon.class }}">{{ __('Fav icon') }}</a>
+                </th>
+                <th id="hParametersCsvFile" scope="col" class="text-left">
+                    <a href="{{ sort.parametersCsvFile.url }}" title="{{ __f('Sort by %s', 'parameters csv file') }}" class="{{ sort.parametersCsvFile.class }}">{{ __('Parameters csv file') }}</a>
+                </th>
+                <th id="hActive" scope="col" class="text-center">
+                    <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', 'active') }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
+                </th>
+                <th id="hTemplate" scope="col" class="text-left">
+                    <a href="{{ sort.template.url }}" title="{{ __f('Sort by %s', 'template') }}" class="{{ sort.template.class }}">{{ __('Template') }}</a>
+                </th>
+                <th id="hProject" scope="col" class="text-left">
+                    <a href="{{ sort.project.url }}" title="{{ __f('Sort by %s', 'project') }}" class="{{ sort.project.class }}">{{ __('Project') }}</a>
+                </th>
+                <th id="hItemActions" scope="col" class="z-order-unsorted">{{ __('Actions') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for site in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hselect" align="center" valign="top">
+                        <input type="checkbox" name="items[]" value="{{ site.id }}" class="sites-checkbox" />
+                    </td>
+                {% endif %}
+                <td headers="hName" class="text-left">
+                    {{ site.name|notifyFilters(zikulamultisitesmodule.filterhook.sites') }}
+                </td>
+                <td headers="hDescription" class="text-left">
+                    {{ site.description }}
+                </td>
+                <td headers="hSiteAlias" class="text-left">
+                    {{ site.siteAlias }}
+                </td>
+                <td headers="hSiteName" class="text-left">
+                    {{ site.siteName }}
+                </td>
+                <td headers="hSiteDescription" class="text-left">
+                    {{ site.siteDescription }}
+                </td>
+                <td headers="hSiteAdminName" class="text-left">
+                    {{ site.siteAdminName }}
+                </td>
+                <td headers="hSiteAdminPassword" class="text-left">
+                </td>
+                <td headers="hSiteAdminRealName" class="text-left">
+                    {{ site.siteAdminRealName }}
+                </td>
+                <td headers="hSiteAdminEmail" class="text-left">
+                    <a href="mailto:{{ site.siteAdminEmail }}" title="{{ __('Send an email') }}" class="fa fa-envelope"></a>
+                </td>
+                <td headers="hSiteCompany" class="text-left">
+                    {{ site.siteCompany }}
+                </td>
+                <td headers="hSiteDns" class="text-left">
+                    {{ site.siteDns }}
+                </td>
+                <td headers="hDatabaseName" class="text-left">
+                    {{ site.databaseName }}
+                </td>
+                <td headers="hDatabaseUserName" class="text-left">
+                    {{ site.databaseUserName }}
+                </td>
+                <td headers="hDatabasePassword" class="text-left">
+                </td>
+                <td headers="hDatabaseHost" class="text-left">
+                    {{ site.databaseHost }}
+                </td>
+                <td headers="hDatabaseType" class="text-left">
+                    {{ site.databaseType }}
+                </td>
+                <td headers="hLogo" class="text-left">
+                    {% if site.logo is not empty %}
+                    <a href="{{ site.logoFullPathURL }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.logoMeta.isImage %} class="lightbox"{% endif %}>
+                    {% if site.logoMeta.isImage %}
+                        {{ zikulamultisitesmodule_thumb({ image: site.logoFullPath, objectid: 'site-' ~ site.id ~ '', preset: siteThumbPresetLogo, tag: true, img_alt: site.getTitleFromDisplayPattern(), img_class: 'img-thumbnail' }) }}
+                    {% else %}
+                        {{ __('Download') }} ({{ site.logoMeta.size|zikulamultisitesmodule_fileSize(site.logoFullPath, false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hFavIcon" class="text-left">
+                    {% if site.favIcon is not empty %}
+                    <a href="{{ site.favIconFullPathURL }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.favIconMeta.isImage %} class="lightbox"{% endif %}>
+                    {% if site.favIconMeta.isImage %}
+                        {{ zikulamultisitesmodule_thumb({ image: site.favIconFullPath, objectid: 'site-' ~ site.id ~ '', preset: siteThumbPresetFavIcon, tag: true, img_alt: site.getTitleFromDisplayPattern(), img_class: 'img-thumbnail' }) }}
+                    {% else %}
+                        {{ __('Download') }} ({{ site.favIconMeta.size|zikulamultisitesmodule_fileSize(site.favIconFullPath, false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hParametersCsvFile" class="text-left">
+                    {% if site.parametersCsvFile is not empty %}
+                    <a href="{{ site.parametersCsvFileFullPathURL }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.parametersCsvFileMeta.isImage %} class="lightbox"{% endif %}>
+                    {% if site.parametersCsvFileMeta.isImage %}
+                        {{ zikulamultisitesmodule_thumb({ image: site.parametersCsvFileFullPath, objectid: 'site-' ~ site.id ~ '', preset: siteThumbPresetParametersCsvFile, tag: true, img_alt: site.getTitleFromDisplayPattern(), img_class: 'img-thumbnail' }) }}
+                    {% else %}
+                        {{ __('Download') }} ({{ site.parametersCsvFileMeta.size|zikulamultisitesmodule_fileSize(site.parametersCsvFileFullPath, false, false) }})
+                    {% endif %}
+                    </a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hActive" class="z-center">
+                    {% set itemid = site.id %}
+                    <a id="toggleActive{{ itemid }}" href="javascript:void(0);" class="hidden">
+                    {% if site.active %}
+                        <span class="cursor-pointer fa fa-check" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></span>
+                        <span class="cursor-pointer fa fa-times hidden" id="noactive_{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></span>
+                    {% else %}
+                        <span class="cursor-pointer fa fa-check hidden" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></span>
+                        <span class="cursor-pointer fa fa-times" id="noactive_{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></span>
+                    {% endif %}
+                    </a>
+                    <noscript><div id="noscriptActive{{ itemid }}">
+                        {{ site.active|yesno(true) }}
+                    </div></noscript>
+                </td>
+                <td headers="hTemplate" class="text-left">
+                    {% if site.Template|default %}
+                          {{ site.Template.getTitleFromDisplayPattern() }}
+                    {% else %}
+                        {{ __('Not set.') }}
+                    {% endif %}
+                </td>
+                <td headers="hProject" class="text-left">
+                    {% if site.Project|default %}
+                          {{ site.Project.getTitleFromDisplayPattern() }}
+                    {% else %}
+                        {{ __('Not set.') }}
+                    {% endif %}
+                </td>
+                <td id="itemActions{{ site.id }}" headers="hItemActions" class="actions nowrap z-w02">
+                    {% if site._actions|length > 0 %}
+                        <div class="dropdown">
+                            <a id="itemActions{{ site.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                            
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="itemActions{{ site.id }}DropDownToggle">
+                                {% for option in site._actions %}
+                                    <li role="presentation"><a href="{{ option.url.type|zikulamultisitesmodule_actionUrl(option.url.func, option.url.arguments) }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
+                                    
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}24{% else %}23{% endif %}">
+            {{ __('No sites found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        </div>
+        
+        {% if all != 1 %}
+            {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_site_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="zikulaMultisitesModuleAction" class="col-sm-3 control-label">{{ __('With selected sites') }}</label>
+                <div class="col-sm-6">
+                    <select id="zikulaMultisitesModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    {% if canBeCreated %}
+        {% if hasPermission('ZikulaMultisitesModule:Site:', '::', 'ACCESS_EDIT') %}
+            {% set createTitle = __('Create site') %}
+            <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        {% endif %}
+    {% endif %}
+    {% set own = showOwnEntries is defined and showOwnEntries == 1 ? 1 : 0 %}
+    {% set all = showAllEntries is defined and showAllEntries == 1 ? 1 : 0 %}
+    {% all == 1 %}
+        {% set linkTitle = __('Back to paginated view') %}
+        <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+    {% else %}
+        {% set linkTitle = __('Show all entries') %}
+        <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+    {% endif %}
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.display_view', urlObject=currentUrlObject) %}
+        {% for providerArea, hook in hooks %}
+            {{ hook }}
+        {% endfor %}
+    {% endif % #}
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    ( function($) {
+        $(document).ready(function() {
+            $('.dropdown-toggle').dropdown();
+            $('a.fa-zoom-in').attr('target', '_blank');
+            {% for site in items %}
+                {% set itemid = site.id %}
+                zikulaMultisitesInitToggle('site', 'active', '{{ itemid|e('js') }}');
+            {% endfor %}
+            {% if routeArea == 'admin' %}
+                {# init the "toggle all" functionality #}
+                if ($('#toggleSites').length > 0) {
+                    $('#toggleSites').on('click', function (e) {
+                        Zikula.toggleInput('sitesViewForm');
+                        e.preventDefault();
+                    });
+                }
+            {% endif %}
+        });
+    })(jQuery);
+/* ]]> */
+</script>
+{% endblock %}

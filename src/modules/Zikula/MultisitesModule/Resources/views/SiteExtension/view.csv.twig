@@ -1,0 +1,11 @@
+{* purpose of this template: site extensions view csv view *}
+{{ zikulamultisitesmodule_templateHeaders(contentType='text/comma-separated-values; charset=iso-8859-15', asAttachment=true, fileName='SiteExtensions.csv') }}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Extension version') }}";"{{ __('Extension type') }}";"{{ __('Workflow state') }}"
+;"{{ __('Site') }}"
+{% endspaceless %}
+{% for siteExtension in items %}
+{% spaceless %}
+    "{{ siteExtension.name }}";"{{ siteExtension.extensionVersion }}";"{{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension':'extensionType') }}";"{{ siteExtension.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
+    ;"{% if siteExtension.Site|default %}{{ siteExtension.Site.getTitleFromDisplayPattern() }}{% endif %}"
+{% endspaceless %}
+{% endfor %}

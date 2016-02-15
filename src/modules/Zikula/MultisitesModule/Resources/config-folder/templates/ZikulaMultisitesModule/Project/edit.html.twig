@@ -1,0 +1,136 @@
+{# purpose of this template: build the form to edit an instance of project #}
+{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
+{{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
+{{ pageAddAsset('javascript', 'web/typeahead.js/dist/typeahead.bundle.min.js') }}
+
+{% if mode != 'create' %}
+    {% block title __('Edit project') %}
+    {% block admin_page_icon 'pencil-square-o' %}
+{% elseif mode == 'create' %}
+    {% block title __('Create project') %}
+    {% block admin_page_icon 'plus' %}
+{% endif %}
+{% block content %}
+    <div class="zikulamultisitesmodule-project zikulamultisitesmodule-edit">
+{% form_theme form with [
+    '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
+    '@ZikulaFormExtensionBundle/Form/form_div_layout.html.twig'
+] %}
+{{ form_start(form, {attr: {id: 'projectEditForm'}}) }}
+{{ form_errors(form) }}
+<fieldset>
+    <legend>{gt text='Content'}</legend>
+    
+    {{ form_row(form.name) }}
+</fieldset>
+
+{% if mode != 'create' %}
+    {{ include('Helper/includeStandardFieldsEdit.html.twig', { obj: project }) }}
+{% endif %}
+
+{# include display hooks #}
+{% if mode != 'create' %}
+    {% set hookId = project.id %}
+    {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.projects.form_edit', id=hookId) %}
+{% else %}
+    {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.projects.form_edit', id=null) %}
+{% endif %}
+{% if hooks is iterable and hooks|length > 0 %}
+    {% for providerArea, hook in hooks %}
+        {% if providerArea != 'provider.scribite.ui_hooks.editor' %}{# fix for #664 #}
+            <fieldset>
+                {{ hook }}
+            </fieldset>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+{# include return control #}
+{% if mode == 'create' %}
+    <fieldset>
+        <legend>{{ __('Return control') }}</legend>
+        {{ form_row(form.repeatCreation) }}
+    </fieldset>
+{/if}
+
+{# include possible submit actions #}
+<div class="form-group form-buttons">
+    <div class="col-sm-offset-3 col-sm-9">
+        {% for action in actions %}
+            {{ form_widget(attribute(form, action.id), {attr: {class: action.buttonClass}, icon: action.id == 'delete' ? 'fa-trash-o' : '') }}
+        {% endfor %}
+        {{ form_widget(form.reset, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-refresh'}) }}
+        {{ form_widget(form.cancel, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-times'}) }}
+    </div>
+</div>
+{{ form_end(form) }}
+</div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+
+    % set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
+    % set deleteImage = '<span class="fa fa-trash-o"></span>' %}
+    
+    
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        
+                var formButtons;
+        
+                function executeCustomValidationConstraints()
+                {
+                    zikulaMultisitesPerformCustomValidationRules('project', '{% if mode != 'create' %}{{ project.id }}{% endif %}');
+                }
+        
+                function triggerFormValidation()
+                {
+                    executeCustomValidationConstraints();
+                    if (!document.getElementById('projectEditForm').checkValidity()) {
+                        // This does not really submit the form,
+                        // but causes the browser to display the error message
+                        jQuery('#projectEditForm').find(':submit').not(jQuery('#btnDelete')).first().click();
+                    }
+                }
+        
+                function handleFormSubmit (event) {
+                    triggerFormValidation();
+                    if (!document.getElementById('projectEditForm').checkValidity()) {
+                        event.preventDefault();
+                        return false;
+                    }
+        
+                    // hide form buttons to prevent double submits by accident
+                    formButtons.each(function (index) {
+                        jQuery(this).addClass('hidden');
+                    });
+        
+                    return true;
+                }
+        
+                ( function($) {
+                    $(document).ready(function() {
+        
+                        var allFormFields = $('#projectEditForm input, #projectEditForm select, #projectEditForm textarea');
+                        allFormFields.change(executeCustomValidationConstraints);
+        
+                        formButtons = $('#projectEditForm .form-buttons input');
+                        $('#btnDelete').bind('click keypress', function (e) {
+                            if (!window.confirm('{{ __('Really delete this project? This includes deletion of assigned templates and sites, too!') }}')) {
+                                e.preventDefault();
+                            }
+                        });
+                        $('#projectEditForm').submit(handleFormSubmit);
+        
+                        {% if mode != 'create' %}
+                            triggerFormValidation();
+                        {% endif %}
+        
+                        $('#projectEditForm label').tooltip();
+                    });
+                })(jQuery);
+    /* ]]> */
+    </script>
+{% endblock %}

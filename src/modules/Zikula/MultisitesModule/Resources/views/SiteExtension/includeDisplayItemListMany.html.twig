@@ -1,0 +1,13 @@
+{# purpose of this template: inclusion template for display of related site extensions #}
+{% set hasAdminPermission = hasPermission('ZikulaMultisitesModule:SiteExtension:', '::', 'ACCESS_EDIT') %}
+{% if items|default and items|length > 0 %}
+<ul class="zikulamultisitesmodule-related-item-list siteExtension">
+{% for item in items %}
+    {% if hasAdminPermission or item.workflowState == 'approved' %}
+    <li>
+    {{ item.getTitleFromDisplayPattern() }}
+    </li>
+    {% endif %}
+{% endfor %}
+</ul>
+{% endif %}

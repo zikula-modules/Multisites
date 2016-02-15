@@ -30,13 +30,15 @@ multiple sites.
 <a name="requirements" />
 ## Requirements
 
-This module is intended for being used with Zikula 1.3.5 to 1.3.9.
+This module is intended for being used with Zikula 1.4.2+.
 
 
 <a name="installation" />
 ## Installation
 
-The Multisites module is installed like any other Zikula module.
+First copy the content of _Resources/config-folder/_ into the _/config_ folder of your Zikula site.
+
+Afterwards the Multisites module is installed like any other Zikula module.
 
 1. Go to the Extensions administration
 2. Find Multisites in the Extensions list
@@ -45,6 +47,8 @@ The Multisites module is installed like any other Zikula module.
 
 <a name="upgrading" />
 ## Upgrading
+
+The upgrade process from 2.0.0 to 2.1.0 has *NOT* been implemented yet.
 
 The upgrade process from 1.0.x to 2.0.0 has been implemented.
 It has not been tested throughly yet though.
@@ -62,7 +66,7 @@ automatically.
 <a name="fileutilchange" />
 ## FileUtil change
 
-At the moment you are required to edit the _/lib/util/FileUtil.php_ file and change the _getDataDirectory()_ method as follows:
+At the moment you are required to edit the _/lib/legacy/util/FileUtil.php_ file and change the _getDataDirectory()_ method as follows:
 
 ```
     /**

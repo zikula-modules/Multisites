@@ -1,0 +1,7 @@
+services:
+    # Twig extension
+    zikula_multisites_module.twig_extension:
+        class: Zikula\MultisitesModule\Twig\TwigExtension
+        public: false
+        tags:
+            - { name: twig.extension }

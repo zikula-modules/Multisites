@@ -1,0 +1,58 @@
+{# purpose of this template: general base layout #}
+{% block header %}
+    {{ pageAddAsset('stylesheet', 'web/bootstrap/css/bootstrap.min.css') }}
+    {{ pageAddAsset('stylesheet', 'web/bootstrap/css/bootstrap-theme.min.css') }}
+    {{ pageAddAsset('javascript', 'jquery') }}
+    {{ pageAddAsset('javascript', 'jquery-ui') }}
+    {{ pageAddAsset('stylesheet', 'web/jquery-ui/themes/base/jquery-ui.min.css') }}
+    {{ pageAddAsset('javascript', 'web/bootstrap/js/bootstrap.min.js') }}
+    {{ pageAddAsset('javascript', 'zikula') }}{# still required for Gettext #}
+    {{ pageAddAsset('javascript', 'web/bootstrap-media-lightbox/bootstrap-media-lightbox.min.js') }}
+    {{ pageAddAsset('stylesheet', 'web/bootstrap-media-lightbox/bootstrap-media-lightbox.css') }}
+    {{ pageAddAsset('stylesheet', 'web/bootstrap-jqueryui/bootstrap-jqueryui.min.css') }}
+    {{ pageAddAsset('javascript', 'web/bootstrap-jqueryui/bootstrap-jqueryui.min.js') }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.js')) }}
+    {{ polyfill('forms', 'forms-ext') }}
+
+    {# initialise additional gettext domain for translations within javascript #}
+    {# blocked by https://github.com/zikula/core/issues/2601 #}
+    {# commented out because not sure yet whether this is still required in 1.4.x #}
+    {# { pageAddVar('jsgettext', 'zikulamultisitesmodule_js:ZikulaMultisitesModule') } #}
+{% endblock %}
+
+{% if app.request.query.get('theme') != 'ZikulaPrinterTheme' %}
+    {% block appTitle %}
+        <h2 class="userheader">{{ __('Multisites') }}</h2>
+    
+    {% endblock %}
+{% endif %}
+
+{% block titleArea %}
+    <h2>{% block title %}{% endblock %}</h2>
+{% endblock %}
+{{ pageSetVar('title', block('title')) }}
+
+{{ showflashes() }}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+    {% if app.request.query.get('theme') != 'ZikulaPrinterTheme' %}
+        <p class="text-center">
+            Powered by <a href="http://modulestudio.de" title="Get the MOST out of Zikula!">ModuleStudio 0.7.0</a>
+        </p>
+    {% elseif app.request.query.get('func') == 'edit' %}
+        {{ pageAddAsset('stylesheet', 'style/core.css') }}
+        {{ pageAddAsset('stylesheet', zasset('@ZikulaMultisitesModule:css/style.css')) }}
+        {{ pageAddAsset('stylesheet', zasset('@ZikulaThemeModule:css/form/style.css')) }}
+        {{ pageAddAsset('stylesheet', zasset('@ZikulaAndreas08Theme:css/fluid960gs/reset.css')) }}
+        {% set pageStyles %}
+        <style type="text/css">
+            body {
+                font-size: 70%;
+            }
+        </style>
+        {% endset %}
+        {{ pageAddAsset('header', pageStyles) }}
+    {% endif %}
+{% endblock %}

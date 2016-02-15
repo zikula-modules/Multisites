@@ -1,0 +1,58 @@
+{# purpose of this template: module configuration page #}
+{% extends 'ZikulaMultisitesModule::adminBase.html.twig' %}
+{% block title __('Settings') %}
+{% block admin_page_icon 'wrench' %}
+{% block content %}
+    <div class="zikulamultisitesmodule-config">
+        {% set globalAdminStatus = app.request.getSession().get('globalAdminStatus', '') %}
+        {% if globalAdminStatus not empty %}
+            <p class="alert alert-warning">{{ globalAdminStatus }}</p>
+        {% endif %}
+
+        {% form_theme form with [
+            '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
+            '@ZikulaFormExtensionBundle/Form/form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form) }}
+        <ul class="nav nav-pills">
+        {% set tabTitle = __('General') %}
+        <li class="active" data-toggle="pill"><a href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
+        {% set tabTitle = __('Security settings') %}
+        <li data-toggle="pill"><a href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
+        </ul>
+
+        {{ form_errors(form) }}
+        <div class="tab-content">
+            {% set tabTitle = __('General') %}
+            <div role="tabpanel" class="tab-pane fade in active" id="tab1">
+                <fieldset>
+                    <legend>{{ tabTitle }}</legend>
+                
+                    <p class="alert alert-info">{{ __('Here you can define general settings.')|nl2br }}</p>
+                
+                    {{ form_row(form.tempAccessFileContent) }}
+                </fieldset>
+            </div>
+            {% set tabTitle = __('Security settings') %}
+            <div role="tabpanel" class="tab-pane fade" id="tab2">
+                <fieldset>
+                    <legend>{{ tabTitle }}</legend>
+                
+                    <p class="alert alert-info">{{ __('Here you can define security-related settings.')|nl2br }}</p>
+                
+                    {{ form_row(form.globalAdminName) }}
+                    {{ form_row(form.globalAdminPassword) }}
+                    {{ form_row(form.globalAdminEmail) }}
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                {{ form_widget(form.save, {attr: {class: 'btn btn-success'}, icon: 'fa-check'}) }}
+                {{ form_widget(form.cancel, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-times'}) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

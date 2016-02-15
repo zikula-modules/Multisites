@@ -1,0 +1,6 @@
+services:
+    zikula_multisites_module.link_container:
+        class: Zikula\MultisitesModule\Container\LinkContainer
+        arguments: [@translator, @router]
+        tags:
+            - { name: zikula.link_container }

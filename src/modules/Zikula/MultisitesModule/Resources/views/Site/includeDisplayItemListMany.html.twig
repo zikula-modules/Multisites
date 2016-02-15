@@ -1,0 +1,17 @@
+{# purpose of this template: inclusion template for display of related sites #}
+{% set hasAdminPermission = hasPermission('ZikulaMultisitesModule:Site:', '::', 'ACCESS_EDIT') %}
+{% if items|default and items|length > 0 %}
+<ul class="zikulamultisitesmodule-related-item-list site">
+{% for item in items %}
+    {% if hasAdminPermission or item.workflowState == 'approved' %}
+    <li>
+    {{ item.getTitleFromDisplayPattern() }}
+<br />
+{% if item.logo != '' and item.logoFullPath is defined and item.logoMeta.isImage %}
+    {{ zikulamultisitesmodule_thumb({ image: item.logoFullPath, objectid: 'site-' ~ item.id ~ '', preset: relationThumbPreset, tag: true, img_alt: item.getTitleFromDisplayPattern(), img_class: 'img-rounded' }) }}
+{% endif %}
+    </li>
+    {% endif %}
+{% endfor %}
+</ul>
+{% endif %}

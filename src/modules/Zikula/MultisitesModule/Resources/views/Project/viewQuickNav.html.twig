@@ -1,0 +1,43 @@
+{# purpose of this template: projects view filter form #}
+{% if hasPermission('ZikulaMultisitesModule:Project:', '::', 'ACCESS_EDIT' %}
+    {% form_theme quickNavForm with [
+        '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
+        '@ZikulaFormExtensionBundle/Form/form_div_layout.html.twig'
+    ] %}
+    {{ form_start(quickNavForm, {attr: {id: 'zikulaMultisitesModuleProjectQuickNavForm', class: 'zikulamultisitesmodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_errors(quickNavForm) }}
+    <fieldset>
+        <h3>{{ __('Quick navigation') }}</h3>
+        {% if workflowStateFilter is not defined or workflowStateFilter == true %}
+            {{ form_row(quickNavForm.workflowState) }}
+        {% endif %}
+        {% if searchFilter is not defined or searchFilter == true %}
+            {{ form_row(quickNavForm.searchTerm) }}
+        {% endif %}
+        {% if sorting is not defined or sorting == true %}
+            {{ form_row(quickNavForm.sort) }}
+            {{ form_row(quickNavForm.sortdir) }}
+        {% else %}
+            {{ form_row(quickNavForm.sort, {attr: {class: 'hidden'}}) }}
+            {{ form_row(quickNavForm.sortdir, {attr: {class: 'hidden'}}) }}
+        {% endif %}
+        {% if pageSizeSelector is not defined or pageSizeSelector == true %}
+            {{ form_row(quickNavForm.num) }}
+        {% endif %}
+        {{ form_widget(quickNavForm.updateview, {attr: {class: 'btn btn-default btn-sm'}}) }}
+    </fieldset>
+    {{ form_end(quickNavForm) }}
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                zikulaMultisitesInitQuickNavigation('project');
+                {% if searchFilter|default and searchFilter == false %}
+                    {# we can hide the submit button if we have no quick search field #}
+                    $('#quicknavSubmit').addClass('hidden');
+                {% endif %}
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
+{% endif %}

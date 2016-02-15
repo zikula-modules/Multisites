@@ -1,0 +1,55 @@
+{# purpose of this template: apply some general form extensions #}
+{% extends '@ZikulaFormExtensionBundle/Form/bootstrap_3_zikula_admin_layout.html.twig' %}
+
+{# add required asterisk to labels, see http://symfony.com/doc/current/cookbook/form/form_customization.html#adding-a-required-asterisk-to-field-labels #}
+{% block form_label %}
+    {{ parent() }}
+
+    {% if required %}
+        <span class="required" title="{{ __('This field is required') }}">*</span>
+    {% endif %}
+{% endblock %}
+
+{# add support for help messages, see http://symfony.com/doc/current/cookbook/form/form_customization.html#adding-help-messages #}
+{% block form_widget_simple %}
+    {{ parent() }}
+
+    {% if help is defined %}
+        {% if help is iterable %}
+            {% for helpText in help %}
+                <span class="help-block z-sub">{{ helpText }}</span>
+            {% endfor %}
+        {% else %}
+            <span class="help-block z-sub">{{ help }}</span>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block file_widget %}
+    {% spaceless %}
+
+    {{ parent() }}
+    {% if not mandatory %}
+        <span class="help-block"><a id="reset{{ id|capitalize }}Val" href="javascript:void(0);" class="hidden">{{ __('Reset to empty value') }}</a></span>
+    {% endif %}
+    <span class="help-block">{{ __('Allowed file extensions') }}: <span id="{{ id }}FileExtensions">{{ allowed_extensions|default('') }}</span></span>
+    {% if allowed_size is not null and allowed_size > 0 %}
+        <span class="help-block">{{ __('Allowed file size') }}: {{ allowed_size|zikulamultisitesmodule_fileSize('', false, false) }}</span>
+    {% endif %}
+    {% if file_path is not null %}
+        <span class="help-block">
+            {{ __('Current file') }}:
+            <a href="{{ file_url }}" title="{{ __('Open file') }}"{% if file_meta.isImage %} class="lightbox"{% endif %}>
+            {% if file_meta.isImage %}
+                {{ zikulamultisitesmodule_thumb({ image: file_path, objectid: object_type ~ object_id, preset: template_from_string("{{ object_type }}ThumbPreset{{ id|capitalize }}"), tag: true, img_alt: formattedEntityTitle, img_class: 'img-thumbnail' }) }}
+            {% else %}
+                {{ __('Download') }} ({{ file_meta.size|zikulamultisitesmodule_fileSize(file_path, false, false) }})
+            {% endif %}
+            </a>
+        </span>
+    {% if not mandatory %}
+        {{ form_row(attribute(form, id ~ 'DeleteFile')) }}
+    {% endif %}
+
+    {% endspaceless %}
+{% endblock %}

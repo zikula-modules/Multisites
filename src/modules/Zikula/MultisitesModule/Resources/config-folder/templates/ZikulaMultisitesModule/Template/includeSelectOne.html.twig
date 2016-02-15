@@ -1,0 +1,45 @@
+{# purpose of this template: inclusion template for managing related template #}
+{% displayMode is not defined or displayMode is empty %}
+    {% set displayMode = 'choices' %}
+{% endif %}
+{% if allowEditing is not defined or allowEditing is empty %}
+    {% set allowEditing = false %}
+{% endif %}
+{% if panel|default(false) == true %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTemplate">{{ __('Template') }}</a></h3>
+        </div>
+        <div id="collapseTemplate" class="panel-collapse collapse in">
+            <div class="panel-body">
+{% else %}
+    <fieldset class="template">
+{% endif %}
+    <legend>{{ __('Template') }}</legend>
+    {% if displayMode == 'choices' %}
+        {{ form_row(form.template) }}
+    {% elseif displayMode == 'autocomplete' %}
+        {% set createUrl = allowEditing ? path('zikulamultisitesmodule_template_' ~ routeArea ~ 'edit') : '' %}
+        {{ form_row(form.template) }}
+        <div class="zikulamultisitesmodule-relation-leftside">
+            {% if attribute(linkingItem, alias) is defined %}
+                {{ include(
+                    'Template/includeSelectItemListOne.html.twig',
+                    { item: attribute(linkingItem, alias) }
+                ) }}
+            {% else %}
+                {{ include('Template/includeSelectItemListOne.html.twig') }}
+            {% endif %}
+        </div>
+        <br style="clear: both" />
+    {% endif %}
+    {% if group == 'site' && mandatory not true %}
+        <p class="alert alert-info">{{ __('If you decouple a site from the template it is not affected by future reapplications of this template anymore, but is configured and maintained independently. If you reassign a decoupled site to a template again this template is reapplied for that site.') }}</p>
+    {% endif %}
+{% if panel|default(false) == true %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    </fieldset>
+{% endif %}

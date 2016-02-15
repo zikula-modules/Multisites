@@ -1,0 +1,38 @@
+services:
+    # Helper classes
+    zikula_multisites_module.model_helper:
+        class: Zikula\MultisitesModule\Helper\ModelHelper
+        arguments: ["@service_container"]
+    
+    zikula_multisites_module.controller_helper:
+        class: Zikula\MultisitesModule\Helper\ControllerHelper
+        arguments: ["@service_container", @translator, @session, @logger]
+    
+    zikula_multisites_module.view_helper:
+        class: Zikula\MultisitesModule\Helper\ViewHelper
+        arguments: ["@service_container", @translator]
+    
+    zikula_multisites_module.workflow_helper:
+        class: Zikula\MultisitesModule\Helper\WorkflowHelper
+        arguments: ["@service_container", @translator]
+    
+    zikula_multisites_module.hook_helper:
+        class: Zikula\MultisitesModule\Helper\HookHelper
+        arguments: ["@hook_dispatcher"]
+    
+    zikula_multisites_module.image_helper:
+        class: Zikula\MultisitesModule\Helper\ImageHelper
+    
+    zikula_multisites_module.listentries_helper:
+        class: Zikula\MultisitesModule\Helper\ListEntriesHelper
+        arguments: [@translator]
+
+    # Custom helper classes
+    zikula_multisites_module.configurator_helper:
+        class: Zikula\MultisitesModule\Helper\ConfiguratorHelper
+    
+    zikula_multisites_module.siteextension_helper:
+        class: Zikula\MultisitesModule\Helper\SiteExtensionHelper
+    
+    zikula_multisites_module.system_helper:
+        class: Zikula\MultisitesModule\Helper\SystemHelper

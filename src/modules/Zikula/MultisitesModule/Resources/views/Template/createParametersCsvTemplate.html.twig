@@ -1,0 +1,11 @@
+{# purpose of this template: show output of create parameters csv template action in template area #}
+{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{% block title %}
+    {{ __('Create parameters csv template') }}
+{% endblock %}
+{% block adminPageIcon %}square{% endblock %}
+{% block content %}
+    <div class="zikulamultisitesmodule-createparameterscsvtemplate zikulamultisitesmodule-createparameterscsvtemplate">
+        <p>Please override this template by moving it from <em>/modules/ZikulaMultisitesModule/Resources/views/Template/createParametersCsvTemplate.tpl</em> to either your <em>/themes/YourTheme/Resources/views/modules/ZikulaMultisitesModule/Template/createParametersCsvTemplate.tpl</em> or <em>/config/templates/ZikulaMultisitesModule/Template/createParametersCsvTemplate.tpl</em>.</p>
+    </div>
+{% endblock %}
