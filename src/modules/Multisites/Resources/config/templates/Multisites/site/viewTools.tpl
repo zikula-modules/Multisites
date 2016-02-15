@@ -1,7 +1,7 @@
-{* purpose of this template: manage site themes *}
+{* purpose of this template: view tools section *}
 {assign var='lct' value='admin'}
 {include file="`$lct`/header.tpl"}
-<div class="multisites-site multisites-managethemes">
+<div class="multisites-site multisites-viewtools">
     {gt text='Site tools' assign='templateTitle'}
     {pagesetvar name='title' value=$templateTitle}
     <div class="z-admin-content-pagetitle">
