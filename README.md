@@ -36,7 +36,9 @@ This module is intended for being used with Zikula 1.3.5 to 1.3.9.
 <a name="installation" />
 ## Installation
 
-The Multisites module is installed like any other Zikula module.
+First copy the content of _Resources/config/_ into the _/config_ folder of your Zikula site.
+
+Afterwards the Multisites module is installed like any other Zikula module.
 
 1. Go to the Extensions administration
 2. Find Multisites in the Extensions list
