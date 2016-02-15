@@ -1,30 +1,30 @@
-application Multisites {
-	vendor Zikula
-	author "Albert Pérez Monfort"
-	email "aperezm@xtec.cat"
-	url "http://modulestudio.de"
-	version "2.0.0"
-	prefix multisites
-	generatorSettings {
-		settingsContainer Settings
-		targetCoreVersion ZK136
-		generateAccountApi false
-		generateSearchApi false
-		generateMailzApi false
-		generateListBlock false
-		generateModerationBlock false
-		generateListContentType false
-		generateDetailContentType false
-		generateNewsletterPlugin false
-		generateModerationPanel false
-		generatePendingContentSupport false
-		generateExternalControllerAndFinder false
-		generateScribitePlugins false
-		generateTagSupport false
-		generateRssTemplates false
-		generateAtomTemplates false
-		generateKmlTemplates false
-		generateIcsTemplates false
+application "Multisites" {
+    vendor "Zikula"
+    author "Albert Pérez Monfort"
+    email "aperezm@xtec.cat"
+    url "http://modulestudio.de"
+    version "2.0.0"
+    prefix "multisites"
+    generatorSettings {
+        settingsContainer "Settings"
+        targetCoreVersion ZK136
+        generateAccountApi false
+        generateSearchApi false
+        generateMailzApi false
+        generateListBlock false
+        generateModerationBlock false
+        generateListContentType false
+        generateDetailContentType false
+        generateNewsletterPlugin false
+        generateModerationPanel false
+        generatePendingContentSupport false
+        generateExternalControllerAndFinder false
+        generateScribitePlugins false
+        generateTagSupport false
+        generateRssTemplates false
+        generateAtomTemplates false
+        generateKmlTemplates false
+        generateIcsTemplates false
         skipFiles "
             CHANGELOG.md,
             README.md,
@@ -51,270 +51,261 @@ application Multisites {
         "
     }
     entities {
-        entity site leading {
+        entity "site" leading {
             documentation "Each site is assigned to a project and instance of a certain site template."
-            nameMultiple sites
+            nameMultiple "sites"
             displayPattern "#name#"
-            incoming ( "template.sites" ,
-            "project.sites" )
-            outgoing ( "site.extensions" )
             fields {
-                string name {
+                string "name" {
                     defaultValue ""
                     length 150
                 },
-                string description {
+                string "description" {
                     defaultValue ""
                     mandatory false
                 },
-                string siteAlias {
+                string "siteAlias" {
                     defaultValue ""
                     length 80
                 },
-                string siteName {
+                string "siteName" {
                     defaultValue ""
                     length 150
                 },
-                string siteDescription {
+                string "siteDescription" {
                     defaultValue ""
                     mandatory false
                 },
-                string siteAdminName {
-                    defaultValue admin
+                string "siteAdminName" {
+                    defaultValue "admin"
                     length 25
                 },
-                string siteAdminPassword password {
+                string "siteAdminPassword" password {
                     defaultValue ""
                     length 15
                 },
-                string siteAdminRealName {
+                string "siteAdminRealName" {
                     defaultValue ""
                     mandatory false
                     length 70
                 },
-                email siteAdminEmail {
+                email "siteAdminEmail" {
                     defaultValue ""
                     length 40
                 },
-                string siteCompany {
+                string "siteCompany" {
                     defaultValue ""
                     mandatory false
                     length 100
                 },
-                string siteDns {
+                string "siteDns" {
                     defaultValue ""
                 },
-                string databaseName {
-                    defaultValue ""
-                    length 50
-                },
-                string databaseUserName {
+                string "databaseName" {
                     defaultValue ""
                     length 50
                 },
-                string databasePassword password {
+                string "databaseUserName" {
                     defaultValue ""
                     length 50
                 },
-                string databaseHost {
-                    defaultValue localhost
+                string "databasePassword" password {
+                    defaultValue ""
                     length 50
                 },
-                string databaseType {
+                string "databaseHost" {
+                    defaultValue "localhost"
+                    length 50
+                },
+                string "databaseType" {
                     defaultValue ""
                     length 25
                 },
-				upload logo {
-					mandatory false
-				},
-                upload favIcon {
-					mandatory false
-					allowedExtensions "png, ico"
-				},
-                array allowedLocales {
+                upload "logo" {
+                    mandatory false
+                },
+                upload "favIcon" {
+                    mandatory false
+                    allowedExtensions "png, ico"
+                },
+                array "allowedLocales" {
                     defaultValue ""
                     mandatory false
                 },
-                upload parametersCsvFile {
+                upload "parametersCsvFile" {
                     mandatory false
-                    allowedExtensions csv
+                    allowedExtensions "csv"
                 },
-                array parametersArray {
+                array "parametersArray" {
                     defaultValue ""
                     mandatory false
                 },
-                boolean active ajaxTogglability {
-                    defaultValue ^false
+                boolean "active" ajaxTogglability {
+                    defaultValue "false"
                     mandatory false
                 }
             }
             indexes {
-                index siteDnsIndex {
+                index "siteDnsIndex" {
                     items {
-                        indexItem siteDns
+                        indexItem "siteDns"
                     }
                 }
             }
             actions {
-                viewAction View,
-                editAction Edit,
-                deleteAction Delete,
-                customAction ManageExtensions,
-                customAction ManageThemes,
-                customAction SetThemeAsDefault,
-                customAction ViewTools,
-                customAction ExecuteTool,
-                customAction ExportDatabaseAsTemplate
+                viewAction "View",
+                editAction "Edit",
+                deleteAction "Delete",
+                customAction "ManageExtensions",
+                customAction "ManageThemes",
+                customAction "SetThemeAsDefault",
+                customAction "ViewTools",
+                customAction "ExecuteTool",
+                customAction "ExportDatabaseAsTemplate"
             }
         },
-        entity template {
+        entity "template" {
             documentation "A site template represents a blueprint for several sites. Each template may be assigned to all or specific projects."
-            nameMultiple templates
+            nameMultiple "templates"
             displayPattern "#name#"
-            incoming ( "projects.templates" )
-            outgoing ( "template.sites" )
-			fields {
-                string name {
+            fields {
+                string "name" {
                     defaultValue ""
                     length 150
                 },
-                string description {
+                string "description" {
                     defaultValue ""
                     mandatory false
                     length 250
                 },
-                upload sqlFile {
+                upload "sqlFile" {
                     allowedExtensions "sql, txt"
                 },
-				array parameters {
-					defaultValue ""
-					mandatory false
-				},
-				array folders {
-					defaultValue ""
-					mandatory false
-				},
-				array excludedTables {
-					defaultValue ""
-					mandatory false
-				}
-			}
-			actions {
-                viewAction View,
-                editAction Edit,
-                customAction CreateParametersCsvTemplate,
-                customAction Reapply
+                array "parameters" {
+                    defaultValue ""
+                    mandatory false
+                },
+                array "folders" {
+                    defaultValue ""
+                    mandatory false
+                },
+                array "excludedTables" {
+                    defaultValue ""
+                    mandatory false
+                }
+            }
+            actions {
+                viewAction "View",
+                editAction "Edit",
+                customAction "CreateParametersCsvTemplate",
+                customAction "Reapply"
             }
         },
-        entity siteExtension {
+        entity "siteExtension" {
             documentation "A site consists of several extensions, which may be modules, themes or plugins."
-            nameMultiple siteExtensions
+            nameMultiple "siteExtensions"
             displayPattern "#name# v#extensionVersion#"
-            incoming ( "site.extensions" )
             fields {
-                string name {
+                string "name" {
                     defaultValue ""
                     length 50
                 },
-                string ^extensionVersion {
+                string "extensionVersion" {
                     defaultValue ""
                     length 10
                 },
-                list ^extensionType {
+                list "extensionType" {
                     items {
-                        default listItem module (module),
-                        listItem theme (theme),
-                        listItem systemPlugin (systemPlugin),
-                        listItem modulePlugin (modulePlugin)
+                        default listItem "module" ("module"),
+                        listItem "theme" ("theme"),
+                        listItem "systemPlugin" ("systemPlugin"),
+                        listItem "modulePlugin" ("modulePlugin")
                     }
                 }
             }
             actions {
-                viewAction View
+                viewAction "View"
             }
         },
-        entity project {
+        entity "project" {
             documentation "Projects serve for grouping sites by clients or topics."
-            nameMultiple projects
+            nameMultiple "projects"
             displayPattern "#name#"
-            outgoing ( "project.sites",
-            "projects.templates" )
             fields {
-                string name {
+                string "name" {
                     defaultValue ""
                     length 150
                 }
             }
             actions {
-                viewAction View,
-                editAction Edit
+                viewAction "View",
+                editAction "Edit"
             }
         }
-	}
-	relations {
+    }
+    relations {
         one2many bidirectional {
-            source template
-            sourceAlias template
-            target site
-            targetAlias sites
+            source "template"
+            sourceAlias "template"
+            target "site"
+            targetAlias "sites"
             editType ACTIVE_NONE_PASSIVE_CHOOSE
             cascade REMOVE
             orderBy "name"
         },
         one2many bidirectional {
-            source site
-            sourceAlias site
-            target siteExtension
-            targetAlias extensions
-            //editType ACTIVE_CHOOSE_PASSIVE_NONE
+            source "site"
+            sourceAlias "site"
+            target "siteExtension"
+            targetAlias "extensions"
             cascade REMOVE
             orderBy "name"
         },
         one2many bidirectional {
-            source project
-            sourceAlias project
-            target site
-            targetAlias sites
+            source "project"
+            sourceAlias "project"
+            target "site"
+            targetAlias "sites"
             editType ACTIVE_NONE_PASSIVE_CHOOSE
             cascade REMOVE
         },
         many2many bidirectional {
-            source project
-            sourceAlias projects
-            target template
-            targetAlias templates
+            source "project"
+            sourceAlias "projects"
+            target "template"
+            targetAlias "templates"
             editType ACTIVE_NONE_PASSIVE_CHOOSE
-            refClass ProjectTemplate
+            refClass "ProjectTemplate"
         }
-	}
-	variables {
-        varContainer General {
+    }
+    variables {
+        varContainer "General" {
             documentation "Here you can define general settings."
             vars {
-                textVar tempAccessFileContent
+                textVar "tempAccessFileContent"
             }
         },
-        varContainer SecuritySettings {
+        varContainer "SecuritySettings" {
             documentation "Here you can define security-related settings."
             sortOrder 2
             vars {
-                textVar globalAdminName,
-                textVar globalAdminPassword,
-                textVar globalAdminEmail
+                textVar "globalAdminName",
+                textVar "globalAdminPassword",
+                textVar "globalAdminEmail"
             }
         }
     }
     controllers {
-        adminController Admin {
+        adminController "Admin" {
             actions {
-                mainAction Main,
-                customAction ManageUpdates,
-                customAction MultiplyQueries
+                mainAction "Main",
+                customAction "ManageUpdates",
+                customAction "MultiplyQueries"
             }
         },
-        ajaxController Ajax {
+        ajaxController "Ajax" {
             actions {
-                mainAction Main
+                mainAction "Main"
             }
         }
     }
