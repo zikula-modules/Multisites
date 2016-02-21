@@ -49,7 +49,7 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
         $logger = $this->container->get('logger');
         // create all tables from according entity definitions
         try {
-            $this->container->get('zikula.doctrine.schema_tool')->create($this->listEntityClasses());
+            $this->schemaTool->create($this->listEntityClasses());
         } catch (\Exception $e) {
             if (System::isDevelopmentMode()) {
                 $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Doctrine Exception') . ': ' . $e->getMessage());
@@ -107,7 +107,7 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
                 // ...
                 // update the database schema
                 try {
-                    $this->container->get('zikula.doctrine.schema_tool')->update($this->listEntityClasses());
+                    $this->schemaTool->update($this->listEntityClasses());
                 } catch (\Exception $e) {
                     if (System::isDevelopmentMode()) {
                         $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Doctrine Exception') . ': ' . $e->getMessage());
@@ -340,7 +340,7 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
         }
     
         try {
-            $this->container->get('zikula.doctrine.schema_tool')->drop($this->listEntityClasses());
+            $this->schemaTool->drop($this->listEntityClasses());
         } catch (\Exception $e) {
             if (System::isDevelopmentMode()) {
                 $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Doctrine Exception') . ': ' . $e->getMessage());
