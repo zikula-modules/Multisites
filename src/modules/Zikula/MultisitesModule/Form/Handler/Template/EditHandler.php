@@ -38,57 +38,6 @@ class EditHandler extends BaseEditHandler
         // set mandatory flag to false
         $this->uploadFields['sqlFile'] = false;
 
-        // build distinct list of all existing sql files
-        $templates = ModUtil::apiFunc($this->name, 'selection', 'getEntities', ['ot' => 'template']);
-        $sqlFiles = [];
-        foreach ($templates as $template) {
-            if (in_array($template['sqlFile'], $sqlFiles)) {
-                continue;
-            }
-            $sqlFiles[$template['id']] = $template['sqlFile'];
-        }
-
-        $entity = $this->entityRef;
-        $sqlFileSelected = 0;
-        if ($this->mode != 'create') {
-            $sqlFileSelected = $entity['id'];
-            // ensure own id is used in sql file list
-            foreach ($sqlFiles as $id => $sqlFile) {
-                if ($sqlFile != $entity['sqlFile']) {
-                    continue;
-                }
-                if ($id != $sqlFileSelected) {
-                    unset($sqlFiles[$id]);
-                    $sqlFiles[$sqlFileSelected] = $sqlFile;
-                }
-                break;
-            }
-        } elseif ($this->hasTemplateId === true) {
-            // creation based on reuse
-            foreach ($sqlFiles as $id => $sqlFile) {
-                if ($sqlFile != $entity['sqlFile']) {
-                    continue;
-                }
-                $sqlFileSelected = $id;
-                break;
-            }
-        }
-
-        $sqlFileSelectedOptions = [];
-        $sqlFileSelectedOptions[] = ['value' => 0, 'text' => $this->__('Select an existing file...')];
-
-        foreach ($sqlFiles as $id => $sqlFile) {
-            $sqlFileSelectedOptions[] = ['value' => $id, 'text' => $sqlFile];
-        }
-
-        // TODO this must be reviewed and probably updated to Symfony forms
-        $additions = [
-            'sqlFileSelected' => $sqlFileSelected,
-            'sqlFileSelectedItems' => $sqlFileSelectedOptions
-        ];
-
-        $this->templateParameters['additions'] = $additions;
-
         return $result;
     }
 
@@ -111,8 +60,7 @@ class EditHandler extends BaseEditHandler
         // check if either an upload file has been provided or an existing sql file has been selected
         $hasSqlUpload = true;
         if (!$formData['sqlFile'] || $formData['sqlFile']['size'] == 0) {
-            $otherFormData = $this->view->getValues();
-            if (!isset($otherFormData['additions']) || !is_array($otherFormData['additions']) || !isset($otherFormData['additions']['sqlFileSelected']) || $otherFormData['additions']['sqlFileSelected'] < 1) {
+            if (!isset($formData['sqlFileSelected']) || $formData['sqlFileSelected'] < 1) {
                 $this->request->getSession()->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Please either provide a sql file or select an existing one.'));
                 return false;
             }
@@ -173,7 +121,7 @@ class EditHandler extends BaseEditHandler
                     $selectedFileTemplateId = $otherFormData['additions']['sqlFileSelected'];
                     if ($this->mode == 'create' || $selectedFileTemplateId != $existingObjectData['id']) {
                         // update file information from original template
-                        $referencedTemplate = ModUtil::apiFunc($this->name, 'selection', 'getEntity', ['ot' => 'template', 'id' => $selectedFileTemplateId]);
+                        $referencedTemplate = ModUtil::apiFunc('ZikulaMultisitesModule', 'selection', 'getEntity', ['ot' => 'template', 'id' => $selectedFileTemplateId]);
                         $formData[$uploadField] = $referencedTemplate[$uploadField];
                         $formData[$uploadField . 'Meta'] = $referencedTemplate[$uploadField . 'Meta'];
                     }

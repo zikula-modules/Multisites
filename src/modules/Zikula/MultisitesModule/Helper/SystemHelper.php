@@ -14,6 +14,7 @@ namespace Zikula\MultisitesModule\Helper;
 
 use ModUtil;
 use ServiceUtil;
+use UserUtil;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 
 /**

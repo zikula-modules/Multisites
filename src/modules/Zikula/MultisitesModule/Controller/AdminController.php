@@ -136,11 +136,13 @@ class AdminController extends BaseAdminController
 
         // create new instance of configurator
         $configurator = $this->get('zikula_multisites_module.configurator_helper');
-        $configValid = $configurator->verify($this->view); // TODO
+        $configValid = $configurator->verify();
 
         // if configuration is not completed we show special content
         if (!$configValid) {
-            return $this->render('@ZikulaMultisitesModule/Admin/wizard.html.twig');
+            $templateParameters = $configurator->getTemplateParameters();
+
+            return $this->render('@ZikulaMultisitesModule/Admin/wizard.html.twig', $templateParameters);
         }
 
         // check whether the global administrator has already been configured

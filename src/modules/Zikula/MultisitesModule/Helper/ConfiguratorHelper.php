@@ -12,17 +12,32 @@
 
 namespace Zikula\MultisitesModule\Helper;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Translation\TranslatorInterface;
+use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\ExtensionsModule\ExtensionVariablesTrait;
+
 /**
  * Utility class for configuration related functionality.
  */
 class ConfiguratorHelper
 {
+    use ExtensionVariablesTrait;
+    use TranslatorTrait;
+
     /**
-     * Reference to view instance.
-     *
-     * @var Zikula_View
+     * @var Session
      */
-    private $view;
+    protected $session;
+
+    /**
+     * The current request.
+     *
+     * @var Request
+     */
+    protected $request = null;
 
     /**
      * Primary configuration file path.
@@ -52,16 +67,31 @@ class ConfiguratorHelper
      */
     private $dbConfigTemplateFile;
 
+    /**
+     * List of template parameters.
+     *
+     * @var array
+     */
+    private $templateParameters = [];
 
     /**
-     * Initialize: called from constructor.
+     * Constructor.
+     * Initialises member vars.
      *
-     * Intended for initialising base classes.
+     * @param Session             $session     Session service instance.
+     * @param TranslatorInterface $translator  Translator service instance.
+     * @param VariableApi         $variableApi VariableApi service instance.
      *
      * @return void
      */
-    protected function initialize()
+    public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi, RequestStack $requestStack)
     {
+        $this->session = $session;
+        $this->setTranslator($translator);
+        $this->variableApi = $variableApi;
+        $this->extensionName = 'ZikulaMultisitesModule';
+        $this->request = $requestStack->getCurrentRequest();
+
         $this->configFile = 'config/multisites_config.php';
         $this->dbConfigFile = 'config/multisites_dbconfig.php';
         $this->configTemplateFile = 'modules/Multisites/Resources/' . $this->configFile;
@@ -69,20 +99,30 @@ class ConfiguratorHelper
     }
 
     /**
+     * Sets the translator.
+     *
+     * @param TranslatorInterface $translator Translator service instance.
+     */
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
      * Checks whether Multisites configuration is existing and well-formed.
      *
-     * @param Zikula_View The given view instance, used for assigning errors and other vars.
-     *
-     * @return boolean True if everything is okay, false otherwise.
+     * @return boolean indicating if everything is okay
      */
-    public function verify(Zikula_View $view)
+    public function verify()
     {
-        $this->view = $view;
+        $this->templateParameters = [];
 
         if (!$this->isMultisitesEnabled()) {
             // step 1 - check if required files are located in the correct place and whether they are writeable
             if (!$this->checkConfigurationFiles()) {
-                $view->assign('step', 1);
+                $this->templateParameters = [
+                    'step' => 1
+                ];
                 return false;
             }
 
@@ -104,9 +144,11 @@ class ConfiguratorHelper
                     $scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0, strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
                     $filesRealPath = $scriptRealPath . '/' . $GLOBALS['ZConfig']['System']['datadir'] . '/msData';
 
-                    $view->assign('step', 2)
-                         ->assign('files_real_path', $filesRealPath)
-                         ->assign('scriptRealPath', $scriptRealPath);
+                    $this->templateParameters = [
+                        'step' => 2,
+                        'files_real_path' => $filesRealPath,
+                        'scriptRealPath' => $scriptRealPath
+                    ];
                     return false;
                 }
             }
@@ -149,12 +191,14 @@ class ConfiguratorHelper
                     $path = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
                     $basePath = substr($path, 0, strrpos($path, '/'));
 
-                    $view->assign('step', 3)
-                         ->assign('configFile', $this->configFile)
-                         ->assign('dbConfigFile', $this->dbConfigFile)
-                         ->assign('mainSiteUrl', $_SERVER['HTTP_HOST'])
-                         ->assign('siteTempFilesFolder', $GLOBALS['ZConfig']['System']['temp'])
-                         ->assign('siteFilesFolder', 'data');
+                    $this->templateParameters = [
+                        'step' => 3,
+                        'configFile' => $this->configFile,
+                        'dbConfigFile' => $this->dbConfigFile,
+                        'mainSiteUrl' => $_SERVER['HTTP_HOST'],
+                        'siteTempFilesFolder' => $GLOBALS['ZConfig']['System']['temp'],
+                        'siteFilesFolder' => 'data'
+                    ];
                     return false;
                 }
             }
@@ -162,13 +206,17 @@ class ConfiguratorHelper
             // Step 4 - Check if config file is still writeable
             $configFileWriteable = file_exists($this->configFile) && is_writeable($this->configFile);
             if ($configFileWriteable) {
-                $view->assign('step', 4)
-                     ->assign('configFile', $this->configFile)
-                     ->assign('configFileWriteable', true);
+                $this->templateParameters = [
+                    'step' => 4,
+                    'configFile' => $this->configFile,
+                    'configFileWriteable' => true
+                ];
                 return false;
             }
 
-            return LogUtil::registerError($this->__('Error: it seems everything is configured correctly, but Multisites is not running. Please check your configuration file!'));
+            $this->session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: it seems everything is configured correctly, but Multisites is not running. Please check your configuration file!'));
+
+            return false;
         }
 
         // Multisites is enabled
@@ -182,13 +230,25 @@ class ConfiguratorHelper
         // check if the multisites_config.php file is writeable (it should not)
         $configFileWriteable = file_exists($this->configFile) && is_writeable($this->configFile);
         if ($configFileWriteable) {
-            $view->assign('step', 4)
-                 ->assign('configFile', $this->configFile)
-                 ->assign('configFileWriteable', true);
+            $this->templateParameters = [
+                'step' => 4,
+                'configFile' => $this->configFile,
+                'configFileWriteable' => true
+            ];
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Returns the collected template parameters.
+     *
+     * @return array List of template parameters.
+     */
+    public function getTemplateParameters()
+    {
+        return $this->templateParameters;
     }
 
     /**
@@ -240,14 +300,16 @@ class ConfiguratorHelper
             $result = $dbConfigFileWriteable;
         }
 
-        $this->view->assign('configFile', $this->configFile)
-                   ->assign('dbConfigFile', $this->dbConfigFile)
-                   ->assign('configTemplateFile', $this->configTemplateFile)
-                   ->assign('dbConfigTemplateFile', $this->dbConfigTemplateFile)
-                   ->assign('configFileExists', $configFileExists)
-                   ->assign('dbConfigFileExists', $dbConfigFileExists)
-                   ->assign('configFileWriteable', $configFileWriteable)
-                   ->assign('dbConfigFileWriteable', $dbConfigFileWriteable);
+        $this->templateParameters = [
+            'configFile' => $this->configFile,
+            'dbConfigFile' => $this->dbConfigFile,
+            'configTemplateFile' => $this->configTemplateFile,
+            'dbConfigTemplateFile' => $this->dbConfigTemplateFile,
+            'configFileExists' => $configFileExists,
+            'dbConfigFileExists' => $dbConfigFileExists,
+            'configFileWriteable' => $configFileWriteable,
+            'dbConfigFileWriteable' => $dbConfigFileWriteable
+        ];
 
         return $result;
     }
@@ -262,17 +324,22 @@ class ConfiguratorHelper
      */
     private function checkWriteableDirectory($filesPath)
     {
+        $flashBag = $this->session->getFlashBag();
+
         if ($filesPath == '') {
-            return LogUtil::registerError($this->__('The directory where the sites files have to be created is not defined. Please, define it.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory where the sites files have to be created is not defined. Please, define it.'));
+            return false;
         }
         if (!file_exists($filesPath)) {
             if (!@mkdir($filesPath, 0777, true) || !file_exists($filesPath)) {
-                return LogUtil::registerError($this->__('The directory where the sites files have to be created does not exist. Please, create it.'));
+                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory where the sites files have to be created does not exist. Please, create it.'));
+                return false;
             }
         }
         // check if the sitesFilesFolder is writeable
         if (!is_writeable($filesPath)) {
-            return LogUtil::registerError($this->__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.'));
+            return false;
         }
 
         return true;
@@ -287,19 +354,19 @@ class ConfiguratorHelper
      */
     private function writeFilesPathToConfig($filesPath)
     {
-        // Check permissions
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
-
         // check if the folder exists and is writeable
         if (!$this->checkWriteableDirectory($filesPath)) {
             return false;
         }
 
+        $flashBag = $this->session->getFlashBag();
+
         // write parameter into the multisites_config.php file
         $fh = @fopen($this->configFile, 'r+');
         if ($fh == false) {
             fclose($fh);
-            return LogUtil::registerError($this->__('Error: File config/multisites_config.php could not be found.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: File config/multisites_config.php could not be found.'));
+            return false;
         }
 
         $lines = file($this->configFile);
@@ -316,7 +383,8 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'w+');
         if (!fwrite($fh, $newFileContent)) {
             fclose($fh);
-            return LogUtil::registerError($this->__('Error: Could not write into the config/multiple_config.php file.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: Could not write into the config/multiple_config.php file.'));
+            return false;
         }
         fclose($fh);
 
@@ -334,20 +402,20 @@ class ConfiguratorHelper
      */
     private function writeSystemParametersToConfig($mainSiteUrl, $siteTempFilesFolder, $siteFilesFolder)
     {
-        // Check permissions
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
-
         // get server zikula folder installation
         /** TODO: write rule to convert domains from www.foo.dom to foo.dom */
         $path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
         $basePath = substr($path, 0 ,  strrpos($path, '/'));
         $wwwroot = 'http://' . $_SERVER['HTTP_HOST'] . $basePath;
 
+        $flashBag = $this->session->getFlashBag();
+
         // write parameter into the multisites_config.php file
         $fh = @fopen($this->configFile, 'r+');
         if ($fh == false) {
             fclose($fh);
-            return LogUtil::registerError($this->__('Error: File config/multisites_config.php could not be found.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: File config/multisites_config.php could not be found.'));
+            return false;
         }
 
         $lines = file($this->configFile);
@@ -375,7 +443,8 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'w+');
         if (!fwrite($fh, $newFileContent)) {
             fclose($fh);
-            return LogUtil::registerError($this->__('Error: Could not write into the config/multiple_config.php file.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: Could not write into the config/multiple_config.php file.'));
+            return false;
         }
         fclose($fh);
 
@@ -389,34 +458,36 @@ class ConfiguratorHelper
      */
     private function createAdditionalDirectories()
     {
-        // Check permissions
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission($this->name . '::', '::', ACCESS_ADMIN));
-
-        $sm = $this->serviceManager;
+        $flashBag = $this->session->getFlashBag();
 
         // check if the sitesFilesFolder exists
         $path = $this->getVar('files_real_path', '');
         if ($path == '') {
-            return LogUtil::registerError($this->__('The directory for storing the sites files is not defined. Check your configuration values.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory for storing the sites files is not defined. Check your configuration values.'));
+            return false;
         }
         if (!file_exists($path)) {
-            return LogUtil::registerError($this->__('The directory for storing the sites files does not exist.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory for storing the sites files does not exist.'));
+            return false;
         }
         // check if the sitesFilesFolder is writeable
         if (!is_writeable($path)) {
-            return LogUtil::registerError($this->__('The directory for storing the sites files is not writeable.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory for storing the sites files is not writeable.'));
+            return false;
         }
 
         // create the main site folder
 //         $path .= '/' . FormUtil::getPassedValue('sitedns', null, 'GET');
 //         if (!file_exists($path) && !mkdir($path, 0777, true)) {
-//             return LogUtil::registerError($this->__('Error creating the directory:') . ' ' . $path);
+//             $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error creating the directory:') . ' ' . $path);
+//             return false;
 //         }
 
         // create the data folder
         $path .= '/' . $this->getVar('site_files_folder', '');
         if (!file_exists($path) && !@mkdir($path, 0777, true)) {
-            return LogUtil::registerError($this->__('Error creating the directory:') . ' ' . $path);
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error creating the directory:') . ' ' . $path);
+            return false;
         }
 
         return true;

@@ -30,12 +30,7 @@
     <legend>{{ __('Template data') }}</legend>
 
     {{ form_row(form.sqlFile) }}
-    {# TODO must be migrated to Symfony Forms in the form handler #}
-    {#
-        {{ form_row(form.sqlFileSelected) }}
-        {formlabel for='sqlFileSelected' __text='or select an existing file' mandatorySym='0' cssClass=''}
-        {formdropdownlist group='additions' id='sqlFileSelected' mandatory=false readOnly=false}
-    #}
+    {{ form_row(form.sqlFileSelected) }}
 </fieldset>
 
 {{ include(

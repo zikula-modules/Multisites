@@ -520,10 +520,11 @@ class SiteController extends BaseSiteController
             // check if the module exists in the site database
             $available = array_key_exists($mod['name'], $siteModules);
 
-            $icons = $extensionHelper->getActionIconsForSiteModule($request, $this->get('twig'), $site, [
-                                        'name' => $mod['name'],
-                                        'available' => $available,
-                                        'siteModules' => $siteModules]);
+            $icons = $extensionHelper->getActionIconsForSiteModule($site, [
+                'name' => $mod['name'],
+                'available' => $available,
+                'siteModules' => $siteModules
+            ]);
 
             // add to output array
             $module = $mod;
@@ -574,11 +575,12 @@ class SiteController extends BaseSiteController
             $available = array_key_exists($thm['name'], $siteThemes);
             $isDefaultTheme = strtolower($thm['name']) == strtolower($defaultTheme);
 
-            $icons = $extensionHelper->getActionIconsForSiteTheme($request, $this->get('twig'), $site, [
-                                        'name' => $thm['name'],
-                                        'available' => $available,
-                                        'isDefaultTheme' => $isDefaultTheme,
-                                        'siteThemes' => $siteThemes]);
+            $icons = $extensionHelper->getActionIconsForSiteTheme($site, [
+                'name' => $thm['name'],
+                'available' => $available,
+                'isDefaultTheme' => $isDefaultTheme,
+                'siteThemes' => $siteThemes
+            ]);
 
             // add to output array
             $theme = $thm;
@@ -617,8 +619,9 @@ class SiteController extends BaseSiteController
         }
 
         // redirect to the admin main page
-        return $this->redirectToRoute('zikulamultisitesmodule_site_adminmanagethemes',
-                                              ['ot' => 'site', 'id' => $site['id']]);
+        return $this->redirectToRoute('zikulamultisitesmodule_site_adminmanagethemes', [
+            'ot' => 'site', 'id' => $site['id']
+        ]);
     }
 
     /**

@@ -126,7 +126,9 @@ class AjaxController extends BaseAjaxController
         }
 
         // return the response
-        return new AjaxResponse(['templates' => $result]);
+        return new AjaxResponse([
+            'templates' => $result
+        ]);
     }
 
     /**
@@ -183,14 +185,17 @@ class AjaxController extends BaseAjaxController
 
         // retrieve updated action icons
         $available = array_key_exists($moduleName, $siteModules);
-        $icons = $extensionHelper->getActionIconsForSiteModule($this->view, $site, [
-                'name' => $moduleName,
-                'available' => $available,
-                'siteModules' => $siteModules]);
+        $icons = $extensionHelper->getActionIconsForSiteModule($site, [
+            'name' => $moduleName,
+            'available' => $available,
+            'siteModules' => $siteModules
+        ]);
 
         // return the response
-        return new AjaxResponse(['content' => $icons,
-                                 'moduleName' => $moduleName]);
+        return new AjaxResponse([
+            'content' => $icons,
+            'moduleName' => $moduleName
+        ]);
     }
 
     /**
@@ -262,10 +267,11 @@ class AjaxController extends BaseAjaxController
 
         // retrieve updated action icons
         $available = array_key_exists($moduleName, $siteModules);
-        $icons = $extensionHelper->getActionIconsForSiteModule(null, $site, [
-                'name' => $moduleName,
-                'available' => $available,
-                'siteModules' => $siteModules]);
+        $icons = $extensionHelper->getActionIconsForSiteModule($site, [
+            'name' => $moduleName,
+            'available' => $available,
+            'siteModules' => $siteModules
+        ]);
 
         // return the response
         return new AjaxResponse(['content' => $icons,
@@ -331,13 +337,16 @@ class AjaxController extends BaseAjaxController
 
         // retrieve updated action icons
         $available = array_key_exists($themeName, $siteThemes);
-        $icons = $extensionHelper->getActionIconsForSiteTheme(null, $site, [
-                'name' => $themeName,
-                'available' => $available,
-                'siteThemes' => $siteThemes]);
+        $icons = $extensionHelper->getActionIconsForSiteTheme($site, [
+            'name' => $themeName,
+            'available' => $available,
+            'siteThemes' => $siteThemes
+        ]);
 
         // return the response
-        return new AjaxResponse(['content' => $icons,
-                                 'themeName' => $themeName]);
+        return new AjaxResponse([
+            'content' => $icons,
+            'themeName' => $themeName
+        ]);
     }
 }

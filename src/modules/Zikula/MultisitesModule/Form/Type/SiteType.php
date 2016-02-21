@@ -193,7 +193,7 @@ class SiteType extends BaseSiteType
                 $this->__('MySQL Improved') => 'mysqli',
                 $this->__('PostgreSQL') => 'postgres',
                 //$this->__('Oracle') => 'oci'
-            ]
+            ],
             'choices_as_values' => true
             'multiple' => false,
             'expanded' => false

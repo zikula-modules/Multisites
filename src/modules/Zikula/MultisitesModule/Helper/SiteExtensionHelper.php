@@ -12,6 +12,14 @@
 
 namespace Zikula\MultisitesModule\Helper;
 
+use DataUtil;
+use ModUtil;
+use ThemeUtil;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Translation\TranslatorInterface;
+use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 
 /**
@@ -19,21 +27,87 @@ use Zikula\MultisitesModule\Entity\SiteEntity;
  */
 class SiteExtensionHelper
 {
+    use TranslatorTrait;
+
+    /**
+     * @var Session
+     */
+    protected $session;
+
+    /**
+     * The current request.
+     *
+     * @var Request
+     */
+    protected $request = null;
+
+    /**
+     * The twig environment.
+     *
+     * @var Twig_Environment
+     */
+    protected $twig = null;
+
+    /**
+     * The workflow helper.
+     *
+     * @var WorkflowHelper
+     */
+    protected $workflowHelper = null;
+
+    /**
+     * The system helper.
+     *
+     * @var SystemHelper
+     */
+    protected $systemHelper = null;
+
+    /**
+     * Constructor.
+     * Initialises member vars.
+     *
+     * @param Session             $session        Session service instance.
+     * @param TranslatorInterface $translator     Translator service instance.
+     * @param RequestStack        $requestStack   RequestStack service instance.
+     * @param Twig_Environment    $twig           Twig service instance.
+     * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance.
+     * @param SystemHelper        $systemHelper   SystemHelper service instance.
+     *
+     * @return void
+     */
+    public function __construct(Session $session, TranslatorInterface $translator, RequestStack $requestStack, \Twig_Environment $twig, WorkflowHelper $workflowHelper, SystemHelper $systemHelper)
+    {
+        $this->session = $session;
+        $this->setTranslator($translator);
+        $this->request = $requestStack->getCurrentRequest();
+        $this->twig = $twig;
+        $this->workflowHelper = $workflowHelper;
+        $this->systemHelper = $systemHelper;
+    }
+
+    /**
+     * Sets the translator.
+     *
+     * @param TranslatorInterface $translator Translator service instance.
+     */
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * Renders the icons that identify the modules availability for a site.
      *
-     * @param Request          $request Current request instance
-     * @param Twig_Environment twig     The Twig environment.
-     * @param SiteEntity       site     The given site instance.
-     * @param array            args     Additional arguments.
+     * @param SiteEntity site The given site instance.
+     * @param array      args Additional arguments.
      *
      * @return string The rendered output.
      */
-    public function getActionIconsForSiteModule(Request $request, \Twig_Environment $twig, SiteEntity $site, $args)
+    public function getActionIconsForSiteModule(SiteEntity $site, $args)
     {
-        $name = isset($args['name']) ? $args['name'] : $request->request->get('name', null);
-        $available = isset($args['available']) ? $args['available'] : $request->request->get('available', null);
-        $siteModules = isset($args['siteModules']) ? $args['siteModules'] : $request->request->get('siteModules', null);
+        $name = isset($args['name']) ? $args['name'] : $this->request->request->get('name', null);
+        $available = isset($args['available']) ? $args['available'] : $this->request->request->get('available', null);
+        $siteModules = isset($args['siteModules']) ? $args['siteModules'] : $this->request->request->get('siteModules', null);
 
         $templateParameters = [
             'site' => $site,
@@ -42,25 +116,23 @@ class SiteExtensionHelper
             'siteModules' => $siteModules
         ];
 
-        return $twig->render('@ZikulaMultisitesModule/Site/iconsModule.html.twig', $templateParameters);
+        return $this->twig->render('@ZikulaMultisitesModule/Site/iconsModule.html.twig', $templateParameters);
     }
 
     /**
      * Renders the icons that identify the themes availability for a site.
      *
-     * @param Request          $request Current request instance
-     * @param Twig_Environment twig     The Twig environment.
-     * @param SiteEntity       site     The given site instance.
-     * @param array            args     Additional arguments.
+     * @param SiteEntity site The given site instance.
+     * @param array      args Additional arguments.
      *
      * @return string The rendered output.
      */
-    public function getActionIconsForSiteTheme(Request $request, \Twig_Environment $twig, SiteEntity $site, $args)
+    public function getActionIconsForSiteTheme(SiteEntity $site, $args)
     {
-        $name = isset($args['name']) ? $args['name'] : $request->request->get('name', null);
-        $available = isset($args['available']) ? $args['available'] : $request->request->get('available', null);
-        $siteThemes = isset($args['siteThemes']) ? $args['siteThemes'] : $request->request->get('siteThemes', null);
-        $isDefaultTheme = isset($args['isDefaultTheme']) ? $args['isDefaultTheme'] : $request->request->get('isDefaultTheme', null);
+        $name = isset($args['name']) ? $args['name'] : $this->request->request->get('name', null);
+        $available = isset($args['available']) ? $args['available'] : $this->request->request->get('available', null);
+        $siteThemes = isset($args['siteThemes']) ? $args['siteThemes'] : $this->request->request->get('siteThemes', null);
+        $isDefaultTheme = isset($args['isDefaultTheme']) ? $args['isDefaultTheme'] : $this->request->request->get('isDefaultTheme', null);
 
         $templateParameters = [
             'site' => $site,
@@ -70,7 +142,7 @@ class SiteExtensionHelper
             'siteThemes', $siteThemes
         ];
 
-        return $twig->render('@ZikulaMultisitesModule/Site/iconsTheme.html.twig', $templateParameters);
+        return $this->twig->render('@ZikulaMultisitesModule/Site/iconsTheme.html.twig', $templateParameters);
     }
 
     /**
@@ -82,12 +154,9 @@ class SiteExtensionHelper
      */
     public function getAllModulesFromSiteDb(SiteEntity $site)
     {
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
-
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $this->session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -114,8 +183,6 @@ class SiteExtensionHelper
         // get all the modules available in site
         $siteModules = $this->getAllModulesFromSiteDb($site);
 
-        $workflowHelper = new Multisites_Util_Workflow($this->serviceManager);
-
         // save them
         foreach ($siteModules as $module) {
             $entity = new SiteEntityExtension();
@@ -124,10 +191,10 @@ class SiteExtensionHelper
             $entity->setExtensionType('module');
             $this->entityManager->persist($entity);
             $site->addExtensions($entity);
-            $success = $workflowHelper->executeAction($entity, 'submit');
+            $success = $this->workflowHelper->executeAction($entity, 'submit');
         }
 
-        //$success = $workflowHelper->executeAction($site, 'update');
+        //$success = $this->workflowHelper->executeAction($site, 'update');
 
         return true;
     }
@@ -142,17 +209,16 @@ class SiteExtensionHelper
      */
     public function getModuleFromSiteDb(SiteEntity $site, $moduleName)
     {
+        $flashBag = $this->session->getFlashBag();
+
         if (null === $moduleName || $moduleName == '') {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
             return false;
         }
 
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
-
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -182,21 +248,20 @@ class SiteExtensionHelper
      */
     public function createSiteModule(SiteEntity $site, $moduleName)
     {
+        $flashBag = $this->session->getFlashBag();
+
         if (null === $moduleName || $moduleName == '') {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
             return false;
         }
 
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
-
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
-        $allModules = ModUtil::apiFunc('Extensions', 'admin', 'getfilemodules');
+        $allModules = ModUtil::apiFunc('ZikulaExtensionsModule', 'admin', 'getfilemodules');
         $module = $allModules[$moduleName];
 
         $fields = '';
@@ -235,7 +300,7 @@ class SiteExtensionHelper
                 VALUES ($values)";
         $rs = $connect->query($sql);
         if (!$rs) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creation attempt failed.' . $sql));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creation attempt failed.' . $sql));
             return false;
         }
 
@@ -252,17 +317,16 @@ class SiteExtensionHelper
      */
     public function deleteSiteModule(SiteEntity $site, $moduleName)
     {
+        $flashBag = $this->session->getFlashBag();
+
         if (null === $moduleName || $moduleName == '') {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
             return false;
         }
 
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
-
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -284,7 +348,7 @@ class SiteExtensionHelper
                 WHERE `name` = :moduleName';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':moduleName' => $moduleName])) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Sorry! Deletion attempt failed.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Sorry! Deletion attempt failed.'));
             return false;
         }
 
@@ -304,12 +368,11 @@ class SiteExtensionHelper
         $moduleName = $args['moduleName'];
         $newState = $args['newState'];
 
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
+        $flashBag = $this->session->getFlashBag();
 
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -319,7 +382,7 @@ class SiteExtensionHelper
                 WHERE `name` = :moduleName';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':moduleName' => $moduleName, ':newState' => $newState])) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Update attempt failed.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Update attempt failed.'));
             return false;
         }
 
@@ -338,6 +401,8 @@ class SiteExtensionHelper
         if (!file_exists($themeBaseFolder) || !is_dir($themeBaseFolder)) {
             return $themes;
         }
+
+        $flashBag = $this->session->getFlashBag();
 
         $dh = opendir($themeBaseFolder);
         $dirArray = [];
@@ -382,11 +447,11 @@ class SiteExtensionHelper
             // manipulate the theme version information
             if (file_exists($file = $themeFolder . 'version.php')) {
                 if (!include($file)) {
-                    $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
+                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
                 }
             } elseif ($themeType == 4 && file_exists($file = $themeFolder . 'theme.cfg')) {
                 if (!include($file)) {
-                    $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
+                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
                 }
                 if (!isset($themeversion['name'])) {
                     $themeversion['name'] = $dir;
@@ -394,7 +459,7 @@ class SiteExtensionHelper
                 $themeversion['displayname'] = $themeversion['name'];
             } elseif ($themeType == 2 && file_exists($file = $themeFolder . 'xaninfo.php')) {
                 if (!include($file)) {
-                    $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
+                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
                 }
                 $themeversion['author'] = $themeinfo['author'];
                 $themeversion['contact'] = $themeinfo['download'];
@@ -442,12 +507,11 @@ class SiteExtensionHelper
      */
     public function getAllThemesFromSiteDb(SiteEntity $site)
     {
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
+        $flashBag = $this->session->getFlashBag();
 
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -472,17 +536,16 @@ class SiteExtensionHelper
      */
     public function getThemeFromSiteDb(SiteEntity $site, $themeName)
     {
+        $flashBag = $this->session->getFlashBag();
+
         if (null === $themeName || $themeName == '') {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
             return false;
         }
 
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
-
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -494,7 +557,7 @@ class SiteExtensionHelper
 
         $rs = $stmt->fetch();
         if (!$rs) {
-            //$serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not load items.'));
+            //$flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not load items.'));
             //return false;
         }
         $item = ['name' => $rs['name'],
@@ -513,17 +576,16 @@ class SiteExtensionHelper
      */
     public function createSiteTheme(SiteEntity $site, $themeName)
     {
+        $flashBag = $this->session->getFlashBag();
+
         if (null === $themeName || $themeName == '') {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
             return false;
         }
 
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
-
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -564,7 +626,7 @@ class SiteExtensionHelper
                 VALUES ($values)";
         $rs = $connect->query($sql);
         if (!$rs) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creation attempt failed.' . $sql));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creation attempt failed.' . $sql));
             return false;
         }
 
@@ -581,17 +643,16 @@ class SiteExtensionHelper
      */
     public function deleteSiteTheme(SiteEntity $site, $themeName)
     {
+        $flashBag = $this->session->getFlashBag();
+
         if (null === $themeName || $themeName == '') {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
             return false;
         }
 
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
-
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -599,7 +660,7 @@ class SiteExtensionHelper
                 WHERE `name` = :themeName';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':themeName' => $themeName])) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Sorry! Deletion attempt failed.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Sorry! Deletion attempt failed.'));
             return false;
         }
 
@@ -615,12 +676,11 @@ class SiteExtensionHelper
      */
     public function getSiteDefaultTheme(SiteEntity $site)
     {
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
+        $flashBag = $this->session->getFlashBag();
 
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -630,7 +690,7 @@ class SiteExtensionHelper
                 AND `name` = \'Default_Theme\'';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute()) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not load default theme.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not load default theme.'));
             return false;
         }
         $rs = $stmt->fetch();
@@ -649,12 +709,11 @@ class SiteExtensionHelper
      */
     public function setAsDefaultTheme(SiteEntity $site, $themeName)
     {
-        $serviceManager = \ServiceUtil::getManager();
-        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
+        $flashBag = $this->session->getFlashBag();
 
-        $connect = $systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
             return false;
         }
 
@@ -665,7 +724,7 @@ class SiteExtensionHelper
                 AND `name` = \'Default_Theme\'';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => $value])) {
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not save the new default theme.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not save the new default theme.'));
             return false;
         }
 
