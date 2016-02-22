@@ -3,71 +3,72 @@ services:
     
     zikula_multisites_module.form.type.sitequicknav:
         class: Zikula\MultisitesModule\Form\Type\QuickNavigation\SiteQuickNavType
-        arguments: [@translator, "@request_stack", @zikula_multisites_module.listentries_helper]
+        arguments: ["@translator", "@request_stack", "@zikula_multisites_module.listentries_helper"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.type.templatequicknav:
         class: Zikula\MultisitesModule\Form\Type\QuickNavigation\TemplateQuickNavType
-        arguments: [@translator, "@request_stack", @zikula_multisites_module.listentries_helper]
+        arguments: ["@translator", "@request_stack", "@zikula_multisites_module.listentries_helper"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.type.siteextensionquicknav:
         class: Zikula\MultisitesModule\Form\Type\QuickNavigation\SiteExtensionQuickNavType
-        arguments: [@translator, "@request_stack", @zikula_multisites_module.listentries_helper]
+        arguments: ["@translator", "@request_stack", "@zikula_multisites_module.listentries_helper"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.type.projectquicknav:
         class: Zikula\MultisitesModule\Form\Type\QuickNavigation\ProjectQuickNavType
-        arguments: [@translator, "@request_stack", @zikula_multisites_module.listentries_helper]
+        arguments: ["@translator", "@request_stack", "@zikula_multisites_module.listentries_helper"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.handler.site:
         class: Zikula\MultisitesModule\Form\\Handler\Site\EditHandler
-        arguments: ["@service_container", @translator, "@request_stack", @router, "@zikula_multisites_module.upload_handler"]
+        arguments: ["@service_container", "@translator", "@request_stack", "@router", "@zikula_multisites_module.upload_handler"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.type.site:
         class: Zikula\MultisitesModule\Form\Type\SiteType
-        arguments: [@translator, "@zikula_multisites_module.site_factory", "@zikula_multisites_module.listentries_helper"]
+        arguments: ["@translator", "@zikula_multisites_module.site_factory", "@zikula_multisites_module.listentries_helper"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.handler.template:
         class: Zikula\MultisitesModule\Form\\Handler\Template\EditHandler
-        arguments: ["@service_container", @translator, "@request_stack", @router, "@zikula_multisites_module.upload_handler"]
+        arguments: ["@service_container", "@translator", "@request_stack", "@router", "@zikula_multisites_module.upload_handler"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.type.template:
         class: Zikula\MultisitesModule\Form\Type\TemplateType
-        arguments: [@translator, "@zikula_multisites_module.template_factory", "@zikula_multisites_module.listentries_helper"]
+        arguments: ["@translator", "@zikula_multisites_module.template_factory", "@zikula_multisites_module.listentries_helper"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.handler.project:
         class: Zikula\MultisitesModule\Form\\Handler\Project\EditHandler
-        arguments: ["@service_container", @translator, "@request_stack", @router, "@zikula_multisites_module.upload_handler"]
+        arguments: ["@service_container", "@translator", "@request_stack", "@router", "@zikula_multisites_module.upload_handler"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.type.project:
         class: Zikula\MultisitesModule\Form\Type\ProjectType
-        arguments: [@translator, "@zikula_multisites_module.project_factory", "@zikula_multisites_module.listentries_helper"]
+        arguments: ["@translator", "@zikula_multisites_module.project_factory", "@zikula_multisites_module.listentries_helper"]
         tags:
             - { name: form.type }
+
     zikula_multisites_module.form.type.deleteentity:
         class: Zikula\MultisitesModule\Form\DeleteEntityType
-        arguments: [@translator]
+        arguments: ["@translator"]
         tags:
             - { name: form.type }
     
     zikula_multisites_module.form.type.appsettings:
         class: Zikula\MultisitesModule\Form\AppSettingsType
-        arguments: [@translator, "@zikula_extensions_module.api.variable"]
+        arguments: ["@translator", "@zikula_extensions_module.api.variable"]
         tags:
             - { name: form.type }
