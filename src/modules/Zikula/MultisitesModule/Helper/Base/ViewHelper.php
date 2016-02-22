@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\Response\PlainResponse;
-use Zikula_View;
 
 /**
  * Utility base class for view helper methods.
