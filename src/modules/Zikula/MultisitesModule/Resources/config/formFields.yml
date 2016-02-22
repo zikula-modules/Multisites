@@ -3,6 +3,6 @@ services:
     
     zikula_multisites_module.form.upload_type_extension:
         class: Zikula\MultisitesModule\Form\Extension\UploadTypeExtension
-        arguments: [@translator]
+        arguments: ["@translator"]
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
