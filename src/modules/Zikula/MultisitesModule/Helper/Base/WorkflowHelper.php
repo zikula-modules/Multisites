@@ -14,7 +14,7 @@ namespace Zikula\MultisitesModule\Helper\Base;
 
 use ModUtil;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Translation\TranslatorInterface;
+use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula_Workflow_Util;
 

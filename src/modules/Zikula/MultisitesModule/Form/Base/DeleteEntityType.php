@@ -14,7 +14,7 @@ namespace Zikula\MultisitesModule\Form\Base;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Zikula\Common\Translator\TranslatorInterface;
 
 /**
  * Entity deletion form type base class.

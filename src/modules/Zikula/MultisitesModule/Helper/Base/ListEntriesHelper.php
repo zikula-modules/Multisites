@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Helper\Base;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Zikula\Common\Translator\TranslatorInterface;
 
 /**
  * Utility base class for list field entries related methods.

@@ -6,15 +6,15 @@ services:
     
     zikula_multisites_module.controller_helper:
         class: Zikula\MultisitesModule\Helper\ControllerHelper
-        arguments: ["@service_container", "@translator", "@session", "@logger"]
+        arguments: ["@service_container", "@translator.default", "@session", "@logger"]
     
     zikula_multisites_module.view_helper:
         class: Zikula\MultisitesModule\Helper\ViewHelper
-        arguments: ["@service_container", "@translator"]
+        arguments: ["@service_container", "@translator.default"]
     
     zikula_multisites_module.workflow_helper:
         class: Zikula\MultisitesModule\Helper\WorkflowHelper
-        arguments: ["@service_container", "@translator"]
+        arguments: ["@service_container", "@translator.default"]
     
     zikula_multisites_module.hook_helper:
         class: Zikula\MultisitesModule\Helper\HookHelper
@@ -25,16 +25,16 @@ services:
     
     zikula_multisites_module.listentries_helper:
         class: Zikula\MultisitesModule\Helper\ListEntriesHelper
-        arguments: ["@translator"]
+        arguments: ["@translator.default"]
 
     # Custom helper classes
     zikula_multisites_module.configurator_helper:
         class: Zikula\MultisitesModule\Helper\ConfiguratorHelper
-        arguments: ["@session", "@translator", "@zikula_extensions_module.api.variable", "@request_stack"]
+        arguments: ["@session", "@translator.default", "@zikula_extensions_module.api.variable", "@request_stack"]
     
     zikula_multisites_module.siteextension_helper:
         class: Zikula\MultisitesModule\Helper\SiteExtensionHelper
-        arguments: ["@session", "@translator", "@request_stack", "@twig", "@zikula_multisites_module.workflow_helper", "@zikula_multisites_module.system_helper"]
+        arguments: ["@session", "@translator.default", "@request_stack", "@twig", "@zikula_multisites_module.workflow_helper", "@zikula_multisites_module.system_helper"]
     
     zikula_multisites_module.system_helper:
         class: Zikula\MultisitesModule\Helper\SystemHelper
