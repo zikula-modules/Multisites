@@ -38,3 +38,4 @@ services:
     
     zikula_multisites_module.system_helper:
         class: Zikula\MultisitesModule\Helper\SystemHelper
+        arguments: ["@translator.default", "@zikula_extensions_module.api.variable"]

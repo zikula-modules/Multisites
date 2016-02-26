@@ -15,6 +15,8 @@ namespace Zikula\MultisitesModule\Form\Handler\Site;
 use Zikula\MultisitesModule\Form\Handler\Site\Base\EditHandler as BaseEditHandler;
 
 use System;
+use Zikula\MultisitesModule\Entity\SiteEntity;
+use Zikula\MultisitesModule\Helper\SystemHelper;
 
 /**
  * This handler class handles the page events of the Form called by the zikulaMultisitesModule_site_edit() function.
@@ -24,7 +26,7 @@ class EditHandler extends BaseEditHandler
 {
     /**
      * Configuration application helper.
-     * @var \Zikula\MultisitesModule\Helper\SystemHelper
+     * @var SystemHelper
      */
     private $systemHelper;
 
@@ -39,7 +41,7 @@ class EditHandler extends BaseEditHandler
     {
         $isDecoupledSite = is_null($this->entityRef['template']);
 
-        $formData = parent::fetchInputData($view, $args);
+        $formData = parent::fetchInputData($args);
 
         // get treated entity reference from persisted member var
         $entity = $this->entityRef;
@@ -67,7 +69,7 @@ class EditHandler extends BaseEditHandler
         // create helper instance for config application
         $this->systemHelper = $this->container->get('zikulamultisitesmodule.system_helper');
 
-        if ($this->mode == 'create') {
+        if ($this->templateParameters['mode'] == 'create') {
             if (is_null($entity['template'])) {
                 $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! You need to select a template for new sites.'));
                 return false;
@@ -86,10 +88,9 @@ class EditHandler extends BaseEditHandler
             }
         }
 
-        if ($this->mode != 'create') {
+        if ($this->templateParameters['mode'] != 'create') {
             // check if site has been decoupled from it's template
-            // we use $_POST directly on purpose here, since the Form plugin changes the result
-            $templateIdArray = isset($_POST['template']) && is_array($_POST['template']) ? $_POST['template'] : [];
+            $templateIdArray = isset($formData['template']) && is_array($formData['template']) ? $formData['template'] : [];
             if (isset($templateIdArray[0])) {
                 if (!$isDecoupledSite && $templateIdArray[0] == '') {
                     // decouple site
@@ -116,8 +117,8 @@ class EditHandler extends BaseEditHandler
     /**
      * Performs preparation work and advanced checks before a new site is persisted.
      *
-     * @param Multisites_Entity_Site entity            The currently treated site instance.
-     * @param boolean                createNewDatabase If true then the database is created, defaults to false.
+     * @param SiteEntity $entity            The currently treated site instance.
+     * @param boolean    $createNewDatabase If true then the database is created, defaults to false.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -125,8 +126,9 @@ class EditHandler extends BaseEditHandler
     {
         $flashBag = $this->request->getSession()->getFlashBag();
 
+        $siteFactory = $this->container->get('zikula_multisites_module.site_factory');
         // check whether the sitedns already exists and return an error it this is the case
-        $repository = $this->entityManager->getRepository('Multisites_Entity_Site');
+        $repository = $siteFactory->getRepository();
         $sites = $repository->getSiteInfo($entity['siteDns']);
         if (!is_null($sites) && count($sites) > 0) {
             $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('This site exists already. The site DNS must be unique.'));

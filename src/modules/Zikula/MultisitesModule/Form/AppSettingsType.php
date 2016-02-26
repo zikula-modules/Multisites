@@ -24,8 +24,8 @@ class AppSettingsType extends BaseAppSettingsType
     /**
      * Adds fields for security settings fields.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addSecuritySettingsFields(FormBuilderInterface $builder, array $options)
     {

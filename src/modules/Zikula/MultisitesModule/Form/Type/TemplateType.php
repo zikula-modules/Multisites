@@ -25,8 +25,8 @@ class TemplateType extends BaseTemplateType
     /**
      * Adds basic entity fields.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
@@ -44,7 +44,7 @@ class TemplateType extends BaseTemplateType
             'required' => false,
             'placeholder' => '',
             'choices' => $templateChoices,
-            'choices_as_values' => true
+            'choices_as_values' => true,
             'multiple' => false,
             'expanded' => false
         ]);
@@ -87,7 +87,7 @@ class TemplateType extends BaseTemplateType
     /**
      * Returns a list of existing template files.
      *
-     * @param array The options.
+     * @param array $options The options.
      *
      * @return array List of choices and preselected entry id.
      */

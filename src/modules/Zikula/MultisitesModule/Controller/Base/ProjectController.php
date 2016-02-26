@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FormUtil;
 use JCSSUtil;
 use ModUtil;
+use RuntimeException;
 use System;
 use UserUtil;
 use ZLanguage;
@@ -43,12 +44,11 @@ class ProjectController extends AbstractController
      * @Theme("admin")
      * @Cache(expires="+2 hours", public=false)
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      * @param string  $sort         Sorting field.
      * @param string  $sortdir      Sorting direction.
      * @param int     $pos          Current pager position.
      * @param int     $num          Amount of entries to display.
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
      *
      * @return mixed Output.
      *
@@ -63,12 +63,11 @@ class ProjectController extends AbstractController
      * This action provides an item list overviewnull.
      * @Cache(expires="+2 hours", public=false)
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      * @param string  $sort         Sorting field.
      * @param string  $sortdir      Sorting direction.
      * @param int     $pos          Current pager position.
      * @param int     $num          Amount of entries to display.
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
      *
      * @return mixed Output.
      *
@@ -229,8 +228,7 @@ class ProjectController extends AbstractController
      * @Theme("admin")
      * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
      *
-     * @param Request  $request      Current request instance
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
+     * @param Request $request Current request instance.
      *
      * @return mixed Output.
      *
@@ -247,8 +245,7 @@ class ProjectController extends AbstractController
      * This action provides a handling of edit requestsnull.
      * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
      *
-     * @param Request  $request      Current request instance
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
+     * @param Request $request Current request instance.
      *
      * @return mixed Output.
      *
@@ -305,8 +302,7 @@ class ProjectController extends AbstractController
      * This function processes the items selected in the admin view page.
      * Multiple items may have their state changed or be deleted.
      *
-     * @param string $action The action to be executed.
-     * @param array  $items  Identifier list of the items to be processed.
+     * @param Request $request Current request instance.
      *
      * @return bool true on sucess, false on failure.
      *
@@ -324,7 +320,7 @@ class ProjectController extends AbstractController
         
         $workflowHelper = $this->get('zikulamultisitesmodule.workflow_helper');
         $hookHelper = $this->get('zikulamultisitesmodule.hook_helper');
-        $flashBag = $this->request->getSession()->getFlashBag();
+        $flashBag = $request->getSession()->getFlashBag();
         $logger = $this->get('logger');
         
         // process each item
@@ -383,7 +379,7 @@ class ProjectController extends AbstractController
             $url = null;
             if ($action != 'delete') {
                 $urlArgs = $entity->createUrlArgs();
-                $url = new RouteUrl('zikulamultisitesmodule_project_' . ($isAdmin ? 'admin' : '') . 'display', $urlArgs);
+                $url = new RouteUrl('zikulamultisitesmodule_project_' . /*($isAdmin ? 'admin' : '') . */'display', $urlArgs);
             }
             $hookHelper->callProcessHooks($entity, $hookType, $url);
         }

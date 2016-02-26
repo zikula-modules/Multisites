@@ -12,7 +12,6 @@
 
 namespace Zikula\MultisitesModule\Helper\Base;
 
-use ModUtil;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\Doctrine\EntityAccess;
@@ -194,6 +193,8 @@ class WorkflowHelper
      * Returns a button class for a certain action.
      *
      * @param string $actionId Id of the treated action.
+     *
+     * @return string The button class.
      */
     protected function getButtonClassForAction($actionId)
     {
@@ -262,7 +263,7 @@ class WorkflowHelper
     {
         $workflow = $entity['__WORKFLOW__'];
         if (!isset($workflow[0]) && isset($workflow['module'])) {
-            return;
+            return true;
         }
     
         if (isset($workflow[0])) {
@@ -297,8 +298,7 @@ class WorkflowHelper
     public function collectAmountOfModerationItems()
     {
         $amounts = [];
-        $modname = 'ZikulaMultisitesModule';
-    
+
         // nothing required here as no entities use enhanced workflows including approval actions
     
         return $amounts;

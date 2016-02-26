@@ -12,19 +12,22 @@
 
 namespace Zikula\MultisitesModule\Container\Base;
 
-use ModUtil;
-use ServiceUtil;
 use Symfony\Component\Routing\RouterInterface;
-use Zikula\Common\Translator\Translator;
+use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\LinkContainer\LinkContainerInterface;
+use Zikula\PermissionsModule\Api\PermissionApi;
+use Zikula\MultisitesModule\Helper\ControllerHelper;
 
 /**
  * This is the link container service implementation class.
  */
 class LinkContainer implements LinkContainerInterface
 {
+    use TranslatorTrait;
+
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     protected $translator;
 
@@ -34,34 +37,55 @@ class LinkContainer implements LinkContainerInterface
     protected $router;
 
     /**
+     * @var PermissionApi
+     */
+    protected $permissionApi;
+
+    /**
+     * @var ControllerHelper
+     */
+    protected $controllerHelper;
+
+    /**
      * Constructor.
      * Initialises member vars.
      *
-     * @param Translator      $translator Translator service instance.
-     * @param Routerinterface $router     The router service.
+     * @param TranslatorInterface $translator       Translator service instance.
+     * @param Routerinterface     $router           Router service instance.
+     * @param PermissionApi       $permissionApi    PermissionApi service instance.
+     * @param ControllerHelper    $controllerHelper ControllerHelper service instance.
      */
-    public function __construct($translator, RouterInterface $router)
+    public function __construct(TranslatorInterface $translator, RouterInterface $router, PermissionApi $permissionApi, ControllerHelper $controllerHelper)
+    {
+        $this->setTranslator($translator);
+        $this->router = $router;
+        $this->permissionApi = $permissionApi;
+        $this->controllerHelper = $controllerHelper;
+    }
+
+    /**
+     * Sets the translator.
+     *
+     * @param TranslatorInterface $translator Translator service instance.
+     */
+    public function setTranslator(/*TranslatorInterface */$translator)
     {
         $this->translator = $translator;
-        $this->router = $router;
     }
 
     /**
      * Returns available header links.
      *
+     * @param string $type The type to collect links for.
+     *
      * @return array Array of header links.
      */
     public function getLinks($type = LinkContainerInterface::TYPE_ADMIN)
     {
-        $serviceManager = ServiceUtil::getManager();
-
-        $controllerHelper = $serviceManager->get('zikulamultisitesmodule.controller_helper');
-        $utilArgs = ['api' => 'ajax', 'action' => 'getLinks'];
-        $allowedObjectTypes = $controllerHelper->getObjectTypes('api', $utilArgs);
+        $utilArgs = ['api' => 'linkContainer', 'action' => 'getLinks'];
+        $allowedObjectTypes = $this->controllerHelper->getObjectTypes('api', $utilArgs);
 
         $permLevel = LinkContainerInterface::TYPE_ADMIN == $type ? ACCESS_ADMIN : ACCESS_READ;
-
-        $permissionHelper = $serviceManager->get('zikula_permissions_module.api.permission');
 
         // Create an array of links to return
         $links = [];
@@ -70,7 +94,7 @@ class LinkContainer implements LinkContainerInterface
         if (LinkContainerInterface::TYPE_ADMIN == $type) {
             
             if (in_array('site', $allowedObjectTypes)
-                && $permissionHelper->hasPermission($this->getBundleName() . ':Site:', '::', $permLevel)) {
+                && $this->permissionApi->hasPermission($this->getBundleName() . ':Site:', '::', $permLevel)) {
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_site_adminview'),
                      'text' => $this->translator->__('Sites'),
@@ -78,7 +102,7 @@ class LinkContainer implements LinkContainerInterface
                  ];
             }
             if (in_array('template', $allowedObjectTypes)
-                && $permissionHelper->hasPermission($this->getBundleName() . ':Template:', '::', $permLevel)) {
+                && $this->permissionApi->hasPermission($this->getBundleName() . ':Template:', '::', $permLevel)) {
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_template_adminview'),
                      'text' => $this->translator->__('Templates'),
@@ -86,7 +110,7 @@ class LinkContainer implements LinkContainerInterface
                  ];
             }
             if (in_array('siteExtension', $allowedObjectTypes)
-                && $permissionHelper->hasPermission($this->getBundleName() . ':SiteExtension:', '::', $permLevel)) {
+                && $this->permissionApi->hasPermission($this->getBundleName() . ':SiteExtension:', '::', $permLevel)) {
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_siteextension_adminview'),
                      'text' => $this->translator->__('Site extensions'),
@@ -94,14 +118,14 @@ class LinkContainer implements LinkContainerInterface
                  ];
             }
             if (in_array('project', $allowedObjectTypes)
-                && $permissionHelper->hasPermission($this->getBundleName() . ':Project:', '::', $permLevel)) {
+                && $this->permissionApi->hasPermission($this->getBundleName() . ':Project:', '::', $permLevel)) {
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_project_adminview'),
                      'text' => $this->translator->__('Projects'),
                      'title' => $this->translator->__('Project list')
                  ];
             }
-            if ($permissionHelper->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_admin_config'),
                      'text' => $this->translator->__('Configuration'),

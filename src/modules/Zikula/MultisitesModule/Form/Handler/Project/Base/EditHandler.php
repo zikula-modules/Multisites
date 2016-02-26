@@ -15,8 +15,9 @@ namespace Zikula\MultisitesModule\Form\Handler\Project\Base;
 use Zikula\MultisitesModule\Form\Handler\Common\EditHandler as BaseEditHandler;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use ModUtil;
+use RuntimeException;
 use System;
 use UserUtil;
 
@@ -51,7 +52,7 @@ class EditHandler extends BaseEditHandler
         if ($this->templateParameters['mode'] == 'create') {
             $modelHelper = $this->container->get('zikulamultisitesmodule.model_helper');
             if (!$modelHelper->canBeCreated($this->objectType)) {
-                $this->request->getSession()->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->translator->trans('Sorry, but you can not create the project yet as other items are required which must be created before!', [], 'zikulamultisitesmodule'));
+                $this->request->getSession()->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Sorry, but you can not create the project yet as other items are required which must be created before!'));
                 $logger = $this->container->get('logger');
                 $logger->notice('{app}: User {user} tried to create a new {entity}, but failed as it other items are required which must be created before.', ['app' => 'ZikulaMultisitesModule', 'user' => UserUtil::getVar('uname'), 'entity' => $this->objectType]);
     
@@ -63,7 +64,7 @@ class EditHandler extends BaseEditHandler
         
         // assign identifiers of predefined outgoing many to many relationships
         // non-editable relation, we store the id and assign it in handleCommand
-        $this->relationPresets['templates'] = FormUtil::getPassedValue('templates', '', 'GET');
+        $this->relationPresets['templates'] = $this->request->get('templates', '');
     
         // save entity reference for later reuse
         $this->entityRef = $entity;
@@ -129,11 +130,13 @@ class EditHandler extends BaseEditHandler
      *
      * This event handler is called when a command is issued by the user.
      *
+     * @param array $args List of arguments.
+     *
      * @return mixed Redirect or false on errors.
      */
-    public function handleCommand()
+    public function handleCommand($args)
     {
-        $result = parent::handleCommand();
+        $result = parent::handleCommand($args);
         if (false === $result) {
             return $result;
         }
@@ -144,7 +147,7 @@ class EditHandler extends BaseEditHandler
     /**
      * Get success or error message for default operations.
      *
-     * @param Array   $args    Arguments from handleCommand method.
+     * @param array   $args    Arguments from handleCommand method.
      * @param Boolean $success Becomes true if this is a success, false for default error.
      *
      * @return String desired status or error message.
@@ -158,18 +161,18 @@ class EditHandler extends BaseEditHandler
         $message = '';
         switch ($args['commandName']) {
             case 'submit':
-                        if ($this->templateParameters['mode'] == 'create') {
-                            $message = $this->translator->trans('Done! Project created.', [], 'zikulamultisitesmodule');
-                        } else {
-                            $message = $this->translator->trans('Done! Project updated.', [], 'zikulamultisitesmodule');
-                        }
-                        break;
+                if ($this->templateParameters['mode'] == 'create') {
+                    $message = $this->__('Done! Project created.');
+                } else {
+                    $message = $this->__('Done! Project updated.');
+                }
+                break;
             case 'delete':
-                        $message = $this->translator->trans('Done! Project deleted.', [], 'zikulamultisitesmodule');
-                        break;
+                $message = $this->__('Done! Project deleted.');
+                break;
             default:
-                        $message = $this->translator->trans('Done! Project updated.', [], 'zikulamultisitesmodule');
-                        break;
+                $message = $this->__('Done! Project updated.');
+                break;
         }
     
         return $message;
@@ -178,7 +181,7 @@ class EditHandler extends BaseEditHandler
     /**
      * This method executes a certain workflow action.
      *
-     * @param Array $args Arguments from handleCommand method.
+     * @param array $args Arguments from handleCommand method.
      *
      * @return bool Whether everything worked well or not.
      *
@@ -192,14 +195,14 @@ class EditHandler extends BaseEditHandler
         $action = $args['commandName'];
     
         $success = false;
+        $flashBag = $this->request->getSession()->getFlashBag();
+        $logger = $this->container->get('logger');
         try {
             // execute the workflow action
             $workflowHelper = $this->container->get('zikulamultisitesmodule.workflow_helper');
-            $flashBag = $this->request->getSession()->getFlashBag();
-            $logger = $this->container->get('logger');
             $success = $workflowHelper->executeAction($entity, $action);
         } catch(\Exception $e) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->translator->trans('Sorry, but an unknown error occured during the %action% action. Please apply the changes again!', ['%action%' => $action], 'zikulamultisitesmodule'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Sorry, but an unknown error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]));
             $logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'user' => UserUtil::getVar('uname'), 'entity' => 'project', 'id' => $entity->createCompositeIdentifier(), 'errorMessage' => $e->getMessage()]);
         }
     
@@ -220,7 +223,7 @@ class EditHandler extends BaseEditHandler
                     $relObj->addProjects($entity);
                 }
             }
-            $this->container->get('doctrine.orm.entity_manager').flush();
+            $this->container->get('doctrine.orm.entity_manager')->flush();
         }
     
         return $success;

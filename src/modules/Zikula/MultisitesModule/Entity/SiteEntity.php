@@ -186,17 +186,17 @@ class SiteEntity extends BaseAbstractSiteEntity
     {
         $serviceManager = ServiceUtil::getManager();
         $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
+        $session = $serviceManager->get('session');
 
         // update db config adding the new database
         if (!$systemHelper->updateDatabaseConfigFile()) {
-            $session = $serviceManager->get('session');
             $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Updating the database configuration file failed.'));
 
             return false;
         }
 
         // save the site module into the Multisites database
-        $extensionHelper = $this->container->get('zikula_multisites_module.siteextension_helper');
+        $extensionHelper = $serviceManager->get('zikula_multisites_module.siteextension_helper');
         if (!$extensionHelper->saveSiteModulesIntoOwnDb($this)) {
             $session = $serviceManager->get('session');
             $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Storing the site modules in the Multisites database failed.'));
@@ -251,19 +251,20 @@ class SiteEntity extends BaseAbstractSiteEntity
         $deleteFiles = FormUtil::getPassedValue('deleteFiles', 0, 'POST', FILTER_VALIDATE_BOOLEAN);
 
         $serviceManager = ServiceUtil::getManager();
-        $systemHelper = new Multisites_Util_System($serviceManager);
+        $systemHelper = $serviceManager->get('zikula_multisites_module.system_helper');
+        $session = $serviceManager->get('session');
 
         if ($deleteDatabase == 1) {
             // delete the database
             if (!$systemHelper->deleteDatabase($this->getDatabaseData())) {
-                return LogUtil::registerError(__('Error during deleting the database.', $dom));
+                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error during deleting the database.'));
             }
         }
         if ($deleteFiles == 1) {
             // delete the site files and directories
-            $siteFolder = $this->serviceManager['multisites.files_real_path'] . '/' . $site['siteAlias'];
+            $siteFolder = $serviceManager['multisites.files_real_path'] . '/' . $this->getSiteAlias();
             if (!$systemHelper->deleteDir($siteFolder)) {
-                return LogUtil::registerError(__('Error during deleting the site files directory.', $dom));
+                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error during deleting the site files directory.'));
             }
         }
 

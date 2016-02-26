@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\ExtensionsModule\Api\VariableApi;
 use Zikula\ExtensionsModule\ExtensionVariablesTrait;
 
 /**
@@ -78,11 +79,10 @@ class ConfiguratorHelper
      * Constructor.
      * Initialises member vars.
      *
-     * @param Session             $session     Session service instance.
-     * @param TranslatorInterface $translator  Translator service instance.
-     * @param VariableApi         $variableApi VariableApi service instance.
-     *
-     * @return void
+     * @param Session             $session      Session service instance.
+     * @param TranslatorInterface $translator   Translator service instance.
+     * @param VariableApi         $variableApi  VariableApi service instance.
+     * @param RequestStack        $requestStack RequestStack service instance.
      */
     public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi, RequestStack $requestStack)
     {
@@ -103,7 +103,7 @@ class ConfiguratorHelper
      *
      * @param TranslatorInterface $translator Translator service instance.
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(/*TranslatorInterface */$translator)
     {
         $this->translator = $translator;
     }
@@ -188,8 +188,8 @@ class ConfiguratorHelper
                     // ask for multisites system parameters
 
                     // get server zikula folder installation
-                    $path = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
-                    $basePath = substr($path, 0, strrpos($path, '/'));
+                    //$path = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
+                    //$basePath = substr($path, 0, strrpos($path, '/'));
 
                     $this->templateParameters = [
                         'step' => 3,
@@ -318,7 +318,7 @@ class ConfiguratorHelper
      * Checks whether the given files directory is existing and writeable or not.
      * Tries to create the directory and/or make it writeable if required.
      *
-     * @param string Path to the physical files folder.
+     * @param string $filesPath Path to the physical files folder.
      *
      * @return boolean True if directory exists and is writeable, false otherwise.
      */
@@ -348,7 +348,7 @@ class ConfiguratorHelper
     /**
      * Writes physical folder path into the config/multisites_config.php file.
      *
-     * @param string Path to the physical files folder.
+     * @param string $filesPath Path to the physical files folder.
      *
      * @return boolean True if everything worked, false otherwise.
      */
@@ -394,9 +394,9 @@ class ConfiguratorHelper
     /**
      * Writes multisites system parameters into the config/multisites_config.php file.
      *
-     * @param string Domain for the main site.
-     * @param string Path to folder for temporary sites files.
-     * @param string Path to folder for sites files.
+     * @param string $mainSiteUrl         Domain for the main site.
+     * @param string $siteTempFilesFolder Path to folder for temporary sites files.
+     * @param string $siteFilesFolder     Path to folder for sites files.
      *
      * @return boolean True if everything worked, false otherwise.
      */

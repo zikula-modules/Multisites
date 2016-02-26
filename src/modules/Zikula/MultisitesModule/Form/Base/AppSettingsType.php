@@ -53,7 +53,7 @@ class AppSettingsType extends AbstractType
      *
      * @param TranslatorInterface $translator Translator service instance.
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(/*TranslatorInterface */$translator)
     {
         $this->translator = $translator;
     }
@@ -79,8 +79,8 @@ class AppSettingsType extends AbstractType
     /**
      * Adds fields for general fields.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addGeneralFields(FormBuilderInterface $builder, array $options)
     {
@@ -101,8 +101,8 @@ class AppSettingsType extends AbstractType
     /**
      * Adds fields for security settings fields.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addSecuritySettingsFields(FormBuilderInterface $builder, array $options)
     {
@@ -146,5 +146,13 @@ class AppSettingsType extends AbstractType
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_appsettings';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

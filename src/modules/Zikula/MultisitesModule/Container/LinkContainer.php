@@ -14,6 +14,8 @@ namespace Zikula\MultisitesModule\Container;
 
 use Zikula\MultisitesModule\Container\Base\LinkContainer as BaseLinkContainer;
 
+use Zikula\Core\LinkContainer\LinkContainerInterface;
+
 /**
  * This is the link container service implementation class.
  */
@@ -21,6 +23,8 @@ class LinkContainer extends BaseLinkContainer
 {
     /**
      * Returns available header links.
+     *
+     * @param string $type The type to collect links for.
      *
      * @return array Array of header links.
      */
@@ -30,46 +34,41 @@ class LinkContainer extends BaseLinkContainer
             return parent::getLinks($type);
         }
 
-        $serviceManager = ServiceUtil::getManager();
-
-        $controllerHelper = $serviceManager->get('zikulamultisitesmodule.controller_helper');
-        $utilArgs = ['api' => 'ajax', 'action' => 'getLinks'];
-        $allowedObjectTypes = $controllerHelper->getObjectTypes('api', $utilArgs);
+        $utilArgs = ['api' => 'linkContainer', 'action' => 'getLinks'];
+        $allowedObjectTypes = $this->controllerHelper->getObjectTypes('api', $utilArgs);
 
         $permLevel = ACCESS_ADMIN;
-
-        $permissionHelper = $serviceManager->get('zikula_permissions_module.api.permission');
 
         $links = [];
 
         if (in_array('project', $allowedObjectTypes)
-            && $permissionHelper->hasPermission($this->getBundleName() . ':Project:', '::', $permLevel)) {
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Project:', '::', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_project_adminview'),
                 'text' => $this->translator->__('Projects'),
-                'title' => $this->translator->__('Project list')
+                'title' => $this->translator->__('Project list'),
                 'icon' => 'group'
             ];
         }
         if (in_array('template', $allowedObjectTypes)
-            && $permissionHelper->hasPermission($this->getBundleName() . ':Template:', '::', $permLevel)) {
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Template:', '::', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_template_adminview'),
                 'text' => $this->translator->__('Templates'),
-                'title' => $this->translator->__('Template list')
+                'title' => $this->translator->__('Template list'),
                 'icon' => 'cubes'
             ];
         }
         if (in_array('site', $allowedObjectTypes)
-            && $permissionHelper->hasPermission($this->getBundleName() . ':Site:', '::', $permLevel)) {
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Site:', '::', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_site_adminview'),
                 'text' => $this->translator->__('Sites'),
-                'title' => $this->translator->__('Site list')
+                'title' => $this->translator->__('Site list'),
                 'icon' => 'list-alt'
             ];
         }
-        if ($permissionHelper->hasPermission($this->getBundleName() . '::', '::', $permLevel)) {
+        if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_admin_manageUpdates'),
                 'text'  => $this->__('Updates'),

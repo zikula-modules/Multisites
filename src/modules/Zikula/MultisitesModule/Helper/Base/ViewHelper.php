@@ -13,13 +13,12 @@
 namespace Zikula\MultisitesModule\Helper\Base;
 
 use DataUtil;
-use FormUtil;
-use ModUtil;
 use PageUtil;
 use System;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig_Environment;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\Response\PlainResponse;
 
@@ -63,7 +62,7 @@ class ViewHelper
      *
      * @return string name of template file.
      */
-    public function getViewTemplate(\Twig_Environment $twig, $type, $func, Request $request)
+    public function getViewTemplate(Twig_Environment $twig, $type, $func, Request $request)
     {
         // create the base template name
         $template = '@ZikulaMultisitesModule/' . ucfirst($type) . '/' . $func;
@@ -93,16 +92,16 @@ class ViewHelper
     /**
      * Utility method for managing view templates.
      *
-     * @param Twig_Environment $twig     Reference to view object.
-     * @param string           $type     Current controller (name of currently treated entity).
-     * @param string           $func     Current function (index, view, ...).
+     * @param Twig_Environment $twig               Reference to view object.
+     * @param string           $type               Current controller (name of currently treated entity).
+     * @param string           $func               Current function (index, view, ...).
      * @param Request          $request            Current request.
      * @param array            $templateParameters Template data.
-     * @param string           $template Optional assignment of precalculated template file.
+     * @param string           $template           Optional assignment of precalculated template file.
      *
      * @return mixed Output.
      */
-    public function processTemplate(\Twig_Environment $twig, $type, $func, Request $request, $templateParameters = [], $template = '')
+    public function processTemplate(Twig_Environment $twig, $type, $func, Request $request, $templateParameters = [], $template = '')
     {
         $templateExtension = $this->determineExtension($twig, $type, $func, $request);
         if (empty($template)) {
@@ -112,9 +111,9 @@ class ViewHelper
         // look whether we need output with or without the theme
         $raw = false;
         if ($request->isMethod('POST')) {
-            $raw = $request->request->getBoolean('raw', false);
+            $raw = (bool) $request->request->get('raw', false);
         } elseif ($request->isMethod('GET')) {
-            $raw = $request->query->getBoolean('raw', false);
+            $raw = (bool) $request->query->get('raw', false);
         }
         if (!$raw && $templateExtension != 'html.twig') {
             $raw = true;
@@ -138,14 +137,14 @@ class ViewHelper
     /**
      * Get extension of the currently treated template.
      *
-     * @param Twig_Environment $twig     Reference to view object.
+     * @param Twig_Environment $twig    Reference to view object.
      * @param string           $type    Current controller (name of currently treated entity).
      * @param string           $func    Current function (index, view, ...).
      * @param Request          $request Current request.
      *
      * @return array List of allowed template extensions.
      */
-    protected function determineExtension(\Twig_Environment $twig, $type, $func, Request $request)
+    protected function determineExtension(Twig_Environment $twig, $type, $func, Request $request)
     {
         $templateExtension = 'html.twig';
         if (!in_array($func, ['view', 'display'])) {
@@ -194,14 +193,14 @@ class ViewHelper
     /**
      * Processes a template file using dompdf (LGPL).
      *
-     * @param Twig_Environment $twig     Reference to view object.
+     * @param Twig_Environment $twig               Reference to view object.
      * @param Request          $request            Current request.
      * @param array            $templateParameters Template data.
-     * @param string           $template Name of template to use.
+     * @param string           $template           Name of template to use.
      *
      * @return mixed Output.
      */
-    protected function processPdf(\Twig_Environment $twig, Request $request, $templateParameters = [], $template)
+    protected function processPdf(Twig_Environment $twig, Request $request, $templateParameters = [], $template)
     {
         // first the content, to set page vars
         $output = $twig->render($template, $templateParameters);

@@ -13,8 +13,10 @@
 namespace Zikula\MultisitesModule\Entity\Repository;
 
 use Zikula\MultisitesModule\Entity\Repository\Base\Site as BaseSite;
-use FormUtil;
+
+use Doctrine\ORM\QueryBuilder;
 use ServiceUtil;
+use Zikula\MultisitesModule\Entity\SiteEntity;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
@@ -26,7 +28,7 @@ class Site extends BaseSite
     /**
      * Selects the site fitting to a given siteDNS.
      *
-     * @param string siteDns The given siteDNS value.
+     * @param string $siteDns The given siteDNS value.
      *
      * @return SiteEntity|null
      */
@@ -48,16 +50,16 @@ class Site extends BaseSite
     /**
      * Adds default filters as where clauses.
      *
-     * @param Doctrine\ORM\QueryBuilder $qb         Query builder to be enhanced.
-     * @param array                     $parameters List of determined filter options.
+     * @param QueryBuilder $qb         Query builder to be enhanced.
+     * @param array        $parameters List of determined filter options.
      *
-     * @return Doctrine\ORM\QueryBuilder Enriched query builder instance.
+     * @return QueryBuilder Enriched query builder instance.
      */
     protected function applyDefaultFilters(QueryBuilder $qb, $parameters = array())
     {
         $qb = parent::applyDefaultFilters($qb, $parameters);
 
-        $letter = FormUtil::getPassedValue('letter', '', 'GET');
+        $letter = $this->request->query->getAlnum('letter', '');
         if ($letter != '') {
             $qb->andWhere('tbl.name LIKE :letter')
                ->setParameter('letter', $letter . '%');
@@ -102,7 +104,7 @@ class Site extends BaseSite
     /**
      * Helper method to add joins to from clause.
      *
-     * @param Doctrine\ORM\QueryBuilder $qb query builder instance used to create the query.
+     * @param QueryBuilder $qb query builder instance used to create the query.
      *
      * @return String Enhancement for from clause.
      */

@@ -29,8 +29,6 @@ class ImageHelper
     /**
      * Constructor.
      * Initialises member vars.
-     *
-     * @return void
      */
     public function __construct()
     {

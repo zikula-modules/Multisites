@@ -12,13 +12,14 @@
 
 namespace Zikula\MultisitesModule\Form\Type\Base;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\MultisitesModule\Entity\Factory\TemplateFactory
+use Zikula\MultisitesModule\Entity\Factory\TemplateFactory;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
 
 /**
@@ -45,7 +46,7 @@ class TemplateType extends AbstractType
      * @param TemplateFactory $entityFactory Entity factory service instance.
      * @param ListEntriesHelper   $listHelper   ListEntriesHelper service instance.
      */
-    public function __construct(TranslatorInterface $translator, TemplateFactory $entityFactory, , ListEntriesHelper $listHelper)
+    public function __construct(TranslatorInterface $translator, TemplateFactory $entityFactory, ListEntriesHelper $listHelper)
     {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
@@ -57,7 +58,7 @@ class TemplateType extends AbstractType
      *
      * @param TranslatorInterface $translator Translator service instance.
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(/*TranslatorInterface */$translator)
     {
         $this->translator = $translator;
     }
@@ -77,8 +78,8 @@ class TemplateType extends AbstractType
     /**
      * Adds basic entity fields.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
@@ -121,8 +122,8 @@ class TemplateType extends AbstractType
     /**
      * Adds fields for incoming relationships.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
     {
@@ -145,8 +146,8 @@ class TemplateType extends AbstractType
     /**
      * Adds fields for outgoing relationships.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options)
     {
@@ -169,8 +170,8 @@ class TemplateType extends AbstractType
     /**
      * Adds the return control field.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addReturnControlField(FormBuilderInterface $builder, array $options)
     {
@@ -184,8 +185,8 @@ class TemplateType extends AbstractType
     /**
      * Adds submit buttons.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addSubmitButtons(FormBuilderInterface $builder, array $options)
     {
@@ -224,16 +225,22 @@ class TemplateType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver
             ->setDefaults([
                 // define class for underlying data (required for embedding forms)
                 'data_class' => 'Zikula\MultisitesModule\Entity\TemplateEntity',
                 'empty_data' => function (FormInterface $form) {
-                    return $this->entityFactory->createTemplate():
+                    return $this->entityFactory->createTemplate();
                 },
                 'error_mapping' => [
                 ],

@@ -58,4 +58,12 @@ class DeleteEntityType extends AbstractType
     {
         return 'zikulamultisitesmodule_deleteentity';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

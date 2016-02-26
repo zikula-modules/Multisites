@@ -14,6 +14,8 @@ namespace Zikula\MultisitesModule\Helper;
 
 use Zikula\MultisitesModule\Helper\Base\ModelHelper as BaseModelHelper;
 
+use Exception;
+
 /**
  * Utility implementation class for model helper methods.
  */
@@ -34,6 +36,8 @@ class ModelHelper extends BaseModelHelper
      * @param string $objectType Name of treated entity type.
      *
      * @return boolean Whether a new instance can be created or not.
+     *
+     * @throws Exception If an invalid object type is used.
      */
     public function canBeCreated($objectType)
     {

@@ -12,9 +12,17 @@
 
 namespace Zikula\MultisitesModule\Helper;
 
+use DateTime;
+use DateTimeZone;
 use ModUtil;
+use PDO;
+use PDOException;
 use ServiceUtil;
 use UserUtil;
+use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\ExtensionVariablesTrait;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 
 /**
@@ -22,12 +30,38 @@ use Zikula\MultisitesModule\Entity\SiteEntity;
  */
 class SystemHelper
 {
+    use ExtensionVariablesTrait;
+    use TranslatorTrait;
+
     private $dbConfigFile = 'config/multisites_dbconfig.php';
+
+    /**
+     * Constructor.
+     * Initialises member vars.
+     *
+     * @param TranslatorInterface $translator     Translator service instance.
+     * @param VariableApi         $variableApi  VariableApi service instance.
+     */
+    public function __construct(TranslatorInterface $translator, VariableApi $variableApi)
+    {
+        $this->setTranslator($translator);
+        $this->variableApi = $variableApi;
+    }
+
+    /**
+     * Sets the translator.
+     *
+     * @param TranslatorInterface $translator Translator service instance.
+     */
+    public function setTranslator(/*TranslatorInterface */$translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * Creates initial folders for a new site.
      *
-     * @param SiteEntity site The given site instance.
+     * @param SiteEntity $site The given site instance.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -97,7 +131,7 @@ class SystemHelper
     /**
      * Creates a .htaccess file in the temp folder of a given site.
      *
-     * @param SiteEntity site The given site instance.
+     * @param SiteEntity $site The given site instance.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -124,15 +158,16 @@ class SystemHelper
     /**
      * Connects to an external database.
      *
-     * @param string dbName The database name.
-     * @param string dbUser The database user name.
-     * @param string dbPass The database password.
-     * @param string dbHost The database host name.
-     * @param string dbType The database type.
+     * @param array $args Given arguments.
+     *   string $dbName The database name.
+     *   string $dbUser The database user name.
+     *   string $dbPass The database password.
+     *   string $dbHost The database host name.
+     *   string $dbType The database type.
      *
      * @return mixed Connection object or false on errors
      */
-    public function connectToExternalDatabase($args)
+    public function connectToExternalDatabase(array $args)
     {
         /** can be removed probably
 
@@ -166,15 +201,16 @@ class SystemHelper
     /**
      * Creates a new database for a new site.
      *
-     * @param string dbName The database name.
-     * @param string dbUser The database user name.
-     * @param string dbPass The database password.
-     * @param string dbHost The database host name.
-     * @param string dbType The database type.
+     * @param array $args Given arguments.
+     *   string $dbName The database name.
+     *   string $dbUser The database user name.
+     *   string $dbPass The database password.
+     *   string $dbHost The database host name.
+     *   string $dbType The database type.
      *
      * @return boolean True on success or false otherwise.
      */
-    public function createDatabase($args)
+    public function createDatabase(array $args)
     {
         $dbName = isset($args['dbname']) ? $args['dbname'] : null;
         $dbType = isset($args['dbtype']) ? $args['dbtype'] : null;
@@ -226,7 +262,7 @@ class SystemHelper
     /**
      * Performs all steps required to setup a certain site in a given database.
      *
-     * @param SiteEntity site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -289,7 +325,7 @@ class SystemHelper
     /**
      * Reads in all tables contained in a database..
      *
-     * @param SiteEntity site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance.
      *
      * @return array|boolean Array with table names or false on errors.
      */
@@ -378,8 +414,8 @@ class SystemHelper
     /**
      * Deletes a given list of tables contained in a database.
      *
-     * @param SiteEntity site   The currently treated site instance.
-     * @param array      tables List of table names.
+     * @param SiteEntity $site   The currently treated site instance.
+     * @param array      $tables List of table names.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -415,9 +451,9 @@ class SystemHelper
     /**
      * Renames a given list of tables contained in a database.
      *
-     * @param SiteEntity site    The currently treated site instance.
-     * @param array      tables  List of table names.
-     * @param boolean    restore False for backup mode and true for recover mode.
+     * @param SiteEntity $site    The currently treated site instance.
+     * @param array      $tables  List of table names.
+     * @param boolean    $restore False for backup mode and true for recover mode.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -493,7 +529,7 @@ class SystemHelper
     /**
      * Creates database tables based on a given template file.
      *
-     * @param SiteEntity site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -564,7 +600,7 @@ class SystemHelper
     /**
      * Updates the module vars values for a newly created site.
      *
-     * @param SiteEntity site The given site instance.
+     * @param SiteEntity $site The given site instance.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -581,30 +617,33 @@ class SystemHelper
         }
 
         // modify the site name
-        $stmt = $connect->prepare('UPDATE `module_vars`
+        $sql = 'UPDATE `module_vars`
             SET `value` = :value
             WHERE `modname` = \'ZConfig\'
-            AND `name` IN (\'sitename\', \'defaultpagetitle\')');
+            AND `name` IN (\'sitename\', \'defaultpagetitle\')';
+        $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => serialize($site->getSiteName())])) {
             $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql  . "\n");
             return false;
         }
 
         // modify the site description
-        $stmt = $connect->prepare('UPDATE `module_vars`
+        $sql = 'UPDATE `module_vars`
             SET `value` = :value
             WHERE `modname` = \'ZConfig\'
-            AND `name` IN (\'slogan\', \'defaultmetadescription\')');
+            AND `name` IN (\'slogan\', \'defaultmetadescription\')';
+        $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => serialize($site->getSiteDescription())])) {
             $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql  . "\n");
             return false;
         }
 
         // modify the adminmail
-        $stmt = $connect->prepare('UPDATE `module_vars`
+        $sql = 'UPDATE `module_vars`
             SET `value` = :value
             WHERE `modname` = \'ZConfig\'
-            AND `name` = \'adminmail\'');
+            AND `name` = \'adminmail\'';
+        $stmt = $connect->prepare($sql);
         $adminEmail = $site->getSiteAdminEmail();
         // decode possibly encoded mail addresses (#201)
         if (strpos($adminEmail, '&#') !== false) {
@@ -616,10 +655,11 @@ class SystemHelper
         }
 
         // modify the sessionCookieName
-        $stmt = $connect->prepare('UPDATE `module_vars`
+        $sql = 'UPDATE `module_vars`
             SET `value` = :value
             WHERE `modname` = \'ZConfig\'
-            AND `name` = \'sessionname\'');
+            AND `name` = \'sessionname\'';
+        $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => serialize('ZKSID_' . strtoupper($site->getSiteAlias()))])) {
             $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql . "\n");
             return false;
@@ -638,9 +678,16 @@ class SystemHelper
             $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
             $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
             // create administrator
-            $stmt = $connect->prepare('INSERT INTO users (uname, email, pass, approved_date, user_regdate, activated)
-                VALUES (:uname, :email, :password, :approvedDate, :regDate, 1)');
-            if (!$stmt->execute([':uname' => $site->getSiteAdminName(), ':email' => $site->getSiteAdminEmail(), ':password' => $password, ':approvedDate' => $nowUTCStr, ':regDate' => $nowUTCStr)]) {
+            $sql = 'INSERT INTO users (uname, email, pass, approved_date, user_regdate, activated)
+                VALUES (:uname, :email, :password, :approvedDate, :regDate, 1)';
+            $stmt = $connect->prepare($sql);
+            if (!$stmt->execute([
+                ':uname' => $site->getSiteAdminName(),
+                ':email' => $site->getSiteAdminEmail(),
+                ':password' => $password,
+                ':approvedDate' => $nowUTCStr,
+                ':regDate' => $nowUTCStr
+            ])) {
                 $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
                 return false;
             }
@@ -652,10 +699,11 @@ class SystemHelper
             $rs = $stmt->fetch(PDO::FETCH_ASSOC);
         } else {
             // modify administrator password and email
-            $stmt = $connect->prepare('UPDATE `users`
+            $sql = 'UPDATE `users`
                 SET `pass` = :password,
                     `email` = :email
-                WHERE `uname` = :uname');
+                WHERE `uname` = :uname';
+            $stmt = $connect->prepare($sql);
             if (!$stmt->execute([':password' => $password, ':email' => $site->getSiteAdminEmail(), ':uname' => $rs['uname']])) {
                 $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
                 return false;
@@ -665,10 +713,11 @@ class SystemHelper
 
         // check if administrator is member of the admin group already
         $adminGroupId = 2;
-        $stmt = $connect->prepare('SELECT `uid`
+        $sql = 'SELECT `uid`
             FROM `group_membership`
             WHERE `uid` = :uid
-            AND `gid` = :gid');
+            AND `gid` = :gid';
+        $stmt = $connect->prepare($sql);
         $stmt->execute([':uid' => $uid, ':gid' => $adminGroupId]);
         $rs = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($rs['uid'] == '') {
@@ -687,7 +736,7 @@ class SystemHelper
     /**
      * Returns a list of parameter names and values for a certain site.
      *
-     * @param SiteEntity site The given site instance.
+     * @param SiteEntity $site The given site instance.
      *
      * @return array Built list of parameters.
      */
@@ -747,7 +796,7 @@ class SystemHelper
     /**
      * Inserts parameters and parameter values as module vars.
      *
-     * @param SiteEntity site The given site instance.
+     * @param SiteEntity $site The given site instance.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -823,7 +872,7 @@ class SystemHelper
 
         // get all active sites
         $where = 'tbl.active = 1';
-        $sites = ModUtil::apiFunc($this->name, 'selection', 'getEntities', ['ot' => 'site', 'where' => $where, 'useJoins' => false]);
+        $sites = ModUtil::apiFunc('ZikulaMultisitesModule', 'selection', 'getEntities', ['ot' => 'site', 'where' => $where, 'useJoins' => false]);
         if ($sites === false) {
             return false;
         }
@@ -847,11 +896,12 @@ class SystemHelper
     /**
      * Deletes a database.
      *
-     * @param string dbName The database name.
-     * @param string dbUser The database user name.
-     * @param string dbPass The database password.
-     * @param string dbHost The database host name.
-     * @param string dbType The database type.
+     * @param array $args Given arguments.
+     *   string $dbName The database name.
+     *   string $dbUser The database user name.
+     *   string $dbPass The database password.
+     *   string $dbHost The database host name.
+     *   string $dbType The database type.
      *
      * @return Boolean True on success or false otherwise.
      */
@@ -863,7 +913,7 @@ class SystemHelper
             $serviceManager = ServiceUtil::getManager();
             $flashBag = $serviceManager->get('session')->getFlashBag();
 
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$args['dbName']]));
             return false;
         }
 
@@ -885,7 +935,7 @@ class SystemHelper
     /**
      * Deletes a directory recursively.
      *
-     * @param string dirName Name of the directory to be deleted.
+     * @param string $dirName Name of the directory to be deleted.
      *
      * @return Boolean True on success or false otherwise.
      */
@@ -959,8 +1009,8 @@ class SystemHelper
     /**
      * Creates a database dump into the given sql file.
      *
-     * @param SiteEntity site           The currently treated site instance.
-     * @param string     outputFilePath Path of output file.
+     * @param SiteEntity $site           The currently treated site instance.
+     * @param string     $outputFilePath Path of output file.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -1006,7 +1056,7 @@ class SystemHelper
     /**
      * Creates a global administrator for a given site.
      *
-     * @param SiteEntity site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance.
      *
      * @return boolean True on success or false otherwise.
      */
@@ -1117,7 +1167,7 @@ class SystemHelper
     /**
      * Recover the first row in the permissions table for administrators.
      *
-     * @param SiteEntity site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance.
      *
      * @return boolean True on success or false otherwise.
      */

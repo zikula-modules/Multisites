@@ -22,13 +22,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use DataUtil;
 use FormUtil;
-use ModUtil;
+use RuntimeException;
 use ServiceUtil;
 use System;
 use UserUtil;
-use Zikula_Exception;
 use Zikula_Workflow_Util;
-use ZLanguage;
 use Zikula\Core\Doctrine\EntityAccess;
 
 /**
@@ -353,7 +351,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
      * @Assert\DateTime()
-     * @var datetime $createdDate.
+     * @var \DateTime $createdDate.
      */
     protected $createdDate;
     
@@ -361,7 +359,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="update")
      * @Assert\DateTime()
-     * @var datetime $updatedDate.
+     * @var \DateTime $updatedDate.
      */
     protected $updatedDate;
     
@@ -372,7 +370,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      * @ORM\JoinTable(name="zikula_multisites_template")
      * @Assert\Type(type="Zikula\MultisitesModule\Entity\TemplateEntity")
      * @Assert\Valid()
-     * @var Zikula\MultisitesModule\Entity\TemplateEntity $template.
+     * @var \Zikula\MultisitesModule\Entity\TemplateEntity $template.
      */
     protected $template;
     
@@ -383,7 +381,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      * @ORM\JoinTable(name="zikula_multisites_project")
      * @Assert\Type(type="Zikula\MultisitesModule\Entity\ProjectEntity")
      * @Assert\Valid()
-     * @var Zikula\MultisitesModule\Entity\ProjectEntity $project.
+     * @var \Zikula\MultisitesModule\Entity\ProjectEntity $project.
      */
     protected $project;
     
@@ -393,7 +391,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      * @ORM\OneToMany(targetEntity="Zikula\MultisitesModule\Entity\SiteExtensionEntity", mappedBy="site", cascade={"remove"})
      * @ORM\JoinTable(name="zikula_multisites_siteextensions")
      * @ORM\OrderBy({"name" = "ASC"})
-     * @var Zikula\MultisitesModule\Entity\SiteExtensionEntity[] $extensions.
+     * @var \Zikula\MultisitesModule\Entity\SiteExtensionEntity[] $extensions.
      */
     protected $extensions = null;
     
@@ -1277,7 +1275,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Get created date.
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedDate()
     {
@@ -1287,7 +1285,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Set created date.
      *
-     * @param datetime $createdDate.
+     * @param \DateTime $createdDate.
      *
      * @return void
      */
@@ -1299,7 +1297,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Get updated date.
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdatedDate()
     {
@@ -1309,7 +1307,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Set updated date.
      *
-     * @param datetime $updatedDate.
+     * @param \DateTime $updatedDate.
      *
      * @return void
      */
@@ -1950,7 +1948,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Start validation and raise exception if invalid data is found.
      *
-     * @return void.
+     * @return boolean Whether everything is valid or not.
      */
     public function validate()
     {
@@ -2057,7 +2055,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Creates url arguments array for easy creation of display urls.
      *
-     * @return Array The resulting arguments list.
+     * @return array The resulting arguments list.
      */
     public function createUrlArgs()
     {

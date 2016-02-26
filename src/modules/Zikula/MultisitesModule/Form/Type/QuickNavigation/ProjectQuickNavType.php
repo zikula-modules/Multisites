@@ -13,6 +13,7 @@
 namespace Zikula\MultisitesModule\Form\Type\QuickNavigation;
 
 use Zikula\MultisitesModule\Form\Type\QuickNavigation\Base\ProjectQuickNavType as BaseProjectQuickNavType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Project quick navigation form type implementation class.
@@ -32,8 +33,8 @@ class ProjectQuickNavType extends BaseProjectQuickNavType
     /**
      * Adds fields for template relationship.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addTemplateFilter(FormBuilderInterface $builder, array $options)
     {

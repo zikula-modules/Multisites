@@ -14,8 +14,10 @@ namespace Zikula\MultisitesModule\Controller;
 
 use Zikula\MultisitesModule\Controller\Base\AjaxController as BaseAjaxController;
 
+use ModUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Response\Ajax\AjaxResponse;
@@ -37,8 +39,7 @@ class AjaxController extends BaseAjaxController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance
-     * @param string  $ot           Treated object type.
+     * @param Request $request Current request instance.
      *
      * @return mixed Output.
      *
@@ -56,9 +57,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/getItemListAutoCompletion", options={"expose"=true})
     
      *
-     * @param string $ot       Treated object type.
-     * @param string $fragment The fragment of the entered item name.
-     * @param string $exclude  Comma separated list with ids of other items (to be excluded from search).
+     * @param Request $request Current request instance.
      *
      * @return JsonResponse
      */
@@ -73,9 +72,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/toggleFlag", options={"expose"=true})
      * @Method("POST")
      *
-     * @param string $ot    Treated object type.
-     * @param string $field The field to be toggled.
-     * @param int    $id    Identifier of treated entity.
+     * @param Request $request Current request instance.
      *
      * @return AjaxResponse
      *
@@ -92,7 +89,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/getProjectTemplates", options={"expose"=true})
      * @Method("POST")
      *
-     * @param int $id Identifier of treated project entity.
+     * @param Request $request Current request instance.
      *
      * @return AjaxResponse
      */
@@ -137,9 +134,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/modifyModuleActivation", options={"expose"=true})
      * @Method("POST")
      *
-     * @param int    id         Identifier of treated site entity.
-     * @param string moduleName Name of module to change.
-     * @param int    newState   New module state.
+     * @param Request $request Current request instance.
      *
      * @return AjaxResponse
      */
@@ -204,8 +199,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/allowModule", options={"expose"=true})
      * @Method("POST")
      *
-     * @param int    id         Identifier of treated site entity.
-     * @param string moduleName Name of module to change.
+     * @param Request $request Current request instance.
      *
      * @return AjaxResponse
      */
@@ -284,8 +278,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/allowTheme", options={"expose"=true})
      * @Method("POST")
      *
-     * @param int    id        Identifier of treated site entity.
-     * @param string themeName Name of theme to change.
+     * @param Request $request Current request instance.
      *
      * @return AjaxResponse
      */

@@ -34,12 +34,11 @@ class SiteExtensionController extends BaseSiteExtensionController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      * @param string  $sort         Sorting field.
      * @param string  $sortdir      Sorting direction.
      * @param int     $pos          Current pager position.
      * @param int     $num          Amount of entries to display.
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
      *
      * @return mixed Output.
      *
@@ -59,12 +58,11 @@ class SiteExtensionController extends BaseSiteExtensionController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      * @param string  $sort         Sorting field.
      * @param string  $sortdir      Sorting direction.
      * @param int     $pos          Current pager position.
      * @param int     $num          Amount of entries to display.
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
      *
      * @return mixed Output.
      *
@@ -85,8 +83,7 @@ class SiteExtensionController extends BaseSiteExtensionController
      *        methods = {"POST"}
      * )
      *
-     * @param string $action The action to be executed.
-     * @param array  $items  Identifier list of the items to be processed.
+     * @param Request $request Current request instance.
      *
      * @return bool true on sucess, false on failure.
      *

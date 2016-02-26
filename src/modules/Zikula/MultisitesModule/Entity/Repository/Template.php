@@ -13,7 +13,9 @@
 namespace Zikula\MultisitesModule\Entity\Repository;
 
 use Zikula\MultisitesModule\Entity\Repository\Base\Template as BaseTemplate;
-use FormUtil;
+
+use Doctrine\ORM\QueryBuilder;
+use ModUtil;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
@@ -34,7 +36,7 @@ class Template extends BaseTemplate
     {
         $parameters = parent::getViewQuickNavParameters($context, $args);
 
-        $parameters['projects'] = isset($this->controllerArguments['projects']) ? $this->controllerArguments['projects'] : FormUtil::getPassedValue('projects', 0, 'GET');
+        $parameters['projects'] = $this->request->query->getDigits('projects', 0);
 
         return $parameters;
     }
@@ -42,13 +44,13 @@ class Template extends BaseTemplate
     /**
      * Adds quick navigation related filter options as where clauses.
      *
-     * @param Doctrine\ORM\QueryBuilder $qb Query builder to be enhanced.
+     * @param QueryBuilder $qb Query builder to be enhanced.
      *
-     * @return Doctrine\ORM\QueryBuilder Enriched query builder instance.
+     * @return QueryBuilder Enriched query builder instance.
      */
     public function addCommonViewFilters(QueryBuilder $qb)
     {
-        $currentFunc = FormUtil::getPassedValue('func', 'index', 'GETPOST');
+        $currentFunc = $this->request->query->getAlpha('func', 'index');
         if ($currentFunc == 'edit') {
             return $qb;
         }

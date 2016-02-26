@@ -14,7 +14,12 @@ namespace Zikula\MultisitesModule;
 
 use Zikula\MultisitesModule\Base\MultisitesModuleInstaller as BaseMultisitesModuleInstaller;
 
+use DBUtil;
 use FileUtil;
+use HookUtil;
+use RuntimeException;
+use System;
+use Zikula\ExtensionsModule\Api\HookApi;
 
 /**
  * Installer implementation class.
@@ -167,10 +172,10 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
 
         // transfer data from old template table
         $result = DBUtil::executeSQL('SELECT * FROM `multisitesmodelsOld`');
-        $data = $result->fetchAll(Doctrine::FETCH_ASSOC);
+        $data = $result->fetchAll(\PDO::FETCH_ASSOC);
         if ($data) {
-            $uploadManager = new \Zikula\MultisitesModule\UploadHandler($this->container->get('translator'));
-            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper')
+            $uploadManager = new \Zikula\MultisitesModule\UploadHandler($this->container->get('translator.default'));
+            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
             $basePath = $controllerHelper->getFileBaseFolder('template', 'sqlFile');
 
             foreach ($data as $k => $v) {
@@ -207,7 +212,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
 
         // transfer data from old site table
         $result = DBUtil::executeSQL('SELECT * FROM `multisitessitesOld`');
-        $data = $result->fetchAll(Doctrine::FETCH_ASSOC);
+        $data = $result->fetchAll(\PDO::FETCH_ASSOC);
         if ($data) {
             foreach ($data as $k => $v) {
                 $site = new \Zikula\MultisitesModule\Entity\SiteEntity();
@@ -252,7 +257,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
 
         // transfer data from old site modules table
         $result = DBUtil::executeSQL('SELECT * FROM `multisitessitemodulesOld`');
-        $data = $result->fetchAll(Doctrine::FETCH_ASSOC);
+        $data = $result->fetchAll(\PDO::FETCH_ASSOC);
         if ($data) {
             foreach ($data as $k => $v) {
                 $extension = new \Zikula\MultisitesModule\Entity\SiteExtensionEntity();
@@ -298,7 +303,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
     {
         // Check if upload directories exist and if needed create them
         try {
-            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper')
+            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
             $controllerHelper->checkAndCreateAllUploadFolders();
         } catch (\Exception $e) {
             $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $e->getMessage());
@@ -321,9 +326,6 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
 
             return false;
         }
-
-        // register persistent event handlers
-        $this->registerPersistentEventHandlers();
 
         // register hook subscriber bundles
         $subscriberHookContainer = $this->hookApi->getHookContainerInstance($this->bundle->getMetaData(), HookApi::SUBSCRIBER_TYPE);
@@ -358,7 +360,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
             }
             closedir($dh);
 
-            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper')
+            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
             $destinationPath = $controllerHelper->getFileBaseFolder('template', 'sqlFile');
             $allMoved = true;
             foreach ($filesArray as $file) {

@@ -17,7 +17,7 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use DataUtil;
 use FileUtil;
-use ModUtil;
+use RuntimeException;
 use ServiceUtil;
 use UserUtil;
 
@@ -87,17 +87,19 @@ class UploadHandler
         if (!in_array($objectType, $this->allowedObjectTypes)) {
             return $result;
         }
-    
+
+        $file = $fileData[$fieldName];
+
         // perform validation
         try {
-            $this->validateFileUpload($objectType, $fileData[$fieldName], $fieldName);
+            $this->validateFileUpload($objectType, $file, $fieldName);
         } catch (\Exception $e) {
             // skip this upload field
             return $result;
         }
-    
+
         // retrieve the final file name
-        $fileName = $fileData[$fieldName]->getClientOriginalName();
+        $fileName = $file->getClientOriginalName();
         $fileNameParts = explode('.', $fileName);
         $extension = null !== $file->guessExtension() ? $file->guessExtension() : $file->guessClientExtension();
         if (null === $extension) {
@@ -123,7 +125,7 @@ class UploadHandler
         }
         $fileName = $this->determineFileName($objectType, $fieldName, $basePath, $fileName, $extension);
     
-        $targetFile = $fileData[$fieldName]->move($basePath, $fileName);
+        $targetFile = $file->move($basePath, $fileName);
     
         // validate file size
         $maxSize = $this->allowedFileSizes[$objectType][$fieldName];
@@ -247,7 +249,7 @@ class UploadHandler
         $extensionarr = explode('.', $fileName);
         $meta['extension'] = strtolower($extensionarr[count($extensionarr) - 1]);
         $meta['size'] = filesize($filePath);
-        $meta['isImage'] = in_array($meta['extension'], $this->imageFileTypes ? true : false);
+        $meta['isImage'] = in_array($meta['extension'], $this->imageFileTypes) ? true : false;
     
         if (!$meta['isImage']) {
             return $meta;
@@ -470,6 +472,8 @@ class UploadHandler
         } catch (\Exception $e) {
             $logger = $serviceManager->get('logger');
             $logger->error('{app}: User {user} could not detect upload destination path for entity {entity} and field {field}.', ['app' => 'ZikulaMultisitesModule', 'user' => UserUtil::getVar('uname'), 'entity' => $objectType, 'field' => $fieldName]);
+
+            return false;
         }
         $fileName = $objectData[$fieldName];
     

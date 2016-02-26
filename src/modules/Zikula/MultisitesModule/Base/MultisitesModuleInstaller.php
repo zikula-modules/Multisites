@@ -12,10 +12,10 @@
 
 namespace Zikula\MultisitesModule\Base;
 
+use Doctrine\DBAL\Connection;
 use EventUtil;
-use FileUtil;
 use HookUtil;
-use ModUtil;
+use RuntimeException;
 use System;
 use UserUtil;
 use Zikula\Core\AbstractExtensionInstaller;
@@ -36,9 +36,10 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
      */
     public function install()
     {
+        $logger = $this->container->get('logger');
         // Check if upload directories exist and if needed create them
         try {
-            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper')
+            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
             $controllerHelper->checkAndCreateAllUploadFolders();
         } catch (\Exception $e) {
             $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $e->getMessage());
@@ -46,7 +47,6 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
         
             return false;
         }
-        $logger = $this->container->get('logger');
         // create all tables from according entity definitions
         try {
             $this->schemaTool->create($this->listEntityClasses());

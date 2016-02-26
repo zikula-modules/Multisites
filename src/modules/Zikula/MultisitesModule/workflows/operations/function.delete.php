@@ -21,12 +21,6 @@
  */
 function ZikulaMultisitesModule_operation_delete(&$entity, $params)
 {
-    $dom = \ZLanguage::getModuleDomain('ZikulaMultisitesModule');
-
-
-    // initialise the result flag
-    $result = false;
-
     // get entity manager
     $serviceManager = \ServiceUtil::getManager();
     $entityManager = $serviceManager->get('doctrine.entitymanager');

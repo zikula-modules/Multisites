@@ -12,9 +12,7 @@
 
 namespace Zikula\MultisitesModule\Listener\Base;
 
-use ModUtil;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Zikula\Core\Event\GenericEvent;
 
 /**

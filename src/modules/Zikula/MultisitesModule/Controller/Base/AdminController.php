@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use JCSSUtil;
 use ModUtil;
+use RuntimeException;
 use System;
 use UserUtil;
 use ZLanguage;
@@ -34,8 +34,7 @@ class AdminController extends AbstractController
     /**
      * This is the default action handling the mainnull area called without defining arguments.
      *
-     * @param Request  $request      Current request instance
-     * @param string  $ot           Treated object type.
+     * @param Request $request Current request instance.
      *
      * @return mixed Output.
      *
@@ -60,7 +59,7 @@ class AdminController extends AbstractController
     /**
      * This is a custom action.
      *
-     * @param Request  $request      Current request instance
+     * @param Request $request Current request instance.
      *
      * @return mixed Output.
      *
@@ -89,7 +88,7 @@ class AdminController extends AbstractController
     /**
      * This is a custom action.
      *
-     * @param Request  $request      Current request instance
+     * @param Request $request Current request instance.
      *
      * @return mixed Output.
      *
@@ -118,6 +117,8 @@ class AdminController extends AbstractController
 
     /**
      * This method takes care of the application configuration.
+     *
+     * @param Request $request Current request instance.
      *
      * @return string Output
      *

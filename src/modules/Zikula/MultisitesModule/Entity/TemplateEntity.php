@@ -230,10 +230,7 @@ class TemplateEntity extends BaseAbstractTemplateEntity
         if ($this->id) {
             // unset identifiers
             $this->setId(0);
-    
-            // init validator
-            $this->initValidator();
-    
+
             // reset Workflow
             $this->resetWorkflow();
     

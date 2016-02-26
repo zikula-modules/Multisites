@@ -13,14 +13,15 @@
 namespace Zikula\MultisitesModule\Helper\Base;
 
 use DataUtil;
+use Exception;
 use FileUtil;
 use Monolog\Logger;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Zikula\Common\Translator\TranslatorInterface;
-use Zikula_Request_Http;
 
 /**
  * Utility base class for controller helper methods.
@@ -55,8 +56,6 @@ class ControllerHelper
      * @param TranslatorInterface    $translator     Translator service instance.
      * @param Session                $session        Session service instance.
      * @param Logger                 $logger         Logger service instance.
-     *
-     * @return void
      */
     public function __construct(\Zikula_ServiceManager $serviceManager, TranslatorInterface $translator, Session $session, Logger $logger)
     {
@@ -134,14 +133,14 @@ class ControllerHelper
     /**
      * Retrieve identifier parameters for a given object type.
      *
-     * @param Zikula_Request_Http $request    Instance of Zikula_Request_Http.
-     * @param array               $args       List of arguments used as fallback if request does not contain a field.
-     * @param string              $objectType Name of treated entity type.
-     * @param array               $idFields   List of identifier field names.
+     * @param Request $request    The current request.
+     * @param array   $args       List of arguments used as fallback if request does not contain a field.
+     * @param string  $objectType Name of treated entity type.
+     * @param array   $idFields   List of identifier field names.
      *
      * @return array List of fetched identifiers.
      */
-    public function retrieveIdentifier(Zikula_Request_Http $request, array $args, $objectType = '', array $idFields)
+    public function retrieveIdentifier(Request $request, array $args, $objectType = '', array $idFields)
     {
         $idValues = [];
         $routeParams = $request->get('_route_params', []);
@@ -234,7 +233,8 @@ class ControllerHelper
      * @param boolean $ignoreCreate Whether to ignore the creation of upload folders on demand or not.
      *
      * @return mixed Output.
-     * @throws Exception if invalid object type is given.
+     *
+     * @throws Exception If an invalid object type is used.
      */
     public function getFileBaseFolder($objectType, $fieldName, $ignoreCreate = false)
     {

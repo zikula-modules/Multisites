@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use DataUtil;
 use ModUtil;
+use RuntimeException;
 use System;
 use UserUtil;
 use ZLanguage;
@@ -39,8 +40,7 @@ class AjaxController extends AbstractController
     /**
      * This is the default action handling the mainnull area called without defining arguments.
      *
-     * @param Request  $request      Current request instance
-     * @param string  $ot           Treated object type.
+     * @param Request $request Current request instance.
      *
      * @return mixed Output.
      *
@@ -61,9 +61,7 @@ class AjaxController extends AbstractController
     /**
      * Searches for entities for auto completion usage.
      *
-     * @param string $ot       Treated object type.
-     * @param string $fragment The fragment of the entered item name.
-     * @param string $exclude  Comma separated list with ids of other items (to be excluded from search).
+     * @param Request $request Current request instance.
      *
      * @return JsonResponse
      */
@@ -100,7 +98,7 @@ class AjaxController extends AbstractController
         $exclude = !empty($exclude) ? explode(',', $exclude) : [];
         
         // parameter for used sorting field
-        $sort = $this->request->query->get('sort', '');
+        $sort = $request->query->get('sort', '');
         if (empty($sort) || !in_array($sort, $repository->getAllowedSortingFields())) {
             $sort = $repository->getDefaultSortingField();
             System::queryStringSetVar('sort', $sort);
@@ -123,12 +121,9 @@ class AjaxController extends AbstractController
         if ((is_array($entities) || is_object($entities)) && count($entities) > 0) {
             $descriptionFieldName = $repository->getDescriptionFieldName();
             $previewFieldName = $repository->getPreviewFieldName();
-            if (!empty($previewFieldName)) {
-                
-                //$imageHelper = $this->get('zikulamultisitesmodule.image_helper');
-                //$imagineManager = $imageHelper->getManager($objectType, $previewFieldName, 'controllerAction', $utilArgs);
-                $imagineManager = $this->get('systemplugin.imagine.manager');
-            }
+            //$imageHelper = $this->get('zikulamultisitesmodule.image_helper');
+            //$imagineManager = $imageHelper->getManager($objectType, $previewFieldName, 'controllerAction', $utilArgs);
+            $imagineManager = $this->get('systemplugin.imagine.manager');
             foreach ($entities as $item) {
                 $itemTitle = $item->getTitleFromDisplayPattern();
                 $itemTitleStripped = str_replace('"', '', $itemTitle);
@@ -146,7 +141,7 @@ class AjaxController extends AbstractController
         
                 // check for preview image
                 if (!empty($previewFieldName) && !empty($item[$previewFieldName]) && isset($item[$previewFieldName . 'FullPath'])) {
-                    $fullObjectId = $objectType . '-' . $itemId;
+                    $fullObjectId = $objectType . '-' . $resultItem['id'];
                     $thumbImagePath = $imagineManager->getThumb($item[$previewFieldName], $fullObjectId);
                     $preview = '<img src="' . $thumbImagePath . '" width="50" height="50" alt="' . $itemTitleStripped . '" />';
                     $resultItem['image'] = $preview;
@@ -162,9 +157,7 @@ class AjaxController extends AbstractController
     /**
      * Changes a given flag (boolean field) by switching between true and false.
      *
-     * @param string $ot    Treated object type.
-     * @param string $field The field to be toggled.
-     * @param int    $id    Identifier of treated entity.
+     * @param Request $request Current request instance.
      *
      * @return AjaxResponse
      *
@@ -199,7 +192,8 @@ class AjaxController extends AbstractController
         $entity[$field] = !$entity[$field];
         
         // save entity back to database
-        $this->entityManager->flush();
+        $entityManager = $this->get('doctrine.entitymanager');
+        $entityManager->flush();
         
         // return response
         $result = [

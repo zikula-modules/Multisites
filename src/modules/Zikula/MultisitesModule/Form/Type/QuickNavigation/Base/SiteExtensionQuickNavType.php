@@ -56,7 +56,7 @@ class SiteExtensionQuickNavType extends AbstractType
      *
      * @param TranslatorInterface $translator Translator service instance.
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(/*TranslatorInterface */$translator)
     {
         $this->translator = $translator;
     }
@@ -66,8 +66,6 @@ class SiteExtensionQuickNavType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $objectType = 'siteExtension';
-
         $builder
             ->add('all', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', [
                 'data' => $options['all'],
@@ -95,8 +93,8 @@ class SiteExtensionQuickNavType extends AbstractType
     /**
      * Adds fields for incoming relationships.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
     {
@@ -128,8 +126,8 @@ class SiteExtensionQuickNavType extends AbstractType
     /**
      * Adds list fields.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addListFields(FormBuilderInterface $builder, array $options)
     {
@@ -170,8 +168,8 @@ class SiteExtensionQuickNavType extends AbstractType
     /**
      * Adds a search field.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addSearchField(FormBuilderInterface $builder, array $options)
     {
@@ -189,8 +187,8 @@ class SiteExtensionQuickNavType extends AbstractType
     /**
      * Adds sorting fields.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addSortingFields(FormBuilderInterface $builder, array $options)
     {
@@ -229,8 +227,8 @@ class SiteExtensionQuickNavType extends AbstractType
     /**
      * Adds a page size field.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addAmountField(FormBuilderInterface $builder, array $options)
     {
@@ -265,10 +263,16 @@ class SiteExtensionQuickNavType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver
             ->setDefaults([
                 'all' => 0,

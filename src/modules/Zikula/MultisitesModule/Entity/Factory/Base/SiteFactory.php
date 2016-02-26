@@ -13,6 +13,7 @@
 namespace Zikula\MultisitesModule\Entity\Factory\Base;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Factory class used to retrieve entity and repository instances.

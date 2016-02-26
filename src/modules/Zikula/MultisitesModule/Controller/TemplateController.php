@@ -14,6 +14,7 @@ namespace Zikula\MultisitesModule\Controller;
 
 use Zikula\MultisitesModule\Controller\Base\TemplateController as BaseTemplateController;
 
+use ModUtil;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -35,12 +36,11 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      * @param string  $sort         Sorting field.
      * @param string  $sortdir      Sorting direction.
      * @param int     $pos          Current pager position.
      * @param int     $num          Amount of entries to display.
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
      *
      * @return mixed Output.
      *
@@ -60,12 +60,11 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      * @param string  $sort         Sorting field.
      * @param string  $sortdir      Sorting direction.
      * @param int     $pos          Current pager position.
      * @param int     $num          Amount of entries to display.
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
      *
      * @return mixed Output.
      *
@@ -84,8 +83,7 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
+     * @param Request  $request      Current request instance.
      *
      * @return mixed Output.
      *
@@ -107,8 +105,7 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance
-     * @param string  $tpl          Name of alternative template (to be used instead of the default template).
+     * @param Request  $request      Current request instance.
      *
      * @return mixed Output.
      *
@@ -127,7 +124,7 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      *
      * @return mixed Output.
      *
@@ -145,7 +142,7 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      *
      * @return mixed Output.
      *
@@ -155,6 +152,7 @@ class TemplateController extends BaseTemplateController
     {
         return parent::createParametersCsvTemplateAction($request);
     }
+
     /**
      * This is a custom action in the admin area.
      *
@@ -162,7 +160,7 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      *
      * @return mixed Output.
      *
@@ -180,7 +178,7 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance
+     * @param Request  $request      Current request instance.
      *
      * @return mixed Output.
      *
@@ -201,8 +199,7 @@ class TemplateController extends BaseTemplateController
      *        methods = {"POST"}
      * )
      *
-     * @param string $action The action to be executed.
-     * @param array  $items  Identifier list of the items to be processed.
+     * @param Request $request Current request instance.
      *
      * @return bool true on sucess, false on failure.
      *
@@ -311,10 +308,10 @@ class TemplateController extends BaseTemplateController
         if ($amountOfSites < 1) {
             $this->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! This template does not have any sites assigned yet.'));
 
-            return $this->redirect($redirectUrl);
+            return $this->redirectToRoute($redirectRoute);
         }
 
-        $confirmation = $request->request->getBool('confirmation', false);
+        $confirmation = (bool) $request->request->get('confirmation', false);
         if ($confirmation) {
             $systemHelper = $this->get('zikula_multisites_module.system_helper');
 

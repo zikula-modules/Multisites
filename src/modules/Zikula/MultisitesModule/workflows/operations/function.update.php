@@ -21,15 +21,6 @@
  */
 function ZikulaMultisitesModule_operation_update(&$entity, $params)
 {
-    $dom = \ZLanguage::getModuleDomain('ZikulaMultisitesModule');
-
-
-    // initialise the result flag
-    $result = false;
-
-    $objectType = $entity['_objectType'];
-    $currentState = $entity['workflowState'];
-    
     // get attributes read from the workflow
     if (isset($params['nextstate']) && !empty($params['nextstate'])) {
         // assign value to the data object

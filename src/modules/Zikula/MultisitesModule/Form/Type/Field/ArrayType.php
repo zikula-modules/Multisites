@@ -45,4 +45,12 @@ class ArrayType extends AbstractType
     {
         return 'zikulamultisitesmodule_field_array';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

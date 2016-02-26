@@ -13,6 +13,7 @@
 namespace Zikula\MultisitesModule\Form\Extension\Base;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -63,6 +64,8 @@ class UploadTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $parentData = $form->getParent()->getData();
+
         $view->vars['object_type'] = $parentData->get_objectType();
         $view->vars['object_id'] = $parentData->createCompositeIdentifier();
 

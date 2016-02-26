@@ -12,6 +12,8 @@
 
 namespace Zikula\MultisitesModule\Entity\Repository\Base;
 
+use Doctrine\ORM\EntityRepository;
+use ServiceUtil;
 use UserUtil;
 
 /**
@@ -20,7 +22,7 @@ use UserUtil;
  * This is the base repository class for the many to many relationship
  * between project and template entities.
  */
-class ProjectTemplate extends \EntityRepository
+class ProjectTemplate extends EntityRepository
 {
     public function truncateTable()
     {

@@ -15,6 +15,7 @@ namespace Zikula\MultisitesModule\Form\Handler\Template;
 use Zikula\MultisitesModule\Form\Handler\Template\Base\EditHandler as BaseEditHandler;
 
 use ModUtil;
+use Zikula\Core\Doctrine\EntityAccess;
 
 /**
  * This handler class handles the page events of the Form called by the zikulaMultisitesModule_template_edit() function.
@@ -69,7 +70,7 @@ class EditHandler extends BaseEditHandler
 
         $existingObjectData = $entity->toArray();
 
-        $objectId = ($this->mode != 'create') ? $this->idValues[0] : 0;
+        $objectId = ($this->templateParameters['mode'] != 'create') ? $this->idValues[0] : 0;
 
         // process all fields
         foreach ($this->uploadFields as $uploadField => $isMandatory) {
@@ -77,7 +78,7 @@ class EditHandler extends BaseEditHandler
                 // check if an existing file must be deleted
                 $hasOldFile = (!empty($existingObjectData[$uploadField]));
                 $hasBeenDeleted = !$hasOldFile;
-                if ($this->mode != 'create') {
+                if ($this->templateParameters['mode'] != 'create') {
                     if (isset($formData[$uploadField . 'DeleteFile'])) {
                         if ($hasOldFile && $formData[$uploadField . 'DeleteFile'] === true && !$entity->isSqlFileReferencedByOtherTemplates()) {
                             // remove upload file (and image thumbnails)
@@ -100,7 +101,7 @@ class EditHandler extends BaseEditHandler
                     continue;
                 }
 
-                if ($hasOldFile && $hasBeenDeleted !== true && $this->mode != 'create' && !$entity->isSqlFileReferencedByOtherTemplates()) {
+                if ($hasOldFile && $hasBeenDeleted !== true && $this->templateParameters['mode'] != 'create' && !$entity->isSqlFileReferencedByOtherTemplates()) {
                     // remove old upload file (and image thumbnails)
                     $existingObjectData = $this->uploadHandler->deleteUploadFile($this->objectType, $existingObjectData, $uploadField, $objectId);
                     if (empty($existingObjectData[$uploadField])) {
@@ -118,8 +119,8 @@ class EditHandler extends BaseEditHandler
                     $formData[$uploadField . 'Meta'] = $uploadResult['metaData'];
                 } else {
                     // check if the selected sql file is different from the current one
-                    $selectedFileTemplateId = $otherFormData['additions']['sqlFileSelected'];
-                    if ($this->mode == 'create' || $selectedFileTemplateId != $existingObjectData['id']) {
+                    $selectedFileTemplateId = $formData['sqlFileSelected'];
+                    if ($this->templateParameters['mode'] == 'create' || $selectedFileTemplateId != $existingObjectData['id']) {
                         // update file information from original template
                         $referencedTemplate = ModUtil::apiFunc('ZikulaMultisitesModule', 'selection', 'getEntity', ['ot' => 'template', 'id' => $selectedFileTemplateId]);
                         $formData[$uploadField] = $referencedTemplate[$uploadField];
@@ -138,7 +139,7 @@ class EditHandler extends BaseEditHandler
                 // check if an existing file must be deleted
                 $hasOldFile = (!empty($existingObjectData[$uploadField]));
                 $hasBeenDeleted = !$hasOldFile;
-                if ($this->mode != 'create') {
+                if ($this->templateParameters['mode'] != 'create') {
                     if (isset($formData[$uploadField . 'DeleteFile'])) {
                         if ($hasOldFile && $formData[$uploadField . 'DeleteFile'] === true) {
                             // remove upload file (and image thumbnails)
@@ -161,7 +162,7 @@ class EditHandler extends BaseEditHandler
                     continue;
                 }
 
-                if ($hasOldFile && $hasBeenDeleted !== true && $this->mode != 'create') {
+                if ($hasOldFile && $hasBeenDeleted !== true && $this->templateParameters['mode'] != 'create') {
                     // remove old upload file (and image thumbnails)
                     $existingObjectData = $this->uploadHandler->deleteUploadFile($this->objectType, $existingObjectData, $uploadField, $objectId);
                     if (empty($existingObjectData[$uploadField])) {

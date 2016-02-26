@@ -46,25 +46,25 @@ function ZikulaMultisitesModule_workflow_none_gettextstrings()
     $serviceManager = \ServiceUtil::getManager();
     $translator = $serviceManager->get('translator');
     return [
-        'title' => $translator->('None workflow (no approval)'),
-        'description' => $translator->('This is like a non-existing workflow. Everything is online immediately after creation.'),
+        'title' => $translator->__('None workflow (no approval)'),
+        'description' => $translator->__('This is like a non-existing workflow. Everything is online immediately after creation.'),
 
         // state titles
         'states' => [
-            $translator->('Initial') => $translator->('Pseudo-state for content which is just created and not persisted yet.'),
-            $translator->('Approved') => $translator->('Content has been approved and is available online.'),
-            $translator->('Deleted') => $translator->('Pseudo-state for content which has been deleted from the database.')
+            $translator->__('Initial') => $translator->__('Pseudo-state for content which is just created and not persisted yet.'),
+            $translator->__('Approved') => $translator->__('Content has been approved and is available online.'),
+            $translator->__('Deleted') => $translator->__('Pseudo-state for content which has been deleted from the database.')
         ],
 
         // action titles and descriptions for each state
         'actions' => [
             'initial' => [
-                $translator->('Submit') => $translator->('Submit content.'),
+                $translator->__('Submit') => $translator->__('Submit content.'),
             ]
             ,
             'approved' => [
-                $translator->('Update') => $translator->('Update content.'),
-                $translator->('Delete') => $translator->('Delete content permanently.')
+                $translator->__('Update') => $translator->__('Update content.'),
+                $translator->__('Delete') => $translator->__('Delete content permanently.')
             ]
             ,
             'deleted' => [

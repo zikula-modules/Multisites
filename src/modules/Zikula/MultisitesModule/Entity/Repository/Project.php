@@ -13,7 +13,8 @@
 namespace Zikula\MultisitesModule\Entity\Repository;
 
 use Zikula\MultisitesModule\Entity\Repository\Base\Project as BaseProject;
-use FormUtil;
+
+use Doctrine\ORM\QueryBuilder;
 use ModUtil;
 
 /**
@@ -35,7 +36,7 @@ class Project extends BaseProject
     {
         $parameters = parent::getViewQuickNavParameters($context, $args);
 
-        $parameters['templates'] = isset($this->controllerArguments['templates']) ? $this->controllerArguments['templates'] : FormUtil::getPassedValue('templates', 0, 'GET');
+        $parameters['templates'] = $this->request->query->getDigits('templates', 0);
 
         return $parameters;
     }
@@ -43,13 +44,13 @@ class Project extends BaseProject
     /**
      * Adds quick navigation related filter options as where clauses.
      *
-     * @param Doctrine\ORM\QueryBuilder $qb Query builder to be enhanced.
+     * @param QueryBuilder $qb Query builder to be enhanced.
      *
-     * @return Doctrine\ORM\QueryBuilder Enriched query builder instance.
+     * @return QueryBuilder Enriched query builder instance.
      */
     public function addCommonViewFilters(QueryBuilder $qb)
     {
-        $currentFunc = FormUtil::getPassedValue('func', 'index', 'GETPOST');
+        $currentFunc = $this->request->query->getAlpha('func', 'index');
         if ($currentFunc == 'edit') {
             return $qb;
         }
@@ -116,7 +117,7 @@ class Project extends BaseProject
     /**
      * Helper method to add joins to from clause.
      *
-     * @param Doctrine\ORM\QueryBuilder $qb query builder instance used to create the query.
+     * @param QueryBuilder $qb query builder instance used to create the query.
      *
      * @return String Enhancement for from clause.
      */

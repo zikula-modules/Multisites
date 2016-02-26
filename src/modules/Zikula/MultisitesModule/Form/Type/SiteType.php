@@ -24,8 +24,8 @@ class SiteType extends BaseSiteType
     /**
      * Adds basic entity fields.
      *
-     * @param FormBuilderInterface The form builder.
-     * @param array                The options.
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options.
      */
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
@@ -194,7 +194,7 @@ class SiteType extends BaseSiteType
                 $this->__('PostgreSQL') => 'postgres',
                 //$this->__('Oracle') => 'oci'
             ],
-            'choices_as_values' => true
+            'choices_as_values' => true,
             'multiple' => false,
             'expanded' => false
         ]);

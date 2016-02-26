@@ -22,13 +22,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use DataUtil;
 use FormUtil;
-use ModUtil;
+use RuntimeException;
 use ServiceUtil;
 use System;
 use UserUtil;
-use Zikula_Exception;
 use Zikula_Workflow_Util;
-use ZLanguage;
 use Zikula\Core\Doctrine\EntityAccess;
 
 /**
@@ -176,7 +174,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
      * @Assert\DateTime()
-     * @var datetime $createdDate.
+     * @var \DateTime $createdDate.
      */
     protected $createdDate;
     
@@ -184,7 +182,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="update")
      * @Assert\DateTime()
-     * @var datetime $updatedDate.
+     * @var \DateTime $updatedDate.
      */
     protected $updatedDate;
     
@@ -192,7 +190,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * Bidirectional - Many templates [templates] are linked by many projects [projects] (INVERSE SIDE).
      *
      * @ORM\ManyToMany(targetEntity="Zikula\MultisitesModule\Entity\ProjectEntity", mappedBy="templates")
-     * @var Zikula\MultisitesModule\Entity\ProjectEntity[] $projects.
+     * @var \Zikula\MultisitesModule\Entity\ProjectEntity[] $projects.
      */
     protected $projects = null;
     /**
@@ -201,7 +199,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * @ORM\OneToMany(targetEntity="Zikula\MultisitesModule\Entity\SiteEntity", mappedBy="template", cascade={"remove"})
      * @ORM\JoinTable(name="zikula_multisites_templatesites")
      * @ORM\OrderBy({"name" = "ASC"})
-     * @var Zikula\MultisitesModule\Entity\SiteEntity[] $sites.
+     * @var \Zikula\MultisitesModule\Entity\SiteEntity[] $sites.
      */
     protected $sites = null;
     
@@ -600,7 +598,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Get created date.
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedDate()
     {
@@ -610,7 +608,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Set created date.
      *
-     * @param datetime $createdDate.
+     * @param \DateTime $createdDate.
      *
      * @return void
      */
@@ -622,7 +620,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Get updated date.
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdatedDate()
     {
@@ -632,7 +630,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Set updated date.
      *
-     * @param datetime $updatedDate.
+     * @param \DateTime $updatedDate.
      *
      * @return void
      */
@@ -1224,7 +1222,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Start validation and raise exception if invalid data is found.
      *
-     * @return void.
+     * @return boolean Whether everything is valid or not.
      */
     public function validate()
     {
@@ -1340,7 +1338,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Creates url arguments array for easy creation of display urls.
      *
-     * @return Array The resulting arguments list.
+     * @return array The resulting arguments list.
      */
     public function createUrlArgs()
     {

@@ -15,19 +15,20 @@ namespace Zikula\MultisitesModule\Form\Handler\Common\Base;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\MultisitesModule\UploadHandler;
-
-use ModUtil;
-use System;
-use UserUtil;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\RouteUrl;
+use ModUtil;
+use RuntimeException;
+use System;
+use UserUtil;
+use Zikula\MultisitesModule\UploadHandler;
 
 /**
  * This handler class handles the page events of editing forms.
@@ -204,7 +205,7 @@ class EditHandler
      *
      * @param TranslatorInterface $translator Translator service instance.
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(/*TranslatorInterface */$translator)
     {
         $this->translator = $translator;
     }
@@ -248,7 +249,7 @@ class EditHandler
     
         $permissionHelper = $this->container->get('zikula_permissions_module.api.permission');
     
-        if ($this->mode == 'edit') {
+        if ($this->templateParameters['mode'] == 'edit') {
             if (!$permissionHelper->hasPermission($this->permissionComponent, $this->createCompositeIdentifier() . '::', ACCESS_EDIT)) {
                 throw new AccessDeniedException();
             }
@@ -283,7 +284,7 @@ class EditHandler
             $this->request->getSession()->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->translator->trans('Error! Could not determine workflow actions.', [], 'zikulamultisitesmodule'));
             $logger = $this->container->get('logger');
             $logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed to determine available workflow actions.', ['app' => 'ZikulaMultisitesModule', 'user' => UserUtil::getVar('uname'), 'entity' => $this->objectType, 'id' => $entity->createCompositeIdentifier()]);
-            throw new \RuntimeException($this->translator->trans('Error! Could not determine workflow actions.', [], 'zikulamultisitesmodule'));
+            throw new RuntimeException($this->translator->trans('Error! Could not determine workflow actions.', [], 'zikulamultisitesmodule'));
         }
     
         $this->templateParameters['actions'] = $actions;
@@ -371,11 +372,14 @@ class EditHandler
     {
         $this->hasTemplateId = false;
         $templateId = $this->request->query->get('astemplate', '');
-        if (!empty($templateId)) {
-            $templateIdValueParts = explode('_', $templateId);
-            $this->hasTemplateId = count($templateIdValueParts) == count($this->idFields);
+        if (empty($templateId)) {
+            return null;
         }
-    
+
+        $entity = null;
+        $templateIdValueParts = explode('_', $templateId);
+        $this->hasTemplateId = count($templateIdValueParts) == count($this->idFields);
+
         if (true === $this->hasTemplateId) {
             $templateIdValues = [];
             $i = 0;
@@ -416,12 +420,13 @@ class EditHandler
     /**
      * Command event handler.
      *
+     * @param array $args List of arguments.
+     *
      * @return mixed Redirect or false on errors.
      */
-    public function handleCommand()
+    public function handleCommand($args)
     {
         // build $args for BC (e.g. used by redirect handling)
-        $args = [];
         foreach ($this->templateParameters['actions'] as $action) {
             if ($this->form->get($action['id'])->isClicked()) {
                 $args['commandName'] = $action['id'];
@@ -440,7 +445,8 @@ class EditHandler
     
         // get treated entity reference from persisted member var
         $entity = $this->entityRef;
-    
+
+        $hookHelper = null;
         if ($entity->supportsHookSubscribers() && !in_array($action, ['reset', 'cancel'])) {
             $hookHelper = $this->container->get('zikulamultisitesmodule.hook_helper');
             // Let any hooks perform additional validation actions
@@ -466,11 +472,13 @@ class EditHandler
                     $urlArgs = $entity->createUrlArgs();
                     $url = new RouteUrl('zikulamultisitesmodule_' . $this->objectType . '_display', $urlArgs);
                 }
-                $hookHelper->callProcessHooks($entity, $hookType, $url);
+                if (!is_null($hookHelper)) {
+                    $hookHelper->callProcessHooks($entity, $hookType, $url);
+                }
             }
         }
     
-        if (true === $this->hasPageLockSupport && $this->mode == 'edit' && ModUtil::available('ZikulaPageLockModule')) {
+        if (true === $this->hasPageLockSupport && $this->templateParameters['mode'] == 'edit' && ModUtil::available('ZikulaPageLockModule')) {
             ModUtil::apiFunc('ZikulaPageLockModule', 'user', 'releaseLock', [
                                  'lockName' => 'ZikulaMultisitesModule' . $this->objectTypeCapital . $this->createCompositeIdentifier()
             ]);
@@ -482,7 +490,7 @@ class EditHandler
     /**
      * Get success or error message for default operations.
      *
-     * @param Array   $args    arguments from handleCommand method.
+     * @param array   $args    arguments from handleCommand method.
      * @param Boolean $success true if this is a success, false for default error.
      *
      * @return String desired status or error message.
@@ -492,26 +500,26 @@ class EditHandler
         $message = '';
         switch ($args['commandName']) {
             case 'create':
-                    if (true === $success) {
-                        $message = $this->translator->trans('Done! Item created.', [], 'zikulamultisitesmodule');
-                    } else {
-                        $message = $this->translator->trans('Error! Creation attempt failed.', [], 'zikulamultisitesmodule');
-                    }
-                    break;
+                if (true === $success) {
+                    $message = $this->translator->trans('Done! Item created.', [], 'zikulamultisitesmodule');
+                } else {
+                    $message = $this->translator->trans('Error! Creation attempt failed.', [], 'zikulamultisitesmodule');
+                }
+                break;
             case 'update':
-                    if (true === $success) {
-                        $message = $this->translator->trans('Done! Item updated.', [], 'zikulamultisitesmodule');
-                    } else {
-                        $message = $this->translator->trans('Error! Update attempt failed.', [], 'zikulamultisitesmodule');
-                    }
-                    break;
+                if (true === $success) {
+                    $message = $this->translator->trans('Done! Item updated.', [], 'zikulamultisitesmodule');
+                } else {
+                    $message = $this->translator->trans('Error! Update attempt failed.', [], 'zikulamultisitesmodule');
+                }
+                break;
             case 'delete':
-                    if (true === $success) {
-                        $message = $this->translator->trans('Done! Item deleted.', [], 'zikulamultisitesmodule');
-                    } else {
-                        $message = $this->translator->trans('Error! Deletion attempt failed.', [], 'zikulamultisitesmodule');
-                    }
-                    break;
+                if (true === $success) {
+                    $message = $this->translator->trans('Done! Item deleted.', [], 'zikulamultisitesmodule');
+                } else {
+                    $message = $this->translator->trans('Error! Deletion attempt failed.', [], 'zikulamultisitesmodule');
+                }
+                break;
         }
     
         return $message;
@@ -520,7 +528,7 @@ class EditHandler
     /**
      * Add success or error message to session.
      *
-     * @param Array   $args    arguments from handleCommand method.
+     * @param array   $args    arguments from handleCommand method.
      * @param Boolean $success true if this is a success, false for default error.
      *
      * @throws RuntimeException Thrown if executing the workflow action fails
@@ -560,7 +568,7 @@ class EditHandler
     
         if (!in_array($args['commandName'], ['reset', 'cancel'])) {
             if (count($this->uploadFields) > 0) {
-                $entityData = $this->handleUploads($entityData, $entity);
+                $entityData = $this->handleUploads($formData, $entity);
                 if ($entityData == false) {
                     return false;
                 }
@@ -573,7 +581,7 @@ class EditHandler
         }
     
         if (isset($formData['additionalNotificationRemarks']) && $formData['additionalNotificationRemarks'] != '') {
-            $this->request->getSession()->set($this->name . 'AdditionalNotificationRemarks', $formData['additionalNotificationRemarks']);
+            $this->request->getSession()->set('ZikulaMultisitesModuleAdditionalNotificationRemarks', $formData['additionalNotificationRemarks']);
         }
     
         // save updated entity
@@ -586,7 +594,7 @@ class EditHandler
     /**
      * This method executes a certain workflow action.
      *
-     * @param Array $args Arguments from handleCommand method.
+     * @param array $args Arguments from handleCommand method.
      *
      * @return bool Whether everything worked well or not.
      */
@@ -619,7 +627,7 @@ class EditHandler
             // check if an existing file must be deleted
             $hasOldFile = !empty($existingObjectData[$uploadField]);
             $hasBeenDeleted = !$hasOldFile;
-            if ($this->mode != 'create') {
+            if ($this->templateParameters['mode'] != 'create') {
                 if (isset($formData[$uploadField . 'DeleteFile'])) {
                     if ($hasOldFile && $formData[$uploadField . 'DeleteFile'] === true) {
                         // remove upload file (and image thumbnails)
