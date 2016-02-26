@@ -14,7 +14,6 @@ namespace Zikula\MultisitesModule\Base;
 
 use Doctrine\DBAL\Connection;
 use EventUtil;
-use HookUtil;
 use RuntimeException;
 use System;
 use UserUtil;
@@ -78,7 +77,7 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
     
         // register hook subscriber bundles
         $subscriberHookContainer = $this->hookApi->getHookContainerInstance($this->bundle->getMetaData(), HookApi::SUBSCRIBER_TYPE);
-        HookUtil::registerSubscriberBundles($subscriberHookContainer->getHookSubscriberBundles());
+        $this->hookApi->registerSubscriberBundles($subscriberHookContainer->getHookSubscriberBundles());
         
     
         // initialisation successful
@@ -356,7 +355,7 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
     
         // unregister hook subscriber bundles
         $subscriberHookContainer = $this->hookApi->getHookContainerInstance($this->bundle->getMetaData(), HookApi::SUBSCRIBER_TYPE);
-        HookUtil::unregisterSubscriberBundles($subscriberHookContainer->getHookSubscriberBundles());
+        $this->hookApi->unregisterSubscriberBundles($subscriberHookContainer->getHookSubscriberBundles());
         
     
         // remove all module vars
