@@ -18,7 +18,6 @@ use DBUtil;
 use FileUtil;
 use RuntimeException;
 use System;
-use Zikula\ExtensionsModule\Api\HookApi;
 
 /**
  * Installer implementation class.
@@ -326,9 +325,8 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
             return false;
         }
 
-        // register hook subscriber bundles
-        $subscriberHookContainer = $this->hookApi->getHookContainerInstance($this->bundle->getMetaData(), HookApi::SUBSCRIBER_TYPE);
-        $this->hookApi->registerSubscriberBundles($subscriberHookContainer->getHookSubscriberBundles());
+        // install subscriber hooks
+        $this->hookApi->installSubscriberHooks($this->bundle->getMetaData());
 
         return true;
     }

@@ -19,7 +19,6 @@ use System;
 use UserUtil;
 use Zikula\Core\AbstractExtensionInstaller;
 use Zikula_Workflow_Util;
-use Zikula\ExtensionsModule\Api\HookApi;
 
 /**
  * Installer base class.
@@ -75,10 +74,8 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
         // create the default data
         $this->createDefaultData();
     
-        // register hook subscriber bundles
-        $subscriberHookContainer = $this->hookApi->getHookContainerInstance($this->bundle->getMetaData(), HookApi::SUBSCRIBER_TYPE);
-        $this->hookApi->registerSubscriberBundles($subscriberHookContainer->getHookSubscriberBundles());
-        
+        // install subscriber hooks
+        $this->hookApi->installSubscriberHooks($this->bundle->getMetaData());
     
         // initialisation successful
         return true;
@@ -353,10 +350,8 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
             return false;
         }
     
-        // unregister hook subscriber bundles
-        $subscriberHookContainer = $this->hookApi->getHookContainerInstance($this->bundle->getMetaData(), HookApi::SUBSCRIBER_TYPE);
-        $this->hookApi->unregisterSubscriberBundles($subscriberHookContainer->getHookSubscriberBundles());
-        
+        // uninstall subscriber hooks
+        $this->hookApi->uninstallSubscriberHooks($this->bundle->getMetaData());
     
         // remove all module vars
         $this->delVars();
