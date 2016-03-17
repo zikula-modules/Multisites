@@ -2,7 +2,7 @@
 {% extends 'ZikulaMultisitesModule::base.html.twig' %}
 {% block header %}
     {% if app.request.query.get('theme') != 'ZikulaPrinterTheme' %}
-        {{ render(controller('ZikulaAdminModule:Admin:adminheader')) }}
+        {{ adminHeader() }}
     {% endif %}
     {{ parent() }}
 {% endblock %}
@@ -12,7 +12,7 @@
 {% endblock %}
 {% block footer %}
     {% if app.request.query.get('theme') != 'ZikulaPrinterTheme' %}
-        {{ render(controller('ZikulaAdminModule:Admin:adminfooter')) }}
+        {{ adminFooter() }}
     {% endif %}
     {{ parent() }}
 {% endblock %}
