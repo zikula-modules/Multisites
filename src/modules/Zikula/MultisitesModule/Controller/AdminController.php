@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use ModUtil;
+use ServiceUtil;
 
 /**
  * Admin controller class providing navigation and interaction functionality.
@@ -72,16 +73,12 @@ class AdminController extends BaseAdminController
      */
     protected function isConfigured()
     {
-        global $ZConfig;
+        $serviceManager = ServiceUtil::getManager();
+        $msConfig = $serviceManager->getParameter('multisites');
 
-        if (!isset($ZConfig['Multisites'])) {
-            return false;
-        }
-        $msConfig = $ZConfig['Multisites'];
-
-        return (isset($msConfig['multisites.enabled']) && $msConfig['multisites.enabled'] == 1
-             && isset($msConfig['multisites.mainsiteurl'])
-             && isset($msConfig['multisites.based_on_domains']));
+        return (isset($msConfig['enabled']) && $msConfig['enabled'] == true
+             && isset($msConfig['mainsiteurl'])
+             && isset($msConfig['based_on_domains']));
     }
 
     /**
@@ -91,15 +88,11 @@ class AdminController extends BaseAdminController
      */
     protected function isMainSite()
     {
-        global $ZConfig;
+        $serviceManager = ServiceUtil::getManager();
+        $msConfig = $serviceManager->getParameter('multisites');
 
-        if (!isset($ZConfig['Multisites'])) {
-            return true;
-        }
-        $msConfig = $ZConfig['Multisites'];
-
-        $isBasedOnDomains = isset($msConfig['multisites.based_on_domains']) ? $msConfig['multisites.based_on_domains'] : 1;
-        $mainUrl = isset($msConfig['multisites.mainsiteurl']) ? $msConfig['multisites.mainsiteurl'] : '';
+        $isBasedOnDomains = isset($msConfig['based_on_domains']) && $msConfig['based_on_domains'] != '~' ? $msConfig['based_on_domains'] : 1;
+        $mainUrl = isset($msConfig['mainsiteurl']) && $msConfig['mainsiteurl'] != '~' ? $msConfig['mainsiteurl'] : '';
 
         return ($isBasedOnDomains == 0 && $mainUrl == $this->request->query->get('sitedns', '')
             || ($isBasedOnDomains == 1 && $mainUrl == $_SERVER['HTTP_HOST']));
@@ -224,15 +217,14 @@ class AdminController extends BaseAdminController
         $databaseHosts = [];
 
         // add main site
-        global $ZConfig;
-        $mainDbSettings = $ZConfig['DBInfo']['databases']['default'];
+        $serviceManager = ServiceUtil::getManager();
         $databases[] = [
             'alias' => 'multisitesMainSiteAlias',
-            'dbname' => $mainDbSettings['dbname'],
-            'dbhost' => $mainDbSettings['host'],
-            'dbtype' => $mainDbSettings['dbdriver'],
-            'dbuname' => $mainDbSettings['user'],
-            'dbpass' => $mainDbSettings['password']
+            'dbname' => $serviceManager->getParameter('database_name'),
+            'dbhost' => $serviceManager->getParameter('database_host'),
+            'dbtype' => str_replace('pdo_', '', $serviceManager->getParameter('database_driver')),
+            'dbuname' => $serviceManager->getParameter('database_user'),
+            'dbpass' => $serviceManager->getParameter('database_password')
         ];
 
         // add child sites

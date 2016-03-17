@@ -82,8 +82,9 @@ class Site extends BaseSite
 
         if ($context == 'controllerAction' && $args['action'] == 'view') {
             $serviceManager = ServiceUtil::getManager();
-            $parameters['wwwroot'] = $serviceManager['multisites.wwwroot'];
-            $parameters['basedOnDomains'] = $serviceManager['multisites.based_on_domains'];
+            $msConfig = $serviceManager->getParameter('multisites');
+            $parameters['wwwroot'] = $msConfig['wwwroot'];
+            $parameters['basedOnDomains'] = $msConfig['based_on_domains'];
         }
 
         return $parameters;

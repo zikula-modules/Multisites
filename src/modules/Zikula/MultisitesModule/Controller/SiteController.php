@@ -405,13 +405,15 @@ class SiteController extends BaseSiteController
         }
 
         $items = $request->request->get('items', null);
+        $serviceManager = ServiceUtil::getManager();
 
         // Initialize and prepare the action
+        $originalTempFolder = '';
         $needsDatabaseAccess = false;
         switch ($action) {
             case 'cleartemplates':
                 // Backup temp folder setting of main site
-                $originalTempFolder = $GLOBALS['ZConfig']['System']['temp'];
+                $originalTempFolder = $serviceManager->getParameter('temp_dir');
                 break;
             case 'anotherOne':
                 // This one needs the database
@@ -419,8 +421,8 @@ class SiteController extends BaseSiteController
                 break;
         }
 
-        $serviceManager = ServiceUtil::getManager();
-        $siteBasePath = $serviceManager['multisites.files_real_path'];
+        $msConfig = $serviceManager->getParameter('multisites');
+        $siteBasePath = $msConfig['files_real_path'];
         $zikula = $this->get('zikula');
 
         $systemHelper = $needsDatabaseAccess ? $this->get('zikula_multisites_module.system_helper') : null;
@@ -455,8 +457,8 @@ class SiteController extends BaseSiteController
             switch ($action) {
                 case 'cleartemplates':
                     // Set temp folder for this site instance
-                    $siteTempDirectory = $siteBasePath . '/' . $entity['sitedns'] . '/' . $serviceManager['multisites.site_temp_files_folder'];
-                    $GLOBALS['ZConfig']['System']['temp'] = $siteTempDirectory;
+                    $siteTempDirectory = $siteBasePath . '/' . $entity['sitedns'] . '/' . $msConfig['site_temp_files_folder'];
+                    $serviceManager->setParameter('temp_dir', $siteTempDirectory);
 
                     ModUtil::apiFunc('ZikulaSettingsModule', 'admin', 'clearallcompiledcaches');
                     $this->addFlash(\Zikula_Session::MESSAGE_STATUS, $this->__f('Done! Cleared all cache and compile directories for site %s.', [$entity->getTitleFromDisplayPattern()]));
@@ -469,7 +471,7 @@ class SiteController extends BaseSiteController
         switch ($action) {
             case 'cleartemplates':
                 // Restore temp folder setting for main site
-                $GLOBALS['ZConfig']['System']['temp'] = $originalTempFolder;
+                $serviceManager->setParameter('temp_dir', $originalTempFolder);
                 break;
         }
 

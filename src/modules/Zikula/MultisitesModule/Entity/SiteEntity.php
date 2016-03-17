@@ -262,7 +262,8 @@ class SiteEntity extends BaseAbstractSiteEntity
         }
         if ($deleteFiles == 1) {
             // delete the site files and directories
-            $siteFolder = $serviceManager['multisites.files_real_path'] . '/' . $this->getSiteAlias();
+            $msConfig = $serviceManager->getParameter('multisites');
+            $siteFolder = $msConfig['files_real_path'] . '/' . $this->getSiteAlias();
             if (!$systemHelper->deleteDir($siteFolder)) {
                 $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error during deleting the site files directory.'));
             }

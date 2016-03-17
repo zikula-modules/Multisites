@@ -342,37 +342,39 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
         // 2.0.0 introduces new upload locations based on MOST
         $modelPath = $this->getVar('modelsFolder');
         $this->delVar('modelsFolder');
-        if (is_dir($modelPath)) {
-            // move existing template files into new folder
-            $dh = opendir($modelPath);
-            $filesArray = [];
-            while ($file = readdir($dh)) {
-                if (in_array($file, ['.', '..', '.git', '.svn', 'CVS', 'index.html', 'index.htm', '.htaccess'])) {
-                    continue;
-                }
-                if (!is_file($modelPath . '/' . $file)) {
-                    continue;
-                }
-                $filesArray[] = $file;
-            }
-            closedir($dh);
+        if (!is_dir($modelPath)) {
+            return true;
+        }
 
-            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
-            $destinationPath = $controllerHelper->getFileBaseFolder('template', 'sqlFile');
-            $allMoved = true;
-            foreach ($filesArray as $file) {
-                if (!@rename($modelPath . '/' . $file, $destinationPath . $file)) {
-                    $allMoved = false;
-                }
+        // move existing template files into new folder
+        $dh = opendir($modelPath);
+        $filesArray = [];
+        while ($file = readdir($dh)) {
+            if (in_array($file, ['.', '..', '.git', '.svn', 'CVS', 'index.html', 'index.htm', '.htaccess'])) {
+                continue;
             }
+            if (!is_file($modelPath . '/' . $file)) {
+                continue;
+            }
+            $filesArray[] = $file;
+        }
+        closedir($dh);
 
-            if ($allMoved) {
-                // delete the old directory
-                $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
-                if (!$systemHelper->deleteDir($modelPath)) {
-                    // raise a message, but continue the process
-                    $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Could not delete the %s folder. Please remove it manually.', [$modelPath]));
-                }
+        $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+        $destinationPath = $controllerHelper->getFileBaseFolder('template', 'sqlFile');
+        $allMoved = true;
+        foreach ($filesArray as $file) {
+            if (!@rename($modelPath . '/' . $file, $destinationPath . $file)) {
+                $allMoved = false;
+            }
+        }
+
+        if ($allMoved) {
+            // delete the old directory
+            $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
+            if (!$systemHelper->deleteDir($modelPath)) {
+                // raise a message, but continue the process
+                $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Could not delete the %s folder. Please remove it manually.', [$modelPath]));
             }
         }
 
@@ -387,7 +389,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
     protected function migratePrimaryConfigFile()
     {
         $configFile = 'config/multisites_config.php';
-        $configFileTemplate = 'modules/Multisites/Resources/config/multisites_config.php';
+        $configFileTemplate = 'modules/Zikula/MultisitesModule/Resources/config-folder/multisites_config.php';
         $configUpdated = false;
 
         if (file_exists($configFile) && is_writeable($configFile)) {

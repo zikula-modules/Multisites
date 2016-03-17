@@ -50,6 +50,7 @@ application "Multisites" {
             Form/Type/TemplateType.php,
             Helper/ModelHelper.php,
             MultisitesModuleInstaller.php,
+            Resources/config/eventSubscriber.yml,
             Resources/config/helpers.yml,
             Resources/docs/overridesTemplate_config.yml,
             Resources/docs/overridesTemplate_theme.yml,

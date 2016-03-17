@@ -19,6 +19,7 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\ExtensionsModule\Api\VariableApi;
 use Zikula\ExtensionsModule\ExtensionVariablesTrait;
+use ServiceUtil;
 
 /**
  * Utility class for configuration related functionality.
@@ -116,6 +117,7 @@ class ConfiguratorHelper
     public function verify()
     {
         $this->templateParameters = [];
+        $serviceManager = ServiceUtil::getManager();
 
         if (!$this->isMultisitesEnabled()) {
             // step 1 - check if required files are located in the correct place and whether they are writeable
@@ -126,12 +128,14 @@ class ConfiguratorHelper
                 return false;
             }
 
+            $postData = $this->request->request;
+
             // step 2 - check if the files folder exists and ask for the physical path
             $filesRealPath = $this->getVar('files_real_path', '');
             if (empty($filesRealPath) || !file_exists($filesRealPath)) {
                 $paramsValid = false;
-                $filesRealPath = $this->request->request->get('files_real_path', null);
-                if ($filesRealPath !== null) {
+                $filesRealPath = $postData->get('files_real_path', null);
+                if (null !== $filesRealPath) {
                     // value is sent via POST, try to save it
                     if ($this->writeFilesPathToConfig($filesRealPath)) {
                         // save in modvar temporarily
@@ -139,10 +143,10 @@ class ConfiguratorHelper
                         $paramsValid = true;
                     }
                 }
-                if ($paramsValid !== true) {
+                if (true !== $paramsValid) {
                     // ask for the correct location for the sites folder where the Temp folders will be created.
                     $scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0, strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
-                    $filesRealPath = $scriptRealPath . '/' . $GLOBALS['ZConfig']['System']['datadir'] . '/msData';
+                    $filesRealPath = $scriptRealPath . '/' . $serviceManager->getParameter('datadir') . '/msData';
 
                     $this->templateParameters = [
                         'step' => 2,
@@ -159,10 +163,10 @@ class ConfiguratorHelper
             $siteFilesFolder = $this->getVar('site_files_folder', '');
             if (empty($mainSiteUrl) || empty($siteTempFilesFolder) || empty($siteFilesFolder)) {
                 $paramsValid = false;
-                $mainSiteUrl = $this->request->request->get('mainsiteurl', null);
-                $siteTempFilesFolder = $this->request->request->get('site_temp_files_folder', null);
-                $siteFilesFolder = $this->request->request->get('site_files_folder', null);
-                if ($mainSiteUrl !== null && $siteTempFilesFolder !== null && $siteFilesFolder !== null) {
+                $mainSiteUrl = $postData->get('mainsiteurl', null);
+                $siteTempFilesFolder = $postData->get('site_temp_files_folder', null);
+                $siteFilesFolder = $postData->get('site_files_folder', null);
+                if (null !== $mainSiteUrl && null !== $siteTempFilesFolder && null !== $siteFilesFolder) {
                     // values are sent via POST, try to save them
                     if ($this->writeSystemParametersToConfig($mainSiteUrl, $siteTempFilesFolder, $siteFilesFolder)) {
                         if ($this->createAdditionalDirectories()) {
@@ -184,7 +188,7 @@ class ConfiguratorHelper
                     }
                 }
 
-                if ($paramsValid !== true) {
+                if (true !== $paramsValid) {
                     // ask for multisites system parameters
 
                     // get server zikula folder installation
@@ -196,7 +200,7 @@ class ConfiguratorHelper
                         'configFile' => $this->configFile,
                         'dbConfigFile' => $this->dbConfigFile,
                         'mainSiteUrl' => $_SERVER['HTTP_HOST'],
-                        'siteTempFilesFolder' => $GLOBALS['ZConfig']['System']['temp'],
+                        'siteTempFilesFolder' => $serviceManager->getParameter('temp_dir'),
                         'siteFilesFolder' => 'data'
                     ];
                     return false;
@@ -258,9 +262,10 @@ class ConfiguratorHelper
      */
     private function isMultisitesEnabled()
     {
-        global $ZConfig;
+        $serviceManager = ServiceUtil::getManager();
+        $msConfig = $serviceManager->getParameter('multisites');
 
-        return isset($ZConfig['Multisites']['multisites.enabled']) && $ZConfig['Multisites']['multisites.enabled'] == 1;
+        return true == $msConfig['enabled'];
     }
 
     /**
@@ -365,7 +370,7 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'r+');
         if ($fh == false) {
             fclose($fh);
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: File config/multisites_config.php could not be found.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error: File config/%s could not be found.', ['multisites_config.php']));
             return false;
         }
 
@@ -373,7 +378,7 @@ class ConfiguratorHelper
         $newFileContent = '';
 
         foreach ($lines as $line_num => $line) {
-            if (strpos($line, "ZConfig['Multisites']['multisites.files_real_path']") !== false) {
+            if (strpos($line, "ZConfig['Multisites']['files_real_path']") !== false) {
                 $line = str_replace('$files_real_path', $filesPath, $line);
             }
             $newFileContent .= $line;
@@ -383,10 +388,20 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'w+');
         if (!fwrite($fh, $newFileContent)) {
             fclose($fh);
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: Could not write into the config/multiple_config.php file.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error: Could not write into the config/%s file.', ['multisites_config.php']));
             return false;
         }
         fclose($fh);
+
+        // write stuff also into app/config/dynamic/generated.yml
+        // TODO deprecate the old config file
+        $serviceManager = ServiceUtil::getManager();
+        $configDumper = $serviceManager->get('zikula.dynamic_config_dumper');
+        $parameters = $configDumper->getParameters();
+        $parameters['multisites']['files_real_path'] = $filesPath;
+        $configDumper->setParameters($parameters);
+        $cacheClearer = $serviceManager->get('zikula.cache_clearer');
+        $cacheClearer->clear('symfony');
 
         return true;
     }
@@ -414,7 +429,7 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'r+');
         if ($fh == false) {
             fclose($fh);
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: File config/multisites_config.php could not be found.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error: File config/%s could not be found.', ['multisites_config.php']));
             return false;
         }
 
@@ -423,17 +438,17 @@ class ConfiguratorHelper
         $configPrefix = "ZConfig['Multisites']";
 
         foreach ($lines as $line_num => $line) {
-            if (strpos($line, $configPrefix . "['multisites.enabled']") !== false && strpos($line, "ZConfig['Multisites']['multisites.mainsiteurl']") === false) {
-                $line = str_replace('= 0', '= 1', $line);
-            } elseif (strpos($line, $configPrefix . "['multisites.mainsiteurl']") !== false) {
+            if (strpos($line, $configPrefix . "['enabled']") !== false && strpos($line, $configPrefix . "['mainsiteurl']") === false) {
+                $line = str_replace('= false', '= true', $line);
+            } elseif (strpos($line, $configPrefix . "['mainsiteurl']") !== false) {
                 $line = str_replace('$mainsiteurl', $mainSiteUrl, $line);
-            } elseif (strpos($line, $configPrefix . "['multisites.site_temp_files_folder']") !== false) {
+            } elseif (strpos($line, $configPrefix . "['site_temp_files_folder']") !== false) {
                 $line = str_replace('$site_temp_files_folder', '/' . $siteTempFilesFolder, $line);
-            } elseif (strpos($line, $configPrefix . "['multisites.site_files_folder']") !== false) {
+            } elseif (strpos($line, $configPrefix . "['site_files_folder']") !== false) {
                 $line = str_replace('$site_files_folder', '/' . $siteFilesFolder, $line);
-            } elseif (strpos($line, $configPrefix . "['multisites.wwwroot']") !== false) {
+            } elseif (strpos($line, $configPrefix . "['wwwroot']") !== false) {
                 $line = str_replace('$wwwroot', $wwwroot, $line);
-            } elseif (strpos($line, $configPrefix . "['multisites.sitedns']") !== false) {
+            } elseif (strpos($line, $configPrefix . "['sitedns']") !== false) {
                 $line = str_replace('$basePath', $basePath, $line);
             }
             $newFileContent .= $line;
@@ -443,10 +458,25 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'w+');
         if (!fwrite($fh, $newFileContent)) {
             fclose($fh);
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: Could not write into the config/multiple_config.php file.'));
+            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error: Could not write into the config/%s file.', ['multisites_config.php']));
             return false;
         }
         fclose($fh);
+
+        // write stuff also into app/config/dynamic/generated.yml
+        // TODO deprecate the old config file
+        $serviceManager = ServiceUtil::getManager();
+        $configDumper = $serviceManager->get('zikula.dynamic_config_dumper');
+        $parameters = $configDumper->getParameters();
+        $parameters['multisites']['enabled'] = true;
+        $parameters['multisites']['mainsiteurl'] = $mainSiteUrl;
+        $parameters['multisites']['site_temp_files_folder'] = $siteTempFilesFolder;
+        $parameters['multisites']['site_files_folder'] = $siteFilesFolder;
+        $parameters['multisites']['wwwroot'] = $wwwroot;
+        $parameters['multisites']['sitedns'] = $basePath;
+        $configDumper->setParameters($parameters);
+        $cacheClearer = $serviceManager->get('zikula.cache_clearer');
+        $cacheClearer->clear('symfony');
 
         return true;
     }
@@ -477,7 +507,7 @@ class ConfiguratorHelper
         }
 
         // create the main site folder
-//         $path .= '/' . FormUtil::getPassedValue('sitedns', null, 'GET');
+//         $path .= '/' . $this->request->query->get('sitedns', null);
 //         if (!file_exists($path) && !mkdir($path, 0777, true)) {
 //             $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error creating the directory:') . ' ' . $path);
 //             return false;

@@ -68,15 +68,17 @@ class SystemHelper
     public function createSiteFolders(SiteEntity $site)
     {
         $serviceManager = ServiceUtil::getManager();
-        $baseFolder = $serviceManager['multisites.files_real_path'];
+        $msConfig = $serviceManager->getParameter('multisites');
+
+        $baseFolder = $msConfig['files_real_path'];
         $siteDirectory = $baseFolder . '/' . $site['siteAlias'];
-        $siteFiles = $siteDirectory . $serviceManager['multisites.site_files_folder'];
-        $siteTemp = $siteDirectory . $serviceManager['multisites.site_temp_files_folder'];
+        $siteFiles = $siteDirectory . $msConfig['site_files_folder'];
+        $siteTemp = $siteDirectory . $msConfig['site_temp_files_folder'];
 
         $directoryList = [
             $baseFolder,
             $siteDirectory,
-            $siteDirectory . $serviceManager['multisites.site_files_folder'],
+            $siteDirectory . $msConfig['site_files_folder'],
             $siteTemp,
             $siteTemp . '/error_logs',
             $siteTemp . '/idsTmp',
@@ -144,10 +146,11 @@ class SystemHelper
         }
 
         $serviceManager = ServiceUtil::getManager();
+        $msConfig = $serviceManager->getParameter('multisites');
 
         // create .htaccess file
-        $siteDirectory = $serviceManager['multisites.files_real_path'] . '/' . $site['siteAlias'];
-        $siteTemp = $siteDirectory . $serviceManager['multisites.site_temp_files_folder'];
+        $siteDirectory = $msConfig['files_real_path'] . '/' . $site['siteAlias'];
+        $siteTemp = $siteDirectory . $msConfig['site_temp_files_folder'];
 
         $file = $siteTemp . '/.htaccess';
         $result = file_put_contents($file, $tempAccessFileContent);
