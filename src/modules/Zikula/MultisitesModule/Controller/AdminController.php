@@ -256,8 +256,12 @@ class AdminController extends BaseAdminController
         $databaseHostsSelected = [];
         $databaseTypesSelected = [];
 
+        $tokenHandler = $this->get('zikula_core.common.csrf_token_handler');
+
         // check whether the form has been submitted
-        if (isset($_POST['submit'])) {
+        if ($request->isMethod('POST')) {
+            $tokenHandler->validate($request->request->get('token', ''));
+
             $inputValid = true;
 
             $sqlInput = $request->request->get('inputquery', '');
@@ -337,6 +341,7 @@ class AdminController extends BaseAdminController
 
         $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
         $templateParameters = [
+            'token' => $tokenHandler->generate(),
             'databases' => $databases,
             'databaseHosts' => $databaseHosts,
             'databaseTypes' => $databaseTypes,

@@ -8,6 +8,7 @@
 
         <form action="{{ path('zikulamultisitesmodule_admin_multiplyqueries') }}" method="post" enctype="multipart/form-data" role="form" class="form">
             <div>
+                <input type="hidden" name="token" value="{{ token }}" />
                 <fieldset>
                     <legend>{{ __('Input data') }}</legend>
                     <p class="alert alert-info">{{ __('Use <strong>`###DBNAME###`</strong> as a placeholder for the database name.') }}</p>

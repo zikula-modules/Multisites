@@ -311,25 +311,33 @@ class TemplateController extends BaseTemplateController
             return $this->redirectToRoute($redirectRoute);
         }
 
-        $confirmation = (bool) $request->request->get('confirmation', false);
-        if ($confirmation) {
-            $systemHelper = $this->get('zikula_multisites_module.system_helper');
+        $tokenHandler = $this->get('zikula_core.common.csrf_token_handler');
 
-            // perform initialisation process for all sites assigned to this template
-            foreach ($sites as $site) {
-                if (!$systemHelper->setupDatabaseContent($site)) {
-                    // error has been registered already
-                    return $this->redirectToRoute($redirectRoute);
+        // check whether the form has been submitted
+        if ($request->isMethod('POST')) {
+            $tokenHandler->validate($request->request->get('token', ''));
+
+            $confirmation = (bool) $request->request->get('confirmation', false);
+            if ($confirmation) {
+                $systemHelper = $this->get('zikula_multisites_module.system_helper');
+
+                // perform initialisation process for all sites assigned to this template
+                foreach ($sites as $site) {
+                    if (!$systemHelper->setupDatabaseContent($site)) {
+                        // error has been registered already
+                        return $this->redirectToRoute($redirectRoute);
+                    }
                 }
+
+                $this->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_STATUS, $this->_fn('The template has been reapplied to %s site.', 'The template has been reapplied to %s sites.', $amountOfSites, [$amountOfSites]));
+
+                return $this->redirectToRoute($redirectRoute);
             }
-
-            $this->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_STATUS, $this->_fn('The template has been reapplied to %s site.', 'The template has been reapplied to %s sites.', $amountOfSites, [$amountOfSites]));
-
-            return $this->redirectToRoute($redirectRoute);
         }
 
         $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
         $templateParameters = [
+            'token' => $tokenHandler->generate(),
             'template' => $entity
         ];
 
