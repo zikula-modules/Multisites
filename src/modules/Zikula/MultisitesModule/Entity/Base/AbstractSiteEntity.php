@@ -412,7 +412,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get _object type.
+     * Gets the _object type.
      *
      * @return string
      */
@@ -422,7 +422,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set _object type.
+     * Sets the _object type.
      *
      * @param string $_objectType.
      *
@@ -434,7 +434,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get _bypass validation.
+     * Gets the _bypass validation.
      *
      * @return boolean
      */
@@ -444,7 +444,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set _bypass validation.
+     * Sets the _bypass validation.
      *
      * @param boolean $_bypassValidation.
      *
@@ -456,7 +456,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get _actions.
+     * Gets the _actions.
      *
      * @return array
      */
@@ -466,7 +466,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set _actions.
+     * Sets the _actions.
      *
      * @param array $_actions.
      *
@@ -478,7 +478,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get __ w o r k f l o w__.
+     * Gets the __ w o r k f l o w__.
      *
      * @return array
      */
@@ -488,7 +488,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set __ w o r k f l o w__.
+     * Sets the __ w o r k f l o w__.
      *
      * @param array $__WORKFLOW__.
      *
@@ -501,7 +501,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     
     /**
-     * Get id.
+     * Gets the id.
      *
      * @return integer
      */
@@ -511,7 +511,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set id.
+     * Sets the id.
      *
      * @param integer $id.
      *
@@ -523,7 +523,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get workflow state.
+     * Gets the workflow state.
      *
      * @return string
      */
@@ -533,7 +533,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set workflow state.
+     * Sets the workflow state.
      *
      * @param string $workflowState.
      *
@@ -545,7 +545,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get name.
+     * Gets the name.
      *
      * @return string
      */
@@ -555,7 +555,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set name.
+     * Sets the name.
      *
      * @param string $name.
      *
@@ -567,7 +567,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get description.
+     * Gets the description.
      *
      * @return string
      */
@@ -577,7 +577,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set description.
+     * Sets the description.
      *
      * @param string $description.
      *
@@ -589,7 +589,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site alias.
+     * Gets the site alias.
      *
      * @return string
      */
@@ -599,7 +599,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site alias.
+     * Sets the site alias.
      *
      * @param string $siteAlias.
      *
@@ -611,7 +611,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site name.
+     * Gets the site name.
      *
      * @return string
      */
@@ -621,7 +621,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site name.
+     * Sets the site name.
      *
      * @param string $siteName.
      *
@@ -633,7 +633,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site description.
+     * Gets the site description.
      *
      * @return string
      */
@@ -643,7 +643,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site description.
+     * Sets the site description.
      *
      * @param string $siteDescription.
      *
@@ -655,7 +655,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site admin name.
+     * Gets the site admin name.
      *
      * @return string
      */
@@ -665,7 +665,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site admin name.
+     * Sets the site admin name.
      *
      * @param string $siteAdminName.
      *
@@ -677,7 +677,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site admin password.
+     * Gets the site admin password.
      *
      * @return string
      */
@@ -687,7 +687,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site admin password.
+     * Sets the site admin password.
      *
      * @param string $siteAdminPassword.
      *
@@ -699,7 +699,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site admin real name.
+     * Gets the site admin real name.
      *
      * @return string
      */
@@ -709,7 +709,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site admin real name.
+     * Sets the site admin real name.
      *
      * @param string $siteAdminRealName.
      *
@@ -721,7 +721,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site admin email.
+     * Gets the site admin email.
      *
      * @return string
      */
@@ -731,7 +731,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site admin email.
+     * Sets the site admin email.
      *
      * @param string $siteAdminEmail.
      *
@@ -743,7 +743,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site company.
+     * Gets the site company.
      *
      * @return string
      */
@@ -753,7 +753,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site company.
+     * Sets the site company.
      *
      * @param string $siteCompany.
      *
@@ -765,7 +765,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get site dns.
+     * Gets the site dns.
      *
      * @return string
      */
@@ -775,7 +775,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set site dns.
+     * Sets the site dns.
      *
      * @param string $siteDns.
      *
@@ -787,7 +787,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get database name.
+     * Gets the database name.
      *
      * @return string
      */
@@ -797,7 +797,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set database name.
+     * Sets the database name.
      *
      * @param string $databaseName.
      *
@@ -809,7 +809,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get database user name.
+     * Gets the database user name.
      *
      * @return string
      */
@@ -819,7 +819,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set database user name.
+     * Sets the database user name.
      *
      * @param string $databaseUserName.
      *
@@ -831,7 +831,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get database password.
+     * Gets the database password.
      *
      * @return string
      */
@@ -841,7 +841,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set database password.
+     * Sets the database password.
      *
      * @param string $databasePassword.
      *
@@ -853,7 +853,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get database host.
+     * Gets the database host.
      *
      * @return string
      */
@@ -863,7 +863,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set database host.
+     * Sets the database host.
      *
      * @param string $databaseHost.
      *
@@ -875,7 +875,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get database type.
+     * Gets the database type.
      *
      * @return string
      */
@@ -885,7 +885,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set database type.
+     * Sets the database type.
      *
      * @param string $databaseType.
      *
@@ -897,7 +897,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get logo.
+     * Gets the logo.
      *
      * @return string
      */
@@ -907,7 +907,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set logo.
+     * Sets the logo.
      *
      * @param string $logo.
      *
@@ -919,7 +919,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get logo full path.
+     * Gets the logo full path.
      *
      * @return string
      */
@@ -929,7 +929,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set logo full path.
+     * Sets the logo full path.
      *
      * @param string $logoFullPath.
      *
@@ -941,7 +941,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get logo full path url.
+     * Gets the logo full path url.
      *
      * @return string
      */
@@ -951,7 +951,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set logo full path url.
+     * Sets the logo full path url.
      *
      * @param string $logoFullPathUrl.
      *
@@ -963,7 +963,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get logo meta.
+     * Gets the logo meta.
      *
      * @return array
      */
@@ -973,7 +973,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set logo meta.
+     * Sets the logo meta.
      *
      * @param array $logoMeta.
      *
@@ -985,7 +985,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get fav icon.
+     * Gets the fav icon.
      *
      * @return string
      */
@@ -995,7 +995,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set fav icon.
+     * Sets the fav icon.
      *
      * @param string $favIcon.
      *
@@ -1007,7 +1007,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get fav icon full path.
+     * Gets the fav icon full path.
      *
      * @return string
      */
@@ -1017,7 +1017,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set fav icon full path.
+     * Sets the fav icon full path.
      *
      * @param string $favIconFullPath.
      *
@@ -1029,7 +1029,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get fav icon full path url.
+     * Gets the fav icon full path url.
      *
      * @return string
      */
@@ -1039,7 +1039,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set fav icon full path url.
+     * Sets the fav icon full path url.
      *
      * @param string $favIconFullPathUrl.
      *
@@ -1051,7 +1051,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get fav icon meta.
+     * Gets the fav icon meta.
      *
      * @return array
      */
@@ -1061,7 +1061,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set fav icon meta.
+     * Sets the fav icon meta.
      *
      * @param array $favIconMeta.
      *
@@ -1073,7 +1073,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get allowed locales.
+     * Gets the allowed locales.
      *
      * @return array
      */
@@ -1083,7 +1083,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set allowed locales.
+     * Sets the allowed locales.
      *
      * @param array $allowedLocales.
      *
@@ -1095,7 +1095,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get parameters csv file.
+     * Gets the parameters csv file.
      *
      * @return string
      */
@@ -1105,7 +1105,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set parameters csv file.
+     * Sets the parameters csv file.
      *
      * @param string $parametersCsvFile.
      *
@@ -1117,7 +1117,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get parameters csv file full path.
+     * Gets the parameters csv file full path.
      *
      * @return string
      */
@@ -1127,7 +1127,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set parameters csv file full path.
+     * Sets the parameters csv file full path.
      *
      * @param string $parametersCsvFileFullPath.
      *
@@ -1139,7 +1139,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get parameters csv file full path url.
+     * Gets the parameters csv file full path url.
      *
      * @return string
      */
@@ -1149,7 +1149,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set parameters csv file full path url.
+     * Sets the parameters csv file full path url.
      *
      * @param string $parametersCsvFileFullPathUrl.
      *
@@ -1161,7 +1161,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get parameters csv file meta.
+     * Gets the parameters csv file meta.
      *
      * @return array
      */
@@ -1171,7 +1171,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set parameters csv file meta.
+     * Sets the parameters csv file meta.
      *
      * @param array $parametersCsvFileMeta.
      *
@@ -1183,7 +1183,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get parameters array.
+     * Gets the parameters array.
      *
      * @return array
      */
@@ -1193,7 +1193,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set parameters array.
+     * Sets the parameters array.
      *
      * @param array $parametersArray.
      *
@@ -1205,7 +1205,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get active.
+     * Gets the active.
      *
      * @return boolean
      */
@@ -1215,7 +1215,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set active.
+     * Sets the active.
      *
      * @param boolean $active.
      *
@@ -1229,7 +1229,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get created user id.
+     * Gets the created user id.
      *
      * @return integer
      */
@@ -1239,7 +1239,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set created user id.
+     * Sets the created user id.
      *
      * @param integer $createdUserId.
      *
@@ -1251,7 +1251,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get updated user id.
+     * Gets the updated user id.
      *
      * @return integer
      */
@@ -1261,7 +1261,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set updated user id.
+     * Sets the updated user id.
      *
      * @param integer $updatedUserId.
      *
@@ -1273,7 +1273,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get created date.
+     * Gets the created date.
      *
      * @return \DateTime
      */
@@ -1283,7 +1283,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set created date.
+     * Sets the created date.
      *
      * @param \DateTime $createdDate.
      *
@@ -1295,7 +1295,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get updated date.
+     * Gets the updated date.
      *
      * @return \DateTime
      */
@@ -1305,7 +1305,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set updated date.
+     * Sets the updated date.
      *
      * @param \DateTime $updatedDate.
      *
@@ -1318,7 +1318,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     
     /**
-     * Get template.
+     * Gets the template.
      *
      * @return \Zikula\MultisitesModule\Entity\TemplateEntity
      */
@@ -1328,7 +1328,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set template.
+     * Sets the template.
      *
      * @param \Zikula\MultisitesModule\Entity\TemplateEntity $template.
      *
@@ -1340,7 +1340,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get project.
+     * Gets the project.
      *
      * @return \Zikula\MultisitesModule\Entity\ProjectEntity
      */
@@ -1350,7 +1350,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set project.
+     * Sets the project.
      *
      * @param \Zikula\MultisitesModule\Entity\ProjectEntity $project.
      *
@@ -1362,7 +1362,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Get extensions.
+     * Gets the extensions.
      *
      * @return \Zikula\MultisitesModule\Entity\SiteExtensionEntity[]
      */
@@ -1372,7 +1372,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     }
     
     /**
-     * Set extensions.
+     * Sets the extensions.
      *
      * @param \Zikula\MultisitesModule\Entity\SiteExtensionEntity[] $extensions.
      *

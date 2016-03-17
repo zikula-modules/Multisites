@@ -221,7 +221,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get _object type.
+     * Gets the _object type.
      *
      * @return string
      */
@@ -231,7 +231,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set _object type.
+     * Sets the _object type.
      *
      * @param string $_objectType.
      *
@@ -243,7 +243,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get _bypass validation.
+     * Gets the _bypass validation.
      *
      * @return boolean
      */
@@ -253,7 +253,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set _bypass validation.
+     * Sets the _bypass validation.
      *
      * @param boolean $_bypassValidation.
      *
@@ -265,7 +265,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get _actions.
+     * Gets the _actions.
      *
      * @return array
      */
@@ -275,7 +275,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set _actions.
+     * Sets the _actions.
      *
      * @param array $_actions.
      *
@@ -287,7 +287,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get __ w o r k f l o w__.
+     * Gets the __ w o r k f l o w__.
      *
      * @return array
      */
@@ -297,7 +297,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set __ w o r k f l o w__.
+     * Sets the __ w o r k f l o w__.
      *
      * @param array $__WORKFLOW__.
      *
@@ -310,7 +310,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     
     /**
-     * Get id.
+     * Gets the id.
      *
      * @return integer
      */
@@ -320,7 +320,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set id.
+     * Sets the id.
      *
      * @param integer $id.
      *
@@ -332,7 +332,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get workflow state.
+     * Gets the workflow state.
      *
      * @return string
      */
@@ -342,7 +342,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set workflow state.
+     * Sets the workflow state.
      *
      * @param string $workflowState.
      *
@@ -354,7 +354,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get name.
+     * Gets the name.
      *
      * @return string
      */
@@ -364,7 +364,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set name.
+     * Sets the name.
      *
      * @param string $name.
      *
@@ -376,7 +376,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get description.
+     * Gets the description.
      *
      * @return string
      */
@@ -386,7 +386,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set description.
+     * Sets the description.
      *
      * @param string $description.
      *
@@ -398,7 +398,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get sql file.
+     * Gets the sql file.
      *
      * @return string
      */
@@ -408,7 +408,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set sql file.
+     * Sets the sql file.
      *
      * @param string $sqlFile.
      *
@@ -420,7 +420,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get sql file full path.
+     * Gets the sql file full path.
      *
      * @return string
      */
@@ -430,7 +430,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set sql file full path.
+     * Sets the sql file full path.
      *
      * @param string $sqlFileFullPath.
      *
@@ -442,7 +442,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get sql file full path url.
+     * Gets the sql file full path url.
      *
      * @return string
      */
@@ -452,7 +452,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set sql file full path url.
+     * Sets the sql file full path url.
      *
      * @param string $sqlFileFullPathUrl.
      *
@@ -464,7 +464,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get sql file meta.
+     * Gets the sql file meta.
      *
      * @return array
      */
@@ -474,7 +474,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set sql file meta.
+     * Sets the sql file meta.
      *
      * @param array $sqlFileMeta.
      *
@@ -486,7 +486,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get parameters.
+     * Gets the parameters.
      *
      * @return array
      */
@@ -496,7 +496,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set parameters.
+     * Sets the parameters.
      *
      * @param array $parameters.
      *
@@ -508,7 +508,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get folders.
+     * Gets the folders.
      *
      * @return array
      */
@@ -518,7 +518,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set folders.
+     * Sets the folders.
      *
      * @param array $folders.
      *
@@ -530,7 +530,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get excluded tables.
+     * Gets the excluded tables.
      *
      * @return array
      */
@@ -540,7 +540,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set excluded tables.
+     * Sets the excluded tables.
      *
      * @param array $excludedTables.
      *
@@ -552,7 +552,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get created user id.
+     * Gets the created user id.
      *
      * @return integer
      */
@@ -562,7 +562,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set created user id.
+     * Sets the created user id.
      *
      * @param integer $createdUserId.
      *
@@ -574,7 +574,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get updated user id.
+     * Gets the updated user id.
      *
      * @return integer
      */
@@ -584,7 +584,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set updated user id.
+     * Sets the updated user id.
      *
      * @param integer $updatedUserId.
      *
@@ -596,7 +596,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get created date.
+     * Gets the created date.
      *
      * @return \DateTime
      */
@@ -606,7 +606,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set created date.
+     * Sets the created date.
      *
      * @param \DateTime $createdDate.
      *
@@ -618,7 +618,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get updated date.
+     * Gets the updated date.
      *
      * @return \DateTime
      */
@@ -628,7 +628,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set updated date.
+     * Sets the updated date.
      *
      * @param \DateTime $updatedDate.
      *
@@ -641,7 +641,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     
     /**
-     * Get projects.
+     * Gets the projects.
      *
      * @return \Zikula\MultisitesModule\Entity\ProjectEntity[]
      */
@@ -651,7 +651,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set projects.
+     * Sets the projects.
      *
      * @param \Zikula\MultisitesModule\Entity\ProjectEntity[] $projects.
      *
@@ -691,7 +691,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Get sites.
+     * Gets the sites.
      *
      * @return \Zikula\MultisitesModule\Entity\SiteEntity[]
      */
@@ -701,7 +701,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     /**
-     * Set sites.
+     * Sets the sites.
      *
      * @param \Zikula\MultisitesModule\Entity\SiteEntity[] $sites.
      *

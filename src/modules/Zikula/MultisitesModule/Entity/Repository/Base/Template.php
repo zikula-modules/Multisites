@@ -69,7 +69,7 @@ class Template extends EntityRepository
     }
 
     /**
-     * Get default sorting field.
+     * Gets the default sorting field.
      *
      * @return string
      */
@@ -79,7 +79,7 @@ class Template extends EntityRepository
     }
     
     /**
-     * Set default sorting field.
+     * Sets the default sorting field.
      *
      * @param string $defaultSortingField.
      *
@@ -91,7 +91,7 @@ class Template extends EntityRepository
     }
     
     /**
-     * Get request.
+     * Gets the request.
      *
      * @return Request
      */
@@ -101,7 +101,7 @@ class Template extends EntityRepository
     }
     
     /**
-     * Set request.
+     * Sets the request.
      *
      * @param Request $request.
      *

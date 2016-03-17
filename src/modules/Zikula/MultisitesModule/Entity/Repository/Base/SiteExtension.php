@@ -66,7 +66,7 @@ class SiteExtension extends EntityRepository
     }
 
     /**
-     * Get default sorting field.
+     * Gets the default sorting field.
      *
      * @return string
      */
@@ -76,7 +76,7 @@ class SiteExtension extends EntityRepository
     }
     
     /**
-     * Set default sorting field.
+     * Sets the default sorting field.
      *
      * @param string $defaultSortingField.
      *
@@ -88,7 +88,7 @@ class SiteExtension extends EntityRepository
     }
     
     /**
-     * Get request.
+     * Gets the request.
      *
      * @return Request
      */
@@ -98,7 +98,7 @@ class SiteExtension extends EntityRepository
     }
     
     /**
-     * Set request.
+     * Sets the request.
      *
      * @param Request $request.
      *

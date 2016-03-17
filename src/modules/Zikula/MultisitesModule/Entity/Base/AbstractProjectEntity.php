@@ -156,7 +156,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get _object type.
+     * Gets the _object type.
      *
      * @return string
      */
@@ -166,7 +166,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set _object type.
+     * Sets the _object type.
      *
      * @param string $_objectType.
      *
@@ -178,7 +178,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get _bypass validation.
+     * Gets the _bypass validation.
      *
      * @return boolean
      */
@@ -188,7 +188,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set _bypass validation.
+     * Sets the _bypass validation.
      *
      * @param boolean $_bypassValidation.
      *
@@ -200,7 +200,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get _actions.
+     * Gets the _actions.
      *
      * @return array
      */
@@ -210,7 +210,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set _actions.
+     * Sets the _actions.
      *
      * @param array $_actions.
      *
@@ -222,7 +222,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get __ w o r k f l o w__.
+     * Gets the __ w o r k f l o w__.
      *
      * @return array
      */
@@ -232,7 +232,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set __ w o r k f l o w__.
+     * Sets the __ w o r k f l o w__.
      *
      * @param array $__WORKFLOW__.
      *
@@ -245,7 +245,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     
     
     /**
-     * Get id.
+     * Gets the id.
      *
      * @return integer
      */
@@ -255,7 +255,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set id.
+     * Sets the id.
      *
      * @param integer $id.
      *
@@ -267,7 +267,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get workflow state.
+     * Gets the workflow state.
      *
      * @return string
      */
@@ -277,7 +277,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set workflow state.
+     * Sets the workflow state.
      *
      * @param string $workflowState.
      *
@@ -289,7 +289,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get name.
+     * Gets the name.
      *
      * @return string
      */
@@ -299,7 +299,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set name.
+     * Sets the name.
      *
      * @param string $name.
      *
@@ -311,7 +311,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get created user id.
+     * Gets the created user id.
      *
      * @return integer
      */
@@ -321,7 +321,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set created user id.
+     * Sets the created user id.
      *
      * @param integer $createdUserId.
      *
@@ -333,7 +333,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get updated user id.
+     * Gets the updated user id.
      *
      * @return integer
      */
@@ -343,7 +343,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set updated user id.
+     * Sets the updated user id.
      *
      * @param integer $updatedUserId.
      *
@@ -355,7 +355,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get created date.
+     * Gets the created date.
      *
      * @return \DateTime
      */
@@ -365,7 +365,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set created date.
+     * Sets the created date.
      *
      * @param \DateTime $createdDate.
      *
@@ -377,7 +377,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get updated date.
+     * Gets the updated date.
      *
      * @return \DateTime
      */
@@ -387,7 +387,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set updated date.
+     * Sets the updated date.
      *
      * @param \DateTime $updatedDate.
      *
@@ -400,7 +400,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     
     
     /**
-     * Get sites.
+     * Gets the sites.
      *
      * @return \Zikula\MultisitesModule\Entity\SiteEntity[]
      */
@@ -410,7 +410,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set sites.
+     * Sets the sites.
      *
      * @param \Zikula\MultisitesModule\Entity\SiteEntity[] $sites.
      *
@@ -450,7 +450,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Get templates.
+     * Gets the templates.
      *
      * @return \Zikula\MultisitesModule\Entity\TemplateEntity[]
      */
@@ -460,7 +460,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     }
     
     /**
-     * Set templates.
+     * Sets the templates.
      *
      * @param \Zikula\MultisitesModule\Entity\TemplateEntity[] $templates.
      *
