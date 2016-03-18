@@ -73,6 +73,6 @@ services:
     # Custom event subscribers
     zikula_multisites_module.multisites_extensions_listener:
         class: Zikula\MultisitesModule\Listener\MultisitesExtensionsListener
-        arguments: ["@multisites", "@request_stack", "@zikula_permissions_module.api.permission"]
+        arguments: ["%multisites%", "@request_stack", "@zikula_permissions_module.api.permission", "@translator.default"]
         tags:
             - { name: kernel.event_subscriber }
