@@ -18,7 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use ModUtil;
-use ServiceUtil;
 
 /**
  * Admin controller class providing navigation and interaction functionality.
@@ -73,8 +72,7 @@ class AdminController extends BaseAdminController
      */
     protected function isConfigured()
     {
-        $serviceManager = ServiceUtil::getManager();
-        $msConfig = $serviceManager->getParameter('multisites');
+        $msConfig = $this->get('container')->getParameter('multisites');
 
         return (isset($msConfig['enabled']) && $msConfig['enabled'] == true
              && isset($msConfig['mainsiteurl'])
@@ -88,8 +86,7 @@ class AdminController extends BaseAdminController
      */
     protected function isMainSite()
     {
-        $serviceManager = ServiceUtil::getManager();
-        $msConfig = $serviceManager->getParameter('multisites');
+        $msConfig = $this->get('container')->getParameter('multisites');
 
         $isBasedOnDomains = isset($msConfig['based_on_domains']) && $msConfig['based_on_domains'] != '~' ? $msConfig['based_on_domains'] : 1;
         $mainUrl = isset($msConfig['mainsiteurl']) && $msConfig['mainsiteurl'] != '~' ? $msConfig['mainsiteurl'] : '';
@@ -217,14 +214,14 @@ class AdminController extends BaseAdminController
         $databaseHosts = [];
 
         // add main site
-        $serviceManager = ServiceUtil::getManager();
+        $container = $this->get('container');
         $databases[] = [
             'alias' => 'multisitesMainSiteAlias',
-            'dbname' => $serviceManager->getParameter('database_name'),
-            'dbhost' => $serviceManager->getParameter('database_host'),
-            'dbtype' => str_replace('pdo_', '', $serviceManager->getParameter('database_driver')),
-            'dbuname' => $serviceManager->getParameter('database_user'),
-            'dbpass' => $serviceManager->getParameter('database_password')
+            'dbname' => $container->getParameter('database_name'),
+            'dbhost' => $container->getParameter('database_host'),
+            'dbtype' => str_replace('pdo_', '', $container->getParameter('database_driver')),
+            'dbuname' => $container->getParameter('database_user'),
+            'dbpass' => $container->getParameter('database_password')
         ];
 
         // add child sites
