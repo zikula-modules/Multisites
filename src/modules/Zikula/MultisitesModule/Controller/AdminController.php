@@ -72,7 +72,7 @@ class AdminController extends BaseAdminController
      */
     protected function isConfigured()
     {
-        $msConfig = $this->get('container')->getParameter('multisites');
+        $msConfig = $this->get('service_container')->getParameter('multisites');
 
         return (isset($msConfig['enabled']) && $msConfig['enabled'] == true
              && isset($msConfig['mainsiteurl'])
@@ -86,7 +86,7 @@ class AdminController extends BaseAdminController
      */
     protected function isMainSite()
     {
-        $msConfig = $this->get('container')->getParameter('multisites');
+        $msConfig = $this->get('service_container')->getParameter('multisites');
 
         $isBasedOnDomains = isset($msConfig['based_on_domains']) && $msConfig['based_on_domains'] != '~' ? $msConfig['based_on_domains'] : 1;
         $mainUrl = isset($msConfig['mainsiteurl']) && $msConfig['mainsiteurl'] != '~' ? $msConfig['mainsiteurl'] : '';
@@ -214,7 +214,7 @@ class AdminController extends BaseAdminController
         $databaseHosts = [];
 
         // add main site
-        $container = $this->get('container');
+        $container = $this->get('service_container');
         $databases[] = [
             'alias' => 'multisitesMainSiteAlias',
             'dbname' => $container->getParameter('database_name'),
