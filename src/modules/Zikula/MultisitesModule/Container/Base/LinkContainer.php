@@ -27,11 +27,6 @@ class LinkContainer implements LinkContainerInterface
     use TranslatorTrait;
 
     /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
      * @var RouterInterface
      */
     protected $router;

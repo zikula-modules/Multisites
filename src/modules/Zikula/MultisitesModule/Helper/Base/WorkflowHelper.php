@@ -168,7 +168,7 @@ class WorkflowHelper
         $wfActions = Zikula_Workflow_Util::getActionsForObject($entity, $objectType, $idColumn, $this->name);
     
         // as we use the workflows for multiple object types we must maybe filter out some actions
-        $listHelper = $this->container->get('zikulamultisitesmodule.listentries_helper');
+        $listHelper = $this->container->get('zikula_multisites_module.listentries_helper');
         $states = $listHelper->getEntries($objectType, 'workflowState');
         $allowedStates = [];
         foreach ($states as $state) {
@@ -315,7 +315,7 @@ class WorkflowHelper
      */
     public function getAmountOfModerationItems($objectType, $state)
     {
-        $repository = $this->container->get('zikulamultisitesmodule.' . $objectType . '_factory')->getRepository();
+        $repository = $this->container->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
     
         $where = 'tbl.workflowState = \'' . $state . '\'';
         $parameters = ['workflowState' => $state];

@@ -14,12 +14,12 @@
         [{{ pagerabc(posvar='letter', forwardvars='module,type,func') }} | <a href="{{ path('zikulamultisitesmodule_site_adminview') }}" title="{{ __('All letters') }}">{{ __('All') }}</a>]
     </div>#}
 
-    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { all: all, own: own, workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { all: showAllEntries, own: showOwnEntries, workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="sitesViewForm" class="form-horizontal" role="form">
         <div>
-    {/if}
+    {% endif %}
         <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-condensed">
             <colgroup>
@@ -45,19 +45,19 @@
                     </th>
                 {% endif %}
                 <th id="hLogo" scope="col" class="text-left">
-                    <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', 'logo') }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
+                    <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', {'%s': 'logo'}) }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
                 </th>
                 <th id="hSiteAlias" scope="col" class="text-left">
-                    <a href="{{ sort.siteAlias.url }}" title="{{ __f('Sort by %s', 'site alias') }}" class="{{ sort.siteAlias.class }}">{{ __('Site alias') }}</a>
+                    <a href="{{ sort.siteAlias.url }}" title="{{ __f('Sort by %s', {'%s': 'site alias'}) }}" class="{{ sort.siteAlias.class }}">{{ __('Site alias') }}</a>
                 </th>
                 <th id="hName" scope="col" class="text-left">
-                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', 'name') }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
                 <th id="hSiteName" scope="col" class="text-left">
-                    <a href="{{ sort.siteName.url }}" title="{{ __f('Sort by %s', 'site name') }}" class="{{ sort.siteName.class }}">{{ __('Site name') }}</a>
+                    <a href="{{ sort.siteName.url }}" title="{{ __f('Sort by %s', {'%s': 'site name'}) }}" class="{{ sort.siteName.class }}">{{ __('Site name') }}</a>
                 </th>
 {#                <th id="hSiteDns" scope="col" class="text-left">
-                    <a href="{{ sort.siteDns.url }}" title="{{ __f('Sort by %s', 'site dns') }}" class="{{ sort.siteDns.class }}">{{ __('Site dns') }}</a>
+                    <a href="{{ sort.siteDns.url }}" title="{{ __f('Sort by %s', {'%s': 'site dns'}) }}" class="{{ sort.siteDns.class }}">{{ __('Site dns') }}</a>
                 </th>#}
                 <th id="hSiteAdminName" scope="col" class="text-left">
                     {{ __('Admin details') }}
@@ -69,7 +69,7 @@
                     {{ __('Allowed locales') }}
                 </th>#}
                 <th id="hActive" scope="col" class="text-center">
-                    <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', 'active') }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
+                    <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', {'%s': 'active'}) }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
                 </th>
                 <th id="hItemActions" scope="col" class="z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
@@ -185,7 +185,7 @@
         </table>
         </div>
         
-        {% if all != 1 %}
+        {% if showAllEntries != 1 %}
             {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_site_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
@@ -218,7 +218,7 @@
     {% endif %}
     {% set own = showOwnEntries is defined and showOwnEntries == 1 ? 1 : 0 %}
     {% set all = showAllEntries is defined and showAllEntries == 1 ? 1 : 0 %}
-    {% all == 1 %}
+    {% if all == 1 %}
         {% set linkTitle = __('Back to paginated view') %}
         <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
     {% else %}

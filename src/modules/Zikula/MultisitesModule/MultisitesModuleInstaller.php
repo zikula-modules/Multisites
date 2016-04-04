@@ -173,7 +173,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
         $data = $result->fetchAll(\PDO::FETCH_ASSOC);
         if ($data) {
             $uploadManager = new \Zikula\MultisitesModule\UploadHandler($this->container->get('translator.default'));
-            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+            $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
             $basePath = $controllerHelper->getFileBaseFolder('template', 'sqlFile');
 
             foreach ($data as $k => $v) {
@@ -301,7 +301,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
     {
         // Check if upload directories exist and if needed create them
         try {
-            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+            $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
             $controllerHelper->checkAndCreateAllUploadFolders();
         } catch (\Exception $e) {
             $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $e->getMessage());
@@ -360,7 +360,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
         }
         closedir($dh);
 
-        $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
         $destinationPath = $controllerHelper->getFileBaseFolder('template', 'sqlFile');
         $allMoved = true;
         foreach ($filesArray as $file) {

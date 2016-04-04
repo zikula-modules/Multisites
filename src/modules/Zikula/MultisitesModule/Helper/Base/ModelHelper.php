@@ -56,7 +56,7 @@ class ModelHelper
      */
     public function canBeCreated($objectType)
     {
-        $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
         if (!in_array($objectType, $controllerHelper->getObjectTypes('util', ['util' => 'model', 'action' => 'canBeCreated']))) {
             throw new Exception('Error! Invalid object type received.');
         }
@@ -92,12 +92,12 @@ class ModelHelper
      */
     protected function hasExistingInstances($objectType)
     {
-        $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
         if (!in_array($objectType, $controllerHelper->getObjectTypes('util', ['util' => 'model', 'action' => 'hasExistingInstances']))) {
             throw new \Exception('Error! Invalid object type received.');
         }
     
-        $repository = $this->container->get('zikulamultisitesmodule.' . $objectType . '_factory')->getRepository();
+        $repository = $this->container->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
     
         return ($repository->selectCount() > 0);
     }

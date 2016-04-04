@@ -165,7 +165,7 @@ class TemplateEntity extends BaseAbstractTemplateEntity
         }
 
         $serviceManager = ServiceUtil::getManager();
-        $translator = $serviceManager->get('translator');
+        $translator = $serviceManager->get('translator.default');
 
         parent::prepareItemActions();
 
@@ -266,7 +266,7 @@ class TemplateEntity extends BaseAbstractTemplateEntity
         // update db config removing all obsolete databases
         if (!$systemHelper->updateDatabaseConfigFile()) {
             $session = $serviceManager->get('session');
-            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Updating the database configuration file failed.'));
+            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error! Updating the database configuration file failed.'));
         }
 
         return parent::performPostRemoveCallback();

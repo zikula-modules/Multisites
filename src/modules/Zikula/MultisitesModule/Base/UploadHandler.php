@@ -110,7 +110,7 @@ class UploadHandler
         $fileName = implode('.', $fileNameParts);
     
         $serviceManager = ServiceUtil::getManager();
-        $controllerHelper = $serviceManager->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $serviceManager->get('zikula_multisites_module.controller_helper');
         $flashBag = $serviceManager->get('session')->getFlashBag();
         $logger = $serviceManager->get('logger');
     
@@ -464,7 +464,7 @@ class UploadHandler
         }
     
         $serviceManager = ServiceUtil::getManager();
-        $controllerHelper = $serviceManager->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $serviceManager->get('zikula_multisites_module.controller_helper');
     
         // determine file system information
         try {

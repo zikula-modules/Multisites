@@ -195,6 +195,27 @@ class TemplateController extends BaseTemplateController
      * This function processes the items selected in the admin view page.
      * Multiple items may have their state changed or be deleted.
      *
+     * @Route("/admin/templates/handleSelectedEntries",
+     *        methods = {"POST"}
+     * )
+     *
+     * @param Request $request Current request instance.
+     *
+     * @return bool true on sucess, false on failure.
+     *
+     * @throws RuntimeException Thrown if executing the workflow action fails
+     */
+    public function adminHandleSelectedEntriesAction(Request $request)
+    {
+        return parent::adminHandleSelectedEntriesAction($request);
+    }
+
+    /**
+     * Process status changes for multiple items.
+     *
+     * This function processes the items selected in the admin view page.
+     * Multiple items may have their state changed or be deleted.
+     *
      * @Route("/templates/handleSelectedEntries",
      *        methods = {"POST"}
      * )
@@ -215,14 +236,14 @@ class TemplateController extends BaseTemplateController
      */
     protected function createParametersCsvTemplateInternal(Request $request, $isAdmin = false)
     {
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
 
         // parameter specifying which type of objects we are treating
         $objectType = 'template';
         if (!$this->hasPermission($this->name . ':' . ucfirst($objectType) . ':', '::', ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
-        $repository = $this->get('zikulamultisitesmodule.' . $objectType . '_factory')->getRepository();
+        $repository = $this->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
         $repository->setRequest($request);
 
         $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', ['ot' => $objectType]);
@@ -274,7 +295,7 @@ class TemplateController extends BaseTemplateController
      */
     protected function reapplyInternal(Request $request, $isAdmin = false)
     {
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
 
         // parameter specifying which type of objects we are treating
         $objectType = 'template';
@@ -335,7 +356,7 @@ class TemplateController extends BaseTemplateController
             }
         }
 
-        $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
+        $viewHelper = $this->get('zikula_multisites_module.view_helper');
         $templateParameters = [
             'token' => $tokenHandler->generate(),
             'template' => $entity

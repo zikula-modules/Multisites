@@ -160,7 +160,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
     {
         
         $serviceManager = ServiceUtil::getManager();
-        $listHelper = $serviceManager->get('zikulamultisitesmodule.listentries_helper');
+        $listHelper = $serviceManager->get('zikula_multisites_module.listentries_helper');
         
         $items = [];
         $listEntries = $listHelper->getExtensionTypeEntriesForSiteExtension();
@@ -669,7 +669,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
     
         // delete workflow for this entity
         $serviceManager = ServiceUtil::getManager();
-        $workflowHelper = $serviceManager->get('zikulamultisitesmodule.workflow_helper');
+        $workflowHelper = $serviceManager->get('zikula_multisites_module.workflow_helper');
         $workflowHelper->normaliseWorkflowData($this);
         $workflow = $this['__WORKFLOW__'];
         if ($workflow['id'] > 0) {
@@ -684,7 +684,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
             }
             if ($result === false) {
                 $session = $serviceManager->get('session');
-                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Could not remove stored workflow. Deletion has been aborted.'));
+                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error! Could not remove stored workflow. Deletion has been aborted.'));
     
                 return false;
             }
@@ -835,7 +835,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
     public function getTitleFromDisplayPattern()
     {
         $serviceManager = ServiceUtil::getManager();
-        $listHelper = $serviceManager->get('zikulamultisitesmodule.listentries_helper');
+        $listHelper = $serviceManager->get('zikula_multisites_module.listentries_helper');
     
         $formattedTitle = ''
                 . $this->getName()
@@ -853,7 +853,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
     public static function getWorkflowStateAllowedValues()
     {
         $serviceManager = ServiceUtil::getManager();
-        $helper = $serviceManager->get('zikulamultisitesmodule.listentries_helper');
+        $helper = $serviceManager->get('zikula_multisites_module.listentries_helper');
         $listEntries = $helper->getWorkflowStateEntriesForSiteExtension();
     
         $allowedValues = [];
@@ -871,7 +871,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
     public static function getExtensionTypeAllowedValues()
     {
         $serviceManager = ServiceUtil::getManager();
-        $helper = $serviceManager->get('zikulamultisitesmodule.listentries_helper');
+        $helper = $serviceManager->get('zikula_multisites_module.listentries_helper');
         $listEntries = $helper->getExtensionTypeEntriesForSiteExtension();
     
         $allowedValues = [];
@@ -898,7 +898,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
         $idColumn = 'id';
         
         $serviceManager = ServiceUtil::getManager();
-        $workflowHelper = $serviceManager->get('zikulamultisitesmodule.workflow_helper');
+        $workflowHelper = $serviceManager->get('zikula_multisites_module.workflow_helper');
         
         $schemaName = $workflowHelper->getWorkflowName($this['_objectType']);
         $this['__WORKFLOW__'] = [
@@ -914,9 +914,8 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
         if ((!in_array($currentFunc, ['index', 'view', 'display']) && empty($isReuse)) || $forceLoading) {
             $result = Zikula_Workflow_Util::getWorkflowForObject($this, $this['_objectType'], $idColumn, 'ZikulaMultisitesModule');
             if (!$result) {
-                $serviceManager = ServiceUtil::getManager();
                 $session = $serviceManager->get('session');
-                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Could not load the associated workflow.'));
+                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error! Could not load the associated workflow.'));
             }
         }
         
@@ -936,7 +935,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
         $this->setWorkflowState('initial');
     
         $serviceManager = ServiceUtil::getManager();
-        $workflowHelper = $serviceManager->get('zikulamultisitesmodule.workflow_helper');
+        $workflowHelper = $serviceManager->get('zikula_multisites_module.workflow_helper');
     
         $schemaName = $workflowHelper->getWorkflowName($this['_objectType']);
         $this['__WORKFLOW__'] = [
@@ -1001,7 +1000,7 @@ abstract class AbstractSiteExtensionEntity extends EntityAccess
         $instance = $this->id . '::';
         $serviceManager = ServiceUtil::getManager();
         $permissionHelper = $serviceManager->get('zikula_permissions_module.api.permission');
-        $translator = $serviceManager->get('translator');
+        $translator = $serviceManager->get('translator.default');
         if ($currentLegacyControllerType == 'admin') {
             if (in_array($currentFunc, ['index', 'view'])) {
             }

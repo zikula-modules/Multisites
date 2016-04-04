@@ -9,12 +9,12 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { all: all, own: own, workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { all: showAllEntries, own: showOwnEntries, workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="sitesViewForm" class="form-horizontal" role="form">
         <div>
-    {/if}
+    {% endif %}
         <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-condensed">
             <colgroup>
@@ -53,70 +53,70 @@
                     </th>
                 {% endif %}
                 <th id="hName" scope="col" class="text-left">
-                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', 'name') }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
                 <th id="hDescription" scope="col" class="text-left">
-                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', 'description') }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
+                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
                 </th>
                 <th id="hSiteAlias" scope="col" class="text-left">
-                    <a href="{{ sort.siteAlias.url }}" title="{{ __f('Sort by %s', 'site alias') }}" class="{{ sort.siteAlias.class }}">{{ __('Site alias') }}</a>
+                    <a href="{{ sort.siteAlias.url }}" title="{{ __f('Sort by %s', {'%s': 'site alias'}) }}" class="{{ sort.siteAlias.class }}">{{ __('Site alias') }}</a>
                 </th>
                 <th id="hSiteName" scope="col" class="text-left">
-                    <a href="{{ sort.siteName.url }}" title="{{ __f('Sort by %s', 'site name') }}" class="{{ sort.siteName.class }}">{{ __('Site name') }}</a>
+                    <a href="{{ sort.siteName.url }}" title="{{ __f('Sort by %s', {'%s': 'site name'}) }}" class="{{ sort.siteName.class }}">{{ __('Site name') }}</a>
                 </th>
                 <th id="hSiteDescription" scope="col" class="text-left">
-                    <a href="{{ sort.siteDescription.url }}" title="{{ __f('Sort by %s', 'site description') }}" class="{{ sort.siteDescription.class }}">{{ __('Site description') }}</a>
+                    <a href="{{ sort.siteDescription.url }}" title="{{ __f('Sort by %s', {'%s': 'site description'}) }}" class="{{ sort.siteDescription.class }}">{{ __('Site description') }}</a>
                 </th>
                 <th id="hSiteAdminName" scope="col" class="text-left">
-                    <a href="{{ sort.siteAdminName.url }}" title="{{ __f('Sort by %s', 'site admin name') }}" class="{{ sort.siteAdminName.class }}">{{ __('Site admin name') }}</a>
+                    <a href="{{ sort.siteAdminName.url }}" title="{{ __f('Sort by %s', {'%s': 'site admin name'}) }}" class="{{ sort.siteAdminName.class }}">{{ __('Site admin name') }}</a>
                 </th>
                 <th id="hSiteAdminPassword" scope="col" class="text-left">
-                    <a href="{{ sort.siteAdminPassword.url }}" title="{{ __f('Sort by %s', 'site admin password') }}" class="{{ sort.siteAdminPassword.class }}">{{ __('Site admin password') }}</a>
+                    <a href="{{ sort.siteAdminPassword.url }}" title="{{ __f('Sort by %s', {'%s': 'site admin password'}) }}" class="{{ sort.siteAdminPassword.class }}">{{ __('Site admin password') }}</a>
                 </th>
                 <th id="hSiteAdminRealName" scope="col" class="text-left">
-                    <a href="{{ sort.siteAdminRealName.url }}" title="{{ __f('Sort by %s', 'site admin real name') }}" class="{{ sort.siteAdminRealName.class }}">{{ __('Site admin real name') }}</a>
+                    <a href="{{ sort.siteAdminRealName.url }}" title="{{ __f('Sort by %s', {'%s': 'site admin real name'}) }}" class="{{ sort.siteAdminRealName.class }}">{{ __('Site admin real name') }}</a>
                 </th>
                 <th id="hSiteAdminEmail" scope="col" class="text-left">
-                    <a href="{{ sort.siteAdminEmail.url }}" title="{{ __f('Sort by %s', 'site admin email') }}" class="{{ sort.siteAdminEmail.class }}">{{ __('Site admin email') }}</a>
+                    <a href="{{ sort.siteAdminEmail.url }}" title="{{ __f('Sort by %s', {'%s': 'site admin email'}) }}" class="{{ sort.siteAdminEmail.class }}">{{ __('Site admin email') }}</a>
                 </th>
                 <th id="hSiteCompany" scope="col" class="text-left">
-                    <a href="{{ sort.siteCompany.url }}" title="{{ __f('Sort by %s', 'site company') }}" class="{{ sort.siteCompany.class }}">{{ __('Site company') }}</a>
+                    <a href="{{ sort.siteCompany.url }}" title="{{ __f('Sort by %s', {'%s': 'site company'}) }}" class="{{ sort.siteCompany.class }}">{{ __('Site company') }}</a>
                 </th>
                 <th id="hSiteDns" scope="col" class="text-left">
-                    <a href="{{ sort.siteDns.url }}" title="{{ __f('Sort by %s', 'site dns') }}" class="{{ sort.siteDns.class }}">{{ __('Site dns') }}</a>
+                    <a href="{{ sort.siteDns.url }}" title="{{ __f('Sort by %s', {'%s': 'site dns'}) }}" class="{{ sort.siteDns.class }}">{{ __('Site dns') }}</a>
                 </th>
                 <th id="hDatabaseName" scope="col" class="text-left">
-                    <a href="{{ sort.databaseName.url }}" title="{{ __f('Sort by %s', 'database name') }}" class="{{ sort.databaseName.class }}">{{ __('Database name') }}</a>
+                    <a href="{{ sort.databaseName.url }}" title="{{ __f('Sort by %s', {'%s': 'database name'}) }}" class="{{ sort.databaseName.class }}">{{ __('Database name') }}</a>
                 </th>
                 <th id="hDatabaseUserName" scope="col" class="text-left">
-                    <a href="{{ sort.databaseUserName.url }}" title="{{ __f('Sort by %s', 'database user name') }}" class="{{ sort.databaseUserName.class }}">{{ __('Database user name') }}</a>
+                    <a href="{{ sort.databaseUserName.url }}" title="{{ __f('Sort by %s', {'%s': 'database user name'}) }}" class="{{ sort.databaseUserName.class }}">{{ __('Database user name') }}</a>
                 </th>
                 <th id="hDatabasePassword" scope="col" class="text-left">
-                    <a href="{{ sort.databasePassword.url }}" title="{{ __f('Sort by %s', 'database password') }}" class="{{ sort.databasePassword.class }}">{{ __('Database password') }}</a>
+                    <a href="{{ sort.databasePassword.url }}" title="{{ __f('Sort by %s', {'%s': 'database password'}) }}" class="{{ sort.databasePassword.class }}">{{ __('Database password') }}</a>
                 </th>
                 <th id="hDatabaseHost" scope="col" class="text-left">
-                    <a href="{{ sort.databaseHost.url }}" title="{{ __f('Sort by %s', 'database host') }}" class="{{ sort.databaseHost.class }}">{{ __('Database host') }}</a>
+                    <a href="{{ sort.databaseHost.url }}" title="{{ __f('Sort by %s', {'%s': 'database host'}) }}" class="{{ sort.databaseHost.class }}">{{ __('Database host') }}</a>
                 </th>
                 <th id="hDatabaseType" scope="col" class="text-left">
-                    <a href="{{ sort.databaseType.url }}" title="{{ __f('Sort by %s', 'database type') }}" class="{{ sort.databaseType.class }}">{{ __('Database type') }}</a>
+                    <a href="{{ sort.databaseType.url }}" title="{{ __f('Sort by %s', {'%s': 'database type'}) }}" class="{{ sort.databaseType.class }}">{{ __('Database type') }}</a>
                 </th>
                 <th id="hLogo" scope="col" class="text-left">
-                    <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', 'logo') }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
+                    <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', {'%s': 'logo'}) }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
                 </th>
                 <th id="hFavIcon" scope="col" class="text-left">
-                    <a href="{{ sort.favIcon.url }}" title="{{ __f('Sort by %s', 'fav icon') }}" class="{{ sort.favIcon.class }}">{{ __('Fav icon') }}</a>
+                    <a href="{{ sort.favIcon.url }}" title="{{ __f('Sort by %s', {'%s': 'fav icon'}) }}" class="{{ sort.favIcon.class }}">{{ __('Fav icon') }}</a>
                 </th>
                 <th id="hParametersCsvFile" scope="col" class="text-left">
-                    <a href="{{ sort.parametersCsvFile.url }}" title="{{ __f('Sort by %s', 'parameters csv file') }}" class="{{ sort.parametersCsvFile.class }}">{{ __('Parameters csv file') }}</a>
+                    <a href="{{ sort.parametersCsvFile.url }}" title="{{ __f('Sort by %s', {'%s': 'parameters csv file'}) }}" class="{{ sort.parametersCsvFile.class }}">{{ __('Parameters csv file') }}</a>
                 </th>
                 <th id="hActive" scope="col" class="text-center">
-                    <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', 'active') }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
+                    <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', {'%s': 'active'}) }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
                 </th>
                 <th id="hTemplate" scope="col" class="text-left">
-                    <a href="{{ sort.template.url }}" title="{{ __f('Sort by %s', 'template') }}" class="{{ sort.template.class }}">{{ __('Template') }}</a>
+                    <a href="{{ sort.template.url }}" title="{{ __f('Sort by %s', {'%s': 'template'}) }}" class="{{ sort.template.class }}">{{ __('Template') }}</a>
                 </th>
                 <th id="hProject" scope="col" class="text-left">
-                    <a href="{{ sort.project.url }}" title="{{ __f('Sort by %s', 'project') }}" class="{{ sort.project.class }}">{{ __('Project') }}</a>
+                    <a href="{{ sort.project.url }}" title="{{ __f('Sort by %s', {'%s': 'project'}) }}" class="{{ sort.project.class }}">{{ __('Project') }}</a>
                 </th>
                 <th id="hItemActions" scope="col" class="z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
@@ -265,7 +265,7 @@
         </table>
         </div>
         
-        {% if all != 1 %}
+        {% if showAllEntries != 1 %}
             {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_site_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
@@ -297,7 +297,7 @@
     {% endif %}
     {% set own = showOwnEntries is defined and showOwnEntries == 1 ? 1 : 0 %}
     {% set all = showAllEntries is defined and showAllEntries == 1 ? 1 : 0 %}
-    {% all == 1 %}
+    {% if all == 1 %}
         {% set linkTitle = __('Back to paginated view') %}
         <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
     {% else %}

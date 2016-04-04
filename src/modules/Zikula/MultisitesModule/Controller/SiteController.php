@@ -384,7 +384,7 @@ class SiteController extends BaseSiteController
      * This function processes the items selected in the admin view page.
      * Multiple items may have their state changed or be deleted.
      *
-     * @Route("/sites/handleSelectedEntries",
+     * @Route("/admin/sites/handleSelectedEntries",
      *        methods = {"POST"}
      * )
      *
@@ -394,14 +394,22 @@ class SiteController extends BaseSiteController
      *
      * @throws RuntimeException Thrown if executing the workflow action fails
      */
-    public function handleSelectedEntriesAction(Request $request)
+    public function adminHandleSelectedEntriesAction(Request $request)
+    {
+        return parent::adminHandleSelectedEntriesAction($request);
+    }
+
+    /**
+     * This method includes the common implementation code for adminHandleSelectedEntriesAction() and handleSelectedEntriesAction().
+     */
+    protected function handleSelectedEntriesActionInternal(Request $request, $isAdmin = false)
     {
         $allowedCustomActions = ['cleartemplates'];
 
         $action = $request->request->get('action', null);
         if (!in_array($action, $allowedCustomActions)) {
             // delegate to parent
-            return parent::handleSelectedEntriesAction($request);
+            return parent::handleSelectedEntriesActionInternal($request, $isAdmin);
         }
 
         $items = $request->request->get('items', null);
@@ -522,7 +530,7 @@ class SiteController extends BaseSiteController
             $modules[] = $module;
         }
 
-        $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
+        $viewHelper = $this->get('zikula_multisites_module.view_helper');
         $templateParameters = [
             'site' => $site,
             'modules' => $modules
@@ -578,7 +586,7 @@ class SiteController extends BaseSiteController
             $themes[] = $theme;
         }
 
-        $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
+        $viewHelper = $this->get('zikula_multisites_module.view_helper');
         $templateParameters = [
             'site' => $site,
             'themes' => $themes
@@ -625,7 +633,7 @@ class SiteController extends BaseSiteController
             return;
         }
 
-        $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
+        $viewHelper = $this->get('zikula_multisites_module.view_helper');
         $templateParameters = [
             'site' => $site
         ];
@@ -693,7 +701,7 @@ class SiteController extends BaseSiteController
         }
 
         // create name of the final sql output file
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
         $sqlFileName = $controllerHelper->formatPermalink($site->getTitleFromDisplayPattern())
                    . '-dump-' . date('Ymd_His', time()) . '.sql';
 
@@ -721,14 +729,14 @@ class SiteController extends BaseSiteController
      */
     protected function loadCurrentSite(Request $request)
     {
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
 
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
         if (!$this->hasPermission($this->name . ':' . ucfirst($objectType) . ':', '::', ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
-        $repository = $this->get('zikulamultisitesmodule.' . $objectType . '_factory')->getRepository();
+        $repository = $this->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
         $repository->setRequest($request);
 
         $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', ['ot' => $objectType]);

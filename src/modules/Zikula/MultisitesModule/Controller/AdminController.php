@@ -328,7 +328,7 @@ class AdminController extends BaseAdminController
             }
         }
 
-        $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
+        $viewHelper = $this->get('zikula_multisites_module.view_helper');
         $templateParameters = [
             'token' => $tokenHandler->generate(),
             'databases' => $databases,

@@ -159,7 +159,7 @@ class UserLoginListener implements EventSubscriberInterface
      *
      *     $serviceManager = ServiceUtil::getManager();
      *     $session = $serviceManager->get('session');
-     *     $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__("Your log-in request was not completed. You must change your web site account's password first."));
+     *     $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__("Your log-in request was not completed. You must change your web site account's password first."));
      *
      * In this example, the user will be redirected to the URL pointing to the `changePassword` function. This URL is constructed by calling 
      * `ModUtil::url()` with the modname, type, func, and args specified in the above array. The `changePassword` function also needs access

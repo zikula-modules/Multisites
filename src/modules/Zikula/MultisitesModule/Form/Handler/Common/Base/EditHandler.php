@@ -239,7 +239,7 @@ class EditHandler
         $this->idFields = ModUtil::apiFunc('ZikulaMultisitesModule', 'selection', 'getIdFields', ['ot' => $this->objectType]);
     
         // retrieve identifier of the object we wish to view
-        $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
     
         $this->idValues = $controllerHelper->retrieveIdentifier($this->request, [], $this->objectType, $this->idFields);
         $hasIdentifier = $controllerHelper->isValidIdentifier($this->idValues);
@@ -278,7 +278,7 @@ class EditHandler
         $this->entityRef = $entity;
     
     
-        $workflowHelper = $this->container->get('zikulamultisitesmodule.workflow_helper');
+        $workflowHelper = $this->container->get('zikula_multisites_module.workflow_helper');
         $actions = $workflowHelper->getActionsForObject($entity);
         if (false === $actions || !is_array($actions)) {
             $this->request->getSession()->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->translator->trans('Error! Could not determine workflow actions.', [], 'zikulamultisitesmodule'));
@@ -372,29 +372,34 @@ class EditHandler
     {
         $this->hasTemplateId = false;
         $templateId = $this->request->query->get('astemplate', '');
-        if (empty($templateId)) {
-            return null;
-        }
-
         $entity = null;
-        $templateIdValueParts = explode('_', $templateId);
-        $this->hasTemplateId = count($templateIdValueParts) == count($this->idFields);
 
-        if (true === $this->hasTemplateId) {
-            $templateIdValues = [];
-            $i = 0;
-            foreach ($this->idFields as $idField) {
-                $templateIdValues[$idField] = $templateIdValueParts[$i];
-                $i++;
+        if (!empty($templateId)) {
+            $templateIdValueParts = explode('_', $templateId);
+            $this->hasTemplateId = count($templateIdValueParts) == count($this->idFields);
+
+            if (true === $this->hasTemplateId) {
+                $templateIdValues = [];
+                $i = 0;
+                foreach ($this->idFields as $idField) {
+                    $templateIdValues[$idField] = $templateIdValueParts[$i];
+                    $i++;
+                }
+                // reuse existing entity
+                $entityT = ModUtil::apiFunc('ZikulaMultisitesModule', 'selection', 'getEntity', ['ot' => $this->objectType, 'id' => $templateIdValues]);
+                if (null === $entityT) {
+                    throw new NotFoundHttpException($this->translator->trans('No such item.', [], 'zikulamultisitesmodule'));
+                }
+                $entity = clone $entityT;
             }
-            // reuse existing entity
-            $entityT = ModUtil::apiFunc('ZikulaMultisitesModule', 'selection', 'getEntity', ['ot' => $this->objectType, 'id' => $templateIdValues]);
-            if (null === $entityT) {
-                throw new NotFoundHttpException($this->translator->trans('No such item.', [], 'zikulamultisitesmodule'));
-            }
-            $entity = clone $entityT;
         }
-    
+
+        if (is_null($entity)) {
+            $factory = $this->container->get('«appService».' . $this->objectType . '_factory');
+            $createMethod = 'create' . ucfirst($this->objectType);
+            $entity = $factory->$createMethod();
+        }
+
         return $entity;
     }
 
@@ -448,7 +453,7 @@ class EditHandler
 
         $hookHelper = null;
         if ($entity->supportsHookSubscribers() && !in_array($action, ['reset', 'cancel'])) {
-            $hookHelper = $this->container->get('zikulamultisitesmodule.hook_helper');
+            $hookHelper = $this->container->get('zikula_multisites_module.hook_helper');
             // Let any hooks perform additional validation actions
             $hookType = $action == 'delete' ? 'validate_delete' : 'validate_edit';
             $validationHooksPassed = $hookHelper->callValidationHooks($entity, $hookType);

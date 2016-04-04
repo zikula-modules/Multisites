@@ -12,7 +12,7 @@
     {{ pageAddAsset('stylesheet', 'web/bootstrap-jqueryui/bootstrap-jqueryui.min.css') }}
     {{ pageAddAsset('javascript', 'web/bootstrap-jqueryui/bootstrap-jqueryui.min.js') }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.js')) }}
-    {{ polyfill('forms', 'forms-ext') }}
+    {{ polyfill(['forms', 'forms-ext']) }}
 
     {# initialise additional gettext domain for translations within javascript #}
     {# blocked by https://github.com/zikula/core/issues/2601 #}

@@ -56,8 +56,7 @@ class TemplateType extends BaseTemplateType
                 'class' => '',
                 'title' => $this->__('Enter additional folders of the template')
             ],
-            'required' => false,
-            'help' => $this->__('Enter the folders to be created for new sites separated by line breaks. If you need a folder within another one you can write expressions like "folder/folder".')
+            'required' => false
         ]);
         $builder->add('excludedTables', 'Zikula\MultisitesModule\Form\Type\Field\ArrayType', [
             'label' => $this->__('Excluded tables') . ':',
@@ -66,8 +65,7 @@ class TemplateType extends BaseTemplateType
                 'class' => '',
                 'title' => $this->__('Enter table names to be excluded from reapplications')
             ],
-            'required' => false,
-            'help' => $this->__('Enter the names of database tables which should be skipped during template reapplications separated by line breaks. With this you can for example avoid overriding your local user table. Note you can use * as a placeholder, like content_* for all Content tables for only * for all tables; ensure to use this if you want to use a template for different sites without any parameters, otherwise you will end up with overriding your data later on when the template is reapplied.')
+            'required' => false
         ]);
         $builder->add('parameters', 'Zikula\MultisitesModule\Form\Type\Field\ArrayType', [
             'label' => $this->__('Parameters') . ':',
@@ -76,11 +74,7 @@ class TemplateType extends BaseTemplateType
                 'class' => '',
                 'title' => $this->__('Enter required parameter names for this template')
             ],
-            'required' => false,
-            'help' => [
-                $this->__('Enter parameter names separated by line breaks. Each parameter represents a variable information which is being replaced by concrete values when creating a new site or reapplying the template on existing sites. The parameter names can be used as placeholders anywhere in the template data accordingly.'),
-                $this->__('Placeholder syntax: ###PARAMETERNAME###')
-            ]
+            'required' => false
         ]);
     }
 

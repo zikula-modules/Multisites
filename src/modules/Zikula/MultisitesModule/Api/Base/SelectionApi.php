@@ -53,7 +53,7 @@ class SelectionApi extends Zikula_AbstractBase
      */
     protected function hasCompositeKeys($objectType)
     {
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
     
         return $controllerHelper->hasCompositeKeys($objectType);
     }
@@ -71,7 +71,7 @@ class SelectionApi extends Zikula_AbstractBase
     public function getEntity(array $args = [])
     {
         if (!isset($args['id'])) {
-            throw new \InvalidArgumentException($this->get('translator')->__('Invalid identifier received.'));
+            throw new \InvalidArgumentException($this->get('translator.default')->__('Invalid identifier received.'));
         }
         $objectType = $this->determineObjectType($args, 'getEntity');
         $repository = $this->getRepository($objectType);
@@ -154,7 +154,7 @@ class SelectionApi extends Zikula_AbstractBase
     protected function determineObjectType(array $args = [], $methodName = '')
     {
         $objectType = isset($args['ot']) ? $args['ot'] : '';
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
         $utilArgs = ['api' => 'selection', 'action' => $methodName];
         if (!in_array($objectType, $controllerHelper->getObjectTypes('api', $utilArgs))) {
             $objectType = $controllerHelper->getDefaultObjectType('api', $utilArgs);
@@ -173,10 +173,10 @@ class SelectionApi extends Zikula_AbstractBase
     protected function getRepository($objectType = '')
     {
         if (empty($objectType)) {
-            throw new \InvalidArgumentException($this->get('translator')->__('Invalid object type received.'));
+            throw new \InvalidArgumentException($this->get('translator.default')->__('Invalid object type received.'));
         }
     
-        $repository = $this->get('zikulamultisitesmodule.' . $objectType . '_factory')->getRepository();
+        $repository = $this->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
     
         return $repository;
     }

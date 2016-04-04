@@ -83,7 +83,7 @@ class ProjectController extends AbstractController
      */
     protected function viewInternal(Request $request, $sort, $sortdir, $pos, $num, $isAdmin = false)
     {
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
         
         // parameter specifying which type of objects we are treating
         $objectType = 'project';
@@ -98,9 +98,9 @@ class ProjectController extends AbstractController
         // let entities know if we are in admin or user area
         System::queryStringSetVar('lct', $isAdmin ? 'admin' : 'user');
         
-        $repository = $this->get('zikulamultisitesmodule.' . $objectType . '_factory')->getRepository();
+        $repository = $this->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
         $repository->setRequest($request);
-        $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
+        $viewHelper = $this->get('zikula_multisites_module.view_helper');
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
         ];
@@ -200,7 +200,7 @@ class ProjectController extends AbstractController
         $currentUrlObject = new ModUrl($this->name, 'project', 'view', ZLanguage::getLanguageCode(), $currentUrlArgs);
         
         $templateParameters['items'] = $entities;
-        $templateParameters['sort'] = $sortableColumns->generateSortableColumns();
+        $templateParameters['sort'] = $sort;
         $templateParameters['sdir'] = $sortdir;
         $templateParameters['pagesize'] = $resultsPerPage;
         $templateParameters['currentUrlObject'] = $currentUrlObject;
@@ -210,14 +210,14 @@ class ProjectController extends AbstractController
             'all' => $templateParameters['showAllEntries'],
             'own' => $templateParameters['showOwnEntries']
         ];
-        $form = $this->createForm('Zikula\MultisitesModule\Form\Type\QuickNavigation\\' . ucfirst($objectType) . 'QuickNavType', $templateParameters, $formOptions)
-            ->setMethod('GET');
+        $form = $this->createForm('Zikula\MultisitesModule\Form\Type\QuickNavigation\\' . ucfirst($objectType) . 'QuickNavType', $templateParameters, $formOptions);
         
-        $templateParameters['quickNavForm'] = $form;
+        $templateParameters['sort'] = $sortableColumns->generateSortableColumns();
+        $templateParameters['quickNavForm'] = $form->createView();
         
         
         
-        $modelHelper = $this->get('zikulamultisitesmodule.model_helper');
+        $modelHelper = $this->get('zikula_multisites_module.model_helper');
         $templateParameters['canBeCreated'] = $modelHelper->canBeCreated($objectType);
         
         // fetch and return the appropriate template
@@ -263,7 +263,7 @@ class ProjectController extends AbstractController
      */
     protected function editInternal(Request $request, $isAdmin = false)
     {
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
         
         // parameter specifying which type of objects we are treating
         $objectType = 'project';
@@ -278,7 +278,7 @@ class ProjectController extends AbstractController
         // let entities know if we are in admin or user area
         System::queryStringSetVar('lct', $isAdmin ? 'admin' : 'user');
         
-        $repository = $this->get('zikulamultisitesmodule.' . $objectType . '_factory')->getRepository();
+        $repository = $this->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
         
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
@@ -286,10 +286,10 @@ class ProjectController extends AbstractController
         $templateParameters = array_merge($templateParameters, $repository->getAdditionalTemplateParameters('controllerAction', $utilArgs));
         
         // delegate form processing to the form handler
-        $formHandler = $this->get('zikulamultisitesmodule.form.handler.project');
+        $formHandler = $this->get('zikula_multisites_module.form.handler.project');
         $formHandler->processForm($templateParameters);
         
-        $viewHelper = $this->get('zikulamultisitesmodule.view_helper');
+        $viewHelper = $this->get('zikula_multisites_module.view_helper');
         $templateParameters = $formHandler->getTemplateParameters();
         
         // fetch and return the appropriate template
@@ -308,7 +308,32 @@ class ProjectController extends AbstractController
      *
      * @throws RuntimeException Thrown if executing the workflow action fails
      */
+    public function adminHandleSelectedEntriesAction(Request $request)
+    {
+        return $this->handleSelectedEntriesActionInternal($request, true);
+    }
+
+    /**
+     * Process status changes for multiple items.
+     *
+     * This function processes the items selected in the admin view page.
+     * Multiple items may have their state changed or be deleted.
+     *
+     * @param Request $request Current request instance.
+     *
+     * @return bool true on sucess, false on failure.
+     *
+     * @throws RuntimeException Thrown if executing the workflow action fails
+     */
     public function handleSelectedEntriesAction(Request $request)
+    {
+        return $this->handleSelectedEntriesActionInternal($request, false);
+    }
+
+    /**
+     * This method includes the common implementation code for adminHandleSelectedEntriesAction() and handleSelectedEntriesAction().
+     */
+    protected function handleSelectedEntriesActionInternal(Request $request, $isAdmin = false)
     {
         $objectType = 'project';
         
@@ -318,8 +343,8 @@ class ProjectController extends AbstractController
         
         $action = strtolower($action);
         
-        $workflowHelper = $this->get('zikulamultisitesmodule.workflow_helper');
-        $hookHelper = $this->get('zikulamultisitesmodule.hook_helper');
+        $workflowHelper = $this->get('zikula_multisites_module.workflow_helper');
+        $hookHelper = $this->get('zikula_multisites_module.hook_helper');
         $flashBag = $request->getSession()->getFlashBag();
         $logger = $this->get('logger');
         
@@ -384,6 +409,6 @@ class ProjectController extends AbstractController
             $hookHelper->callProcessHooks($entity, $hookType, $url);
         }
         
-        return $this->redirectToRoute('zikulamultisitesmodule_project_adminindex');
+        return $this->redirectToRoute('zikulamultisitesmodule_project_' . ($isAdmin ? 'admin' : '') . 'index');
     }
 }

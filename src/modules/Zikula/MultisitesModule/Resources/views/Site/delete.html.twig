@@ -8,7 +8,7 @@
 
         {% form_theme deleteForm with [
             '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
-            '@ZikulaFormExtensionBundle/Form/form_div_layout.html.twig'
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
         ] %}
         {{ form_start(deleteForm) }}
         {{ form_errors(deleteForm) }}

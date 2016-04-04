@@ -41,7 +41,7 @@ class ModelHelper extends BaseModelHelper
      */
     public function canBeCreated($objectType)
     {
-        $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
         if (!in_array($objectType, $controllerHelper->getObjectTypes('util', ['util' => 'model', 'action' => 'canBeCreated']))) {
             throw new \Exception('Error! Invalid object type received.');
         }

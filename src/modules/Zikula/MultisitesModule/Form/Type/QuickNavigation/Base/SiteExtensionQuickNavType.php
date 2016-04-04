@@ -67,6 +67,7 @@ class SiteExtensionQuickNavType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->setMethod('GET')
             ->add('all', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', [
                 'data' => $options['all'],
                 'empty_data' => 0
@@ -85,7 +86,8 @@ class SiteExtensionQuickNavType extends AbstractType
         $builder->add('updateview', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
             'label' => $this->__('OK'),
             'attr' => [
-                'id' => 'quicknavSubmit'
+                'id' => 'quicknavSubmit',
+                'class' => 'btn btn-default btn-sm'
             ]
         ]);
     }
@@ -136,10 +138,13 @@ class SiteExtensionQuickNavType extends AbstractType
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
             $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = $entry['title'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
         $builder->add('workflowState', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
             'label' => $this->__('Workflow state'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
             'required' => false,
             'placeholder' => $this->__('All'),
             'choices' => $choices,
@@ -152,7 +157,7 @@ class SiteExtensionQuickNavType extends AbstractType
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
             $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = $entry['title'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
         $builder->add('extensionType', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
             'label' => $this->__('Extension type'),
@@ -176,7 +181,8 @@ class SiteExtensionQuickNavType extends AbstractType
         $builder->add('q', 'Symfony\Component\Form\Extension\Core\Type\SearchType', [
             'label' => $this->__('Search'),
             'attr' => [
-                'id' => 'searchTerm'
+                'id' => 'searchTerm',
+                'class' => 'input-sm'
             ],
             'required' => false,
             'max_length' => 255
@@ -196,8 +202,10 @@ class SiteExtensionQuickNavType extends AbstractType
             ->add('sort', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => $this->__('Sort by'),
                 'attr' => [
-                    'id' => 'zikulaMultisitesModuleSort'
+                    'id' => 'zikulaMultisitesModuleSort',
+                    'class' => 'input-sm'
                 ],
+                'required' => false,
                 'choices' => [
                     $this->__('Id') => 'id',
                     $this->__('Name') => 'name',
@@ -213,8 +221,10 @@ class SiteExtensionQuickNavType extends AbstractType
                 'label' => $this->__('Sort direction'),
                 'empty_data' => 'asc',
                 'attr' => [
-                    'id' => 'zikulaMultisitesModuleSortDir'
+                    'id' => 'zikulaMultisitesModuleSortDir',
+                    'class' => 'input-sm'
                 ],
+                'required' => false,
                 'choices' => [
                     $this->__('Ascending') => 'asc',
                     $this->__('Descending') => 'desc'
@@ -237,8 +247,9 @@ class SiteExtensionQuickNavType extends AbstractType
             'empty_data' => 20,
             'attr' => [
                 'id' => 'zikulaMultisitesModulePageSize',
-                'class' => 'text-right'
+                'class' => 'input-sm text-right'
             ],
+            'required' => false,
             'choices' => [
                 5 => 5,
                 10 => 10,

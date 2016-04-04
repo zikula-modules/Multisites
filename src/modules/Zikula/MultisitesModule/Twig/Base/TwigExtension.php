@@ -51,6 +51,155 @@ class TwigExtension extends \Twig_Extension
     }
     
     /**
+     * The zikulamultisitesmodule_actionUrl filter creates the URL for a given action.
+     *
+     * @param string $urlType      The url type (admin, user, etc.)
+     * @param string $urlFunc      The url func (view, display, edit, etc.)
+     * @param array  $urlArguments The argument array containing ids and other additional parameters
+     *
+     * @return string Desired url in encoded form.
+     */
+    public function buildActionUrl($urlType, $urlFunc, $urlArguments)
+    {
+        return \DataUtil::formatForDisplay(\ModUtil::url('ZikulaMultisitesModule', $urlType, $urlFunc, $urlArguments));
+    }
+    
+    
+    /**
+     * The zikulamultisitesmodule_objectState filter displays the name of a given object's workflow state.
+     * Examples:
+     *    {{ item.workflowState|zikulamultisitesmodule_objectState }}        {# with visual feedback #}
+     *    {{ item.workflowState|zikulamultisitesmodule_objectState(false) }} {# no ui feedback #}
+     *
+     * @param string  $state      Name of given workflow state.
+     * @param boolean $uiFeedback Whether the output should include some visual feedback about the state.
+     *
+     * @return string Enriched and translated workflow state ready for display.
+     */
+    public function getObjectState($state = 'initial', $uiFeedback = true)
+    {
+        $serviceManager = \ServiceUtil::getManager();
+        $workflowHelper = $serviceManager->get('zikula_multisites_module.workflow_helper');
+    
+        $stateInfo = $workflowHelper->getStateInfo($state);
+    
+        $result = $stateInfo['text'];
+        if ($uiFeedback === true) {
+            $result = '<span class="label label-' . $stateInfo['ui'] . '">' . $result . '</span>';
+        }
+    
+        return $result;
+    }
+    
+    
+    /**
+     * The zikulamultisitesmodule_templateHeaders function performs header() operations
+     * to change the content type provided to the user agent.
+     *
+     * Available parameters:
+     *   - contentType:  Content type for corresponding http header.
+     *   - asAttachment: If set to true the file will be offered for downloading.
+     *   - fileName:     Name of download file.
+     *
+     * @return boolean false.
+     */
+    public function templateHeaders($contentType, $asAttachment = false, $fileName = '')
+    {
+        // apply header
+        header('Content-Type: ' . $contentType);
+    
+        // if desired let the browser offer the given file as a download
+        if ($asAttachment && !empty($fileName)) {
+            header('Content-Disposition: attachment; filename=' . $fileName);
+        }
+    
+        return;
+    }
+    
+    
+    /**
+     * The zikulamultisitesmodule_fileSize filter displays the size of a given file in a readable way.
+     * Example:
+     *     {{ 12345|zikulamultisitesmodule_fileSize }}
+     *
+     * @param integer $size     File size in bytes.
+     * @param string  $filepath The input file path including file name (if file size is not known).
+     * @param boolean $nodesc   If set to true the description will not be appended.
+     * @param boolean $onlydesc If set to true only the description will be returned.
+     *
+     * @return string File size in a readable form.
+     */
+    public function getFileSize($size = 0, $filepath = '', $nodesc = false, $onlydesc = false)
+    {
+        if (!is_numeric($size)) {
+            $size = (int) $size;
+        }
+        if (!$size) {
+            if (empty($filepath) || !file_exists($filepath)) {
+                return '';
+            }
+            $size = filesize($filepath);
+        }
+        if (!$size) {
+            return '';
+        }
+    
+        $serviceManager = \ServiceUtil::getManager();
+        $viewHelper = $serviceManager->get('zikula_multisites_module.view_helper');
+    
+        $result = $viewHelper->getReadableFileSize($size, $nodesc, $onlydesc);
+    
+        return $result;
+    }
+    
+    
+    /**
+     * The zikulamultisitesmodule_listEntry filter displays the name
+     * or names for a given list item.
+     * Example:
+     *     {{ entity.listField|zikulamultisitesmodule_listEntry('entityName', 'fieldName') }}
+     *
+     * @param string $value      The dropdown value to process.
+     * @param string $objectType The treated object type.
+     * @param string $fieldName  The list field's name.
+     * @param string $delimiter  String used as separator for multiple selections.
+     *
+     * @return string List item name.
+     */
+    public function getListEntry($value, $objectType = '', $fieldName = '', $delimiter = ', ')
+    {
+        if ((empty($value) && $value != '0') || empty($objectType) || empty($fieldName)) {
+            return $value;
+        }
+    
+        $serviceManager = \ServiceUtil::getManager();
+        $helper = $serviceManager->get('zikula_multisites_module.listentries_helper');
+    
+        return $helper->resolve($value, $objectType, $fieldName, $delimiter);
+    }
+    
+    
+    /**
+     * The zikulamultisitesmodule_objectTypeSelector function provides items for a dropdown selector.
+     *
+     * @return string The output of the plugin.
+     */
+    public function getObjectTypeSelector()
+    {
+        $serviceManager = \ServiceUtil::getManager();
+        $translator = $serviceManager->get('translator.default');
+        $result = [];
+    
+        $result[] = ['text' => $translator->__('Sites'), 'value' => 'site'];
+        $result[] = ['text' => $translator->__('Templates'), 'value' => 'template'];
+        $result[] = ['text' => $translator->__('Site extensions'), 'value' => 'siteExtension'];
+        $result[] = ['text' => $translator->__('Projects'), 'value' => 'project'];
+    
+        return $result;
+    }
+    
+    
+    /**
      * The zikulamultisitesmodule_templateSelector function provides items for a dropdown selector.
      *
      * @return string The output of the plugin.
@@ -58,7 +207,7 @@ class TwigExtension extends \Twig_Extension
     public function getTemplateSelector()
     {
         $serviceManager = \ServiceUtil::getManager();
-        $translator = $serviceManager->get('translator');
+        $translator = $serviceManager->get('translator.default');
         $result = [];
     
         $result[] = ['text' => $translator->__('Only item titles'), 'value' => 'itemlist_display.html.twig'];
@@ -99,19 +248,19 @@ class TwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function getUserAvatar($uid, $width, $height, $size, $rating)
+    public function getUserAvatar($uid, $width = 0, $height = 0, $size = 0, $rating = '')
     {
         $params = ['uid' => $uid];
-        if ($width) {
+        if ($width > 0) {
             $params['width'] = $width;
         }
-        if ($height) {
+        if ($height > 0) {
             $params['height'] = $height;
         }
-        if ($size) {
+        if ($size > 0) {
             $params['size'] = $size;
         }
-        if ($rating) {
+        if ($rating != '') {
             $params['rating'] = $rating;
         }
     

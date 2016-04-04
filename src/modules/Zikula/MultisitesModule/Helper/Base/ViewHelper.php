@@ -214,7 +214,7 @@ class ViewHelper
         // then the surrounding
         $output = $twig->render('includePdfHeader.html.twig') . $output . '</body></html>';
     
-        $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
         // create name of the pdf output file
         $fileTitle = $controllerHelper->formatPermalink(System::getVar('sitename'))
                    . '-'

@@ -1,21 +1,20 @@
 {# purpose of this template: build the form to edit an instance of template #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
-{{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
-{{ pageAddAsset('javascript', 'web/typeahead.js/dist/typeahead.bundle.min.js') }}
 
-{% if mode != 'create' %}
-    {% block title __('Edit template') %}
-    {% block admin_page_icon 'pencil-square-o' %}
-{% elseif mode == 'create' %}
-    {% block title __('Create template') %}
-    {% block admin_page_icon 'plus' %}
-{% endif %}
+{% block header %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
+    {{ pageAddAsset('javascript', 'web/typeahead.js/dist/typeahead.bundle.min.js') }}
+{% endblock %}
+
+{% block title mode == 'create' ? __('Create template') : __('Edit template') %}
+{% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
     <div class="zikulamultisitesmodule-template zikulamultisitesmodule-edit">
 {% form_theme form with [
     '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
-    '@ZikulaFormExtensionBundle/Form/form_div_layout.html.twig'
+    'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
 ] %}
 {{ form_start(form, {attr: {id: 'templateEditForm'}}) }}
 {{ form_errors(form) }}
@@ -41,15 +40,15 @@
 <fieldset>
     <legend>{{ __('Advanced options') }}</legend>
 
-    {{ form_row(form.folders) }}
+    {{ form_row(form.folders, {help: __('Enter the folders to be created for new sites separated by line breaks. If you need a folder within another one you can write expressions like "folder/folder".')}) }}
 
-    {{ form_row(form.excludedTables) }}
+    {{ form_row(form.excludedTables, {help: __('Enter the names of database tables which should be skipped during template reapplications separated by line breaks. With this you can for example avoid overriding your local user table. Note you can use * as a placeholder, like content_* for all Content tables for only * for all tables; ensure to use this if you want to use a template for different sites without any parameters, otherwise you will end up with overriding your data later on when the template is reapplied.')}) }}
 
-    {{ form_row(form.parameters) }}
+    {{ form_row(form.parameters, {help: [__('Enter parameter names separated by line breaks. Each parameter represents a variable information which is being replaced by concrete values when creating a new site or reapplying the template on existing sites. The parameter names can be used as placeholders anywhere in the template data accordingly.'), __('Placeholder syntax: ###PARAMETERNAME###')]}) }}
 </fieldset>
 
 {% if mode != 'create' %}
-    {{ include('Helper/includeStandardFieldsEdit.html.twig', { obj: template }) }}
+    {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', { obj: template }) }}
 {% endif %}
 
 {# include display hooks #}
@@ -76,13 +75,13 @@
         <legend>{{ __('Return control') }}</legend>
         {{ form_row(form.repeatCreation) }}
     </fieldset>
-{/if}
+{% endif %}
 
 {# include possible submit actions #}
 <div class="form-group form-buttons">
     <div class="col-sm-offset-3 col-sm-9">
         {% for action in actions %}
-            {{ form_widget(attribute(form, action.id), {attr: {class: action.buttonClass}, icon: action.id == 'delete' ? 'fa-trash-o' : '') }}
+            {{ form_widget(attribute(form, action.id), {attr: {class: action.buttonClass}, icon: action.id == 'delete' ? 'fa-trash-o' : ''}) }}
         {% endfor %}
         {{ form_widget(form.reset, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-refresh'}) }}
         {{ form_widget(form.cancel, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-times'}) }}

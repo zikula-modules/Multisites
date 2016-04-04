@@ -50,7 +50,7 @@ class EditHandler extends BaseEditHandler
         }
     
         if ($this->templateParameters['mode'] == 'create') {
-            $modelHelper = $this->container->get('zikulamultisitesmodule.model_helper');
+            $modelHelper = $this->container->get('zikula_multisites_module.model_helper');
             if (!$modelHelper->canBeCreated($this->objectType)) {
                 $this->request->getSession()->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Sorry, but you can not create the project yet as other items are required which must be created before!'));
                 $logger = $this->container->get('logger');
@@ -199,7 +199,7 @@ class EditHandler extends BaseEditHandler
         $logger = $this->container->get('logger');
         try {
             // execute the workflow action
-            $workflowHelper = $this->container->get('zikulamultisitesmodule.workflow_helper');
+            $workflowHelper = $this->container->get('zikula_multisites_module.workflow_helper');
             $success = $workflowHelper->executeAction($entity, $action);
         } catch(\Exception $e) {
             $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Sorry, but an unknown error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]));

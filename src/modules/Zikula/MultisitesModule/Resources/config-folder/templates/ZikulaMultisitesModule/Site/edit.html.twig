@@ -1,16 +1,15 @@
 {# purpose of this template: build the form to edit an instance of site #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
-{{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
-{{ pageAddAsset('javascript', 'web/typeahead.js/dist/typeahead.bundle.min.js') }}
 
-{% if mode != 'create' %}
-    {% block title __('Edit site') %}
-    {% block admin_page_icon 'pencil-square-o' %}
-{% elseif mode == 'create' %}
-    {% block title __('Create site') %}
-    {% block admin_page_icon 'plus' %}
-{% endif %}
+{% block header %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
+    {{ pageAddAsset('javascript', 'web/typeahead.js/dist/typeahead.bundle.min.js') }}
+{% endblock %}
+
+{% block title mode == 'create' ? __('Create site') : __('Edit site') %}
+{% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
     <div class="zikulamultisitesmodule-site zikulamultisitesmodule-edit">
 {% if mode != 'create' %}
@@ -18,7 +17,7 @@
 {% endif %}
 {% form_theme form with [
     '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
-    '@ZikulaFormExtensionBundle/Form/form_div_layout.html.twig'
+    'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
 ] %}
 {{ form_start(form, {attr: {id: 'siteEditForm'}}) }}
 {{ form_errors(form) }}
@@ -104,7 +103,7 @@
                 <span class="help-block z-sub">{{ __('Note: the database user must exist already for this to work.') }}</span>
             </div>
         </div>
-    {/if}
+    {% endif %}
 </fieldset>
 <div{% if mode != 'create' %} class="hidden"{% endif %}>
     {{ include(
@@ -125,16 +124,16 @@
     {{ form_row(form.favIcon) }}
 
     <div class="hidden">
-        {{ form_row(form.allowedLocales) }}
+        {{ form_row(form.allowedLocales, {help: [__('Expert option! Per default all locales available in the system will be made available for the site.'), __('This feature has not been implemented yet (issue #17).')]}) }}
     </div>
 
-    {{ form_row(form.parametersCsvFile, { help: __('Note: you should use semicolon as delimiter and UTF-8 as encoding.') }) }}
+    {{ form_row(form.parametersCsvFile, {help: __('Note: you should use semicolon as delimiter and UTF-8 as encoding.')}) }}
 
-    {{ form_row(form.parametersArray) }}
+    {{ form_row(form.parametersArray, {help: ['<a id="deriveParametersFromTemplate" href="javascript:void(0);" class="hidden" style="clear:left;">' ~ __('Derive placeholders from template') ~ '</a>', __('Enter values for all parameters specified by the selected template separated by line breaks.')]}) }}
 </fieldset>
 
 {% if mode != 'create' %}
-    {{ include('Helper/includeStandardFieldsEdit.html.twig', { obj: site }) }}
+    {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', { obj: site }) }}
 {% endif %}
 
 {# include display hooks #}
@@ -161,13 +160,13 @@
         <legend>{{ __('Return control') }}</legend>
         {{ form_row(form.repeatCreation) }}
     </fieldset>
-{/if}
+{% endif %}
 
 {# include possible submit actions #}
 <div class="form-group form-buttons">
     <div class="col-sm-offset-3 col-sm-9">
         {% for action in actions %}
-            {{ form_widget(attribute(form, action.id), {attr: {class: action.buttonClass}, icon: action.id == 'delete' ? 'fa-trash-o' : '') }}
+            {{ form_widget(attribute(form, action.id), {attr: {class: action.buttonClass}, icon: action.id == 'delete' ? 'fa-trash-o' : ''}) }}
         {% endfor %}
         {{ form_widget(form.reset, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-refresh'}) }}
         {{ form_widget(form.cancel, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-times'}) }}

@@ -67,7 +67,7 @@ class AdminController extends AbstractController
      */
     public function manageUpdatesAction(Request $request)
     {
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
         
         // parameter specifying which type of objects we are treating
         $objectType = $request->query->getAlnum('ot', 'site');
@@ -96,7 +96,7 @@ class AdminController extends AbstractController
      */
     public function multiplyQueriesAction(Request $request)
     {
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
         
         // parameter specifying which type of objects we are treating
         $objectType = $request->query->getAlnum('ot', 'site');

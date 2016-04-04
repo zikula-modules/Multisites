@@ -26,7 +26,7 @@ services:
             - { name: form.type }
     
     zikula_multisites_module.form.handler.site:
-        class: Zikula\MultisitesModule\Form\\Handler\Site\EditHandler
+        class: Zikula\MultisitesModule\Form\Handler\Site\EditHandler
         arguments: ["@service_container", "@translator.default", "@request_stack", "@router", "@zikula_multisites_module.upload_handler"]
         tags:
             - { name: form.type }
@@ -38,7 +38,7 @@ services:
             - { name: form.type }
     
     zikula_multisites_module.form.handler.template:
-        class: Zikula\MultisitesModule\Form\\Handler\Template\EditHandler
+        class: Zikula\MultisitesModule\Form\Handler\Template\EditHandler
         arguments: ["@service_container", "@translator.default", "@request_stack", "@router", "@zikula_multisites_module.upload_handler"]
         tags:
             - { name: form.type }
@@ -50,7 +50,7 @@ services:
             - { name: form.type }
     
     zikula_multisites_module.form.handler.project:
-        class: Zikula\MultisitesModule\Form\\Handler\Project\EditHandler
+        class: Zikula\MultisitesModule\Form\Handler\Project\EditHandler
         arguments: ["@service_container", "@translator.default", "@request_stack", "@router", "@zikula_multisites_module.upload_handler"]
         tags:
             - { name: form.type }

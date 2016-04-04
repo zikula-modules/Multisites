@@ -190,7 +190,7 @@ class SiteEntity extends BaseAbstractSiteEntity
 
         // update db config adding the new database
         if (!$systemHelper->updateDatabaseConfigFile()) {
-            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Updating the database configuration file failed.'));
+            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error! Updating the database configuration file failed.'));
 
             return false;
         }
@@ -199,7 +199,7 @@ class SiteEntity extends BaseAbstractSiteEntity
         $extensionHelper = $serviceManager->get('zikula_multisites_module.siteextension_helper');
         if (!$extensionHelper->saveSiteModulesIntoOwnDb($this)) {
             $session = $serviceManager->get('session');
-            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Storing the site modules in the Multisites database failed.'));
+            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error! Storing the site modules in the Multisites database failed.'));
 
             return false;
         }
@@ -226,7 +226,7 @@ class SiteEntity extends BaseAbstractSiteEntity
         // update db config adding the new database
         if (!$systemHelper->updateDatabaseConfigFile()) {
             $session = $serviceManager->get('session');
-            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Updating the database configuration file failed.'));
+            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error! Updating the database configuration file failed.'));
 
             return false;
         }
@@ -257,7 +257,7 @@ class SiteEntity extends BaseAbstractSiteEntity
         if ($deleteDatabase == 1) {
             // delete the database
             if (!$systemHelper->deleteDatabase($this->getDatabaseData())) {
-                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error during deleting the database.'));
+                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error during deleting the database.'));
             }
         }
         if ($deleteFiles == 1) {
@@ -265,7 +265,7 @@ class SiteEntity extends BaseAbstractSiteEntity
             $msConfig = $serviceManager->getParameter('multisites');
             $siteFolder = $msConfig['files_real_path'] . '/' . $this->getSiteAlias();
             if (!$systemHelper->deleteDir($siteFolder)) {
-                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error during deleting the site files directory.'));
+                $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error during deleting the site files directory.'));
             }
         }
 
@@ -292,7 +292,7 @@ class SiteEntity extends BaseAbstractSiteEntity
         // update db config removing the database
         if (!$systemHelper->updateDatabaseConfigFile()) {
             $session = $serviceManager->get('session');
-            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Updating the database configuration file failed.'));
+            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error! Updating the database configuration file failed.'));
         }
 
         return parent::performPostRemoveCallback();
@@ -324,7 +324,7 @@ class SiteEntity extends BaseAbstractSiteEntity
         }
 
         $serviceManager = ServiceUtil::getManager();
-        $translator = $serviceManager->get('translator');
+        $translator = $serviceManager->get('translator.default');
 
         parent::prepareItemActions();
 

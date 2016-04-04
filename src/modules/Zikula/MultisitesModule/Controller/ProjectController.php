@@ -123,6 +123,27 @@ class ProjectController extends BaseProjectController
      * This function processes the items selected in the admin view page.
      * Multiple items may have their state changed or be deleted.
      *
+     * @Route("/admin/projects/handleSelectedEntries",
+     *        methods = {"POST"}
+     * )
+     *
+     * @param Request $request Current request instance.
+     *
+     * @return bool true on sucess, false on failure.
+     *
+     * @throws RuntimeException Thrown if executing the workflow action fails
+     */
+    public function adminHandleSelectedEntriesAction(Request $request)
+    {
+        return parent::adminHandleSelectedEntriesAction($request);
+    }
+
+    /**
+     * Process status changes for multiple items.
+     *
+     * This function processes the items selected in the admin view page.
+     * Multiple items may have their state changed or be deleted.
+     *
      * @Route("/projects/handleSelectedEntries",
      *        methods = {"POST"}
      * )

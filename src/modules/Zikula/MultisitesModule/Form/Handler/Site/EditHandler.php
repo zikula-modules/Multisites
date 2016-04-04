@@ -67,7 +67,7 @@ class EditHandler extends BaseEditHandler
         }
 
         // create helper instance for config application
-        $this->systemHelper = $this->container->get('zikulamultisitesmodule.system_helper');
+        $this->systemHelper = $this->container->get('zikula_multisites_module.system_helper');
 
         if ($this->templateParameters['mode'] == 'create') {
             if (is_null($entity['template'])) {

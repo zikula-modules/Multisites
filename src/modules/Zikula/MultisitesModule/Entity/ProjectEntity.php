@@ -167,7 +167,7 @@ class ProjectEntity extends BaseAbstractProjectEntity
         // update db config removing all obsolete databases
         if (!$systemHelper->updateDatabaseConfigFile()) {
             $session = $serviceManager->get('session');
-            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator')->__('Error! Updating the database configuration file failed.'));
+            $session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $serviceManager->get('translator.default')->__('Error! Updating the database configuration file failed.'));
         }
 
         return parent::performPostRemoveCallback();

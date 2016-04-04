@@ -1,8 +1,8 @@
 {# purpose of this template: site extensions view filter form #}
-{% if hasPermission('ZikulaMultisitesModule:SiteExtension:', '::', 'ACCESS_EDIT' %}
+{% if hasPermission('ZikulaMultisitesModule:SiteExtension:', '::', 'ACCESS_EDIT') %}
     {% form_theme quickNavForm with [
         '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
-        '@ZikulaFormExtensionBundle/Form/form_div_layout.html.twig'
+        'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
     ] %}
     {{ form_start(quickNavForm, {attr: {id: 'zikulaMultisitesModuleSiteExtensionQuickNavForm', class: 'zikulamultisitesmodule-quicknav navbar-form', role: 'navigation'}}) }}
     {{ form_errors(quickNavForm) }}
@@ -18,7 +18,7 @@
             {{ form_row(quickNavForm.extensionType) }}
         {% endif %}
         {% if searchFilter is not defined or searchFilter == true %}
-            {{ form_row(quickNavForm.searchTerm) }}
+            {{ form_row(quickNavForm.q) }}
         {% endif %}
         {% if sorting is not defined or sorting == true %}
             {{ form_row(quickNavForm.sort) }}
@@ -30,7 +30,7 @@
         {% if pageSizeSelector is not defined or pageSizeSelector == true %}
             {{ form_row(quickNavForm.num) }}
         {% endif %}
-        {{ form_widget(quickNavForm.updateview, {attr: {class: 'btn btn-default btn-sm'}}) }}
+        {{ form_widget(quickNavForm.updateview) }}
     </fieldset>
     {{ form_end(quickNavForm) }}
     <script type="text/javascript">

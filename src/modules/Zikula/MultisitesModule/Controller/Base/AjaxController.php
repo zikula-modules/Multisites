@@ -77,13 +77,13 @@ class AjaxController extends AbstractController
         } elseif ($request->isMethod('GET') && $request->query->has('ot')) {
             $objectType = $request->query->getAlnum('ot', 'site');
         }
-        $controllerHelper = $this->get('zikulamultisitesmodule.controller_helper');
+        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
         $utilArgs = ['controller' => 'ajax', 'action' => 'getItemListAutoCompletion'];
         if (!in_array($objectType, $controllerHelper->getObjectTypes('controllerAction', $utilArgs))) {
             $objectType = $controllerHelper->getDefaultObjectType('controllerAction', $utilArgs);
         }
         
-        $repository = $this->get('zikulamultisitesmodule.' . $objectType . '_factory')->getRepository();
+        $repository = $this->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
         $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', ['ot' => $objectType]);
         
         $fragment = '';
@@ -121,7 +121,7 @@ class AjaxController extends AbstractController
         if ((is_array($entities) || is_object($entities)) && count($entities) > 0) {
             $descriptionFieldName = $repository->getDescriptionFieldName();
             $previewFieldName = $repository->getPreviewFieldName();
-            //$imageHelper = $this->get('zikulamultisitesmodule.image_helper');
+            //$imageHelper = $this->get('zikula_multisites_module.image_helper');
             //$imagineManager = $imageHelper->getManager($objectType, $previewFieldName, 'controllerAction', $utilArgs);
             $imagineManager = $this->get('systemplugin.imagine.manager');
             foreach ($entities as $item) {

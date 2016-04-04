@@ -17,7 +17,7 @@ use Zikula\MultisitesModule\Container\Base\HookContainer as BaseHookContainer;
 /**
  * Implementation class for hook container methods.
  */
-class HookHelper extends BaseHookContainer
+class HookContainer extends BaseHookContainer
 {
     // feel free to add your own convenience methods here
 }

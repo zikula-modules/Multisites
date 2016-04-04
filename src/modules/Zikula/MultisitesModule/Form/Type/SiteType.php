@@ -256,11 +256,7 @@ class SiteType extends BaseSiteType
                 'class' => '',
                 'title' => $this->__('Enter the allowed locales of the site')
             ],
-            'required' => false,
-            'help' => [
-                $this->__('Expert option! Per default all locales available in the system will be made available for the site.'),
-                $this->__('This feature has not been implemented yet (issue #17).')
-            ]
+            'required' => false
         ]);
         $builder->add('parametersArray', 'Zikula\MultisitesModule\Form\Type\Field\ArrayType', [
             'label' => $this->__('or enter them manually'),
@@ -269,11 +265,7 @@ class SiteType extends BaseSiteType
                 'class' => '',
                 'title' => $this->__('Enter values for the template parameters')
             ],
-            'required' => false,
-            'help' => [
-                '<a id="deriveParametersFromTemplate" href="javascript:void(0);" class="hidden" style="clear:left;">' . $this->__('Derive placeholders from template') . '</a>',
-                $this->__('Enter values for all parameters specified by the selected template separated by line breaks.')
-            ]
+            'required' => false
         ]);
     }
 }

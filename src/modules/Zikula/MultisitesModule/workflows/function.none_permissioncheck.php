@@ -44,7 +44,7 @@ function ZikulaMultisitesModule_workflow_none_permissioncheck($obj, $permLevel, 
 function ZikulaMultisitesModule_workflow_none_gettextstrings()
 {
     $serviceManager = \ServiceUtil::getManager();
-    $translator = $serviceManager->get('translator');
+    $translator = $serviceManager->get('translator.default');
     return [
         'title' => $translator->__('None workflow (no approval)'),
         'description' => $translator->__('This is like a non-existing workflow. Everything is online immediately after creation.'),

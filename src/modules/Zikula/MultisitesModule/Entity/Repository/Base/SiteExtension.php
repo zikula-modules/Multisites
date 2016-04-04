@@ -185,7 +185,7 @@ class SiteExtension extends EntityRepository
             }
     
             // initialise Imagine preset instances
-            $imageHelper = $serviceManager->get('zikulamultisitesmodule.image_helper');
+            $imageHelper = $serviceManager->get('zikula_multisites_module.image_helper');
             if (in_array($args['action'], ['display', 'view'])) {
                 // use separate preset for images in related items
                 $templateParameters['relationThumbPreset'] = $imageHelper->getCustomPreset('', '', 'ZikulaMultisitesModule_relateditem', $context, $args);
@@ -263,7 +263,7 @@ class SiteExtension extends EntityRepository
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)
          || $newUserId == 0 || !is_numeric($newUserId)) {
-            throw new InvalidArgumentException($serviceManager->get('translator')->__('Invalid user identifier received.'));
+            throw new InvalidArgumentException($serviceManager->get('translator.default')->__('Invalid user identifier received.'));
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -295,7 +295,7 @@ class SiteExtension extends EntityRepository
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)
          || $newUserId == 0 || !is_numeric($newUserId)) {
-            throw new InvalidArgumentException($serviceManager->get('translator')->__('Invalid user identifier received.'));
+            throw new InvalidArgumentException($serviceManager->get('translator.default')->__('Invalid user identifier received.'));
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -325,7 +325,7 @@ class SiteExtension extends EntityRepository
     
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)) {
-            throw new InvalidArgumentException($serviceManager->get('translator')->__('Invalid user identifier received.'));
+            throw new InvalidArgumentException($serviceManager->get('translator.default')->__('Invalid user identifier received.'));
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -355,7 +355,7 @@ class SiteExtension extends EntityRepository
     
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)) {
-            throw new InvalidArgumentException($serviceManager->get('translator')->__('Invalid user identifier received.'));
+            throw new InvalidArgumentException($serviceManager->get('translator.default')->__('Invalid user identifier received.'));
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -399,7 +399,7 @@ class SiteExtension extends EntityRepository
             // check id parameter
             if ($id == 0) {
                 $serviceManager = ServiceUtil::getManager();
-                throw new InvalidArgumentException($serviceManager->get('translator')->__('Invalid identifier received.'));
+                throw new InvalidArgumentException($serviceManager->get('translator.default')->__('Invalid identifier received.'));
             }
     
             if (is_array($id)) {
@@ -432,7 +432,7 @@ class SiteExtension extends EntityRepository
      */
     public function selectById($id = 0, $useJoins = true, $slimMode = false)
     {
-        $results = $this->selectByIdList([$id]);
+        $results = $this->selectByIdList([$id], $useJoins, $slimMode);
     
         return (count($results) > 0) ? $results[0] : null;
     }
@@ -936,7 +936,7 @@ class SiteExtension extends EntityRepository
     
         $serviceManager = ServiceUtil::getManager();
         $varHelper = $serviceManager->get('zikula_extensions_module.api.variable');
-        $showOnlyOwnEntries = $this->request->query->getDigits('own', $varHelper->get('ZikulaMultisitesModule', 'showOnlyOwnEntries', 0));
+        $showOnlyOwnEntries = /*$this->request->query->getDigits('own', */$varHelper->get('ZikulaMultisitesModule', 'showOnlyOwnEntries', 0)/*)*/;
         if ($showOnlyOwnEntries == 1) {
             $uid = UserUtil::getVar('uid');
             $qb->andWhere('tbl.createdUserId = :creator')

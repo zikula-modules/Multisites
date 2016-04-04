@@ -37,7 +37,7 @@ class MultisitesModuleInstaller extends AbstractExtensionInstaller
         $logger = $this->container->get('logger');
         // Check if upload directories exist and if needed create them
         try {
-            $controllerHelper = $this->container->get('zikulamultisitesmodule.controller_helper');
+            $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
             $controllerHelper->checkAndCreateAllUploadFolders();
         } catch (\Exception $e) {
             $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $e->getMessage());
