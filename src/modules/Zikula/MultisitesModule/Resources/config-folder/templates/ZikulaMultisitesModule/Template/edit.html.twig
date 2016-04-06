@@ -5,7 +5,7 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
-    {{ pageAddAsset('javascript', 'web/typeahead.js/dist/typeahead.bundle.min.js') }}
+    {{ pageAddAsset('javascript', asset('typeahead.js/dist/typeahead.bundle.min.js')) }}
 {% endblock %}
 
 {% block title mode == 'create' ? __('Create template') : __('Edit template') %}
