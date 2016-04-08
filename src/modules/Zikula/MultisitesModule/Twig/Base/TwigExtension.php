@@ -12,11 +12,62 @@
 
 namespace Zikula\MultisitesModule\Twig\Base;
 
+use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\MultisitesModule\Helper\WorkflowHelper;
+use Zikula\MultisitesModule\Helper\ViewHelper;
+use Zikula\MultisitesModule\Helper\ListEntriesHelper;
+
 /**
  * Twig extension base class.
  */
 class TwigExtension extends \Twig_Extension
 {
+    use TranslatorTrait;
+    
+    /**
+     * @var WorkflowHelper
+     */
+    protected $workflowHelper;
+    
+    /**
+     * @var ViewHelper
+     */
+    protected $viewHelper;
+    
+    /**
+     * @var ListEntriesHelper
+     */
+    protected $listHelper;
+    
+    
+    /**
+     * Constructor.
+     * Initialises member vars.
+     *
+     * @param TranslatorInterface $translator     Translator service instance.
+     * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance.
+     * @param ViewHelper          $viewHelper     ViewHelper service instance.
+     * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance.
+     */
+    public function __construct(TranslatorInterface $translator, WorkflowHelper $workflowHelper, ViewHelper $viewHelper, ListEntriesHelper $listHelper)
+    {
+        $this->setTranslator($translator);
+        $this->workflowHelper = $workflowHelper;
+        $this->viewHelper = $viewHelper;
+        $this->listHelper = $listHelper;
+    }
+    
+    /**
+     * Sets the translator.
+     *
+     * @param TranslatorInterface $translator Translator service instance.
+     */
+    public function setTranslator(/*TranslatorInterface */$translator)
+    {
+        $this->translator = $translator;
+    }
+    
     /**
      * Returns a list of custom Twig functions.
      *
@@ -78,10 +129,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function getObjectState($state = 'initial', $uiFeedback = true)
     {
-        $serviceManager = \ServiceUtil::getManager();
-        $workflowHelper = $serviceManager->get('zikula_multisites_module.workflow_helper');
-    
-        $stateInfo = $workflowHelper->getStateInfo($state);
+        $stateInfo = $this->workflowHelper->getStateInfo($state);
     
         $result = $stateInfo['text'];
         if ($uiFeedback === true) {
@@ -144,12 +192,7 @@ class TwigExtension extends \Twig_Extension
             return '';
         }
     
-        $serviceManager = \ServiceUtil::getManager();
-        $viewHelper = $serviceManager->get('zikula_multisites_module.view_helper');
-    
-        $result = $viewHelper->getReadableFileSize($size, $nodesc, $onlydesc);
-    
-        return $result;
+        return $this->viewHelper->getReadableFileSize($size, $nodesc, $onlydesc);
     }
     
     
@@ -172,10 +215,7 @@ class TwigExtension extends \Twig_Extension
             return $value;
         }
     
-        $serviceManager = \ServiceUtil::getManager();
-        $helper = $serviceManager->get('zikula_multisites_module.listentries_helper');
-    
-        return $helper->resolve($value, $objectType, $fieldName, $delimiter);
+        return $this->listHelper->resolve($value, $objectType, $fieldName, $delimiter);
     }
     
     
@@ -186,14 +226,12 @@ class TwigExtension extends \Twig_Extension
      */
     public function getObjectTypeSelector()
     {
-        $serviceManager = \ServiceUtil::getManager();
-        $translator = $serviceManager->get('translator.default');
         $result = [];
     
-        $result[] = ['text' => $translator->__('Sites'), 'value' => 'site'];
-        $result[] = ['text' => $translator->__('Templates'), 'value' => 'template'];
-        $result[] = ['text' => $translator->__('Site extensions'), 'value' => 'siteExtension'];
-        $result[] = ['text' => $translator->__('Projects'), 'value' => 'project'];
+        $result[] = ['text' => $this->__('Sites'), 'value' => 'site'];
+        $result[] = ['text' => $this->__('Templates'), 'value' => 'template'];
+        $result[] = ['text' => $this->__('Site extensions'), 'value' => 'siteExtension'];
+        $result[] = ['text' => $this->__('Projects'), 'value' => 'project'];
     
         return $result;
     }
@@ -206,13 +244,11 @@ class TwigExtension extends \Twig_Extension
      */
     public function getTemplateSelector()
     {
-        $serviceManager = \ServiceUtil::getManager();
-        $translator = $serviceManager->get('translator.default');
         $result = [];
     
-        $result[] = ['text' => $translator->__('Only item titles'), 'value' => 'itemlist_display.html.twig'];
-        $result[] = ['text' => $translator->__('With description'), 'value' => 'itemlist_display_description.html.twig'];
-        $result[] = ['text' => $translator->__('Custom template'), 'value' => 'custom'];
+        $result[] = ['text' => $this->__('Only item titles'), 'value' => 'itemlist_display.html.twig'];
+        $result[] = ['text' => $this->__('With description'), 'value' => 'itemlist_display_description.html.twig'];
+        $result[] = ['text' => $this->__('Custom template'), 'value' => 'custom'];
     
         return $result;
     }
