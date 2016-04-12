@@ -40,7 +40,6 @@ class TwigExtension extends \Twig_Extension
      */
     protected $listHelper;
     
-    
     /**
      * Constructor.
      * Initialises member vars.
