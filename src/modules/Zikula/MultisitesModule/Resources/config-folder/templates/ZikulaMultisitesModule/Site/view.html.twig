@@ -99,9 +99,9 @@
                 </td>
                 <td headers="hName" class="text-left">
                     {% if basedOnDomains == 1 %}
-                        <a href="http://{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.name|notifyFilters(zikulamultisitesmodule.filterhook.sites') }}</a>
+                        <a href="http://{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.name|notifyFilters('zikulamultisitesmodule.filterhook.sites') }}</a>
                     {% else %}
-                        <a href="{{ wwwroot }}/{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.namenotifyFilters(zikulamultisitesmodule.filterhook.sites') }}</a>
+                        <a href="{{ wwwroot }}/{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.namenotifyFilters('zikulamultisitesmodule.filterhook.sites') }}</a>
                     {/if}
                     {% if site.description not empty %}
                         <br /><span class="z-sub">{{ site.description }}</span>

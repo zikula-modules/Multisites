@@ -131,7 +131,7 @@
                     </td>
                 {% endif %}
                 <td headers="hName" class="text-left">
-                    {{ site.name|notifyFilters(zikulamultisitesmodule.filterhook.sites') }}
+                    {{ site.name|notifyFilters('zikulamultisitesmodule.filterhook.sites') }}
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ site.description }}

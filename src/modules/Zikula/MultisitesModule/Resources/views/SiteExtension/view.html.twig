@@ -59,7 +59,7 @@
                     </td>
                 {% endif %}
                 <td headers="hName" class="text-left">
-                    {{ siteExtension.name|notifyFilters(zikulamultisitesmodule.filterhook.siteextensions') }}
+                    {{ siteExtension.name|notifyFilters('zikulamultisitesmodule.filterhook.siteextensions') }}
                 </td>
                 <td headers="hExtensionVersion" class="text-left">
                     {{ siteExtension.extensionVersion }}

@@ -55,7 +55,7 @@
                     </td>
                 {% endif % #}
                 <td headers="hName" class="text-left">
-                    {{ project.name|notifyFilters(zikulamultisitesmodule.filterhook.projects') }}
+                    {{ project.name|notifyFilters('zikulamultisitesmodule.filterhook.projects') }}
                 </td>
                 <td headers="hTemplates" class="text-left">
                     {% if project.templates|length > 0 %}
