@@ -30,7 +30,7 @@
             <thead>
             <tr>
                 {% if routeArea == 'admin' %}
-                    <th id="hSelect" scope="col" align="center" valign="middle">
+                    <th id="hSelect" scope="col" class="text-center">
                         <input type="checkbox" id="toggleSiteExtensions" />
                     </th>
                 {% endif %}
@@ -54,7 +54,7 @@
         {% for siteExtension in items %}
             <tr>
                 {% if routeArea == 'admin' %}
-                    <td headers="hselect" align="center" valign="top">
+                    <td headers="hSelect" class="text-center">
                         <input type="checkbox" name="items[]" value="{{ siteExtension.id }}" class="siteextensions-checkbox" />
                     </td>
                 {% endif %}
