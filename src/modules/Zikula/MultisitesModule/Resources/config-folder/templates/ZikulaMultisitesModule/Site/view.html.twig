@@ -9,10 +9,11 @@
 
     {{ block('page_nav_links') }}
 
-    {# TODO enable again when pagerabc is available for Twig
-    <div class="text-center bold">
-        [{{ pagerabc(posvar='letter', forwardvars='module,type,func') }} | <a href="{{ path('zikulamultisitesmodule_site_adminview') }}" title="{{ __('All letters') }}">{{ __('All') }}</a>]
-    </div>#}
+    {% if routeArea == 'admin' %}
+        <div class="text-center bold">
+            [{{ pagerabc(route='zikulamultisitesmodule_site_adminview', posvar='letter', forwardvars='module,type,func') }} | <a href="{{ path('zikulamultisitesmodule_site_adminview') }}" title="{{ __('All letters') }}">{{ __('All') }}</a>]
+        </div>
+    {% endif %}
 
     {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { all: showAllEntries, own: showOwnEntries, workflowStateFilter: false }) }}{# see template file for available options #}
 
