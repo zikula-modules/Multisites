@@ -5,7 +5,7 @@
 {% endspaceless %}
 {% for siteExtension in items %}
 {% spaceless %}
-    "{{ siteExtension.name }}";"{{ siteExtension.extensionVersion }}";"{{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension':'extensionType') }}";"{{ siteExtension.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
+    "{{ siteExtension.name }}";"{{ siteExtension.extensionVersion }}";"{{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension', 'extensionType') }}";"{{ siteExtension.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
     ;"{% if siteExtension.Site|default %}{{ siteExtension.Site.getTitleFromDisplayPattern() }}{% endif %}"
 {% endspaceless %}
 {% endfor %}

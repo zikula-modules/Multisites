@@ -65,7 +65,7 @@
                     {{ siteExtension.extensionVersion }}
                 </td>
                 <td headers="hExtensionType" class="text-left">
-                    {{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension':'extensionType') }}
+                    {{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension', 'extensionType') }}
                 </td>
                 <td headers="hSite" class="text-left">
                     {% if siteExtension.Site|default %}

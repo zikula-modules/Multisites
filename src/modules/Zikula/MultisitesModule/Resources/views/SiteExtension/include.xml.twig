@@ -3,7 +3,7 @@
     <id>{{ siteExtension.id }}</id>
     <name><![CDATA[{{ siteExtension.name }}]]></name>
     <extensionVersion><![CDATA[{{ siteExtension.extensionVersion }}]]></extensionVersion>
-    <extensionType>{{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension':'extensionType') }}</extensionType>
+    <extensionType>{{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension', 'extensionType') }}</extensionType>
     <workflowState>{{ siteExtension.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
     <site>{% if siteExtension.Site|default %}{{ siteExtension.Site.getTitleFromDisplayPattern() }}{% endif %}</site>
 </siteextension>
