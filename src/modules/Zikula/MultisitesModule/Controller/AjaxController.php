@@ -33,13 +33,13 @@ use Zikula\Core\Response\Ajax\NotFoundResponse;
 class AjaxController extends BaseAjaxController
 {
     /**
-     * This is the default action handling the mainnull area called without defining arguments.
+     * This is the default action handling the main area called without defining arguments.
      *
      * @Route("/ajax",
      *        methods = {"GET"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
      * @return mixed Output.
      *
@@ -57,7 +57,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/getItemListAutoCompletion", options={"expose"=true})
     
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
      * @return JsonResponse
      */
@@ -72,7 +72,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/toggleFlag", options={"expose"=true})
      * @Method("POST")
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
      * @return AjaxResponse
      *
@@ -89,7 +89,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/getProjectTemplates", options={"expose"=true})
      * @Method("POST")
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
      * @return AjaxResponse
      */
@@ -134,7 +134,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/modifyModuleActivation", options={"expose"=true})
      * @Method("POST")
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
      * @return AjaxResponse
      */
@@ -199,7 +199,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/allowModule", options={"expose"=true})
      * @Method("POST")
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
      * @return AjaxResponse
      */
@@ -278,7 +278,7 @@ class AjaxController extends BaseAjaxController
      * @Route("/allowTheme", options={"expose"=true})
      * @Method("POST")
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
      * @return AjaxResponse
      */

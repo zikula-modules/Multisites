@@ -37,7 +37,7 @@ class SiteEntity extends BaseAbstractSiteEntity
     /**
      * Retrieves database information array.
      *
-     * @return array List of database parameters.
+     * @return array List of database parameters
      */
     public function getDatabaseData()
     {

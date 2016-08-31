@@ -36,11 +36,11 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance.
-     * @param string  $sort         Sorting field.
-     * @param string  $sortdir      Sorting direction.
-     * @param int     $pos          Current pager position.
-     * @param int     $num          Amount of entries to display.
+     * @param Request  $request      Current request instance
+     * @param string  $sort         Sorting field
+     * @param string  $sortdir      Sorting direction
+     * @param int     $pos          Current pager position
+     * @param int     $num          Amount of entries to display
      *
      * @return mixed Output.
      *
@@ -52,7 +52,7 @@ class TemplateController extends BaseTemplateController
     }
     
     /**
-     * This action provides an item list overviewnull.
+     * This action provides an item list overview.
      *
      * @Route("/templates/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
@@ -60,11 +60,11 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance.
-     * @param string  $sort         Sorting field.
-     * @param string  $sortdir      Sorting direction.
-     * @param int     $pos          Current pager position.
-     * @param int     $num          Amount of entries to display.
+     * @param Request  $request      Current request instance
+     * @param string  $sort         Sorting field
+     * @param string  $sortdir      Sorting direction
+     * @param int     $pos          Current pager position
+     * @param int     $num          Amount of entries to display
      *
      * @return mixed Output.
      *
@@ -83,13 +83,13 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance.
+     * @param Request  $request      Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
-     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found.
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available).
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found
+     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
     {
@@ -97,7 +97,7 @@ class TemplateController extends BaseTemplateController
     }
     
     /**
-     * This action provides a handling of edit requestsnull.
+     * This action provides a handling of edit requests.
      *
      * @Route("/template/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -105,13 +105,13 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance.
+     * @param Request  $request      Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
-     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found.
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available).
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found
+     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
     {
@@ -124,11 +124,11 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance.
+     * @param Request  $request      Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminCreateParametersCsvTemplateAction(Request $request)
     {
@@ -142,11 +142,11 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance.
+     * @param Request  $request      Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function createParametersCsvTemplateAction(Request $request)
     {
@@ -160,11 +160,11 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance.
+     * @param Request  $request      Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminReapplyAction(Request $request)
     {
@@ -178,9 +178,9 @@ class TemplateController extends BaseTemplateController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance.
+     * @param Request  $request      Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
      */
@@ -199,9 +199,9 @@ class TemplateController extends BaseTemplateController
      *        methods = {"POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return bool true on sucess, false on failure.
+     * @return bool true on sucess, false on failure
      *
      * @throws RuntimeException Thrown if executing the workflow action fails
      */

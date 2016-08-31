@@ -45,9 +45,9 @@ class SystemHelper
      * Constructor.
      * Initialises member vars.
      *
-     * @param Session             $session        Session service instance.
-     * @param TranslatorInterface $translator   Translator service instance.
-     * @param VariableApi         $variableApi  VariableApi service instance.
+     * @param Session             $session      Session service instance
+     * @param TranslatorInterface $translator   Translator service instance
+     * @param VariableApi         $variableApi  VariableApi service instance
      */
     public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi)
     {
@@ -59,7 +59,7 @@ class SystemHelper
     /**
      * Sets the translator.
      *
-     * @param TranslatorInterface $translator Translator service instance.
+     * @param TranslatorInterface $translator Translator service instance
      */
     public function setTranslator(/*TranslatorInterface */$translator)
     {
@@ -69,9 +69,9 @@ class SystemHelper
     /**
      * Creates initial folders for a new site.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function createSiteFolders(SiteEntity $site)
     {
@@ -143,9 +143,9 @@ class SystemHelper
     /**
      * Creates a .htaccess file in the temp folder of a given site.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function createHtAccessForTempFolder(SiteEntity $site)
     {
@@ -171,12 +171,12 @@ class SystemHelper
     /**
      * Connects to an external database.
      *
-     * @param array $args Given arguments.
-     *   string $dbName The database name.
-     *   string $dbUser The database user name.
-     *   string $dbPass The database password.
-     *   string $dbHost The database host name.
-     *   string $dbType The database type.
+     * @param array $args Given arguments
+     *   string $dbName The database name
+     *   string $dbUser The database user name
+     *   string $dbPass The database password
+     *   string $dbHost The database host name
+     *   string $dbType The database type
      *
      * @return mixed Connection object or false on errors
      */
@@ -214,14 +214,14 @@ class SystemHelper
     /**
      * Creates a new database for a new site.
      *
-     * @param array $args Given arguments.
-     *   string $dbName The database name.
-     *   string $dbUser The database user name.
-     *   string $dbPass The database password.
-     *   string $dbHost The database host name.
-     *   string $dbType The database type.
+     * @param array $args Given arguments
+     *   string $dbName The database name
+     *   string $dbUser The database user name
+     *   string $dbPass The database password
+     *   string $dbHost The database host name
+     *   string $dbType The database type
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function createDatabase(array $args)
     {
@@ -277,9 +277,9 @@ class SystemHelper
     /**
      * Performs all steps required to setup a certain site in a given database.
      *
-     * @param SiteEntity $site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function setupDatabaseContent(SiteEntity $site)
     {
@@ -343,11 +343,11 @@ class SystemHelper
     }
 
     /**
-     * Reads in all tables contained in a database..
+     * Reads in all tables contained in a database.
      *
-     * @param SiteEntity $site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance
      *
-     * @return array|boolean Array with table names or false on errors.
+     * @return array|boolean Array with table names or false on errors
      */
     protected function readTables(SiteEntity $site)
     {
@@ -438,10 +438,10 @@ class SystemHelper
     /**
      * Deletes a given list of tables contained in a database.
      *
-     * @param SiteEntity $site   The currently treated site instance.
-     * @param array      $tables List of table names.
+     * @param SiteEntity $site   The currently treated site instance
+     * @param array      $tables List of table names
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     protected function deleteTables(SiteEntity $site, array $tables)
     {
@@ -476,11 +476,11 @@ class SystemHelper
     /**
      * Renames a given list of tables contained in a database.
      *
-     * @param SiteEntity $site    The currently treated site instance.
-     * @param array      $tables  List of table names.
-     * @param boolean    $restore False for backup mode and true for recover mode.
+     * @param SiteEntity $site    The currently treated site instance
+     * @param array      $tables  List of table names
+     * @param boolean    $restore False for backup mode and true for recover mode
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     protected function renameExcludedTables(SiteEntity $site, array $tables, $restore = false)
     {
@@ -555,9 +555,9 @@ class SystemHelper
     /**
      * Creates database tables based on a given template file.
      *
-     * @param SiteEntity $site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     protected function createTablesFromTemplate(SiteEntity $site)
     {
@@ -630,9 +630,9 @@ class SystemHelper
     /**
      * Updates the module vars values for a newly created site.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     protected function updateConfigValues(SiteEntity $site)
     {
@@ -773,9 +773,9 @@ class SystemHelper
     /**
      * Returns a list of parameter names and values for a certain site.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return array Built list of parameters.
+     * @return array Built list of parameters
      */
     protected function determineParameters(SiteEntity $site)
     {
@@ -833,9 +833,9 @@ class SystemHelper
     /**
      * Inserts parameters and parameter values as module vars.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     protected function processParameters(SiteEntity $site)
     {
@@ -903,7 +903,7 @@ class SystemHelper
     /**
      * Updates the multisites_dbconfig.php configuration file.
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function updateDatabaseConfigFile()
     {
@@ -937,14 +937,14 @@ class SystemHelper
     /**
      * Deletes a database.
      *
-     * @param array $args Given arguments.
-     *   string $dbName The database name.
-     *   string $dbUser The database user name.
-     *   string $dbPass The database password.
-     *   string $dbHost The database host name.
-     *   string $dbType The database type.
+     * @param array $args Given arguments
+     *   string $dbName The database name
+     *   string $dbUser The database user name
+     *   string $dbPass The database password
+     *   string $dbHost The database host name
+     *   string $dbType The database type
      *
-     * @return Boolean True on success or false otherwise.
+     * @return Boolean True on success or false otherwise
      */
     public function deleteDatabase($args)
     {
@@ -975,9 +975,9 @@ class SystemHelper
     /**
      * Deletes a directory recursively.
      *
-     * @param string $dirName Name of the directory to be deleted.
+     * @param string $dirName Name of the directory to be deleted
      *
-     * @return Boolean True on success or false otherwise.
+     * @return Boolean True on success or false otherwise
      */
     public function deleteDir($dirName)
     {
@@ -1014,7 +1014,7 @@ class SystemHelper
     /**
      * Checks whether the operating system is Windows.
      *
-     * @return boolean True if Windows is detected, false otherwise.
+     * @return boolean True if Windows is detected, false otherwise
      */
     protected function isOnWindows() 
     {
@@ -1024,7 +1024,7 @@ class SystemHelper
     /**
      * Returns complete file path to the mysql program.
      *
-     * @return string Path to the mysql program.
+     * @return string Path to the mysql program
      */
     protected function getMySQLFilePath()
     {
@@ -1050,10 +1050,10 @@ class SystemHelper
     /**
      * Creates a database dump into the given sql file.
      *
-     * @param SiteEntity $site           The currently treated site instance.
-     * @param string     $outputFilePath Path of output file.
+     * @param SiteEntity $site           The currently treated site instance
+     * @param string     $outputFilePath Path of output file
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function dumpDatabase(SiteEntity $site, $outputFilePath)
     {
@@ -1099,9 +1099,9 @@ class SystemHelper
     /**
      * Creates a global administrator for a given site.
      *
-     * @param SiteEntity $site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function createAdministrator(SiteEntity $site)
     {
@@ -1217,9 +1217,9 @@ class SystemHelper
     /**
      * Recover the first row in the permissions table for administrators.
      *
-     * @param SiteEntity $site The currently treated site instance.
+     * @param SiteEntity $site The currently treated site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function recoverAdminSiteControl(SiteEntity $site)
     {

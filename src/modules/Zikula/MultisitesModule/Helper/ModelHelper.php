@@ -33,11 +33,11 @@ class ModelHelper extends BaseModelHelper
      * Note that even creation of a certain object is possible, it may still be forbidden for the current user
      * if he does not have the required permission level.
      *
-     * @param string $objectType Name of treated entity type.
+     * @param string $objectType Name of treated entity type
      *
-     * @return boolean Whether a new instance can be created or not.
+     * @return boolean Whether a new instance can be created or not
      *
-     * @throws Exception If an invalid object type is used.
+     * @throws Exception If an invalid object type is used
      */
     public function canBeCreated($objectType)
     {

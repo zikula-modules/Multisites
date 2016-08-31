@@ -37,7 +37,7 @@ class TemplateEntity extends BaseAbstractTemplateEntity
     /**
      * Checks whether the sql file is referenced by any other template.
      *
-     * @return boolean True if a reference has been found, false otherwise.
+     * @return boolean True if a reference has been found, false otherwise
      */
     public function isSqlFileReferencedByOtherTemplates()
     {

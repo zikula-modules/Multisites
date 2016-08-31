@@ -96,12 +96,12 @@ class ConfiguratorHelper
      * Constructor.
      * Initialises member vars.
      *
-     * @param Session             $session      Session service instance.
-     * @param TranslatorInterface $translator   Translator service instance.
-     * @param VariableApi         $variableApi  VariableApi service instance.
-     * @param RequestStack        $requestStack RequestStack service instance.
-     * @param DynamicConfigDumper $configDumper DynamicConfigDumper service instance.
-     * @param CacheClearer        $cacheClearer CacheClearer service instance.
+     * @param Session             $session      Session service instance
+     * @param TranslatorInterface $translator   Translator service instance
+     * @param VariableApi         $variableApi  VariableApi service instance
+     * @param RequestStack        $requestStack RequestStack service instance
+     * @param DynamicConfigDumper $configDumper DynamicConfigDumper service instance
+     * @param CacheClearer        $cacheClearer CacheClearer service instance
      */
     public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi, RequestStack $requestStack, DynamicConfigDumper $configDumper, CacheClearer $cacheClearer)
     {
@@ -122,7 +122,7 @@ class ConfiguratorHelper
     /**
      * Sets the translator.
      *
-     * @param TranslatorInterface $translator Translator service instance.
+     * @param TranslatorInterface $translator Translator service instance
      */
     public function setTranslator(/*TranslatorInterface */$translator)
     {
@@ -268,7 +268,7 @@ class ConfiguratorHelper
     /**
      * Returns the collected template parameters.
      *
-     * @return array List of template parameters.
+     * @return array List of template parameters
      */
     public function getTemplateParameters()
     {
@@ -278,7 +278,7 @@ class ConfiguratorHelper
     /**
      * Checks whether the Multisites system is enabled or not.
      *
-     * @return boolean True if Multisites is active, false otherwise.
+     * @return boolean True if Multisites is active, false otherwise
      */
     private function isMultisitesEnabled()
     {
@@ -292,7 +292,7 @@ class ConfiguratorHelper
      * Checks whether the Multisites configuration files exist and are writable.
      * Tries to setup the files automatically if possible.
      *
-     * @return boolean True if all files are setup well, false otherwise.
+     * @return boolean True if all files are setup well, false otherwise
      */
     private function checkConfigurationFiles()
     {
@@ -343,9 +343,9 @@ class ConfiguratorHelper
      * Checks whether the given files directory is existing and writeable or not.
      * Tries to create the directory and/or make it writeable if required.
      *
-     * @param string $filesPath Path to the physical files folder.
+     * @param string $filesPath Path to the physical files folder
      *
-     * @return boolean True if directory exists and is writeable, false otherwise.
+     * @return boolean True if directory exists and is writeable, false otherwise
      */
     private function checkWriteableDirectory($filesPath)
     {
@@ -376,9 +376,9 @@ class ConfiguratorHelper
     /**
      * Writes physical folder path into the config/multisites_config.php file.
      *
-     * @param string $filesPath Path to the physical files folder.
+     * @param string $filesPath Path to the physical files folder
      *
-     * @return boolean True if everything worked, false otherwise.
+     * @return boolean True if everything worked, false otherwise
      */
     private function writeFilesPathToConfig($filesPath)
     {
@@ -431,11 +431,11 @@ class ConfiguratorHelper
     /**
      * Writes multisites system parameters into the config/multisites_config.php file.
      *
-     * @param string $mainSiteUrl         Domain for the main site.
-     * @param string $siteTempFilesFolder Path to folder for temporary sites files.
-     * @param string $siteFilesFolder     Path to folder for sites files.
+     * @param string $mainSiteUrl         Domain for the main site
+     * @param string $siteTempFilesFolder Path to folder for temporary sites files
+     * @param string $siteFilesFolder     Path to folder for sites files
      *
-     * @return boolean True if everything worked, false otherwise.
+     * @return boolean True if everything worked, false otherwise
      */
     private function writeSystemParametersToConfig($mainSiteUrl, $siteTempFilesFolder, $siteFilesFolder)
     {
@@ -505,7 +505,7 @@ class ConfiguratorHelper
     /**
      * Writes multisites system parameters into the config/multisites_config.php file.
      *
-     * @return boolean True if everything worked, false otherwise.
+     * @return boolean True if everything worked, false otherwise
      */
     private function createAdditionalDirectories()
     {

@@ -67,12 +67,12 @@ class SiteExtensionHelper
      * Constructor.
      * Initialises member vars.
      *
-     * @param Session             $session        Session service instance.
-     * @param TranslatorInterface $translator     Translator service instance.
-     * @param RequestStack        $requestStack   RequestStack service instance.
-     * @param Twig_Environment    $twig           Twig service instance.
-     * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance.
-     * @param SystemHelper        $systemHelper   SystemHelper service instance.
+     * @param Session             $session        Session service instance
+     * @param TranslatorInterface $translator     Translator service instance
+     * @param RequestStack        $requestStack   RequestStack service instance
+     * @param Twig_Environment    $twig           Twig service instance
+     * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
+     * @param SystemHelper        $systemHelper   SystemHelper service instance
      */
     public function __construct(Session $session, TranslatorInterface $translator, RequestStack $requestStack, Twig_Environment $twig, WorkflowHelper $workflowHelper, SystemHelper $systemHelper)
     {
@@ -87,7 +87,7 @@ class SiteExtensionHelper
     /**
      * Sets the translator.
      *
-     * @param TranslatorInterface $translator Translator service instance.
+     * @param TranslatorInterface $translator Translator service instance
      */
     public function setTranslator(/*TranslatorInterface */$translator)
     {
@@ -97,10 +97,10 @@ class SiteExtensionHelper
     /**
      * Renders the icons that identify the modules availability for a site.
      *
-     * @param SiteEntity $site The given site instance.
-     * @param array      $args Additional arguments.
+     * @param SiteEntity $site The given site instance
+     * @param array      $args Additional arguments
      *
-     * @return string The rendered output.
+     * @return string The rendered output
      */
     public function getActionIconsForSiteModule(SiteEntity $site, $args)
     {
@@ -121,10 +121,10 @@ class SiteExtensionHelper
     /**
      * Renders the icons that identify the themes availability for a site.
      *
-     * @param SiteEntity $site The given site instance.
-     * @param array      $args Additional arguments.
+     * @param SiteEntity $site The given site instance
+     * @param array      $args Additional arguments
      *
-     * @return string The rendered output.
+     * @return string The rendered output
      */
     public function getActionIconsForSiteTheme(SiteEntity $site, $args)
     {
@@ -147,9 +147,9 @@ class SiteExtensionHelper
     /**
      * Retrieves all modules available for a given site.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return array|boolean An array with a list of the found modules or false on errors.
+     * @return array|boolean An array with a list of the found modules or false on errors
      */
     public function getAllModulesFromSiteDb(SiteEntity $site)
     {
@@ -174,9 +174,9 @@ class SiteExtensionHelper
     /**
      * Saves the modules and versions of a site into the Multisites database.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function saveSiteModulesIntoOwnDb(SiteEntity $site)
     {
@@ -202,10 +202,10 @@ class SiteExtensionHelper
     /**
      * Returns information for a given site module.
      *
-     * @param SiteEntity $site       The given site instance.
-     * @param string     $moduleName Name of module to select.
+     * @param SiteEntity $site       The given site instance
+     * @param string     $moduleName Name of module to select
      *
-     * @return array|boolean An array with the required module information or false on errors.
+     * @return array|boolean An array with the required module information or false on errors
      */
     public function getModuleFromSiteDb(SiteEntity $site, $moduleName)
     {
@@ -245,10 +245,10 @@ class SiteExtensionHelper
     /**
      * Creates a module in a site database.
      *
-     * @param SiteEntity $site       The given site instance.
-     * @param string     $moduleName Name of module to create.
+     * @param SiteEntity $site       The given site instance
+     * @param string     $moduleName Name of module to create
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function createSiteModule(SiteEntity $site, $moduleName)
     {
@@ -321,10 +321,10 @@ class SiteExtensionHelper
     /**
      * Deletes a module from a site database.
      *
-     * @param SiteEntity $site       The given site instance.
-     * @param string     $moduleName Name of module to delete.
+     * @param SiteEntity $site       The given site instance
+     * @param string     $moduleName Name of module to delete
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function deleteSiteModule(SiteEntity $site, $moduleName)
     {
@@ -374,10 +374,10 @@ class SiteExtensionHelper
     /**
      * Modifies the state of a module in a site database.
      *
-     * @param SiteEntity $site The given site instance.
-     * @param array      $args Additional arguments.
+     * @param SiteEntity $site The given site instance
+     * @param array      $args Additional arguments
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function modifyModuleActivation(SiteEntity $site, $args)
     {
@@ -410,7 +410,7 @@ class SiteExtensionHelper
     /**
      * Retrieves all themes available in the themes directory.
      *
-     * @return array All existing theme names.
+     * @return array All existing theme names
      */
     public function getAllThemesInSystem()
     {
@@ -522,9 +522,9 @@ class SiteExtensionHelper
     /**
      * Retrieves all themes available for a given site.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return array|boolean List of found themes or false on errors.
+     * @return array|boolean List of found themes or false on errors
      */
     public function getAllThemesFromSiteDb(SiteEntity $site)
     {
@@ -551,10 +551,10 @@ class SiteExtensionHelper
     /**
      * Returns information for a given site theme.
      *
-     * @param SiteEntity $site      The given site instance.
-     * @param string     $themeName Name of theme to select.
+     * @param SiteEntity $site      The given site instance
+     * @param string     $themeName Name of theme to select
      *
-     * @return array|boolean An array with the required theme information or false on errors.
+     * @return array|boolean An array with the required theme information or false on errors
      */
     public function getThemeFromSiteDb(SiteEntity $site, $themeName)
     {
@@ -596,10 +596,10 @@ class SiteExtensionHelper
     /**
      * Creates a theme in a site database.
      *
-     * @param SiteEntity $site      The given site instance.
-     * @param string     $themeName Name of theme to create.
+     * @param SiteEntity $site      The given site instance
+     * @param string     $themeName Name of theme to create
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function createSiteTheme(SiteEntity $site, $themeName)
     {
@@ -670,10 +670,10 @@ class SiteExtensionHelper
     /**
      * Deletes a theme from a site database.
      *
-     * @param SiteEntity $site      The given site instance.
-     * @param string     $themeName Name of theme to delete.
+     * @param SiteEntity $site      The given site instance
+     * @param string     $themeName Name of theme to delete
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function deleteSiteTheme(SiteEntity $site, $themeName)
     {
@@ -707,9 +707,9 @@ class SiteExtensionHelper
     /**
      * Gets the default theme for a site.
      *
-     * @param SiteEntity $site The given site instance.
+     * @param SiteEntity $site The given site instance
      *
-     * @return string Name of site default theme.
+     * @return string Name of site default theme
      */
     public function getSiteDefaultTheme(SiteEntity $site)
     {
@@ -741,10 +741,10 @@ class SiteExtensionHelper
     /**
      * Update the site default theme
      *
-     * @param SiteEntity $site      The given site instance.
-     * @param string     $themeName Name of new default theme.
+     * @param SiteEntity $site      The given site instance
+     * @param string     $themeName Name of new default theme
      *
-     * @return boolean True on success or false otherwise.
+     * @return boolean True on success or false otherwise
      */
     public function setAsDefaultTheme(SiteEntity $site, $themeName)
     {

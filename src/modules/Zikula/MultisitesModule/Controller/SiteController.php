@@ -38,11 +38,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance.
-     * @param string  $sort         Sorting field.
-     * @param string  $sortdir      Sorting direction.
-     * @param int     $pos          Current pager position.
-     * @param int     $num          Amount of entries to display.
+     * @param Request  $request      Current request instance
+     * @param string  $sort         Sorting field
+     * @param string  $sortdir      Sorting direction
+     * @param int     $pos          Current pager position
+     * @param int     $num          Amount of entries to display
      *
      * @return mixed Output.
      *
@@ -54,7 +54,7 @@ class SiteController extends BaseSiteController
     }
     
     /**
-     * This action provides an item list overviewnull.
+     * This action provides an item list overview.
      *
      * @Route("/sites/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
@@ -62,15 +62,15 @@ class SiteController extends BaseSiteController
      *        methods = {"GET"}
      * )
      *
-     * @param Request  $request      Current request instance.
-     * @param string  $sort         Sorting field.
-     * @param string  $sortdir      Sorting direction.
-     * @param int     $pos          Current pager position.
-     * @param int     $num          Amount of entries to display.
+     * @param Request  $request      Current request instance
+     * @param string  $sort         Sorting field
+     * @param string  $sortdir      Sorting direction
+     * @param int     $pos          Current pager position
+     * @param int     $num          Amount of entries to display
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -86,13 +86,13 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
-     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found.
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available).
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found
+     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
     {
@@ -100,7 +100,7 @@ class SiteController extends BaseSiteController
     }
     
     /**
-     * This action provides a handling of edit requestsnull.
+     * This action provides a handling of edit requests.
      *
      * @Route("/site/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -108,13 +108,13 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
-     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found.
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available).
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found
+     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
     {
@@ -130,14 +130,14 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance.
-     * @param SiteEntity $site      Treated site instance.
+     * @param Request  $request      Current request instance
+     * @param SiteEntity $site      Treated site instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
-     * @throws NotFoundHttpException Thrown by param converter if item to be deleted isn't found.
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available).
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     * @throws NotFoundHttpException Thrown by param converter if item to be deleted isn't found
+     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminDeleteAction(Request $request, SiteEntity $site)
     {
@@ -145,7 +145,7 @@ class SiteController extends BaseSiteController
     }
     
     /**
-     * This action provides a handling of simple delete requestsnull.
+     * This action provides a handling of simple delete requests.
      *
      * @Route("/site/delete/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -153,14 +153,14 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request      Current request instance.
-     * @param SiteEntity $site      Treated site instance.
+     * @param Request  $request      Current request instance
+     * @param SiteEntity $site      Treated site instance
      *
      * @return mixed Output.
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
-     * @throws NotFoundHttpException Thrown by param converter if item to be deleted isn't found.
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available).
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     * @throws NotFoundHttpException Thrown by param converter if item to be deleted isn't found
+     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function deleteAction(Request $request, SiteEntity $site)
     {
@@ -174,11 +174,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminManageExtensionsAction(Request $request)
     {
@@ -192,11 +192,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function manageExtensionsAction(Request $request)
     {
@@ -209,11 +209,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminManageThemesAction(Request $request)
     {
@@ -227,11 +227,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function manageThemesAction(Request $request)
     {
@@ -244,11 +244,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminSetThemeAsDefaultAction(Request $request)
     {
@@ -262,11 +262,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function setThemeAsDefaultAction(Request $request)
     {
@@ -279,11 +279,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminViewToolsAction(Request $request)
     {
@@ -297,11 +297,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function viewToolsAction(Request $request)
     {
@@ -314,11 +314,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminExecuteToolAction(Request $request)
     {
@@ -332,11 +332,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function executeToolAction(Request $request)
     {
@@ -349,11 +349,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminExportDatabaseAsTemplateAction(Request $request)
     {
@@ -367,11 +367,11 @@ class SiteController extends BaseSiteController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function exportDatabaseAsTemplateAction(Request $request)
     {
@@ -388,9 +388,9 @@ class SiteController extends BaseSiteController
      *        methods = {"POST"}
      * )
      *
-     * @param Request $request Current request instance.
+     * @param Request $request Current request instance
      *
-     * @return bool true on sucess, false on failure.
+     * @return bool true on sucess, false on failure
      *
      * @throws RuntimeException Thrown if executing the workflow action fails
      */

@@ -26,9 +26,9 @@ class LinkContainer extends BaseLinkContainer
     /**
      * Returns available header links.
      *
-     * @param string $type The type to collect links for.
+     * @param string $type The type to collect links for
      *
-     * @return array Array of header links.
+     * @return array Array of header links
      */
     public function getLinks($type = LinkContainerInterface::TYPE_ADMIN)
     {

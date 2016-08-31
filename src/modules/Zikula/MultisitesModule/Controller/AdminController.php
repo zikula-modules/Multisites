@@ -25,18 +25,18 @@ use ModUtil;
 class AdminController extends BaseAdminController
 {
     /**
-     * This is the default action handling the mainnull area called without defining arguments.
+     * This is the default action handling the main area called without defining arguments.
      *
      * @Route("/admin",
      *        methods = {"GET"}
      * )
      *
      * @param Request  $request      Current request instance
-     * @param string  $ot           Treated object type.
+     * @param string  $ot           Treated object type
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function indexAction(Request $request)
     {
@@ -68,7 +68,7 @@ class AdminController extends BaseAdminController
     /**
      * Check whether Multisites is running or not.
      *
-     * @return boolean True if Multisites properties are available.
+     * @return boolean True if Multisites properties are available
      */
     protected function isConfigured()
     {
@@ -82,7 +82,7 @@ class AdminController extends BaseAdminController
     /**
      * Check if the current request is done on the main site or not.
      *
-     * @return boolean True if the main site is requested, false otherwise.
+     * @return boolean True if the main site is requested, false otherwise
      */
     protected function isMainSite()
     {
@@ -102,11 +102,11 @@ class AdminController extends BaseAdminController
      *        methods = {"GET", "POST"}
      * )
      *
-     * @param Request  $request Current request instance
+     * @param Request  $request Current request instanc
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function manageUpdatesAction(Request $request)
     {
@@ -133,9 +133,9 @@ class AdminController extends BaseAdminController
      *
      * @param Request  $request Current request instance
      *
-     * @return mixed Output.
+     * @return mixed Output
      *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function multiplyQueriesAction(Request $request)
     {
