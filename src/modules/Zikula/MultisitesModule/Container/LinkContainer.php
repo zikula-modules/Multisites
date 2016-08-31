@@ -14,6 +14,7 @@ namespace Zikula\MultisitesModule\Container;
 
 use Zikula\MultisitesModule\Container\Base\LinkContainer as BaseLinkContainer;
 
+use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\LinkContainer\LinkContainerInterface;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
