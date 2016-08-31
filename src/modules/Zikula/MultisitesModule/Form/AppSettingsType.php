@@ -30,16 +30,6 @@ class AppSettingsType extends BaseAppSettingsType
     public function addSecuritySettingsFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('globalAdminName', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
-                'label' => $this->__('Global admin name') . ':',
-                'required' => false,
-                'data' => $this->modVars['globalAdminName'],
-                'empty_data' => '',
-                'attr' => [
-                    'title' => $this->__('Enter the global admin name.')
-                ],
-                'max_length' => 255
-            ])
             ->add('globalAdminPassword', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', [
                 'label' => $this->__('Global admin password') . ':',
                 'required' => false,
@@ -47,16 +37,6 @@ class AppSettingsType extends BaseAppSettingsType
                 'empty_data' => '',
                 'attr' => [
                     'title' => $this->__('Enter the global admin password.')
-                ],
-                'max_length' => 255
-            ])
-            ->add('globalAdminEmail', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
-                'label' => $this->__('Global admin email') . ':',
-                'required' => false,
-                'data' => $this->modVars['globalAdminEmail'],
-                'empty_data' => '',
-                'attr' => [
-                    'title' => $this->__('Enter the global admin email.')
                 ],
                 'max_length' => 255
             ])

@@ -155,7 +155,8 @@ class SiteExtensionHelper
     {
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $this->session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $this->session->getFlashBag()->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -211,13 +212,15 @@ class SiteExtensionHelper
         $flashBag = $this->session->getFlashBag();
 
         if (null === $moduleName || $moduleName == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add('error', $this->__('Error! Could not do what you wanted. Please check your input.'));
+
             return false;
         }
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -231,8 +234,10 @@ class SiteExtensionHelper
             return false;
         }
 
-        $item = ['name' => $rs['name'],
-                 'state' => $rs['state']];
+        $item = [
+            'name' => $rs['name'],
+            'state' => $rs['state']
+        ];
 
         return $item;
     }
@@ -250,13 +255,15 @@ class SiteExtensionHelper
         $flashBag = $this->session->getFlashBag();
 
         if (null === $moduleName || $moduleName == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add('error', $this->__('Error! Could not do what you wanted. Please check your input.'));
+
             return false;
         }
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -266,19 +273,23 @@ class SiteExtensionHelper
         $fields = '';
         $values = '';
 
-        $textual = ['name',
-                    'displayname',
-                    'url',
-                    'description',
-                    'directory',
-                    'version',
-                    'capabilities',
-                    'securityschema',
-                    'core_min',
-                    'core_max'];
+        $textual = [
+            'name',
+            'displayname',
+            'url',
+            'description',
+            'directory',
+            'version',
+            'capabilities',
+            'securityschema',
+            'core_min',
+            'core_max'
+        ];
 
-        $exclude = ['oldnames',
-                    'dependencies'];
+        $exclude = [
+            'oldnames',
+            'dependencies'
+        ];
 
         foreach ($module as $key => $value) {
             if (!in_array($key, $exclude)) {
@@ -299,7 +310,8 @@ class SiteExtensionHelper
                 VALUES ($values)";
         $rs = $connect->query($sql);
         if (!$rs) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creation attempt failed.' . $sql));
+            $flashBag->add('error', $this->__('Error! Creation attempt failed.' . $sql));
+
             return false;
         }
 
@@ -319,13 +331,15 @@ class SiteExtensionHelper
         $flashBag = $this->session->getFlashBag();
 
         if (null === $moduleName || $moduleName == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add('error', $this->__('Error! Could not do what you wanted. Please check your input.'));
+
             return false;
         }
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -335,7 +349,9 @@ class SiteExtensionHelper
         if ($siteModule['state'] == ModUtil::STATE_ACTIVE) {
             $this->modifyModuleActivation($site, [
                 'moduleName' => $moduleName,
-                'newState' => ModUtil::STATE_INACTIVE]);
+                'newState' => ModUtil::STATE_INACTIVE
+            ]);
+
             return true;
         }
 
@@ -347,7 +363,8 @@ class SiteExtensionHelper
                 WHERE `name` = :moduleName';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':moduleName' => $moduleName])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Sorry! Deletion attempt failed.'));
+            $flashBag->add('error', $this->__('Error! Sorry! Deletion attempt failed.'));
+
             return false;
         }
 
@@ -371,7 +388,8 @@ class SiteExtensionHelper
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -381,7 +399,8 @@ class SiteExtensionHelper
                 WHERE `name` = :moduleName';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':moduleName' => $moduleName, ':newState' => $newState])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Update attempt failed.'));
+            $flashBag->add('error', $this->__('Error! Update attempt failed.'));
+
             return false;
         }
 
@@ -446,11 +465,11 @@ class SiteExtensionHelper
             // manipulate the theme version information
             if (file_exists($file = $themeFolder . 'version.php')) {
                 if (!include($file)) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
+                    $flashBag->add('error', $this->__f('Error! Could not include %s', ['%s' => $file]));
                 }
             } elseif ($themeType == 4 && file_exists($file = $themeFolder . 'theme.cfg')) {
                 if (!include($file)) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
+                    $flashBag->add('error', $this->__f('Error! Could not include %s', ['%s' => $file]));
                 }
                 if (!isset($themeversion['name'])) {
                     $themeversion['name'] = $dir;
@@ -459,7 +478,7 @@ class SiteExtensionHelper
             } elseif ($themeType == 2 && file_exists($file = $themeFolder . 'xaninfo.php')) {
                 $themeinfo = [];
                 if (!include($file)) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Could not include %s', $file));
+                    $flashBag->add('error', $this->__f('Error! Could not include %s', ['%s' => $file]));
 
                     return false;
                 }
@@ -513,7 +532,8 @@ class SiteExtensionHelper
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -541,13 +561,15 @@ class SiteExtensionHelper
         $flashBag = $this->session->getFlashBag();
 
         if (null === $themeName || $themeName == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add('error', $this->__('Error! Could not do what you wanted. Please check your input.'));
+
             return false;
         }
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -559,11 +581,14 @@ class SiteExtensionHelper
 
         $rs = $stmt->fetch();
         if (!$rs) {
-            //$flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not load items.'));
+            //$flashBag->add('error', $this->__('Error! Could not load items.'));
+
             //return false;
         }
-        $item = ['name' => $rs['name'],
-                 'state' => $rs['state']];
+        $item = [
+            'name' => $rs['name'],
+            'state' => $rs['state']
+        ];
 
         return $item;
     }
@@ -581,13 +606,15 @@ class SiteExtensionHelper
         $flashBag = $this->session->getFlashBag();
 
         if (null === $themeName || $themeName == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add('error', $this->__('Error! Could not do what you wanted. Please check your input.'));
+
             return false;
         }
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -597,19 +624,23 @@ class SiteExtensionHelper
         $fields = '';
         $values = '';
 
-        $textual = ['name',
-                    'displayname',
-                    'description',
-                    'directory',
-                    'version',
-                    'contact'];
+        $textual = [
+            'name',
+            'displayname',
+            'description',
+            'directory',
+            'version',
+            'contact'
+        ];
 
-        $exclude = ['official',
-                    'author',
-                    'credits',
-                    'help',
-                    'changelog',
-                    'license'];
+        $exclude = [
+            'official',
+            'author',
+            'credits',
+            'help',
+            'changelog',
+            'license'
+        ];
 
         foreach ($theme as $key => $value) {
             if (!in_array($key, $exclude)) {
@@ -628,7 +659,8 @@ class SiteExtensionHelper
                 VALUES ($values)";
         $rs = $connect->query($sql);
         if (!$rs) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creation attempt failed.' . $sql));
+            $flashBag->add('error', $this->__('Error! Creation attempt failed.' . $sql));
+
             return false;
         }
 
@@ -648,13 +680,15 @@ class SiteExtensionHelper
         $flashBag = $this->session->getFlashBag();
 
         if (null === $themeName || $themeName == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not do what you wanted. Please check your input.'));
+            $flashBag->add('error', $this->__('Error! Could not do what you wanted. Please check your input.'));
+
             return false;
         }
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -662,7 +696,8 @@ class SiteExtensionHelper
                 WHERE `name` = :themeName';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':themeName' => $themeName])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Sorry! Deletion attempt failed.'));
+            $flashBag->add('error', $this->__('Error! Sorry! Deletion attempt failed.'));
+
             return false;
         }
 
@@ -682,7 +717,8 @@ class SiteExtensionHelper
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -692,7 +728,8 @@ class SiteExtensionHelper
                 AND `name` = \'Default_Theme\'';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute()) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not load default theme.'));
+            $flashBag->add('error', $this->__('Error! Could not load default theme.'));
+
             return false;
         }
         $rs = $stmt->fetch();
@@ -715,7 +752,8 @@ class SiteExtensionHelper
 
         $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -726,7 +764,8 @@ class SiteExtensionHelper
                 AND `name` = \'Default_Theme\'';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => $value])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not save the new default theme.'));
+            $flashBag->add('error', $this->__('Error! Could not save the new default theme.'));
+
             return false;
         }
 

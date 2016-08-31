@@ -6,10 +6,10 @@
  */
 function zikulaMultisitesResetUploadField(fieldName)
 {
-    if (jQuery('#' + fieldName).size() > 0) {
-        jQuery('#' + fieldName).attr('type', 'input');
-        jQuery('#' + fieldName).attr('type', 'file');
-    }
+    jQuery("input[id$='" + fieldName.toLowerCase() + "']").attr({
+        type: 'input',
+        type: 'file'
+    });
 }
 
 /**
@@ -17,14 +17,9 @@ function zikulaMultisitesResetUploadField(fieldName)
  */
 function zikulaMultisitesInitUploadField(fieldName)
 {
-    var fieldNameCapitalised;
-
-    fieldNameCapitalised = fieldName.charAt(0).toUpperCase() + fieldName.substring(1);
-    if (jQuery('#reset' + fieldNameCapitalised + 'Val').size() > 0) {
-        jQuery('#reset' + fieldNameCapitalised + 'Val').click( function (evt) {
-            event.stopPropagation();
-            zikulaMultisitesResetUploadField(fieldName);
-        }).removeClass('hidden');
-    }
+    jQuery("a[id$='" + fieldName.toLowerCase() + "Val']").click( function (event) {
+        event.stopPropagation();
+        zikulaMultisitesResetUploadField(fieldName);
+    }).removeClass('hidden');
 }
 

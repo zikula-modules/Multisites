@@ -1,5 +1,6 @@
 {# purpose of this template: general base layout #}
 {% block header %}
+    
     {{ pageAddAsset('stylesheet', asset('jquery-ui/themes/base/jquery-ui.min.css')) }}
     {{ pageAddAsset('javascript', asset('bootstrap/js/bootstrap.min.js')) }}
     {#{ pageAddAsset('javascript', 'zikula') }}{# still required for Gettext #}
@@ -19,7 +20,7 @@
 {% if app.request.query.get('theme') != 'ZikulaPrinterTheme' %}
     {% block appTitle %}
         <h2 class="userheader">{{ __('Multisites') }}</h2>
-    
+        {{ moduleLinks(type='user', modName='ZikulaMultisitesModule') }}
     {% endblock %}
 {% endif %}
 

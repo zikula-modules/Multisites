@@ -24,11 +24,11 @@
     <parametersArray>{{ site.parametersArray }}</parametersArray>
     <active>{% if not site.active %}0{% else %}1{% endif %}</active>
     <workflowState>{{ site.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
-    <template>{% if site.Template|default %}{{ site.Template.getTitleFromDisplayPattern() }}{% endif %}</template>
-    <project>{% if site.Project|default %}{{ site.Project.getTitleFromDisplayPattern() }}{% endif %}</project>
+    <template>{% if site.template|default %}{{ site.template.getTitleFromDisplayPattern() }}{% endif %}</template>
+    <project>{% if site.project|default %}{{ site.project.getTitleFromDisplayPattern() }}{% endif %}</project>
     <extensions>
-    {% if site.Extensions|default %}
-        {% for relatedItem in site.Extensions %}
+    {% if site.extensions|default %}
+        {% for relatedItem in site.extensions %}
         <siteExtension>{{ relatedItem.getTitleFromDisplayPattern() }}</siteExtension>
         {% endfor %}
     {% endif %}

@@ -49,19 +49,19 @@ class EditHandler extends BaseEditHandler
         $flashBag = $this->request->getSession()->getFlashBag();
 
         if (!ctype_lower($entity['siteAlias'])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! The site alias may contain only lowercase letters.'));
+            $flashBag->add('error', $this->__('Error! The site alias may contain only lowercase letters.'));
             return false;
         }
 
         if (!System::varValidate($entity['siteAdminName'], 'uname')) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The user name you entered for the site administrator contains unacceptable characters. A valid user name consists of lowercase letters, numbers, underscores, periods, and/or dashes.'));
+            $flashBag->add('error', $this->__('The user name you entered for the site administrator contains unacceptable characters. A valid user name consists of lowercase letters, numbers, underscores, periods, and/or dashes.'));
             return false;
         }
 
         if (!is_null($entity['template']) && count($entity['template']['parameters']) > 0) {
             // check if parameters have been provided
             if (!$entity['parametersCsvFile'] && (is_null($entity['parametersArray']) || !count($entity['parametersArray']))) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Please either provide a csv file containing the required parameter values or enter them manually.'));
+                $flashBag->add('error', $this->__('Error! Please either provide a csv file containing the required parameter values or enter them manually.'));
                 return false;
             }
         }
@@ -71,7 +71,7 @@ class EditHandler extends BaseEditHandler
 
         if ($this->templateParameters['mode'] == 'create') {
             if (is_null($entity['template'])) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! You need to select a template for new sites.'));
+                $flashBag->add('error', $this->__('Error! You need to select a template for new sites.'));
                 return false;
             }
 
@@ -83,7 +83,7 @@ class EditHandler extends BaseEditHandler
             // check if database connection works
             $connect = $this->systemHelper->connectToExternalDatabase($entity->getDatabaseData());
             if (!$connect) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Connecting to the database failed.'));
+                $flashBag->add('error', $this->__('Error! Connecting to the database failed.'));
                 return false;
             }
         }
@@ -131,7 +131,7 @@ class EditHandler extends BaseEditHandler
         $repository = $siteFactory->getRepository();
         $sites = $repository->getSiteInfo($entity['siteDns']);
         if (!is_null($sites) && count($sites) > 0) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('This site exists already. The site DNS must be unique.'));
+            $flashBag->add('error', $this->__('This site exists already. The site DNS must be unique.'));
             return false;
         }
 
@@ -139,7 +139,7 @@ class EditHandler extends BaseEditHandler
         $where = 'tbl.siteAlias = \'' . $entity['siteAlias'] . '\'';
         $sites = $repository->selectWhere($where, '', false);
         if (!is_null($sites) && count($sites) > 0) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('This site exists already. The site alias must be unique.'));
+            $flashBag->add('error', $this->__('This site exists already. The site alias must be unique.'));
             return false;
         }
 
@@ -153,14 +153,14 @@ class EditHandler extends BaseEditHandler
         // check if database connection works
         $connect = $this->systemHelper->connectToExternalDatabase($entity->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Connecting to the database failed.'));
+            $flashBag->add('error', $this->__('Error! Connecting to the database failed.'));
             return false;
         }
 
         if ($createNewDatabase) {
             // create a new database if it does not exist yet
             if (!$this->systemHelper->createDatabase($entity->getDatabaseData())) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creation of database failed.'));
+                $flashBag->add('error', $this->__('Error! Creation of database failed.'));
                 return false;
             }
         }

@@ -327,7 +327,7 @@ class TemplateController extends BaseTemplateController
         $sites = $entity['sites'];
         $amountOfSites = count($sites);
         if ($amountOfSites < 1) {
-            $this->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! This template does not have any sites assigned yet.'));
+            $this->get('session')->getFlashBag()->add('error', $this->__('Error! This template does not have any sites assigned yet.'));
 
             return $this->redirectToRoute($redirectRoute);
         }
@@ -350,7 +350,7 @@ class TemplateController extends BaseTemplateController
                     }
                 }
 
-                $this->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_STATUS, $this->_fn('The template has been reapplied to %s site.', 'The template has been reapplied to %s sites.', $amountOfSites, [$amountOfSites]));
+                $this->get('session')->getFlashBag()->add('status', $this->_fn('The template has been reapplied to %s site.', 'The template has been reapplied to %s sites.', $amountOfSites, ['%s' => $amountOfSites]));
 
                 return $this->redirectToRoute($redirectRoute);
             }

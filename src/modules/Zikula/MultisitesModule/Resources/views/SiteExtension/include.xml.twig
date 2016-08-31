@@ -5,5 +5,5 @@
     <extensionVersion><![CDATA[{{ siteExtension.extensionVersion }}]]></extensionVersion>
     <extensionType>{{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension', 'extensionType') }}</extensionType>
     <workflowState>{{ siteExtension.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
-    <site>{% if siteExtension.Site|default %}{{ siteExtension.Site.getTitleFromDisplayPattern() }}{% endif %}</site>
+    <site>{% if siteExtension.site|default %}{{ siteExtension.site.getTitleFromDisplayPattern() }}{% endif %}</site>
 </siteextension>

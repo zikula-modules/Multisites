@@ -17,6 +17,7 @@ use Zikula\MultisitesModule\Entity\Repository\Base\Site as BaseSite;
 use Doctrine\ORM\QueryBuilder;
 use ServiceUtil;
 use Zikula\MultisitesModule\Entity\SiteEntity;
+use Zikula\MultisitesModule\Helper\ImageHelper;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
@@ -71,14 +72,15 @@ class Site extends BaseSite
     /**
      * Returns an array of additional template variables which are specific to the object type treated by this repository.
      *
-     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType).
-     * @param array  $args    Additional arguments.
+     * @param ImageHelper $imageHelper ImageHelper service instance
+     * @param string      $context     Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
+     * @param array       $args        Additional arguments
      *
      * @return array List of template variables to be assigned.
      */
-    public function getAdditionalTemplateParameters($context = '', $args = array())
+    public function getAdditionalTemplateParameters(ImageHelper $imageHelper, $context = '', $args = array())
     {
-        $parameters = parent::getAdditionalTemplateParameters($context, $args);
+        $parameters = parent::getAdditionalTemplateParameters($imageHelper, $context, $args);
 
         if ($context == 'controllerAction' && $args['action'] == 'view') {
             $serviceManager = ServiceUtil::getManager();

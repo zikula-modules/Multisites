@@ -30,7 +30,7 @@ services:
     # Custom helper classes
     zikula_multisites_module.configurator_helper:
         class: Zikula\MultisitesModule\Helper\ConfiguratorHelper
-        arguments: ["@session", "@translator.default", "@zikula_extensions_module.api.variable", "@request_stack"]
+        arguments: ["@session", "@translator.default", "@zikula_extensions_module.api.variable", "@request_stack", "@zikula.dynamic_config_dumper", "@zikula.cache_clearer"]
     
     zikula_multisites_module.siteextension_helper:
         class: Zikula\MultisitesModule\Helper\SiteExtensionHelper
@@ -38,4 +38,4 @@ services:
     
     zikula_multisites_module.system_helper:
         class: Zikula\MultisitesModule\Helper\SystemHelper
-        arguments: ["@translator.default", "@zikula_extensions_module.api.variable"]
+        arguments: ["@session", "@translator.default", "@zikula_extensions_module.api.variable"]

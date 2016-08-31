@@ -1,5 +1,10 @@
 services:
     # Event subscriber and listener classes
+    zikula_multisites_module.entity_lifecycle_listener:
+        class: Zikula\MultisitesModule\Listener\EntityLifecycleListener
+        tags:
+            - { name: doctrine.event_subscriber }
+    
     zikula_multisites_module.core_listener:
         class: Zikula\MultisitesModule\Listener\CoreListener
         tags:

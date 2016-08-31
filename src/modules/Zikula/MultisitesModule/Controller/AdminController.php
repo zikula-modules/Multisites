@@ -56,7 +56,7 @@ class AdminController extends BaseAdminController
 
         $redirectRoute = null;
         if ($configRequired) {
-            $redirectRoute = 'zikulamultisitesmodule_admin_config';
+            $redirectRoute = 'zikulamultisitesmodule_config_config';
         } else {
             $redirectRoute = 'zikulamultisitesmodule_site_adminview';
         }
@@ -96,52 +96,6 @@ class AdminController extends BaseAdminController
     }
 
     /**
-     * This method takes care of the application configuration.
-     *
-     * @Route("/config",
-     *        methods = {"GET", "POST"}
-     * )
-     *
-     * @return string Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     */
-    public function configAction(Request $request)
-    {
-        // return error if we are not on the main site
-        if (!$this->isMainSite() && $this->isConfigured()) {
-            throw new AccessDeniedException();
-        }
-
-        // return error if no permissions are granted
-        $permLevel = ACCESS_ADMIN;
-        if (!$this->hasPermission($this->name . '::', '::', $permLevel)) {
-            throw new AccessDeniedException();
-        }
-
-        // create new instance of configurator
-        $configurator = $this->get('zikula_multisites_module.configurator_helper');
-        $configValid = $configurator->verify();
-
-        // if configuration is not completed we show special content
-        if (!$configValid) {
-            $templateParameters = $configurator->getTemplateParameters();
-
-            return $this->render('@ZikulaMultisitesModule/Admin/wizard.html.twig', $templateParameters);
-        }
-
-        // check whether the global administrator has already been configured
-        $globalAdminStatus = '';
-        if ($this->getVar('globalAdminName', '') == '' || $this->getVar('globalAdminPassword', '') == '' || $this->getVar('globalAdminEmail', '') == '') {
-            $globalAdminStatus = $this->__('Please configure the global administrator settings.');
-        }
-        $this->get('session')->set('globalAdminStatus', $globalAdminStatus);
-
-        // else we call the parent method to render the default configuration form
-        return parent::configAction($request);
-    }
-
-    /**
      * Core and module update management.
      *
      * @Route("/admin/manageUpdates",
@@ -164,7 +118,7 @@ class AdminController extends BaseAdminController
         // check if configuration is required
         $configRequired = !$this->isConfigured();
         if ($configRequired) {
-            return $this->redirectToRoute('zikulamultisitesmodule_admin_config');
+            return $this->redirectToRoute('zikulamultisitesmodule_config_config');
         }
 
         return parent::manageUpdatesAction($request);
@@ -192,18 +146,18 @@ class AdminController extends BaseAdminController
 
         // return error if no permissions are granted
         $permLevel = ACCESS_ADMIN;
-        if (!$this->hasPermission($this->name . '::', '::', $permLevel)) {
+        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
 
         // check if configuration is required
         $configRequired = !$this->isConfigured();
         if ($configRequired) {
-            return $this->redirectToRoute('zikulamultisitesmodule_admin_config');
+            return $this->redirectToRoute('zikulamultisitesmodule_config_config');
         }
 
         // get all sites
-        $sites = ModUtil::apiFunc($this->name, 'selection', 'getEntities', ['ot' => 'site', 'where' => '', 'useJoins' => false]);
+        $sites = ModUtil::apiFunc('ZikulaMultisitesModule', 'selection', 'getEntities', ['ot' => 'site', 'where' => '', 'useJoins' => false]);
         if (false === $sites) {
             return false;
         }
@@ -258,7 +212,7 @@ class AdminController extends BaseAdminController
                 $sqlInput = file_get_contents($_FILES['queryfile']['tmp_name']);
             }
             if (empty($sqlInput)) {
-                $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Please enter some sql commands or provide a sql file.'));
+                $this->addFlash('error', $this->__('Error! Please enter some sql commands or provide a sql file.'));
                 $inputValid = false;
             }
 
@@ -266,10 +220,10 @@ class AdminController extends BaseAdminController
             $databaseTypesSelected = $request->request->get('dbtypes', []);
             if (count($databaseHostsSelected) < 1 || count($databaseTypesSelected) < 1) {
                 if (count($databaseHostsSelected) < 1) {
-                    $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Please select at least one database host.'));
+                    $this->addFlash('error', $this->__('Error! Please select at least one database host.'));
                 }
                 if (count($databaseTypesSelected) < 1) {
-                    $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Please select at least one database type.'));
+                    $this->addFlash('error', $this->__('Error! Please select at least one database type.'));
                 }
                 $inputValid = false;
             }
@@ -304,14 +258,14 @@ class AdminController extends BaseAdminController
                         // run sql in site database
                         $connect = $systemHelper->connectToExternalDatabase($database);
                         if (!$connect) {
-                            $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$dbName]));
+                            $this->addFlash('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $dbName]));
                             continue;
                         }
                         $stmt = $connect->prepare($sql);
                         if (!$stmt->execute()) {
-                            $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error during executing query in database %s.', [$dbName]));
+                            $this->addFlash('error', $this->__f('Error during executing query in database %s.', ['%s' => $dbName]));
                         } else {
-                            $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Query executed in database %s successfully.', [$dbName]));
+                            $this->addFlash('error', $this->__f('Query executed in database %s successfully.', ['%s' => $dbName]));
                         }
                     }
                 }

@@ -68,20 +68,21 @@
                     {{ siteExtension.extensionType|zikulamultisitesmodule_listEntry('siteExtension', 'extensionType') }}
                 </td>
                 <td headers="hSite" class="text-left">
-                    {% if siteExtension.Site|default %}
-                          {{ siteExtension.Site.getTitleFromDisplayPattern() }}
+                    {% if siteExtension.site|default %}
+                          {{ siteExtension.site.getTitleFromDisplayPattern() }}
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
                 </td>
                 <td id="itemActions{{ siteExtension.id }}" headers="hItemActions" class="actions nowrap z-w02">
-                    {% if siteExtension._actions|length > 0 %}
+                    {% set actionLinks = zikulamultisitesmodule_actions(entity=siteExtension, area=routeArea, context='view') %}
+                    {% if actionLinks|length > 0 %}
                         <div class="dropdown">
                             <a id="itemActions{{ siteExtension.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                             
                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="itemActions{{ siteExtension.id }}DropDownToggle">
-                                {% for option in siteExtension._actions %}
-                                    <li role="presentation"><a href="{{ option.url.type|zikulamultisitesmodule_actionUrl(option.url.func, option.url.arguments) }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
+                                {% for option in actionLinks %}
+                                    <li role="presentation"><a href="{{ option.url }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
                                     
                                 {% endfor %}
                             </ul>

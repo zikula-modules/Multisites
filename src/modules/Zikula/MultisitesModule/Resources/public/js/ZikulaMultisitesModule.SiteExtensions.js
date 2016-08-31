@@ -1,28 +1,24 @@
 /**
  * Modifies the state of a module in a site database.
+ *
+ * TODO migrate to jQuery
  */
 function multisitesModifyModuleActivation(moduleName, siteId, newState)
 {
-    var params, request;
+    jQuery('#module_' + moduleName).html('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
 
-    params = 'id=' + siteId + '&moduleName=' + moduleName + '&newState=' + newState;
-    $('module_' + moduleName).update('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
-
-    request = new Zikula.Ajax.Request(
-        Zikula.Config.baseURL + 'ajax.php?module=Multisites&func=modifyModuleActivation',
-        {
-            method: 'post',
-            parameters: params,
-            onComplete: function (req) {
-                if (!req.isSuccess()) {
-                    Zikula.showajaxerror(req.getMessage());
-                    return;
-                }
-                var data = req.getData();
-                $('module_' + data.moduleName).update(data.content);
-            }
+    jQuery.ajax({
+        type: 'POST',
+        url: Routing.generate('zikulamultisitesmodule_modifymoduleactivation'),
+        data: {
+            id: siteId,
+            moduleName: moduleName,
+            newState: newState
         }
-    );
+    }).done(function(data) {
+        var data = req.getData();
+        jQuery('#module_' + data.moduleName).html(data.content);
+    });
 }
 
 /**
@@ -30,26 +26,19 @@ function multisitesModifyModuleActivation(moduleName, siteId, newState)
  */
 function multisitesAllowModule(moduleName, siteId)
 {
-    var params, request;
+    jQuery('#module_' + moduleName).html('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
 
-    params = 'id=' + siteId + '&moduleName=' + moduleName;
-    $('module_' + moduleName).update('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
-
-    request = new Zikula.Ajax.Request(
-        Zikula.Config.baseURL + 'ajax.php?module=Multisites&func=allowModule',
-        {
-            method: 'post',
-            parameters: params,
-            onComplete: function (req) {
-                if (!req.isSuccess()) {
-                    Zikula.showajaxerror(req.getMessage());
-                    return;
-                }
-                var data = req.getData();
-                $('module_' + data.moduleName).update(data.content);
-            }
+    jQuery.ajax({
+        type: 'POST',
+        url: Routing.generate('zikulamultisitesmodule_ajax_allowmodule'),
+        data: {
+            id: siteId,
+            moduleName: moduleName
         }
-    );
+    }).done(function(data) {
+        var data = req.getData();
+        jQuery('#module_' + data.moduleName).html(data.content);
+    });
 }
 
 /**
@@ -57,24 +46,17 @@ function multisitesAllowModule(moduleName, siteId)
  */
 function multisitesAllowTheme(themeName, siteId)
 {
-    var params, request;
+    jQuery('#theme_' + moduleName).html('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
 
-    params = 'id=' + siteId + '&themeName=' + themeName;
-    $('theme_' + themeName).update('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
-
-    request = new Zikula.Ajax.Request(
-        Zikula.Config.baseURL + 'ajax.php?module=Multisites&func=allowTheme',
-        {
-            method: 'post',
-            parameters: params,
-            onComplete: function (req) {
-                if (!req.isSuccess()) {
-                    Zikula.showajaxerror(req.getMessage());
-                    return;
-                }
-                var data = req.getData();
-                $('theme_' + data.themeName).update(data.content);
-            }
+    jQuery.ajax({
+        type: 'POST',
+        url: Routing.generate('zikulamultisitesmodule_ajax_allowtheme'),
+        data: {
+            id: siteId,
+            themeName: themeName
         }
-    );
+    }).done(function(data) {
+        var data = req.getData();
+        jQuery('#module_' + data.themeName).html(data.content);
+    });
 }

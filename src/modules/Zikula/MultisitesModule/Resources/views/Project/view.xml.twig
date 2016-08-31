@@ -1,5 +1,5 @@
 {# purpose of this template: projects view xml view #}
-{{ zikulamultisitesmodule_templateHeaders(contentType='text/xml') }}<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
 <projects>
 {% for project in items %}
     {{ include('@ZikulaMultisitesModule/Project/include.xml.twig') }}

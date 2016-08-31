@@ -209,7 +209,7 @@
                     </a>
                     {% else %}&nbsp;{% endif %}
                 </td>
-                <td headers="hActive" class="z-center">
+                <td headers="hActive" class="text-center">
                     {% set itemid = site.id %}
                     <a id="toggleActive{{ itemid }}" href="javascript:void(0);" class="hidden">
                     {% if site.active %}
@@ -221,31 +221,32 @@
                     {% endif %}
                     </a>
                     <noscript><div id="noscriptActive{{ itemid }}">
-                        {{ site.active|yesno(true) }}
+                        {{ site.active|yesNo(true) }}
                     </div></noscript>
                 </td>
                 <td headers="hTemplate" class="text-left">
-                    {% if site.Template|default %}
-                          {{ site.Template.getTitleFromDisplayPattern() }}
+                    {% if site.template|default %}
+                          {{ site.template.getTitleFromDisplayPattern() }}
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
                 </td>
                 <td headers="hProject" class="text-left">
-                    {% if site.Project|default %}
-                          {{ site.Project.getTitleFromDisplayPattern() }}
+                    {% if site.project|default %}
+                          {{ site.project.getTitleFromDisplayPattern() }}
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
                 </td>
                 <td id="itemActions{{ site.id }}" headers="hItemActions" class="actions nowrap z-w02">
-                    {% if site._actions|length > 0 %}
+                    {% set actionLinks = zikulamultisitesmodule_actions(entity=site, area=routeArea, context='view') %}
+                    {% if actionLinks|length > 0 %}
                         <div class="dropdown">
                             <a id="itemActions{{ site.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                             
                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="itemActions{{ site.id }}DropDownToggle">
-                                {% for option in site._actions %}
-                                    <li role="presentation"><a href="{{ option.url.type|zikulamultisitesmodule_actionUrl(option.url.func, option.url.arguments) }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
+                                {% for option in actionLinks %}
+                                    <li role="presentation"><a href="{{ option.url }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
                                     
                                 {% endfor %}
                             </ul>

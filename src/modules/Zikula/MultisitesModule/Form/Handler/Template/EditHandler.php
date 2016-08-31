@@ -62,7 +62,7 @@ class EditHandler extends BaseEditHandler
         $hasSqlUpload = true;
         if (!$formData['sqlFile'] || $formData['sqlFile']['size'] == 0) {
             if (!isset($formData['sqlFileSelected']) || $formData['sqlFileSelected'] < 1) {
-                $this->request->getSession()->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Please either provide a sql file or select an existing one.'));
+                $this->request->getSession()->getFlashBag()->add('error', $this->__('Error! Please either provide a sql file or select an existing one.'));
                 return false;
             }
             $hasSqlUpload = false;

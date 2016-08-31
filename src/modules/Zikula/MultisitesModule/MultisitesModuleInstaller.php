@@ -53,13 +53,13 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
                     $this->container->get('zikula.doctrine.schema_tool')->update($this->listEntityClasses());
                 } catch (\Exception $e) {
                     if (System::isDevelopmentMode()) {
-                        $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Doctrine Exception') . ': ' . $e->getMessage());
-                        $logger->error('{app}: User {user} could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'user' => UserUtil::getVar('uname'), 'errorMessage' => $e->getMessage()]);
+                        $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $e->getMessage());
+                        $logger->error('{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $e->getMessage()]);
     
                         return false;
                     }
-                    $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('An error was encountered while updating tables for the %s extension.', ['ZikulaMultisitesModule']));
-                    $logger->error('{app}: User {user} could not update the database tables during the ugprade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'user' => UserUtil::getVar('uname'), 'errorMessage' => $e->getMessage()]);
+                    $this->addFlash('error', $this->__f('An error was encountered while updating tables for the %s extension.', ['%s' => 'ZikulaMultisitesModule']));
+                    $logger->error('{app}: Could not update the database tables during the ugprade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $e->getMessage()]);
     
                     return false;
                 }*/
@@ -146,7 +146,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
         // finally update the database configuration file
         $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
         if (!$systemHelper->updateDatabaseConfigFile()) {
-            $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Updating the database configuration file failed.'));
+            $this->addFlash('error', $this->__('Error! Updating the database configuration file failed.'));
             return false;
         }
 
@@ -237,7 +237,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
                      * We could also do this automatically.
                      * Needs a refactoring of SystemHelper class, see readTables() and renameExcludedTables()
                      */
-                    $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('The site "%1$s" does have a table prefix set which is not supported anymore. You need to rename tables in the "%2$s" database accordingly.', [$site->getName(), $site->getDatabaseName()]));
+                    $this->addFlash('error', $this->__f('The site "%site%" does have a table prefix set which is not supported anymore. You need to rename tables in the "%database%" database accordingly.', ['%site%' => $site->getName(), '%database%' => $site->getDatabaseName()]));
                 }
 
                 $site->setActive($v['active']);
@@ -304,7 +304,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
             $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
             $controllerHelper->checkAndCreateAllUploadFolders();
         } catch (\Exception $e) {
-            $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $e->getMessage());
+            $this->addFlash('error', $e->getMessage());
             return false;
         }
 
@@ -313,14 +313,14 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
             $this->container->get('zikula.doctrine.schema_tool')->create($this->listEntityClasses());
         } catch (\Exception $e) {
             if (System::isDevelopmentMode()) {
-                $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Doctrine Exception: ') . $e->getMessage());
+                $this->addFlash('error', $this->__('Doctrine Exception: ') . $e->getMessage());
                 return false;
             }
-            $returnMessage = $this->__f('An error was encountered while creating the tables for the %s extension.', [$this->name]);
+            $returnMessage = $this->__f('An error was encountered while creating the tables for the %s extension.', ['%s' => $this->name]);
             if (!System::isDevelopmentMode()) {
                 $returnMessage .= ' ' . $this->__('Please enable the development mode by editing the /config/config.php file in order to reveal the error details.');
             }
-            $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $returnMessage);
+            $this->addFlash('error', $returnMessage);
 
             return false;
         }
@@ -374,7 +374,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
             $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
             if (!$systemHelper->deleteDir($modelPath)) {
                 // raise a message, but continue the process
-                $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Could not delete the %s folder. Please remove it manually.', [$modelPath]));
+                $this->addFlash('error', $this->__f('Could not delete the %s folder. Please remove it manually.', ['%s' => $modelPath]));
             }
         }
 
@@ -426,7 +426,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
         }
 
         if (!$configUpdated) {
-            $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Could not update the %1$s file automatically. Please compare it with %2$s and update it manually.', [$configFile, $configFileTemplate]));
+            $this->addFlash('error', $this->__f('Could not update the %file% file automatically. Please compare it with %template% and update it manually.', ['%file%' => $configFile, '%template%' => $configFileTemplate]));
         }
 
         return true;

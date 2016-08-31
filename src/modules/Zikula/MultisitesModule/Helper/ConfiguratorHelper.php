@@ -15,6 +15,8 @@ namespace Zikula\MultisitesModule\Helper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Zikula\Bundle\CoreBundle\CacheClearer;
+use Zikula\Bundle\CoreBundle\DynamicConfigDumper;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\ExtensionsModule\Api\VariableApi;
@@ -40,6 +42,20 @@ class ConfiguratorHelper
      * @var Request
      */
     protected $request = null;
+
+    /**
+     * Config dumper.
+     *
+     * @var DynamicConfigDumper
+     */
+    protected $configDumper = null;
+
+    /**
+     * Cache clearer.
+     *
+     * @var CacheClearer
+     */
+    protected $cacheClearer = null;
 
     /**
      * Primary configuration file path.
@@ -84,14 +100,18 @@ class ConfiguratorHelper
      * @param TranslatorInterface $translator   Translator service instance.
      * @param VariableApi         $variableApi  VariableApi service instance.
      * @param RequestStack        $requestStack RequestStack service instance.
+     * @param DynamicConfigDumper $configDumper DynamicConfigDumper service instance.
+     * @param CacheClearer        $cacheClearer CacheClearer service instance.
      */
-    public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi, RequestStack $requestStack)
+    public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi, RequestStack $requestStack, DynamicConfigDumper $configDumper, CacheClearer $cacheClearer)
     {
         $this->session = $session;
         $this->setTranslator($translator);
         $this->variableApi = $variableApi;
         $this->extensionName = 'ZikulaMultisitesModule';
         $this->request = $requestStack->getCurrentRequest();
+        $this->configDumper = $configDumper;
+        $this->cacheClearer = $cacheClearer;
 
         $this->configFile = 'config/multisites_config.php';
         $this->dbConfigFile = 'config/multisites_dbconfig.php';
@@ -218,7 +238,7 @@ class ConfiguratorHelper
                 return false;
             }
 
-            $this->session->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error: it seems everything is configured correctly, but Multisites is not running. Please check your configuration file!'));
+            $this->session->getFlashBag()->add('error', $this->__('Error: it seems everything is configured correctly, but Multisites is not running. Please check your configuration file!'));
 
             return false;
         }
@@ -332,18 +352,21 @@ class ConfiguratorHelper
         $flashBag = $this->session->getFlashBag();
 
         if ($filesPath == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory where the sites files have to be created is not defined. Please, define it.'));
+            $flashBag->add('error', $this->__('The directory where the sites files have to be created is not defined. Please, define it.'));
+
             return false;
         }
         if (!file_exists($filesPath)) {
             if (!@mkdir($filesPath, 0777, true) || !file_exists($filesPath)) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory where the sites files have to be created does not exist. Please, create it.'));
+                $flashBag->add('error', $this->__('The directory where the sites files have to be created does not exist. Please, create it.'));
+
                 return false;
             }
         }
         // check if the sitesFilesFolder is writeable
         if (!is_writeable($filesPath)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.'));
+            $flashBag->add('error', $this->__('The directory where the sites files have to be created is not writeable. Please, set it as writeable.'));
+
             return false;
         }
 
@@ -370,7 +393,8 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'r+');
         if ($fh == false) {
             fclose($fh);
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error: File config/%s could not be found.', ['multisites_config.php']));
+            $flashBag->add('error', $this->__f('Error: File config/%s could not be found.', ['%s' => 'multisites_config.php']));
+
             return false;
         }
 
@@ -388,20 +412,18 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'w+');
         if (!fwrite($fh, $newFileContent)) {
             fclose($fh);
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error: Could not write into the config/%s file.', ['multisites_config.php']));
+            $flashBag->add('error', $this->__f('Error: Could not write into the config/%s file.', ['%s' => 'multisites_config.php']));
+
             return false;
         }
         fclose($fh);
 
         // write stuff also into app/config/dynamic/generated.yml
         // TODO deprecate the old config file
-        $serviceManager = ServiceUtil::getManager();
-        $configDumper = $serviceManager->get('zikula.dynamic_config_dumper');
-        $parameters = $configDumper->getParameters();
+        $parameters = $this->configDumper->getParameters();
         $parameters['multisites']['files_real_path'] = $filesPath;
-        $configDumper->setParameters($parameters);
-        $cacheClearer = $serviceManager->get('zikula.cache_clearer');
-        $cacheClearer->clear('symfony');
+        $this->configDumper->setParameters($parameters);
+        $this->cacheClearer->clear('symfony');
 
         return true;
     }
@@ -429,7 +451,8 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'r+');
         if ($fh == false) {
             fclose($fh);
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error: File config/%s could not be found.', ['multisites_config.php']));
+            $flashBag->add('error', $this->__f('Error: File config/%s could not be found.', ['%s' => 'multisites_config.php']));
+
             return false;
         }
 
@@ -458,25 +481,23 @@ class ConfiguratorHelper
         $fh = @fopen($this->configFile, 'w+');
         if (!fwrite($fh, $newFileContent)) {
             fclose($fh);
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error: Could not write into the config/%s file.', ['multisites_config.php']));
+            $flashBag->add('error', $this->__f('Error: Could not write into the config/%s file.', ['%s' => 'multisites_config.php']));
+
             return false;
         }
         fclose($fh);
 
         // write stuff also into app/config/dynamic/generated.yml
         // TODO deprecate the old config file
-        $serviceManager = ServiceUtil::getManager();
-        $configDumper = $serviceManager->get('zikula.dynamic_config_dumper');
-        $parameters = $configDumper->getParameters();
+        $parameters = $this->configDumper->getParameters();
         $parameters['multisites']['enabled'] = true;
         $parameters['multisites']['mainsiteurl'] = $mainSiteUrl;
         $parameters['multisites']['site_temp_files_folder'] = $siteTempFilesFolder;
         $parameters['multisites']['site_files_folder'] = $siteFilesFolder;
         $parameters['multisites']['wwwroot'] = $wwwroot;
         $parameters['multisites']['sitedns'] = $basePath;
-        $configDumper->setParameters($parameters);
-        $cacheClearer = $serviceManager->get('zikula.cache_clearer');
-        $cacheClearer->clear('symfony');
+        $this->configDumper->setParameters($parameters);
+        $this->cacheClearer->clear('symfony');
 
         return true;
     }
@@ -493,30 +514,35 @@ class ConfiguratorHelper
         // check if the sitesFilesFolder exists
         $path = $this->getVar('files_real_path', '');
         if ($path == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory for storing the sites files is not defined. Check your configuration values.'));
+            $flashBag->add('error', $this->__('The directory for storing the sites files is not defined. Check your configuration values.'));
+
             return false;
         }
         if (!file_exists($path)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory for storing the sites files does not exist.'));
+            $flashBag->add('error', $this->__('The directory for storing the sites files does not exist.'));
+
             return false;
         }
         // check if the sitesFilesFolder is writeable
         if (!is_writeable($path)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('The directory for storing the sites files is not writeable.'));
+            $flashBag->add('error', $this->__('The directory for storing the sites files is not writeable.'));
+
             return false;
         }
 
         // create the main site folder
 //         $path .= '/' . $this->request->query->get('sitedns', null);
 //         if (!file_exists($path) && !mkdir($path, 0777, true)) {
-//             $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error creating the directory:') . ' ' . $path);
+//             $flashBag->add('error', $this->__('Error creating the directory:') . ' ' . $path);
+
 //             return false;
 //         }
 
         // create the data folder
         $path .= '/' . $this->getVar('site_files_folder', '');
         if (!file_exists($path) && !@mkdir($path, 0777, true)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error creating the directory:') . ' ' . $path);
+            $flashBag->add('error', $this->__('Error creating the directory:') . ' ' . $path);
+
             return false;
         }
 

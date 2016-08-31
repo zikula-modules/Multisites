@@ -1,5 +1,5 @@
 {# purpose of this template: sites view xml view #}
-{{ zikulamultisitesmodule_templateHeaders(contentType='text/xml') }}<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
 <sites>
 {% for site in items %}
     {{ include('@ZikulaMultisitesModule/Site/include.xml.twig') }}

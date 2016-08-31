@@ -52,6 +52,6 @@ modules/Zikula/MultisitesModule/Resources/views/Project/inlineRedirectHandler.ht
 modules/Zikula/MultisitesModule/Resources/views/Helper/includeStandardFieldsDisplay.html.twig: config/templates/ZikulaMultisitesModule/Helper/includeStandardFieldsDisplay.html.twig
 modules/Zikula/MultisitesModule/Resources/views/Helper/includeStandardFieldsEdit.html.twig: config/templates/ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig
 modules/Zikula/MultisitesModule/Resources/views/includeFilterSyntaxDialog.html.twig: config/templates/ZikulaMultisitesModule/includeFilterSyntaxDialog.html.twig
-modules/Zikula/MultisitesModule/Resources/views/Admin/config.html.twig: config/templates/ZikulaMultisitesModule/Admin/config.html.twig
+modules/zikula/multisitesModule/Resources/views/Config/config.html.twig: config/templates/ZikulaMultisitesModule/Config/config.html.twig
 modules/Zikula/MultisitesModule/Resources/views/includePdfHeader.html.twig: config/templates/ZikulaMultisitesModule/includePdfHeader.html.twig
 modules/Zikula/MultisitesModule/Resources/views/Admin/wizard.html.twig: config/templates/ZikulaMultisitesModule/Admin/wizard.html.twig

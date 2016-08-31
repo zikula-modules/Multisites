@@ -18,6 +18,7 @@ use ModUtil;
 use PDO;
 use PDOException;
 use ServiceUtil;
+use Symfony\Component\HttpFoundation\Session\Session;
 use UserUtil;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -36,14 +37,21 @@ class SystemHelper
     private $dbConfigFile = 'config/multisites_dbconfig.php';
 
     /**
+     * @var Session
+     */
+    protected $session;
+
+    /**
      * Constructor.
      * Initialises member vars.
      *
-     * @param TranslatorInterface $translator     Translator service instance.
+     * @param Session             $session        Session service instance.
+     * @param TranslatorInterface $translator   Translator service instance.
      * @param VariableApi         $variableApi  VariableApi service instance.
      */
-    public function __construct(TranslatorInterface $translator, VariableApi $variableApi)
+    public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi)
     {
+        $this->session = $session;
         $this->setTranslator($translator);
         $this->variableApi = $variableApi;
     }
@@ -101,7 +109,7 @@ class SystemHelper
             }
         }
 
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check and create the directories
         $result = true;
@@ -109,14 +117,16 @@ class SystemHelper
             if (!file_exists($directory)) {
                 @mkdir($directory, 0777, true);
                 if (!file_exists($directory)) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! The <strong>%s</strong> directory does not exist and could not be created automatically. Please create it and make it writeable.', [$directory]));
+                    $flashBag->add('error', $this->__f('Error! The <strong>%s</strong> directory does not exist and could not be created automatically. Please create it and make it writeable.', ['%s' => $directory]));
+
                     $result = false;
                 }
             }
             if (file_exists($directory) && !is_writeable($directory)) {
                 @chmod($directory, 0777);
                 if (!is_writeable($directory)) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! The <strong>%s</strong> directory is not writeable. Please correct that.', [$directory]));
+                    $flashBag->add('error', $this->__f('Error! The <strong>%s</strong> directory is not writeable. Please correct that.', ['%s' => $directory]));
+
                     $result = false;
                 }
             }
@@ -193,8 +203,8 @@ class SystemHelper
                 [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
             );
         } catch (PDOException $e) {
-            $serviceManager = ServiceUtil::getManager();
-            $serviceManager->get('session')->getFlashBag()->add(\Zikula_Session::MESSAGE_ERROR, $e->getMessage());
+            $this->session->getFlashBag()->add('error', $e->getMessage());
+
             return false;
         }
 
@@ -222,13 +232,13 @@ class SystemHelper
             return false;
         }
 
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($args);
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$dbName]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $dbName]));
+
             return false;
         }
 
@@ -250,12 +260,14 @@ class SystemHelper
             if (!empty($sql)) {
                 $stmt = $connect->prepare($sql);
                 if (!$stmt->execute([':dbName' => $dbName])) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('DB Query error.') . ':<br />' . $sql  . "\n");;
+                    $flashBag->add('error', $this->__('DB Query error.') . ':<br />' . $sql  . "\n");;
+
                     return false;
                 }
             }
         } catch (PDOException $e) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Connection error, because:') . ' ' . $e->getMessage());
+            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $e->getMessage());
+
             return false;
         }
 
@@ -283,42 +295,47 @@ class SystemHelper
             return false;
         }
 
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // delete old tables (except excluded ones)
         if (!$this->deleteTables($site, $tables['delete'])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Deletion of old database tables failed.'));
+            $flashBag->add('error', $this->__('Error! Deletion of old database tables failed.'));
+
             return false;
         }
 
         // rename/backup excluded tables
         if (!$this->renameExcludedTables($site, $tables['rename'])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Renaming of excluded database tables failed.'));
+            $flashBag->add('error', $this->__('Error! Renaming of excluded database tables failed.'));
+
             return false;
         }
 
         // recreate the database tables based on the template file
         if (!$this->createTablesFromTemplate($site)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creation of database tables failed.'));
+            $flashBag->add('error', $this->__('Error! Creation of database tables failed.'));
+
             return false;
         }
 
         // rename/restore excluded tables
         if (!$this->renameExcludedTables($site, $tables['rename'], true)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Renaming of excluded database tables failed.'));
+            $flashBag->add('error', $this->__('Error! Renaming of excluded database tables failed.'));
+
             return false;
         }
 
         // update site parameters like admin name, admin password, cookie name, site name...
         if (!$this->updateConfigValues($site)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Updating the site configuration failed.'));
+            $flashBag->add('error', $this->__('Error! Updating the site configuration failed.'));
+
             return false;
         }
 
         // handle parameters as modvars
         if (!$this->processParameters($site)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Updating the site parameters failed.'));
+            $flashBag->add('error', $this->__('Error! Updating the site parameters failed.'));
+
             return false;
         }
 
@@ -334,13 +351,13 @@ class SystemHelper
      */
     protected function readTables(SiteEntity $site)
     {
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -358,7 +375,8 @@ class SystemHelper
                     WHERE `table_schema` = :dbName';
             $stmt = $connect->prepare($sql);
             if (!$stmt->execute([':dbName' => $site->getDatabaseName()])) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('DB Query error.') . ':<br />' . $sql  . "\n");;
+                $flashBag->add('error', $this->__('DB Query error.') . ':<br />' . $sql  . "\n");;
+
                 return false;
             }
 
@@ -406,12 +424,15 @@ class SystemHelper
                 }
             }
         } catch (PDOException $e) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Connection error, because:') . ' ' . $e->getMessage());
+            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $e->getMessage());
+
             return false;
         }
 
-        return ['delete' => $droppedTables,
-                'rename' => $backupTables];
+        return [
+            'delete' => $droppedTables,
+            'rename' => $backupTables
+        ];
     }
 
     /**
@@ -428,13 +449,13 @@ class SystemHelper
             return true;
         }
 
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -444,7 +465,8 @@ class SystemHelper
         try {
             $stmt->execute();
         } catch (PDOException $e) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Connection error, because:') . ' ' . $e->getMessage());
+            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $e->getMessage());
+
             return false;
         }
 
@@ -466,13 +488,13 @@ class SystemHelper
             return true;
         }
 
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -522,7 +544,8 @@ class SystemHelper
                 $stmt->execute();
             }
         } catch (PDOException $e) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Connection error, because:') . ' ' . $e->getMessage());
+            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $e->getMessage());
+
             return false;
         }
 
@@ -538,27 +561,29 @@ class SystemHelper
      */
     protected function createTablesFromTemplate(SiteEntity $site)
     {
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check if the sql exists and it is readable
         $sqlFile = $site['template']['sqlFileFullPath'];
         if (!file_exists($sqlFile) || !is_readable($sqlFile)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! The template sql file could not be found.'));
+            $flashBag->add('error', $this->__('Error! The template sql file could not be found.'));
+
             return false;
         }
 
         // start reading the file
         $fh = fopen($sqlFile, 'r+');
         if ($fh == false) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Opening the template sql file failed.'));
+            $flashBag->add('error', $this->__('Error! Opening the template sql file failed.'));
+
             return false;
         }
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -588,12 +613,14 @@ class SystemHelper
         fclose($fh);
 
         if (!empty($errorInfo)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $errorInfo);
+            $flashBag->add('error', $errorInfo);
+
             return false;
         }
 
         if (!$done) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Importing the database failed. Perhaps there is a problem with the template file.'));
+            $flashBag->add('error', $this->__('Error! Importing the database failed. Perhaps there is a problem with the template file.'));
+
             return false;
         }
 
@@ -609,13 +636,13 @@ class SystemHelper
      */
     protected function updateConfigValues(SiteEntity $site)
     {
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -626,7 +653,8 @@ class SystemHelper
             AND `name` IN (\'sitename\', \'defaultpagetitle\')';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => serialize($site->getSiteName())])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql  . "\n");
+            $flashBag->add('error', $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql  . "\n");
+
             return false;
         }
 
@@ -637,7 +665,8 @@ class SystemHelper
             AND `name` IN (\'slogan\', \'defaultmetadescription\')';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => serialize($site->getSiteDescription())])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql  . "\n");
+            $flashBag->add('error', $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql  . "\n");
+
             return false;
         }
 
@@ -653,18 +682,20 @@ class SystemHelper
             $adminEmail = html_entity_decode($adminEmail);
         }
         if (!$stmt->execute([':value' => serialize($adminEmail)])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql . "\n");
+            $flashBag->add('error', $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql . "\n");
+
             return false;
         }
 
-        // modify the sessionCookieName
+        // modify the session cookie name
         $sql = 'UPDATE `module_vars`
             SET `value` = :value
             WHERE `modname` = \'ZConfig\'
             AND `name` = \'sessionname\'';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => serialize('ZKSID_' . strtoupper($site->getSiteAlias()))])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql . "\n");
+            $flashBag->add('error', $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql . "\n");
+
             return false;
         }
 
@@ -691,7 +722,8 @@ class SystemHelper
                 ':approvedDate' => $nowUTCStr,
                 ':regDate' => $nowUTCStr
             ])) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
+                $flashBag->add('error', $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
+
                 return false;
             }
 
@@ -708,7 +740,8 @@ class SystemHelper
                 WHERE `uname` = :uname';
             $stmt = $connect->prepare($sql);
             if (!$stmt->execute([':password' => $password, ':email' => $site->getSiteAdminEmail(), ':uname' => $rs['uname']])) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
+                $flashBag->add('error', $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
+
                 return false;
             }
         }
@@ -728,7 +761,8 @@ class SystemHelper
             $stmt = $connect->prepare('INSERT INTO `group_membership` (`uid`, `gid`)
                 VALUES (:uid, :gid)');
             if (!$stmt->execute([':uid' => $uid, ':gid' => $adminGroupId])) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
+                $flashBag->add('error', $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
+
                 return false;
             }
         }
@@ -805,13 +839,13 @@ class SystemHelper
      */
     protected function processParameters(SiteEntity $site)
     {
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -823,7 +857,8 @@ class SystemHelper
                 AND `name` LIKE \'' . $parameterPrefix . '%\'';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute()) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Deleting old parameters failed.'));
+            $flashBag->add('error', $this->__('Error! Deleting old parameters failed.'));
+
             return false;
         }
 
@@ -837,7 +872,8 @@ class SystemHelper
             foreach ($parameters as $parameterName => $parameterValue) {
                 $stmt = $connect->prepare($sql);
                 if (!$stmt->execute([':name' => $parameterPrefix . ucfirst($parameterName), ':value' => serialize($parameterValue)])) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Creating parameter "%s" failed.', [ucfirst($parameterName)]));
+                    $flashBag->add('error', $this->__f('Error! Creating parameter "%s" failed.', ['%s' => ucfirst($parameterName)]));
+
                     return false;
                 }
             }
@@ -847,7 +883,8 @@ class SystemHelper
         $logo = ($site['logo'] !== null && $site['logo'] != '' && file_exists($site['logoFullPath'])) ? $site['logoFullPath'] : '';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':name' => $parameterPrefix . 'Logo', ':value' => serialize($logo)])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Creating parameter "%s" failed.', ['Logo']));
+            $flashBag->add('error', $this->__f('Error! Creating parameter "%s" failed.', ['%s' => 'Logo']));
+
             return false;
         }
 
@@ -855,7 +892,8 @@ class SystemHelper
         $favIcon = ($site['favIcon'] !== null && $site['favIcon'] != '' && file_exists($site['favIconFullPath'])) ? $site['favIconFullPath'] : '';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':name' => $parameterPrefix . 'FavIcon', ':value' => serialize($favIcon)])) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Creating parameter "%s" failed.', ['FavIcon']));
+            $flashBag->add('error', $this->__f('Error! Creating parameter "%s" failed.', ['%s' => 'FavIcon']));
+
             return false;
         }
 
@@ -913,10 +951,9 @@ class SystemHelper
         // check if database connection works
         $connect = $this->connectToExternalDatabase($args);
         if (!$connect) {
-            $serviceManager = ServiceUtil::getManager();
-            $flashBag = $serviceManager->get('session')->getFlashBag();
+            $flashBag = $this->session->getFlashBag();
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $args['dbName']]));
 
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$args['dbName']]));
             return false;
         }
 
@@ -948,8 +985,7 @@ class SystemHelper
             return true;
         }
 
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         $dir = dir($dirName);
         while ($file = $dir->read()) {
@@ -959,14 +995,16 @@ class SystemHelper
                     continue;
                 }
                 if (!@unlink($dirName . '/' . $file)) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error deleting file:') . ' ' . $dirName . '/' . $file);
+                    $flashBag->add('error', $this->__('Error deleting file:') . ' ' . $dirName . '/' . $file);
+
                     return false;
                 }
             }
         }
         $dir->close();
         if (!@rmdir($dirName)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error deleting file:') . ' ' . $dirName);
+            $flashBag->add('error', $this->__('Error deleting file:') . ' ' . $dirName);
+
             return false;
         }
 
@@ -1021,18 +1059,19 @@ class SystemHelper
     {
         ini_set('max_execution_time', 600);
 
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // find the "mysqldump" program
         $mysqlPath = $this->getMySQLFilePath(); // z.B. c:\Programme\xampp\mysql\bin\mysql.exe
         if (!$mysqlPath) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Could not find MySQL program directory.'));
+            $flashBag->add('error', $this->__('Error! Could not find MySQL program directory.'));
+
             return false;
         }
         $dumper = dirname($mysqlPath) . ($this->isOnWindows() ? '/mysqldump.exe' : '/mysqldump');
         if (!file_exists($dumper)) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! The "mysqldump" program is not installed.'));
+            $flashBag->add('error', $this->__('Error! The "mysqldump" program is not installed.'));
+
             return false;
         }
 
@@ -1049,7 +1088,8 @@ class SystemHelper
         $cmd .= ' > ' . $outputFilePath;
         system($cmd, $retval);
         if ($retval != 0) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! The database dump failed. Please ensure that the database user %1%s has the "LOCK_TABLES" permission and the web service may write into the %2$s folder.', [$site['databaseUserName'], dirname($outputFilePath)]));
+            $flashBag->add('error', $this->__f('Error! The database dump failed. Please ensure that the database user %1$s has the "LOCK_TABLES" permission and the web service may write into the %2$s folder.', ['%1$s' => $site['databaseUserName'], '%2$s' => dirname($outputFilePath)]));
+
             return false;
         }
 
@@ -1065,8 +1105,7 @@ class SystemHelper
      */
     public function createAdministrator(SiteEntity $site)
     {
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // get global administrator parameters
         $globalAdminName = $this->getVar('globalAdminName');
@@ -1074,14 +1113,16 @@ class SystemHelper
         $globalAdminEmail = $this->getVar('globalAdminEmail');
         // check if the global administrator name, password and email had been defined
         if ($globalAdminName == '' || $globalAdminPassword == '' || $globalAdminEmail == '') {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('You have not defined the global administrator name or password. Check the module configuration.'));
+            $flashBag->add('error', $this->__('You have not defined the global administrator name or password. Check the module configuration.'));
+
             return false;
         }
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -1104,7 +1145,8 @@ class SystemHelper
             $stmt = $connect->prepare('INSERT INTO users (uname, email, pass, approved_date, user_regdate, activated)
                 VALUES (:uname, :email, :password, :approvedDate, :regDate, 1)');
             if (!$stmt->execute([':uname' => $globalAdminName, ':email' => $globalAdminEmail, ':password' => $password, ':approvedDate' => $nowUTCStr, ':regDate' => $nowUTCStr])) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creating global administrator failed.'));
+                $flashBag->add('error', $this->__('Error! Creating global administrator failed.'));
+
                 return false;
             }
 
@@ -1115,7 +1157,8 @@ class SystemHelper
             $stmt->execute([':globalAdminName' => $globalAdminName]);
             $rs = $stmt->fetch(PDO::FETCH_ASSOC);
             if (!$rs) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Getting global administrator values failed.'));
+                $flashBag->add('error', $this->__('Error! Getting global administrator values failed.'));
+
                 return false;
             }
             $uid = $rs['uid'];
@@ -1124,7 +1167,8 @@ class SystemHelper
                 // insert the user into the administrators group
                 $stmt = $connect->prepare('INSERT INTO group_membership (uid, gid) VALUES (:uid, 2)');
                 if (!$stmt->execute([':uid' => $uid])) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Adding global administrator to admin group failed.'));
+                    $flashBag->add('error', $this->__('Error! Adding global administrator to admin group failed.'));
+
                     return false;
                 }
             }
@@ -1139,7 +1183,8 @@ class SystemHelper
             $stmt->execute([':uid' => $uid, ':gid' => $adminGroupId]);
             $rs = $stmt->fetch(PDO::FETCH_ASSOC);
             if (!$rs) {
-                $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Getting global administrator group failed.'));
+                $flashBag->add('error', $this->__('Error! Getting global administrator group failed.'));
+
                 return false;
             }
             $gid = $rs['gid'];
@@ -1148,7 +1193,8 @@ class SystemHelper
                 // the user is not administrator, hence we insert the user into the administrators group
                 $stmt = $connect->prepare('INSERT INTO `group_membership` (`uid`, `gid`) VALUES (:uid, :gid)');
                 if (!$stmt->execute([':uid' => $uid, ':gid' => $adminGroupId])) {
-                    $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Adding global administrator to admin group failed.'));
+                    $flashBag->add('error', $this->__('Error! Adding global administrator to admin group failed.'));
+
                     return false;
                 }
             }
@@ -1159,7 +1205,8 @@ class SystemHelper
                     WHERE `uid` = :uid';
             $stmt = $connect->prepare($sql);
             if (!$stmt->execute([':uid' => $uid, ':password' => $password])) {
-               $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Updating global administrator password failed.'));
+               $flashBag->add('error', $this->__('Error! Updating global administrator password failed.'));
+
                return false;
             }
         }
@@ -1176,13 +1223,13 @@ class SystemHelper
      */
     public function recoverAdminSiteControl(SiteEntity $site)
     {
-        $serviceManager = ServiceUtil::getManager();
-        $flashBag = $serviceManager->get('session')->getFlashBag();
+        $flashBag = $this->session->getFlashBag();
 
         // check if database connection works
         $connect = $this->connectToExternalDatabase($site->getDatabaseData());
         if (!$connect) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$site->getDatabaseName()]));
+            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+
             return false;
         }
 
@@ -1192,7 +1239,8 @@ class SystemHelper
                 OR `pid` = 1';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute()) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Deleting the permission sequences having a value below 0 failed.'));
+            $flashBag->add('error', $this->__('Error! Deleting the permission sequences having a value below 0 failed.'));
+
             return false;
         }
 
@@ -1201,7 +1249,8 @@ class SystemHelper
                 VALUES (2, 0, \'.*\', \'.*\', 800, 1)';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute()) {
-            $flashBag->add(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! Creating the new permission sequence failed.'));
+            $flashBag->add('error', $this->__('Error! Creating the new permission sequence failed.'));
+
             return false;
         }
 

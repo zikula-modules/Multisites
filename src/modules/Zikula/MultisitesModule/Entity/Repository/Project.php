@@ -62,19 +62,6 @@ class Project extends BaseProject
                     $qb->andWhere(':templates MEMBER OF tbl.templates')
                        ->setParameter('templates', $v);
                 }
-            } elseif ($k == 'catId') {
-                // single category filter
-                if ($v > 0) {
-                    $qb->andWhere('tblCategories.category = :category')
-                       ->setParameter('category', $v);
-                }
-            } elseif ($k == 'catIdList') {
-                // multi category filter
-                /* old
-                $qb->andWhere('tblCategories.category IN (:categories)')
-                   ->setParameter('categories', $v);
-                 */
-                $qb = ModUtil::apiFunc('ZikulaMultisitesModule', 'category', 'buildFilterClauses', array('qb' => $qb, 'ot' => 'project', 'catids' => $v));
             } elseif (in_array($k, array('q', 'searchterm'))) {
                 // quick search
                 if (!empty($v)) {

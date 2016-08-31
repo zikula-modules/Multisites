@@ -8,7 +8,7 @@
     {{ form_errors(quickNavForm) }}
     <fieldset>
         <h3>{{ __('Quick navigation') }}</h3>
-        {% if siteFilter not defined or siteFilter == true %}
+        {% if siteFilter is not defined or siteFilter == true %}
             {{ form_row(quickNavForm.site) }}
         {% endif %}
         {% if workflowStateFilter is not defined or workflowStateFilter == true %}
@@ -40,7 +40,7 @@
                 zikulaMultisitesInitQuickNavigation('siteExtension');
                 {% if searchFilter|default and searchFilter == false %}
                     {# we can hide the submit button if we have no quick search field #}
-                    $('#quicknavSubmit').addClass('hidden');
+                    $('#zikulamultisitesmodule_siteextensionquicknav_updateview').addClass('hidden');
                 {% endif %}
             });
         })(jQuery);

@@ -1,7 +1,7 @@
 {# purpose of this template: projects view json view #}
-{{ zikulamultisitesmodule_templateHeaders(contentType='application/json') }}[
+[
 {% for project in items %}
     {% if not loop.first %},{% endif %}
     {{ project.toJson() }}
-{/foreach}
+{% endfor %}
 ]

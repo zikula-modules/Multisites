@@ -9,15 +9,15 @@
     <excludedTables>{{ template.excludedTables }}</excludedTables>
     <workflowState>{{ template.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
     <projects>
-    {% if template.Projects|default %}
-        {% for relatedItem in template.Projects %}
+    {% if template.projects|default %}
+        {% for relatedItem in template.projects %}
         <project>{{ relatedItem.getTitleFromDisplayPattern() }}</project>
         {% endfor %}
     {% endif %}
     </projects>
     <sites>
-    {% if template.Sites|default %}
-        {% for relatedItem in template.Sites %}
+    {% if template.sites|default %}
+        {% for relatedItem in template.sites %}
         <site>{{ relatedItem.getTitleFromDisplayPattern() }}</site>
         {% endfor %}
     {% endif %}

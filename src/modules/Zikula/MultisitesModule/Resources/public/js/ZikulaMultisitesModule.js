@@ -22,53 +22,54 @@ function zikulaMultisitesInitQuickNavigation(objectType)
         return;
     }
 
-    if (jQuery('#catid').length > 0) {
-        jQuery('#catid').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+    var fieldPrefix = 'zikulamultisitesmodule_' + objectType.toLowerCase() + 'quicknav_';
+    if (jQuery('#' + fieldPrefix + 'catid').length > 0) {
+        jQuery('#' + fieldPrefix + 'catid').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
     }
-    if (jQuery('#sortBy').length > 0) {
-        jQuery('#sortBy').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+    if (jQuery('#' + fieldPrefix + 'sortBy').length > 0) {
+        jQuery('#' + fieldPrefix + 'sortBy').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
     }
-    if (jQuery('#sortDir').length > 0) {
-        jQuery('#sortDir').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+    if (jQuery('#' + fieldPrefix + 'sortDir').length > 0) {
+        jQuery('#' + fieldPrefix + 'sortDir').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
     }
-    if (jQuery('#num').length > 0) {
-        jQuery('#num').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+    if (jQuery('#' + fieldPrefix + 'num').length > 0) {
+        jQuery('#' + fieldPrefix + 'num').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
     }
 
     switch (objectType) {
     case 'site':
-        if (jQuery('#template').length > 0) {
-            jQuery('#template').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'template').length > 0) {
+            jQuery('#' + fieldPrefix + 'template').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
-        if (jQuery('#project').length > 0) {
-            jQuery('#project').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'project').length > 0) {
+            jQuery('#' + fieldPrefix + 'project').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
-        if (jQuery('#workflowState').length > 0) {
-            jQuery('#workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'workflowState').length > 0) {
+            jQuery('#' + fieldPrefix + 'workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
-        if (jQuery('#active').length > 0) {
-            jQuery('#active').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'active').length > 0) {
+            jQuery('#' + fieldPrefix + 'active').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
         break;
     case 'template':
-        if (jQuery('#workflowState').length > 0) {
-            jQuery('#workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'workflowState').length > 0) {
+            jQuery('#' + fieldPrefix + 'workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
         break;
     case 'siteExtension':
-        if (jQuery('#site').length > 0) {
-            jQuery('#site').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'site').length > 0) {
+            jQuery('#' + fieldPrefix + 'site').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
-        if (jQuery('#workflowState').length > 0) {
-            jQuery('#workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'workflowState').length > 0) {
+            jQuery('#' + fieldPrefix + 'workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
-        if (jQuery('#extensionType').length > 0) {
-            jQuery('#extensionType').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'extensionType').length > 0) {
+            jQuery('#' + fieldPrefix + 'extensionType').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
         break;
     case 'project':
-        if (jQuery('#workflowState').length > 0) {
-            jQuery('#workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
+        if (jQuery('#' + fieldPrefix + 'workflowState').length > 0) {
+            jQuery('#' + fieldPrefix + 'workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
         }
         break;
     default:

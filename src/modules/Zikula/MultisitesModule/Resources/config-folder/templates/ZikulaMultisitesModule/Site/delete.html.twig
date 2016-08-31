@@ -8,7 +8,7 @@
 
         {% form_theme deleteForm with [
             '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
-            '@ZikulaFormExtensionBundle/Form/form_div_layout.html.twig'
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
         ] %}
         {{ form_start(deleteForm) }}
         {{ form_errors(deleteForm) }}
@@ -75,8 +75,8 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                    {{ form_widget(deleteForm.delete, {attr: {class: 'btn btn-success'}, icon: 'fa-trash-o'}) }}
-                    {{ form_widget(deleteForm.cancel, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-times'}) }}
+                    {{ form_widget(deleteForm.delete) }}
+                    {{ form_widget(deleteForm.cancel) }}
                 </div>
             </div>
         </fieldset>

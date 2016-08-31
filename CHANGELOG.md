@@ -19,39 +19,3 @@ Changes in Multisites 2.0.0
 * A new query multiplier and shell interface allows to perform sql queries on all databases (#14).
 * Removed unrequired access table.
 * Many other new features.
-
-
-CUSTOMISATIONS
-==============
-
-Implemented classes:
-* lib/Multisites/Api/Admin.php
-* lib/Multisites/Controller/Admin.php
-* lib/Multisites/Controller/Ajax.php
-* lib/Multisites/Controller/Site.php
-* lib/Multisites/Controller/Template.php
-* lib/Multisites/Entity/Repository/Project.php
-* lib/Multisites/Entity/Repository/Site.php
-* lib/Multisites/Entity/Repository/Template.php
-* lib/Multisites/Entity/Project.php
-* lib/Multisites/Entity/Site.php
-* lib/Multisites/Entity/Template.php
-* lib/Multisites/Form/Handler/Site/Edit.php
-* lib/Multisites/Form/Handler/Template/Edit.php
-* lib/Multisites/Installer.php
-* lib/Multisites/Listener/Theme.php
-* lib/Multisites/Util/Model.php
-* lib/Multisites/Version.php
-
-Changed files:
-* CHANGELOG.md
-* images/admin.png
-
-Manually added files:
-* docs/model/*
-* images/blank.png
-* javascript/Multisites_siteExtensions.js
-* lib/Multisites/Form/Plugin/ArrayInput.php
-* lib/Multisites/Util/Configurator.php
-* lib/Multisites/Util/System.php
-* templates/plugins/function.multisitesArrayInput.php

@@ -72,13 +72,14 @@
                     <a href="{{ path('zikulamultisitesmodule_site_view', { project: project.id }) }}" title="{{ __('View sites assigned to this project') }}">{{ __('Site list') }}</a>
                 </td>
                 <td id="itemActions{{ project.id }}" headers="hItemActions" class="actions nowrap z-w02">
-                    {% if project._actions|length > 0 %}
+                    {% set actionLinks = zikulamultisitesmodule_actions(entity=project, area=routeArea, context='view') %}
+                    {% if actionLinks|length > 0 %}
                         <div class="dropdown">
                             <a id="itemActions{{ project.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                             
                             <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="itemActions{{ project.id }}DropDownToggle">
-                                {% for option in project._actions %}
-                                    <li role="presentation"><a href="{{ option.url.type|zikulamultisitesmodule_actionUrl(option.url.func, option.url.arguments) }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
+                                {% for option in actionLinks %}
+                                    <li role="presentation"><a href="{{ option.url }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
                                     
                                 {% endfor %}
                             </ul>

@@ -22,7 +22,7 @@
     },
     "extra": {
         "zikula": {
-            "core-compatibility": "~1.4.2",
+            "core-compatibility": "~1.4.3",
             "class": "Zikula\\MultisitesModule\\ZikulaMultisitesModule",
             "displayname": "Multisites manager",
             "url": "multisites",

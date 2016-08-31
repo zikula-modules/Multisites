@@ -60,13 +60,13 @@
                     {% endif %}
                     <br />
                     <div class="form-group form-buttons text-center">
-                        <p><a href="{{ path('zikulamultisitesmodule_admin_config') }}" title="{{ __('Check again') }}" class='btn btn-success'>{{ __('Check again') }}</a></p>
+                        <p><a href="{{ path('zikulamultisitesmodule_config_config') }}" title="{{ __('Check again') }}" class='btn btn-success'>{{ __('Check again') }}</a></p>
                     </div>
                 </fieldset>
             </div>
         {% elseif step == 2 %}
             <h3>{{ __('Step 2 - Checking whether the sites files directory exists') }}</h3>
-            <form method="post" action="{{ path('zikulamultisitesmodule_admin_config') }}" class="form" role="form">
+            <form method="post" action="{{ path('zikulamultisitesmodule_config_config') }}" class="form" role="form">
                 <fieldset>
                     <div class="form-group">
                         <label class="control-label">{{ __('Script Real Path') }}:</label>
@@ -87,7 +87,7 @@
             <p class="alert alert-warning">
                 {{ __f('If you experience any problem you can delete the <strong>%1$s</strong> and <strong>%2$s</strong> files to recover the system to the previous state.', { '%1$s': configFile, '%2$s': dbConfigFile }) }}
             </p>
-            <form method="post" action="{{ path('zikulamultisitesmodule_admin_config') }}" class="form" role="form">
+            <form method="post" action="{{ path('zikulamultisitesmodule_config_config') }}" class="form" role="form">
                 <fieldset>
                     <div class="form-group">
                         <label for="mainSiteUrl" class="control-label">{gt text='Main domain'}:</label>
@@ -116,7 +116,7 @@
                     </p>
                     <br />
                     <div class="form-group form-buttons text-center">
-                        <p><a href="{{ path('zikulamultisitesmodule_admin_config') }}" title="{{ __('Check again') }}" class='btn btn-success'>{{ __('Check again') }}</a></p>
+                        <p><a href="{{ path('zikulamultisitesmodule_config_config') }}" title="{{ __('Check again') }}" class='btn btn-success'>{{ __('Check again') }}</a></p>
                     </div>
                 </fieldset>
             </div>

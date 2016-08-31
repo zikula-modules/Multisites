@@ -442,12 +442,14 @@ class SiteController extends BaseSiteController
             //$zikula->init();
 
             // Get site information
-            $selectionArgs = ['ot' => 'site',
-                              'id' => $itemid,
-                              'useJoins' => false];
+            $selectionArgs = [
+                'ot' => 'site',
+                'id' => $itemid,
+                'useJoins' => false
+            ];
             $entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', $selectionArgs);
             if ($entity === false || !is_object($entity)) {
-                $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! No site with id %s could be found.', [$itemid]));
+                $this->addFlash('error', $this->__f('Error! No site with id %s could be found.', ['%s' => $itemid]));
                 continue;
             }
 
@@ -456,7 +458,7 @@ class SiteController extends BaseSiteController
             if ($needsDatabaseAccess) {
                 $connect = $systemHelper->connectToExternalDatabase($entity->getDatabaseData());
                 if (!$connect) {
-                    $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__f('Error! Connecting to the database %s failed.', [$entity['databaseName']]));
+                    $this->addFlash('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $entity['databaseName']]));
                     continue;
                 }
             }
@@ -469,7 +471,7 @@ class SiteController extends BaseSiteController
                     $serviceManager->setParameter('temp_dir', $siteTempDirectory);
 
                     ModUtil::apiFunc('ZikulaSettingsModule', 'admin', 'clearallcompiledcaches');
-                    $this->addFlash(\Zikula_Session::MESSAGE_STATUS, $this->__f('Done! Cleared all cache and compile directories for site %s.', [$entity->getTitleFromDisplayPattern()]));
+                    $this->addFlash('error', $this->__f('Done! Cleared all cache and compile directories for site %s.', ['%s' => $entity->getTitleFromDisplayPattern()]));
                     break;
             }
         }
@@ -608,7 +610,7 @@ class SiteController extends BaseSiteController
 
         $name = $request->query->get('name', null);
         if (is_null($name) || empty($name)) {
-            $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('Error! No valid theme name received.'));
+            $this->addFlash('error', $this->__('Error! No valid theme name received.'));
         } else {
             // helper for extensions-related functions
             $extensionHelper = $this->get('zikula_multisites_module.siteextension_helper');
@@ -617,9 +619,7 @@ class SiteController extends BaseSiteController
         }
 
         // redirect to the admin main page
-        return $this->redirectToRoute('zikulamultisitesmodule_site_adminmanagethemes', [
-            'ot' => 'site', 'id' => $site['id']
-        ]);
+        return $this->redirectToRoute('zikulamultisitesmodule_site_adminmanagethemes', ['id' => $site['id']]);
     }
 
     /**
@@ -659,17 +659,17 @@ class SiteController extends BaseSiteController
             case 'createAdministrator':
                 $result = $systemHelper->createAdministrator($site);
                 if ($result) {
-                    $this->addFlash(\Zikula_Session::MESSAGE_STATUS, $this->__('A global administrator has been created.'));
+                    $this->addFlash('status', $this->__('A global administrator has been created.'));
                 }
                 break;
             case 'adminSiteControl':
                 $recoverAdminSiteControl = $systemHelper->recoverAdminSiteControl($site);
                 if ($recoverAdminSiteControl) {
-                    $this->addFlash(\Zikula_Session::MESSAGE_STATUS, $this->__('The administration control has been recovered.'));
+                    $this->addFlash('status', $this->__('The administration control has been recovered.'));
                 }
                 break;
             default:
-                $this->addFlash(\Zikula_Session::MESSAGE_ERROR, $this->__('No tool selected'));
+                $this->addFlash('error', $this->__('No tool selected'));
         }
 
         return $this->redirectToRoute('zikulamultisitesmodule_site_adminviewtools', ['id' => $site['id']]);

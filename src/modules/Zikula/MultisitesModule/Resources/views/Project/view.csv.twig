@@ -1,5 +1,4 @@
-{* purpose of this template: projects view csv view *}
-{{ zikulamultisitesmodule_templateHeaders(contentType='text/comma-separated-values; charset=iso-8859-15', asAttachment=true, fileName='Projects.csv') }}
+{# purpose of this template: projects view csv view #}
 {% spaceless %}"{{ __('Name') }}";"{{ __('Workflow state') }}"
 ;"{{ __('Sites') }}"
 ;"{{ __('Templates') }}"{% endspaceless %}
@@ -7,15 +6,15 @@
 {% spaceless %}
     "{{ project.name }}";"{{ project.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
     ;"
-    {% if project.Sites|default %}
-        {% for relatedItem in project.Sites %}
+    {% if project.sites|default %}
+        {% for relatedItem in project.sites %}
         {{ relatedItem.getTitleFromDisplayPattern() }}{% if not loop.last %}, {% endif %}
         {% endfor %}
     {% endif %}
     "
     ;"
-    {% if project.Templates|default %}
-        {% for relatedItem in project.Templates %}
+    {% if project.templates|default %}
+        {% for relatedItem in project.templates %}
         {{ relatedItem.getTitleFromDisplayPattern() }}{% if not loop.last %}, {% endif %}
         {% endfor %}
     {% endif %}

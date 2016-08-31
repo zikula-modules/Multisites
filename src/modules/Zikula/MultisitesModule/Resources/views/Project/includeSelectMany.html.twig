@@ -1,5 +1,5 @@
 {# purpose of this template: inclusion template for managing related projects #}
-{% displayMode is not defined or displayMode is empty %}
+{% if displayMode is not defined or displayMode is empty %}
     {% set displayMode = 'choices' %}
 {% endif %}
 {% if allowEditing is not defined or allowEditing is empty %}
@@ -17,10 +17,10 @@
 {% endif %}
     <legend>{{ __('Projects') }}</legend>
     {% if displayMode == 'choices' %}
-        {{ form_row(form.projects) }}
+        {{ form_row(attribute(form, alias)) }}
     {% elseif displayMode == 'autocomplete' %}
         {% set createUrl = allowEditing ? path('zikulamultisitesmodule_project_' ~ routeArea ~ 'edit') : '' %}
-        {{ form_row(form.projects) }}
+        {{ form_row(attribute(form, alias)) }}
         <div class="zikulamultisitesmodule-relation-leftside">
             {% if attribute(linkingItem, alias) is defined %}
                 {{ include(

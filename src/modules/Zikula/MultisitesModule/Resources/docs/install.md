@@ -8,5 +8,5 @@
 
 For questions and other remarks visit our homepage http://modulestudio.de.
 
-Albert Pérez Monfort (aperezm@xtec.cat)
+Albert P?rez Monfort (aperezm@xtec.cat)
 http://modulestudio.de

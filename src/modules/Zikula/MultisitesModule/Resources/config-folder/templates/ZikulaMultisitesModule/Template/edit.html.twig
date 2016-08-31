@@ -5,7 +5,7 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
-    {{ pageAddAsset('javascript', asset('typeahead.js/dist/typeahead.bundle.min.js')) }}
+    {{ pageAddAsset('javascript', '/vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js') }}
 {% endblock %}
 
 {% block title mode == 'create' ? __('Create template') : __('Edit template') %}
@@ -81,10 +81,10 @@
 <div class="form-group form-buttons">
     <div class="col-sm-offset-3 col-sm-9">
         {% for action in actions %}
-            {{ form_widget(attribute(form, action.id), {attr: {class: action.buttonClass}, icon: action.id == 'delete' ? 'fa-trash-o' : ''}) }}
+            {{ form_widget(attribute(form, action.id)) }}
         {% endfor %}
-        {{ form_widget(form.reset, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-refresh'}) }}
-        {{ form_widget(form.cancel, {attr: {class: 'btn btn-default', formnovalidate: 'formnovalidate'}, icon: 'fa-times'}) }}
+        {{ form_widget(form.reset) }}
+        {{ form_widget(form.cancel) }}
     </div>
 </div>
 {{ form_end(form) }}
@@ -93,8 +93,8 @@
 {% block footer %}
     {{ parent() }}
 
-    % set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
-    % set deleteImage = '<span class="fa fa-trash-o"></span>' %}
+    {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
+    {% set deleteImage = '<span class="fa fa-trash-o"></span>' %}
     
     
     <script type="text/javascript">
@@ -113,7 +113,7 @@
                     if (!document.getElementById('templateEditForm').checkValidity()) {
                         // This does not really submit the form,
                         // but causes the browser to display the error message
-                        jQuery('#templateEditForm').find(':submit').not(jQuery('#btnDelete')).first().click();
+                        jQuery('#templateEditForm').find(':submit').first().click();
                     }
                 }
         
@@ -139,7 +139,7 @@
                         allFormFields.change(executeCustomValidationConstraints);
         
                         formButtons = $('#templateEditForm .form-buttons input');
-                        $('#btnDelete').bind('click keypress', function (e) {
+                        $('.btn-danger').first().bind('click keypress', function (e) {
                             if (!window.confirm('{{ __('Really delete this template? This includes deletion of assigned parameters and sites, too!') }}')) {
                                 e.preventDefault();
                             }
