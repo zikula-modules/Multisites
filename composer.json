@@ -15,7 +15,7 @@
         "phploc/phploc": "*",
         "pdepend/pdepend": "2.*",
         "squizlabs/php_codesniffer": "1.*",
-        "phpunit/phpunit": "4.2.*",
+        "phpunit/phpunit": "5.*",
         "theseer/phpdox": "*",
         "phpmd/phpmd": "2.*",
         "sebastian/phpcpd": "*"
