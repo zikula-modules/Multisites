@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Entity\Repository;
 
-use Zikula\MultisitesModule\Entity\Repository\Base\AbstractSite;
+use Zikula\MultisitesModule\Entity\Repository\Base\AbstractSiteRepository;
 
 use Doctrine\ORM\QueryBuilder;
 use ServiceUtil;
@@ -24,7 +24,7 @@ use Zikula\MultisitesModule\Helper\ImageHelper;
  *
  * This is the concrete repository class for site entities.
  */
-class Site extends AbstractSite
+class SiteRepository extends AbstractSiteRepository
 {
     /**
      * Selects the site fitting to a given siteDNS.

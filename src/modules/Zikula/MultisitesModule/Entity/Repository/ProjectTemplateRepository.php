@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Entity\Repository;
 
-use Zikula\MultisitesModule\Entity\Repository\Base\AbstractProjectTemplate;
+use Zikula\MultisitesModule\Entity\Repository\Base\AbstractProjectTemplateRepository;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
@@ -20,7 +20,7 @@ use Zikula\MultisitesModule\Entity\Repository\Base\AbstractProjectTemplate;
  * This is the concrete repository class for the many to many relationship
  * between project and template entities.
  */
-class ProjectTemplate extends AbstractProjectTemplate
+class ProjectTemplateRepository extends AbstractProjectTemplateRepository
 {
     // feel free to add your own methods here, like for example reusable DQL queries
 }

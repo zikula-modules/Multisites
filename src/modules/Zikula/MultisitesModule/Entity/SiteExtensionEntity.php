@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Entity class that defines the entity structure and behaviours.
  *
  * This is the concrete entity class for site extension entities.
- * @ORM\Entity(repositoryClass="\Zikula\MultisitesModule\Entity\Repository\SiteExtension")
+ * @ORM\Entity(repositoryClass="\Zikula\MultisitesModule\Entity\Repository\SiteExtensionRepository")
  * @ORM\Table(name="zikula_multisites_siteextension",
  *     indexes={
  *         @ORM\Index(name="workflowstateindex", columns={"workflowState"})

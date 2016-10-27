@@ -28,15 +28,15 @@ use ServiceUtil;
 use System;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\UsersModule\Api\CurrentUserApi;
-use Zikula\MultisitesModule\Entity\ProjectEntity;
+use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Helper\ImageHelper;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
- * This is the base repository class for project entities.
+ * This is the base repository class for site entities.
  */
-abstract class AbstractProject extends EntityRepository
+abstract class AbstractSiteRepository extends EntityRepository
 {
     /**
      * @var string The default sorting field/expression
@@ -56,9 +56,30 @@ abstract class AbstractProject extends EntityRepository
     public function getAllowedSortingFields()
     {
         return [
-            'id',
+            'template',
             'workflowState',
             'name',
+            'description',
+            'siteAlias',
+            'siteName',
+            'siteDescription',
+            'siteAdminName',
+            'siteAdminPassword',
+            'siteAdminRealName',
+            'siteAdminEmail',
+            'siteCompany',
+            'siteDns',
+            'databaseName',
+            'databaseUserName',
+            'databasePassword',
+            'databaseHost',
+            'databaseType',
+            'logo',
+            'favIcon',
+            'allowedLocales',
+            'parametersCsvFile',
+            'parametersArray',
+            'active',
             'createdUserId',
             'updatedUserId',
             'createdDate',
@@ -130,7 +151,7 @@ abstract class AbstractProject extends EntityRepository
      */
     public function getDescriptionFieldName()
     {
-        $fieldName = 'name';
+        $fieldName = 'description';
     
         return $fieldName;
     }
@@ -142,7 +163,7 @@ abstract class AbstractProject extends EntityRepository
      */
     public function getPreviewFieldName()
     {
-        $fieldName = '';
+        $fieldName = 'logo';
     
         return $fieldName;
     }
@@ -186,6 +207,10 @@ abstract class AbstractProject extends EntityRepository
             }
     
             // initialise Imagine preset instances
+            $objectType = 'site';
+            $templateParameters[$objectType . 'ThumbPresetLogo'] = $imageHelper->getPreset($objectType, 'logo', $context, $args);
+            $templateParameters[$objectType . 'ThumbPresetFavIcon'] = $imageHelper->getPreset($objectType, 'favIcon', $context, $args);
+            $templateParameters[$objectType . 'ThumbPresetParametersCsvFile'] = $imageHelper->getPreset($objectType, 'parametersCsvFile', $context, $args);
             if (in_array($args['action'], ['display', 'view'])) {
                 // use separate preset for images in related items
                 $templateParameters['relationThumbPreset'] = $imageHelper->getCustomPreset('', '', 'ZikulaMultisitesModule_relateditem', $context, $args);
@@ -214,9 +239,12 @@ abstract class AbstractProject extends EntityRepository
         }
     
         $parameters = [];
+        $parameters['template'] = $this->getRequest()->query->get('template', 0);
+        $parameters['project'] = $this->getRequest()->query->get('project', 0);
         $parameters['workflowState'] = $this->getRequest()->query->get('workflowState', '');
         $parameters['q'] = $this->getRequest()->query->get('q', '');
         
+        $parameters['active'] = $this->getRequest()->query->get('active', '');
     
         // in the concrete child class you could do something like
         // $parameters = parent::getViewQuickNavParameters($context, $args);
@@ -237,12 +265,12 @@ abstract class AbstractProject extends EntityRepository
     public function truncateTable(LoggerInterface $logger)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete('Zikula\MultisitesModule\Entity\ProjectEntity', 'tbl');
+        $qb->delete('Zikula\MultisitesModule\Entity\SiteEntity', 'tbl');
         $query = $qb->getQuery();
     
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'entity' => 'project'];
+        $logArgs = ['app' => 'ZikulaMultisitesModule', 'entity' => 'site'];
         $logger->debug('{app}: Truncated the {entity} entity table.', $logArgs);
     }
     /**
@@ -267,14 +295,14 @@ abstract class AbstractProject extends EntityRepository
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->update('Zikula\MultisitesModule\Entity\ProjectEntity', 'tbl')
+        $qb->update('Zikula\MultisitesModule\Entity\SiteEntity', 'tbl')
            ->set('tbl.createdUserId', $newUserId)
            ->where('tbl.createdUserId = :creator')
            ->setParameter('creator', $userId);
         $query = $qb->getQuery();
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'projects', 'userid' => $userId];
+        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'sites', 'userid' => $userId];
         $logger->debug('{app}: User {user} updated {entities} created by user id {userid}.', $logArgs);
     }
     
@@ -300,14 +328,14 @@ abstract class AbstractProject extends EntityRepository
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->update('Zikula\MultisitesModule\Entity\ProjectEntity', 'tbl')
+        $qb->update('Zikula\MultisitesModule\Entity\SiteEntity', 'tbl')
            ->set('tbl.updatedUserId', $newUserId)
            ->where('tbl.updatedUserId = :editor')
            ->setParameter('editor', $userId);
         $query = $qb->getQuery();
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'projects', 'userid' => $userId];
+        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'sites', 'userid' => $userId];
         $logger->debug('{app}: User {user} updated {entities} edited by user id {userid}.', $logArgs);
     }
     
@@ -331,14 +359,14 @@ abstract class AbstractProject extends EntityRepository
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete('Zikula\MultisitesModule\Entity\ProjectEntity', 'tbl')
+        $qb->delete('Zikula\MultisitesModule\Entity\SiteEntity', 'tbl')
            ->where('tbl.createdUserId = :creator')
            ->setParameter('creator', $userId);
         $query = $qb->getQuery();
     
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'projects', 'userid' => $userId];
+        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'sites', 'userid' => $userId];
         $logger->debug('{app}: User {user} deleted {entities} created by user id {userid}.', $logArgs);
     }
     
@@ -362,14 +390,14 @@ abstract class AbstractProject extends EntityRepository
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->delete('Zikula\MultisitesModule\Entity\ProjectEntity', 'tbl')
+        $qb->delete('Zikula\MultisitesModule\Entity\SiteEntity', 'tbl')
            ->where('tbl.updatedUserId = :editor')
            ->setParameter('editor', $userId);
         $query = $qb->getQuery();
     
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'projects', 'userid' => $userId];
+        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'sites', 'userid' => $userId];
         $logger->debug('{app}: User {user} deleted {entities} edited by user id {userid}.', $logArgs);
     }
 
@@ -414,7 +442,7 @@ abstract class AbstractProject extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return array|projectEntity retrieved data array or projectEntity instance
+     * @return array|siteEntity retrieved data array or siteEntity instance
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
@@ -432,7 +460,7 @@ abstract class AbstractProject extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return ArrayCollection collection containing retrieved projectEntity instances
+     * @return ArrayCollection collection containing retrieved siteEntity instances
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
@@ -494,7 +522,7 @@ abstract class AbstractProject extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return ArrayCollection collection containing retrieved projectEntity instances
+     * @return ArrayCollection collection containing retrieved siteEntity instances
      */
     public function selectWhere($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
@@ -562,12 +590,12 @@ abstract class AbstractProject extends EntityRepository
             if ($page > 1 || isset($_GET['pos'])) {
                 // store current page in session
                 if (null !== $session) {
-                    $session->set('ZikulaMultisitesModuleProjectsCurrentPage', $page);
+                    $session->set('ZikulaMultisitesModuleSitesCurrentPage', $page);
                 }
             } else {
                 // restore current page from session
                 if (null !== $session) {
-                    $page = $session->get('ZikulaMultisitesModuleProjectsCurrentPage', 1);
+                    $page = $session->get('ZikulaMultisitesModuleSitesCurrentPage', 1);
                     if (null !== $this->getRequest()) {
                         $this->getRequest()->query->set('pos', $page);
                     }
@@ -605,6 +633,13 @@ abstract class AbstractProject extends EntityRepository
                 // quick search
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter($qb, $v);
+                }
+            } elseif (in_array($k, ['active'])) {
+                // boolean filter
+                if ($v == 'no') {
+                    $qb->andWhere('tbl.' . $k . ' = 0');
+                } elseif ($v == 'yes' || $v == '1') {
+                    $qb->andWhere('tbl.' . $k . ' = 1');
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -690,9 +725,81 @@ abstract class AbstractProject extends EntityRepository
         if (!$fragmentIsNumeric) {
             $where .= ((!empty($where)) ? ' OR ' : '');
             $where .= 'tbl.name LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.description LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAlias LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteDescription LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAdminName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAdminPassword LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAdminRealName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAdminEmail = \'' . $fragment . '\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteCompany LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteDns LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databaseName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databaseUserName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databasePassword LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databaseHost LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databaseType LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.logo = \'' . $fragment . '\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.favIcon = \'' . $fragment . '\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.parametersCsvFile = \'' . $fragment . '\'';
         } else {
             $where .= ((!empty($where)) ? ' OR ' : '');
             $where .= 'tbl.name LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.description LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAlias LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteDescription LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAdminName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAdminPassword LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAdminRealName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteAdminEmail = \'' . $fragment . '\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteCompany LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.siteDns LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databaseName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databaseUserName LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databasePassword LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databaseHost LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.databaseType LIKE \'%' . $fragment . '%\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.logo = \'' . $fragment . '\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.favIcon = \'' . $fragment . '\'';
+            $where .= ((!empty($where)) ? ' OR ' : '');
+            $where .= 'tbl.parametersCsvFile = \'' . $fragment . '\'';
         }
         $where = '(' . $where . ')';
     
@@ -742,14 +849,14 @@ abstract class AbstractProject extends EntityRepository
     {
         $useJoins = false;
     
-        $selection = 'COUNT(tbl.id) AS numProjects';
+        $selection = 'COUNT(tbl.id) AS numSites';
         if ($useJoins === true) {
             $selection .= $this->addJoinsToSelection();
         }
     
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($selection)
-           ->from('Zikula\MultisitesModule\Entity\ProjectEntity', 'tbl');
+           ->from('Zikula\MultisitesModule\Entity\SiteEntity', 'tbl');
     
         if ($useJoins === true) {
             $this->addJoinsToFrom($qb);
@@ -786,9 +893,9 @@ abstract class AbstractProject extends EntityRepository
      *
      * @param string $fieldName  The name of the property to be checked
      * @param string $fieldValue The value of the property to be checked
-     * @param int    $excludeId  Id of projects to exclude (optional)
+     * @param int    $excludeId  Id of sites to exclude (optional)
      *
-     * @return boolean result of this check, true if the given project does not already exist
+     * @return boolean result of this check, true if the given site does not already exist
      */
     public function detectUniqueState($fieldName, $fieldValue, $excludeId = 0)
     {
@@ -836,7 +943,7 @@ abstract class AbstractProject extends EntityRepository
     
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($selection)
-           ->from('Zikula\MultisitesModule\Entity\ProjectEntity', 'tbl');
+           ->from('Zikula\MultisitesModule\Entity\SiteEntity', 'tbl');
     
         if ($useJoins === true) {
             $this->addJoinsToFrom($qb);
@@ -973,7 +1080,7 @@ abstract class AbstractProject extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblSites, tblTemplates';
+        $selection = ', tblTemplate, tblProject, tblExtensions';
     
         return $selection;
     }
@@ -987,8 +1094,9 @@ abstract class AbstractProject extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.sites', 'tblSites');
-        $qb->leftJoin('tbl.templates', 'tblTemplates');
+        $qb->leftJoin('tbl.template', 'tblTemplate');
+        $qb->leftJoin('tbl.project', 'tblProject');
+        $qb->leftJoin('tbl.extensions', 'tblExtensions');
     
         return $qb;
     }

@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Entity class that defines the entity structure and behaviours.
  *
  * This is the concrete entity class for project entities.
- * @ORM\Entity(repositoryClass="\Zikula\MultisitesModule\Entity\Repository\Project")
+ * @ORM\Entity(repositoryClass="\Zikula\MultisitesModule\Entity\Repository\ProjectRepository")
  * @ORM\Table(name="zikula_multisites_project",
  *     indexes={
  *         @ORM\Index(name="workflowstateindex", columns={"workflowState"})

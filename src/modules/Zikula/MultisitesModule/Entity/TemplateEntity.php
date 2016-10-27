@@ -25,7 +25,7 @@ use ModUtil;
  * Entity class that defines the entity structure and behaviours.
  *
  * This is the concrete entity class for template entities.
- * @ORM\Entity(repositoryClass="\Zikula\MultisitesModule\Entity\Repository\Template")
+ * @ORM\Entity(repositoryClass="\Zikula\MultisitesModule\Entity\Repository\TemplateRepository")
  * @ORM\Table(name="zikula_multisites_template",
  *     indexes={
  *         @ORM\Index(name="workflowstateindex", columns={"workflowState"})

@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Entity\Repository;
 
-use Zikula\MultisitesModule\Entity\Repository\Base\AbstractProject;
+use Zikula\MultisitesModule\Entity\Repository\Base\AbstractTemplateRepository;
 
 use Doctrine\ORM\QueryBuilder;
 use ModUtil;
@@ -20,9 +20,9 @@ use ModUtil;
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
- * This is the concrete repository class for project entities.
+ * This is the concrete repository class for template entities.
  */
-class Project extends AbstractProject
+class TemplateRepository extends AbstractTemplateRepository
 {
     /**
      * Returns an array of additional template variables for view quick navigation forms.
@@ -36,7 +36,7 @@ class Project extends AbstractProject
     {
         $parameters = parent::getViewQuickNavParameters($context, $args);
 
-        $parameters['templates'] = $this->request->query->getDigits('templates', 0);
+        $parameters['projects'] = $this->request->query->getDigits('projects', 0);
 
         return $parameters;
     }
@@ -57,10 +57,10 @@ class Project extends AbstractProject
 
         $parameters = $this->getViewQuickNavParameters('', array());
         foreach ($parameters as $k => $v) {
-            if ($k == 'templates') {
+            if ($k == 'projects') {
                 if ($v > 0 && strpos($qb->getDql(), 'tblTemplates') !== false) {
-                    $qb->andWhere(':templates MEMBER OF tbl.templates')
-                       ->setParameter('templates', $v);
+                    $qb->andWhere(':projects MEMBER OF tbl.templates')
+                       ->setParameter('projects', $v);
                 }
             } elseif (in_array($k, array('q', 'searchterm'))) {
                 // quick search
@@ -83,36 +83,9 @@ class Project extends AbstractProject
                 }
             }
         }
-    
+
         $qb = $this->applyDefaultFilters($qb, $parameters);
 
-        return $qb;
-    }
-
-    /**
-     * Helper method to add join selections.
-     *
-     * @return String Enhancement for select clause.
-     */
-    protected function addJoinsToSelection()
-    {
-        $selection = ', tblTemplates';//', tblSites, tblTemplates';
-    
-        return $selection;
-    }
-    
-    /**
-     * Helper method to add joins to from clause.
-     *
-     * @param QueryBuilder $qb query builder instance used to create the query.
-     *
-     * @return String Enhancement for from clause.
-     */
-    protected function addJoinsToFrom(QueryBuilder $qb)
-    {
-        //$qb->leftJoin('tbl.sites', 'tblSites');
-        $qb->leftJoin('tbl.templates', 'tblTemplates');
-    
         return $qb;
     }
 }

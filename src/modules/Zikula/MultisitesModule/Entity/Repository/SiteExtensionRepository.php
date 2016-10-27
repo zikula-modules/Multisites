@@ -12,14 +12,14 @@
 
 namespace Zikula\MultisitesModule\Entity\Repository;
 
-use Zikula\MultisitesModule\Entity\Repository\Base\AbstractSiteExtension as BaseRepository;
+use Zikula\MultisitesModule\Entity\Repository\Base\AbstractSiteExtensionRepository;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
  * This is the concrete repository class for site extension entities.
  */
-class SiteExtension extends BaseRepository
+class SiteExtensionRepository extends AbstractSiteExtensionRepository
 {
     // feel free to add your own methods here, like for example reusable DQL queries
 }

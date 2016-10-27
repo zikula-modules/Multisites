@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  * This is the base repository class for the many to many relationship
  * between project and template entities.
  */
-class AbstractProjectTemplate extends EntityRepository
+class AbstractProjectTemplateRepository extends EntityRepository
 {
     /**
      * Deletes all items in this table.

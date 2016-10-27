@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Entity class that defines the entity structure and behaviours.
  *
  * This is the concrete entity class for site entities.
- * @ORM\Entity(repositoryClass="\Zikula\MultisitesModule\Entity\Repository\Site")
+ * @ORM\Entity(repositoryClass="\Zikula\MultisitesModule\Entity\Repository\SiteRepository")
  * @ORM\Table(name="zikula_multisites_site",
  *     indexes={
  *         @ORM\Index(name="sitednsindex", columns={"siteDns"}),
