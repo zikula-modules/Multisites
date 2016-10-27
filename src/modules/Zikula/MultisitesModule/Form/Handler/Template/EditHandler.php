@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Form\Handler\Template;
 
-use Zikula\MultisitesModule\Form\Handler\Template\Base\EditHandler as BaseEditHandler;
+use Zikula\MultisitesModule\Form\Handler\Template\Base\AbstractEditHandler;
 
 use ModUtil;
 use Zikula\Core\Doctrine\EntityAccess;
@@ -21,7 +21,7 @@ use Zikula\Core\Doctrine\EntityAccess;
  * This handler class handles the page events of the Form called by the zikulaMultisitesModule_template_edit() function.
  * It aims on the template object type.
  */
-class EditHandler extends BaseEditHandler
+class EditHandler extends AbstractEditHandler
 {
     /**
      * Initialise form handler.

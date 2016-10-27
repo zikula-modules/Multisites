@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Listener;
 
-use Zikula\MultisitesModule\Listener\Base\EntityLifecycleListener as BaseEntityLifecycleListener;
+use Zikula\MultisitesModule\Listener\Base\AbstractEntityLifecycleListener;
 
 use FormUtil;
 use ServiceUtil;
@@ -23,7 +23,7 @@ use Zikula\MultisitesModule\Entity\TemplateEntity;
 /**
  * Event subscriber implementation class for entity lifecycle events.
  */
-class EntityLifecycleListener extends BaseEntityLifecycleListener
+class EntityLifecycleListener extends AbstractEntityLifecycleListener
 {
     /**
      * The preRemove event occurs for a given entity before the respective EntityManager

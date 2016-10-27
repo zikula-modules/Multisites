@@ -12,13 +12,13 @@
 
 namespace Zikula\MultisitesModule\Form\Type\QuickNavigation;
 
-use Zikula\MultisitesModule\Form\Type\QuickNavigation\Base\TemplateQuickNavType as BaseTemplateQuickNavType;
+use Zikula\MultisitesModule\Form\Type\QuickNavigation\Base\AbstractTemplateQuickNavType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Template quick navigation form type implementation class.
  */
-class TemplateQuickNavType extends BaseTemplateQuickNavType
+class TemplateQuickNavType extends AbstractTemplateQuickNavType
 {
     /**
      * {@inheritdoc}

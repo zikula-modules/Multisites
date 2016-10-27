@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Entity\Repository;
 
-use Zikula\MultisitesModule\Entity\Repository\Base\Template as BaseTemplate;
+use Zikula\MultisitesModule\Entity\Repository\Base\AbstractTemplate;
 
 use Doctrine\ORM\QueryBuilder;
 use ModUtil;
@@ -22,7 +22,7 @@ use ModUtil;
  *
  * This is the concrete repository class for template entities.
  */
-class Template extends BaseTemplate
+class Template extends AbstractTemplate
 {
     /**
      * Returns an array of additional template variables for view quick navigation forms.

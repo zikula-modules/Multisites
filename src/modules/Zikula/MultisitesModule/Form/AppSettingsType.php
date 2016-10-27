@@ -12,14 +12,14 @@
 
 namespace Zikula\MultisitesModule\Form;
 
-use Zikula\MultisitesModule\Form\Base\AppSettingsType as BaseAppSettingsType;
+use Zikula\MultisitesModule\Form\Base\AbstractAppSettingsType;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Configuration form type implementation class.
  */
-class AppSettingsType extends BaseAppSettingsType
+class AppSettingsType extends AbstractAppSettingsType
 {
     /**
      * Adds fields for security settings fields.

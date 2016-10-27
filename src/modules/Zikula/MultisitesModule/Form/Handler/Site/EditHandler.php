@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Form\Handler\Site;
 
-use Zikula\MultisitesModule\Form\Handler\Site\Base\EditHandler as BaseEditHandler;
+use Zikula\MultisitesModule\Form\Handler\Site\Base\AbstractEditHandler;
 
 use System;
 use Zikula\MultisitesModule\Entity\SiteEntity;
@@ -22,7 +22,7 @@ use Zikula\MultisitesModule\Helper\SystemHelper;
  * This handler class handles the page events of the Form called by the zikulaMultisitesModule_site_edit() function.
  * It aims on the site object type.
  */
-class EditHandler extends BaseEditHandler
+class EditHandler extends AbstractEditHandler
 {
     /**
      * Configuration application helper.

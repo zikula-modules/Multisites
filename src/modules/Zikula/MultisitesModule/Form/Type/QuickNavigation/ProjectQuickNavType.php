@@ -12,13 +12,13 @@
 
 namespace Zikula\MultisitesModule\Form\Type\QuickNavigation;
 
-use Zikula\MultisitesModule\Form\Type\QuickNavigation\Base\ProjectQuickNavType as BaseProjectQuickNavType;
+use Zikula\MultisitesModule\Form\Type\QuickNavigation\Base\AbstractProjectQuickNavType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Project quick navigation form type implementation class.
  */
-class ProjectQuickNavType extends BaseProjectQuickNavType
+class ProjectQuickNavType extends AbstractProjectQuickNavType
 {
     /**
      * {@inheritdoc}

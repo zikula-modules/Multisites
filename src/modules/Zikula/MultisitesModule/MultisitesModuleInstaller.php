@@ -12,17 +12,20 @@
 
 namespace Zikula\MultisitesModule;
 
-use Zikula\MultisitesModule\Base\MultisitesModuleInstaller as BaseMultisitesModuleInstaller;
+use Zikula\MultisitesModule\Base\AbstractMultisitesModuleInstaller;
 
-use DBUtil;
 use FileUtil;
 use RuntimeException;
 use System;
+use Zikula\MultisitesModule\Entity\ProjectEntity;
+use Zikula\MultisitesModule\Entity\SiteEntity;
+use Zikula\MultisitesModule\Entity\SiteExtensionEntity;
+use Zikula\MultisitesModule\Entity\TemplateEntity;
 
 /**
  * Installer implementation class.
  */
-class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
+class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
 {
     /**
      * Upgrade the Multisites application from an older version.
@@ -98,23 +101,26 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
     }
 
     /**
-     * Upgrades v1.x to 2.0.0. This includes migration from DBUtil to Doctrine 2 as well as
+     * Upgrades v1.x to 2.0.0. This includes migration to Doctrine 2 as well as
      * several changes in the filesystem.
      *
      * @return boolean True on success or false otherwise.
      */
     protected function upgradeToV2()
     {
+        $conn = $this->getConnection();
+        $dbName = $this->getDbName();
+
         // first the access table can be removed, too, as it was actually never used
-        $sql = 'DROP TABLE IF EXISTS `multisitesaccess`';
-        DBUtil::executeSQL($sql);
+        $conn->executeQuery('DROP TABLE IF EXISTS `multisitesaccess`');
 
         // rename the other tables to avoid any naming conflicts
         $oldTables = ['sites', 'models', 'sitemodules'];
         foreach ($oldTables as $tableName) {
-            if (!DBUtil::renameTable($tableName, $tableName . 'Old')) {
-                return false;
-            }
+            $conn->executeQuery('
+                RENAME TABLE ' . $dbName . '.' . $tableName . '
+                TO ' . $dbName . '.' . $newTableName . 'Old
+            ');
         }
 
         // install the new stuff
@@ -134,8 +140,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
 
         // remove the old tables
         foreach ($oldTables as $tableName) {
-            $sql = 'DROP TABLE IF EXISTS `' . $tableName . 'Old`';
-            DBUtil::executeSQL($sql);
+            $conn->executeQuery('DROP TABLE IF EXISTS `' . $tableName . 'Old`');
         }
 
         // update the primary configuration file
@@ -147,6 +152,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
         $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
         if (!$systemHelper->updateDatabaseConfigFile()) {
             $this->addFlash('error', $this->__('Error! Updating the database configuration file failed.'));
+
             return false;
         }
 
@@ -161,7 +167,7 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
     protected function migrateDatabaseDataToV2()
     {
         // create a project
-        $project = new \Zikula\MultisitesModule\Entity\ProjectEntity();
+        $project = new ProjectEntity();
         $project->setName($this->__('Imported'));
         $this->entityManager->persist($project);
 
@@ -169,106 +175,99 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
         $sitesById = [];
 
         // transfer data from old template table
-        $result = DBUtil::executeSQL('SELECT * FROM `multisitesmodelsOld`');
-        $data = $result->fetchAll(\PDO::FETCH_ASSOC);
-        if ($data) {
-            $uploadManager = new \Zikula\MultisitesModule\UploadHandler($this->container->get('translator.default'));
-            $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
-            $basePath = $controllerHelper->getFileBaseFolder('template', 'sqlFile');
+        $conn = $this->getConnection();
 
-            foreach ($data as $k => $v) {
-                $template = new \Zikula\MultisitesModule\Entity\TemplateEntity();
-                $template->setId($v['modelid']);
-                $template->setName($v['modelname']);
-                $template->setDescription($v['description']);
+        $uploadManager = new \Zikula\MultisitesModule\UploadHandler($this->container->get('translator.default'));
+        $controllerHelper = $this->container->get('zikula_multisites_module.controller_helper');
+        $basePath = $controllerHelper->getFileBaseFolder('template', 'sqlFile');
 
-                if (!empty($v['filename'])) {
-                    $template->setSqlFile($v['filename']);
+        $stmt = $conn->executeQuery('SELECT * FROM `multisitesmodelsOld`');
+        while ($row = $stmt->fetch()) {
+            $template = new TemplateEntity();
+            $template->setId($row['modelid']);
+            $template->setName($row['modelname']);
+            $template->setDescription($row['description']);
 
-                    $fullPath = $basePath . $template->getSqlFile();
-                    $template->setSqlFileMeta($uploadManager->readMetaDataForFile($template->getSqlFile(), $fullPath));
-                }
+            if (!empty($row['filename'])) {
+                $template->setSqlFile($row['filename']);
 
-                if (!empty($v['folders'])) {
-                    $folders = [];
-                    $oldFolders = explode(',', $v['folders']);
-                    foreach ($oldFolders as $folder) {
-                        if (!empty($folder)) {
-                            $folders[] = $folder;
-                        }
-                    }
-                    $template->setFolders($folders);
-                }
-
-                $template->addProjects($project);
-
-                $this->entityManager->persist($template);
-
-                $templatesByName[$template->getName()] = $template;
+                $fullPath = $basePath . $template->getSqlFile();
+                $template->setSqlFileMeta($uploadManager->readMetaDataForFile($template->getSqlFile(), $fullPath));
             }
+
+            if (!empty($row['folders'])) {
+                $folders = [];
+                $oldFolders = explode(',', $row['folders']);
+                foreach ($oldFolders as $folder) {
+                    if (!empty($folder)) {
+                        $folders[] = $folder;
+                    }
+                }
+                $template->setFolders($folders);
+            }
+
+            $template->addProjects($project);
+
+            $this->entityManager->persist($template);
+
+            $templatesByName[$template->getName()] = $template;
         }
 
         // transfer data from old site table
-        $result = DBUtil::executeSQL('SELECT * FROM `multisitessitesOld`');
-        $data = $result->fetchAll(\PDO::FETCH_ASSOC);
-        if ($data) {
-            foreach ($data as $k => $v) {
-                $site = new \Zikula\MultisitesModule\Entity\SiteEntity();
-                $site->setId($v['instanceid']);
-                $site->setName($v['instancename']);
-                $site->setDescription($v['description']);
-                $site->setSiteAlias($v['alias']);
-                $site->setSiteName($v['sitename']);
-                $site->setSiteDescription($v['sitedescription']);
-                $site->setSiteAdminName($v['siteadminname']);
-                $site->setSiteAdminPassword($v['siteadminpwd']);
-                $site->setSiteAdminRealName($v['siteadminrealname']);
-                $site->setSiteAdminEmail($v['siteadminemail']);
-                $site->setSiteCompany($v['sitecompany']);
-                $site->setSiteDns($v['sitedns']);
-                $site->setDatabaseName($v['sitedbname']);
-                $site->setDatabaseUserName($v['sitedbuname']);
-                $site->setDatabasePassword($v['sitedbpass']);
-                $site->setDatabaseHost($v['sitedbhost']);
-                $site->setDatabaseType($v['sitedbtype']);
+        $stmt = $conn->executeQuery('SELECT * FROM `multisitessitesOld`');
+        while ($row = $stmt->fetch()) {
+            $site = new SiteEntity();
+            $site->setId($row['instanceid']);
+            $site->setName($row['instancename']);
+            $site->setDescription($row['description']);
+            $site->setSiteAlias($row['alias']);
+            $site->setSiteName($row['sitename']);
+            $site->setSiteDescription($row['sitedescription']);
+            $site->setSiteAdminName($row['siteadminname']);
+            $site->setSiteAdminPassword($row['siteadminpwd']);
+            $site->setSiteAdminRealName($row['siteadminrealname']);
+            $site->setSiteAdminEmail($row['siteadminemail']);
+            $site->setSiteCompany($row['sitecompany']);
+            $site->setSiteDns($row['sitedns']);
+            $site->setDatabaseName($row['sitedbname']);
+            $site->setDatabaseUserName($row['sitedbuname']);
+            $site->setDatabasePassword($row['sitedbpass']);
+            $site->setDatabaseHost($row['sitedbhost']);
+            $site->setDatabaseType($row['sitedbtype']);
 
-                if ($v['sitedbprefix'] != '') {
-                    /** TODO
-                     * We could also do this automatically.
-                     * Needs a refactoring of SystemHelper class, see readTables() and renameExcludedTables()
-                     */
-                    $this->addFlash('error', $this->__f('The site "%site%" does have a table prefix set which is not supported anymore. You need to rename tables in the "%database%" database accordingly.', ['%site%' => $site->getName(), '%database%' => $site->getDatabaseName()]));
-                }
-
-                $site->setActive($v['active']);
-
-                $this->entityManager->persist($site);
-
-                $project->addSites($site);
-                if (isset($templatesByName[$v['siteinitmodel']])) {
-                    $templatesByName[$v['siteinitmodel']]->addSites($site);
-                }
-
-                $sitesById[$site->getId()] = $site;
+            if ($row['sitedbprefix'] != '') {
+                /** TODO
+                    * We could also do this automatically.
+                    * Needs a refactoring of SystemHelper class, see readTables() and renameExcludedTables()
+                    */
+                $this->addFlash('error', $this->__f('The site "%site%" does have a table prefix set which is not supported anymore. You need to rename tables in the "%database%" database accordingly.', ['%site%' => $site->getName(), '%database%' => $site->getDatabaseName()]));
             }
+
+            $site->setActive($row['active']);
+
+            $this->entityManager->persist($site);
+
+            $project->addSites($site);
+            if (isset($templatesByName[$row['siteinitmodel']])) {
+                $templatesByName[$row['siteinitmodel']]->addSites($site);
+            }
+
+            $sitesById[$site->getId()] = $site;
         }
 
         // transfer data from old site modules table
-        $result = DBUtil::executeSQL('SELECT * FROM `multisitessitemodulesOld`');
-        $data = $result->fetchAll(\PDO::FETCH_ASSOC);
-        if ($data) {
-            foreach ($data as $k => $v) {
-                $extension = new \Zikula\MultisitesModule\Entity\SiteExtensionEntity();
-                $extension->setName($v['modulename']);
-                $extension->setExtensionVersion($v['moduleversion']);
-                $extension->setExtensionType('module');
+        $stmt = $conn->executeQuery('SELECT * FROM `multisitessitemodulesOld`');
+        while ($row = $stmt->fetch()) {
+            $extension = new SiteExtensionEntity();
+            $extension->setName($row['modulename']);
+            $extension->setExtensionVersion($row['moduleversion']);
+            $extension->setExtensionType('module');
 
-                if (isset($sitesById[$v['instanceid']])) {
-                    $sitesById[$v['instanceid']]->addExtensions($extension);
-                }
-
-                $this->entityManager->persist($extension);
+            if (isset($sitesById[$row['instanceid']])) {
+                $sitesById[$row['instanceid']]->addExtensions($extension);
             }
+
+            $this->entityManager->persist($extension);
         }
 
         $this->entityManager->flush();
@@ -281,13 +280,13 @@ class MultisitesModuleInstaller extends BaseMultisitesModuleInstaller
         foreach ($tables as $tableName) {
             $sql = $sqlBase . '\'' . $tableName . '\' AS `obj_table`, \'id\' AS `obj_idcolumn`, `id` AS `obj_id`, 0 AS `busy`, NULL AS `debug` FROM `multisites_' . $tableName . '` ';
             $sql .= 'WHERE `id` NOT IN (SELECT `obj_id` FROM `workflows` WHERE `module` = \'Multisites\' AND `obj_table` = \'' . $tableName . '\')';
-            DBUtil::executeSQL($sql);
+            $conn->executeQuery($sql);
         }
 
         // add workflow data for the site extensions
         $sql = $sqlBase . '\'siteExtension\' AS `obj_table`, \'id\' AS `obj_idcolumn`, `id` AS `obj_id`, 0 AS `busy`, NULL AS `debug` FROM `multisites_site_extension` ';
         $sql .= 'WHERE `id` NOT IN (SELECT `obj_id` FROM `workflows` WHERE `module` = \'Multisites\' AND `obj_table` = \'siteExtension\')';
-        DBUtil::executeSQL($sql);
+        $conn->executeQuery($sql);
 
         return true;
     }

@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Controller;
 
-use Zikula\MultisitesModule\Controller\Base\TemplateController as BaseTemplateController;
+use Zikula\MultisitesModule\Controller\Base\AbstractTemplateController;
 
 use ModUtil;
 use RuntimeException;
@@ -25,7 +25,7 @@ use Zikula\MultisitesModule\Entity\TemplateEntity;
 /**
  * Template controller class providing navigation and interaction functionality.
  */
-class TemplateController extends BaseTemplateController
+class TemplateController extends AbstractTemplateController
 {
     /**
      * This action provides an item list overview in the admin area.

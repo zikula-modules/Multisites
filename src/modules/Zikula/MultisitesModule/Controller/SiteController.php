@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Controller;
 
-use Zikula\MultisitesModule\Controller\Base\SiteController as BaseSiteController;
+use Zikula\MultisitesModule\Controller\Base\AbstractSiteController;
 
 use ModUtil;
 use RuntimeException;
@@ -27,7 +27,7 @@ use Zikula\MultisitesModule\Entity\SiteEntity;
 /**
  * Site controller class providing navigation and interaction functionality.
  */
-class SiteController extends BaseSiteController
+class SiteController extends AbstractSiteController
 {
     /**
      * This action provides an item list overview in the admin area.

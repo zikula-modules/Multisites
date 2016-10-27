@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Form\Type;
 
-use Zikula\MultisitesModule\Form\Type\Base\TemplateType as BaseTemplateType;
+use Zikula\MultisitesModule\Form\Type\Base\AbstractTemplateType;
 
 use ModUtil;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Template editing form type implementation class.
  */
-class TemplateType extends BaseTemplateType
+class TemplateType extends AbstractTemplateType
 {
     /**
      * Adds basic entity fields.

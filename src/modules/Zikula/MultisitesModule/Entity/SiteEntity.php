@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Entity;
 
-use Zikula\MultisitesModule\Entity\Base\AbstractSiteEntity as BaseAbstractSiteEntity;
+use Zikula\MultisitesModule\Entity\Base\AbstractSiteEntity as BaseEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,7 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  */
-class SiteEntity extends BaseAbstractSiteEntity
+class SiteEntity extends BaseEntity
 {
     /**
      * Retrieves database information array.

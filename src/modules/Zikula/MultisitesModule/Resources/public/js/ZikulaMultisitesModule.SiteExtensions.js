@@ -1,7 +1,5 @@
 /**
  * Modifies the state of a module in a site database.
- *
- * TODO migrate to jQuery
  */
 function multisitesModifyModuleActivation(moduleName, siteId, newState)
 {

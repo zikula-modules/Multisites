@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Container;
 
-use Zikula\MultisitesModule\Container\Base\LinkContainer as BaseLinkContainer;
+use Zikula\MultisitesModule\Container\Base\AbstractLinkContainer;
 
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\LinkContainer\LinkContainerInterface;
@@ -22,7 +22,7 @@ use Zikula\MultisitesModule\Entity\TemplateEntity;
 /**
  * This is the link container service implementation class.
  */
-class LinkContainer extends BaseLinkContainer
+class LinkContainer extends AbstractLinkContainer
 {
     /**
      * Returns available header links.

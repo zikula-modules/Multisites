@@ -154,7 +154,7 @@
                     {{ site.siteAdminRealName }}
                 </td>
                 <td headers="hSiteAdminEmail" class="text-left">
-                    <a href="mailto:{{ site.siteAdminEmail }}" title="{{ __('Send an email') }}" class="fa fa-envelope"></a>
+                    <a href="mailto:{{ site.siteAdminEmail|protectMail }}" title="{{ __('Send an email') }}" class="fa fa-envelope"></a>
                 </td>
                 <td headers="hSiteCompany" class="text-left">
                     {{ site.siteCompany }}

@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Entity;
 
-use Zikula\MultisitesModule\Entity\Base\AbstractTemplateEntity as BaseAbstractTemplateEntity;
+use Zikula\MultisitesModule\Entity\Base\AbstractTemplateEntity as BaseEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,7 +32,7 @@ use ModUtil;
  *     }
  * )
  */
-class TemplateEntity extends BaseAbstractTemplateEntity
+class TemplateEntity extends BaseEntity
 {
     /**
      * Checks whether the sql file is referenced by any other template.

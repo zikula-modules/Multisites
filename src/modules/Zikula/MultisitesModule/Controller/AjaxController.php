@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Controller;
 
-use Zikula\MultisitesModule\Controller\Base\AjaxController as BaseAjaxController;
+use Zikula\MultisitesModule\Controller\Base\AbstractAjaxController;
 
 use ModUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -30,7 +30,7 @@ use Zikula\Core\Response\Ajax\NotFoundResponse;
  *
  * @Route("/ajax")
  */
-class AjaxController extends BaseAjaxController
+class AjaxController extends AbstractAjaxController
 {
     /**
      * This is the default action handling the main area called without defining arguments.

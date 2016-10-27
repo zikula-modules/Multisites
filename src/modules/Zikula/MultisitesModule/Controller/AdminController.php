@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Controller;
 
-use Zikula\MultisitesModule\Controller\Base\AdminController as BaseAdminController;
+use Zikula\MultisitesModule\Controller\Base\AbstractAdminController;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ use ModUtil;
 /**
  * Admin controller class providing navigation and interaction functionality.
  */
-class AdminController extends BaseAdminController
+class AdminController extends AbstractAdminController
 {
     /**
      * This is the default action handling the main area called without defining arguments.

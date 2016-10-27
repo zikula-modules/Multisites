@@ -1,20 +1,8 @@
 services:
     # Helper classes
-    zikula_multisites_module.model_helper:
-        class: Zikula\MultisitesModule\Helper\ModelHelper
-        arguments: ["@service_container"]
-    
     zikula_multisites_module.controller_helper:
         class: Zikula\MultisitesModule\Helper\ControllerHelper
         arguments: ["@service_container", "@translator.default", "@session", "@logger"]
-    
-    zikula_multisites_module.view_helper:
-        class: Zikula\MultisitesModule\Helper\ViewHelper
-        arguments: ["@service_container", "@translator.default"]
-    
-    zikula_multisites_module.workflow_helper:
-        class: Zikula\MultisitesModule\Helper\WorkflowHelper
-        arguments: ["@service_container", "@translator.default"]
     
     zikula_multisites_module.hook_helper:
         class: Zikula\MultisitesModule\Helper\HookHelper
@@ -26,6 +14,22 @@ services:
     zikula_multisites_module.listentries_helper:
         class: Zikula\MultisitesModule\Helper\ListEntriesHelper
         arguments: ["@translator.default"]
+    
+    zikula_multisites_module.model_helper:
+        class: Zikula\MultisitesModule\Helper\ModelHelper
+        arguments: ["@service_container"]
+    
+    zikula_multisites_module.selection_helper:
+        class: Zikula\MultisitesModule\Helper\SelectionHelper
+        arguments: ["@service_container", "@doctrine.orm.entity_manager", "@translator.default", "@zikula_multisites_module.controller_helper"]
+    
+    zikula_multisites_module.view_helper:
+        class: Zikula\MultisitesModule\Helper\ViewHelper
+        arguments: ["@service_container", "@translator.default"]
+    
+    zikula_multisites_module.workflow_helper:
+        class: Zikula\MultisitesModule\Helper\WorkflowHelper
+        arguments: ["@service_container", "@translator.default"]
 
     # Custom helper classes
     zikula_multisites_module.configurator_helper:

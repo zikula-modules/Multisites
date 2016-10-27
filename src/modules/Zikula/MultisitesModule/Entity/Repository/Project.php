@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Entity\Repository;
 
-use Zikula\MultisitesModule\Entity\Repository\Base\Project as BaseProject;
+use Zikula\MultisitesModule\Entity\Repository\Base\AbstractProject;
 
 use Doctrine\ORM\QueryBuilder;
 use ModUtil;
@@ -22,7 +22,7 @@ use ModUtil;
  *
  * This is the concrete repository class for project entities.
  */
-class Project extends BaseProject
+class Project extends AbstractProject
 {
     /**
      * Returns an array of additional template variables for view quick navigation forms.

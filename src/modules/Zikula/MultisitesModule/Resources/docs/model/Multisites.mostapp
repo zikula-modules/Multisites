@@ -1,4 +1,5 @@
 application "Multisites" {
+    documentation "Zikula Multisites manager."
     vendor "Zikula"
     author "Albert Pérez Monfort"
     email "aperezm@xtec.cat"
@@ -21,6 +22,7 @@ application "Multisites" {
         generateExternalControllerAndFinder false
         generateScribitePlugins false
         generateTagSupport false
+        generateMultiHookNeedles false
         generateRssTemplates false
         generateAtomTemplates false
         generateKmlTemplates false
@@ -31,7 +33,6 @@ application "Multisites" {
             README.md
         "
         markFiles "
-            composer.json,
             Container/LinkContainer.php,
             Controller/AdminController.php,
             Controller/ConfigController.php,
@@ -56,8 +57,7 @@ application "Multisites" {
             Resources/config/eventSubscriber.yml,
             Resources/config/helpers.yml,
             Resources/docs/overridesTemplate_config.yml,
-            Resources/docs/overridesTemplate_theme.yml,
-            zikula.manifest.json
+            Resources/docs/overridesTemplate_theme.yml
         "
     }
     entities {

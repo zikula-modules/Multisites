@@ -12,14 +12,14 @@
 
 namespace Zikula\MultisitesModule\Form\Type;
 
-use Zikula\MultisitesModule\Form\Type\Base\SiteType as BaseSiteType;
+use Zikula\MultisitesModule\Form\Type\Base\AbstractSiteType;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Site editing form type implementation class.
  */
-class SiteType extends BaseSiteType
+class SiteType extends AbstractSiteType
 {
     /**
      * Adds basic entity fields.

@@ -35,6 +35,7 @@ function zikulaMultisitesToday(format)
         }
         todayDate += hours + ':' + minutes;// + ':' + seconds;
     }
+
     return todayDate;
 }
 
@@ -52,6 +53,7 @@ function zikulaMultisitesReadDate(val, includeTime)
         if (includeTime === true) {
             newVal += ' ' + val.substr(11, 5);
         }
+
         return newVal;
     }
 }
@@ -70,6 +72,7 @@ function zikulaMultisitesValidateUploadExtension(val, elem)
     if (val === '') {
         return true;
     }
+
     fileExtension = '.' + val.substr(val.lastIndexOf('.') + 1);
     allowedExtensions = jQuery('#' + elem.attr('id') + 'FileExtensions').innerHTML;
     allowedExtensions = '(.' + allowedExtensions.replace(/, /g, '|.').replace(/,/g, '|.') + ')$';

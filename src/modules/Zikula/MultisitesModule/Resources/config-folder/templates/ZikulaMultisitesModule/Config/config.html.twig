@@ -19,6 +19,8 @@
         <li class="active" data-toggle="pill"><a href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
         {% set tabTitle = __('Security settings') %}
         <li data-toggle="pill"><a href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
+        {% set tabTitle = __('Images') %}
+        <li data-toggle="pill"><a href="#tab3" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
         </ul>
 
         {{ form_errors(form) }}
@@ -45,6 +47,18 @@
                     {{ form_row(form.globalAdminEmail) }}
                 </fieldset>
             </div>
+            {% set tabTitle = __('Images') %}
+            <div role="tabpanel" class="tab-pane fade" id="tab3">
+                <fieldset>
+                    <legend>{{ tabTitle }}</legend>
+                
+                    <p class="alert alert-info">{{ __('Here you can define shrinking behaviour for huge images.')|nl2br }}</p>
+                
+                    {{ form_row(form.enableShrinkingForSiteLogo) }}
+                    {{ form_row(form.shrinkWidthSiteLogo) }}
+                    {{ form_row(form.shrinkHeightSiteLogo) }}
+                </fieldset>
+            </div>
         </div>
 
         <div class="form-group">
@@ -55,4 +69,17 @@
         </div>
         {{ form_end(form) }}
     </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                $('.zikulamultisitesmodule-form-tooltips').tooltip();
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
 {% endblock %}

@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Entity;
 
-use Zikula\MultisitesModule\Entity\Base\AbstractProjectEntity as BaseAbstractProjectEntity;
+use Zikula\MultisitesModule\Entity\Base\AbstractProjectEntity as BaseEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -31,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  */
-class ProjectEntity extends BaseAbstractProjectEntity
+class ProjectEntity extends BaseEntity
 {
     // feel free to add your own methods here
 }

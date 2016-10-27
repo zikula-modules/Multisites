@@ -12,14 +12,14 @@
 
 namespace Zikula\MultisitesModule\Helper;
 
-use Zikula\MultisitesModule\Helper\Base\ModelHelper as BaseModelHelper;
+use Zikula\MultisitesModule\Helper\Base\AbstractModelHelper;
 
 use Exception;
 
 /**
  * Utility implementation class for model helper methods.
  */
-class ModelHelper extends BaseModelHelper
+class ModelHelper extends AbstractModelHelper
 {
     /**
      * Determines whether creating an instance of a certain object type is possible.
