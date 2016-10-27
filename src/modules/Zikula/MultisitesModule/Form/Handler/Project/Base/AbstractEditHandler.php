@@ -219,6 +219,7 @@ abstract class AbstractEditHandler extends EditHandler
         
         if ($args['commandName'] == 'create') {
             // save predefined outgoing relationship to child entity
+            $selectionHelper = $this->container->get('zikula_multisites_module.selection_helper');
             if (!empty($this->relationPresets['templates'])) {
                 $relObj = $selectionHelper->getEntity('template', $this->relationPresets['templates']);
                 if (null !== $relObj) {

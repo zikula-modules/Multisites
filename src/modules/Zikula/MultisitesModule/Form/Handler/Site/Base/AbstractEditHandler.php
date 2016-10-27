@@ -66,6 +66,7 @@ abstract class AbstractEditHandler extends EditHandler
         $entity = $this->entityRef;
         
         // assign identifiers of predefined incoming relationships
+        $selectionHelper = $this->container->get('zikula_multisites_module.selection_helper');
         // editable relation, we store the id and assign it now to show it in UI
         $this->relationPresets['template'] = $this->request->get('template', '');
         if (!empty($this->relationPresets['template'])) {
