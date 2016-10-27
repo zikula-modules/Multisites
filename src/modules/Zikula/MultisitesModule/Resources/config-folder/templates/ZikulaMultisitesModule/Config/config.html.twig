@@ -70,16 +70,3 @@
         {{ form_end(form) }}
     </div>
 {% endblock %}
-{% block footer %}
-    {{ parent() }}
-
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        ( function($) {
-            $(document).ready(function() {
-                $('.zikulamultisitesmodule-form-tooltips').tooltip();
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
-{% endblock %}

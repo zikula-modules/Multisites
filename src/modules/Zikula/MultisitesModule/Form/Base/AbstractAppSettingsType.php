@@ -158,7 +158,7 @@ abstract class AbstractAppSettingsType extends AbstractType
             ->add('enableShrinkingForSiteLogo', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
                 'label' => $this->__('Enable shrinking for site logo') . ':',
                 'label_attr' => [
-                    'class' => 'zikulamultisitesmodule-form-tooltips',
+                    'class' => 'tooltips',
                     'title' => $this->__('Whether to enable shrinking to maximum image dimensions. The original image is not stored.')
                 ],
                 'help' => $this->__('Whether to enable shrinking to maximum image dimensions. The original image is not stored.'),
@@ -172,7 +172,7 @@ abstract class AbstractAppSettingsType extends AbstractType
             ->add('shrinkWidthSiteLogo', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Shrink width site logo') . ':',
                 'label_attr' => [
-                    'class' => 'zikulamultisitesmodule-form-tooltips',
+                    'class' => 'tooltips',
                     'title' => $this->__('The maximum image width.')
                 ],
                 'help' => $this->__('The maximum image width.'),
@@ -188,7 +188,7 @@ abstract class AbstractAppSettingsType extends AbstractType
             ->add('shrinkHeightSiteLogo', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
                 'label' => $this->__('Shrink height site logo') . ':',
                 'label_attr' => [
-                    'class' => 'zikulamultisitesmodule-form-tooltips',
+                    'class' => 'tooltips',
                     'title' => $this->__('The maximum image height.')
                 ],
                 'help' => $this->__('The maximum image height.'),
