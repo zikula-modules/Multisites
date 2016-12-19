@@ -100,6 +100,14 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
 
         
         if (LinkContainerInterface::TYPE_ADMIN == $type) {
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_READ)) {
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_user_index'),
+                    'text' => $this->__('Frontend'),
+                    'title' => $this->__('Switch to user area.'),
+                    'icon' => 'home'
+                ];
+            }
             
             if (in_array('site', $allowedObjectTypes)
                 && $this->permissionApi->hasPermission($this->getBundleName() . ':Site:', '::', $permLevel)) {
@@ -142,6 +150,57 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 ];
             }
         }
+        if (LinkContainerInterface::TYPE_USER == $type) {
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_admin_index'),
+                    'text' => $this->__('Backend'),
+                    'title' => $this->__('Switch to administration area.'),
+                    'icon' => 'wrench'
+                ];
+            }
+            
+            if (in_array('site', $allowedObjectTypes)
+                && $this->permissionApi->hasPermission($this->getBundleName() . ':Site:', '::', $permLevel)) {
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_site_view'),
+                     'text' => $this->__('Sites'),
+                     'title' => $this->__('Site list')
+                 ];
+            }
+            if (in_array('template', $allowedObjectTypes)
+                && $this->permissionApi->hasPermission($this->getBundleName() . ':Template:', '::', $permLevel)) {
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_template_view'),
+                     'text' => $this->__('Templates'),
+                     'title' => $this->__('Template list')
+                 ];
+            }
+            if (in_array('siteExtension', $allowedObjectTypes)
+                && $this->permissionApi->hasPermission($this->getBundleName() . ':SiteExtension:', '::', $permLevel)) {
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_siteextension_view'),
+                     'text' => $this->__('Site extensions'),
+                     'title' => $this->__('Site extension list')
+                 ];
+            }
+            if (in_array('project', $allowedObjectTypes)
+                && $this->permissionApi->hasPermission($this->getBundleName() . ':Project:', '::', $permLevel)) {
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_project_view'),
+                     'text' => $this->__('Projects'),
+                     'title' => $this->__('Project list')
+                 ];
+            }
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_config_config'),
+                    'text' => $this->__('Configuration'),
+                    'title' => $this->__('Manage settings for this application'),
+                    'icon' => 'wrench'
+                ];
+            }
+        }
 
         return $links;
     }
@@ -166,7 +225,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         
         if ($entity instanceof SiteEntity) {
             $component = 'ZikulaMultisitesModule:Site:';
-            $instance = $this->id . '::';
+            $instance = $entity['id'] . '::';
         
         if ($currentLegacyControllerType == 'admin') {
             if (in_array($currentFunc, ['index', 'view'])) {
@@ -174,13 +233,13 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             if (in_array($currentFunc, ['index', 'view', 'display'])) {
                 if ($this->permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                     $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_site_adminedit', ['id' => $this['id']]),
+                        'url' => $this->router->generate('zikulamultisitesmodule_site_adminedit', ['id' => $entity['id']]),
                         'icon' => 'pencil-square-o',
                         'linkTitle' => $this->__('Edit'),
                         'linkText' => $this->__('Edit')
                     ];
                     $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_site_adminedit', ['astemplate' => $this['id']]),
+                        'url' => $this->router->generate('zikulamultisitesmodule_site_adminedit', ['astemplate' => $entity['id']]),
                         'icon' => 'files-o',
                         'linkTitle' => $this->__('Reuse for new item'),
                         'linkText' => $this->__('Reuse')
@@ -188,7 +247,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 }
                 if ($this->permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                     $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_site_admindelete', ['id' => $this['id']]),
+                        'url' => $this->router->generate('zikulamultisitesmodule_site_admindelete', ['id' => $entity['id']]),
                         'icon' => 'trash-o',
                         'linkTitle' => $this->__('Delete'),
                         'linkText' => $this->__('Delete')
@@ -200,16 +259,54 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $authAdmin = $this->permissionApi->hasPermission($component, $instance, ACCESS_ADMIN);
             
             $uid = $this->currentUserApi->get('uid');
-            if ($authAdmin || (isset($uid) && isset($entity->createdUserId) && $entity->createdUserId == $uid)) {
+            if ($authAdmin || (isset($uid) && $entity->getCreatedUserId() != '' && $entity->getCreatedUserId() == $uid)) {
             
-                $urlArgs = ['site' => $this->id];
-                if ($currentFunc == 'view') {
-                    $urlArgs['returnTo'] = 'adminViewSite';
-                } elseif ($currentFunc == 'display') {
-                    $urlArgs['returnTo'] = 'adminDisplaySite';
-                }
+                $urlArgs = ['site' => $entity['id']];
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_siteextension_adminedit', $urlArgs),
+                    'icon' => 'plus',
+                    'linkTitle' => $this->__('Create site extension'),
+                    'linkText' => $this->__('Create site extension')
+                ];
+            }
+        }
+        if ($currentLegacyControllerType == 'user') {
+            if (in_array($currentFunc, ['index', 'view'])) {
+            }
+            if (in_array($currentFunc, ['index', 'view', 'display'])) {
+                if ($this->permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+                    $links[] = [
+                        'url' => $this->router->generate('zikulamultisitesmodule_site_edit', ['id' => $entity['id']]),
+                        'icon' => 'pencil-square-o',
+                        'linkTitle' => $this->__('Edit'),
+                        'linkText' => $this->__('Edit')
+                    ];
+                    $links[] = [
+                        'url' => $this->router->generate('zikulamultisitesmodule_site_edit', ['astemplate' => $entity['id']]),
+                        'icon' => 'files-o',
+                        'linkTitle' => $this->__('Reuse for new item'),
+                        'linkText' => $this->__('Reuse')
+                    ];
+                }
+                if ($this->permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+                    $links[] = [
+                        'url' => $this->router->generate('zikulamultisitesmodule_site_delete', ['id' => $entity['id']]),
+                        'icon' => 'trash-o',
+                        'linkTitle' => $this->__('Delete'),
+                        'linkText' => $this->__('Delete')
+                    ];
+                }
+            }
+            
+            // more actions for adding new related items
+            $authAdmin = $this->permissionApi->hasPermission($component, $instance, ACCESS_ADMIN);
+            
+            $uid = $this->currentUserApi->get('uid');
+            if ($authAdmin || (isset($uid) && $entity->getCreatedUserId() != '' && $entity->getCreatedUserId() == $uid)) {
+            
+                $urlArgs = ['site' => $entity['id']];
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_siteextension_edit', $urlArgs),
                     'icon' => 'plus',
                     'linkTitle' => $this->__('Create site extension'),
                     'linkText' => $this->__('Create site extension')
@@ -219,7 +316,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         }
         if ($entity instanceof TemplateEntity) {
             $component = 'ZikulaMultisitesModule:Template:';
-            $instance = $this->id . '::';
+            $instance = $entity['id'] . '::';
         
         if ($currentLegacyControllerType == 'admin') {
             if (in_array($currentFunc, ['index', 'view'])) {
@@ -227,24 +324,16 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             if (in_array($currentFunc, ['index', 'view', 'display'])) {
                 if ($this->permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                     $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_template_adminedit', ['id' => $this['id']]),
+                        'url' => $this->router->generate('zikulamultisitesmodule_template_adminedit', ['id' => $entity['id']]),
                         'icon' => 'pencil-square-o',
                         'linkTitle' => $this->__('Edit'),
                         'linkText' => $this->__('Edit')
                     ];
                     $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_template_adminedit', ['astemplate' => $this['id']]),
+                        'url' => $this->router->generate('zikulamultisitesmodule_template_adminedit', ['astemplate' => $entity['id']]),
                         'icon' => 'files-o',
                         'linkTitle' => $this->__('Reuse for new item'),
                         'linkText' => $this->__('Reuse')
-                    ];
-                }
-                if ($this->permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
-                    $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_template_admindelete', ['id' => $this['id']]),
-                        'icon' => 'trash-o',
-                        'linkTitle' => $this->__('Delete'),
-                        'linkText' => $this->__('Delete')
                     ];
                 }
             }
@@ -253,14 +342,9 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $authAdmin = $this->permissionApi->hasPermission($component, $instance, ACCESS_ADMIN);
             
             $uid = $this->currentUserApi->get('uid');
-            if ($authAdmin || (isset($uid) && isset($entity->createdUserId) && $entity->createdUserId == $uid)) {
+            if ($authAdmin || (isset($uid) && $entity->getCreatedUserId() != '' && $entity->getCreatedUserId() == $uid)) {
             
-                $urlArgs = ['template' => $this->id];
-                if ($currentFunc == 'view') {
-                    $urlArgs['returnTo'] = 'adminViewTemplate';
-                } elseif ($currentFunc == 'display') {
-                    $urlArgs['returnTo'] = 'adminDisplayTemplate';
-                }
+                $urlArgs = ['template' => $entity['id']];
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_site_adminedit', $urlArgs),
                     'icon' => 'plus',
@@ -268,14 +352,52 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                     'linkText' => $this->__('Create site')
                 ];
             
-                $urlArgs = ['templates' => $this->id];
-                if ($currentFunc == 'view') {
-                    $urlArgs['returnTo'] = 'adminViewTemplate';
-                } elseif ($currentFunc == 'display') {
-                    $urlArgs['returnTo'] = 'adminDisplayTemplate';
-                }
+                $urlArgs = ['templates' => $entity['id']];
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_project_adminedit', $urlArgs),
+                    'icon' => 'plus',
+                    'linkTitle' => $this->__('Create project'),
+                    'linkText' => $this->__('Create project')
+                ];
+            }
+        }
+        if ($currentLegacyControllerType == 'user') {
+            if (in_array($currentFunc, ['index', 'view'])) {
+            }
+            if (in_array($currentFunc, ['index', 'view', 'display'])) {
+                if ($this->permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+                    $links[] = [
+                        'url' => $this->router->generate('zikulamultisitesmodule_template_edit', ['id' => $entity['id']]),
+                        'icon' => 'pencil-square-o',
+                        'linkTitle' => $this->__('Edit'),
+                        'linkText' => $this->__('Edit')
+                    ];
+                    $links[] = [
+                        'url' => $this->router->generate('zikulamultisitesmodule_template_edit', ['astemplate' => $entity['id']]),
+                        'icon' => 'files-o',
+                        'linkTitle' => $this->__('Reuse for new item'),
+                        'linkText' => $this->__('Reuse')
+                    ];
+                }
+            }
+            
+            // more actions for adding new related items
+            $authAdmin = $this->permissionApi->hasPermission($component, $instance, ACCESS_ADMIN);
+            
+            $uid = $this->currentUserApi->get('uid');
+            if ($authAdmin || (isset($uid) && $entity->getCreatedUserId() != '' && $entity->getCreatedUserId() == $uid)) {
+            
+                $urlArgs = ['template' => $entity['id']];
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_site_edit', $urlArgs),
+                    'icon' => 'plus',
+                    'linkTitle' => $this->__('Create site'),
+                    'linkText' => $this->__('Create site')
+                ];
+            
+                $urlArgs = ['templates' => $entity['id']];
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_project_edit', $urlArgs),
                     'icon' => 'plus',
                     'linkTitle' => $this->__('Create project'),
                     'linkText' => $this->__('Create project')
@@ -285,40 +407,24 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         }
         if ($entity instanceof SiteExtensionEntity) {
             $component = 'ZikulaMultisitesModule:SiteExtension:';
-            $instance = $this->id . '::';
+            $instance = $entity['id'] . '::';
         
         if ($currentLegacyControllerType == 'admin') {
             if (in_array($currentFunc, ['index', 'view'])) {
             }
             if (in_array($currentFunc, ['index', 'view', 'display'])) {
-                if ($this->permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
-                    $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_siteextension_adminedit', ['id' => $this['id']]),
-                        'icon' => 'pencil-square-o',
-                        'linkTitle' => $this->__('Edit'),
-                        'linkText' => $this->__('Edit')
-                    ];
-                    $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_siteextension_adminedit', ['astemplate' => $this['id']]),
-                        'icon' => 'files-o',
-                        'linkTitle' => $this->__('Reuse for new item'),
-                        'linkText' => $this->__('Reuse')
-                    ];
-                }
-                if ($this->permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
-                    $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_siteextension_admindelete', ['id' => $this['id']]),
-                        'icon' => 'trash-o',
-                        'linkTitle' => $this->__('Delete'),
-                        'linkText' => $this->__('Delete')
-                    ];
-                }
+            }
+        }
+        if ($currentLegacyControllerType == 'user') {
+            if (in_array($currentFunc, ['index', 'view'])) {
+            }
+            if (in_array($currentFunc, ['index', 'view', 'display'])) {
             }
         }
         }
         if ($entity instanceof ProjectEntity) {
             $component = 'ZikulaMultisitesModule:Project:';
-            $instance = $this->id . '::';
+            $instance = $entity['id'] . '::';
         
         if ($currentLegacyControllerType == 'admin') {
             if (in_array($currentFunc, ['index', 'view'])) {
@@ -326,24 +432,16 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             if (in_array($currentFunc, ['index', 'view', 'display'])) {
                 if ($this->permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                     $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_project_adminedit', ['id' => $this['id']]),
+                        'url' => $this->router->generate('zikulamultisitesmodule_project_adminedit', ['id' => $entity['id']]),
                         'icon' => 'pencil-square-o',
                         'linkTitle' => $this->__('Edit'),
                         'linkText' => $this->__('Edit')
                     ];
                     $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_project_adminedit', ['astemplate' => $this['id']]),
+                        'url' => $this->router->generate('zikulamultisitesmodule_project_adminedit', ['astemplate' => $entity['id']]),
                         'icon' => 'files-o',
                         'linkTitle' => $this->__('Reuse for new item'),
                         'linkText' => $this->__('Reuse')
-                    ];
-                }
-                if ($this->permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
-                    $links[] = [
-                        'url' => $this->router->generate('zikulamultisitesmodule_project_admindelete', ['id' => $this['id']]),
-                        'icon' => 'trash-o',
-                        'linkTitle' => $this->__('Delete'),
-                        'linkText' => $this->__('Delete')
                     ];
                 }
             }
@@ -352,14 +450,9 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $authAdmin = $this->permissionApi->hasPermission($component, $instance, ACCESS_ADMIN);
             
             $uid = $this->currentUserApi->get('uid');
-            if ($authAdmin || (isset($uid) && isset($entity->createdUserId) && $entity->createdUserId == $uid)) {
+            if ($authAdmin || (isset($uid) && $entity->getCreatedUserId() != '' && $entity->getCreatedUserId() == $uid)) {
             
-                $urlArgs = ['project' => $this->id];
-                if ($currentFunc == 'view') {
-                    $urlArgs['returnTo'] = 'adminViewProject';
-                } elseif ($currentFunc == 'display') {
-                    $urlArgs['returnTo'] = 'adminDisplayProject';
-                }
+                $urlArgs = ['project' => $entity['id']];
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_site_adminedit', $urlArgs),
                     'icon' => 'plus',
@@ -367,14 +460,52 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                     'linkText' => $this->__('Create site')
                 ];
             
-                $urlArgs = ['projects' => $this->id];
-                if ($currentFunc == 'view') {
-                    $urlArgs['returnTo'] = 'adminViewProject';
-                } elseif ($currentFunc == 'display') {
-                    $urlArgs['returnTo'] = 'adminDisplayProject';
-                }
+                $urlArgs = ['projects' => $entity['id']];
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_template_adminedit', $urlArgs),
+                    'icon' => 'plus',
+                    'linkTitle' => $this->__('Create template'),
+                    'linkText' => $this->__('Create template')
+                ];
+            }
+        }
+        if ($currentLegacyControllerType == 'user') {
+            if (in_array($currentFunc, ['index', 'view'])) {
+            }
+            if (in_array($currentFunc, ['index', 'view', 'display'])) {
+                if ($this->permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+                    $links[] = [
+                        'url' => $this->router->generate('zikulamultisitesmodule_project_edit', ['id' => $entity['id']]),
+                        'icon' => 'pencil-square-o',
+                        'linkTitle' => $this->__('Edit'),
+                        'linkText' => $this->__('Edit')
+                    ];
+                    $links[] = [
+                        'url' => $this->router->generate('zikulamultisitesmodule_project_edit', ['astemplate' => $entity['id']]),
+                        'icon' => 'files-o',
+                        'linkTitle' => $this->__('Reuse for new item'),
+                        'linkText' => $this->__('Reuse')
+                    ];
+                }
+            }
+            
+            // more actions for adding new related items
+            $authAdmin = $this->permissionApi->hasPermission($component, $instance, ACCESS_ADMIN);
+            
+            $uid = $this->currentUserApi->get('uid');
+            if ($authAdmin || (isset($uid) && $entity->getCreatedUserId() != '' && $entity->getCreatedUserId() == $uid)) {
+            
+                $urlArgs = ['project' => $entity['id']];
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_site_edit', $urlArgs),
+                    'icon' => 'plus',
+                    'linkTitle' => $this->__('Create site'),
+                    'linkText' => $this->__('Create site')
+                ];
+            
+                $urlArgs = ['projects' => $entity['id']];
+                $links[] = [
+                    'url' => $this->router->generate('zikulamultisitesmodule_template_edit', $urlArgs),
                     'icon' => 'plus',
                     'linkTitle' => $this->__('Create template'),
                     'linkText' => $this->__('Create template')

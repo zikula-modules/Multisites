@@ -22,7 +22,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use UserUtil;
+use Zikula\ExtensionsModule\Api\ExtensionApi;
 use Zikula\MultisitesModule\Entity\SiteEntity;
+use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
  * Site controller class providing navigation and interaction functionality.
@@ -34,9 +36,10 @@ class SiteController extends AbstractSiteController
      *
      * @Route("/admin/sites/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
-     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 0, "_format" = "html"},
+     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request      Current request instance
      * @param string  $sort         Sorting field
@@ -85,6 +88,7 @@ class SiteController extends AbstractSiteController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -129,6 +133,7 @@ class SiteController extends AbstractSiteController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request      Current request instance
      * @param SiteEntity $site      Treated site instance
@@ -173,6 +178,7 @@ class SiteController extends AbstractSiteController
      * @Route("/admin/sites/manageExtensions",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -208,6 +214,7 @@ class SiteController extends AbstractSiteController
      * @Route("/admin/sites/manageThemes",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -243,6 +250,7 @@ class SiteController extends AbstractSiteController
      * @Route("/admin/sites/setThemeAsDefault",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -278,6 +286,7 @@ class SiteController extends AbstractSiteController
      * @Route("/admin/sites/viewTools",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -313,6 +322,7 @@ class SiteController extends AbstractSiteController
      * @Route("/admin/sites/executeTool",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -348,6 +358,7 @@ class SiteController extends AbstractSiteController
      * @Route("/admin/sites/exportDatabaseAsTemplate",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -387,6 +398,7 @@ class SiteController extends AbstractSiteController
      * @Route("/admin/sites/handleSelectedEntries",
      *        methods = {"POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -433,6 +445,7 @@ class SiteController extends AbstractSiteController
         $siteBasePath = $msConfig['files_real_path'];
         $zikula = $this->get('zikula');
 
+        $selectionHelper = $this->get('zikula_multisites_module.selection_helper');
         $systemHelper = $needsDatabaseAccess ? $this->get('zikula_multisites_module.system_helper') : null;
 
         // process each item
@@ -442,13 +455,8 @@ class SiteController extends AbstractSiteController
             //$zikula->init();
 
             // Get site information
-            $selectionArgs = [
-                'ot' => 'site',
-                'id' => $itemid,
-                'useJoins' => false
-            ];
-            $entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', $selectionArgs);
-            if ($entity === false || !is_object($entity)) {
+            $entity = $selectionHelper->getEntity('site', $itemid, false);
+            if (null === $entity || !is_object($entity)) {
                 $this->addFlash('error', $this->__f('Error! No site with id %s could be found.', ['%s' => $itemid]));
                 continue;
             }
@@ -513,7 +521,7 @@ class SiteController extends AbstractSiteController
         $modules = [];
 
         foreach ($allModules as $mod) {
-            if (ModUtil::TYPE_SYSTEM == $mod['type']) {
+            if (ExtensionApi::TYPE_SYSTEM == $mod['type']) {
                 continue;
             }
 
@@ -739,7 +747,8 @@ class SiteController extends AbstractSiteController
         $repository = $this->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
         $repository->setRequest($request);
 
-        $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', ['ot' => $objectType]);
+        $selectionHelper = $this->get('zikula_multisites_module.selection_helper');
+        $idFields = $selectionHelper->getIdFields($objectType);
 
         // retrieve identifier of the object we wish to view
         $idValues = $controllerHelper->retrieveIdentifier($request, [], $objectType, $idFields);
@@ -749,9 +758,7 @@ class SiteController extends AbstractSiteController
             throw new NotFoundHttpException($this->__('Error! Invalid identifier received.'));
         }
 
-        $selectionArgs = ['ot' => $objectType, 'id' => $idValues];
-
-        $entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', $selectionArgs);
+        $entity = $selectionHelper->getEntity($objectType, $idValues);
         if (null === $entity) {
             throw new NotFoundHttpException($this->__('No such item.'));
         }

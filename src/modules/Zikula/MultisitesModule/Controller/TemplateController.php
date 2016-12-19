@@ -14,12 +14,12 @@ namespace Zikula\MultisitesModule\Controller;
 
 use Zikula\MultisitesModule\Controller\Base\AbstractTemplateController;
 
-use ModUtil;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Zikula\ThemeModule\Engine\Annotation\Theme;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
 
 /**
@@ -32,9 +32,10 @@ class TemplateController extends AbstractTemplateController
      *
      * @Route("/admin/templates/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
-     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 0, "_format" = "html"},
+     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request      Current request instance
      * @param string  $sort         Sorting field
@@ -82,6 +83,7 @@ class TemplateController extends AbstractTemplateController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request      Current request instance
      *
@@ -123,6 +125,7 @@ class TemplateController extends AbstractTemplateController
      * @Route("/admin/templates/createParametersCsvTemplate",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request      Current request instance
      *
@@ -159,6 +162,7 @@ class TemplateController extends AbstractTemplateController
      * @Route("/admin/templates/reapply",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request      Current request instance
      *
@@ -198,6 +202,7 @@ class TemplateController extends AbstractTemplateController
      * @Route("/admin/templates/handleSelectedEntries",
      *        methods = {"POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -246,7 +251,8 @@ class TemplateController extends AbstractTemplateController
         $repository = $this->get('zikula_multisites_module.' . $objectType . '_factory')->getRepository();
         $repository->setRequest($request);
 
-        $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', ['ot' => $objectType]);
+        $selectionHelper = $this->get('zikula_multisites_module.selection_helper');
+        $idFields = $selectionHelper->getIdFields($objectType);
 
         // retrieve identifier of the object we wish to view
         $idValues = $controllerHelper->retrieveIdentifier($request, [], $objectType, $idFields);
@@ -256,9 +262,7 @@ class TemplateController extends AbstractTemplateController
             throw new NotFoundHttpException($this->__('Error! Invalid identifier received.'));
         }
 
-        $selectionArgs = ['ot' => $objectType, 'id' => $idValues];
-
-        $entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', $selectionArgs);
+        $entity = $selectionHelper->getEntity($objectType, $idValues);
         if (null === $entity) {
             throw new NotFoundHttpException($this->__('No such item.'));
         }
@@ -303,7 +307,8 @@ class TemplateController extends AbstractTemplateController
             throw new AccessDeniedException();
         }
 
-        $idFields = ModUtil::apiFunc($this->name, 'selection', 'getIdFields', ['ot' => $objectType]);
+        $selectionHelper = $this->get('zikula_multisites_module.selection_helper');
+        $idFields = $selectionHelper->getIdFields($objectType);
         
         // retrieve identifier of the object we wish to delete
         $idValues = $controllerHelper->retrieveIdentifier($request, [], $objectType, $idFields);
@@ -313,9 +318,7 @@ class TemplateController extends AbstractTemplateController
             throw new NotFoundHttpException($this->__('Error! Invalid identifier received.'));
         }
         
-        $selectionArgs = ['ot' => $objectType, 'id' => $idValues];
-        
-        $entity = ModUtil::apiFunc($this->name, 'selection', 'getEntity', $selectionArgs);
+        $entity = $selectionHelper->getEntity($objectType, $idValues);
         if (null === $entity) {
             throw new NotFoundHttpException($this->__('No such item.'));
         }

@@ -167,7 +167,7 @@ function zikulaMultisitesToggleFlag(objectType, fieldName, itemId)
 
         idSuffix = idSuffix.toLowerCase();
         var state = data.state;
-        if (state === true) {
+        if (true === state) {
             jQuery('#no' + idSuffix).addClass('hidden');
             jQuery('#yes' + idSuffix).removeClass('hidden');
         } else {

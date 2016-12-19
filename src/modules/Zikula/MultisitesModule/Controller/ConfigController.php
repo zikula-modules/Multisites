@@ -16,6 +16,7 @@ use Zikula\MultisitesModule\Controller\Base\AbstractConfigController;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
  * config controller class providing navigation and interaction functionality.
@@ -28,6 +29,7 @@ class ConfigController extends AbstractConfigController
      * @Route("/config/config",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request      Current request instance
      *

@@ -9,7 +9,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { all: showAllEntries, own: showOwnEntries, workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="sitesViewForm" class="form-horizontal" role="form">
@@ -177,34 +177,37 @@
                     {{ site.databaseType }}
                 </td>
                 <td headers="hLogo" class="text-left">
-                    {% if site.logo is not empty %}
-                    <a href="{{ site.logoFullPathURL }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.logoMeta.isImage %} class="lightbox"{% endif %}>
+                    {% if site.logo is not empty and site.logoMeta|default %}
+                                <a href="{{ site.logoUrl }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.logoMeta.isImage %} class="lightbox"{% endif %}>
                     {% if site.logoMeta.isImage %}
-                        {{ zikulamultisitesmodule_thumb({ image: site.logoFullPath, objectid: 'site-' ~ site.id ~ '', preset: siteThumbPresetLogo, tag: true, img_alt: site.getTitleFromDisplayPattern(), img_class: 'img-thumbnail' }) }}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'siteLogo') %}
+                        <img src="{{ site.logo.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
-                        {{ __('Download') }} ({{ site.logoMeta.size|zikulamultisitesmodule_fileSize(site.logoFullPath, false, false) }})
+                        {{ __('Download') }} ({{ site.logoMeta.size|zikulamultisitesmodule_fileSize(site.logo.getPathname(), false, false) }})
                     {% endif %}
                     </a>
                     {% else %}&nbsp;{% endif %}
                 </td>
                 <td headers="hFavIcon" class="text-left">
-                    {% if site.favIcon is not empty %}
-                    <a href="{{ site.favIconFullPathURL }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.favIconMeta.isImage %} class="lightbox"{% endif %}>
+                    {% if site.favIcon is not empty and site.favIconMeta|default %}
+                                <a href="{{ site.favIconUrl }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.favIconMeta.isImage %} class="lightbox"{% endif %}>
                     {% if site.favIconMeta.isImage %}
-                        {{ zikulamultisitesmodule_thumb({ image: site.favIconFullPath, objectid: 'site-' ~ site.id ~ '', preset: siteThumbPresetFavIcon, tag: true, img_alt: site.getTitleFromDisplayPattern(), img_class: 'img-thumbnail' }) }}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'siteFavIcon') %}
+                        <img src="{{ site.favIcon.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
-                        {{ __('Download') }} ({{ site.favIconMeta.size|zikulamultisitesmodule_fileSize(site.favIconFullPath, false, false) }})
+                        {{ __('Download') }} ({{ site.favIconMeta.size|zikulamultisitesmodule_fileSize(site.favIcon.getPathname(), false, false) }})
                     {% endif %}
                     </a>
                     {% else %}&nbsp;{% endif %}
                 </td>
                 <td headers="hParametersCsvFile" class="text-left">
-                    {% if site.parametersCsvFile is not empty %}
-                    <a href="{{ site.parametersCsvFileFullPathURL }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.parametersCsvFileMeta.isImage %} class="lightbox"{% endif %}>
+                    {% if site.parametersCsvFile is not empty and site.parametersCsvFileMeta|default %}
+                                <a href="{{ site.parametersCsvFileUrl }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.parametersCsvFileMeta.isImage %} class="lightbox"{% endif %}>
                     {% if site.parametersCsvFileMeta.isImage %}
-                        {{ zikulamultisitesmodule_thumb({ image: site.parametersCsvFileFullPath, objectid: 'site-' ~ site.id ~ '', preset: siteThumbPresetParametersCsvFile, tag: true, img_alt: site.getTitleFromDisplayPattern(), img_class: 'img-thumbnail' }) }}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'siteParametersCsvFile') %}
+                        <img src="{{ site.parametersCsvFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
-                        {{ __('Download') }} ({{ site.parametersCsvFileMeta.size|zikulamultisitesmodule_fileSize(site.parametersCsvFileFullPath, false, false) }})
+                        {{ __('Download') }} ({{ site.parametersCsvFileMeta.size|zikulamultisitesmodule_fileSize(site.parametersCsvFile.getPathname(), false, false) }})
                     {% endif %}
                     </a>
                     {% else %}&nbsp;{% endif %}
@@ -213,15 +216,19 @@
                     {% set itemid = site.id %}
                     <a id="toggleActive{{ itemid }}" href="javascript:void(0);" class="hidden">
                     {% if site.active %}
-                        <span class="cursor-pointer fa fa-check" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></span>
-                        <span class="cursor-pointer fa fa-times hidden" id="noactive_{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></span>
+                        <i class="cursor-pointer fa fa-check" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="cursor-pointer fa fa-times hidden" id="noactive_{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
                     {% else %}
-                        <span class="cursor-pointer fa fa-check hidden" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></span>
-                        <span class="cursor-pointer fa fa-times" id="noactive_{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></span>
+                        <i class="cursor-pointer fa fa-check hidden" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="cursor-pointer fa fa-times" id="noactive_{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
                     {% endif %}
                     </a>
                     <noscript><div id="noscriptActive{{ itemid }}">
-                        {{ site.active|yesNo(true) }}
+                        {% if site.active %}
+                            <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                        {% else %}
+                            <i class="fa fa-times" title="{{ __('No') }}"></i>
+                        {% endif %}
                     </div></noscript>
                 </td>
                 <td headers="hTemplate" class="text-left">
@@ -266,7 +273,7 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 %}
+        {% if showAllEntries != 1 and pager|default %}
             {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_site_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
@@ -296,9 +303,7 @@
             <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         {% endif %}
     {% endif %}
-    {% set own = showOwnEntries is defined and showOwnEntries == 1 ? 1 : 0 %}
-    {% set all = showAllEntries is defined and showAllEntries == 1 ? 1 : 0 %}
-    {% if all == 1 %}
+    {% if showAllEntries == 1 %}
         {% set linkTitle = __('Back to paginated view') %}
         <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
     {% else %}
@@ -323,6 +328,7 @@
 /* <![CDATA[ */
     ( function($) {
         $(document).ready(function() {
+            $('a.lightbox').lightbox();
             $('.dropdown-toggle').dropdown();
             $('a.fa-zoom-in').attr('target', '_blank');
             {% for site in items %}
@@ -332,9 +338,8 @@
             {% if routeArea == 'admin' %}
                 {# init the "toggle all" functionality #}
                 if ($('#toggleSites').length > 0) {
-                    $('#toggleSites').on('click', function (e) {
-                        Zikula.toggleInput('sitesViewForm');
-                        e.preventDefault();
+                    $('#toggleSites').click(function (event) {
+                        $('sites-checkbox').prop('checked', $(this).prop('checked'));
                     });
                 }
             {% endif %}

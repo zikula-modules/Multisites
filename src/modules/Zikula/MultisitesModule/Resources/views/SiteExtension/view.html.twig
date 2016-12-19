@@ -9,7 +9,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@ZikulaMultisitesModule/SiteExtension/viewQuickNav.html.twig', { all: showAllEntries, own: showOwnEntries, workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/SiteExtension/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="siteExtensionsViewForm" class="form-horizontal" role="form">
@@ -102,7 +102,7 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 %}
+        {% if showAllEntries != 1 and pager|default %}
             {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
@@ -126,9 +126,7 @@
 </div>
 {% endblock %}
 {% block page_nav_links %}
-    {% set own = showOwnEntries is defined and showOwnEntries == 1 ? 1 : 0 %}
-    {% set all = showAllEntries is defined and showAllEntries == 1 ? 1 : 0 %}
-    {% if all == 1 %}
+    {% if showAllEntries == 1 %}
         {% set linkTitle = __('Back to paginated view') %}
         <a href="{{ path('zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
     {% else %}
@@ -158,9 +156,8 @@
             {% if routeArea == 'admin' %}
                 {# init the "toggle all" functionality #}
                 if ($('#toggleSiteExtensions').length > 0) {
-                    $('#toggleSiteExtensions').on('click', function (e) {
-                        Zikula.toggleInput('siteExtensionsViewForm');
-                        e.preventDefault();
+                    $('#toggleSiteExtensions').click(function (event) {
+                        $('siteextensions-checkbox').prop('checked', $(this).prop('checked'));
                     });
                 }
             {% endif %}

@@ -4,6 +4,6 @@
     {{ item.getTitleFromDisplayPattern() }}
 </h4>
 <br />
-{% if item.logo != '' and item.logoFullPath is defined and item.logoMeta.isImage %}
-    {{ zikulamultisitesmodule_thumb({ image: item.logoFullPath, objectid: 'site-' ~ item.id ~ '', preset: relationThumbPreset, tag: true, img_alt: item.getTitleFromDisplayPattern(), img_class: 'img-rounded' }) }}
+{% if item.logo is not empty and item.logoMeta.isImage %}
+    <img src="{{ item.logo.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
 {% endif %}

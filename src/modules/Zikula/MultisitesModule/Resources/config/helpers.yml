@@ -10,6 +10,7 @@ services:
     
     zikula_multisites_module.image_helper:
         class: Zikula\MultisitesModule\Helper\ImageHelper
+        arguments: ["@translator.default", "@session", "@zikula_extensions_module.api.variable"]
     
     zikula_multisites_module.listentries_helper:
         class: Zikula\MultisitesModule\Helper\ListEntriesHelper

@@ -8,3 +8,6 @@ imports:
   - { resource: 'helpers.yml' }
   - { resource: 'twig.yml' }
   - { resource: 'logger.yml' }
+
+parameters:
+    liip_imagine.cache.signer.class: Zikula\MultisitesModule\Imagine\Cache\DummySigner

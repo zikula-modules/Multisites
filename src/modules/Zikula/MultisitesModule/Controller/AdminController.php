@@ -17,7 +17,7 @@ use Zikula\MultisitesModule\Controller\Base\AbstractAdminController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use ModUtil;
+use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
  * Admin controller class providing navigation and interaction functionality.
@@ -30,6 +30,7 @@ class AdminController extends AbstractAdminController
      * @Route("/admin",
      *        methods = {"GET"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request      Current request instance
      * @param string  $ot           Treated object type
@@ -101,6 +102,7 @@ class AdminController extends AbstractAdminController
      * @Route("/admin/manageUpdates",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request Current request instanc
      *
@@ -130,6 +132,7 @@ class AdminController extends AbstractAdminController
      * @Route("/admin/multiplyQueries",
      *        methods = {"GET", "POST"}
      * )
+     * @Theme("admin")
      *
      * @param Request  $request Current request instance
      *
@@ -157,7 +160,8 @@ class AdminController extends AbstractAdminController
         }
 
         // get all sites
-        $sites = ModUtil::apiFunc('ZikulaMultisitesModule', 'selection', 'getEntities', ['ot' => 'site', 'where' => '', 'useJoins' => false]);
+        $selectionHelper = $this->get('zikula_multisites_module.selection_helper');
+        $sites = $selectionHelper->getEntities('site', [], '', '', false);
         if (false === $sites) {
             return false;
         }

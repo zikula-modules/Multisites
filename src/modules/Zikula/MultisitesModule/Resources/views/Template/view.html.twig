@@ -9,7 +9,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@ZikulaMultisitesModule/Template/viewQuickNav.html.twig', { all: showAllEntries, own: showOwnEntries, workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/Template/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="templatesViewForm" class="form-horizontal" role="form">
@@ -61,13 +61,16 @@
                     {{ template.description }}
                 </td>
                 <td headers="hSqlFile" class="text-left">
-                    <a href="{{ template.sqlFileFullPathURL }}" title="{{ template.getTitleFromDisplayPattern()|e('html_attr') }}"{% if template.sqlFileMeta.isImage %} class="lightbox"{% endif %}>
+                    {% if template.sqlFileMeta|default %}
+                    <a href="{{ template.sqlFileUrl }}" title="{{ template.getTitleFromDisplayPattern()|e('html_attr') }}"{% if template.sqlFileMeta.isImage %} class="lightbox"{% endif %}>
                     {% if template.sqlFileMeta.isImage %}
-                        {{ zikulamultisitesmodule_thumb({ image: template.sqlFileFullPath, objectid: 'template-' ~ template.id ~ '', preset: templateThumbPresetSqlFile, tag: true, img_alt: template.getTitleFromDisplayPattern(), img_class: 'img-thumbnail' }) }}
+                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'templateSqlFile') %}
+                        <img src="{{ template.sqlFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ template.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
-                        {{ __('Download') }} ({{ template.sqlFileMeta.size|zikulamultisitesmodule_fileSize(template.sqlFileFullPath, false, false) }})
+                        {{ __('Download') }} ({{ template.sqlFileMeta.size|zikulamultisitesmodule_fileSize(template.sqlFile.getPathname(), false, false) }})
                     {% endif %}
                     </a>
+                    {% endif %}
                 </td>
                 <td id="itemActions{{ template.id }}" headers="hItemActions" class="actions nowrap z-w02">
                     {% set actionLinks = zikulamultisitesmodule_actions(entity=template, area=routeArea, context='view') %}
@@ -97,7 +100,7 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 %}
+        {% if showAllEntries != 1 and pager|default %}
             {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_template_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
@@ -127,9 +130,7 @@
             <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         {% endif %}
     {% endif %}
-    {% set own = showOwnEntries is defined and showOwnEntries == 1 ? 1 : 0 %}
-    {% set all = showAllEntries is defined and showAllEntries == 1 ? 1 : 0 %}
-    {% if all == 1 %}
+    {% if showAllEntries == 1 %}
         {% set linkTitle = __('Back to paginated view') %}
         <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
     {% else %}
@@ -159,9 +160,8 @@
             {% if routeArea == 'admin' %}
                 {# init the "toggle all" functionality #}
                 if ($('#toggleTemplates').length > 0) {
-                    $('#toggleTemplates').on('click', function (e) {
-                        Zikula.toggleInput('templatesViewForm');
-                        e.preventDefault();
+                    $('#toggleTemplates').click(function (event) {
+                        $('templates-checkbox').prop('checked', $(this).prop('checked'));
                     });
                 }
             {% endif %}

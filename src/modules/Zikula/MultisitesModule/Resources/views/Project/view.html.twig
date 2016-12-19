@@ -9,7 +9,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@ZikulaMultisitesModule/Project/viewQuickNav.html.twig', { all: showAllEntries, own: showOwnEntries, workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/Project/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="projectsViewForm" class="form-horizontal" role="form">
@@ -77,7 +77,7 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 %}
+        {% if showAllEntries != 1 and pager|default %}
             {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_project_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
@@ -107,9 +107,7 @@
             <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         {% endif %}
     {% endif %}
-    {% set own = showOwnEntries is defined and showOwnEntries == 1 ? 1 : 0 %}
-    {% set all = showAllEntries is defined and showAllEntries == 1 ? 1 : 0 %}
-    {% if all == 1 %}
+    {% if showAllEntries == 1 %}
         {% set linkTitle = __('Back to paginated view') %}
         <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
     {% else %}
@@ -139,9 +137,8 @@
             {% if routeArea == 'admin' %}
                 {# init the "toggle all" functionality #}
                 if ($('#toggleProjects').length > 0) {
-                    $('#toggleProjects').on('click', function (e) {
-                        Zikula.toggleInput('projectsViewForm');
-                        e.preventDefault();
+                    $('#toggleProjects').click(function (event) {
+                        $('projects-checkbox').prop('checked', $(this).prop('checked'));
                     });
                 }
             {% endif %}

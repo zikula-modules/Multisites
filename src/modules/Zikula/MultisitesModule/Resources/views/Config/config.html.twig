@@ -47,11 +47,18 @@
                 <fieldset>
                     <legend>{{ tabTitle }}</legend>
                 
-                    <p class="alert alert-info">{{ __('Here you can define shrinking behaviour for huge images.')|nl2br }}</p>
+                    <p class="alert alert-info">{{ __('Here you can define several options for image handling.')|nl2br }}</p>
                 
                     {{ form_row(form.enableShrinkingForSiteLogo) }}
+                    <div id="shrinkDetailsSiteLogo">
                     {{ form_row(form.shrinkWidthSiteLogo) }}
                     {{ form_row(form.shrinkHeightSiteLogo) }}
+                    </div>
+                    {{ form_row(form.thumbnailModeSite) }}
+                    {{ form_row(form.thumbnailWidthSiteLogoView) }}
+                    {{ form_row(form.thumbnailHeightSiteLogoView) }}
+                    {{ form_row(form.thumbnailWidthSiteLogoEdit) }}
+                    {{ form_row(form.thumbnailHeightSiteLogoEdit) }}
                 </fieldset>
             </div>
         </div>
@@ -64,4 +71,27 @@
         </div>
         {{ form_end(form) }}
     </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            function multisitesToggleShrinkSettings(fieldName) {
+                var idSuffix = fieldName.replace('zikulamultisitesmodule_appsettings_', '');
+                $('#shrinkDetails' + idSuffix).toggleClass('hidden', !$('#zikulamultisitesmodule_appsettings_enableShrinkingFor' + idSuffix).prop('checked'));
+            }
+
+            $(document).ready(function() {
+                $('.shrink-enabler').each(function (index) {
+                    $(this).bind('click keyup', function (event) {
+                        multisitesToggleShrinkSettings($(this).attr('id').replace('enableShrinkingFor', ''));
+                    });
+                    multisitesToggleShrinkSettings($(this).attr('id').replace('enableShrinkingFor', ''));
+                });
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
 {% endblock %}

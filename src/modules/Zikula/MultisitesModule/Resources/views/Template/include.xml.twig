@@ -3,7 +3,7 @@
     <id>{{ template.id }}</id>
     <name><![CDATA[{{ template.name }}]]></name>
     <description><![CDATA[{{ template.description }}]]></description>
-    <sqlFile{% if template.sqlFile is not empty %} extension="{{ template.sqlFileMeta.extension }}" size="{{ template.sqlFileMeta.size }}" isImage="{% if template.sqlFileMeta.isImage %}true{% else %}false{% endif %}"{% if template.sqlFileMeta.isImage %} width="{{ template.sqlFileMeta.width }}" height="{{ template.sqlFileMeta.height }}" format="{{ template.sqlFileMeta.format }}"{% endif %}{% endif %}>{{ template.sqlFile }}</sqlFile>
+    <sqlFile{% if template.sqlFile is not empty and template.sqlFileMeta|default %} extension="{{ template.sqlFileMeta.extension }}" size="{{ template.sqlFileMeta.size }}" isImage="{% if template.sqlFileMeta.isImage %}true{% else %}false{% endif %}"{% if template.sqlFileMeta.isImage %} width="{{ template.sqlFileMeta.width }}" height="{{ template.sqlFileMeta.height }}" format="{{ template.sqlFileMeta.format }}"{% endif %}{% endif %}>{{ template.sqlFile }}</sqlFile>
     <parameters>{{ template.parameters }}</parameters>
     <folders>{{ template.folders }}</folders>
     <excludedTables>{{ template.excludedTables }}</excludedTables>

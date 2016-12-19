@@ -14,7 +14,6 @@ namespace Zikula\MultisitesModule\Controller;
 
 use Zikula\MultisitesModule\Controller\Base\AbstractAjaxController;
 
-use ModUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,6 +23,7 @@ use Zikula\Core\Response\Ajax\AjaxResponse;
 use Zikula\Core\Response\Ajax\BadDataResponse;
 use Zikula\Core\Response\Ajax\FatalResponse;
 use Zikula\Core\Response\Ajax\NotFoundResponse;
+use Zikula\ExtensionsModule\Api\ExtensionApi;
 
 /**
  * Ajax controller class providing navigation and interaction functionality.
@@ -107,8 +107,9 @@ class AjaxController extends AbstractAjaxController
         }
 
         // select project entity
-        $project = ModUtil::apiFunc($this->name, 'selection', 'getEntity', ['ot' => 'project', 'id' => $id]);
-        if (null == $project) {
+        $selectionHelper = $this->get('zikula_multisites_module.selection_helper');
+        $project = $selectionHelper->getEntity('project', 'id');
+        if (null === $project) {
             return new NotFoundResponse($this->__('No such item.'));
         }
 
@@ -222,8 +223,9 @@ class AjaxController extends AbstractAjaxController
         }
 
         // select site entity
-        $site = ModUtil::apiFunc($this->name, 'selection', 'getEntity', ['ot' => 'site', 'id' => $id]);
-        if (null == $site) {
+        $selectionHelper = $this->get('zikula_multisites_module.selection_helper');
+        $site = $selectionHelper->getEntity('site', $id);
+        if (null === $site) {
             return new NotFoundResponse($this->__('No such item.'));
         }
 
@@ -234,14 +236,14 @@ class AjaxController extends AbstractAjaxController
         $module = $extensionHelper->getModuleFromSiteDb($site, $moduleName);
 
         // apply the state change
-        if ($module['state'] == ModUtil::STATE_NOTALLOWED) {
+        if ($module['state'] == ExtensionApi::STATE_NOTALLOWED) {
             // set the module as deactivated
-            if (!$extensionHelper->modifyModuleActivation($site, ['moduleName' => $moduleName, 'newState' => ModUtil::STATE_INACTIVE])) {
+            if (!$extensionHelper->modifyModuleActivation($site, ['moduleName' => $moduleName, 'newState' => ExtensionApi::STATE_INACTIVE])) {
                 return new FatalResponse($this->__('Error changing module state.'));
             }
-        } elseif (in_array($module['state'], [ModUtil::STATE_INACTIVE, ModUtil::STATE_ACTIVE])) {
+        } elseif (in_array($module['state'], [ExtensionApi::STATE_INACTIVE, ExtensionApi::STATE_ACTIVE])) {
             // set the module as not allowed
-            if (!$extensionHelper->modifyModuleActivation($site, ['moduleName' => $moduleName, 'newState' => ModUtil::STATE_NOTALLOWED])) {
+            if (!$extensionHelper->modifyModuleActivation($site, ['moduleName' => $moduleName, 'newState' => ExtensionApi::STATE_NOTALLOWED])) {
                 return new FatalResponse($this->__('Error changing module state.'));
             }
         } elseif ($module['state'] == '') {
@@ -301,8 +303,9 @@ class AjaxController extends AbstractAjaxController
         }
 
         // select site entity
-        $site = ModUtil::apiFunc($this->name, 'selection', 'getEntity', ['ot' => 'site', 'id' => $id]);
-        if (null == $site) {
+        $selectionHelper = $this->get('zikula_multisites_module.selection_helper');
+        $site = $selectionHelper->getEntity('site', $id);
+        if (null === $site) {
             return new NotFoundResponse($this->__('No such item.'));
         }
 

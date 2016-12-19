@@ -6,7 +6,7 @@
     "license": "LGPL-3.0+",
     "authors": [
         {
-            "name": "Albert Pérez Monfort",
+            "name": "Albert P?rez Monfort",
             "email": "aperezm@xtec.cat",
             "homepage": "http://modulestudio.de",
             "role": "owner"
@@ -27,7 +27,7 @@
             "displayname": "Multisites",
             "url": "multisites",
             "capabilities": {
-                "user": {"route": "zikulamultisitesmodule_site_view"},
+                "user": {"route": "zikulamultisitesmodule_user_index"},
                 "admin": {"route": "zikulamultisitesmodule_admin_index"},
                 "hook_subscriber": {"class": "Zikula\\MultisitesModule\\Container\\HookContainer"}
             },

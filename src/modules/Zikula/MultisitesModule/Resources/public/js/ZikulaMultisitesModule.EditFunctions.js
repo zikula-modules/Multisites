@@ -6,10 +6,8 @@
  */
 function zikulaMultisitesResetUploadField(fieldName)
 {
-    jQuery("input[id$='" + fieldName.toLowerCase() + "']").attr({
-        type: 'input',
-        type: 'file'
-    });
+    jQuery('#' + fieldName).attr('type', 'input');
+    jQuery('#' + fieldName).attr('type', 'file');
 }
 
 /**
@@ -17,7 +15,7 @@ function zikulaMultisitesResetUploadField(fieldName)
  */
 function zikulaMultisitesInitUploadField(fieldName)
 {
-    jQuery("a[id$='" + fieldName.toLowerCase() + "Val']").click( function (event) {
+    jQuery('#' + fieldName + 'ResetVal').click( function (event) {
         event.stopPropagation();
         zikulaMultisitesResetUploadField(fieldName);
     }).removeClass('hidden');

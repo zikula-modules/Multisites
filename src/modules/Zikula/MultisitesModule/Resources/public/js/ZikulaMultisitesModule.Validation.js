@@ -50,7 +50,7 @@ function zikulaMultisitesReadDate(val, includeTime)
     // look if we have DD.MM.YYYY
     if (val.substr(2, 1) === '.' && val.substr(5, 1) === '.') {
         var newVal = val.substr(6, 4) + '-' + val.substr(3, 2) + '-' + val.substr(0, 2);
-        if (includeTime === true) {
+        if (true === includeTime) {
             newVal += ' ' + val.substr(11, 5);
         }
 
@@ -74,7 +74,7 @@ function zikulaMultisitesValidateUploadExtension(val, elem)
     }
 
     fileExtension = '.' + val.substr(val.lastIndexOf('.') + 1);
-    allowedExtensions = jQuery('#' + elem.attr('id') + 'FileExtensions').innerHTML;
+    allowedExtensions = jQuery('#' + elem.attr('id') + 'FileExtensions').text();
     allowedExtensions = '(.' + allowedExtensions.replace(/, /g, '|.').replace(/,/g, '|.') + ')$';
     allowedExtensions = new RegExp(allowedExtensions, 'i');
 
@@ -88,14 +88,14 @@ function zikulaMultisitesPerformCustomValidationRules(objectType, currentEntityI
 {
     jQuery('.validate-nospace').each( function() {
         if (!zikulaMultisitesValidateNoSpace(jQuery(this).val())) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Zikula.__('This value must not contain spaces.', 'zikulamultisitesmodule_js'));
+            document.getElementById(jQuery(this).attr('id')).setCustomValidity(/*Zikula.__(*/'This value must not contain spaces.'/*, 'zikulamultisitesmodule_js')*/);
         } else {
             document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
         }
     });
     jQuery('.validate-upload').each( function() {
         if (!zikulaMultisitesValidateUploadExtension(jQuery(this).val(), jQuery(this))) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Zikula.__('Please select a valid file extension.', 'zikulamultisitesmodule_js'));
+            document.getElementById(jQuery(this).attr('id')).setCustomValidity(/*Zikula.__(*/'Please select a valid file extension.'/*, 'zikulamultisitesmodule_js')*/);
         } else {
             document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
         }

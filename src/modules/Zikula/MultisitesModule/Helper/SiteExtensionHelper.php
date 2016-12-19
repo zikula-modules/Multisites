@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Twig_Environment;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\ExtensionsModule\Api\ExtensionApi;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 
 /**
@@ -346,16 +347,16 @@ class SiteExtensionHelper
         // get module information
         $siteModule = $this->getModuleFromSiteDb($site, $moduleName);
 
-        if ($siteModule['state'] == ModUtil::STATE_ACTIVE) {
+        if ($siteModule['state'] == ExtensionApi::STATE_ACTIVE) {
             $this->modifyModuleActivation($site, [
                 'moduleName' => $moduleName,
-                'newState' => ModUtil::STATE_INACTIVE
+                'newState' => ExtensionApi::STATE_INACTIVE
             ]);
 
             return true;
         }
 
-        if ($siteModule['state'] == ModUtil::STATE_INACTIVE) {
+        if ($siteModule['state'] == ExtensionApi::STATE_INACTIVE) {
             return true;
         }
 
