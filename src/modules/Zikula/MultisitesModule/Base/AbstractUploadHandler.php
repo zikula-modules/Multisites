@@ -156,13 +156,21 @@ abstract class AbstractUploadHandler
             // check if shrinking functionality is enabled
             $fieldSuffix = ucfirst($objectType) . ucfirst($fieldName);
             if (true === $this->variableApi->get('ZikulaMultisitesModule', 'enableShrinkingFor' . $fieldSuffix, false)) {
-                // resize to allowed maximum size
-                $thumbManager = $serviceManager->get('systemplugin.imagine.manager');
+                // check for maximum size
                 $maxWidth = $this->variableApi->get('ZikulaMultisitesModule', 'shrinkWidth' . $fieldSuffix, 800);
                 $maxHeight = $this->variableApi->get('ZikulaMultisitesModule', 'shrinkHeight' . $fieldSuffix, 600);
     
                 $imgInfo = getimagesize($destinationFilePath);
                 if ($imgInfo[0] > $maxWidth || $imgInfo[1] > $maxHeight) {
+                    // resize to allowed maximum size
+                    $thumbManager = $serviceManager->get('systemplugin.imagine.manager');
+                    $preset = new \SystemPlugin_Imagine_Preset('«appName»_Shrinker', [
+                        'width' => $maxWidth,
+                        'height' => $maxHeight,
+                        'mode' => 'inset'
+                    ]);
+                    $thumbManager->setPreset($preset);
+
                     // create thumbnail image
                     $thumbFilePath = $thumbManager->getThumb($destinationFilePath, $maxWidth, $maxHeight);
     
