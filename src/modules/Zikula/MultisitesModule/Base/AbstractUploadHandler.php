@@ -416,9 +416,14 @@ abstract class AbstractUploadHandler
         $controllerHelper = $serviceManager->get('zikula_multisites_module.controller_helper');
     
         // remove the file
-        $filePath = $entity[$fieldName]->getPathname();
-        if (file_exists($filePath) && !unlink($filePath)) {
-            return false;
+        if (is_array($entity[$fieldName]) && isset($entity[$fieldName][$fieldName])) {
+            $entity[$fieldName] = $entity[$fieldName][$fieldName];
+        }
+        if (is_object($entity[$fieldName])) {
+            $filePath = $entity[$fieldName]->getPathname();
+            if (file_exists($filePath) && !unlink($filePath)) {
+                return false;
+            }
         }
         $entity[$fieldName] = '';
         $entity[$fieldName . 'Meta'] = [];
