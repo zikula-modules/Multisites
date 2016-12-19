@@ -5,7 +5,7 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
-    {{ pageAddAsset('javascript', '/vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js') }}
+    {{ pageAddAsset('javascript', pagevars.homepath ~ 'vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js') }}
 {% endblock %}
 
 {% block title mode == 'create' ? __('Create template') : __('Edit template') %}
@@ -101,6 +101,7 @@
     /* <![CDATA[ */
         
                 var formButtons;
+                var triggerValidation = true;
         
                 function executeCustomValidationConstraints()
                 {
@@ -118,10 +119,12 @@
                 }
         
                 function handleFormSubmit (event) {
-                    triggerFormValidation();
-                    if (!document.getElementById('templateEditForm').checkValidity()) {
-                        event.preventDefault();
-                        return false;
+                    if (triggerValidation) {
+                        triggerFormValidation();
+                        if (!document.getElementById('templateEditForm').checkValidity()) {
+                            event.preventDefault();
+                            return false;
+                        }
                     }
         
                     // hide form buttons to prevent double submits by accident
@@ -139,10 +142,13 @@
                         allFormFields.change(executeCustomValidationConstraints);
         
                         formButtons = $('#templateEditForm .form-buttons input');
-                        $('.btn-danger').first().bind('click keypress', function (e) {
+                        $('.btn-danger').first().bind('click keypress', function (event) {
                             if (!window.confirm('{{ __('Really delete this template? This includes deletion of assigned parameters and sites, too!') }}')) {
-                                e.preventDefault();
+                                event.preventDefault();
                             }
+                        });
+                        $('#templateEditForm button[type=submit]').bind('click keypress', function (event) {
+                            triggerValidation = !$(this).attr('formnovalidate');
                         });
                         $('#templateEditForm').submit(handleFormSubmit);
         
@@ -150,7 +156,7 @@
                             triggerFormValidation();
                         {% endif %}
         
-                        zikulaMultisitesInitUploadField('sqlFile');
+                        zikulaMultisitesInitUploadField('zikulamultisitesmodule_template_sqlFile_sqlFile');
 
                         $('#parameters').keyup(function() {
                             $(this).val($(this).val().toUpperCase();

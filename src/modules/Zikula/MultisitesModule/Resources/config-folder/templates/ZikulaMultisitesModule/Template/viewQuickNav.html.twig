@@ -1,31 +1,47 @@
 {# purpose of this template: templates view filter form #}
 {% if hasPermission('ZikulaMultisitesModule:Template:', '::', 'ACCESS_EDIT') %}
     {% form_theme quickNavForm with [
-        '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
-        'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        'bootstrap_3_layout.html.twig'
     ] %}
     {{ form_start(quickNavForm, {attr: {id: 'zikulaMultisitesModuleTemplateQuickNavForm', class: 'zikulamultisitesmodule-quicknav navbar-form', role: 'navigation'}}) }}
     {{ form_errors(quickNavForm) }}
     <fieldset>
         <h3>{{ __('Quick navigation') }}</h3>
-        {% if projectFilter is not defined or projectFilter == true %}
+        {% if projectFilter is defined and projectFilter != true %}
+            <div class="hidden">
+        {% endif %}
             {{ form_row(quickNavForm.project) }}
+        {% if projectFilter is defined and projectFilter != true %}
+            </div>
         {% endif %}
-        {% if workflowStateFilter is not defined or workflowStateFilter == true %}
+        {% if workflowStateFilter is defined and workflowStateFilter != true %}
+            <div class="hidden">
+        {% endif %}
             {{ form_row(quickNavForm.workflowState) }}
+        {% if workflowStateFilter is defined and workflowStateFilter != true %}
+            </div>
         {% endif %}
-        {% if searchFilter is not defined or searchFilter == true %}
+        {% if searchFilter is defined and searchFilter != true %}
+            <div class="hidden">
+        {% endif %}
             {{ form_row(quickNavForm.q) }}
+        {% if searchFilter is defined and searchFilter != true %}
+            </div>
         {% endif %}
-        {% if sorting is not defined or sorting == true %}
+        {% if sorting is defined and sorting != true %}
+            <div class="hidden">
+        {% endif %}
             {{ form_row(quickNavForm.sort) }}
             {{ form_row(quickNavForm.sortdir) }}
-        {% else %}
-            {{ form_row(quickNavForm.sort, {attr: {class: 'hidden'}}) }}
-            {{ form_row(quickNavForm.sortdir, {attr: {class: 'hidden'}}) }}
+        {% if sorting is defined and sorting != true %}
+            </div>
         {% endif %}
-        {% if pageSizeSelector is not defined or pageSizeSelector == true %}
+        {% if pageSizeSelector is defined and pageSizeSelector != true %}
+            <div class="hidden">
+        {% endif %}
             {{ form_row(quickNavForm.num) }}
+        {% if pageSizeSelector is defined and pageSizeSelector != true %}
+            </div>
         {% endif %}
         {{ form_widget(quickNavForm.updateview) }}
     </fieldset>
