@@ -33,7 +33,7 @@ before_install:
 install:
     - composer install
     - zip -qr ZikulaMultisitesModule.zip .
-    - wget http://ci.zikula.org/job/Zikula_Core-1.4.4/121/artifact/build/archive/Zikula_Core-1.4.4.build121.tar.gz
+    - wget http://ci.zikula.org/job/Zikula_Core-1.4.4/182/artifact/build/archive/Zikula_Core-1.4.4.build182.tar.gz
     - tar -xpzf Zikula_Core-1.4.4.build13.tar.gz
     - rm Zikula_Core-1.4.4.build13.tar.gz
     - cd Zikula_Core-1.4.4
