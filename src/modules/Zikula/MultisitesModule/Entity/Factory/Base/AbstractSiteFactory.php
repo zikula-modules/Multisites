@@ -47,7 +47,7 @@ abstract class AbstractSiteFactory
     {
         $this->className = $className;
         $this->objectManager = $om;
-        $this->repository = $this->om->getRepository($className);
+        $this->repository = $this->objectManager->getRepository($className);
     }
 
     public function createSite()
