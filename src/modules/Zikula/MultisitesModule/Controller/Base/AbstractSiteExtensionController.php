@@ -308,13 +308,13 @@ abstract class AbstractSiteExtensionController extends AbstractController
         
             $success = false;
             try {
-                if (!$entity->validate()) {
+                if ($action != 'delete' && !$entity->validate()) {
                     continue;
                 }
                 // execute the workflow action
                 $success = $workflowHelper->executeAction($entity, $action);
             } catch(\Exception $e) {
-                $this->addFlash('error', $this->__f('Sorry, but an unknown error occured during the %s action. Please apply the changes again!', ['%s' => $action]));
+                $this->addFlash('error', $this->__f('Sorry, but an error occured during the %s action.', ['%s' => $action]) . '  ' . $e->getMessage());
                 $logger->error('{app}: User {user} tried to execute the {action} workflow action for the {entity} with id {id}, but failed. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'action' => $action, 'entity' => 'site extension', 'id' => $itemid, 'errorMessage' => $e->getMessage()]);
             }
         
