@@ -2,7 +2,7 @@ services:
     # Twig extension
     zikula_multisites_module.twig_extension:
         class: Zikula\MultisitesModule\Twig\TwigExtension
-        arguments: ["@translator.default", "@zikula_extensions_module.api.variable", "@zikula_multisites_module.link_container", "@zikula_multisites_module.workflow_helper", "@zikula_multisites_module.view_helper", "@zikula_multisites_module.listentries_helper"]
+        arguments: ["@translator.default", "@zikula_extensions_module.api.variable", "@zikula_multisites_module.workflow_helper", "@zikula_multisites_module.view_helper", "@zikula_multisites_module.listentries_helper"]
         public: false
         tags:
             - { name: twig.extension }

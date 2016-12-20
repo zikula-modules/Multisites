@@ -42,7 +42,7 @@
                 <th id="hSqlFile" scope="col" class="text-left">
                     <a href="{{ sort.sqlFile.url }}" title="{{ __f('Sort by %s', {'%s': 'sql file'}) }}" class="{{ sort.sqlFile.class }}">{{ __('Sql file') }}</a>
                 </th>
-                <th id="hItemActions" scope="col" class="z-order-unsorted">{{ __('Actions') }}</th>
+                <th id="hItemActions" scope="col" class="text-right z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -72,20 +72,13 @@
                     </a>
                     {% endif %}
                 </td>
-                <td id="itemActions{{ template.id }}" headers="hItemActions" class="actions nowrap z-w02">
-                    {% set actionLinks = zikulamultisitesmodule_actions(entity=template, area=routeArea, context='view') %}
-                    {% if actionLinks|length > 0 %}
-                        <div class="dropdown">
-                            <a id="itemActions{{ template.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                            
-                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="itemActions{{ template.id }}DropDownToggle">
-                                {% for option in actionLinks %}
-                                    <li role="presentation"><a href="{{ option.url }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
-                                    
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
+                <td id="itemActions{{ template.id }}" headers="hItemActions" class="actions text-right nowrap z-w02">
+                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], { entity: template, area: routeArea, context: 'view' }) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ template.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        
+                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -155,8 +148,12 @@
 /* <![CDATA[ */
     ( function($) {
         $(document).ready(function() {
-            $('.dropdown-toggle').dropdown();
-            $('a.fa-zoom-in').attr('target', '_blank');
+            $('.dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
+            $('.dropdown > ul a').each(function (index) {
+                $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+            });
+            $('.dropdown > ul a i').addClass('fa-fw');
+            $('.dropdown-toggle').removeClass('hidden').dropdown();
             {% if routeArea == 'admin' %}
                 {# init the "toggle all" functionality #}
                 if ($('#toggleTemplates').length > 0) {

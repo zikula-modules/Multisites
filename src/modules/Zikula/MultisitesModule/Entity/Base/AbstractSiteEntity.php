@@ -1119,7 +1119,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Returns the created user id.
      *
-     * @return string
+     * @return integer
      */
     public function getCreatedUserId()
     {
@@ -1129,7 +1129,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Sets the created user id.
      *
-     * @param string $createdUserId
+     * @param integer $createdUserId
      *
      * @return void
      */
@@ -1141,7 +1141,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Returns the updated user id.
      *
-     * @return string
+     * @return integer
      */
     public function getUpdatedUserId()
     {
@@ -1151,7 +1151,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Sets the updated user id.
      *
-     * @param string $updatedUserId
+     * @param integer $updatedUserId
      *
      * @return void
      */

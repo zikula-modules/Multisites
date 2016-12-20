@@ -19,7 +19,6 @@ use Zikula\ExtensionsModule\Api\VariableApi;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
 use Zikula\MultisitesModule\Helper\ViewHelper;
 use Zikula\MultisitesModule\Helper\WorkflowHelper;
-use Zikula\MultisitesModule\Container\LinkContainer;
 
 /**
  * Twig extension base class.
@@ -32,11 +31,6 @@ abstract class AbstractTwigExtension extends \Twig_Extension
      * @var VariableApi
      */
     protected $variableApi;
-    
-    /**
-     * @var LinkContainer
-     */
-    protected $linkContainer;
     
     /**
      * @var WorkflowHelper
@@ -59,16 +53,14 @@ abstract class AbstractTwigExtension extends \Twig_Extension
      *
      * @param TranslatorInterface $translator     Translator service instance
      * @param VariableApi         $variableApi    VariableApi service instance
-     * @param LinkContainer       $linkContainer  LinkContainer service instance
      * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
      * @param ViewHelper          $viewHelper     ViewHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
      */
-    public function __construct(TranslatorInterface $translator, VariableApi $variableApi, LinkContainer $linkContainer, WorkflowHelper $workflowHelper, ViewHelper $viewHelper, ListEntriesHelper $listHelper)
+    public function __construct(TranslatorInterface $translator, VariableApi $variableApi, WorkflowHelper $workflowHelper, ViewHelper $viewHelper, ListEntriesHelper $listHelper)
     {
         $this->setTranslator($translator);
         $this->variableApi = $variableApi;
-        $this->linkContainer = $linkContainer;
         $this->workflowHelper = $workflowHelper;
         $this->viewHelper = $viewHelper;
         $this->listHelper = $listHelper;
@@ -92,7 +84,6 @@ abstract class AbstractTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('zikulamultisitesmodule_actions', [$this, 'getActionLinks']),
             new \Twig_SimpleFunction('zikulamultisitesmodule_objectTypeSelector', [$this, 'getObjectTypeSelector']),
             new \Twig_SimpleFunction('zikulamultisitesmodule_templateSelector', [$this, 'getTemplateSelector']),
             new \Twig_SimpleFunction('zikulamultisitesmodule_userVar', [$this, 'getUserVar']),
@@ -112,20 +103,6 @@ abstract class AbstractTwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('zikulamultisitesmodule_listEntry', [$this, 'getListEntry']),
             new \Twig_SimpleFilter('zikulamultisitesmodule_objectState', [$this, 'getObjectState'], ['is_safe' => ['html']])
         ];
-    }
-    
-    /**
-     * Returns action links for a given entity.
-     *
-     * @param EntityAccess $entity  The entity
-     * @param string       $area    The context area name (e.g. admin or nothing for user)
-     * @param string       $context The context page name (e.g. view, display, edit, delete)
-     *
-     * @return array Array of action links
-     */
-    public function getActionLinks(/*EntityAccess */$entity, $area = '', $context = 'view')
-    {
-        return $this->linkContainer->getActionLinks($entity, $area, $context);
     }
     
     /**

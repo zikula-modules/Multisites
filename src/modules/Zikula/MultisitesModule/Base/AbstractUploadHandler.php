@@ -164,13 +164,13 @@ abstract class AbstractUploadHandler
                 if ($imgInfo[0] > $maxWidth || $imgInfo[1] > $maxHeight) {
                     // resize to allowed maximum size
                     $thumbManager = $serviceManager->get('systemplugin.imagine.manager');
-                    $preset = new \SystemPlugin_Imagine_Preset('«appName»_Shrinker', [
+                    $preset = new \SystemPlugin_Imagine_Preset('ZikulaMultisitesModule_Shrinker', [
                         'width' => $maxWidth,
                         'height' => $maxHeight,
                         'mode' => 'inset'
                     ]);
                     $thumbManager->setPreset($preset);
-
+    
                     // create thumbnail image
                     $thumbFilePath = $thumbManager->getThumb($destinationFilePath, $maxWidth, $maxHeight);
     
