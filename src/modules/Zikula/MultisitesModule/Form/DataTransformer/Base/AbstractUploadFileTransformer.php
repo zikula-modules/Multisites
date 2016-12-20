@@ -145,7 +145,7 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
 
         if (null === $uploadedFile) {
             // no file has been uploaded
-            return null;
+            return $oldFile;
         }
 
         // new file has been uploaded; check if there is an old one to be deleted
