@@ -99,7 +99,7 @@ abstract class AbstractTwigExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('zikulamultisitesmodule_fileSize', [$this, 'getFileSize']),
+            new \Twig_SimpleFilter('zikulamultisitesmodule_fileSize', [$this, 'getFileSize'], ['is_safe' => ['html']]),
             new \Twig_SimpleFilter('zikulamultisitesmodule_listEntry', [$this, 'getListEntry']),
             new \Twig_SimpleFilter('zikulamultisitesmodule_objectState', [$this, 'getObjectState'], ['is_safe' => ['html']])
         ];

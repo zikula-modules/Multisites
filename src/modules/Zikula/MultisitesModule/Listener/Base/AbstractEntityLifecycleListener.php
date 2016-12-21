@@ -57,7 +57,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
-        if (!$this->isEntityManagedByThisBundle($entity)) {
+        if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
 
@@ -156,7 +156,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
-        if (!$this->isEntityManagedByThisBundle($entity)) {
+        if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
 
@@ -195,7 +195,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
-        if (!$this->isEntityManagedByThisBundle($entity)) {
+        if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
 
@@ -224,7 +224,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getObject();
-        if (!$this->isEntityManagedByThisBundle($entity)) {
+        if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
 
@@ -263,7 +263,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
-        if (!$this->isEntityManagedByThisBundle($entity)) {
+        if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
 
@@ -295,7 +295,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
-        if (!$this->isEntityManagedByThisBundle($entity)) {
+        if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
 
