@@ -435,6 +435,7 @@ abstract class AbstractUploadHandler
         }
         $entity[$fieldName] = '';
         $entity[$fieldName . 'Meta'] = [];
+        $entity[$fieldName . 'Url'] = '';
     
         return $entity;
     }
