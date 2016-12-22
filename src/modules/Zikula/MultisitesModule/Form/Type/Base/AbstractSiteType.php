@@ -353,6 +353,9 @@ abstract class AbstractSiteType extends AbstractType
      */
     public function addReturnControlField(FormBuilderInterface $builder, array $options)
     {
+        if ($options['mode'] != 'create') {
+            return;
+        }
         $builder->add('repeatCreation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
             'mapped' => false,
             'label' => $this->__('Create another item after save'),
