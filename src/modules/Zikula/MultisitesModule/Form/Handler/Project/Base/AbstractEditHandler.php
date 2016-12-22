@@ -156,6 +156,9 @@ abstract class AbstractEditHandler extends EditHandler
                 $args['commandName'] = $action['id'];
             }
         }
+        if ($this->form->get('cancel')->isClicked()) {
+            $args['commandName'] = 'cancel';
+        }
     
         return new RedirectResponse($this->getRedirectUrl($args), 302);
     }

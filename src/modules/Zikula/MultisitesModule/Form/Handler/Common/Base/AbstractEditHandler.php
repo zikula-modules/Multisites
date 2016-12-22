@@ -449,6 +449,9 @@ abstract class AbstractEditHandler
                 $args['commandName'] = $action['id'];
             }
         }
+        if ($this->form->get('cancel')->isClicked()) {
+            $args['commandName'] = 'cancel';
+        }
     
         $action = $args['commandName'];
         $isRegularAction = !in_array($action, ['delete', 'cancel']);
