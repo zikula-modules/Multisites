@@ -88,14 +88,14 @@ function zikulaMultisitesPerformCustomValidationRules(objectType, currentEntityI
 {
     jQuery('.validate-nospace').each( function() {
         if (!zikulaMultisitesValidateNoSpace(jQuery(this).val())) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(/*Zikula.__(*/'This value must not contain spaces.'/*, 'zikulamultisitesmodule_js')*/);
+            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('This value must not contain spaces.'));
         } else {
             document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
         }
     });
     jQuery('.validate-upload').each( function() {
         if (!zikulaMultisitesValidateUploadExtension(jQuery(this).val(), jQuery(this))) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(/*Zikula.__(*/'Please select a valid file extension.'/*, 'zikulamultisitesmodule_js')*/);
+            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('Please select a valid file extension.'));
         } else {
             document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
         }

@@ -76,7 +76,7 @@
                 <th id="hSiteAdminRealName" scope="col" class="text-left">
                     <a href="{{ sort.siteAdminRealName.url }}" title="{{ __f('Sort by %s', {'%s': 'site admin real name'}) }}" class="{{ sort.siteAdminRealName.class }}">{{ __('Site admin real name') }}</a>
                 </th>
-                <th id="hSiteAdminEmail" scope="col" class="text-left">
+                <th id="hSiteAdminEmail" scope="col" class="text-center">
                     <a href="{{ sort.siteAdminEmail.url }}" title="{{ __f('Sort by %s', {'%s': 'site admin email'}) }}" class="{{ sort.siteAdminEmail.class }}">{{ __('Site admin email') }}</a>
                 </th>
                 <th id="hSiteCompany" scope="col" class="text-left">
@@ -153,7 +153,7 @@
                 <td headers="hSiteAdminRealName" class="text-left">
                     {{ site.siteAdminRealName }}
                 </td>
-                <td headers="hSiteAdminEmail" class="text-left">
+                <td headers="hSiteAdminEmail" class="text-center">
                     <a href="mailto:{{ site.siteAdminEmail|protectMail }}" title="{{ __('Send an email') }}" class="fa fa-envelope"></a>
                 </td>
                 <td headers="hSiteCompany" class="text-left">
@@ -213,7 +213,7 @@
                     {% else %}&nbsp;{% endif %}
                 </td>
                 <td headers="hActive" class="text-center">
-                    {% set itemid = site.id %}
+                    {% set itemid = site.createCompositeIdentifier() %}
                     <a id="toggleActive{{ itemid }}" href="javascript:void(0);" class="hidden">
                     {% if site.active %}
                         <i class="cursor-pointer fa fa-check" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
@@ -317,31 +317,31 @@
 {% block footer %}
     {{ parent() }}
 
-<script type="text/javascript">
-/* <![CDATA[ */
-    ( function($) {
-        $(document).ready(function() {
-            $('a.lightbox').lightbox();
-            $('.dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
-            $('.dropdown > ul a').each(function (index) {
-                $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                $('a.lightbox').lightbox();
+                $('.zikulamultisitesmodule-site .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
+                $('.zikulamultisitesmodule-site .dropdown > ul a').each(function (index) {
+                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+                });
+                $('.zikulamultisitesmodule-site .dropdown > ul a i').addClass('fa-fw');
+                $('.zikulamultisitesmodule-site .dropdown-toggle').removeClass('hidden').dropdown();
+                {% for site in items %}
+                    {% set itemid = site.createCompositeIdentifier() %}
+                    zikulaMultisitesInitToggle('site', 'active', '{{ itemid|e('js') }}');
+                {% endfor %}
+                {% if routeArea == 'admin' %}
+                    {# init the "toggle all" functionality #}
+                    if ($('#toggleSites').length > 0) {
+                        $('#toggleSites').click(function (event) {
+                            $('.sites-checkbox').prop('checked', $(this).prop('checked'));
+                        });
+                    }
+                {% endif %}
             });
-            $('.dropdown > ul a i').addClass('fa-fw');
-            $('.dropdown-toggle').removeClass('hidden').dropdown();
-            {% for site in items %}
-                {% set itemid = site.id %}
-                zikulaMultisitesInitToggle('site', 'active', '{{ itemid|e('js') }}');
-            {% endfor %}
-            {% if routeArea == 'admin' %}
-                {# init the "toggle all" functionality #}
-                if ($('#toggleSites').length > 0) {
-                    $('#toggleSites').click(function (event) {
-                        $('sites-checkbox').prop('checked', $(this).prop('checked'));
-                    });
-                }
-            {% endif %}
-        });
-    })(jQuery);
-/* ]]> */
-</script>
+        })(jQuery);
+    /* ]]> */
+    </script>
 {% endblock %}

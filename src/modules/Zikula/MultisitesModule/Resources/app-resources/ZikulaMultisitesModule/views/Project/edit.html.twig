@@ -73,67 +73,66 @@
     {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
     {% set deleteImage = '<span class="fa fa-trash-o"></span>' %}
     
-    
     <script type="text/javascript">
     /* <![CDATA[ */
         
-                var formButtons;
-                var triggerValidation = true;
-        
-                function executeCustomValidationConstraints()
-                {
-                    zikulaMultisitesPerformCustomValidationRules('project', '{% if mode != 'create' %}{{ project.id }}{% endif %}');
+        var formButtons;
+        var triggerValidation = true;
+
+        function executeCustomValidationConstraints()
+        {
+            zikulaMultisitesPerformCustomValidationRules('project', '{% if mode != 'create' %}{{ project.id }}{% endif %}');
+        }
+
+        function triggerFormValidation()
+        {
+            executeCustomValidationConstraints();
+            if (!document.getElementById('projectEditForm').checkValidity()) {
+                // This does not really submit the form,
+                // but causes the browser to display the error message
+                jQuery('#projectEditForm').find(':submit').first().click();
+            }
+        }
+
+        function handleFormSubmit (event) {
+            if (triggerValidation) {
+                triggerFormValidation();
+                if (!document.getElementById('projectEditForm').checkValidity()) {
+                    event.preventDefault();
+                    return false;
                 }
-        
-                function triggerFormValidation()
-                {
-                    executeCustomValidationConstraints();
-                    if (!document.getElementById('projectEditForm').checkValidity()) {
-                        // This does not really submit the form,
-                        // but causes the browser to display the error message
-                        jQuery('#projectEditForm').find(':submit').first().click();
+            }
+
+            // hide form buttons to prevent double submits by accident
+            formButtons.each(function (index) {
+                jQuery(this).addClass('hidden');
+            });
+
+            return true;
+        }
+
+        ( function($) {
+            $(document).ready(function() {
+
+                var allFormFields = $('#projectEditForm input, #projectEditForm select, #projectEditForm textarea');
+                allFormFields.change(executeCustomValidationConstraints);
+
+                formButtons = $('#projectEditForm .form-buttons input');
+                $('.btn-danger').first().bind('click keypress', function (event) {
+                    if (!window.confirm('{{ __('Really delete this project? This includes deletion of assigned templates and sites, too!') }}')) {
+                        event.preventDefault();
                     }
-                }
-        
-                function handleFormSubmit (event) {
-                    if (triggerValidation) {
-                        triggerFormValidation();
-                        if (!document.getElementById('projectEditForm').checkValidity()) {
-                            event.preventDefault();
-                            return false;
-                        }
-                    }
-        
-                    // hide form buttons to prevent double submits by accident
-                    formButtons.each(function (index) {
-                        jQuery(this).addClass('hidden');
-                    });
-        
-                    return true;
-                }
-        
-                ( function($) {
-                    $(document).ready(function() {
-        
-                        var allFormFields = $('#projectEditForm input, #projectEditForm select, #projectEditForm textarea');
-                        allFormFields.change(executeCustomValidationConstraints);
-        
-                        formButtons = $('#projectEditForm .form-buttons input');
-                        $('.btn-danger').first().bind('click keypress', function (event) {
-                            if (!window.confirm('{{ __('Really delete this project? This includes deletion of assigned templates and sites, too!') }}')) {
-                                event.preventDefault();
-                            }
-                        });
-                        $('#projectEditForm button[type=submit]').bind('click keypress', function (event) {
-                            triggerValidation = !$(this).attr('formnovalidate');
-                        });
-                        $('#projectEditForm').submit(handleFormSubmit);
-        
-                        {% if mode != 'create' %}
-                            triggerFormValidation();
-                        {% endif %}
-                    });
-                })(jQuery);
+                });
+                $('#projectEditForm button[type=submit]').bind('click keypress', function (event) {
+                    triggerValidation = !$(this).attr('formnovalidate');
+                });
+                $('#projectEditForm').submit(handleFormSubmit);
+
+                {% if mode != 'create' %}
+                    triggerFormValidation();
+                {% endif %}
+            });
+        })(jQuery);
     /* ]]> */
     </script>
 {% endblock %}

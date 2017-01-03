@@ -4,7 +4,6 @@ div#z-maincontent.z-module-multisites table tbody tr td {
 }
 
 /* display pages */
-
 .zikulamultisitesmodule-display div.col-sm-3 h3 {
     color: #333;
     font-weight: 400;
@@ -38,7 +37,7 @@ div.zikulamultisitesmodule-relation-rightside {
     width: 65%;
 }
 
-/* hide legends if z-panels are used as both contain the same labels */
+/* hide legends if panels are used as both contain the same labels */
 div.multisites-edit .panel legend {
     display: none;
 }
@@ -119,4 +118,9 @@ div.zikulamultisitesmodule-view form.zikulamultisitesmodule-quicknav fieldset la
 div.zikulamultisitesmodule-view form.zikulamultisitesmodule-quicknav fieldset #num {
     width: 50px;
     text-align: right;
+}
+
+div.zikulamultisitesmodule-view .avatar img {
+    width: auto;
+    max-height: 24px;
 }

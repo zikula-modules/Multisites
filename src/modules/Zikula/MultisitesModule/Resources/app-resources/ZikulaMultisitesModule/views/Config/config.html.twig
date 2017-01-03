@@ -19,8 +19,10 @@
         <li class="active" data-toggle="pill"><a href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
         {% set tabTitle = __('Security settings') %}
         <li data-toggle="pill"><a href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
-        {% set tabTitle = __('Images') %}
+        {% set tabTitle = __('Listviews') %}
         <li data-toggle="pill"><a href="#tab3" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
+        {% set tabTitle = __('Images') %}
+        <li data-toggle="pill"><a href="#tab4" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
         </ul>
 
         {{ form_errors(form) }}
@@ -47,8 +49,21 @@
                     {{ form_row(form.globalAdminEmail) }}
                 </fieldset>
             </div>
-            {% set tabTitle = __('Images') %}
+            {% set tabTitle = __('Listviews') %}
             <div role="tabpanel" class="tab-pane fade" id="tab3">
+                <fieldset>
+                    <legend>{{ tabTitle }}</legend>
+                
+                    <p class="alert alert-info">{{ __('Here you can configure parameters for list views.')|nl2br }}</p>
+                
+                    {{ form_row(form.siteEntriesPerPage) }}
+                    {{ form_row(form.templateEntriesPerPage) }}
+                    {{ form_row(form.siteExtensionEntriesPerPage) }}
+                    {{ form_row(form.projectEntriesPerPage) }}
+                </fieldset>
+            </div>
+            {% set tabTitle = __('Images') %}
+            <div role="tabpanel" class="tab-pane fade" id="tab4">
                 <fieldset>
                     <legend>{{ tabTitle }}</legend>
                 
@@ -59,11 +74,20 @@
                     {{ form_row(form.shrinkWidthSiteLogo) }}
                     {{ form_row(form.shrinkHeightSiteLogo) }}
                     </div>
+                    {{ form_row(form.enableShrinkingForSiteFavIcon) }}
+                    <div id="shrinkDetailsSiteFavIcon">
+                    {{ form_row(form.shrinkWidthSiteFavIcon) }}
+                    {{ form_row(form.shrinkHeightSiteFavIcon) }}
+                    </div>
                     {{ form_row(form.thumbnailModeSite) }}
                     {{ form_row(form.thumbnailWidthSiteLogoView) }}
                     {{ form_row(form.thumbnailHeightSiteLogoView) }}
                     {{ form_row(form.thumbnailWidthSiteLogoEdit) }}
                     {{ form_row(form.thumbnailHeightSiteLogoEdit) }}
+                    {{ form_row(form.thumbnailWidthSiteFavIconView) }}
+                    {{ form_row(form.thumbnailHeightSiteFavIconView) }}
+                    {{ form_row(form.thumbnailWidthSiteFavIconEdit) }}
+                    {{ form_row(form.thumbnailHeightSiteFavIconEdit) }}
                 </fieldset>
             </div>
         </div>

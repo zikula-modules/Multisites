@@ -38,13 +38,15 @@ This module is intended for being used with Zikula 1.4.3+.
 <a name="installation" />
 ## Installation
 
-First copy the content of _Resources/config-folder/_ into the _/config_ folder of your Zikula site.
+The Multisites module is installed like this:
 
-Afterwards the Multisites module is installed like any other Zikula module.
-
-1. Go to the Extensions administration
-2. Find Multisites in the Extensions list
-3. Click on the first icon on the right for installing and activating the module
+1. Copy ZikulaMultisitesModule into your `modules` directory. Afterwards you should have a folder named `modules/Zikula/MultisitesModule/Resources`.
+2. Copy the content of _Resources/config-folder/_ into the _/config_ folder of your Zikula site.
+3. Copy the content of _Resources/app-resources/_ into the _/app/Resources_ folder of your Zikula site.
+4. Initialize and activate ZikulaMultisitesModule in the extensions administration.
+5. Move or copy the directory `Resources/userdata/ZikulaMultisitesModule/` to `/userdata/ZikulaMultisitesModule/`.
+   Note this step is optional as the install process can create these folders, too.
+6. Make the directory `/userdata/ZikulaMultisitesModule/` writable including all sub folders.
 
 
 <a name="upgrading" />

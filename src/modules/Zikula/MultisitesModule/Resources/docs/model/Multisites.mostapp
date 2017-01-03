@@ -30,20 +30,10 @@ application "Multisites" {
         writeModelToDocs true
         skipFiles "
             CHANGELOG.md,
-            README.md
-        "
-        markFiles "
             Container/LinkContainer.php,
-            Controller/AdminController.php,
-            Controller/ConfigController.php,
-            Controller/AjaxController.php,
-            Controller/SiteController.php,
-            Controller/TemplateController.php,
             Entity/Repository/ProjectRepository.php,
             Entity/Repository/SiteRepository.php,
             Entity/Repository/TemplateRepository.php,
-            Entity/SiteEntity.php,
-            Entity/TemplateEntity.php,
             Form/AppSettingsType.php,
             Form/Handler/Site/EditHandler.php,
             Form/Handler/Template/EditHandler.php,
@@ -54,10 +44,18 @@ application "Multisites" {
             Helper/ModelHelper.php,
             Listener/EntityLifecycleListener.php,
             MultisitesModuleInstaller.php,
+            README.md
+        "
+        markFiles "
+            Controller/AdminController.php,
+            Controller/AjaxController.php,
+            Controller/ConfigController.php,
+            Controller/SiteController.php,
+            Controller/TemplateController.php,
+            Entity/SiteEntity.php,
+            Entity/TemplateEntity.php,
             Resources/config/eventSubscriber.yml,
-            Resources/config/helpers.yml,
-            Resources/docs/overridesTemplate_config.yml,
-            Resources/docs/overridesTemplate_theme.yml
+            Resources/config/helpers.yml
         "
     }
     entities {

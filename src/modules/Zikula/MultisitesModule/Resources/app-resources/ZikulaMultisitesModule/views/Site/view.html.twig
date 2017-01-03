@@ -72,7 +72,7 @@
                 <th id="hActive" scope="col" class="text-center">
                     <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', {'%s': 'active'}) }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
                 </th>
-                <th id="hItemActions" scope="col" class="z-order-unsorted">{{ __('Actions') }}</th>
+                <th id="hItemActions" scope="col" class="text-right z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -164,20 +164,13 @@
                         {% endif %}
                     </div></noscript>
                 </td>
-                <td id="itemActions{{ site.id }}" headers="hItemActions" class="actions nowrap z-w02">
-                    {% set actionLinks = zikulamultisitesmodule_actions(entity=site, area=routeArea, context='view') %}
-                    {% if actionLinks|length > 0 %}
-                        <div class="dropdown">
-                            <a id="itemActions{{ site.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                            
-                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="itemActions{{ site.id }}DropDownToggle">
-                                {% for option in actionLinks %}
-                                    <li role="presentation"><a href="{{ option.url }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
-                                    
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
+                <td id="itemActions{{ site.id }}" headers="hItemActions" class="actions text-right nowrap z-w02">
+                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], { entity: site, area: routeArea, context: 'view' }) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ site.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        
+                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -244,29 +237,31 @@
 {% block footer %}
     {{ parent() }}
 
-<script type="text/javascript">
-/* <![CDATA[ */
-    ( function($) {
-        $(document).ready(function() {
-            $('a.lightbox').lightbox();
-            $('.dropdown-toggle').dropdown();
-            $('a.fa-zoom-in').attr('target', '_blank');
-            {% for site in items %}
-                {% set itemid = site.id %}
-                zikulaMultisitesInitToggle('site', 'active', '{{ itemid|e('js') }}');
-            {% endfor %}
-            {% if routeArea == 'admin' %}
-                {# init the "toggle all" functionality #}
-                if ($('#toggleSites').length > 0) {
-                    $('#toggleSites').click(function (event) {
-                        $('sites-checkbox').prop('checked', $(this).prop('checked'));
-                    });
-                }
-
-                $('a.sitelink').attr('target', '_blank');
-            {% endif %}
-        });
-    })(jQuery);
-/* ]]> */
-</script>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                $('a.lightbox').lightbox();
+                $('.zikulamultisitesmodule-site .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
+                $('.zikulamultisitesmodule-site .dropdown > ul a').each(function (index) {
+                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+                });
+                $('.zikulamultisitesmodule-site .dropdown > ul a i').addClass('fa-fw');
+                $('.zikulamultisitesmodule-site .dropdown-toggle').removeClass('hidden').dropdown();
+                {% for site in items %}
+                    {% set itemid = site.createCompositeIdentifier() %}
+                    zikulaMultisitesInitToggle('site', 'active', '{{ itemid|e('js') }}');
+                {% endfor %}
+                {% if routeArea == 'admin' %}
+                    {# init the "toggle all" functionality #}
+                    if ($('#toggleSites').length > 0) {
+                        $('#toggleSites').click(function (event) {
+                            $('.sites-checkbox').prop('checked', $(this).prop('checked'));
+                        });
+                    }
+                {% endif %}
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
 {% endblock %}

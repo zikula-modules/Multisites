@@ -140,26 +140,26 @@
 {% block footer %}
     {{ parent() }}
 
-<script type="text/javascript">
-/* <![CDATA[ */
-    ( function($) {
-        $(document).ready(function() {
-            $('.dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
-            $('.dropdown > ul a').each(function (index) {
-                $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                $('.zikulamultisitesmodule-siteextension .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
+                $('.zikulamultisitesmodule-siteextension .dropdown > ul a').each(function (index) {
+                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+                });
+                $('.zikulamultisitesmodule-siteextension .dropdown > ul a i').addClass('fa-fw');
+                $('.zikulamultisitesmodule-siteextension .dropdown-toggle').removeClass('hidden').dropdown();
+                {% if routeArea == 'admin' %}
+                    {# init the "toggle all" functionality #}
+                    if ($('#toggleSiteExtensions').length > 0) {
+                        $('#toggleSiteExtensions').click(function (event) {
+                            $('.siteextensions-checkbox').prop('checked', $(this).prop('checked'));
+                        });
+                    }
+                {% endif %}
             });
-            $('.dropdown > ul a i').addClass('fa-fw');
-            $('.dropdown-toggle').removeClass('hidden').dropdown();
-            {% if routeArea == 'admin' %}
-                {# init the "toggle all" functionality #}
-                if ($('#toggleSiteExtensions').length > 0) {
-                    $('#toggleSiteExtensions').click(function (event) {
-                        $('siteextensions-checkbox').prop('checked', $(this).prop('checked'));
-                    });
-                }
-            {% endif %}
-        });
-    })(jQuery);
-/* ]]> */
-</script>
+        })(jQuery);
+    /* ]]> */
+    </script>
 {% endblock %}

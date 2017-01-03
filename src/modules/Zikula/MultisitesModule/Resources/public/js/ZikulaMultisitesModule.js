@@ -162,7 +162,7 @@ function zikulaMultisitesToggleFlag(objectType, fieldName, itemId)
         data = res.data;
 
         /*if (data.message) {
-            zikulaMultisitesSimpleAlert(jQuery('#toggle' + idSuffix), Zikula.__('Success', 'zikulamultisitesmodule_js'), data.message, 'toggle' + idSuffix + 'DoneAlert', 'success');
+            zikulaMultisitesSimpleAlert(jQuery('#toggle' + idSuffix), Translator.__('Success'), data.message, 'toggle' + idSuffix + 'DoneAlert', 'success');
         }*/
 
         idSuffix = idSuffix.toLowerCase();

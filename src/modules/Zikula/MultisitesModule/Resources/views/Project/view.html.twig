@@ -121,26 +121,26 @@
 {% block footer %}
     {{ parent() }}
 
-<script type="text/javascript">
-/* <![CDATA[ */
-    ( function($) {
-        $(document).ready(function() {
-            $('.dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
-            $('.dropdown > ul a').each(function (index) {
-                $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                $('.zikulamultisitesmodule-project .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
+                $('.zikulamultisitesmodule-project .dropdown > ul a').each(function (index) {
+                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+                });
+                $('.zikulamultisitesmodule-project .dropdown > ul a i').addClass('fa-fw');
+                $('.zikulamultisitesmodule-project .dropdown-toggle').removeClass('hidden').dropdown();
+                {% if routeArea == 'admin' %}
+                    {# init the "toggle all" functionality #}
+                    if ($('#toggleProjects').length > 0) {
+                        $('#toggleProjects').click(function (event) {
+                            $('.projects-checkbox').prop('checked', $(this).prop('checked'));
+                        });
+                    }
+                {% endif %}
             });
-            $('.dropdown > ul a i').addClass('fa-fw');
-            $('.dropdown-toggle').removeClass('hidden').dropdown();
-            {% if routeArea == 'admin' %}
-                {# init the "toggle all" functionality #}
-                if ($('#toggleProjects').length > 0) {
-                    $('#toggleProjects').click(function (event) {
-                        $('projects-checkbox').prop('checked', $(this).prop('checked'));
-                    });
-                }
-            {% endif %}
-        });
-    })(jQuery);
-/* ]]> */
-</script>
+        })(jQuery);
+    /* ]]> */
+    </script>
 {% endblock %}

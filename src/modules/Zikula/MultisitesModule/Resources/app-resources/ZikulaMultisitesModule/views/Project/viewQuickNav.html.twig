@@ -21,9 +21,6 @@
         {% if workflowStateFilter is defined and workflowStateFilter != true %}
             </div>
         {% endif %}
-        {% if searchFilter is not defined or searchFilter == true %}
-            {{ form_row(quickNavForm.q) }}
-        {% endif %}
         {% if searchFilter is defined and searchFilter != true %}
             <div class="hidden">
         {% endif %}

@@ -42,7 +42,7 @@
                 <th id="hSites" scope="col" class="text-left z-order-unsorted">
                     {{ __('Sites') }}
                 </th>
-                <th id="hItemActions" scope="col" class="z-order-unsorted">{{ __('Actions') }}</th>
+                <th id="hItemActions" scope="col" class="text-right z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -72,19 +72,12 @@
                     <a href="{{ path('zikulamultisitesmodule_site_view', { project: project.id }) }}" title="{{ __('View sites assigned to this project') }}">{{ __('Site list') }}</a>
                 </td>
                 <td id="itemActions{{ project.id }}" headers="hItemActions" class="actions nowrap z-w02">
-                    {% set actionLinks = zikulamultisitesmodule_actions(entity=project, area=routeArea, context='view') %}
-                    {% if actionLinks|length > 0 %}
-                        <div class="dropdown">
-                            <a id="itemActions{{ project.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                            
-                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="itemActions{{ project.id }}DropDownToggle">
-                                {% for option in actionLinks %}
-                                    <li role="presentation"><a href="{{ option.url }}" title="{{ option.linkTitle|e('html_attr') }}" role="menuitem" tabindex="-1" class="fa fa-{{ option.icon }}">{{ option.linkText }}</a></li>
-                                    
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
+                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], { entity: project, area: routeArea, context: 'view' }) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ project.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        
+                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -149,24 +142,27 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-{#
-<script type="text/javascript">
-/* <![CDATA[ */
-    ( function($) {
-        $(document).ready(function() {
-            $('.dropdown-toggle').dropdown();
-            $('a.fa-zoom-in').attr('target', '_blank');
-            {% if routeArea == 'admin' %}
-                {# init the "toggle all" functionality # }
-                if ($('#toggleProjects').length > 0) {
-                    $('#toggleProjects').click(function (event) {
-                        $('projects-checkbox').prop('checked', $(this).prop('checked'));
-                    });
-                }
-            {% endif %}
-        });
-    })(jQuery);
-/* ]]> */
-</script>
-#}
+
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                $('.zikulamultisitesmodule-project .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
+                $('.zikulamultisitesmodule-project .dropdown > ul a').each(function (index) {
+                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
+                });
+                $('.zikulamultisitesmodule-project .dropdown > ul a i').addClass('fa-fw');
+                $('.zikulamultisitesmodule-project .dropdown-toggle').removeClass('hidden').dropdown();
+                {#% if routeArea == 'admin' %}
+                    {# init the "toggle all" functionality # }
+                    if ($('#toggleProjects').length > 0) {
+                        $('#toggleProjects').click(function (event) {
+                            $('.projects-checkbox').prop('checked', $(this).prop('checked'));
+                        });
+                    }
+                {% endif %#}
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
 {% endblock %}
