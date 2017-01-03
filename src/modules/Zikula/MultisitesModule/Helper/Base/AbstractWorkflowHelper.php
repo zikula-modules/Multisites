@@ -65,17 +65,17 @@ abstract class AbstractWorkflowHelper
          $states = [];
          $states[] = [
              'value' => 'initial',
-             'text' => $this->->translator__('Initial'),
+             'text' => $this->translator__('Initial'),
              'ui' => 'danger'
          ];
          $states[] = [
              'value' => 'approved',
-             'text' => $this->->translator__('Approved'),
+             'text' => $this->translator__('Approved'),
              'ui' => 'success'
          ];
          $states[] = [
              'value' => 'deleted',
-             'text' => $this->->translator__('Deleted'),
+             'text' => $this->translator__('Deleted'),
              'ui' => 'danger'
          ];
     
