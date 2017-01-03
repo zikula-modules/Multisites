@@ -31,7 +31,7 @@ class ProjectRepository extends AbstractProjectRepository
     {
         $parameters = parent::getViewQuickNavParameters($context, $args);
 
-        $parameters['templates'] = $this->request->query->getDigits('templates', 0);
+        $parameters['templates'] = $this->request->query->getInt('templates', 0);
 
         return $parameters;
     }

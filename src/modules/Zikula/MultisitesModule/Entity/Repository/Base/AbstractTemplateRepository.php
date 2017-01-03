@@ -895,7 +895,7 @@ abstract class AbstractTemplateRepository extends EntityRepository
         }
     
         
-        $showOnlyOwnEntries = $this->getRequest()->query->getDigits('own', 0);
+        $showOnlyOwnEntries = $this->getRequest()->query->getInt('own', 0);
         if ($showOnlyOwnEntries == 1) {
             
             $uid = $this->getRequest()->getSession()->get('uid');

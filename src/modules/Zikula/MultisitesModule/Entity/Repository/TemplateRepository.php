@@ -27,11 +27,11 @@ class TemplateRepository extends AbstractTemplateRepository
     /**
      * {@inheritdoc}
      */
-    protected function getViewQuickNavParameters($context = '', $args = array())
+    protected function getViewQuickNavParameters($context = '', $args = [])
     {
         $parameters = parent::getViewQuickNavParameters($context, $args);
 
-        $parameters['projects'] = $this->request->query->getDigits('projects', 0);
+        $parameters['projects'] = $this->request->query->getInt('projects', 0);
 
         return $parameters;
     }
@@ -46,7 +46,7 @@ class TemplateRepository extends AbstractTemplateRepository
             return $qb;
         }
 
-        $parameters = $this->getViewQuickNavParameters('', array());
+        $parameters = $this->getViewQuickNavParameters('', []);
         foreach ($parameters as $k => $v) {
             if ($k == 'projects') {
                 if ($v > 0 && strpos($qb->getDql(), 'tblTemplates') !== false) {

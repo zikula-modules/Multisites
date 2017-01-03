@@ -79,7 +79,7 @@ class TemplateEntity extends BaseEntity
     
             // reset upload fields
             //$this->setSqlFile('');
-            //$this->setSqlFileMeta(array());
+            //$this->setSqlFileMeta([]);
     
             $this->setCreatedDate(null);
             $this->setCreatedUserId(null);
