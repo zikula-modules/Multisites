@@ -13,22 +13,12 @@
 namespace Zikula\MultisitesModule\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Array field transformer class.
  */
 class ArrayFieldTransformer implements DataTransformerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $transformer = new ArrayFieldTransformer();
-        $builder->addModelTransformer($transformer);
-    }
-
     /**
      * Transforms the object array to the normalised value.
      *
