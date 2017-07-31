@@ -11,7 +11,7 @@
                     <history enabled="true" limit="15" />
                 </source>
                 <source type="checkstyle" />
-                <source type="phpcs" />
+                <!--source type="phpcs" /-->
                 <source type="pmd" />
                 <source type="phploc" />
                 <source type="phpunit">
