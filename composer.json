@@ -22,10 +22,5 @@
         "sebastian/phpcpd": "*"
     },
     "suggest": {
-    },
-    "config": {
-        "platform": {
-            "php": "5.5.9"
-        }
     }
 }
