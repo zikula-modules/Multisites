@@ -19,7 +19,7 @@ pipeline {
         stage('Composer Install') {
             steps {
                 sh 'if [ -f build/composer.phar] ; then rm "build/composer.phar"; fi'
-                sh 'wget -nc "http://getcomposer.org/composer.phar"'
+                sh 'cd build && wget -nc "http://getcomposer.org/composer.phar" && cd ..'
                 sh 'chmod +x build/composer.phar'
                 sh 'build/composer.phar install'
             }
