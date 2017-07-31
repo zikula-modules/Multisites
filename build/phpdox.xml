@@ -11,8 +11,8 @@
                     <history enabled="true" limit="15" />
                 </source>
                 <source type="checkstyle" />
-<!--                 <source type="phpcs" /> alternative for checkstyle with better phpcs support, coming in next version -->
-<!--                 <source type="pmd" /> -->
+                <source type="phpcs" />
+                <source type="pmd" />
                 <source type="phploc" />
                 <source type="phpunit">
                     <coverage path="coverage/xml" />
