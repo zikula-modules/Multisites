@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Composer Install') {
             steps {
-                sh 'if [ -f build/composer.phar] ; then rm build/composer.phar fi'
+                sh 'if [ -f build/composer.phar] ; then rm "build/composer.phar"; fi'
                 sh 'wget -nc "http://getcomposer.org/composer.phar"'
                 sh 'chmod +x build/composer.phar'
                 sh 'build/composer.phar install'
