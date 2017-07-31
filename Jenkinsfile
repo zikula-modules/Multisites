@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'vendor/bin/phpunit -c build/phpunit.xml || exit 0'
+                sh 'vendor/bin/phpunit -c phpunit.xml || exit 0'
                 step([
                     $class: 'XUnitBuilder',
                     thresholds: [[$class: 'FailedThreshold', unstableThreshold: '1']],
