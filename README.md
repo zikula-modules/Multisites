@@ -2,7 +2,7 @@
 
 The Multisites module.
 
-![Build Status](http://guite.info:8080/buildStatus/icon?job=Applications_Multisites/master)
+![Build Status](http://guite.info:8080/buildStatus/icon?job=Applications_Multisites/2.0.0-prototype)
 
 ## Documentation
 
