@@ -2,5 +2,4 @@ services:
     # Log processor
     zikula_multisites_module.log.processor:
         class: Monolog\Processor\PsrLogMessageProcessor
-        tags:
-            - { name: monolog.processor }
+        tags: ['monolog.processor']

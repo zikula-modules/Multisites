@@ -2,6 +2,6 @@
 [
 {% for site in items %}
     {% if not loop.first %},{% endif %}
-    {{ site.toJson() }}
+    {{ site.toArray()|json_encode() }}
 {% endfor %}
 ]

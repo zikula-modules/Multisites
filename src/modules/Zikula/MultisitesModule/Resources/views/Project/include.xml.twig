@@ -1,19 +1,19 @@
 {# purpose of this template: projects xml inclusion template #}
-<project id="{{ project.id }}" createdon="{{ project.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ project.updatedDate|localizeddate('medium', 'short') }}">
+<project id="{{ project.getId() }}" createdon="{{ project.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ project.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ project.id }}</id>
     <name><![CDATA[{{ project.name }}]]></name>
     <workflowState>{{ project.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
     <sites>
     {% if project.sites|default %}
         {% for relatedItem in project.sites %}
-        <site>{{ relatedItem.getTitleFromDisplayPattern() }}</site>
+        <site>{{ relatedItem|zikulamultisitesmodule_formattedTitle }}</site>
         {% endfor %}
     {% endif %}
     </sites>
     <templates>
     {% if project.templates|default %}
         {% for relatedItem in project.templates %}
-        <template>{{ relatedItem.getTitleFromDisplayPattern() }}</template>
+        <template>{{ relatedItem|zikulamultisitesmodule_formattedTitle }}</template>
         {% endfor %}
     {% endif %}
     </templates>

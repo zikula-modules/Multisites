@@ -2,6 +2,6 @@
 [
 {% for template in items %}
     {% if not loop.first %},{% endif %}
-    {{ template.toJson() }}
+    {{ template.toArray()|json_encode() }}
 {% endfor %}
 ]

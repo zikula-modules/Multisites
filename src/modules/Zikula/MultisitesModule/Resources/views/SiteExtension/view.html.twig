@@ -1,6 +1,6 @@
 {# purpose of this template: site extensions list view #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{% block title __('Site extension list') %}
+{% block title own ? __('My site extensions') : __('Site extensions list') %}
 {% block admin_page_icon 'list-alt' %}
 {% block content %}
 <div class="zikulamultisitesmodule-siteextension zikulamultisitesmodule-view">
@@ -9,7 +9,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@ZikulaMultisitesModule/SiteExtension/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/SiteExtension/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="siteExtensionsViewForm" class="form-horizontal" role="form">
@@ -21,19 +21,20 @@
                 {% if routeArea == 'admin' %}
                     <col id="cSelect" />
                 {% endif %}
+                <col id="cItemActions" />
                 <col id="cName" />
                 <col id="cExtensionVersion" />
                 <col id="cExtensionType" />
                 <col id="cSite" />
-                <col id="cItemActions" />
             </colgroup>
             <thead>
             <tr>
                 {% if routeArea == 'admin' %}
-                    <th id="hSelect" scope="col" class="text-center">
-                        <input type="checkbox" id="toggleSiteExtensions" />
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="zikulamultisites-mass-toggle" />
                     </th>
                 {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
@@ -46,7 +47,6 @@
                 <th id="hSite" scope="col" class="text-left">
                     <a href="{{ sort.site.url }}" title="{{ __f('Sort by %s', {'%s': 'site'}) }}" class="{{ sort.site.class }}">{{ __('Site') }}</a>
                 </th>
-                <th id="hItemActions" scope="col" class="text-right z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -54,12 +54,19 @@
         {% for siteExtension in items %}
             <tr>
                 {% if routeArea == 'admin' %}
-                    <td headers="hSelect" class="text-center">
-                        <input type="checkbox" name="items[]" value="{{ siteExtension.id }}" class="siteextensions-checkbox" />
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ siteExtension.getKey() }}" class="zikulamultisites-toggle-checkbox" />
                     </td>
                 {% endif %}
+                <td id="itemActions{{ siteExtension.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], {entity: siteExtension, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ siteExtension.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
                 <td headers="hName" class="text-left">
-                    {{ siteExtension.name|notifyFilters('zikulamultisitesmodule.filterhook.siteextensions') }}
+                    {{ siteExtension.name|notifyFilters('zikulamultisitesmodule.filterhook.siteextensions')|safeHtml }}
                 </td>
                 <td headers="hExtensionVersion" class="text-left">
                     {{ siteExtension.extensionVersion }}
@@ -69,18 +76,10 @@
                 </td>
                 <td headers="hSite" class="text-left">
                     {% if siteExtension.site|default %}
-                          {{ siteExtension.site.getTitleFromDisplayPattern() }}
+                          {{ siteExtension.site|zikulamultisitesmodule_formattedTitle }}
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
-                </td>
-                <td id="itemActions{{ siteExtension.id }}" headers="hItemActions" class="actions text-right nowrap z-w02">
-                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], { entity: siteExtension, area: routeArea, context: 'view' }) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ siteExtension.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        
-                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
-                    </div>
                 </td>
             </tr>
         {% else %}
@@ -95,8 +94,8 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 and pager|default %}
-            {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'view'}) }}
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
             <fieldset>
@@ -119,13 +118,15 @@
 </div>
 {% endblock %}
 {% block page_nav_links %}
-    {% if showAllEntries == 1 %}
-        {% set linkTitle = __('Back to paginated view') %}
-        <a href="{{ path('zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
-    {% else %}
-        {% set linkTitle = __('Show all entries') %}
-        <a href="{{ path('zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
-    {% endif %}
+    <p>
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('zikulamultisitesmodule_siteextension_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
 {% endblock %}
 {% block display_hooks %}
     
@@ -136,30 +137,4 @@
             {{ hook }}
         {% endfor %}
     {% endif % #}
-{% endblock %}
-{% block footer %}
-    {{ parent() }}
-
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        ( function($) {
-            $(document).ready(function() {
-                $('.zikulamultisitesmodule-siteextension .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
-                $('.zikulamultisitesmodule-siteextension .dropdown > ul a').each(function (index) {
-                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
-                });
-                $('.zikulamultisitesmodule-siteextension .dropdown > ul a i').addClass('fa-fw');
-                $('.zikulamultisitesmodule-siteextension .dropdown-toggle').removeClass('hidden').dropdown();
-                {% if routeArea == 'admin' %}
-                    {# init the "toggle all" functionality #}
-                    if ($('#toggleSiteExtensions').length > 0) {
-                        $('#toggleSiteExtensions').click(function (event) {
-                            $('.siteextensions-checkbox').prop('checked', $(this).prop('checked'));
-                        });
-                    }
-                {% endif %}
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
 {% endblock %}

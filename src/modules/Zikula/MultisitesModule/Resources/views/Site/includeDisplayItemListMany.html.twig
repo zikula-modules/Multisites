@@ -1,14 +1,17 @@
 {# purpose of this template: inclusion template for display of related sites #}
 {% set hasAdminPermission = hasPermission('ZikulaMultisitesModule:Site:', '::', 'ACCESS_EDIT') %}
 {% if items|default and items|length > 0 %}
-<ul class="zikulamultisitesmodule-related-item-list site">
+<ul class="list-group zikulamultisitesmodule-related-item-list site">
 {% for item in items %}
     {% if hasAdminPermission or item.workflowState == 'approved' %}
-    <li>
-    {{ item.getTitleFromDisplayPattern() }}
-<br />
+    <li class="list-group-item">
+<h4 class="list-group-item-heading">
+    {{ item|zikulamultisitesmodule_formattedTitle }}
+</h4>
 {% if item.logo is not empty and item.logoMeta.isImage %}
-    <img src="{{ item.logo.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
+    <p class="list-group-item-text">
+        <img src="{{ item.logo.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|zikulamultisitesmodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
+    </p>
 {% endif %}
     </li>
     {% endif %}

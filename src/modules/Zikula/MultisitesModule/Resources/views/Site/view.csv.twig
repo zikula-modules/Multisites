@@ -5,12 +5,26 @@
 {% endspaceless %}
 {% for site in items %}
 {% spaceless %}
-    "{{ site.name }}";"{{ site.description }}";"{{ site.siteAlias }}";"{{ site.siteName }}";"{{ site.siteDescription }}";"{{ site.siteAdminName }}";"";"{{ site.siteAdminRealName }}";"{{ site.siteAdminEmail }}";"{{ site.siteCompany }}";"{{ site.siteDns }}";"{{ site.databaseName }}";"{{ site.databaseUserName }}";"";"{{ site.databaseHost }}";"{{ site.databaseType }}";"{{ site.logo }}";"{{ site.favIcon }}";"{{ site.allowedLocales }}";"{{ site.parametersCsvFile }}";"{{ site.parametersArray }}";"{% if not site.active %}0{% else %}1{% endif %}";"{{ site.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
-    ;"{% if site.template|default %}{{ site.template.getTitleFromDisplayPattern() }}{% endif %}";"{% if site.project|default %}{{ site.project.getTitleFromDisplayPattern() }}{% endif %}"
+    "{{ site.name }}";"{{ site.description }}";"{{ site.siteAlias }}";"{{ site.siteName }}";"{{ site.siteDescription }}";"{{ site.siteAdminName }}";"";"{{ site.siteAdminRealName }}";"{{ site.siteAdminEmail }}";"{{ site.siteCompany }}";"{{ site.siteDns }}";"{{ site.databaseName }}";"{{ site.databaseUserName }}";"";"{{ site.databaseHost }}";"{{ site.databaseType }}";"{{ site.logo }}";"{{ site.favIcon }}";"{% if site.allowedLocales is iterable and site.allowedLocales|length > 0 %}
+        <ul>
+        {% for entry in site.allowedLocales %}
+            <li>{{ entry }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    ";"{{ site.parametersCsvFile }}";"{% if site.parametersArray is iterable and site.parametersArray|length > 0 %}
+        <ul>
+        {% for entry in site.parametersArray %}
+            <li>{{ entry }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    ";"{% if not site.active %}0{% else %}1{% endif %}";"{{ site.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
+    ;"{% if site.template|default %}{{ site.template|zikulamultisitesmodule_formattedTitle }}{% endif %}";"{% if site.project|default %}{{ site.project|zikulamultisitesmodule_formattedTitle }}{% endif %}"
     ;"
     {% if site.extensions|default %}
         {% for relatedItem in site.extensions %}
-        {{ relatedItem.getTitleFromDisplayPattern() }}{% if not loop.last %}, {% endif %}
+        {{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
         {% endfor %}
     {% endif %}
     "

@@ -1,0 +1,78 @@
+services:
+    zikula_multisites_module.hook_subscriber.filter_hooks.sites:
+        class: Zikula\MultisitesModule\HookSubscriber\SiteFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.filter_hooks.sites' }
+
+    zikula_multisites_module.hook_subscriber.form_aware_hook.sites:
+        class: Zikula\MultisitesModule\HookSubscriber\SiteFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.form_aware_hook.sites' }
+
+    zikula_multisites_module.hook_subscriber.ui_hooks.sites:
+        class: Zikula\MultisitesModule\HookSubscriber\SiteUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.ui_hooks.sites' }
+
+    zikula_multisites_module.hook_subscriber.filter_hooks.templates:
+        class: Zikula\MultisitesModule\HookSubscriber\TemplateFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.filter_hooks.templates' }
+
+    zikula_multisites_module.hook_subscriber.form_aware_hook.templates:
+        class: Zikula\MultisitesModule\HookSubscriber\TemplateFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.form_aware_hook.templates' }
+
+    zikula_multisites_module.hook_subscriber.ui_hooks.templates:
+        class: Zikula\MultisitesModule\HookSubscriber\TemplateUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.ui_hooks.templates' }
+
+    zikula_multisites_module.hook_subscriber.filter_hooks.siteextensions:
+        class: Zikula\MultisitesModule\HookSubscriber\SiteExtensionFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.filter_hooks.siteextensions' }
+
+    zikula_multisites_module.hook_subscriber.ui_hooks.siteextensions:
+        class: Zikula\MultisitesModule\HookSubscriber\SiteExtensionUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.ui_hooks.siteextensions' }
+
+    zikula_multisites_module.hook_subscriber.filter_hooks.projects:
+        class: Zikula\MultisitesModule\HookSubscriber\ProjectFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.filter_hooks.projects' }
+
+    zikula_multisites_module.hook_subscriber.form_aware_hook.projects:
+        class: Zikula\MultisitesModule\HookSubscriber\ProjectFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.form_aware_hook.projects' }
+
+    zikula_multisites_module.hook_subscriber.ui_hooks.projects:
+        class: Zikula\MultisitesModule\HookSubscriber\ProjectUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.ui_hooks.projects' }
+

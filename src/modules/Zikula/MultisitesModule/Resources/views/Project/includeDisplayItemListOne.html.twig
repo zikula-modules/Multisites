@@ -1,5 +1,5 @@
 {# purpose of this template: inclusion template for display of related projects #}
 {% set hasAdminPermission = hasPermission('ZikulaMultisitesModule:Project:', '::', 'ACCESS_EDIT') %}
 <h4>
-    {{ item.getTitleFromDisplayPattern() }}
+    {{ item|zikulamultisitesmodule_formattedTitle }}
 </h4>

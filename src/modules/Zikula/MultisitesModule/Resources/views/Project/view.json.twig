@@ -2,6 +2,6 @@
 [
 {% for project in items %}
     {% if not loop.first %},{% endif %}
-    {{ project.toJson() }}
+    {{ project.toArray()|json_encode() }}
 {% endfor %}
 ]

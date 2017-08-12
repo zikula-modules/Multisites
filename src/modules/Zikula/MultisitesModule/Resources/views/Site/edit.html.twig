@@ -1,189 +1,131 @@
 {# purpose of this template: build the form to edit an instance of site #}
-{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'ZikulaMultisitesModule::' ~ baseTemplate ~ '.html.twig' %}
 
 {% block header %}
     {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js')) }}
-    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js')) }}
-    {{ pageAddAsset('javascript', pagevars.homepath ~ 'vendor/twitter/typeahead.js/dist/typeahead.bundle.min.js') }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
 {% endblock %}
-
 {% block title mode == 'create' ? __('Create site') : __('Edit site') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
     <div class="zikulamultisitesmodule-site zikulamultisitesmodule-edit">
-{% form_theme form with [
-    '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
-    'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
-] %}
-{{ form_start(form, {attr: {id: 'siteEditForm'}}) }}
-{{ form_errors(form) }}
-<fieldset>
-    <legend>{{ __('Content') }}</legend>
-    
-    {{ form_row(form.name) }}
-    
-    {{ form_row(form.description) }}
-    
-    {{ form_row(form.siteAlias) }}
-    
-    {{ form_row(form.siteName) }}
-    
-    {{ form_row(form.siteDescription) }}
-    
-    {{ form_row(form.siteAdminName) }}
-    
-    {{ form_row(form.siteAdminPassword) }}
-    
-    {{ form_row(form.siteAdminRealName) }}
-    
-    {{ form_row(form.siteAdminEmail) }}
-    
-    {{ form_row(form.siteCompany) }}
-    
-    {{ form_row(form.siteDns) }}
-    
-    {{ form_row(form.databaseName) }}
-    
-    {{ form_row(form.databaseUserName) }}
-    
-    {{ form_row(form.databasePassword) }}
-    
-    {{ form_row(form.databaseHost) }}
-    
-    {{ form_row(form.databaseType) }}
-    
-    {{ form_row(form.logo) }}
-    
-    {{ form_row(form.favIcon) }}
-    
-    {{ form_row(form.parametersCsvFile) }}
-    
-    {{ form_row(form.active) }}
-</fieldset>
-
-{{ include(
-    '@ZikulaMultisitesModule/Template/includeSelectOne.html.twig',
-    { group: 'site', alias: 'template', aliasReverse: 'sites', mandatory: false, idPrefix: 'multisitesSite_Template', linkingItem: site, displayMode: 'choices', allowEditing: false }
-) }}
-{{ include(
-    '@ZikulaMultisitesModule/Project/includeSelectOne.html.twig',
-    { group: 'site', alias: 'project', aliasReverse: 'sites', mandatory: false, idPrefix: 'multisitesSite_Project', linkingItem: site, displayMode: 'choices', allowEditing: false }
-) }}
-{% if mode != 'create' %}
-    {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', { obj: site }) }}
-{% endif %}
-
-{# include display hooks #}
-{% if mode != 'create' %}
-    {% set hookId = site.id %}
-    {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_edit', id=hookId) %}
-{% else %}
-    {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_edit', id=null) %}
-{% endif %}
-{% if hooks is iterable and hooks|length > 0 %}
-    {% for providerArea, hook in hooks %}
-        {% if providerArea != 'provider.scribite.ui_hooks.editor' %}{# fix for #664 #}
+        {% form_theme form with [
+            '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form, {attr: {id: 'siteEditForm', class: 'zikulamultisites-edit-form'}}) }}
+        {{ form_errors(form) }}
+        <fieldset>
+            <legend>{{ __('Content') }}</legend>
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.siteAlias) }}
+            {{ form_row(form.siteName) }}
+            {{ form_row(form.siteDescription) }}
+            {{ form_row(form.siteAdminName) }}
+            {{ form_row(form.siteAdminPassword) }}
+            {{ form_row(form.siteAdminRealName) }}
+            {{ form_row(form.siteAdminEmail) }}
+            {{ form_row(form.siteCompany) }}
+            {{ form_row(form.siteDns) }}
+            {{ form_row(form.databaseName) }}
+            {{ form_row(form.databaseUserName) }}
+            {{ form_row(form.databasePassword) }}
+            {{ form_row(form.databaseHost) }}
+            {{ form_row(form.databaseType) }}
+            {{ form_row(form.logo) }}
+            {{ form_row(form.favIcon) }}
+            {{ form_row(form.allowedLocales) }}
+            {{ form_row(form.parametersCsvFile) }}
+            {{ form_row(form.parametersArray) }}
+            {{ form_row(form.active) }}
+        </fieldset>
+        
+        {{ include(
+            '@ZikulaMultisitesModule/Template/includeSelectOne.html.twig',
+            {group: 'site', alias: 'template', aliasReverse: 'sites', mandatory: false, idPrefix: 'multisitesSite_Template', linkingItem: site, displayMode: 'choices'}
+        ) }}
+        {{ include(
+            '@ZikulaMultisitesModule/Project/includeSelectOne.html.twig',
+            {group: 'site', alias: 'project', aliasReverse: 'sites', mandatory: false, idPrefix: 'multisitesSite_Project', linkingItem: site, displayMode: 'choices'}
+        ) }}
+        {% if mode != 'create' %}
+            {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', {obj: site}) }}
+        {% endif %}
+        
+        {% if formHookTemplates|length > 0 %}
             <fieldset>
-                {{ hook }}
+                {% for hookTemplate in formHookTemplates %}
+                    {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
+                {% endfor %}
             </fieldset>
         {% endif %}
-    {% endfor %}
-{% endif %}
-
-
-{# include return control #}
-{% if mode == 'create' %}
-    <fieldset>
-        <legend>{{ __('Return control') }}</legend>
-        {{ form_row(form.repeatCreation) }}
-    </fieldset>
-{% endif %}
-
-{# include possible submit actions #}
-<div class="form-group form-buttons">
-    <div class="col-sm-offset-3 col-sm-9">
-        {% for action in actions %}
-            {{ form_widget(attribute(form, action.id)) }}
-        {% endfor %}
-        {{ form_widget(form.reset) }}
-        {{ form_widget(form.cancel) }}
+        
+        {% if form.moderationSpecificCreator is defined %}
+            <fieldset id="moderationFieldsSection">
+                <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
+                <div id="moderationFieldsContent">
+                    {{ form_row(form.moderationSpecificCreator) }}
+                    {{ form_row(form.moderationSpecificCreationDate) }}
+                </div>
+            </fieldset>
+        {% endif %}
+        
+        {# include return control #}
+        {% if mode == 'create' %}
+            <fieldset>
+                <legend>{{ __('Return control') }}</legend>
+                {{ form_row(form.repeatCreation) }}
+            </fieldset>
+        {% endif %}
+        
+        {# include possible submit actions #}
+        <div class="form-group form-buttons">
+            <div class="col-sm-offset-3 col-sm-9">
+                {% for action in actions %}
+                    {{ form_widget(attribute(form, action.id)) }}
+                {% endfor %}
+                {{ form_widget(form.reset) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {% set hookId = mode != 'create' ? site.id : null %}
+        {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_edit', id=hookId) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            <h3>{{ __('Hooks') }}</h3>
+            {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+                <h4>{{ providerArea }}</h4>
+                {{ hook }}
+            {% endfor %}
+        {% endif %}
+        
     </div>
-</div>
-{{ form_end(form) }}
-</div>
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-
     {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
-    {% set deleteImage = '<span class="fa fa-trash-o"></span>' %}
-    
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        
-        var formButtons;
-        var triggerValidation = true;
-        
-        function executeCustomValidationConstraints()
-        {
-            zikulaMultisitesPerformCustomValidationRules('site', '{% if mode != 'create' %}{{ site.id }}{% endif %}');
-        }
-        
-        function triggerFormValidation()
-        {
-            executeCustomValidationConstraints();
-            if (!document.getElementById('siteEditForm').checkValidity()) {
-                // This does not really submit the form,
-                // but causes the browser to display the error message
-                jQuery('#siteEditForm').find(':submit').first().click();
-            }
-        }
-        
-        function handleFormSubmit (event) {
-            if (triggerValidation) {
-                triggerFormValidation();
-                if (!document.getElementById('siteEditForm').checkValidity()) {
-                    event.preventDefault();
-                    return false;
-                }
-            }
-        
-            // hide form buttons to prevent double submits by accident
-            formButtons.each(function (index) {
-                jQuery(this).addClass('hidden');
-            });
-        
-            return true;
-        }
-        
-        ( function($) {
-            $(document).ready(function() {
-                $('a.lightbox').lightbox();
-        
-                var allFormFields = $('#siteEditForm input, #siteEditForm select, #siteEditForm textarea');
-                allFormFields.change(executeCustomValidationConstraints);
-        
-                formButtons = $('#siteEditForm .form-buttons input');
-                $('.btn-danger').first().bind('click keypress', function (event) {
-                    if (!window.confirm('{{ __('Really delete this site?') }}')) {
-                        event.preventDefault();
-                    }
+    {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
+    {% set formInitScript %}
+        <script type="text/javascript">
+        /* <![CDATA[ */
+            
+            ( function($) {
+                $(document).ready(function() {
+                    // initialise auto completion for user fields
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('zikulamultisitesmodule_site_moderationSpecificCreator');
+                    {% endif %}
+                    zikulaMultisitesInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ site.id }}{% endif %}');
+                    zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_logo_logo');
+                    zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_favIcon_favIcon');
+                    zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_parametersCsvFile_parametersCsvFile');
                 });
-                $('#siteEditForm button[type=submit]').bind('click keypress', function (event) {
-                    triggerValidation = !$(this).attr('formnovalidate');
-                });
-                $('#siteEditForm').submit(handleFormSubmit);
-        
-                {% if mode != 'create' %}
-                    triggerFormValidation();
-                {% endif %}
-        
-                zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_logo_logo');
-                zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_favIcon_favIcon');
-                zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_parametersCsvFile_parametersCsvFile');
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', formInitScript) }}
 {% endblock %}

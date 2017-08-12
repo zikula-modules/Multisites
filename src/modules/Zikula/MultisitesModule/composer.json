@@ -16,20 +16,27 @@
         "psr-4": { "Zikula\\MultisitesModule\\": "" }
     },
     "require": {
-        "php": ">=5.4.1"
+        "php": ">=5.5.9"
     },
-    "suggest": {
+    "require-dev": {
+        "jakub-onderka/php-parallel-lint": "*",
+        "phploc/phploc": "*",
+        "pdepend/pdepend": "2.*",
+        "squizlabs/php_codesniffer": "1.*",
+        "phpunit/phpunit": "4.*",
+        "theseer/phpdox": "*",
+        "phpmd/phpmd": "2.*",
+        "sebastian/phpcpd": "*"
     },
     "extra": {
         "zikula": {
-            "core-compatibility": "~1.4.5",
+            "core-compatibility": ">=2.0.0 <3.0",
             "class": "Zikula\\MultisitesModule\\ZikulaMultisitesModule",
             "displayname": "Multisites",
             "url": "multisites",
             "capabilities": {
-                "user": {"route": "zikulamultisitesmodule_user_index"},
-                "admin": {"route": "zikulamultisitesmodule_admin_index"},
-                "hook_subscriber": {"class": "Zikula\\MultisitesModule\\Container\\HookContainer"}
+                "user": {"route": "zikulamultisitesmodule_site_view"},
+                "admin": {"route": "zikulamultisitesmodule_site_adminview"}
             },
             "securityschema": {
                 "ZikulaMultisitesModule::": "::",
