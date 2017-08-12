@@ -1,6 +1,6 @@
 {# purpose of this template: sites list view #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{% block title __('Site list') %}
+{% block title own ? __('My sites') : __('Sites list') %}
 {% block admin_page_icon 'list-alt' %}
 {% block content %}
 <div class="zikulamultisitesmodule-site zikulamultisitesmodule-view">
@@ -15,7 +15,7 @@
         </div>
     {% endif %}
 
-    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/Site/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="sitesViewForm" class="form-horizontal" role="form">
@@ -27,6 +27,7 @@
                 {% if routeArea == 'admin' %}
                     <col id="cSelect" />
                 {% endif %}
+                <col id="cItemActions" />
                 <col id="cLogo" />
                 <col id="cSiteAlias" />
                 <col id="cName" />
@@ -36,15 +37,15 @@
                 <col id="cFeatures" />
 {#                <col id="cAllowedLocales" />#}
                 <col id="cActive" />
-                <col id="cItemActions" />
             </colgroup>
             <thead>
             <tr>
                 {% if routeArea == 'admin' %}
-                    <th id="hSelect" scope="col" class="text-center">
-                        <input type="checkbox" id="toggleSites" />
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="zikulamultisites-mass-toggle" />
                     </th>
                 {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hLogo" scope="col" class="text-left">
                     <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', {'%s': 'logo'}) }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
                 </th>
@@ -72,7 +73,6 @@
                 <th id="hActive" scope="col" class="text-center">
                     <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', {'%s': 'active'}) }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
                 </th>
-                <th id="hItemActions" scope="col" class="text-right z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -80,16 +80,23 @@
         {% for site in items %}
             <tr>
                 {% if routeArea == 'admin' %}
-                    <td headers="hSelect" class="text-center">
-                        <input type="checkbox" name="items[]" value="{{ site.id }}" class="sites-checkbox" />
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ site.getKey() }}" class="zikulamultisites-toggle-checkbox" />
                     </td>
                 {% endif %}
+                <td id="itemActions{{ site.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], {entity: site, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ site.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
                 <td headers="hLogo" class="text-left">
                     {% if site.logo is not empty and site.logoMeta|default %}
-                                <a href="{{ site.logoUrl }}" title="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}"{% if site.logoMeta.isImage %} class="lightbox"{% endif %}>
+                                <a href="{{ site.logoUrl }}" title="{{ site|zikulamultisitesmodule_formattedTitle|e('html_attr') }}"{% if site.logoMeta.isImage %} class="image-link"{% endif %}>
                     {% if site.logoMeta.isImage %}
                         {% set thumbOptions = attribute(thumbRuntimeOptions, 'siteLogo') %}
-                        <img src="{{ site.logo.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ site.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                        <img src="{{ site.logo.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ site|zikulamultisitesmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
                         {{ __('Download') }} ({{ site.logoMeta.size|zikulamultisitesmodule_fileSize(site.logo.getPathname(), false, false) }})
                     {% endif %}
@@ -101,9 +108,9 @@
                 </td>
                 <td headers="hName" class="text-left">
                     {% if basedOnDomains == 1 %}
-                        <a href="http://{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.name|notifyFilters('zikulamultisitesmodule.filterhook.sites') }}</a>
+                        <a href="http://{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.name|notifyFilters('zikulamultisitesmodule.filterhook.sites')|safeHtml }}</a>
                     {% else %}
-                        <a href="{{ wwwroot }}/{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.namenotifyFilters('zikulamultisitesmodule.filterhook.sites') }}</a>
+                        <a href="{{ wwwroot }}/{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.name|notifyFilters('zikulamultisitesmodule.filterhook.sites')|safeHtml }}</a>
                     {/if}
                     {% if site.description not empty %}
                         <br /><span class="z-sub">{{ site.description }}</span>
@@ -128,14 +135,14 @@
                 </td>
                 <td headers="hFeatures" class="text-left">
                     <ul class="z-sub">
-                        <li>{{ __('Project') }}: {% if site.project|default %}{{ site.project.getTitleFromDisplayPattern() }}{% else %}{{ __('Not set.') }}{% endif %}</li>
-                        <li>{{ __('Template') }}: {% if site.template|default %}{{ site.template.getTitleFromDisplayPattern() }}{% else %}{{ __('None (decoupled)') }}{% endif %}</li>
+                        <li>{{ __('Project') }}: {% if site.project|default %}{{ site.project|zikulamultisitesmodule_formattedTitle }}{% else %}{{ __('Not set.') }}{% endif %}</li>
+                        <li>{{ __('Template') }}: {% if site.template|default %}{{ site.template|zikulamultisitesmodule_formattedTitle }}{% else %}{{ __('None (decoupled)') }}{% endif %}</li>
                         <li>{{ __('Site database') }}: {{ site.databaseName }} ({{ site.databaseType }})</li>
                         <li>{{ __('Creation date') }}: {{ site.createdDate|localizeddate('medium', 'short') }}</li>
                     </ul>
                 </td>
 {*                <td headers="hAllowedLocales" class="text-left">
-                    {% if site.allowedLocales|length > 0 %}
+                    {% if site.allowedLocales is iterable and site.allowedLocales|length > 0 %}
                         <ul>
                         {% for locale in site.allowedLocales %}
                             <li>{{ locale }}</li>
@@ -145,32 +152,19 @@
                         {{ __('All') }}
                     {% endif %}
                 </td>*}
-                <td headers="hActive" class="z-center">
-                    {% set itemid = site.id %}
-                    <a id="toggleActive{{ itemid }}" href="javascript:void(0);" class="hidden">
-                    {% if site.active %}
-                        <i class="cursor-pointer fa fa-check" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
-                        <i class="cursor-pointer fa fa-times hidden" id="noactive_{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
-                    {% else %}
-                        <i class="cursor-pointer fa fa-check hidden" id="yesactive_{{ itemid }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
-                        <i class="cursor-pointer fa fa-times" id="noactive_{{ itemid }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
-                    {% endif %}
+                <td headers="hActive" class="text-center">
+                    {% set itemId = site.getKey() %}
+                    <a id="toggleActive{{ itemId }}" href="javascript:void(0);" class="zikulamultisites-ajax-toggle hidden" data-object-type="site" data-field-name="active" data-item-id="{{ itemId }}">
+                        <i class="fa fa-check{% if not site.active %} hidden{% endif %}" id="yesActive{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
+                        <i class="fa fa-times{% if site.active %} hidden{% endif %}" id="noActive{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
                     </a>
-                    <noscript><div id="noscriptActive{{ itemid }}">
+                    <noscript><div id="noscriptActive{{ itemId }}">
                         {% if site.active %}
                             <i class="fa fa-check" title="{{ __('Yes') }}"></i>
                         {% else %}
                             <i class="fa fa-times" title="{{ __('No') }}"></i>
                         {% endif %}
                     </div></noscript>
-                </td>
-                <td id="itemActions{{ site.id }}" headers="hItemActions" class="actions text-right nowrap z-w02">
-                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], { entity: site, area: routeArea, context: 'view' }) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ site.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        
-                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
-                    </div>
                 </td>
             </tr>
         {% else %}
@@ -185,8 +179,8 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 and pager|default %}
-            {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_site_' ~ routeArea ~ 'view'}) }}
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'zikulamultisitesmodule_site_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
             <fieldset>
@@ -210,19 +204,21 @@
 </div>
 {% endblock %}
 {% block page_nav_links %}
-    {% if canBeCreated %}
-        {% if hasPermission('ZikulaMultisitesModule:Site:', '::', 'ACCESS_EDIT') %}
-            {% set createTitle = __('Create site') %}
-            <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('ZikulaMultisitesModule:Site:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create site') %}
+                <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
         {% endif %}
-    {% endif %}
-    {% if showAllEntries == 1 %}
-        {% set linkTitle = __('Back to paginated view') %}
-        <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
-    {% else %}
-        {% set linkTitle = __('Show all entries') %}
-        <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
-    {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
 {% endblock %}
 {% block display_hooks %}
     
@@ -233,35 +229,4 @@
             {{ hook }}
         {% endfor %}
     {% endif % #}
-{% endblock %}
-{% block footer %}
-    {{ parent() }}
-
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        ( function($) {
-            $(document).ready(function() {
-                $('a.lightbox').lightbox();
-                $('.zikulamultisitesmodule-site .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
-                $('.zikulamultisitesmodule-site .dropdown > ul a').each(function (index) {
-                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
-                });
-                $('.zikulamultisitesmodule-site .dropdown > ul a i').addClass('fa-fw');
-                $('.zikulamultisitesmodule-site .dropdown-toggle').removeClass('hidden').dropdown();
-                {% for site in items %}
-                    {% set itemid = site.createCompositeIdentifier() %}
-                    zikulaMultisitesInitToggle('site', 'active', '{{ itemid|e('js') }}');
-                {% endfor %}
-                {% if routeArea == 'admin' %}
-                    {# init the "toggle all" functionality #}
-                    if ($('#toggleSites').length > 0) {
-                        $('#toggleSites').click(function (event) {
-                            $('.sites-checkbox').prop('checked', $(this).prop('checked'));
-                        });
-                    }
-                {% endif %}
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
 {% endblock %}

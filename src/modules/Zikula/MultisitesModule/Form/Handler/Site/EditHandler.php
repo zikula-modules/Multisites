@@ -129,6 +129,7 @@ class EditHandler extends AbstractEditHandler
         $sites = $repository->getSiteInfo($entity['siteDns']);
         if (!is_null($sites) && count($sites) > 0) {
             $flashBag->add('error', $this->__('This site exists already. The site DNS must be unique.'));
+
             return false;
         }
 
@@ -137,6 +138,7 @@ class EditHandler extends AbstractEditHandler
         $sites = $repository->selectWhere($where, '', false);
         if (!is_null($sites) && count($sites) > 0) {
             $flashBag->add('error', $this->__('This site exists already. The site alias must be unique.'));
+
             return false;
         }
 
@@ -151,6 +153,7 @@ class EditHandler extends AbstractEditHandler
         $connect = $this->systemHelper->connectToExternalDatabase($entity->getDatabaseData());
         if (!$connect) {
             $flashBag->add('error', $this->__('Error! Connecting to the database failed.'));
+
             return false;
         }
 
@@ -158,6 +161,7 @@ class EditHandler extends AbstractEditHandler
             // create a new database if it does not exist yet
             if (!$this->systemHelper->createDatabase($entity->getDatabaseData())) {
                 $flashBag->add('error', $this->__('Error! Creation of database failed.'));
+
                 return false;
             }
         }

@@ -1,11 +1,9 @@
 {# purpose of this template: show output of manage themes action in site area #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.SiteExtensions.js')) }}
-{% block title %}
-    {{ __('Allowed layouts') }}
-{% endblock %}
-{% block adminPageIcon %}paint-brush{% endblock %}
+{% block title __('Allowed layouts') %}
+{% block admin_page_icon 'paint-brush' %}
 {% block content %}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.SiteExtensions.js')) }}
     <div class="zikulamultisitesmodule-managethemes">
         <p>{{ __('Name') }}: {{ site.name }}<br />
         {{ __('Site name') }}: {{ site.siteName }}<br />

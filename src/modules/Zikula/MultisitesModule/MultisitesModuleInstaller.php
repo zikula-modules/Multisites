@@ -222,9 +222,9 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
 
             if ($row['sitedbprefix'] != '') {
                 /** TODO
-                    * We could also do this automatically.
-                    * Needs a refactoring of SystemHelper class, see readTables() and renameExcludedTables()
-                    */
+                 * We could also do this automatically.
+                 * Needs a refactoring of SystemHelper class, see readTables() and renameExcludedTables()
+                 */
                 $this->addFlash('error', $this->__f('The site "%site%" does have a table prefix set which is not supported anymore. You need to rename tables in the "%database%" database accordingly.', ['%site%' => $site->getName(), '%database%' => $site->getDatabaseName()]));
             }
 
@@ -256,22 +256,6 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         }
 
         $this->entityManager->flush();
-
-        // because we did not use the workflow manager, we need to add the workflow data in a separate step
-        $sqlBase = 'INSERT INTO `workflows` (`metaid`, `module`, `schemaname`, `state`, `type`, `obj_table`, `obj_idcolumn`, `obj_id`, `busy`, `debug`) ';
-        $sqlBase .= 'SELECT 0 AS `metaid`, \'Multisites\' AS `module`, \'none\' AS `schemaname`, \'approved\' AS `state`, 1 AS `type`, ';
-
-        $tables = ['project', 'template', 'site'];
-        foreach ($tables as $tableName) {
-            $sql = $sqlBase . '\'' . $tableName . '\' AS `obj_table`, \'id\' AS `obj_idcolumn`, `id` AS `obj_id`, 0 AS `busy`, NULL AS `debug` FROM `multisites_' . $tableName . '` ';
-            $sql .= 'WHERE `id` NOT IN (SELECT `obj_id` FROM `workflows` WHERE `module` = \'Multisites\' AND `obj_table` = \'' . $tableName . '\')';
-            $conn->executeQuery($sql);
-        }
-
-        // add workflow data for the site extensions
-        $sql = $sqlBase . '\'siteExtension\' AS `obj_table`, \'id\' AS `obj_idcolumn`, `id` AS `obj_id`, 0 AS `busy`, NULL AS `debug` FROM `multisites_site_extension` ';
-        $sql .= 'WHERE `id` NOT IN (SELECT `obj_id` FROM `workflows` WHERE `module` = \'Multisites\' AND `obj_table` = \'siteExtension\')';
-        $conn->executeQuery($sql);
 
         return true;
     }

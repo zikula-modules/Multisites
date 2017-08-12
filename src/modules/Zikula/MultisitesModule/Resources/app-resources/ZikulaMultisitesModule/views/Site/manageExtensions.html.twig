@@ -1,11 +1,9 @@
 {# purpose of this template: show output of manage extensions action in site area #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.SiteExtensions.js')) }}
-{% block title %}
-    {{ __('Allowed extensions') }}
-{% endblock %}
-{% block adminPageIcon %}cubes{% endblock %}
+{% block title __('Allowed extensions') %}
+{% block admin_page_icon 'cubes' %}
 {% block content %}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.SiteExtensions.js')) }}
     <div class="zikulamultisitesmodule-manageextensions">
         <p>{{ __('Name') }}: {{ site.name }}<br />
         {{ __('Site name') }}: {{ site.siteName }}<br />

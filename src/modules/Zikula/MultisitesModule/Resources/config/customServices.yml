@@ -1,0 +1,37 @@
+services:
+    zikula_multisites_module.multisites_extensions_listener:
+        class: Zikula\MultisitesModule\Listener\MultisitesExtensionsListener
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@zikula_permissions_module.api.permission"
+            - "%multisites%"
+        tags: ['kernel.event_subscriber']
+
+    zikula_multisites_module.configurator_helper:
+        class: Zikula\MultisitesModule\Helper\ConfiguratorHelper
+        arguments:
+            - "@translator.default"
+            - "@session"
+            - "@zikula_extensions_module.api.variable"
+            - "@request_stack"
+            - "@zikula.dynamic_config_dumper"
+            - "@zikula.cache_clearer"
+    
+    zikula_multisites_module.siteextension_helper:
+        class: Zikula\MultisitesModule\Helper\SiteExtensionHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@session"
+            - "@twig"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.workflow_helper"
+            - "@zikula_multisites_module.system_helper"
+    
+    zikula_multisites_module.system_helper:
+        class: Zikula\MultisitesModule\Helper\SystemHelper
+        arguments:
+            - "@translator.default"
+            - "@session"
+            - "@zikula_extensions_module.api.variable"

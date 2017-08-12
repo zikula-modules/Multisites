@@ -52,6 +52,7 @@ class EditHandler extends AbstractEditHandler
         if (!$formData['sqlFile'] || $formData['sqlFile']['size'] == 0) {
             if (!isset($formData['sqlFileSelected']) || $formData['sqlFileSelected'] < 1) {
                 $this->request->getSession()->getFlashBag()->add('error', $this->__('Error! Please either provide a sql file or select an existing one.'));
+
                 return false;
             }
             $hasSqlUpload = false;
@@ -120,6 +121,7 @@ class EditHandler extends AbstractEditHandler
                 // if current field is mandatory check if everything has been done
                 if ($isMandatory && empty($formData[$uploadField])) {
                     // mandatory upload has not been completed successfully
+
                     return false;
                 }
         

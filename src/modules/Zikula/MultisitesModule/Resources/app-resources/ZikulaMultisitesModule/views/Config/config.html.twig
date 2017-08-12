@@ -14,81 +14,126 @@
             'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
         ] %}
         {{ form_start(form) }}
-        <ul class="nav nav-pills">
-        {% set tabTitle = __('General') %}
-        <li class="active" data-toggle="pill"><a href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
-        {% set tabTitle = __('Security settings') %}
-        <li data-toggle="pill"><a href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
-        {% set tabTitle = __('Listviews') %}
-        <li data-toggle="pill"><a href="#tab3" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
-        {% set tabTitle = __('Images') %}
-        <li data-toggle="pill"><a href="#tab4" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a></li>
-        </ul>
+        <div class="zikula-bootstrap-tab-container">
+            <ul class="nav nav-tabs">
+                {% set tabTitle = __('General') %}
+                <li role="presentation" class="active">
+                    <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+                {% set tabTitle = __('Security settings') %}
+                <li role="presentation">
+                    <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+                {% set tabTitle = __('List views') %}
+                <li role="presentation">
+                    <a id="vars3Tab" href="#tab3" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+                {% set tabTitle = __('Images') %}
+                <li role="presentation" class=" dropdown">
+                    <a id="imagesTabDrop" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-controls="imagesTabDropSections" aria-expanded="false" title="{{ tabTitle|e('html_attr') }}">{{ tabTitle }}<span class="caret"></span></a>
+                    <ul id="imagesTabDropSections" class="dropdown-menu" aria-labelledby="imagesTabDrop">
+                    <li>
+                        <a id="imagesSiteLogoTab" href="#tabImagesSiteLogo" role="tab" data-toggle="tab" aria-controls="tabImagesSiteLogo">{{ __('Sites logo') }}</a>
+                    </li>
+                    <li>
+                        <a id="imagesSiteFavIconTab" href="#tabImagesSiteFavIcon" role="tab" data-toggle="tab" aria-controls="tabImagesSiteFavIcon">{{ __('Sites fav icon') }}</a>
+                    </li>
+                    </ul>
+                </li>
+                {% set tabTitle = __('Workflows') %}
+                <li role="presentation">
+                    <a id="workflowsTab" href="#tabWorkflows" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+            </ul>
 
-        {{ form_errors(form) }}
-        <div class="tab-content">
-            {% set tabTitle = __('General') %}
-            <div role="tabpanel" class="tab-pane fade in active" id="tab1">
-                <fieldset>
-                    <legend>{{ tabTitle }}</legend>
+            {{ form_errors(form) }}
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="tab1" aria-labelledby="vars1Tab">
+                    {% set tabTitle = __('General') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can define general settings.')|nl2br }}</p>
+                    
+                        {{ form_row(form.tempAccessFileContent) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
+                    {% set tabTitle = __('Security settings') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can define security-related settings.')|nl2br }}</p>
+                    
+                        {{ form_row(form.globalAdminName) }}
+                        {{ form_row(form.globalAdminPassword) }}
+                        {{ form_row(form.globalAdminEmail) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab3" aria-labelledby="vars3Tab">
+                    {% set tabTitle = __('List views') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can configure parameters for list views.')|nl2br }}</p>
+                    
+                        {{ form_row(form.siteEntriesPerPage) }}
+                        {{ form_row(form.templateEntriesPerPage) }}
+                        {{ form_row(form.siteExtensionEntriesPerPage) }}
+                        {{ form_row(form.projectEntriesPerPage) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesSiteLogo" aria-labelledby="imagesSiteLogoTab">
+                    {% set tabTitle = __('Image settings for sites logo') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
                 
-                    <p class="alert alert-info">{{ __('Here you can define general settings.')|nl2br }}</p>
+                        {{ form_row(form.enableShrinkingForSiteLogo) }}
+                        <div id="shrinkDetailsSiteLogo">
+                        {{ form_row(form.shrinkWidthSiteLogo) }}
+                        {{ form_row(form.shrinkHeightSiteLogo) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeSiteLogo) }}
+                        {{ form_row(form.thumbnailWidthSiteLogoView) }}
+                        {{ form_row(form.thumbnailHeightSiteLogoView) }}
+                        {{ form_row(form.thumbnailWidthSiteLogoEdit) }}
+                        {{ form_row(form.thumbnailHeightSiteLogoEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesSiteFavIcon" aria-labelledby="imagesSiteFavIconTab">
+                    {% set tabTitle = __('Image settings for sites fav icon') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
                 
-                    {{ form_row(form.tempAccessFileContent) }}
-                </fieldset>
-            </div>
-            {% set tabTitle = __('Security settings') %}
-            <div role="tabpanel" class="tab-pane fade" id="tab2">
-                <fieldset>
-                    <legend>{{ tabTitle }}</legend>
+                        {{ form_row(form.enableShrinkingForSiteFavIcon) }}
+                        <div id="shrinkDetailsSiteFavIcon">
+                        {{ form_row(form.shrinkWidthSiteFavIcon) }}
+                        {{ form_row(form.shrinkHeightSiteFavIcon) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeSiteFavIcon) }}
+                        {{ form_row(form.thumbnailWidthSiteFavIconView) }}
+                        {{ form_row(form.thumbnailHeightSiteFavIconView) }}
+                        {{ form_row(form.thumbnailWidthSiteFavIconEdit) }}
+                        {{ form_row(form.thumbnailHeightSiteFavIconEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabWorkflows" aria-labelledby="workflowsTab">
+                    {% set tabTitle = __('Workflows') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
                 
-                    <p class="alert alert-info">{{ __('Here you can define security-related settings.')|nl2br }}</p>
+                        <p class="alert alert-info">{{ __('Here you can inspect and amend the existing workflows.') }}</p>
                 
-                    {{ form_row(form.globalAdminName) }}
-                    {{ form_row(form.globalAdminPassword) }}
-                    {{ form_row(form.globalAdminEmail) }}
-                </fieldset>
-            </div>
-            {% set tabTitle = __('Listviews') %}
-            <div role="tabpanel" class="tab-pane fade" id="tab3">
-                <fieldset>
-                    <legend>{{ tabTitle }}</legend>
-                
-                    <p class="alert alert-info">{{ __('Here you can configure parameters for list views.')|nl2br }}</p>
-                
-                    {{ form_row(form.siteEntriesPerPage) }}
-                    {{ form_row(form.templateEntriesPerPage) }}
-                    {{ form_row(form.siteExtensionEntriesPerPage) }}
-                    {{ form_row(form.projectEntriesPerPage) }}
-                </fieldset>
-            </div>
-            {% set tabTitle = __('Images') %}
-            <div role="tabpanel" class="tab-pane fade" id="tab4">
-                <fieldset>
-                    <legend>{{ tabTitle }}</legend>
-                
-                    <p class="alert alert-info">{{ __('Here you can define several options for image handling.')|nl2br }}</p>
-                
-                    {{ form_row(form.enableShrinkingForSiteLogo) }}
-                    <div id="shrinkDetailsSiteLogo">
-                    {{ form_row(form.shrinkWidthSiteLogo) }}
-                    {{ form_row(form.shrinkHeightSiteLogo) }}
-                    </div>
-                    {{ form_row(form.enableShrinkingForSiteFavIcon) }}
-                    <div id="shrinkDetailsSiteFavIcon">
-                    {{ form_row(form.shrinkWidthSiteFavIcon) }}
-                    {{ form_row(form.shrinkHeightSiteFavIcon) }}
-                    </div>
-                    {{ form_row(form.thumbnailModeSite) }}
-                    {{ form_row(form.thumbnailWidthSiteLogoView) }}
-                    {{ form_row(form.thumbnailHeightSiteLogoView) }}
-                    {{ form_row(form.thumbnailWidthSiteLogoEdit) }}
-                    {{ form_row(form.thumbnailHeightSiteLogoEdit) }}
-                    {{ form_row(form.thumbnailWidthSiteFavIconView) }}
-                    {{ form_row(form.thumbnailHeightSiteFavIconView) }}
-                    {{ form_row(form.thumbnailWidthSiteFavIconEdit) }}
-                    {{ form_row(form.thumbnailHeightSiteFavIconEdit) }}
-                </fieldset>
+                        <h4>{{ __('Sites') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for sites') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit sites workflow') }}</a>
+                        <h4>{{ __('Templates') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for templates') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit templates workflow') }}</a>
+                        <h4>{{ __('Site extensions') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for site extensions') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit site extensions workflow') }}</a>
+                        <h4>{{ __('Projects') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for projects') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit projects workflow') }}</a>
+                    </fieldset>
+                </div>
             </div>
         </div>
 
@@ -103,24 +148,5 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
-
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        ( function($) {
-            function multisitesToggleShrinkSettings(fieldName) {
-                var idSuffix = fieldName.replace('zikulamultisitesmodule_appsettings_', '');
-                $('#shrinkDetails' + idSuffix).toggleClass('hidden', !$('#zikulamultisitesmodule_appsettings_enableShrinkingFor' + idSuffix).prop('checked'));
-            }
-
-            $(document).ready(function() {
-                $('.shrink-enabler').each(function (index) {
-                    $(this).bind('click keyup', function (event) {
-                        multisitesToggleShrinkSettings($(this).attr('id').replace('enableShrinkingFor', ''));
-                    });
-                    multisitesToggleShrinkSettings($(this).attr('id').replace('enableShrinkingFor', ''));
-                });
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Config.js')) }}
 {% endblock %}

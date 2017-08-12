@@ -12,7 +12,7 @@
 {% if isDefaultTheme == 1 and available == true %}
     <i class="fa fa-circle" style="color: green" title="{{ __('Default theme') }}"></i>
 {% elseif isDefaultTheme != 1 and available == true %}
-    <a href="{{ path('zikulamultisitesmodule_site_setthemeasdefault', { id: site.id, name: name }) }}" title="{{ __('Set as default theme') }}"><i class="fa fa-circle" style="color: red" title="{{ __('Not default theme') }}"></i></a>
+    <a href="{{ path('zikulamultisitesmodule_site_setthemeasdefault', {id: site.id, name: name}) }}" title="{{ __('Set as default theme') }}"><i class="fa fa-circle" style="color: red" title="{{ __('Not default theme') }}"></i></a>
 {% else %}
     <img src="{{ zasset('@ZikulaMultisitesModule:images/blank.png') }}" width="16" height="16" alt="blank" title="{{ __('Not available') }}" />
 {% endif %}

@@ -7,7 +7,7 @@ function multisitesModifyModuleActivation(moduleName, siteId, newState)
 
     jQuery.ajax({
         type: 'POST',
-        url: Routing.generate('zikulamultisitesmodule_modifymoduleactivation'),
+        url: Routing.generate('zikulamultisitesmodule_ajax_modifymoduleactivation'),
         data: {
             id: siteId,
             moduleName: moduleName,

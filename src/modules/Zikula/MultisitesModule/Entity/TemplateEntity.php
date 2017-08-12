@@ -15,10 +15,7 @@ namespace Zikula\MultisitesModule\Entity;
 use Zikula\MultisitesModule\Entity\Base\AbstractTemplateEntity as BaseEntity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
-use DoctrineExtensions\StandardFields\Mapping\Annotation as ZK;
-use Symfony\Component\Validator\Constraints as Assert;
 use ModUtil;
 
 /**
@@ -58,34 +55,31 @@ class TemplateEntity extends BaseEntity
     }
 
     /**
-     * Clone interceptor implementation.
-     * This method is for example called by the reuse functionality.
-     * Performs a quite simple shallow copy.
-     *
-     * See also:
-     * (1) http://docs.doctrine-project.org/en/latest/cookbook/implementing-wakeup-or-clone.html
-     * (2) http://www.php.net/manual/en/language.oop5.cloning.php
-     * (3) http://stackoverflow.com/questions/185934/how-do-i-create-a-copy-of-an-object-in-php
+     * @inheritDoc
      */
     public function __clone()
     {
-        // If the entity has an identity, proceed as normal.
-        if ($this->id) {
-            // unset identifiers
-            $this->setId(0);
-
-            // reset Workflow
-            $this->resetWorkflow();
-    
-            // reset upload fields
-            //$this->setSqlFile('');
-            //$this->setSqlFileMeta([]);
-    
-            $this->setCreatedDate(null);
-            $this->setCreatedUserId(null);
-            $this->setUpdatedDate(null);
-            $this->setUpdatedUserId(null);
+        // if the entity has no identity do nothing, do NOT throw an exception
+        if (!$this->id) {
+            return;
         }
-        // otherwise do nothing, do NOT throw an exception!
+
+        // otherwise proceed
+    
+        // unset identifier
+        $this->setId(0);
+    
+        // reset workflow
+        $this->setWorkflowState('initial');
+    
+        // reset upload fields
+        //$this->setSqlFile(null);
+        //$this->setSqlFileMeta([]);
+        //$this->setSqlFileUrl('');
+    
+        $this->setCreatedBy(null);
+        $this->setCreatedDate(null);
+        $this->setUpdatedBy(null);
+        $this->setUpdatedDate(null);
     }
 }

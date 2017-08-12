@@ -31,7 +31,7 @@ class ProjectRepository extends AbstractProjectRepository
     {
         $parameters = parent::getViewQuickNavParameters($context, $args);
 
-        $parameters['templates'] = $this->request->query->getInt('templates', 0);
+        $parameters['template'] = $this->request->query->getInt('template', 0);
 
         return $parameters;
     }
@@ -48,10 +48,10 @@ class ProjectRepository extends AbstractProjectRepository
 
         $parameters = $this->getViewQuickNavParameters('', []);
         foreach ($parameters as $k => $v) {
-            if ($k == 'templates') {
+            if ($k == 'template') {
                 if ($v > 0 && false !== strpos($qb->getDql(), 'tblTemplates')) {
-                    $qb->andWhere(':templates MEMBER OF tbl.templates')
-                       ->setParameter('templates', $v);
+                    $qb->andWhere(':template MEMBER OF tbl.templates')
+                       ->setParameter('template', $v);
                 }
             } elseif (in_array($k, array('q', 'searchterm'))) {
                 // quick search

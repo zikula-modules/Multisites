@@ -21,7 +21,7 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Event\GenericEvent;
 use Zikula\ExtensionsModule\Api\ExtensionApi;
 use Zikula\ExtensionsModule\ExtensionEvents;
-use Zikula\PermissionsModule\Api\PermissionApi;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 
 /**
  * Event handler implementation class for extensions events.
@@ -31,34 +31,38 @@ class MultisitesExtensionsListener implements EventSubscriberInterface
     use TranslatorTrait;
 
     /**
-     * @var array
-     */
-    private $multisites;
-
-    /**
      * @var RequestStack
      */
     private $requestStack;
 
     /**
-     * @var PermissionApi
+     * @var PermissionApiInterface
      */
     private $permissionApi;
 
     /**
+     * @var array
+     */
+    private $multisites;
+
+    /**
      * MultisitesExtensionsListener constructor.
      *
-     * @param array               $multisitesParameters Multisites parameters array.
-     * @param RequestStack        $requestStack         RequestStack service instance.
-     * @param PermissionApi       $permissionApi        PermissionApi service instance.
-     * @param TranslatorInterface $translator           Translator service instance.
+     * @param TranslatorInterface    $translator           Translator service instance.
+     * @param RequestStack           $requestStack         RequestStack service instance.
+     * @param PermissionApiInterface $permissionApi        PermissionApi service instance.
+     * @param array                  $multisitesParameters Multisites parameters array.
      */
-    public function __construct(array $multisitesParameters, RequestStack $requestStack, PermissionApi $permissionApi, TranslatorInterface $translator)
-    {
-        $this->multisites = $multisitesParameters;
+    public function __construct(
+        TranslatorInterface $translator,
+        RequestStack $requestStack,
+        PermissionApiInterface $permissionApi,
+        array $multisitesParameters
+    ) {
+        $this->setTranslator($translator);
         $this->requestStack = $requestStack;
         $this->permissionApi = $permissionApi;
-        $this->setTranslator($translator);
+        $this->multisites = $multisitesParameters;
     }
 
     /**

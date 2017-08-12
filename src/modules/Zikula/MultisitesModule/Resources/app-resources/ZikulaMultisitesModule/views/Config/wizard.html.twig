@@ -7,7 +7,7 @@
         {% if step == 1 %}
             <h3>{{ __('Step 1 - Checking the correct location of the configuration files') }}</h3>
             <div class="alert alert-info">
-                {{ __f('Please copy the files <strong>%1$s</strong> and <strong>%2$s</strong> into the Zikula <strong>config</strong> directory and give them writeable permissions.', { '%1$s': configTemplateFile, '%2$s': dbConfigTemplateFile }) }}
+                {{ __f('Please copy the files <strong>%1$s</strong> and <strong>%2$s</strong> into the Zikula <strong>config</strong> directory and give them writeable permissions.', {'%1$s': configTemplateFile, '%2$s': dbConfigTemplateFile}) }}
             </div>
             <div class="z-warningmsg">
                 {{ __('If you have any problem you can recover the system to the previous state at any time by deleting both files again.') }}
@@ -17,44 +17,44 @@
                     {% if not configFileExists %}
                         <div>
                             {icon type='error' size='extrasmall'}
-                            {{ __f('The file <strong>%s</strong> has not been found and could not be copied automatically.', { '%s': configFile }) }}
+                            {{ __f('The file <strong>%s</strong> has not been found and could not be copied automatically.', {'%s': configFile}) }}
                         </div>
                     {% else %}
                         <p class="alert alert-danger">
                             <i class="fa fa-times"></i>
-                            {{ __f('The file <strong>%s</strong> is located in the correct place.', { '%s': configFile }) }}
+                            {{ __f('The file <strong>%s</strong> is located in the correct place.', {'%s': configFile}) }}
                         </p>
                         {% if not configFileWriteable %}
                             <p class="alert alert-danger">
                                 <i class="fa fa-times"></i>
-                                {{ __f('The file <strong>%s</strong> is not writeable, but it should be.', { '%s': configFile }) }}
+                                {{ __f('The file <strong>%s</strong> is not writeable, but it should be.', {'%s': configFile}) }}
                             </p>
                         {% else %}
                             <p class="alert alert-success">
                                 <i class="fa fa-check"></i>
-                                {{ __f('The file <strong>%s</strong> is writeable.', { '%s': configFile }) }}
+                                {{ __f('The file <strong>%s</strong> is writeable.', {'%s': configFile}) }}
                             </p>
                         {% endif %}
                     {% endif %}
                     {% if not dbConfigFileExists %}
                         <p class="alert alert-danger">
                             <i class="fa fa-times"></i>
-                            {{ __f('The file <strong>%s</strong> has not been found and could not be copied automatically.', { '%s': dbConfigFile }) }}
+                            {{ __f('The file <strong>%s</strong> has not been found and could not be copied automatically.', {'%s': dbConfigFile}) }}
                         </p>
                     {% else %}
                         <p class="alert alert-danger">
                             <i class="fa fa-times"></i>
-                            {{ __f('The file <strong>%s</strong> is located in the correct place.', { '%s': dbConfigFile }) }}
+                            {{ __f('The file <strong>%s</strong> is located in the correct place.', {'%s': dbConfigFile}) }}
                         </p>
                         {% if not configFileWriteable %}
                             <p class="alert alert-danger">
                                 <i class="fa fa-times"></i>
-                                {{ __f('The file <strong>%s</strong> is not writeable, but it should be.', { '%s': dbConfigFile }) }}
+                                {{ __f('The file <strong>%s</strong> is not writeable, but it should be.', {'%s': dbConfigFile}) }}
                             </p>
                         {% else %}
                             <p class="alert alert-success">
                                 <i class="fa fa-check"></i>
-                                {{ __f('The file <strong>%s</strong> is writeable.', { '%s': dbConfigFile }) }}
+                                {{ __f('The file <strong>%s</strong> is writeable.', {'%s': dbConfigFile}) }}
                             </p>
                         {% endif %}
                     {% endif %}
@@ -83,7 +83,7 @@
                 </fieldset>
             </form>
         {% elseif step == 3 %}
-            <h3>{{ __f('Step 3 - Writing correct parameters into the <strong>%s.php</strong> file', '%s': configFile }) }}</h3>
+            <h3>{{ __f('Step 3 - Writing correct parameters into the <strong>%s.php</strong> file', {'%s': configFile}) }}</h3>
             <p class="alert alert-warning">
                 {{ __f('If you experience any problem you can delete the <strong>%1$s</strong> and <strong>%2$s</strong> files to recover the system to the previous state.', { '%1$s': configFile, '%2$s': dbConfigFile }) }}
             </p>
@@ -91,15 +91,15 @@
                 <fieldset>
                     <div class="form-group">
                         <label for="mainSiteUrl" class="control-label">{gt text='Main domain'}:</label>
-                        <input type="text" id="mainSiteUrl" name="mainsiteurl" size="50" maxlength="50" value="{$mainSiteUrl}" class="form-control" />
+                        <input type="text" id="mainSiteUrl" name="mainsiteurl" size="50" maxlength="50" value="{{ mainSiteUrl|e('html_attr') }}" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="siteTempFilesFolder" class="control-label">{gt text='Sites temporal directory'}:</label>
-                        <input type="text" id="siteTempFilesFolder" name="site_temp_files_folder" size="50" maxlength="50" value="{$siteTempFilesFolder}" class="form-control" />
+                        <input type="text" id="siteTempFilesFolder" name="site_temp_files_folder" size="50" maxlength="50" value="{{ siteTempFilesFolder|e('html_attr') }}" class="form-control" />
                     </div>
                     <div class="form-group" class="control-label">
                         <label for="siteFilesFolder">{gt text='Sites data directory'}:</label>
-                        <input type="text" id="siteFilesFolder" name="site_files_folder" size="50" maxlength="50" value="{$siteFilesFolder}" class="form-control" />
+                        <input type="text" id="siteFilesFolder" name="site_files_folder" size="50" maxlength="50" value="{{ siteFilesFolder|e('html_attr') }}" class="form-control" />
                     </div>
                     <div class="form-group form-buttons text-center">
                         <input type="submit" value="{{ __('Save') }}" class="btn btn-sucess" />
@@ -107,12 +107,12 @@
                 </fieldset>
             </form>
         {% elseif step == 4 %}
-            <h3>{{ __f('Step 4 - Check if the %s file is not writeable anymore', { '%s': configFile }) }}</h3>
+            <h3>{{ __f('Step 4 - Check if the %s file is not writeable anymore', {'%s': configFile}) }}</h3>
             <div class="form">
                 <fieldset>
                     <p class="alert alert-danger">
                         <i class="fa fa-times"></i>
-                        {{ __f('The file <strong>%s</strong> is writeable, but it should not be. Please set this file as not writeable.', { '%s': configFile }) }}
+                        {{ __f('The file <strong>%s</strong> is writeable, but it should not be. Please set this file as not writeable.', {'%s': configFile}) }}
                     </p>
                     <br />
                     <div class="form-group form-buttons text-center">

@@ -1,46 +1,81 @@
 services:
-    # Helper classes
+    # Helper services
+    zikula_multisites_module.collection_filter_helper:
+        class: Zikula\MultisitesModule\Helper\CollectionFilterHelper
+        arguments:
+            - "@request_stack"
+            - "@zikula_users_module.current_user"
+            - "@=service('zikula_extensions_module.api.variable').get('ZikulaMultisitesModule', 'showOnlyOwnEntries', false)"
+    
     zikula_multisites_module.controller_helper:
         class: Zikula\MultisitesModule\Helper\ControllerHelper
-        arguments: ["@service_container", "@translator.default", "@session", "@logger"]
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@logger"
+            - "@form.factory"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.collection_filter_helper"
+            - "@zikula_multisites_module.model_helper"
+            - "@zikula_multisites_module.image_helper"
+    
+    zikula_multisites_module.entity_display_helper:
+        class: Zikula\MultisitesModule\Helper\EntityDisplayHelper
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.listentries_helper"
     
     zikula_multisites_module.hook_helper:
         class: Zikula\MultisitesModule\Helper\HookHelper
-        arguments: ["@hook_dispatcher"]
+        arguments:
+            - "@hook_dispatcher"
     
     zikula_multisites_module.image_helper:
         class: Zikula\MultisitesModule\Helper\ImageHelper
-        arguments: ["@translator.default", "@session", "@zikula_extensions_module.api.variable"]
+        arguments:
+            - "@translator.default"
+            - "@session"
+            - "@zikula_extensions_module.api.variable"
     
     zikula_multisites_module.listentries_helper:
         class: Zikula\MultisitesModule\Helper\ListEntriesHelper
-        arguments: ["@translator.default"]
+        arguments:
+            - "@translator.default"
     
     zikula_multisites_module.model_helper:
         class: Zikula\MultisitesModule\Helper\ModelHelper
-        arguments: ["@service_container"]
+        arguments:
+            - "@zikula_multisites_module.entity_factory"
     
-    zikula_multisites_module.selection_helper:
-        class: Zikula\MultisitesModule\Helper\SelectionHelper
-        arguments: ["@service_container", "@doctrine.orm.entity_manager", "@translator.default", "@zikula_multisites_module.controller_helper"]
+    zikula_multisites_module.upload_helper:
+        class: «nsBase»UploadHelper
+        arguments:
+            - "@translator.default"
+            - "@session"
+            - "@logger"
+            - "@zikula_users_module.current_user"
+            - "@=service('zikula_extensions_module.api.variable').getAll('ZikulaMultisitesModule')"
+            - "%datadir%"
     
     zikula_multisites_module.view_helper:
         class: Zikula\MultisitesModule\Helper\ViewHelper
-        arguments: ["@service_container", "@translator.default"]
+        arguments:
+            - "@twig"
+            - "@twig.loader"
+            - "@request_stack"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_core.common.theme.pagevars"
+            - "@zikula_multisites_module.controller_helper"
     
     zikula_multisites_module.workflow_helper:
         class: Zikula\MultisitesModule\Helper\WorkflowHelper
-        arguments: ["@service_container", "@translator.default"]
-
-    # Custom helper classes
-    zikula_multisites_module.configurator_helper:
-        class: Zikula\MultisitesModule\Helper\ConfiguratorHelper
-        arguments: ["@session", "@translator.default", "@zikula_extensions_module.api.variable", "@request_stack", "@zikula.dynamic_config_dumper", "@zikula.cache_clearer"]
-    
-    zikula_multisites_module.siteextension_helper:
-        class: Zikula\MultisitesModule\Helper\SiteExtensionHelper
-        arguments: ["@session", "@translator.default", "@request_stack", "@twig", "@zikula_multisites_module.workflow_helper", "@zikula_multisites_module.system_helper"]
-    
-    zikula_multisites_module.system_helper:
-        class: Zikula\MultisitesModule\Helper\SystemHelper
-        arguments: ["@session", "@translator.default", "@zikula_extensions_module.api.variable"]
+        arguments:
+            - "@translator.default"
+            - "@workflow.registry"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_users_module.current_user"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.listentries_helper"

@@ -14,12 +14,12 @@ namespace Zikula\MultisitesModule\Helper;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Zikula\Bundle\CoreBundle\CacheClearer;
 use Zikula\Bundle\CoreBundle\DynamicConfigDumper;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\ExtensionsModule\ExtensionVariablesTrait;
 use ServiceUtil;
 
@@ -32,16 +32,16 @@ class ConfiguratorHelper
     use TranslatorTrait;
 
     /**
-     * @var Session
-     */
-    protected $session;
-
-    /**
      * The current request.
      *
      * @var Request
      */
     protected $request = null;
+
+    /**
+     * @var SessionInterface
+     */
+    protected $session;
 
     /**
      * Config dumper.
@@ -96,20 +96,25 @@ class ConfiguratorHelper
      * Constructor.
      * Initialises member vars.
      *
-     * @param Session             $session      Session service instance
-     * @param TranslatorInterface $translator   Translator service instance
-     * @param VariableApi         $variableApi  VariableApi service instance
-     * @param RequestStack        $requestStack RequestStack service instance
-     * @param DynamicConfigDumper $configDumper DynamicConfigDumper service instance
-     * @param CacheClearer        $cacheClearer CacheClearer service instance
+     * @param TranslatorInterface  $translator   Translator service instance
+     * @param RequestStack         $requestStack RequestStack service instance
+     * @param SessionInterface     $session      Session service instance
+     * @param VariableApiInterface $variableApi  VariableApi service instance
+     * @param DynamicConfigDumper  $configDumper DynamicConfigDumper service instance
+     * @param CacheClearer         $cacheClearer CacheClearer service instance
      */
-    public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi, RequestStack $requestStack, DynamicConfigDumper $configDumper, CacheClearer $cacheClearer)
-    {
-        $this->session = $session;
+    public function __construct(
+        TranslatorInterface $translator,
+        RequestStack $requestStack,
+        SessionInterface $session,
+        VariableApiInterface $variableApi,
+        DynamicConfigDumper $configDumper,
+        CacheClearer $cacheClearer
+    ) {
         $this->setTranslator($translator);
-        $this->variableApi = $variableApi;
-        $this->extensionName = 'ZikulaMultisitesModule';
         $this->request = $requestStack->getCurrentRequest();
+        $this->session = $session;
+        $this->variableApi = $variableApi;
         $this->configDumper = $configDumper;
         $this->cacheClearer = $cacheClearer;
 

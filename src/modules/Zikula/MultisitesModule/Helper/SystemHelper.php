@@ -18,7 +18,7 @@ use ModUtil;
 use PDO;
 use PDOException;
 use ServiceUtil;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use UserUtil;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -37,7 +37,7 @@ class SystemHelper
     private $dbConfigFile = 'config/multisites_dbconfig.php';
 
     /**
-     * @var Session
+     * @var SessionInterface
      */
     protected $session;
 
@@ -45,14 +45,17 @@ class SystemHelper
      * Constructor.
      * Initialises member vars.
      *
-     * @param Session             $session      Session service instance
      * @param TranslatorInterface $translator   Translator service instance
+     * @param SessionInterface    $session      Session service instance
      * @param VariableApi         $variableApi  VariableApi service instance
      */
-    public function __construct(Session $session, TranslatorInterface $translator, VariableApi $variableApi)
-    {
-        $this->session = $session;
+    public function __construct(
+        TranslatorInterface $translator,
+        SessionInterface $session,
+        VariableApi $variableApi
+    ) {
         $this->setTranslator($translator);
+        $this->session = $session;
         $this->variableApi = $variableApi;
     }
 

@@ -1,11 +1,9 @@
 {# purpose of this template: show output of reapply action in template area #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{% block title %}
-    {{ __('Reapply') }}
-{% endblock %}
-{% block adminPageIcon %}refresh{% endblock %}
+{% block title __('Reapply') %}
+{% block admin_page_icon 'refresh' %}
 {% block content %}
-    <form action="{{ path('zikulamultisitesmodule_template_reapply', { id: template.id }) }}" method="post" class="form" role="form">
+    <form action="{{ path('zikulamultisitesmodule_template_reapply', {id: template.id}) }}" method="post" class="form" role="form">
         <div>
             <input type="hidden" name="token" value="{{ token }}" />
             <input type="hidden" id="confirmation" name="confirmation" value="1" />

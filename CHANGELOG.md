@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+Changes in Multisites 2.1.0
+
+* Regenerated using ModuleStudio 1.0.1-dev.
+* Migrated to Zikula 2.0.x.
+
 Changes in Multisites 2.0.0
 
 * Reimplemented module using ModuleStudio (early development 0.7.0 version) (#16).

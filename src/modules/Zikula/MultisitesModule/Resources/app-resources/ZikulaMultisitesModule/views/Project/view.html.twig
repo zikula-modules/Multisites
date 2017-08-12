@@ -1,6 +1,6 @@
 {# purpose of this template: projects list view #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{% block title __('Project list') %}
+{% block title own ? __('My projects') : __('Projects list') %}
 {% block admin_page_icon 'list-alt' %}
 {% block content %}
 <div class="zikulamultisitesmodule-project zikulamultisitesmodule-view">
@@ -9,7 +9,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@ZikulaMultisitesModule/Project/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/Project/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="projectsViewForm" class="form-horizontal" role="form">
@@ -21,18 +21,19 @@
                 {# % if routeArea == 'admin' %}
                     <col id="cSelect" />
                 {% endif % #}
+                <col id="cItemActions" />
                 <col id="cName" />
                 <col id="cTemplates" />
                 <col id="cSites" />
-                <col id="cItemActions" />
             </colgroup>
             <thead>
             <tr>
                 {# % if routeArea == 'admin' %}
-                    <th id="hSelect" scope="col" class="text-center">
-                        <input type="checkbox" id="toggleProjects" />
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="zikulamultisites-mass-toggle" />
                     </th>
                 {% endif % #}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
@@ -42,7 +43,6 @@
                 <th id="hSites" scope="col" class="text-left z-order-unsorted">
                     {{ __('Sites') }}
                 </th>
-                <th id="hItemActions" scope="col" class="text-right z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -50,18 +50,25 @@
         {% for project in items %}
             <tr>
                 {# % if routeArea == 'admin' %}
-                    <td headers="hSelect" class="text-center">
-                        <input type="checkbox" name="items[]" value="{{ project.id }}" class="projects-checkbox" />
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ project.getKey() }}" class="zikulamultisites-toggle-checkbox" />
                     </td>
                 {% endif % #}
+                <td id="itemActions{{ project.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], {entity: project, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ project.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
                 <td headers="hName" class="text-left">
-                    {{ project.name|notifyFilters('zikulamultisitesmodule.filterhook.projects') }}
+                    {{ project.name|notifyFilters('zikulamultisitesmodule.filterhook.projects')|safeHtml }}
                 </td>
                 <td headers="hTemplates" class="text-left">
-                    {% if project.templates|length > 0 %}
+                    {% if project.templates is iterable and project.templates|length > 0 %}
                         <ul>
                         {% for template in project.templates %}
-                            <li>{{ template.getTitleFromDisplayPattern() }}</li>
+                            <li>{{ template|zikulamultisitesmodule_formattedTitle }}</li>
                         {% endfor %}
                         </ul>
                     {% else %}
@@ -69,15 +76,7 @@
                     {% endif %}
                 </td>
                 <td headers="hSites" class="text-left">
-                    <a href="{{ path('zikulamultisitesmodule_site_view', { project: project.id }) }}" title="{{ __('View sites assigned to this project') }}">{{ __('Site list') }}</a>
-                </td>
-                <td id="itemActions{{ project.id }}" headers="hItemActions" class="actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], { entity: project, area: routeArea, context: 'view' }) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ project.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        
-                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
-                    </div>
+                    <a href="{{ path('zikulamultisitesmodule_site_view', {project: project.getKey()}) }}" title="{{ __('View sites assigned to this project') }}">{{ __('Site list') }}</a>
                 </td>
             </tr>
         {% else %}
@@ -92,8 +91,8 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 and pager|default %}
-            {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_project_' ~ routeArea ~ 'view'}) }}
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'zikulamultisitesmodule_project_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
 {#            <fieldset>
@@ -116,19 +115,21 @@
 </div>
 {% endblock %}
 {% block page_nav_links %}
-    {% if canBeCreated %}
-        {% if hasPermission('ZikulaMultisitesModule:Project:', '::', 'ACCESS_EDIT') %}
-            {% set createTitle = __('Create project') %}
-            <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('ZikulaMultisitesModule:Project:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create project') %}
+                <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
         {% endif %}
-    {% endif %}
-    {% if showAllEntries == 1 %}
-        {% set linkTitle = __('Back to paginated view') %}
-        <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
-    {% else %}
-        {% set linkTitle = __('Show all entries') %}
-        <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
-    {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
 {% endblock %}
 {% block display_hooks %}
     
@@ -139,30 +140,4 @@
             {{ hook }}
         {% endfor %}
     {% endif % #}
-{% endblock %}
-{% block footer %}
-    {{ parent() }}
-
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        ( function($) {
-            $(document).ready(function() {
-                $('.zikulamultisitesmodule-project .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
-                $('.zikulamultisitesmodule-project .dropdown > ul a').each(function (index) {
-                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
-                });
-                $('.zikulamultisitesmodule-project .dropdown > ul a i').addClass('fa-fw');
-                $('.zikulamultisitesmodule-project .dropdown-toggle').removeClass('hidden').dropdown();
-                {#% if routeArea == 'admin' %}
-                    {# init the "toggle all" functionality # }
-                    if ($('#toggleProjects').length > 0) {
-                        $('#toggleProjects').click(function (event) {
-                            $('.projects-checkbox').prop('checked', $(this).prop('checked'));
-                        });
-                    }
-                {% endif %#}
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
 {% endblock %}
