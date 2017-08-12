@@ -87,9 +87,10 @@ application "Multisites" {
                     defaultValue "admin"
                     length 25
                 },
-                string "siteAdminPassword" password {
+                string "siteAdminPassword" {
                     defaultValue ""
                     length 15
+                    role PASSWORD
                 },
                 string "siteAdminRealName" {
                     defaultValue ""
@@ -116,9 +117,10 @@ application "Multisites" {
                     defaultValue ""
                     length 50
                 },
-                string "databasePassword" password {
+                string "databasePassword" {
                     defaultValue ""
                     length 50
+                    role PASSWORD
                 },
                 string "databaseHost" {
                     defaultValue "localhost"
@@ -142,6 +144,7 @@ application "Multisites" {
                 upload "parametersCsvFile" {
                     mandatory false
                     allowedExtensions "csv"
+                    mimeTypes "text/csv"
                 },
                 array "parametersArray" {
                     defaultValue ""
@@ -187,6 +190,7 @@ application "Multisites" {
                 },
                 upload "sqlFile" {
                     allowedExtensions "sql, txt"
+                    mimeTypes "text/*"
                 },
                 array "parameters" {
                     defaultValue ""
@@ -299,20 +303,6 @@ application "Multisites" {
                 textVar "globalAdminName",
                 textVar "globalAdminPassword",
                 textVar "globalAdminEmail"
-            }
-        }
-    }
-    controllers {
-        adminController "Admin" {
-            actions {
-                mainAction "Main",
-                customAction "ManageUpdates",
-                customAction "MultiplyQueries"
-            }
-        },
-        ajaxController "Ajax" {
-            actions {
-                mainAction "Main"
             }
         }
     }
