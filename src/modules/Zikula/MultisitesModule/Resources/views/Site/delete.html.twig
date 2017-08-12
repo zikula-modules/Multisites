@@ -4,7 +4,7 @@
 {% block admin_page_icon 'trash-o' %}
 {% block content %}
     <div class="zikulamultisitesmodule-site zikulamultisitesmodule-delete">
-        <p class="alert alert-warning">{{ __f('Do you really want to delete this site: "%name%" ?', {'%name%': site.getTitleFromDisplayPattern()}) }}</p>
+        <p class="alert alert-warning">{{ __f('Do you really want to delete this site: "%name%" ?', {'%name%': site|zikulamultisitesmodule_formattedTitle}) }}</p>
 
         {% form_theme deleteForm with [
             '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
@@ -13,6 +13,13 @@
         {{ form_start(deleteForm) }}
         {{ form_errors(deleteForm) }}
 
+        {% if formHookTemplates|length > 0 %}
+            <fieldset>
+                {% for hookTemplate in formHookTemplates %}
+                    {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
+                {% endfor %}
+            </fieldset>
+        {% endif %}
         <fieldset>
             <legend>{{ __('Confirmation prompt') }}</legend>
             <div class="form-group">
@@ -22,13 +29,13 @@
                 </div>
             </div>
         </fieldset>
+        {{ form_end(deleteForm) }}
 
         {{ block('display_hooks') }}
-        {{ form_end(deleteForm) }}
     </div>
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_delete', id=site.id) %}
+    {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_delete', id=site.getKey()) %}
     {% if hooks is iterable and hooks|length > 0 %}
         {% for providerArea, hook in hooks %}
             <fieldset>

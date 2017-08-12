@@ -51,7 +51,7 @@ function zikulaMultisitesReadDate(val, includeTime)
     if (val.substr(2, 1) === '.' && val.substr(5, 1) === '.') {
         var newVal = val.substr(6, 4) + '-' + val.substr(3, 2) + '-' + val.substr(0, 2);
         if (true === includeTime) {
-            newVal += ' ' + val.substr(11, 5);
+            newVal += ' ' + val.substr(11, 7);
         }
 
         return newVal;
@@ -84,7 +84,7 @@ function zikulaMultisitesValidateUploadExtension(val, elem)
 /**
  * Runs special validation rules.
  */
-function zikulaMultisitesPerformCustomValidationRules(objectType, currentEntityId)
+function zikulaMultisitesExecuteCustomValidationConstraints(objectType, currentEntityId)
 {
     jQuery('.validate-nospace').each( function() {
         if (!zikulaMultisitesValidateNoSpace(jQuery(this).val())) {

@@ -1,21 +1,17 @@
 {# purpose of this template: general base layout #}
 {% block header %}
-    
     {{ pageAddAsset('stylesheet', asset('jquery-ui/themes/base/jquery-ui.min.css')) }}
-    {{ pageAddAsset('javascript', asset('bootstrap/js/bootstrap.min.js')) }}
-    {{ pageAddAsset('javascript', asset('bootstrap-media-lightbox/bootstrap-media-lightbox.min.js')) }}
-    {{ pageAddAsset('stylesheet', asset('bootstrap-media-lightbox/bootstrap-media-lightbox.css')) }}
     {{ pageAddAsset('stylesheet', asset('bootstrap-jqueryui/bootstrap-jqueryui.min.css')) }}
+    {{ pageAddAsset('javascript', asset('jquery-ui/jquery-ui.min.js')) }}
     {{ pageAddAsset('javascript', asset('bootstrap-jqueryui/bootstrap-jqueryui.min.js')) }}
+    {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+    {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.js')) }}
-    {{ polyfill(['forms', 'forms-ext']) }}
 {% endblock %}
 
-{% if app.request.query.get('theme') != 'ZikulaPrinterTheme' %}
-    {% block appTitle %}
-        {{ moduleHeader('user', '', '', false, true, false, true) }}
-    {% endblock %}
-{% endif %}
+{% block appTitle %}
+    {{ moduleHeader('user', '', '', false, true, false, true) }}
+{% endblock %}
 
 {% block titleArea %}
     <h2>{% block title %}{% endblock %}</h2>
@@ -27,22 +23,7 @@
 {% block content %}{% endblock %}
 
 {% block footer %}
-    {% if app.request.query.get('theme') != 'ZikulaPrinterTheme' %}
-        <p class="text-center">
-            Powered by <a href="http://modulestudio.de" title="Get the MOST out of Zikula!">ModuleStudio 0.7.1</a>
-        </p>
-    {% elseif app.request.query.get('func') == 'edit' %}
-        {{ pageAddAsset('stylesheet', 'style/core.css') }}
-        {{ pageAddAsset('stylesheet', zasset('@ZikulaMultisitesModule:css/style.css')) }}
-        {{ pageAddAsset('stylesheet', zasset('@ZikulaThemeModule:css/form/style.css')) }}
-        {{ pageAddAsset('stylesheet', zasset('@ZikulaAndreas08Theme:css/fluid960gs/reset.css')) }}
-        {% set pageStyles %}
-        <style type="text/css">
-            body {
-                font-size: 70%;
-            }
-        </style>
-        {% endset %}
-        {{ pageAddAsset('header', pageStyles) }}
-    {% endif %}
+    <p class="text-center">
+        Powered by <a href="https://modulestudio.de" title="Get the MOST out of Zikula!">ModuleStudio 1.0.1</a>
+    </p>
 {% endblock %}

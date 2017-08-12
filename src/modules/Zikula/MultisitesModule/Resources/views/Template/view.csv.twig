@@ -5,18 +5,39 @@
 {% endspaceless %}
 {% for template in items %}
 {% spaceless %}
-    "{{ template.name }}";"{{ template.description }}";"{{ template.sqlFile }}";"{{ template.parameters }}";"{{ template.folders }}";"{{ template.excludedTables }}";"{{ template.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
+    "{{ template.name }}";"{{ template.description }}";"{{ template.sqlFile }}";"{% if template.parameters is iterable and template.parameters|length > 0 %}
+        <ul>
+        {% for entry in template.parameters %}
+            <li>{{ entry }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    ";"{% if template.folders is iterable and template.folders|length > 0 %}
+        <ul>
+        {% for entry in template.folders %}
+            <li>{{ entry }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    ";"{% if template.excludedTables is iterable and template.excludedTables|length > 0 %}
+        <ul>
+        {% for entry in template.excludedTables %}
+            <li>{{ entry }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    ";"{{ template.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
     ;"
     {% if template.projects|default %}
         {% for relatedItem in template.projects %}
-        {{ relatedItem.getTitleFromDisplayPattern() }}{% if not loop.last %}, {% endif %}
+        {{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
         {% endfor %}
     {% endif %}
     "
     ;"
     {% if template.sites|default %}
         {% for relatedItem in template.sites %}
-        {{ relatedItem.getTitleFromDisplayPattern() }}{% if not loop.last %}, {% endif %}
+        {{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
         {% endfor %}
     {% endif %}
     "

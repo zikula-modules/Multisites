@@ -1,6 +1,6 @@
 {# purpose of this template: templates list view #}
 {% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
-{% block title __('Template list') %}
+{% block title own ? __('My templates') : __('Templates list') %}
 {% block admin_page_icon 'list-alt' %}
 {% block content %}
 <div class="zikulamultisitesmodule-template zikulamultisitesmodule-view">
@@ -9,7 +9,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@ZikulaMultisitesModule/Template/viewQuickNav.html.twig', { workflowStateFilter: false }) }}{# see template file for available options #}
+    {{ include('@ZikulaMultisitesModule/Template/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="templatesViewForm" class="form-horizontal" role="form">
@@ -21,18 +21,19 @@
                 {% if routeArea == 'admin' %}
                     <col id="cSelect" />
                 {% endif %}
+                <col id="cItemActions" />
                 <col id="cName" />
                 <col id="cDescription" />
                 <col id="cSqlFile" />
-                <col id="cItemActions" />
             </colgroup>
             <thead>
             <tr>
                 {% if routeArea == 'admin' %}
-                    <th id="hSelect" scope="col" class="text-center">
-                        <input type="checkbox" id="toggleTemplates" />
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="zikulamultisites-mass-toggle" />
                     </th>
                 {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
@@ -42,7 +43,6 @@
                 <th id="hSqlFile" scope="col" class="text-left">
                     <a href="{{ sort.sqlFile.url }}" title="{{ __f('Sort by %s', {'%s': 'sql file'}) }}" class="{{ sort.sqlFile.class }}">{{ __('Sql file') }}</a>
                 </th>
-                <th id="hItemActions" scope="col" class="text-right z-order-unsorted">{{ __('Actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -50,35 +50,34 @@
         {% for template in items %}
             <tr>
                 {% if routeArea == 'admin' %}
-                    <td headers="hSelect" class="text-center">
-                        <input type="checkbox" name="items[]" value="{{ template.id }}" class="templates-checkbox" />
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ template.getKey() }}" class="zikulamultisites-toggle-checkbox" />
                     </td>
                 {% endif %}
+                <td id="itemActions{{ template.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], {entity: template, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ template.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
                 <td headers="hName" class="text-left">
-                    {{ template.name|notifyFilters('zikulamultisitesmodule.filterhook.templates') }}
+                    {{ template.name|notifyFilters('zikulamultisitesmodule.filterhook.templates')|safeHtml }}
                 </td>
                 <td headers="hDescription" class="text-left">
                     {{ template.description }}
                 </td>
                 <td headers="hSqlFile" class="text-left">
                     {% if template.sqlFileMeta|default %}
-                    <a href="{{ template.sqlFileUrl }}" title="{{ template.getTitleFromDisplayPattern()|e('html_attr') }}"{% if template.sqlFileMeta.isImage %} class="lightbox"{% endif %}>
+                    <a href="{{ template.sqlFileUrl }}" title="{{ template|zikulamultisitesmodule_formattedTitle|e('html_attr') }}"{% if template.sqlFileMeta.isImage %} class="image-link"{% endif %}>
                     {% if template.sqlFileMeta.isImage %}
                         {% set thumbOptions = attribute(thumbRuntimeOptions, 'templateSqlFile') %}
-                        <img src="{{ template.sqlFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ template.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                        <img src="{{ template.sqlFile.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ template|zikulamultisitesmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
                         {{ __('Download') }} ({{ template.sqlFileMeta.size|zikulamultisitesmodule_fileSize(template.sqlFile.getPathname(), false, false) }})
                     {% endif %}
                     </a>
                     {% endif %}
-                </td>
-                <td id="itemActions{{ template.id }}" headers="hItemActions" class="actions text-right nowrap z-w02">
-                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], { entity: template, area: routeArea, context: 'view' }) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ template.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        
-                        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
-                    </div>
                 </td>
             </tr>
         {% else %}
@@ -93,8 +92,8 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 and pager|default %}
-            {{ pager({ rowcount: pager.numitems, limit: pager.itemsperpage, display: 'page', route: 'zikulamultisitesmodule_template_' ~ routeArea ~ 'view'}) }}
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'zikulamultisitesmodule_template_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
             <fieldset>
@@ -117,19 +116,21 @@
 </div>
 {% endblock %}
 {% block page_nav_links %}
-    {% if canBeCreated %}
-        {% if hasPermission('ZikulaMultisitesModule:Template:', '::', 'ACCESS_EDIT') %}
-            {% set createTitle = __('Create template') %}
-            <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('ZikulaMultisitesModule:Template:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create template') %}
+                <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            {% endif %}
         {% endif %}
-    {% endif %}
-    {% if showAllEntries == 1 %}
-        {% set linkTitle = __('Back to paginated view') %}
-        <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
-    {% else %}
-        {% set linkTitle = __('Show all entries') %}
-        <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'view', { all: 1 }) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
-    {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
+        {% endif %}
+    </p>
 {% endblock %}
 {% block display_hooks %}
     
@@ -140,30 +141,4 @@
             {{ hook }}
         {% endfor %}
     {% endif % #}
-{% endblock %}
-{% block footer %}
-    {{ parent() }}
-
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        ( function($) {
-            $(document).ready(function() {
-                $('.zikulamultisitesmodule-template .dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu dropdown-menu-right');
-                $('.zikulamultisitesmodule-template .dropdown > ul a').each(function (index) {
-                    $(this).html($(this).html() + $(this).find('i').first().data('original-title'));
-                });
-                $('.zikulamultisitesmodule-template .dropdown > ul a i').addClass('fa-fw');
-                $('.zikulamultisitesmodule-template .dropdown-toggle').removeClass('hidden').dropdown();
-                {% if routeArea == 'admin' %}
-                    {# init the "toggle all" functionality #}
-                    if ($('#toggleTemplates').length > 0) {
-                        $('#toggleTemplates').click(function (event) {
-                            $('.templates-checkbox').prop('checked', $(this).prop('checked'));
-                        });
-                    }
-                {% endif %}
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
 {% endblock %}

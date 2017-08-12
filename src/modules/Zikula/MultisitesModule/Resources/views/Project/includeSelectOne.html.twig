@@ -2,16 +2,9 @@
 {% if displayMode is not defined or displayMode is empty %}
     {% set displayMode = 'choices' %}
 {% endif %}
-{% if allowEditing is not defined or allowEditing is empty %}
-    {% set allowEditing = false %}
-{% endif %}
-{% if panel|default(false) == true %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseProject">{{ __('Project') }}</a></h3>
-        </div>
-        <div id="collapseProject" class="panel-collapse collapse in">
-            <div class="panel-body">
+{% if tabs|default(false) == true %}
+    <div role="tabpanel" class="tab-pane fade" id="tabProject" aria-labelledby="projectTab">
+        <h3>{{ __('Project') }}</h3>
 {% else %}
     <fieldset class="project">
 {% endif %}
@@ -19,23 +12,16 @@
     {% if displayMode == 'choices' %}
         {{ form_row(attribute(form, alias)) }}
     {% elseif displayMode == 'autocomplete' %}
-        {% set createUrl = allowEditing ? path('zikulamultisitesmodule_project_' ~ routeArea ~ 'edit') : '' %}
         {{ form_row(attribute(form, alias)) }}
         <div class="zikulamultisitesmodule-relation-leftside">
-            {% if attribute(linkingItem, alias) is defined %}
-                {{ include(
-                    'Project/includeSelectItemListOne.html.twig',
-                    { item: attribute(linkingItem, alias) }
-                ) }}
-            {% else %}
-                {{ include('Project/includeSelectItemListOne.html.twig') }}
-            {% endif %}
+            {{ include(
+                '@ZikulaMultisitesModule/Project/includeSelectItemListOne.html.twig',
+                attribute(linkingItem, alias) is defined ? {item: attribute(linkingItem, alias)} : {}
+            ) }}
         </div>
         <br style="clear: both" />
     {% endif %}
-{% if panel|default(false) == true %}
-            </div>
-        </div>
+{% if tabs|default(false) == true %}
     </div>
 {% else %}
     </fieldset>

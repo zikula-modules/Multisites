@@ -6,177 +6,79 @@ function zikulaMultisitesCapitaliseFirstLetter(string)
 }
 
 /**
- * Submits a quick navigation form.
+ * Initialise the quick navigation form in list views.
  */
-function zikulaMultisitesSubmitQuickNavForm(objectType)
+function zikulaMultisitesInitQuickNavigation()
 {
-    jQuery('#zikulamultisitesmodule' + zikulaMultisitesCapitaliseFirstLetter(objectType) + 'QuickNavForm').submit();
-}
+    var quickNavForm;
+    var objectType;
 
-/**
- * Initialise the quick navigation panel in list views.
- */
-function zikulaMultisitesInitQuickNavigation(objectType)
-{
-    if (jQuery('#zikulamultisitesmodule' + zikulaMultisitesCapitaliseFirstLetter(objectType) + 'QuickNavForm').length < 1) {
+    if (jQuery('.zikulamultisitesmodule-quicknav').length < 1) {
         return;
     }
 
-    var fieldPrefix = 'zikulamultisitesmodule_' + objectType.toLowerCase() + 'quicknav_';
-    if (jQuery('#' + fieldPrefix + 'catid').length > 0) {
-        jQuery('#' + fieldPrefix + 'catid').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-    }
-    if (jQuery('#' + fieldPrefix + 'sortBy').length > 0) {
-        jQuery('#' + fieldPrefix + 'sortBy').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-    }
-    if (jQuery('#' + fieldPrefix + 'sortDir').length > 0) {
-        jQuery('#' + fieldPrefix + 'sortDir').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-    }
-    if (jQuery('#' + fieldPrefix + 'num').length > 0) {
-        jQuery('#' + fieldPrefix + 'num').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-    }
+    quickNavForm = jQuery('.zikulamultisitesmodule-quicknav').first();
+    objectType = quickNavForm.attr('id').replace('zikulaMultisitesModule', '').replace('QuickNavForm', '');
 
-    switch (objectType) {
-    case 'site':
-        if (jQuery('#' + fieldPrefix + 'template').length > 0) {
-            jQuery('#' + fieldPrefix + 'template').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        if (jQuery('#' + fieldPrefix + 'project').length > 0) {
-            jQuery('#' + fieldPrefix + 'project').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        if (jQuery('#' + fieldPrefix + 'workflowState').length > 0) {
-            jQuery('#' + fieldPrefix + 'workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        if (jQuery('#' + fieldPrefix + 'active').length > 0) {
-            jQuery('#' + fieldPrefix + 'active').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        break;
-    case 'template':
-        if (jQuery('#' + fieldPrefix + 'workflowState').length > 0) {
-            jQuery('#' + fieldPrefix + 'workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        break;
-    case 'siteExtension':
-        if (jQuery('#' + fieldPrefix + 'site').length > 0) {
-            jQuery('#' + fieldPrefix + 'site').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        if (jQuery('#' + fieldPrefix + 'workflowState').length > 0) {
-            jQuery('#' + fieldPrefix + 'workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        if (jQuery('#' + fieldPrefix + 'extensionType').length > 0) {
-            jQuery('#' + fieldPrefix + 'extensionType').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        break;
-    case 'project':
-        if (jQuery('#' + fieldPrefix + 'workflowState').length > 0) {
-            jQuery('#' + fieldPrefix + 'workflowState').change(function () { zikulaMultisitesSubmitQuickNavForm(objectType); });
-        }
-        break;
-    default:
-        break;
-    }
-}
-
-/**
- * Helper function to create new Bootstrap modal window instances.
- */
-function zikulaMultisitesInitInlineWindow(containerElem, title)
-{
-    var newWindowId;
-
-    // show the container (hidden for users without JavaScript)
-    containerElem.removeClass('hidden');
-
-    // define name of window
-    newWindowId = containerElem.attr('id') + 'Dialog';
-
-    containerElem.unbind('click').click(function(e) {
-        e.preventDefault();
-
-        // check if window exists already
-        if (jQuery('#' + newWindowId).length < 1) {
-            // create new window instance
-            jQuery('<div id="' + newWindowId + '"></div>')
-                .append(
-                    jQuery('<iframe width="100%" height="100%" marginWidth="0" marginHeight="0" frameBorder="0" scrolling="auto" />')
-                        .attr('src', containerElem.attr('href'))
-                )
-                .dialog({
-                    autoOpen: false,
-                    show: {
-                        effect: 'blind',
-                        duration: 1000
-                    },
-                    hide: {
-                        effect: 'explode',
-                        duration: 1000
-                    },
-                    title: title,
-                    width: 600,
-                    height: 400,
-                    modal: false
-                });
-        }
-
-        // open the window
-        jQuery('#' + newWindowId).dialog('open');
+    quickNavForm.find('select').change(function (event) {
+        quickNavForm.submit();
     });
 
-    // return the dialog selector id;
-    return newWindowId;
-}
-
-
-/**
- * Initialise ajax-based toggle for boolean fields.
- */
-function zikulaMultisitesInitToggle(objectType, fieldName, itemId)
-{
-    var idSuffix = zikulaMultisitesCapitaliseFirstLetter(fieldName) + itemId;
-    if (jQuery('#toggle' + idSuffix).length < 1) {
-        return;
+    var fieldPrefix = 'zikulamultisitesmodule_' + objectType.toLowerCase() + 'quicknav_';
+    // we can hide the submit button if we have no visible quick search field
+    if (jQuery('#' + fieldPrefix + 'q').length < 1 || jQuery('#' + fieldPrefix + 'q').parent().parent().hasClass('hidden')) {
+        jQuery('#' + fieldPrefix + 'updateview').addClass('hidden');
     }
-    jQuery('#toggle' + idSuffix).click( function() {
-        zikulaMultisitesToggleFlag(objectType, fieldName, itemId);
-    }).removeClass('hidden');
 }
-
 
 /**
  * Toggles a certain flag for a given item.
  */
 function zikulaMultisitesToggleFlag(objectType, fieldName, itemId)
 {
-    var fieldNameCapitalised = zikulaMultisitesCapitaliseFirstLetter(fieldName);
-    var params = 'ot=' + objectType + '&field=' + fieldName + '&id=' + itemId;
-
     jQuery.ajax({
-        type: 'POST',
+        method: 'POST',
         url: Routing.generate('zikulamultisitesmodule_ajax_toggleflag'),
-        data: params
-    }).done(function(res) {
-        // get data returned by the ajax response
-        var idSuffix, data;
+        data: {
+            ot: objectType,
+            field: fieldName,
+            id: itemId
+        },
+        success: function(data) {
+            var idSuffix;
+            var toggleLink;
 
-        idSuffix = fieldName + '_' + itemId;
-        data = res.data;
+            idSuffix = zikulaMultisitesCapitaliseFirstLetter(fieldName) + itemId;
+            toggleLink = jQuery('#toggle' + idSuffix);
 
-        /*if (data.message) {
-            zikulaMultisitesSimpleAlert(jQuery('#toggle' + idSuffix), Translator.__('Success'), data.message, 'toggle' + idSuffix + 'DoneAlert', 'success');
-        }*/
+            if (data.message) {
+                zikulaMultisitesSimpleAlert(toggleLink, Translator.__('Success'), data.message, 'toggle' + idSuffix + 'DoneAlert', 'success');
+            }
 
-        idSuffix = idSuffix.toLowerCase();
-        var state = data.state;
-        if (true === state) {
-            jQuery('#no' + idSuffix).addClass('hidden');
-            jQuery('#yes' + idSuffix).removeClass('hidden');
-        } else {
-            jQuery('#yes' + idSuffix).addClass('hidden');
-            jQuery('#no' + idSuffix).removeClass('hidden');
+            toggleLink.find('.fa-check').toggleClass('hidden', true !== data.state);
+            toggleLink.find('.fa-times').toggleClass('hidden', true === data.state);
         }
     });
 }
 
+/**
+ * Initialise ajax-based toggle for all affected boolean fields on the current page.
+ */
+function zikulaMultisitesInitAjaxToggles()
+{
+    jQuery('.zikulamultisites-ajax-toggle').click(function (event) {
+        var objectType;
+        var fieldName;
+        var itemId;
+
+        event.preventDefault();
+        objectType = jQuery(this).data('object-type');
+        fieldName = jQuery(this).data('field-name');
+        itemId = jQuery(this).data('item-id');
+
+        zikulaMultisitesToggleFlag(objectType, fieldName, itemId);
+    }).removeClass('hidden');
+}
 
 /**
  * Simulates a simple alert using bootstrap.
@@ -199,3 +101,144 @@ function zikulaMultisitesSimpleAlert(beforeElem, title, content, alertId, cssCla
         jQuery(this).remove();
     });
 }
+
+/**
+ * Initialises the mass toggle functionality for admin view pages.
+ */
+function zikulaMultisitesInitMassToggle()
+{
+    if (jQuery('.zikulamultisites-mass-toggle').length > 0) {
+        jQuery('.zikulamultisites-mass-toggle').unbind('click').click(function (event) {
+            if (jQuery('.table.fixed-columns').length > 0) {
+                jQuery('.zikulamultisites-toggle-checkbox').prop('checked', false);
+                jQuery('.table.fixed-columns .zikulamultisites-toggle-checkbox').prop('checked', jQuery(this).prop('checked'));
+            } else {
+                jQuery('.zikulamultisites-toggle-checkbox').prop('checked', jQuery(this).prop('checked'));
+            }
+        });
+    }
+}
+
+/**
+ * Initialises fixed table columns.
+ */
+function zikulaMultisitesInitFixedColumns()
+{
+    jQuery('.table.fixed-columns').remove();
+    jQuery('.table').each(function() {
+        var originalTable, fixedColumnsTable, fixedTableWidth;
+
+        originalTable = jQuery(this);
+        fixedTableWidth = 0;
+        if (originalTable.find('.fixed-column').length > 0) {
+            fixedColumnsTable = originalTable.clone().insertBefore(originalTable).addClass('fixed-columns').removeAttr('id');
+            originalTable.find('.dropdown').addClass('hidden');
+            fixedColumnsTable.find('.dropdown').removeClass('hidden');
+            fixedColumnsTable.css('left', originalTable.parent().position().left);
+
+            fixedColumnsTable.find('th, td').not('.fixed-column').remove();
+            fixedColumnsTable.find('th').each(function (i, elem) {
+                jQuery(this).css('width', originalTable.find('th').eq(i).css('width'));
+                fixedTableWidth += originalTable.find('th').eq(i).width();
+            });
+            fixedColumnsTable.css('width', fixedTableWidth + 'px');
+
+            fixedColumnsTable.find('tr').each(function (i, elem) {
+                jQuery(this).height(originalTable.find('tr:eq(' + i + ')').height());
+            });
+        }
+    });
+    zikulaMultisitesInitMassToggle();
+}
+
+/**
+ * Creates a dropdown menu for the item actions.
+ */
+function zikulaMultisitesInitItemActions(context)
+{
+    var containerSelector;
+    var containers;
+    var listClasses;
+
+    containerSelector = '';
+    if (context == 'view') {
+        containerSelector = '.zikulamultisitesmodule-view';
+        listClasses = 'list-unstyled dropdown-menu';
+    } else if (context == 'display') {
+        containerSelector = 'h2, h3';
+        listClasses = 'list-unstyled dropdown-menu';
+    }
+
+    if (containerSelector == '') {
+        return;
+    }
+
+    containers = jQuery(containerSelector);
+    if (containers.length < 1) {
+        return;
+    }
+
+    containers.find('.dropdown > ul').removeClass('list-inline').addClass(listClasses);
+    containers.find('.dropdown > ul a').each(function (index) {
+        var title;
+
+        title = jQuery(this).find('i').first().attr('title');
+        if (title == '') {
+            title = jQuery(this).find('i').first().data('original-title');
+        }
+        jQuery(this).html(jQuery(this).html() + title);
+    });
+    containers.find('.dropdown > ul a i').addClass('fa-fw');
+    containers.find('.dropdown-toggle').removeClass('hidden').dropdown();
+}
+
+/**
+ * Initialises image viewing behaviour.
+ */
+function zikulaMultisitesInitImageViewer()
+{
+    jQuery('a.image-link').magnificPopup({
+        type: 'image',
+        closeOnContentClick: true,
+        image: {
+            titleSrc: 'title',
+            verticalFit: true
+        },
+        gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+            arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>',
+            tPrev: Translator.__('Previous (Left arrow key)'),
+            tNext: Translator.__('Next (Right arrow key)'),
+            tCounter: '<span class="mfp-counter">%curr% ' + Translator.__('of') + ' %total%</span>'
+        },
+        zoom: {
+            enabled: true,
+            duration: 300,
+            easing: 'ease-in-out'
+        }
+    });
+}
+
+jQuery(document).ready(function() {
+    var isViewPage;
+    var isDisplayPage;
+
+    isViewPage = jQuery('.zikulamultisitesmodule-view').length > 0;
+    isDisplayPage = jQuery('.zikulamultisitesmodule-display').length > 0;
+
+    zikulaMultisitesInitImageViewer();
+
+    if (isViewPage) {
+        zikulaMultisitesInitQuickNavigation();
+        zikulaMultisitesInitMassToggle();
+        jQuery(window).resize(zikulaMultisitesInitFixedColumns);
+        zikulaMultisitesInitFixedColumns();
+        window.setTimeout(zikulaMultisitesInitFixedColumns, 1000);
+        zikulaMultisitesInitItemActions('view');
+        zikulaMultisitesInitAjaxToggles();
+    } else if (isDisplayPage) {
+        zikulaMultisitesInitItemActions('display');
+        zikulaMultisitesInitAjaxToggles();
+    }
+});

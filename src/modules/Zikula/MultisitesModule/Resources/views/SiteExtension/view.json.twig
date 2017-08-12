@@ -2,6 +2,6 @@
 [
 {% for siteExtension in items %}
     {% if not loop.first %},{% endif %}
-    {{ siteExtension.toJson() }}
+    {{ siteExtension.toArray()|json_encode() }}
 {% endfor %}
 ]
