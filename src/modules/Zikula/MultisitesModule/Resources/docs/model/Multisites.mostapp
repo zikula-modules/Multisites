@@ -8,7 +8,6 @@ application "Multisites" {
     prefix "multisites"
     generatorSettings {
         settingsContainer "Settings"
-        targetCoreVersion ZK14
         generateAccountApi false
         generateSearchApi false
         generateMailzApi false
