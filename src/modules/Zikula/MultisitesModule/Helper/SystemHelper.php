@@ -226,7 +226,7 @@ class SystemHelper
         $config = new Configuration();
 
         $connectionParams = [
-            'url' => $dbType . '://' . $dbUser . ':' . $dbPass . '@' . $dbHost;
+            'url' => $dbType . '://' . $dbUser . ':' . $dbPass . '@' . $dbHost
         ];
         if (!$skipDatabase) {
             $connectionParams['url'] .= '/' . $dbName;
