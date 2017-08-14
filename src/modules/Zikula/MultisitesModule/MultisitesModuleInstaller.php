@@ -44,7 +44,7 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
                 // ...
                 // update the database schema
                 try {
-                    $this->container->get('zikula.doctrine.schema_tool')->update($this->listEntityClasses());
+                    $this->schemaTool->update($this->listEntityClasses());
                 } catch (\Exception $e) {
                     $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $e->getMessage());
                     $logger->error('{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $e->getMessage()]);
@@ -170,6 +170,7 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         }
 
         // transfer data from old site table
+        $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
         $stmt = $conn->executeQuery('SELECT * FROM `multisitessitesOld`');
         while ($row = $stmt->fetch()) {
             $site = new SiteEntity();
@@ -192,11 +193,35 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
             $site->setDatabaseType($row['sitedbtype']);
 
             if ($row['sitedbprefix'] != '') {
-                /** TODO
-                 * We could also do this automatically.
-                 * Needs a refactoring of SystemHelper class, see readTables() and renameExcludedTables()
-                 */
-                $this->addFlash('error', $this->__f('The site "%site%" does have a table prefix set which is not supported anymore. You need to rename tables in the "%database%" database accordingly.', ['%site%' => $site->getName(), '%database%' => $site->getDatabaseName()]));
+                $connect = $systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
+                if (!$connect) {
+                    $this->addFlash('error', $this->__f('The site "%site%" does have a table prefix set which is not supported anymore. You need to rename tables in the "%database%" database accordingly.', ['%site%' => $site->getName(), '%database%' => $site->getDatabaseName()]));
+                } else {
+                    // remove legacy prefix in all tables
+                    $tableNames = [];
+                    $sql = '
+                        SELECT `table_name` AS `tableName`
+                        FROM `information_schema`.`tables`
+                        WHERE `table_schema` = :dbName
+                    ';
+
+                    while ($row = $connect->fetchAssoc($sql, [':dbName' => $site->getDatabaseName()])) {
+                        $tableNames[] = $row['tableName'];
+                    }
+
+                    // rename tables removing the old prefix
+                    $prefix = $row['sitedbprefix'] . '_';
+                    $prefixLength = strlen($prefix);
+                    foreach ($tableNames as $tableName) {
+                        if (substr($tableName, 0, $prefixLength) != $prefix) {
+                            continue;
+                        }
+
+                        $sql = 'ALTER TABLE `' . $tableName . '` RENAME TO `' . str_replace($prefix, '', $tableName) . '`';
+                        $stmt = $connect->prepare($sql);
+                        $stmt->execute();
+                    }
+                }
             }
 
             $site->setActive($row['active']);
@@ -227,17 +252,17 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         try {
             $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
             $uploadHelper->checkAndCreateAllUploadFolders();
-        } catch (\Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (\Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
 
             return false;
         }
 
         // create all tables from according entity definitions
         try {
-            $this->container->get('zikula.doctrine.schema_tool')->create($this->listEntityClasses());
-        } catch (\Exception $e) {
-            $this->addFlash('error', $this->__('Doctrine Exception: ') . $e->getMessage());
+            $this->schemaTool->create($this->listEntityClasses());
+        } catch (\Exception $exception) {
+            $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
 
             return false;
         }
