@@ -676,7 +676,7 @@ class SystemHelper
             SELECT `uid`
             FROM `users`
             WHERE `uname` = :uname
-        ');
+        ';
         $user = $connect->fetchAssoc($sql, [':uname' => $site->getSiteAdminName()]);
         $userId = $user['uid'];
 
