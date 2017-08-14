@@ -19,7 +19,6 @@ use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
-use Zikula\MultisitesModule\Entity\SiteExtensionEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 
 /**
@@ -80,9 +79,6 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'template') {
             return $this->getViewQuickNavParametersForTemplate($context, $args);
         }
-        if ($objectType == 'siteExtension') {
-            return $this->getViewQuickNavParametersForSiteExtension($context, $args);
-        }
         if ($objectType == 'project') {
             return $this->getViewQuickNavParametersForProject($context, $args);
         }
@@ -105,9 +101,6 @@ abstract class AbstractCollectionFilterHelper
         }
         if ($objectType == 'template') {
             return $this->addCommonViewFiltersForTemplate($qb);
-        }
-        if ($objectType == 'siteExtension') {
-            return $this->addCommonViewFiltersForSiteExtension($qb);
         }
         if ($objectType == 'project') {
             return $this->addCommonViewFiltersForProject($qb);
@@ -132,9 +125,6 @@ abstract class AbstractCollectionFilterHelper
         }
         if ($objectType == 'template') {
             return $this->applyDefaultFiltersForTemplate($qb, $parameters);
-        }
-        if ($objectType == 'siteExtension') {
-            return $this->applyDefaultFiltersForSiteExtension($qb, $parameters);
         }
         if ($objectType == 'project') {
             return $this->applyDefaultFiltersForProject($qb, $parameters);
@@ -183,29 +173,6 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
-    
-        return $parameters;
-    }
-    
-    /**
-     * Returns an array of additional template variables for view quick navigation forms.
-     *
-     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array  $args    Additional arguments
-     *
-     * @return array List of template variables to be assigned
-     */
-    protected function getViewQuickNavParametersForSiteExtension($context = '', $args = [])
-    {
-        $parameters = [];
-        if (null === $this->request) {
-            return $parameters;
-        }
-    
-        $parameters['site'] = $this->request->query->get('site', 0);
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['extensionType'] = $this->request->query->get('extensionType', '');
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -338,52 +305,6 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function addCommonViewFiltersForSiteExtension(QueryBuilder $qb)
-    {
-        if (null === $this->request) {
-            return $qb;
-        }
-        $routeName = $this->request->get('_route');
-        if (false !== strpos($routeName, 'edit')) {
-            return $qb;
-        }
-    
-        $parameters = $this->getViewQuickNavParametersForSiteExtension();
-        foreach ($parameters as $k => $v) {
-            if (in_array($k, ['q', 'searchterm'])) {
-                // quick search
-                if (!empty($v)) {
-                    $qb = $this->addSearchFilter('siteExtension', $qb, $v);
-                }
-            } else if (!is_array($v)) {
-                // field filter
-                if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
-                    if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
-                        $qb->andWhere('tbl.' . $k . ' != :' . $k)
-                           ->setParameter($k, substr($v, 1, strlen($v)-1));
-                    } elseif (substr($v, 0, 1) == '%') {
-                        $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
-                           ->setParameter($k, '%' . $v . '%');
-                    } else {
-                        $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                           ->setParameter($k, $v);
-                   }
-                }
-            }
-        }
-    
-        $qb = $this->applyDefaultFiltersForSiteExtension($qb, $parameters);
-    
-        return $qb;
-    }
-    
-    /**
-     * Adds quick navigation related filter options as where clauses.
-     *
-     * @param QueryBuilder $qb Query builder to be enhanced
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
     protected function addCommonViewFiltersForProject(QueryBuilder $qb)
     {
         if (null === $this->request) {
@@ -466,34 +387,6 @@ abstract class AbstractCollectionFilterHelper
         }
         $routeName = $this->request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'zikulamultisitesmodule_template_admin');
-        if ($isAdminArea) {
-            return $qb;
-        }
-    
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
-    
-        if ($showOnlyOwnEntries) {
-            $qb = $this->addCreatorFilter($qb);
-        }
-    
-        return $qb;
-    }
-    
-    /**
-     * Adds default filters as where clauses.
-     *
-     * @param QueryBuilder $qb         Query builder to be enhanced
-     * @param array        $parameters List of determined filter options
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
-    protected function applyDefaultFiltersForSiteExtension(QueryBuilder $qb, $parameters = [])
-    {
-        if (null === $this->request) {
-            return $qb;
-        }
-        $routeName = $this->request->get('_route');
-        $isAdminArea = false !== strpos($routeName, 'zikulamultisitesmodule_site extension_admin');
         if ($isAdminArea) {
             return $qb;
         }
@@ -600,14 +493,6 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchDescription'] = '%' . $fragment . '%';
             $filters[] = 'tbl.sqlFile = :searchSqlFile';
             $parameters['searchSqlFile'] = $fragment;
-        }
-        if ($objectType == 'siteExtension') {
-            $filters[] = 'tbl.name LIKE :searchName';
-            $parameters['searchName'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.extensionVersion LIKE :searchExtensionVersion';
-            $parameters['searchExtensionVersion'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.extensionType = :searchExtensionType';
-            $parameters['searchExtensionType'] = $fragment;
         }
         if ($objectType == 'project') {
             $filters[] = 'tbl.name LIKE :searchName';

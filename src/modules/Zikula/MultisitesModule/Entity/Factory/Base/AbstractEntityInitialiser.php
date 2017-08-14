@@ -14,7 +14,6 @@ namespace Zikula\MultisitesModule\Entity\Factory\Base;
 
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
-use Zikula\MultisitesModule\Entity\SiteExtensionEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
 
@@ -60,28 +59,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initTemplate(TemplateEntity $entity)
     {
-
-        return $entity;
-    }
-
-    /**
-     * Initialises a given siteExtension instance.
-     *
-     * @param SiteExtensionEntity $entity The newly created entity instance
-     *
-     * @return SiteExtensionEntity The updated entity instance
-     */
-    public function initSiteExtension(SiteExtensionEntity $entity)
-    {
-        $listEntries = $this->listEntriesHelper->getEntries('siteExtension', 'extensionType');
-        $items = [];
-        foreach ($listEntries as $listEntry) {
-            if (true === $listEntry['default']) {
-                $items[] = $listEntry['value'];
-            }
-        }
-        $entity->setExtensionType(implode('###', $items));
-
 
         return $entity;
     }

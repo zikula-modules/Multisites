@@ -1,9 +1,0 @@
-{# purpose of this template: site extensions view xml view #}
-<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
-<siteExtensions>
-{% for siteExtension in items %}
-    {{ include('@ZikulaMultisitesModule/SiteExtension/include.xml.twig') }}
-{% else %}
-    <noSiteExtension />
-{% endfor %}
-</siteExtensions>

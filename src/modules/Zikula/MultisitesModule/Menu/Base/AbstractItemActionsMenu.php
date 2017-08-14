@@ -20,7 +20,6 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
-use Zikula\MultisitesModule\Entity\SiteExtensionEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 
 /**
@@ -135,13 +134,6 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
-        }
-        if ($entity instanceof SiteExtensionEntity) {
-            $component = 'ZikulaMultisitesModule:SiteExtension:';
-            $instance = $entity->getKey() . '::';
-            $routePrefix = 'zikulamultisitesmodule_siteextension_';
-            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
-        
         }
         if ($entity instanceof ProjectEntity) {
             $component = 'ZikulaMultisitesModule:Project:';

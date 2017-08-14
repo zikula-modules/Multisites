@@ -197,34 +197,6 @@ class SiteExtensionHelper
     }
 
     /**
-     * Saves the modules and versions of a site into the Multisites database.
-     *
-     * @param SiteEntity $site The given site instance
-     *
-     * @return boolean True on success or false otherwise
-     */
-    public function saveSiteModulesIntoOwnDb(SiteEntity $site)
-    {
-        // get all the modules available in site
-        $siteModules = $this->getAllModulesFromSiteDb($site);
-
-        // save them
-        foreach ($siteModules as $module) {
-            $entity = $this->entityFactory->createSiteExtension();
-            $entity->setName($module['name']);
-            $entity->setExtensionVersion($module['version']);
-            $entity->setExtensionType('module');
-            $this->entityFactory->getObjectManager()->persist($entity);
-            $site->addExtensions($entity);
-            $success = $this->workflowHelper->executeAction($entity, 'submit');
-        }
-
-        //$success = $this->workflowHelper->executeAction($site, 'update');
-
-        return true;
-    }
-
-    /**
      * Returns information for a given site module.
      *
      * @param SiteEntity $site       The given site instance

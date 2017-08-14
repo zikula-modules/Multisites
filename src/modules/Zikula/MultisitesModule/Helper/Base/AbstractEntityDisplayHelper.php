@@ -15,7 +15,6 @@ namespace Zikula\MultisitesModule\Helper\Base;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
-use Zikula\MultisitesModule\Entity\SiteExtensionEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
 
@@ -63,9 +62,6 @@ abstract class AbstractEntityDisplayHelper
         if ($entity instanceof TemplateEntity) {
             return $this->formatTemplate($entity);
         }
-        if ($entity instanceof SiteExtensionEntity) {
-            return $this->formatSiteExtension($entity);
-        }
         if ($entity instanceof ProjectEntity) {
             return $this->formatProject($entity);
         }
@@ -104,21 +100,6 @@ abstract class AbstractEntityDisplayHelper
     /**
      * Returns the formatted title for a given entity.
      *
-     * @param SiteExtensionEntity $entity The given entity instance
-     *
-     * @return string The formatted title
-     */
-    protected function formatSiteExtension(SiteExtensionEntity $entity)
-    {
-        return $this->translator->__f('%name% v%extensionVersion%', [
-            '%name%' => $entity->getName(),
-            '%extensionVersion%' => $entity->getExtensionVersion()
-        ]);
-    }
-    
-    /**
-     * Returns the formatted title for a given entity.
-     *
      * @param ProjectEntity $entity The given entity instance
      *
      * @return string The formatted title
@@ -145,9 +126,6 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'template') {
             return 'name';
         }
-        if ($objectType == 'siteExtension') {
-            return 'name';
-        }
         if ($objectType == 'project') {
             return 'name';
         }
@@ -169,9 +147,6 @@ abstract class AbstractEntityDisplayHelper
         }
         if ($objectType == 'template') {
             return 'description';
-        }
-        if ($objectType == 'siteExtension') {
-            return 'extensionVersion';
         }
         if ($objectType == 'project') {
             return 'name';
@@ -210,9 +185,6 @@ abstract class AbstractEntityDisplayHelper
             return 'createdDate';
         }
         if ($objectType == 'template') {
-            return 'createdDate';
-        }
-        if ($objectType == 'siteExtension') {
             return 'createdDate';
         }
         if ($objectType == 'project') {

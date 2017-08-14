@@ -110,14 +110,6 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
 
                 return false;
             }
-
-            // save the site module into the Multisites database
-            $extensionHelper = $this->container->get('zikula_multisites_module.siteextension_helper');
-            if (!$extensionHelper->saveSiteModulesIntoOwnDb($this)) {
-                $flashBag->add('error', $this->container->get('translator.default')->__('Error! Storing the site modules in the Multisites database failed.'));
-
-                return false;
-            }
         }
 
         parent::postPersist($args);

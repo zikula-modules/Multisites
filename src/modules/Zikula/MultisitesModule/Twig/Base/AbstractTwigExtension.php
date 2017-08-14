@@ -248,10 +248,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
             'value' => 'template'
         ];
         $result[] = [
-            'text' => $this->__('Site extensions'),
-            'value' => 'siteExtension'
-        ];
-        $result[] = [
             'text' => $this->__('Projects'),
             'value' => 'project'
         ];

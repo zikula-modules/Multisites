@@ -316,16 +316,6 @@ abstract class AbstractSiteEntity extends EntityAccess
      */
     protected $project;
     
-    /**
-     * Bidirectional - One site [site] has many extensions [site extensions] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="Zikula\MultisitesModule\Entity\SiteExtensionEntity", mappedBy="site", cascade={"remove"})
-     * @ORM\JoinTable(name="zikula_multisites_siteextensions")
-     * @ORM\OrderBy({"name" = "ASC"})
-     * @var \Zikula\MultisitesModule\Entity\SiteExtensionEntity[] $extensions
-     */
-    protected $extensions = null;
-    
     
     /**
      * SiteEntity constructor.
@@ -1127,59 +1117,6 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setProject($project = null)
     {
         $this->project = $project;
-    }
-    
-    /**
-     * Returns the extensions.
-     *
-     * @return \Zikula\MultisitesModule\Entity\SiteExtensionEntity[]
-     */
-    public function getExtensions()
-    {
-        return $this->extensions;
-    }
-    
-    /**
-     * Sets the extensions.
-     *
-     * @param \Zikula\MultisitesModule\Entity\SiteExtensionEntity[] $extensions
-     *
-     * @return void
-     */
-    public function setExtensions($extensions)
-    {
-        foreach ($this->extensions as $siteExtensionSingle) {
-            $this->removeExtensions($siteExtensionSingle);
-        }
-        foreach ($extensions as $siteExtensionSingle) {
-            $this->addExtensions($siteExtensionSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \Zikula\MultisitesModule\Entity\SiteExtensionEntity to the list of extensions.
-     *
-     * @param \Zikula\MultisitesModule\Entity\SiteExtensionEntity $siteExtension The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addExtensions(\Zikula\MultisitesModule\Entity\SiteExtensionEntity $siteExtension)
-    {
-        $this->extensions->add($siteExtension);
-        $siteExtension->setSite($this);
-    }
-    
-    /**
-     * Removes an instance of \Zikula\MultisitesModule\Entity\SiteExtensionEntity from the list of extensions.
-     *
-     * @param \Zikula\MultisitesModule\Entity\SiteExtensionEntity $siteExtension The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeExtensions(\Zikula\MultisitesModule\Entity\SiteExtensionEntity $siteExtension)
-    {
-        $this->extensions->removeElement($siteExtension);
-        $siteExtension->setSite(null);
     }
     
     

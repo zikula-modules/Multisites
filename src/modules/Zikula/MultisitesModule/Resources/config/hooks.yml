@@ -41,20 +41,6 @@ services:
         tags:
             - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.ui_hooks.templates' }
 
-    zikula_multisites_module.hook_subscriber.filter_hooks.siteextensions:
-        class: Zikula\MultisitesModule\HookSubscriber\SiteExtensionFilterHooksSubscriber
-        arguments:
-            - "@translator.default"
-        tags:
-            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.filter_hooks.siteextensions' }
-
-    zikula_multisites_module.hook_subscriber.ui_hooks.siteextensions:
-        class: Zikula\MultisitesModule\HookSubscriber\SiteExtensionUiHooksSubscriber
-        arguments:
-            - "@translator.default"
-        tags:
-            - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulamultisitesmodule.ui_hooks.siteextensions' }
-
     zikula_multisites_module.hook_subscriber.filter_hooks.projects:
         class: Zikula\MultisitesModule\HookSubscriber\ProjectFilterHooksSubscriber
         arguments:

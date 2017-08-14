@@ -190,21 +190,6 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the template entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('siteExtensionEntriesPerPage', IntegerType::class, [
-                'label' => $this->__('Site extension entries per page') . ':',
-                'label_attr' => [
-                    'class' => 'tooltips',
-                    'title' => $this->__('The amount of site extensions shown per page')
-                ],
-                'help' => $this->__('The amount of site extensions shown per page'),
-                'required' => false,
-                'data' => isset($this->moduleVars['siteExtensionEntriesPerPage']) ? intval($this->moduleVars['siteExtensionEntriesPerPage']) : intval(10),
-                'empty_data' => intval('10'),
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the site extension entries per page.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0
-            ])
             ->add('projectEntriesPerPage', IntegerType::class, [
                 'label' => $this->__('Project entries per page') . ':',
                 'label_attr' => [

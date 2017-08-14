@@ -105,22 +105,6 @@ abstract class AbstractEntityFactory
     }
 
     /**
-     * Creates a new siteExtension instance.
-     *
-     * @return Zikula\MultisitesModule\Entity\siteExtensionEntity The newly created entity instance
-     */
-    public function createSiteExtension()
-    {
-        $entityClass = 'Zikula\\MultisitesModule\\Entity\\SiteExtensionEntity';
-
-        $entity = new $entityClass();
-
-        $this->entityInitialiser->initSiteExtension($entity);
-
-        return $entity;
-    }
-
-    /**
      * Creates a new project instance.
      *
      * @return Zikula\MultisitesModule\Entity\projectEntity The newly created entity instance

@@ -9,7 +9,6 @@ framework:
             supports:
                 - Zikula\MultisitesModule\Entity\SiteEntity
                 - Zikula\MultisitesModule\Entity\TemplateEntity
-                - Zikula\MultisitesModule\Entity\SiteExtensionEntity
                 - Zikula\MultisitesModule\Entity\ProjectEntity
             places:
                 - initial

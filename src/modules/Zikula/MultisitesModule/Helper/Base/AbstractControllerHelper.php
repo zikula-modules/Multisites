@@ -137,7 +137,6 @@ abstract class AbstractControllerHelper
         $allowedObjectTypes = [];
         $allowedObjectTypes[] = 'site';
         $allowedObjectTypes[] = 'template';
-        $allowedObjectTypes[] = 'siteExtension';
         $allowedObjectTypes[] = 'project';
     
         return $allowedObjectTypes;

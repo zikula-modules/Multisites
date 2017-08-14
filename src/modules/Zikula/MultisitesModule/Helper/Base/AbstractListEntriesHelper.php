@@ -144,16 +144,6 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
-            case 'siteExtension':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $result = false;
-                        break;
-                    case 'extensionType':
-                        $result = false;
-                        break;
-                }
-                break;
             case 'project':
                 switch ($fieldName) {
                     case 'workflowState':
@@ -194,16 +184,6 @@ abstract class AbstractListEntriesHelper
                 switch ($fieldName) {
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForTemplate();
-                        break;
-                }
-                break;
-            case 'siteExtension':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $entries = $this->getWorkflowStateEntriesForSiteExtension();
-                        break;
-                    case 'extensionType':
-                        $entries = $this->getExtensionTypeEntriesForSiteExtension();
                         break;
                 }
                 break;
@@ -265,72 +245,6 @@ abstract class AbstractListEntriesHelper
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'workflow state' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getWorkflowStateEntriesForSiteExtension()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'approved',
-            'text'    => $this->__('Approved'),
-            'title'   => $this->__('Content has been approved and is available online.'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => '!approved',
-            'text'    => $this->__('All except approved'),
-            'title'   => $this->__('Shows all items except these which are approved'),
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'extension type' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getExtensionTypeEntriesForSiteExtension()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'module',
-            'text'    => $this->__('Module'),
-            'title'   => '',
-            'image'   => '',
-            'default' => true
-        ];
-        $states[] = [
-            'value'   => 'theme',
-            'text'    => $this->__('Theme'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => 'systemPlugin',
-            'text'    => $this->__('System plugin'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => 'modulePlugin',
-            'text'    => $this->__('Module plugin'),
-            'title'   => '',
             'image'   => '',
             'default' => false
         ];

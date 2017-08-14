@@ -1,7 +1,0 @@
-{# purpose of this template: site extensions view json view #}
-[
-{% for siteExtension in items %}
-    {% if not loop.first %},{% endif %}
-    {{ siteExtension.toArray()|json_encode() }}
-{% endfor %}
-]

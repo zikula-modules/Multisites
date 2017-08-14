@@ -196,16 +196,6 @@ abstract class AbstractUserListener implements EventSubscriberInterface
         $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'templates'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
-        $repo = $this->entityFactory->getRepository('siteExtension');
-        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all site extensions created by this user
-        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
-        
-        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all site extensions updated by this user
-        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
-        
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'site extensions'];
-        $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
-        
         $repo = $this->entityFactory->getRepository('project');
         // set creator to admin (UsersConstant::USER_ID_ADMIN) for all projects created by this user
         $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);

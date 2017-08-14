@@ -18,7 +18,6 @@ use Symfony\Component\Finder\Finder;
 use Zikula\MultisitesModule\Base\AbstractMultisitesModuleInstaller;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 use Zikula\MultisitesModule\Entity\SiteEntity;
-use Zikula\MultisitesModule\Entity\SiteExtensionEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
 
 /**
@@ -210,21 +209,6 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
             }
 
             $sitesById[$site->getId()] = $site;
-        }
-
-        // transfer data from old site modules table
-        $stmt = $conn->executeQuery('SELECT * FROM `multisitessitemodulesOld`');
-        while ($row = $stmt->fetch()) {
-            $extension = new SiteExtensionEntity();
-            $extension->setName($row['modulename']);
-            $extension->setExtensionVersion($row['moduleversion']);
-            $extension->setExtensionType('module');
-
-            if (isset($sitesById[$row['instanceid']])) {
-                $sitesById[$row['instanceid']]->addExtensions($extension);
-            }
-
-            $this->entityManager->persist($extension);
         }
 
         $this->entityManager->flush();

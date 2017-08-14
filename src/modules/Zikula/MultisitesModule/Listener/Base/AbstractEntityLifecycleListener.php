@@ -27,7 +27,6 @@ use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\MultisitesModule\MultisitesEvents;
 use Zikula\MultisitesModule\Event\FilterSiteEvent;
 use Zikula\MultisitesModule\Event\FilterTemplateEvent;
-use Zikula\MultisitesModule\Event\FilterSiteExtensionEvent;
 use Zikula\MultisitesModule\Event\FilterProjectEvent;
 
 /**

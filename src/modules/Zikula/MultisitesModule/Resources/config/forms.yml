@@ -17,15 +17,6 @@ services:
             - "@zikula_multisites_module.listentries_helper"
         tags: ['form.type']
     
-    zikula_multisites_module.form.type.siteextensionquicknav:
-        class: Zikula\MultisitesModule\Form\Type\QuickNavigation\SiteExtensionQuickNavType
-        arguments:
-            - "@translator.default"
-            - "@request_stack"
-            - "@zikula_multisites_module.entity_display_helper"
-            - "@zikula_multisites_module.listentries_helper"
-        tags: ['form.type']
-    
     zikula_multisites_module.form.type.projectquicknav:
         class: Zikula\MultisitesModule\Form\Type\QuickNavigation\ProjectQuickNavType
         arguments:

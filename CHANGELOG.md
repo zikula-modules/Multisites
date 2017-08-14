@@ -4,7 +4,8 @@ CHANGELOG
 Changes in Multisites 2.1.0
 
 * Regenerated using ModuleStudio 1.0.1-dev.
-* Migrated to Zikula 2.0.x.
+* Dropped unneeded site extension table (#29).
+* Migrated to Zikula 2.0.x (#29).
 
 Changes in Multisites 2.0.0
 

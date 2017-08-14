@@ -40,11 +40,4 @@
     <workflowState>{{ site.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
     <template>{% if site.template|default %}{{ site.template|zikulamultisitesmodule_formattedTitle }}{% endif %}</template>
     <project>{% if site.project|default %}{{ site.project|zikulamultisitesmodule_formattedTitle }}{% endif %}</project>
-    <extensions>
-    {% if site.extensions|default %}
-        {% for relatedItem in site.extensions %}
-        <siteExtension>{{ relatedItem|zikulamultisitesmodule_formattedTitle }}</siteExtension>
-        {% endfor %}
-    {% endif %}
-    </extensions>
 </site>

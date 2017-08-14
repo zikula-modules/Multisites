@@ -131,14 +131,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 'title' => $this->__('Templates list', 'zikulamultisitesmodule')
             ];
         }
-        if (in_array('siteExtension', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':SiteExtension:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('zikulamultisitesmodule_siteextension_' . $routeArea . 'view'),
-                'text' => $this->__('Site extensions', 'zikulamultisitesmodule'),
-                'title' => $this->__('Site extensions list', 'zikulamultisitesmodule')
-            ];
-        }
         if (in_array('project', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Project:', '::', $permLevel)) {
             $links[] = [

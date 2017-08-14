@@ -34,9 +34,6 @@ class ModelHelper extends AbstractModelHelper
             case 'template':
                 $result = $this->hasExistingInstances('project');
                 break;
-            case 'siteExtension':
-                $result = true;
-                break;
             case 'project':
                 $result = true;
                 break;

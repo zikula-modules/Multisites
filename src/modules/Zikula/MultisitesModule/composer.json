@@ -45,8 +45,6 @@
                 "ZikulaMultisitesModule:Project:Site": "Project ID:Site ID:",
                 "ZikulaMultisitesModule:Template:": "Template ID::",
                 "ZikulaMultisitesModule:Project:Template": "Project ID:Template ID:",
-                "ZikulaMultisitesModule:SiteExtension:": "SiteExtension ID::",
-                "ZikulaMultisitesModule:Site:SiteExtension": "Site ID:SiteExtension ID:",
                 "ZikulaMultisitesModule:Project:": "Project ID::",
                 "ZikulaMultisitesModule::Ajax": "::"
             }

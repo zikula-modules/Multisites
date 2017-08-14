@@ -61,7 +61,6 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         $this->setVar('globalAdminEmail', '');
         $this->setVar('siteEntriesPerPage', '10');
         $this->setVar('templateEntriesPerPage', '10');
-        $this->setVar('siteExtensionEntriesPerPage', '10');
         $this->setVar('projectEntriesPerPage', '10');
         $this->setVar('enableShrinkingForSiteLogo', false);
         $this->setVar('shrinkWidthSiteLogo', '800');
@@ -162,7 +161,6 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         $classNames = [];
         $classNames[] = 'Zikula\MultisitesModule\Entity\SiteEntity';
         $classNames[] = 'Zikula\MultisitesModule\Entity\TemplateEntity';
-        $classNames[] = 'Zikula\MultisitesModule\Entity\SiteExtensionEntity';
         $classNames[] = 'Zikula\MultisitesModule\Entity\ProjectEntity';
     
         return $classNames;
