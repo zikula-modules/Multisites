@@ -33,8 +33,8 @@ services:
             - "@zikula_multisites_module.listentries_helper"
         tags: ['form.type']
     
-    zikula_multisites_module.form.handler.site:
-        class: Zikula\MultisitesModule\Form\Handler\Site\EditHandler
+    zikula_multisites_module.form.handler.common:
+        abstract: true
         arguments:
             - "@kernel"
             - "@translator.default"
@@ -49,6 +49,11 @@ services:
             - "@zikula_multisites_module.model_helper"
             - "@zikula_multisites_module.workflow_helper"
             - "@zikula_multisites_module.hook_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+
+    zikula_multisites_module.form.handler.site:
+        class: Zikula\MultisitesModule\Form\Handler\Site\EditHandler
         calls:
             - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
             - [setSystemHelper, ["@zikula_multisites_module.system_helper"]]
@@ -66,22 +71,6 @@ services:
     
     zikula_multisites_module.form.handler.template:
         class: Zikula\MultisitesModule\Form\Handler\Template\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_users_module.current_user"
-            - "@zikula_multisites_module.entity_factory"
-            - "@zikula_multisites_module.controller_helper"
-            - "@zikula_multisites_module.model_helper"
-            - "@zikula_multisites_module.workflow_helper"
-            - "@zikula_multisites_module.hook_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
         tags: ['form.type']
     
     zikula_multisites_module.form.type.template:
@@ -96,22 +85,6 @@ services:
     
     zikula_multisites_module.form.handler.project:
         class: Zikula\MultisitesModule\Form\Handler\Project\EditHandler
-        arguments:
-            - "@kernel"
-            - "@translator.default"
-            - "@form.factory"
-            - "@request_stack"
-            - "@router"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@zikula_users_module.current_user"
-            - "@zikula_multisites_module.entity_factory"
-            - "@zikula_multisites_module.controller_helper"
-            - "@zikula_multisites_module.model_helper"
-            - "@zikula_multisites_module.workflow_helper"
-            - "@zikula_multisites_module.hook_helper"
-        calls:
-            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
         tags: ['form.type']
     
     zikula_multisites_module.form.type.project:
