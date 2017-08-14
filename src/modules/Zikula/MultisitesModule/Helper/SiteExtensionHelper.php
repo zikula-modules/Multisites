@@ -186,10 +186,9 @@ class SiteExtensionHelper
         }
 
         $items = [];
-        $stmt = $connect->prepare('SELECT `name`, `state`, `version` FROM `modules`');
-        $stmt->execute();
+        $sql = 'SELECT `name`, `state`, `version` FROM `modules`';
 
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+        while ($row = $connect->fetchAssoc($sql)) {
             $items[$row['name']] = $row;
         }
 
@@ -225,18 +224,8 @@ class SiteExtensionHelper
             SELECT `name`, `state` FROM `modules`
             WHERE `name` = :moduleName
         ';
-        $stmt = $connect->prepare($sql);
-        $stmt->execute([':moduleName' => $moduleName]);
 
-        $rs = $stmt->fetch();
-        if (!$rs) {
-            return false;
-        }
-
-        return [
-            'name' => $rs['name'],
-            'state' => $rs['state']
-        ];
+        return $connect->fetchAssoc($sql, [':moduleName' => $moduleName]);
     }
 
     /**
@@ -268,7 +257,6 @@ class SiteExtensionHelper
         $module = $allModules[$moduleName];
 
         $fields = [];
-        $parameters = [];
 
         $exclude = [
             'oldnames',
@@ -279,27 +267,13 @@ class SiteExtensionHelper
             if (in_array($key, $exclude)) {
                 continue;
             }
-            $fields[] = $key;
-            $parameters[':' . $key] = $value;
+            $fields[$key] = $value;
         }
         // set module state to 1
-        $fields[] = 'state';
-        $parameters[':state'] = '1';
+        $fields['state'] = '1';
 
         // create the module in the site
-        $sql = '
-            INSERT INTO modules (' . implode(', ', $fields) . ')
-            VALUES (' . implode(', ', array_keys($parameters)) . ')
-        ';
-        $stmt = $connect->prepare($sql);
-        $stmt->execute($parameters);
-
-        $rs = $stmt->fetch();
-        if (!$rs) {
-            $flashBag->add('error', $this->__('Error! Creation attempt failed.') . ' ' . $sql);
-
-            return false;
-        }
+        $connect->insert('modules', $fields);
 
         return true;
     }
@@ -345,16 +319,7 @@ class SiteExtensionHelper
             return true;
         }
 
-        $sql = '
-            DELETE FROM `modules`
-            WHERE `name` = :moduleName
-        ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute([':moduleName' => $moduleName])) {
-            $flashBag->add('error', $this->__('Error! Sorry! Deletion attempt failed.'));
-
-            return false;
-        }
+        $connect->delete('modules', ['name' => $moduleName]);
 
         return true;
     }
@@ -380,17 +345,7 @@ class SiteExtensionHelper
         }
 
         // update the module state
-        $sql = '
-            UPDATE `modules`
-            SET `state` = :newState
-            WHERE `name` = :moduleName
-        ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute([':moduleName' => $moduleName, ':newState' => $newState])) {
-            $flashBag->add('error', $this->__('Error! Update attempt failed.'));
-
-            return false;
-        }
+        $connect->update('modules', ['state' => $newState], ['name' => $moduleName]);
 
         return true;
     }
@@ -414,10 +369,9 @@ class SiteExtensionHelper
         }
 
         $items = [];
-        $stmt = $connect->prepare('SELECT `name`, `state` FROM `themes`');
-        $stmt->execute();
+        $sql = 'SELECT `name`, `state` FROM `themes`';
 
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+        while ($row = $connect->fetchAssoc($sql)) {
             $items[$row['name']] = $row;
         }
 
@@ -454,18 +408,8 @@ class SiteExtensionHelper
             FROM `themes`
             WHERE `name` = :themeName
         ';
-        $stmt = $connect->prepare($sql);
-        $stmt->execute([':themeName' => $themeName]);
 
-        $rs = $stmt->fetch();
-        if (!$rs) {
-            return false;
-        }
-
-        return [
-            'name' => $rs['name'],
-            'state' => $rs['state']
-        ];
+        return $connect->fetchAssoc($sql, [':themeName' => $themeName]);
     }
 
     /**
@@ -497,7 +441,6 @@ class SiteExtensionHelper
         $theme = $allThemes[$themeName];
 
         $fields = [];
-        $parameters = [];
 
         $exclude = [
             'official',
@@ -512,24 +455,11 @@ class SiteExtensionHelper
             if (in_array($key, $exclude)) {
                 continue;
             }
-            $fields[] = $key;
-            $parameters[':' . $key] = $value;
+            $fields[$key] = $value;
         }
 
         // create the theme in the site
-        $sql = '
-            INSERT INTO themes (' . implode(', ', $fields) . ')
-            VALUES (' . implode(', ', array_keys($parameters)) . ')
-        ';
-        $stmt = $connect->prepare($sql);
-        $stmt->execute($parameters);
-
-        $rs = $stmt->fetch();
-        if (!$rs) {
-            $flashBag->add('error', $this->__('Error! Creation attempt failed.') . ' ' . $sql);
-
-            return false;
-        }
+        $connect->insert('themes', $fields);
 
         return true;
     }
@@ -559,16 +489,7 @@ class SiteExtensionHelper
             return false;
         }
 
-        $sql = '
-            DELETE FROM `themes`
-            WHERE `name` = :themeName
-        ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute([':themeName' => $themeName])) {
-            $flashBag->add('error', $this->__('Error! Sorry! Deletion attempt failed.'));
-
-            return false;
-        }
+        $connect->delete('themes', ['name' => $themeName]);
 
         return true;
     }
@@ -597,16 +518,9 @@ class SiteExtensionHelper
             WHERE `modname` = \'ZConfig\'
             AND `name` = \'Default_Theme\'
         ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute()) {
-            $flashBag->add('error', $this->__('Error! Could not load default theme.'));
+        $row = $connect->fetchAssoc($sql);
 
-            return false;
-        }
-        $rs = $stmt->fetch();
-        $defaultTheme = $rs['value'];
-
-        return $defaultTheme;
+        return unserialize($row['value']);
     }
 
     /**
@@ -628,19 +542,7 @@ class SiteExtensionHelper
             return false;
         }
 
-        $value = serialize($themeName);
-        $sql = '
-            UPDATE `module_vars`
-            SET `value` = :value
-            WHERE `modname` = \'ZConfig\'
-            AND `name` = \'Default_Theme\'
-        ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute([':value' => $value])) {
-            $flashBag->add('error', $this->__('Error! Could not save the new default theme.'));
-
-            return false;
-        }
+        $connect->update('module_vars', ['value' => serialize($themeName)], ['modname' => 'ZConfig', 'name' => 'Default_Theme']);
 
         return true;
     }

@@ -14,8 +14,8 @@ namespace Zikula\MultisitesModule\Helper;
 
 use DateTime;
 use DateTimeZone;
-use PDO;
-use PDOException;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Finder\Finder;
@@ -24,6 +24,7 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\ExtensionsModule\ExtensionVariablesTrait;
+use Zikula\GroupsModule\Constant as GroupsConstant;
 use Zikula\MultisitesModule\DatabaseInfo;
 use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
 use Zikula\MultisitesModule\Entity\SiteEntity;
@@ -114,6 +115,7 @@ class SystemHelper
         $siteFiles = $siteDirectory . $msConfig['site_files_folder'];
         $siteTemp = $siteDirectory . $msConfig['site_temp_files_folder'];
 
+        // TODO update list
         $directoryList = [
             $baseFolder,
             $siteDirectory,
@@ -221,17 +223,19 @@ class SystemHelper
         $dbHost = $dbInfo->getHost();
         $dbType = $dbInfo->getType();
 
-        $dsn = "$dbType:host=$dbHost";
+        $config = new Configuration();
+
+        $connectionParams = [
+            'url' => $dbType . '://' . $dbUser . ':' . $dbPass . '@' . $dbHost;
+        ];
         if (!$skipDatabase) {
-            $dsl .= ";dbname=$dbName";
+            $connectionParams['url'] .= '/' . $dbName;
         }
 
         try {
-            $connect = new PDO($dsn, $dbUser, $dbPass,
-                [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
-            );
-        } catch (PDOException $e) {
-            $this->session->getFlashBag()->add('error', $e->getMessage());
+            $connect = DriverManager::getConnection($connectionParams, $config);
+        } catch (\Exception $exception) {
+            $this->session->getFlashBag()->add('error', $exception->getMessage());
 
             return false;
         }
@@ -277,15 +281,15 @@ class SystemHelper
                     break;
             }
             if (!empty($sql)) {
-                $stmt = $connect->prepare($sql);
-                if (!$stmt->execute([':dbName' => $dbName])) {
+                $stmt = $connect->executeQuery($sql, [':dbName' => $dbName]);
+                if (!$stmt->execute()) {
                     $flashBag->add('error', $this->__('DB Query error.') . ':<br />' . $sql  . "\n");;
 
                     return false;
                 }
             }
-        } catch (PDOException $e) {
-            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $e->getMessage());
+        } catch (\Exception $exception) {
+            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $exception->getMessage());
 
             return false;
         }
@@ -389,18 +393,6 @@ class SystemHelper
         $backupTables = [];
 
         try {
-            $sql = '
-                SELECT `table_name` AS `tableName`
-                FROM `information_schema`.`tables`
-                WHERE `table_schema` = :dbName
-            ';
-            $stmt = $connect->prepare($sql);
-            if (!$stmt->execute([':dbName' => $site->getDatabaseName()])) {
-                $flashBag->add('error', $this->__('DB Query error.') . ':<br />' . $sql  . "\n");;
-
-                return false;
-            }
-
             $excludedTablesWithWildCards = [];
             $excludeAll = false;
             foreach ($excludedTables as $excludedTable) {
@@ -415,11 +407,17 @@ class SystemHelper
                 $excludedTablesWithWildCards[] = $excludedTable;
             }
 
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $sql = '
+                SELECT `table_name` AS `tableName`
+                FROM `information_schema`.`tables`
+                WHERE `table_schema` = :dbName
+            ';
+
+            while ($row = $connect->fetchAssoc($sql, [':dbName' => $site->getDatabaseName()])) {
                 $tableName = $row['tableName'];
 
                 $excluded = false;
-                if ($excludeAll === true) {
+                if (true === $excludeAll) {
                     $excluded = true;
                 } elseif (in_array($tableName, $excludedTables)) {
                     // table is excluded (e.g. content_content)
@@ -436,7 +434,7 @@ class SystemHelper
                     }
                 }
 
-                if ($excluded === true) {
+                if (true === $excluded) {
                     // rename
                     $backupTables[] = $tableName;
                 } else {
@@ -444,8 +442,8 @@ class SystemHelper
                     $droppedTables[] = $tableName;
                 }
             }
-        } catch (PDOException $e) {
-            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $e->getMessage());
+        } catch (\Exception $exception) {
+            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $exception->getMessage());
 
             return false;
         }
@@ -487,8 +485,8 @@ class SystemHelper
         $stmt = $connect->prepare($sql);
         try {
             $stmt->execute();
-        } catch (PDOException $e) {
-            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $e->getMessage());
+        } catch (\Exception $exception) {
+            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $exception->getMessage());
 
             return false;
         }
@@ -566,8 +564,8 @@ class SystemHelper
                 $stmt = $connect->prepare($sql);
                 $stmt->execute();
             }
-        } catch (PDOException $e) {
-            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $e->getMessage());
+        } catch (\Exception $exception) {
+            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $exception->getMessage());
 
             return false;
         }
@@ -660,142 +658,65 @@ class SystemHelper
         }
 
         // modify the site name
-        $sql = '
-            UPDATE `module_vars`
-            SET `value` = :value
-            WHERE `modname` = \'ZConfig\'
-            AND `name` IN (\'sitename\', \'defaultpagetitle\')
-        ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute([':value' => serialize($site->getSiteName())])) {
-            $flashBag->add('error', $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql  . "\n");
-
-            return false;
-        }
+        $connect->update('module_vars', ['value' => serialize($site->getSiteName())], ['modname' => 'ZConfig', 'name' => 'sitename']);
+        $connect->update('module_vars', ['value' => serialize($site->getSiteName())], ['modname' => 'ZConfig', 'name' => 'defaultpagetitle']);
 
         // modify the site description
-        $sql = '
-            UPDATE `module_vars`
-            SET `value` = :value
-            WHERE `modname` = \'ZConfig\'
-            AND `name` IN (\'slogan\', \'defaultmetadescription\')
-        ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute([':value' => serialize($site->getSiteDescription())])) {
-            $flashBag->add('error', $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql  . "\n");
-
-            return false;
-        }
+        $connect->update('module_vars', ['value' => serialize($site->getSiteDescription())], ['modname' => 'ZConfig', 'name' => 'slogan']);
+        $connect->update('module_vars', ['value' => serialize($site->getSiteDescription())], ['modname' => 'ZConfig', 'name' => 'defaultmetadescription']);
 
         // modify the adminmail
-        $sql = '
-            UPDATE `module_vars`
-            SET `value` = :value
-            WHERE `modname` = \'ZConfig\'
-            AND `name` = \'adminmail\'
-        ';
-        $stmt = $connect->prepare($sql);
-        $adminEmail = $site->getSiteAdminEmail();
-        // decode possibly encoded mail addresses (#201)
-        if (strpos($adminEmail, '&#') !== false) {
-            $adminEmail = html_entity_decode($adminEmail);
-        }
-        if (!$stmt->execute([':value' => serialize($adminEmail)])) {
-            $flashBag->add('error', $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql . "\n");
-
-            return false;
-        }
+        $connect->update('module_vars', ['value' => serialize($site->getSiteAdminEmail())], ['modname' => 'ZConfig', 'name' => 'adminmail']);
 
         // modify the session cookie name
-        $sql = '
-            UPDATE `module_vars`
-            SET `value` = :value
-            WHERE `modname` = \'ZConfig\'
-            AND `name` = \'sessionname\'
-        ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute([':value' => serialize('ZKSID_' . strtoupper($site->getSiteAlias()))])) {
-            $flashBag->add('error', $this->__('Error! Setting configurating value failed.') . ':<br />' . $sql . "\n");
-
-            return false;
-        }
+        $connect->update('module_vars', ['value' => serialize('ZKSID_' . strtoupper($site->getSiteAlias()))], ['modname' => 'ZConfig', 'name' => 'sessionname']);
 
         // checks if the given administrator user exists
-        $stmt = $connect->prepare('
-            SELECT `uname`, `uid`
+        $sql = '
+            SELECT `uid`
             FROM `users`
             WHERE `uname` = :uname
         ');
-        $stmt->execute([':uname' => $site->getSiteAdminName()]);
-        $rs = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $connect->fetchAssoc($sql, [':uname' => $site->getSiteAdminName()]);
+        $userId = $user['uid'];
 
+        // encrypt the password with the hash method
         $password = $this->passwordApi->getHashedPassword($site->getSiteAdminPassword());
-        if ($rs['uname'] == '') {
+        if ($userId == '') {
             // insert new admin user
             $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
             $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
-            // create administrator
             // TODO consider auth mapping table
-            $sql = '
-                INSERT INTO users (uname, email, pass, approved_date, user_regdate, activated)
-                VALUES (:uname, :email, :password, :approvedDate, :regDate, 1)
-            ';
-            $stmt = $connect->prepare($sql);
-            if (!$stmt->execute([
-                ':uname' => $site->getSiteAdminName(),
-                ':email' => $site->getSiteAdminEmail(),
-                ':password' => $password,
-                ':approvedDate' => $nowUTCStr,
-                ':regDate' => $nowUTCStr
-            ])) {
-                $flashBag->add('error', $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
+            $fields = [
+                'uname' => $site->getSiteAdminName(),
+                'email' => $site->getSiteAdminEmail(),
+                'pass' => $password,
+                'approved_date' => $nowUTCStr,
+                'user_regdate' => $nowUTCStr,
+                'activated' => '1'
+            ];
+            $connect->insert('users', $fields);
 
-                return false;
-            }
-
-            $stmt = $connect->prepare('SELECT `uid`
-                FROM `users`
-                WHERE `uname` = :uname');
-            $stmt->execute([':uname' => $site->getSiteAdminName()]);
-            $rs = $stmt->fetch(PDO::FETCH_ASSOC);
+            $user = $connect->fetchAssoc($sql, [':uname' => $site->getSiteAdminName()]);
         } else {
             // modify administrator password and email
             // TODO consider auth mapping table
-            $sql = '
-                UPDATE `users`
-                SET `pass` = :password,
-                    `email` = :email
-                WHERE `uname` = :uname
-            ';
-            $stmt = $connect->prepare($sql);
-            if (!$stmt->execute([':password' => $password, ':email' => $site->getSiteAdminEmail(), ':uname' => $rs['uname']])) {
-                $flashBag->add('error', $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
-
-                return false;
-            }
+            $connect->update('users', ['email' => $site->getSiteAdminEmail(), 'pass' => $password], ['uid' => $userId]);
         }
-        $uid = $rs['uid'];
+        $userId = $user['uid'];
 
         // check if administrator is member of the admin group already
-        $adminGroupId = 2;
+        $adminGroupId = GroupsConstant::GROUP_ID_ADMIN;
         $sql = '
             SELECT `uid`
             FROM `group_membership`
             WHERE `uid` = :uid
             AND `gid` = :gid
         ';
-        $stmt = $connect->prepare($sql);
-        $stmt->execute([':uid' => $uid, ':gid' => $adminGroupId]);
-        $rs = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($rs['uid'] == '') {
+        $groupMembership = $connect->fetchAssoc($sql, [':uid' => $userId, ':gid' => $adminGroupId]);
+        if ($groupMembership['gid'] == '') {
             // add admin to the admin group
-            $stmt = $connect->prepare('INSERT INTO `group_membership` (`uid`, `gid`)
-                VALUES (:uid, :gid)');
-            if (!$stmt->execute([':uid' => $uid, ':gid' => $adminGroupId])) {
-                $flashBag->add('error', $this->__('Error! Creating the site administrator failed.') . ':<br />' . $sql . "\n");
-
-                return false;
-            }
+            $connect->insert('group_membership', ['uid' => $userId, 'gid' => $adminGroupId]);
         }
 
         return true;
@@ -1002,12 +923,8 @@ class SystemHelper
         // now try to delete the database
         try {
             $stmt = $connect->prepare('DROP DATABASE :dbName;');
-            try {
-                $stmt->execute([':dbName' => $dbName]);
-            } catch (PDOException $e) {
-                return false;
-            }
-        } catch (PDOException $e) {
+            $stmt->execute([':dbName' => $dbName]);
+        } catch (\Exception $exception) {
             return false;
         }
 
@@ -1186,102 +1103,51 @@ class SystemHelper
             FROM `users`
             WHERE `uname`= :globalAdminName
         ';
-        $stmt = $connect->prepare($sql);
-        $stmt->execute([':globalAdminName' => $globalAdminName]);
-        $rs = $stmt->fetch(PDO::FETCH_ASSOC);
-        $uid = $rs['uid'];
+        $user = $connect->fetchAssoc($sql, [':globalAdminName' => $globalAdminName]);
+        $userId = $user['uid'];
 
         // encrypt the password with the hash method
         $password = $this->passwordApi->getHashedPassword($globalAdminPassword);
-
-        if ($uid == '') {
+        if ($userId == '') {
             // the user doesn't exist, thus we create it
-            // TODO consider auth mapping table
             $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
             $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
-            $stmt = $connect->prepare('
-                INSERT INTO users (uname, email, pass, approved_date, user_regdate, activated)
-                VALUES (:uname, :email, :password, :approvedDate, :regDate, 1)
-            ');
-            $parameters = [
-                ':uname' => $globalAdminName,
-                ':email' => $globalAdminEmail,
-                ':password' => $password,
-                ':approvedDate' => $nowUTCStr,
-                ':regDate' => $nowUTCStr
+            // TODO consider auth mapping table
+            $fields = [
+                'uname' => $globalAdminName,
+                'email' => $globalAdminEmail,
+                'pass' => $password,
+                'approved_date' => $nowUTCStr,
+                'user_regdate' => $nowUTCStr,
+                'activated' => '1'
             ];
-            if (!$stmt->execute($parameters)) {
-                $flashBag->add('error', $this->__('Error! Creating global administrator failed.'));
+            $connect->insert('users', $fields);
 
-                return false;
-            }
+            $user = $connect->fetchAssoc($sql, [':globalAdminName' => $globalAdminName]);
+            $userId = $user['uid'];
 
-            $sql = '
-                SELECT `uid`
-                FROM `users`
-                WHERE `uname`= :globalAdminName
-            ';
-            $stmt = $connect->prepare($sql);
-            $stmt->execute([':globalAdminName' => $globalAdminName]);
-            $rs = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$rs) {
-                $flashBag->add('error', $this->__('Error! Getting global administrator values failed.'));
-
-                return false;
-            }
-            $uid = $rs['uid'];
-
-            if ($uid != '') {
+            if ($userId != '') {
                 // insert the user into the administrators group
-                $stmt = $connect->prepare('INSERT INTO group_membership (uid, gid) VALUES (:uid, 2)');
-                if (!$stmt->execute([':uid' => $uid])) {
-                    $flashBag->add('error', $this->__('Error! Adding global administrator to admin group failed.'));
-
-                    return false;
-                }
+                $connect->insert('group_membership', ['uid' => $userId, GroupsConstant::GROUP_ID_ADMIN]);
             }
         } else {
             // check if the user is administrator
-            $adminGroupId = 2;
+            $adminGroupId = GroupsConstant::GROUP_ID_ADMIN;
             $sql = '
                 SELECT `gid`
                 FROM `group_membership`
                 WHERE `uid` = :uid
                 AND gid = :gid
             ';
-            $stmt = $connect->prepare($sql);
-            $stmt->execute([':uid' => $uid, ':gid' => $adminGroupId]);
-            $rs = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$rs) {
-                $flashBag->add('error', $this->__('Error! Getting global administrator group failed.'));
-
-                return false;
-            }
-            $gid = $rs['gid'];
-
-            if ($gid == '') {
+            $groupMembership = $connect->fetchAssoc($sql, [':uid' => $userId, ':gid' => $adminGroupId]);
+            if ($groupMembership['gid'] == '') {
                 // the user is not administrator, hence we insert the user into the administrators group
-                $stmt = $connect->prepare('INSERT INTO `group_membership` (`uid`, `gid`) VALUES (:uid, :gid)');
-                if (!$stmt->execute([':uid' => $uid, ':gid' => $adminGroupId])) {
-                    $flashBag->add('error', $this->__('Error! Adding global administrator to admin group failed.'));
-
-                    return false;
-                }
+                $connect->insert('group_membership', ['uid' => $userId, 'gid' => $adminGroupId]);
             }
 
-            // update global administrator password
+            // update global administrator password and email
             // TODO consider auth mapping table
-            $sql = '
-                UPDATE `users`
-                SET `pass` = :password
-                WHERE `uid` = :uid
-            ';
-            $stmt = $connect->prepare($sql);
-            if (!$stmt->execute([':uid' => $uid, ':password' => $password])) {
-               $flashBag->add('error', $this->__('Error! Updating global administrator password failed.'));
-
-               return false;
-            }
+            $connect->update('users', ['email' => $globalAdminEmail, 'pass' => $password], ['uid' => $userId]);
         }
 
         return true;
@@ -1320,16 +1186,15 @@ class SystemHelper
         }
 
         // insert a new sequence
-        $sql = '
-            INSERT INTO `group_perms` (`gid`, `sequence`, `component`, `instance`, `level`, `pid`)
-            VALUES (2, 0, \'.*\', \'.*\', 800, 1)
-        ';
-        $stmt = $connect->prepare($sql);
-        if (!$stmt->execute()) {
-            $flashBag->add('error', $this->__('Error! Creating the new permission sequence failed.'));
-
-            return false;
-        }
+        $fields = [
+            'gid' => GroupsConstant::GROUP_ID_ADMIN,
+            'sequence' => 0,
+            'component' => '.*',
+            'instance' => '.*',
+            'level' => '800',
+            'pid' => 1
+        ];
+        $connect->insert('group_perms', $fields);
 
         return true;
     }
