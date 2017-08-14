@@ -15,6 +15,7 @@ namespace Zikula\MultisitesModule\Helper;
 use DateTime;
 use DateTimeZone;
 use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -213,7 +214,7 @@ class SystemHelper
      * @param DatabaseInfo $dbInfo       Database information
      * @param boolean      $skipDatabase Whether to create a general connection (non-db-specific)
      *
-     * @return mixed Connection object or false on errors
+     * @return Connection|boolean Connection object or false on errors
      */
     public function connectToExternalDatabase(DatabaseInfo $dbInfo, $skipDatabase = false)
     {
@@ -671,53 +672,7 @@ class SystemHelper
         // modify the session cookie name
         $connect->update('module_vars', ['value' => serialize('ZKSID_' . strtoupper($site->getSiteAlias()))], ['modname' => 'ZConfig', 'name' => 'sessionname']);
 
-        // checks if the given administrator user exists
-        $sql = '
-            SELECT `uid`
-            FROM `users`
-            WHERE `uname` = :uname
-        ';
-        $user = $connect->fetchAssoc($sql, [':uname' => $site->getSiteAdminName()]);
-        $userId = $user['uid'];
-
-        // encrypt the password with the hash method
-        $password = $this->passwordApi->getHashedPassword($site->getSiteAdminPassword());
-        if ($userId == '') {
-            // insert new admin user
-            $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
-            $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
-            // TODO consider auth mapping table
-            $fields = [
-                'uname' => $site->getSiteAdminName(),
-                'email' => $site->getSiteAdminEmail(),
-                'pass' => $password,
-                'approved_date' => $nowUTCStr,
-                'user_regdate' => $nowUTCStr,
-                'activated' => '1'
-            ];
-            $connect->insert('users', $fields);
-
-            $user = $connect->fetchAssoc($sql, [':uname' => $site->getSiteAdminName()]);
-        } else {
-            // modify administrator password and email
-            // TODO consider auth mapping table
-            $connect->update('users', ['email' => $site->getSiteAdminEmail(), 'pass' => $password], ['uid' => $userId]);
-        }
-        $userId = $user['uid'];
-
-        // check if administrator is member of the admin group already
-        $adminGroupId = GroupsConstant::GROUP_ID_ADMIN;
-        $sql = '
-            SELECT `uid`
-            FROM `group_membership`
-            WHERE `uid` = :uid
-            AND `gid` = :gid
-        ';
-        $groupMembership = $connect->fetchAssoc($sql, [':uid' => $userId, ':gid' => $adminGroupId]);
-        if ($groupMembership['gid'] == '') {
-            // add admin to the admin group
-            $connect->insert('group_membership', ['uid' => $userId, 'gid' => $adminGroupId]);
-        }
+        $this->processAdministrator($connect, $site->getSiteAdminName(), $site->getSiteAdminEmail(), $site->getSiteAdminPassword());
 
         return true;
     }
@@ -1097,58 +1052,7 @@ class SystemHelper
             return false;
         }
 
-        // check if the super administrator exists
-        $sql = '
-            SELECT `uid`
-            FROM `users`
-            WHERE `uname`= :globalAdminName
-        ';
-        $user = $connect->fetchAssoc($sql, [':globalAdminName' => $globalAdminName]);
-        $userId = $user['uid'];
-
-        // encrypt the password with the hash method
-        $password = $this->passwordApi->getHashedPassword($globalAdminPassword);
-        if ($userId == '') {
-            // the user doesn't exist, thus we create it
-            $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
-            $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
-            // TODO consider auth mapping table
-            $fields = [
-                'uname' => $globalAdminName,
-                'email' => $globalAdminEmail,
-                'pass' => $password,
-                'approved_date' => $nowUTCStr,
-                'user_regdate' => $nowUTCStr,
-                'activated' => '1'
-            ];
-            $connect->insert('users', $fields);
-
-            $user = $connect->fetchAssoc($sql, [':globalAdminName' => $globalAdminName]);
-            $userId = $user['uid'];
-
-            if ($userId != '') {
-                // insert the user into the administrators group
-                $connect->insert('group_membership', ['uid' => $userId, GroupsConstant::GROUP_ID_ADMIN]);
-            }
-        } else {
-            // check if the user is administrator
-            $adminGroupId = GroupsConstant::GROUP_ID_ADMIN;
-            $sql = '
-                SELECT `gid`
-                FROM `group_membership`
-                WHERE `uid` = :uid
-                AND gid = :gid
-            ';
-            $groupMembership = $connect->fetchAssoc($sql, [':uid' => $userId, ':gid' => $adminGroupId]);
-            if ($groupMembership['gid'] == '') {
-                // the user is not administrator, hence we insert the user into the administrators group
-                $connect->insert('group_membership', ['uid' => $userId, 'gid' => $adminGroupId]);
-            }
-
-            // update global administrator password and email
-            // TODO consider auth mapping table
-            $connect->update('users', ['email' => $globalAdminEmail, 'pass' => $password], ['uid' => $userId]);
-        }
+        $this->processAdministrator($connect, $globalAdminName, $globalAdminEmail, $globalAdminPassword);
 
         return true;
     }
@@ -1197,5 +1101,82 @@ class SystemHelper
         $connect->insert('group_perms', $fields);
 
         return true;
+    }
+
+    /**
+     * Creates or updates an admin user.
+     *
+     * @param Connection $connect
+     * @param string     $userName
+     * @param string     $emailAddress
+     * @param string     $unhashedPassword
+     */
+    protected function processAdministrator(Connection $connect, $userName, $emailAddress, $unhashedPassword)
+    {
+        // checks if the given administrator user exists
+        $sql = '
+            SELECT `uid`
+            FROM `users`
+            WHERE `uname` = :uname
+        ';
+        $user = $connect->fetchAssoc($sql, [':uname' => $userName]);
+        $userId = $user['uid'];
+
+        // encrypt the password with the hash method
+        $password = $this->passwordApi->getHashedPassword($password);
+
+        if ($userId == '') {
+            // insert new admin user
+            $nowUTC = new DateTime(null, new DateTimeZone('UTC'));
+            $nowUTCStr = $nowUTC->format('Y-m-d H:i:s');
+            $fields = [
+                'uname' => $userName,
+                'email' => $emailAddress,
+                'approved_date' => $nowUTCStr,
+                'user_regdate' => $nowUTCStr,
+                'activated' => '1'
+            ];
+            $connect->insert('users', $fields);
+
+            // insert new admin user
+            $fields = [
+                'method' => 'native_either',
+                'uid' => $userId,
+                'uname' => $userName,
+                'email' => $emailAddress,
+                'verifiedEmail' => true,
+                'pass' => $password
+            ];
+            $connect->insert('zauth_authentication_mapping', $fields);
+
+            // add user attribute for used authentication method
+            $fields = [
+                'user_id' => $userId,
+                'name' => 'authenticationMethod',
+                'value' => 'native_either'
+            ];
+            $connect->insert('users_attributes', $fields);
+
+            $user = $connect->fetchAssoc($sql, [':uname' => $userName]);
+            $userId = $user['uid'];
+        } else {
+            // modify administrator password and email
+            $connect->update('users', ['email' => $emailAddress], ['uid' => $userId]);
+            $connect->update('zauth_authentication_mapping', ['email' => $emailAddress, 'pass' => $password], ['uid' => $userId]);
+        }
+
+        // check if administrator is member of the admin group already
+        $adminGroupId = GroupsConstant::GROUP_ID_ADMIN;
+        $sql = '
+            SELECT `uid`
+            FROM `group_membership`
+            WHERE `uid` = :uid
+            AND `gid` = :gid
+        ';
+        $groupMembership = $connect->fetchAssoc($sql, [':uid' => $userId, ':gid' => $adminGroupId]);
+        if ($groupMembership['gid'] == '') {
+            // add admin to the admin group
+            $connect->insert('group_membership', ['uid' => $userId, 'gid' => $adminGroupId]);
+        }
     }
 }

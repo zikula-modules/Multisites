@@ -241,10 +241,6 @@ class ConfiguratorHelper
                 if (true !== $paramsValid) {
                     // ask for multisites system parameters
 
-                    // get server zikula folder installation
-                    //$path = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
-                    //$basePath = substr($path, 0, strrpos($path, '/'));
-
                     $this->templateParameters = [
                         'step' => 3,
                         'configFile' => $this->configFile,
@@ -475,7 +471,8 @@ class ConfiguratorHelper
     {
         // get server zikula folder installation
         /** TODO: write rule to convert domains from www.foo.dom to foo.dom */
-        $path = substr($_SERVER['PHP_SELF'], 0 ,  strrpos($_SERVER['PHP_SELF'], '/'));
+        $pathToThisFile = $this->request->server->get('PHP_SELF');
+        $path = substr($pathToThisFile, 0, strrpos($pathToThisFile, '/'));
         $basePath = substr($path, 0 ,  strrpos($path, '/'));
         $wwwroot = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath();
 

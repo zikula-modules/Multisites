@@ -26,7 +26,6 @@ application "Multisites" {
         generateAtomTemplates false
         generateKmlTemplates false
         generateIcsTemplates false
-        writeModelToDocs true
         skipFiles "
             CHANGELOG.md,
             Container/LinkContainer.php,
