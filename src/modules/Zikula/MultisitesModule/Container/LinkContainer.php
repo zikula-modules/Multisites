@@ -12,9 +12,8 @@
 
 namespace Zikula\MultisitesModule\Container;
 
-use Zikula\MultisitesModule\Container\Base\AbstractLinkContainer;
-
 use Zikula\Core\LinkContainer\LinkContainerInterface;
+use Zikula\MultisitesModule\Container\Base\AbstractLinkContainer;
 
 /**
  * This is the link container service implementation class.
@@ -30,41 +29,9 @@ class LinkContainer extends AbstractLinkContainer
             return parent::getLinks($type);
         }
 
-        $utilArgs = ['api' => 'linkContainer', 'action' => 'getLinks'];
-        $allowedObjectTypes = $this->controllerHelper->getObjectTypes('api', $utilArgs);
+        $links = parent::getLinks();
 
-        $permLevel = ACCESS_ADMIN;
-
-        $links = [];
-
-        if (in_array('project', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Project:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('zikulamultisitesmodule_project_adminview'),
-                'text' => $this->__('Projects', 'zikulamultisitesmodule'),
-                'title' => $this->__('Project list', 'zikulamultisitesmodule'),
-                'icon' => 'group'
-            ];
-        }
-        if (in_array('template', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Template:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('zikulamultisitesmodule_template_adminview'),
-                'text' => $this->__('Templates', 'zikulamultisitesmodule'),
-                'title' => $this->__('Template list', 'zikulamultisitesmodule'),
-                'icon' => 'cubes'
-            ];
-        }
-        if (in_array('site', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Site:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('zikulamultisitesmodule_site_adminview'),
-                'text' => $this->__('Sites', 'zikulamultisitesmodule'),
-                'title' => $this->__('Site list', 'zikulamultisitesmodule'),
-                'icon' => 'list-alt'
-            ];
-        }
-        if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', $permLevel)) {
+        if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_admin_manageUpdates'),
                 'text'  => $this->__('Updates', 'zikulamultisitesmodule'),

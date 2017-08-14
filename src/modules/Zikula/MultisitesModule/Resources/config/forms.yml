@@ -51,6 +51,7 @@ services:
             - "@zikula_multisites_module.hook_helper"
         calls:
             - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+            - [setSystemHelper, ["@zikula_multisites_module.system_helper"]]
         tags: ['form.type']
     
     zikula_multisites_module.form.type.site:

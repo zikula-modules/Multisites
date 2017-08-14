@@ -12,10 +12,8 @@
 
 namespace Zikula\MultisitesModule\Entity;
 
-use Zikula\MultisitesModule\Entity\Base\AbstractSiteEntity as BaseEntity;
-
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Zikula\MultisitesModule\Entity\Base\AbstractSiteEntity as BaseEntity;
 
 /**
  * Entity class that defines the entity structure and behaviours.
@@ -31,22 +29,5 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class SiteEntity extends BaseEntity
 {
-    /**
-     * Retrieves database information array.
-     *
-     * @return array List of database parameters
-     */
-    public function getDatabaseData()
-    {
-        $dbInfo = [
-            'alias' => $this->getSiteAlias(),
-            'dbname' => $this->getDatabaseName(),
-            'dbhost' => $this->getDatabaseHost(),
-            'dbtype' => $this->getDatabaseType(),
-            'dbuname' => $this->getDatabaseUserName(),
-            'dbpass' => $this->getDatabasePassword()
-        ];
-
-        return $dbInfo;
-    }
+    // feel free to add your own methods here
 }

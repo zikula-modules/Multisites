@@ -25,7 +25,6 @@
         <fieldset>
             <legend>{{ __('Template data') }}</legend>
             {{ form_row(form.sqlFile) }}
-            {{ form_row(form.sqlFileSelected) }}
         </fieldset>
 
         {{ include(
@@ -123,4 +122,3 @@
     {% endset %}
     {{ pageAddAsset('footer', formInitScript) }}
 {% endblock %}
-{% block footer %}

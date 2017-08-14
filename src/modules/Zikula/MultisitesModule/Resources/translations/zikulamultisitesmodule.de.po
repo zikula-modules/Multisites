@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Multisites v2.0.0\n"
+"Project-Id-Version: Multisites v2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-04 17:49+0100\n"
+"POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: Axel Guckelsberger <info@guite.de>\n"
 "Language-Team: Axel Guckelsberger <info@guite.de>\n"
@@ -12,447 +12,611 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.1\n"
 
-#: lib/Multisites/Installer.php:104 lib/Multisites/Entity/Site.php:188
-#: lib/Multisites/Entity/Site.php:219 lib/Multisites/Entity/Site.php:283
-#: lib/Multisites/Entity/Project.php:165
-#: lib/Multisites/Entity/Template.php:266
-msgid "Error! Updating the database configuration file failed."
-msgstr "Fehler! Ändern der Datenbank-Konfigurationsdatei fehlgeschlagen."
+msgid "%name%"
+msgstr "%name%"
 
-#: lib/Multisites/Installer.php:119
-msgid "Imported"
-msgstr "Importiert"
+msgid "%name% v%extensionVersion%"
+msgstr "%name% v%extensionVersion%"
 
-#: lib/Multisites/Installer.php:194
-#, php-format
+msgid "10"
+msgstr "10"
+
+msgid "100"
+msgstr "100"
+
+msgid "15"
+msgstr "15"
+
+msgid "20"
+msgstr "20"
+
+msgid "30"
+msgstr "30"
+
+msgid "5"
+msgstr "5"
+
+msgid "50"
+msgstr "50"
+
+msgid "A global administrator has been created."
+msgstr "Erledigt! Ein globaler Administrator wurde erstellt."
+
 msgid ""
-"The site \"%1$s\" does have a table prefix set which is not supported "
-"anymore. You need to rename tables in the \"%2$s\" database accordingly."
+"A site consists of several extensions, which may be modules, themes or "
+"plugins."
 msgstr ""
-"Die Seite \"%1$s\" hat einen Tabellenpräfix gesetzt, welches nicht mehr "
-"unterstützt wird. Die Tabellen in der Datenbank \"%2$s\" müssen entsprechend "
-"umbenannt werden."
+"Eine Seite besteht aus mehreren Erweiterungen, welche Module, Themes oder "
+"Plugins sein können."
 
-#: lib/Multisites/Installer.php:269 lib/Multisites/Base/Installer.php:38
-#: lib/Multisites/Base/Installer.php:119
-msgid "Doctrine Exception: "
-msgstr "Doctrine Exception: "
-
-#: lib/Multisites/Installer.php:271 lib/Multisites/Base/Installer.php:40
-#, php-format
 msgid ""
-"An error was encountered while creating the tables for the %s extension."
+"A site template represents a blueprint for several sites. Each template may "
+"be assigned to all or specific projects."
 msgstr ""
-"Beim Erstellen der Tabellen für die Erweiterung %s ist ein Fehler "
+"Eine Seitenvorlage repräsentiert eine Blaupause für mehrere Seiten. Jede "
+"Vorlage kann allen oder lediglich bestimmten Projekten zugeordnet werden."
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "All except approved"
+msgstr "Alle außer freigegeben"
+
+msgid "Allowed extensions"
+msgstr "Erlaubte Erweiterungen"
+
+msgid "Allowed file extensions"
+msgstr "Erlaubte Dateiendungen"
+
+msgid "Allowed file size"
+msgstr "Erlaubte Dateigröße"
+
+msgid "Allowed layouts"
+msgstr "Erlaubte Layouts"
+
+msgid "Allowed locales"
+msgstr "Erlaubte Sprachen"
+
+msgid ""
+"An error occured during creation of the .htaccess file in directory \"%path%"
+"\"."
+msgstr ""
+"Beim Erstellen der .htaccess-Datei im Ordner \"%path%\" ist ein Fehler "
 "aufgetreten."
 
-#: lib/Multisites/Installer.php:273 lib/Multisites/Base/Installer.php:42
-msgid ""
-"Please enable the development mode by editing the /config/config.php file in "
-"order to reveal the error details."
-msgstr ""
-"Bitte aktiviere den Entwicklungsmodus durch Bearbeiten der Datei /config/"
-"config.php um die Fehlerdetails zu enthüllen."
+msgid "Approved"
+msgstr "Freigegeben"
 
-#: lib/Multisites/Installer.php:327
-#, php-format
-msgid "Could not delete the %s folder. Please remove it manually."
-msgstr "Der Ordner %s konnte nicht gelöscht werden. Bitte manuell entfernen."
+msgid "Ascending"
+msgstr "Aufsteigend"
 
-#: lib/Multisites/Installer.php:380
-#, php-format
-msgid ""
-"Could not update the %1$s file automatically. Please compare it with %2$s "
-"and update it manually."
-msgstr ""
-"Die Datei %1$s konnte nicht automatisch aktualisiert werden. Bitte mit %2$s "
-"vergleichen und manuell anpassen."
+msgid "Back to paginated view"
+msgstr "Zurück zur Seitenansicht"
 
-#: lib/Multisites/Version.php:28
-msgid "Zikula Multisites module"
-msgstr "Zikula Multisites Modul"
+msgid "Backend"
+msgstr "Backend"
 
-#: lib/Multisites/Version.php:29
-msgid "Multisites manager"
-msgstr "Multisites Manager"
+msgid "Bytes"
+msgstr "Bytes"
 
-#: lib/Multisites/Base/Installer.php:112
-#, php-format
-msgid ""
-"An error was encountered while removing stored object workflows for the %s "
-"extension."
-msgstr ""
-"Beim Entfernen der gespeicherten Workflows für die Erweiterung %s ist ein "
-"Fehler aufgetreten."
-
-#: lib/Multisites/Base/Installer.php:121
-#, php-format
-msgid "An error was encountered while dropping tables for the %s extension."
-msgstr ""
-"Beim Entfernen der Tabellen für die Erweiterung %s ist ein Fehler "
-"aufgetreten."
-
-#: lib/Multisites/Base/Installer.php:141
-#, php-format
-msgid "The upload directories at [%s] can be removed manually."
-msgstr "Das Upload-Verzeichnis [%s] kann manuell entfernt werden."
-
-#: lib/Multisites/Base/Version.php:30
-msgid "Multisites"
-msgstr "Multisites"
-
-#: lib/Multisites/Base/Version.php:32
-msgid "Multisites module generated by ModuleStudio 0.7.0."
-msgstr "Das Multisites-Modul, generiert von ModuleStudio 0.7.0."
-
-#. ! url version of name, should be in lowercase without space
-#: lib/Multisites/Base/Version.php:34
-msgid "multisites"
-msgstr "multisites"
-
-#: lib/Multisites/Base/Version.php:75
-msgid "multisites Sites Display Hooks"
-msgstr "Multisites Seiten Display-Hooks"
-
-#: lib/Multisites/Base/Version.php:93
-msgid "multisites Sites Filter Hooks"
-msgstr "Multisites Seiten Filter-Hooks"
-
-#: lib/Multisites/Base/Version.php:98
-msgid "multisites Templates Display Hooks"
-msgstr "Multisites Vorlagen Display-Hooks"
-
-#: lib/Multisites/Base/Version.php:116
-msgid "multisites Templates Filter Hooks"
-msgstr "Multisites Vorlagen Filter-Hooks"
-
-#: lib/Multisites/Base/Version.php:121
-msgid "multisites Site extensions Display Hooks"
-msgstr "Multisites Seiten-AddOns Display-Hooks"
-
-#: lib/Multisites/Base/Version.php:139
-msgid "multisites Site extensions Filter Hooks"
-msgstr "Multisites Seiten-AddOns Filter-Hooks"
-
-#: lib/Multisites/Base/Version.php:144
-msgid "multisites Projects Display Hooks"
-msgstr "Multisites Projekte Display-Hooks"
-
-#: lib/Multisites/Base/Version.php:162
-msgid "multisites Projects Filter Hooks"
-msgstr "Multisites Projekte Filter-Hooks"
-
-#: lib/Multisites/Base/UploadHandler.php:97
-msgid "Error! Could not move your file to the destination folder."
-msgstr "Fehler! Die Datei konnte nicht in den Zielordner verschoben werden."
-
-#: lib/Multisites/Base/UploadHandler.php:127
-msgid "Error! No file found."
-msgstr "Fehler! Keine Datei gefunden."
-
-#: lib/Multisites/Base/UploadHandler.php:139
-msgid ""
-"Error! This file type is not allowed. Please choose another file format."
-msgstr ""
-"Fehler! Dieses Dateiformat ist nicht erlaubt. Bitte ein anderes Dateiformat "
-"wählen."
-
-#: lib/Multisites/Base/UploadHandler.php:150
-#, php-format
-msgid "Error! Your file is too big. Please keep it smaller than %s kilobytes."
-msgstr ""
-"Fehler! Die Datei ist zu groß. Bitte eine Größe von weniger als %s KB wählen."
-
-#: lib/Multisites/Base/UploadHandler.php:154
-#, php-format
-msgid "Error! Your file is too big. Please keep it smaller than %s megabytes."
-msgstr ""
-"Fehler! Die Datei ist zu groß. Bitte eine Größe von weniger als %s MB wählen."
-
-#: lib/Multisites/Base/UploadHandler.php:163
-msgid "Error! This file type seems not to be a valid image."
-msgstr "Fehler! Dieser Dateityp scheint kein gültiges Bild zu sein."
-
-#. !
-#. !  :)
-#: lib/Multisites/Base/UploadHandler.php:350
-#: lib/Multisites/Base/UploadHandler.php:368
-msgid "Unknown error"
-msgstr "Unbekannter Fehler."
-
-#: lib/Multisites/Base/UploadHandler.php:353
-#: lib/Multisites/Base/UploadHandler.php:356
-msgid "File too big"
-msgstr "Die Datei ist zu groß."
-
-#: lib/Multisites/Base/UploadHandler.php:359
-msgid "File uploaded partially"
-msgstr "Die Datei wurde nur teilweise hochgeladen."
-
-#: lib/Multisites/Base/UploadHandler.php:362
-msgid "No file uploaded"
-msgstr "Keine Datei hochgeladen."
-
-#: lib/Multisites/Base/UploadHandler.php:365
-msgid "No tmp folder"
-msgstr "Kein temporärer Ordner."
-
-#: lib/Multisites/Base/UploadHandler.php:372
-msgid "Error with upload: "
-msgstr "Fehler! Upload fehlgeschlagen:"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:110
-msgid "site"
-msgstr "Seite"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:113
-msgid "template"
-msgstr "Vorlage"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:116
-msgid "site extension"
-msgstr "Seiten-Erweiterung"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:119
-msgid "project"
-msgstr "Projekt"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:123
-#, php-format
-msgid "Add %s"
-msgstr "%s hinzufügen"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:123
-#, php-format
-msgid "Select %s"
-msgstr "%s wählen"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:124
-#, php-format
-msgid "Find %s"
-msgstr "%s finden"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:125
-#, php-format
-msgid "Search %s"
-msgstr "%s suchen"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:132
-#, php-format
-msgid "Create new %s"
-msgstr "%s neu erstellen"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:132
-msgid "Create"
-msgstr "Erstellen"
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:149
-msgid "No results found!"
-msgstr "Keine Ergebnisse gefunden."
-
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:152
-#: Resources/config/templates/Multisites/template/edit.tpl:158
-#: Resources/config/templates/Multisites/template/reapply.tpl:43
-#: Resources/config/templates/Multisites/admin/config.tpl:59
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:74
-#: Resources/config/templates/Multisites/project/edit.tpl:95
-#: Resources/config/templates/Multisites/site/edit.tpl:347
-#: Resources/config/templates/Multisites/site/delete.tpl:69
-#: templates/template/edit.tpl:133 templates/admin/config.tpl:54
-#: templates/project/edit.tpl:95 templates/site/edit.tpl:270
-#: templates/site/delete.tpl:30
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: lib/Multisites/Form/Plugin/Base/RelationSelectorAutoComplete.php:154
-msgid "This function requires JavaScript activated!"
-msgstr "Diese Funktion erfordert aktiviertes JavaScript!"
+msgid "Choose action"
+msgstr "Aktion wählen"
 
-#: lib/Multisites/Form/Plugin/Base/AbstractObjectSelector.php:123
-#: lib/Multisites/Form/Plugin/Base/AbstractObjectSelector.php:129
-#, php-format
-msgid "Error! in %1$s: the %2$s parameter must be specified."
-msgstr "Fehler! in %1$s: der Parameter %2$s muss angegeben werden."
+msgid "Choose the database type of the site"
+msgstr "Wähle den Typ der Datenbank aus"
 
-#: lib/Multisites/Form/Handler/Template/Base/Edit.php:62
+msgid "Choose the project"
+msgstr "Das Projekt auswählen"
+
+msgid "Choose the projects"
+msgstr "Die Projekte auswählen"
+
+msgid "Choose the template"
+msgstr "Die Vorlage auswählen"
+
+msgid "Choose the thumbnail mode."
+msgstr "Den Thumbnailmodus auswählen"
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Confirmation prompt"
+msgstr "Bestätigungsabfrage"
+
+msgid "Connection error, because:"
+msgstr "Fehler! Datenbankverbindung fehlgeschlagen, weil:"
+
+msgid "Content"
+msgstr "Inhalt"
+
+msgid "Content has been approved and is available online."
+msgstr "Der Inhalt wurde freigegeben und ist online verfügbar."
+
+msgid "Could not delete the %s folder. Please remove it manually."
+msgstr "Der Ordner %s konnte nicht gelöscht werden. Bitte manuell entfernen."
+
 msgid ""
-"Sorry, but you can not create the template yet as other items are required "
-"which must be created before!"
+"Could not update the %file% file automatically. Please compare it with "
+"%template% and update it manually."
 msgstr ""
-"Du kannst die Vorlage noch nicht erstellen, da andere Einträge benötigt "
-"werden, die zuvor erstellt werden müssen!"
+"Die Datei %file% konnte nicht automatisch aktualisiert werden. Bitte mit "
+"%template% vergleichen und manuell anpassen."
 
-#: lib/Multisites/Form/Handler/Template/Base/Edit.php:187
-msgid "Done! Template created."
-msgstr "Erledigt! Vorlage erstellt."
+msgid "Create a CSV file for the defined parameters"
+msgstr "Eine CSV-Datei für die definierten Parameter erstellen"
 
-#: lib/Multisites/Form/Handler/Template/Base/Edit.php:189
-#: lib/Multisites/Form/Handler/Template/Base/Edit.php:196
-msgid "Done! Template updated."
-msgstr "Erledigt! Vorlage geändert."
+msgid "Create another item after save"
+msgstr "Nach dem Speichern noch einen Eintrag erstellen"
 
-#: lib/Multisites/Form/Handler/Template/Base/Edit.php:193
-msgid "Done! Template deleted."
-msgstr "Erledigt! Vorlage gelöscht."
+msgid "Create parameters csv template"
+msgstr "Parameter CSV-Vorlage erstellen"
 
-#: lib/Multisites/Form/Handler/Template/Base/Edit.php:222
-#: lib/Multisites/Form/Handler/Project/Base/Edit.php:214
-#: lib/Multisites/Form/Handler/Site/Base/Edit.php:234
-#: lib/Multisites/Controller/Base/Site.php:533
-#: lib/Multisites/Controller/Base/Project.php:277
-#: lib/Multisites/Controller/Base/SiteExtension.php:241
-#: lib/Multisites/Controller/Base/Template.php:327
-#, php-format
-msgid ""
-"Sorry, but an unknown error occured during the %s action. Please apply the "
-"changes again!"
+msgid "Create project"
+msgstr "Projekt erstellen"
+
+msgid "Create site"
+msgstr "Seite erstellen"
+
+msgid "Create site extension"
+msgstr "Seiten-Erweiterung erstellen"
+
+msgid "Create template"
+msgstr "Vorlage erstellen"
+
+msgid "Created by %user"
+msgstr "Erstellt von %user"
+
+msgid "Created by %user on %date"
+msgstr "Erstellt von %user am %date"
+
+msgid "Created on %date"
+msgstr "Erstellt am %date"
+
+msgid "Creation"
+msgstr "Erstellung"
+
+msgid "Creation and update"
+msgstr "Erstellung und Änderung"
+
+msgid "Creation date"
+msgstr "Erstellungsdatum"
+
+msgid "Creator"
+msgstr "Ersteller"
+
+msgid "Current file"
+msgstr "Aktuelle Datei"
+
+msgid "Custom template"
+msgstr "Eigene Vorlage"
+
+msgid "DB Query error."
+msgstr "Fehler! Datenbankabfrage fehlgeschlagen."
+
+msgid "Database SQL Export"
+msgstr "Datenbank SQL-Export"
+
+msgid "Database host"
+msgstr "Datenbank Host"
+
+msgid "Database name"
+msgstr "Datenbank Name"
+
+msgid "Database password"
+msgstr "Datenbank Kennwort"
+
+msgid "Database type"
+msgstr "Datenbank Typ"
+
+msgid "Database user name"
+msgstr "Datenbank Benutzer"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Delete content permanently."
+msgstr "Den Inhalt permanent löschen."
+
+msgid "Delete existing file"
+msgstr "Existierende Datei löschen"
+
+msgid "Delete site"
+msgstr "Seite löschen"
+
+msgid "Delete this file ?"
+msgstr "Diese Datei löschen ?"
+
+msgid "Delete this site"
+msgstr "Diese Seite wirklich löschen?"
+
+msgid "Deleted"
+msgstr "Gelöscht"
+
+msgid "Descending"
+msgstr "Absteigend"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Do you really want to delete this site: \"%name%\" ?"
+msgstr "Soll diese Seite wirklich gelöscht werden: \"%name%\" ?"
+
+msgid "Doctrine Exception"
+msgstr "Doctrine Ausnahme"
+
+msgid "Doctrine Exception: "
+msgstr "Doctrine Exception: "
+
+msgid "Done! Cleared all cache and compile directories for site %s."
 msgstr ""
-"Ein unbekannter Fehler ist während der Aktion %s aufgetreten. Bitte die "
-"Änderungen noch einmal anwenden!"
+"Erledigt! Alle Cache und Compile Verzeichnisse für die Seite %s geleert."
 
-#: lib/Multisites/Form/Handler/Template/Edit.php:84
-msgid "Select an existing file..."
-msgstr "Eine existierende Datei auswählen..."
-
-#: lib/Multisites/Form/Handler/Template/Edit.php:117
-msgid "Error! Please either provide a sql file or select an existing one."
-msgstr ""
-"Fehler! Bitte entweder eine SQL-Datei bereitstellen oder eine bestehende "
-"auswählen."
-
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:249
-#: lib/Multisites/Controller/Base/Site.php:258
-msgid "Error! Could not determine workflow actions."
-msgstr "Fehler! Die Workflow-Aktionen konnten nicht ermittelt werden."
-
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:285
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:317
-#: lib/Multisites/Controller/Site.php:314
-#: lib/Multisites/Controller/Base/Site.php:250
-#: lib/Multisites/Controller/Base/Ajax.php:159
-#: lib/Multisites/Controller/Ajax.php:40 lib/Multisites/Controller/Ajax.php:90
-#: lib/Multisites/Controller/Ajax.php:143
-#: lib/Multisites/Controller/Ajax.php:217
-#: lib/Multisites/Controller/Template.php:51
-#: lib/Multisites/Controller/Template.php:108
-msgid "No such item."
-msgstr "Keinen solchen Eintrag gefunden."
-
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:458
 msgid "Done! Item created."
 msgstr "Erledigt! Eintrag angelegt."
 
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:460
-#: lib/Multisites/Util/SiteExtensionHandler.php:227
-#: lib/Multisites/Util/SiteExtensionHandler.php:539
-msgid "Error! Creation attempt failed."
-msgstr "Fehler! Erstellung fehlgeschlagen."
-
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:465
-#: lib/Multisites/Controller/Base/Site.php:543
-#: lib/Multisites/Controller/Base/Project.php:287
-#: lib/Multisites/Controller/Base/SiteExtension.php:251
-#: lib/Multisites/Controller/Base/Template.php:337
-msgid "Done! Item updated."
-msgstr "Erledigt! Eintrag geändert."
-
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:467
-#: lib/Multisites/Util/SiteExtensionHandler.php:304
-msgid "Error! Update attempt failed."
-msgstr "Fehler! Änderung fehlgeschlagen."
-
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:472
-#: lib/Multisites/Controller/Base/Site.php:288
-#: lib/Multisites/Controller/Base/Site.php:541
-#: lib/Multisites/Controller/Base/Project.php:285
-#: lib/Multisites/Controller/Base/SiteExtension.php:249
-#: lib/Multisites/Controller/Base/Template.php:335
 msgid "Done! Item deleted."
 msgstr "Erledigt! Eintrag gelöscht."
 
-#: lib/Multisites/Form/Handler/Common/Base/Edit.php:474
-msgid "Error! Deletion attempt failed."
-msgstr "Fehler! Löschversuch fehlgeschlagen."
+msgid "Done! Item updated."
+msgstr "Erledigt! Eintrag geändert."
 
-#: lib/Multisites/Form/Handler/Admin/Base/Config.php:115
-msgid "Error! Failed to set configuration variables."
-msgstr "Fehler! Aktualisierung der Einstellungen fehlgeschlagen."
-
-#: lib/Multisites/Form/Handler/Admin/Base/Config.php:122
 msgid "Done! Module configuration updated."
 msgstr "Erledigt! Modulkonfiguration geändert."
 
-#: lib/Multisites/Form/Handler/Project/Base/Edit.php:60
-msgid ""
-"Sorry, but you can not create the project yet as other items are required "
-"which must be created before!"
-msgstr ""
-"Du kannst das Projekt noch nicht erstellen, da andere Einträge benötigt "
-"werden, die zuvor erstellt werden müssen!"
-
-#: lib/Multisites/Form/Handler/Project/Base/Edit.php:179
 msgid "Done! Project created."
 msgstr "Erledigt! Projekt erstellt."
 
-#: lib/Multisites/Form/Handler/Project/Base/Edit.php:181
-#: lib/Multisites/Form/Handler/Project/Base/Edit.php:188
-msgid "Done! Project updated."
-msgstr "Erledigt! Projekt geändert."
-
-#: lib/Multisites/Form/Handler/Project/Base/Edit.php:185
 msgid "Done! Project deleted."
 msgstr "Erledigt! Projekt gelöscht."
 
-#: lib/Multisites/Form/Handler/Site/Base/Edit.php:62
-msgid ""
-"Sorry, but you can not create the site yet as other items are required which "
-"must be created before!"
-msgstr ""
-"Du kannst die Seite noch nicht erstellen, da andere Einträge benötigt "
-"werden, die zuvor erstellt werden müssen!"
+msgid "Done! Project updated."
+msgstr "Erledigt! Projekt geändert."
 
-#: lib/Multisites/Form/Handler/Site/Base/Edit.php:199
 msgid "Done! Site created."
 msgstr "Erledigt! Seite erstellt."
 
-#: lib/Multisites/Form/Handler/Site/Base/Edit.php:201
-#: lib/Multisites/Form/Handler/Site/Base/Edit.php:208
-msgid "Done! Site updated."
-msgstr "Erledigt! Seite geändert."
-
-#: lib/Multisites/Form/Handler/Site/Base/Edit.php:205
 msgid "Done! Site deleted."
 msgstr "Erledigt! Seite gelöscht."
 
-#: lib/Multisites/Form/Handler/Site/Edit.php:38
-msgid "MySQL"
-msgstr "MySQL"
+msgid "Done! Site updated."
+msgstr "Erledigt! Seite geändert."
 
-#: lib/Multisites/Form/Handler/Site/Edit.php:39
-msgid "MySQL Improved"
-msgstr "MySQL Improved"
+msgid "Done! Template created."
+msgstr "Erledigt! Vorlage erstellt."
 
-#: lib/Multisites/Form/Handler/Site/Edit.php:40
-msgid "PostgreSQL"
-msgstr "PostgreSQL"
+msgid "Done! Template deleted."
+msgstr "Erledigt! Vorlage gelöscht."
 
-#: lib/Multisites/Form/Handler/Site/Edit.php:65
-msgid "Error! The site alias may contain only lowercase letters."
-msgstr "Fehler! Der Seiten-Alias darf nur Kleinbuchstaben enthalten."
+msgid "Done! Template updated."
+msgstr "Erledigt! Vorlage geändert."
 
-#: lib/Multisites/Form/Handler/Site/Edit.php:69
+msgid "Download"
+msgstr "Download"
+
 msgid ""
-"The user name you entered for the site administrator contains unacceptable "
-"characters. A valid user name consists of lowercase letters, numbers, "
-"underscores, periods, and/or dashes."
+"Each site is assigned to a project and instance of a certain site template."
 msgstr ""
-"Der eingegebene Benutzername für den Seiten-Administrator enthält ungültige "
-"Zeichen. Ein gültiger Benutzername besteht aus Kleinbuchstaben, Ziffern, "
-"Unterstrichen, Punkten und/oder Bindestrichen."
+"Jede Seite ist einem Projekt zugeordnet und Ausprägung einer bestimmten "
+"Seitenvorlage."
 
-#: lib/Multisites/Form/Handler/Site/Edit.php:75
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Edit project"
+msgstr "Projekt bearbeiten"
+
+msgid "Edit projects workflow"
+msgstr "Workflow für Projekte bearbeiten"
+
+msgid "Edit site"
+msgstr "Seite bearbeiten"
+
+msgid "Edit site extensions workflow"
+msgstr "Workflow für Seitenerweiterungen bearbeiten"
+
+msgid "Edit sites workflow"
+msgstr "Workflow für Seiten bearbeiten"
+
+msgid "Edit template"
+msgstr "Vorlage bearbeiten"
+
+msgid "Edit templates workflow"
+msgstr "Workflow für Vorlagen bearbeiten"
+
+msgid "Edit this project"
+msgstr "Dieses Projekt bearbeiten"
+
+msgid "Edit this site"
+msgstr "Diese Seite bearbeiten"
+
+msgid "Edit this template"
+msgstr "Diese Vorlage bearbeiten"
+
+msgid "Edit workflow for projects"
+msgstr "Workflow für Projekte bearbeiten"
+
+msgid "Edit workflow for site extensions"
+msgstr "Workflow für Seitenerweiterungen bearbeiten"
+
+msgid "Edit workflow for sites"
+msgstr "Workflow für Seiten bearbeiten"
+
+msgid "Edit workflow for templates"
+msgstr "Workflow für Vorlagen bearbeiten"
+
+msgid "Enable shrinking"
+msgstr "Verkleinerung von zu großen Bildern aktivieren"
+
+msgid "Enter one entry per line."
+msgstr "Einen Eintrag je Zeile eingeben."
+
+msgid "Enter the allowed locales of the site"
+msgstr "Gebe die erlaubten Sprachen für die Seite ein"
+
+msgid "Enter the database host of the site"
+msgstr "Gebe den Hostnamen für die Datenbank ein"
+
+msgid "Enter the database name of the site"
+msgstr "Gebe den Namen der Datenbank für diese Seite ein"
+
+msgid "Enter the database password of the site"
+msgstr "Gebe das Kennwort für die Datenbank ein"
+
+msgid "Enter the database type of the site"
+msgstr "Wähle den Typ der Datenbank aus"
+
+msgid "Enter the database user name of the site"
+msgstr "Gebe den Benutzernamen für die Datenbank ein"
+
+msgid "Enter the description of the site"
+msgstr "Gebe die interne Beschreibung der Seite ein"
+
+msgid "Enter the description of the template"
+msgstr "Beschreibe die Vorlage ausführlich"
+
+msgid "Enter the excluded tables of the template"
+msgstr "Die ausgeschlossenen Tabellen der Vorlage eingeben"
+
+msgid "Enter the fav icon of the site"
+msgstr "Das FavIcon der Seite eingeben"
+
+msgid "Enter the folders of the template"
+msgstr "Die Ordner der Vorlage eingeben"
+
+msgid "Enter the global admin email."
+msgstr "Bitte die E-Mail-Adresse des globalen Administrators eingeben."
+
+msgid "Enter the global admin name."
+msgstr "Bitte den (Nutzer-)Namen des globalen Administrators eingeben."
+
+msgid "Enter the global admin password."
+msgstr "Bitte das Kennwort des globalen Administrators eingeben."
+
+msgid "Enter the logo of the site"
+msgstr "Das Logo der Seite eingeben"
+
+msgid "Enter the name of the project"
+msgstr "Gebe den Namen des Projektes ein"
+
+msgid "Enter the name of the site"
+msgstr "Gebe den internen Namen der Seite ein"
+
+msgid "Enter the name of the template"
+msgstr "Gebe den Namen der Vorlage ein"
+
+msgid "Enter the parameters array of the site"
+msgstr "Die Parameterliste der Seite eingeben"
+
+msgid "Enter the parameters csv file of the site"
+msgstr "Die CSV-Datei mit Parametern der Seite eingeben"
+
+msgid "Enter the parameters of the template"
+msgstr "Die Parameter der Vorlage eingeben"
+
+msgid "Enter the project entries per page."
+msgstr "Die Projekt-Einträge je Seite eingeben."
+
+msgid "Enter the shrink height."
+msgstr "Die reduzierte Höhe eingeben"
+
+msgid "Enter the shrink width."
+msgstr "Die reduzierte Breite eingeben"
+
+msgid "Enter the site admin email of the site"
+msgstr "Gebe die E-Mail-Adresse des Seiten-Administrators ein"
+
+msgid "Enter the site admin name of the site"
+msgstr "Gebe den (Nutzer-)Namen des Seiten-Administrators ein"
+
+msgid "Enter the site admin password of the site"
+msgstr "Gebe das Kennwort des Seiten-Administrators ein."
+
+msgid "Enter the site admin real name of the site"
+msgstr "Gebe den realen Namen des Seiten-Administrators ein"
+
+msgid "Enter the site alias of the site"
+msgstr "Gebe ein Alias für diese Seite ein"
+
+msgid "Enter the site company of the site"
+msgstr "Gebe das Unternehmen der Seite ein"
+
+msgid "Enter the site description of the site"
+msgstr "Gebe die Beschreibung der Seite ein"
+
+msgid "Enter the site dns of the site"
+msgstr "Gebe die Domain bzw. den Ordnernamen für diese Seite ein"
+
+msgid "Enter the site entries per page."
+msgstr "Die Seiten-Einträge je Seite eingeben."
+
+msgid "Enter the site extension entries per page."
+msgstr "Die Seitenerweiterungen-Einträge je Seite eingeben."
+
+msgid "Enter the site name of the site"
+msgstr "Gebe den Namen der Seite ein"
+
+msgid "Enter the sql file of the template"
+msgstr "Die SQL-Datei der Vorlage eingeben."
+
+msgid "Enter the temp access file content."
+msgstr "Bitte gebe den Inhalt der .htaccess-Datei des temporären Ordners ein."
+
+msgid "Enter the template entries per page."
+msgstr "Die Vorlagen-Eitnräge je Seite eingeben."
+
+msgid "Enter the thumbnail height edit."
+msgstr "Die Vorschaubildhöhe für die Bearbeitung eingeben"
+
+msgid "Enter the thumbnail height view."
+msgstr "Die Vorschaubildhöhe für die Listen eingeben"
+
+msgid "Enter the thumbnail width edit."
+msgstr "Die Vorschaubildbreite für die Bearbeitung eingeben"
+
+msgid "Enter the thumbnail width view."
+msgstr "Die Vorschaubildbreite für die Listen eingeben"
+
+msgid "Enter values for the template parameters"
+msgstr "Gebe Werte für die Vorlagen-Parameter ein"
+
+msgid "Error changing module state."
+msgstr "Fehler! Änderung des Modulzustands fehlgeschlagen."
+
+msgid "Error creating module."
+msgstr "Fehler! Erstellen des Moduls fehlgeschlagen."
+
+msgid "Error creating the directory:"
+msgstr "Fehler beim Erstellen des Verzeichnisses:"
+
+msgid "Error creating theme."
+msgstr "Fehler! Erstellen des Themes fehlgeschlagen."
+
+msgid "Error deleting file:"
+msgstr "Fehler beim Löschen der Datei:"
+
+msgid "Error deleting module."
+msgstr "Fehler! Löschen des Moduls fehlgeschlagen."
+
+msgid "Error deleting theme."
+msgstr "Fehler! Löschen des Themes fehlgeschlagen."
+
+msgid "Error during deleting the database."
+msgstr "Fehler beim Löschen der Datenbank."
+
+msgid "Error during deleting the site files directory."
+msgstr "Fehler beim Löschen des Seiten-Dateiverzeichnisses."
+
+msgid "Error during executing query in database %s."
+msgstr "Fehler beim Ausführen der Abfrage in Datenbank %s."
+
+msgid "Error importing the database in line"
+msgstr "Fehler! Importieren der Datenbank in Zeile"
+
+msgid "Error! Adding global administrator to admin group failed."
+msgstr ""
+"Fehler! Hinzufügen des globalen Administrators zur Admin-Gruppe "
+"fehlgeschlagen."
+
+msgid "Error! Connecting to the database %s failed."
+msgstr "Fehler! Das Verbinden zur Datenbank %s ist fehlgeschlagen."
+
+msgid "Error! Connecting to the database failed."
+msgstr "Fehler! Verbinden zur Datenbank fehlgeschlagen."
+
+msgid "Error! Could not determine workflow actions."
+msgstr "Fehler! Die Workflow-Aktionen konnten nicht ermittelt werden."
+
+msgid "Error! Could not do what you wanted. Please check your input."
+msgstr ""
+"Fehler! Die gewünschte Aktion konnte nicht ausgeführt werden. Bitte die "
+"Eingaben überprüfen."
+
+msgid "Error! Could not find MySQL program directory."
+msgstr "Fehler! Das MySQL-Programmverzeichnis konnte nicht gefunden werden."
+
+msgid "Error! Could not load default theme."
+msgstr "Fehler! Das Standard-Theme konnte nicht geladen werden."
+
+msgid "Error! Could not save the new default theme."
+msgstr "Fehler! Das neue Standard-Theme konnte nicht gespeichert werden."
+
+msgid "Error! Creating global administrator failed."
+msgstr "Fehler! Erstellung des globalen Administrators fehlgeschlagen."
+
+msgid "Error! Creating parameter \"%s\" failed."
+msgstr "Fehler! Erstellen des Parameters \"%s\" fehlgeschlagen."
+
+msgid "Error! Creating the new permission sequence failed."
+msgstr ""
+"Fehler! Das Erstellen der neuen Berechtigungssequenz ist fehlgeschlagen."
+
+msgid "Error! Creating the site administrator failed."
+msgstr "Fehler! Erstellung des Seiten-Administrators fehlgeschlagen."
+
+msgid "Error! Creation attempt failed."
+msgstr "Fehler! Erstellung fehlgeschlagen."
+
+msgid "Error! Creation of database failed."
+msgstr "Fehler! Erstellung der Datenbank fehlgeschlagen."
+
+msgid "Error! Creation of database tables failed."
+msgstr "Fehler! Erstellung der Datenbank-Tabellen fehlgeschlagen."
+
+msgid "Error! Deleting old parameters failed."
+msgstr "Fehler! Löschen der alten Parameter fehlgeschlagen."
+
+msgid "Error! Deleting the permission sequences having a value below 0 failed."
+msgstr ""
+"Fehler! Das Löschen der Sequenzen mit Wert kleiner 0 ist fehlgeschlagen."
+
+msgid "Error! Deletion attempt failed."
+msgstr "Fehler! Löschversuch fehlgeschlagen."
+
+msgid "Error! Deletion of old database tables failed."
+msgstr "Fehler! Löschen der alten Datenbank-Tabellen fehlgeschlagen."
+
+msgid "Error! Getting global administrator group failed."
+msgstr "Fehler! Abrufen der Gruppe des globalen Administrators fehlgeschlagen."
+
+msgid "Error! Getting global administrator values failed."
+msgstr "Fehler! Abrufen der Werte des globalen Administrators fehlgeschlagen."
+
+msgid ""
+"Error! Importing the database failed. Perhaps there is a problem with the "
+"template file."
+msgstr ""
+"Fehler! Importieren der Datenbank fehlgeschlagen. Vielleicht gibt es ein "
+"Problem mit der Vorlagendatei."
+
+msgid "Error! Invalid identifier received."
+msgstr "Fehler! Ungültigen Identifier erhalten."
+
+msgid "Error! Invalid module state transition."
+msgstr "Fehler! Ungültiger Statuswechsel des Moduls."
+
+msgid "Error! Invalid object type received."
+msgstr "Fehler! Ungültigen Objekttyp erhalten."
+
+msgid "Error! It is not allowed to delete this site."
+msgstr "Fehler! Es ist nicht erlaubt, diese Seite zu löschen."
+
+msgid "Error! No site with id %s could be found."
+msgstr "Fehler! Es konnte keine Seite mit der ID %s gefunden werden."
+
+msgid "Error! No valid theme name received."
+msgstr "Fehler! Keinen gültigen Theme-Namen erhalten."
+
 msgid ""
 "Error! Please either provide a csv file containing the required parameter "
 "values or enter them manually."
@@ -460,322 +624,35 @@ msgstr ""
 "Fehler! Bitte entweder eine CSV-Datei mit den benötigten Parameterwerten "
 "bereitstellen oder diese manuell eingeben."
 
-#: lib/Multisites/Form/Handler/Site/Edit.php:84
-msgid "Error! You need to select a template for new sites."
-msgstr "Fehler! Bitte eine Vorlage für die neue Seite auswählen."
-
-#: lib/Multisites/Form/Handler/Site/Edit.php:95
-#: lib/Multisites/Form/Handler/Site/Edit.php:160
-msgid "Error! Connecting to the database failed."
-msgstr "Fehler! Verbinden zur Datenbank fehlgeschlagen."
-
-#: lib/Multisites/Form/Handler/Site/Edit.php:140
-msgid "This site exists already. The site DNS must be unique."
-msgstr "Diese Seite existiert bereits. Die Seiten-DNS muss eindeutig sein."
-
-#: lib/Multisites/Form/Handler/Site/Edit.php:147
-msgid "This site exists already. The site alias must be unique."
-msgstr "Diese Seite existiert bereits. Das Seiten-Alias muss eindeutig sein."
-
-#: lib/Multisites/Form/Handler/Site/Edit.php:166
-msgid "Error! Creation of database failed."
-msgstr "Fehler! Erstellung der Datenbank fehlgeschlagen."
-
-#: lib/Multisites/Api/Admin.php:33
-#: templates/plugins/function.multisitesObjectTypeSelector.php:33
-#: Resources/config/templates/Multisites/template/view.tpl:80
-#: templates/template/view.csv.tpl:4
-#: templates/project/include_selectMany.tpl:9
-#: templates/project/include_selectMany.tpl:14
-#: templates/site/view_quickNav.tpl:36
-msgid "Projects"
-msgstr "Projekte"
-
-#: lib/Multisites/Api/Admin.php:34
-msgid "View projects"
-msgstr "Projektliste"
-
-#: lib/Multisites/Api/Admin.php:39
-#: templates/plugins/function.multisitesObjectTypeSelector.php:31
-#: Resources/config/templates/Multisites/project/view.tpl:69
-#: templates/project/view.csv.tpl:5 templates/site/view_quickNav.tpl:15
-msgid "Templates"
-msgstr "Vorlagen"
-
-#: lib/Multisites/Api/Admin.php:40
-msgid "View site templates"
-msgstr "Liste der Seitenvorlagen"
-
-#: lib/Multisites/Api/Admin.php:45
-#: templates/plugins/function.multisitesObjectTypeSelector.php:30
-#: Resources/config/templates/Multisites/template/view.tpl:83
-#: Resources/config/templates/Multisites/project/view.tpl:72
-#: templates/template/view.csv.tpl:5 templates/project/view.csv.tpl:4
-#: templates/siteExtension/view_quickNav.tpl:15
-msgid "Sites"
-msgstr "Seiten"
-
-#: lib/Multisites/Api/Admin.php:46
-msgid "View sites"
-msgstr "Seitenliste"
-
-#: lib/Multisites/Api/Admin.php:51
-msgid "Updates"
-msgstr "Updates"
-
-#: lib/Multisites/Api/Admin.php:52
-msgid "Manage module updates"
-msgstr "Modulaktualisierungen verwalten"
-
-#: lib/Multisites/Api/Admin.php:57
-msgid "Queries"
-msgstr "Abfragen"
-
-#: lib/Multisites/Api/Admin.php:58
-msgid "Execute mass queries in site databases"
-msgstr "Massenabfragen in den Seitendatenbanken ausführen"
-
-#: lib/Multisites/Api/Admin.php:63 lib/Multisites/Api/Admin.php:64
-#: lib/Multisites/Api/Base/Admin.php:39
-msgid "Configuration"
-msgstr "Konfiguration"
-
-#: lib/Multisites/Api/Base/Admin.php:40
-msgid "Manage settings for this application"
-msgstr "Einstellungen für diese Anwendung verwalten"
-
-#: lib/Multisites/Api/Base/Selection.php:68
-#: lib/Multisites/Entity/Repository/Base/Site.php:398
-#: lib/Multisites/Entity/Repository/Base/Project.php:364
-#: lib/Multisites/Entity/Repository/Base/SiteExtension.php:369
-#: lib/Multisites/Entity/Repository/Base/Template.php:372
-msgid "Invalid identifier received."
-msgstr "Fehler! Ungültigen Identifier erhalten."
-
-#: lib/Multisites/Api/Base/Selection.php:170
-msgid "Invalid object type received."
-msgstr "Fehler! Ungültigen Objekttyp erhalten."
-
-#: lib/Multisites/Util/SiteExtensionHandler.php:86
-#: lib/Multisites/Util/SiteExtensionHandler.php:148
-#: lib/Multisites/Util/SiteExtensionHandler.php:185
-#: lib/Multisites/Util/SiteExtensionHandler.php:251
-#: lib/Multisites/Util/SiteExtensionHandler.php:295
-#: lib/Multisites/Util/SiteExtensionHandler.php:430
-#: lib/Multisites/Util/SiteExtensionHandler.php:462
-#: lib/Multisites/Util/SiteExtensionHandler.php:499
-#: lib/Multisites/Util/SiteExtensionHandler.php:563
-#: lib/Multisites/Util/SiteExtensionHandler.php:589
-#: lib/Multisites/Util/SiteExtensionHandler.php:620
-#: lib/Multisites/Util/System.php:176 lib/Multisites/Util/System.php:273
-#: lib/Multisites/Util/System.php:328 lib/Multisites/Util/System.php:361
-#: lib/Multisites/Util/System.php:440 lib/Multisites/Util/System.php:491
-#: lib/Multisites/Util/System.php:658 lib/Multisites/Util/System.php:754
-#: lib/Multisites/Util/System.php:903 lib/Multisites/Util/System.php:994
-#: lib/Multisites/Controller/Site.php:391
-#: lib/Multisites/Controller/Admin.php:485
-#, php-format
-msgid "Error! Connecting to the database %s failed."
-msgstr "Fehler! Das Verbinden zur Datenbank %s ist fehlgeschlagen."
-
-#: lib/Multisites/Util/SiteExtensionHandler.php:141
-#: lib/Multisites/Util/SiteExtensionHandler.php:178
-#: lib/Multisites/Util/SiteExtensionHandler.php:244
-#: lib/Multisites/Util/SiteExtensionHandler.php:455
-#: lib/Multisites/Util/SiteExtensionHandler.php:492
-#: lib/Multisites/Util/SiteExtensionHandler.php:556
-msgid "Error! Could not do what you wanted. Please check your input."
+msgid "Error! Please enter some sql commands or provide a sql file."
 msgstr ""
-"Fehler! Die gewünschte Aktion konnte nicht ausgeführt werden. Bitte die "
-"Eingaben überprüfen."
+"Fehler! Bitte entweder einige SQL-Kommandos oder eine SQL-Datei "
+"bereitstellen."
 
-#: lib/Multisites/Util/SiteExtensionHandler.php:272
-#: lib/Multisites/Util/SiteExtensionHandler.php:570
+msgid "Error! Please select at least one database host."
+msgstr "Fehler! Bitte mindestens einen Datenbank-Server auswählen."
+
+msgid "Error! Please select at least one database type."
+msgstr "Fehler! Bitte mindestens einen Datenbank-Typ auswählen."
+
+msgid "Error! Renaming of excluded database tables failed."
+msgstr ""
+"Fehler! Umbenennen der ausgeschlossenen Datenbank-Tabellen fehlgeschlagen."
+
+msgid "Error! Setting configurating value failed."
+msgstr "Fehler! Setzen eines Konfigurationswertes fehlgeschlagen."
+
 msgid "Error! Sorry! Deletion attempt failed."
 msgstr "Fehler! Löschversuch fehlgeschlagen."
 
-#: lib/Multisites/Util/SiteExtensionHandler.php:366
-#: lib/Multisites/Util/SiteExtensionHandler.php:370
-#: lib/Multisites/Util/SiteExtensionHandler.php:378
-#, php-format
-msgid "Error! Could not include %s"
-msgstr "Fehler beim Einbinden von %s"
-
-#: lib/Multisites/Util/SiteExtensionHandler.php:598
-msgid "Error! Could not load default theme."
-msgstr "Fehler! Das Standard-Theme konnte nicht geladen werden."
-
-#: lib/Multisites/Util/SiteExtensionHandler.php:630
-msgid "Error! Could not save the new default theme."
-msgstr "Fehler! Das neue Standard-Theme konnte nicht gespeichert werden."
-
-#: lib/Multisites/Util/Base/ListEntries.php:206
-#: lib/Multisites/Util/Base/ListEntries.php:228
-#: lib/Multisites/Util/Base/ListEntries.php:250
-#: lib/Multisites/Util/Base/ListEntries.php:304
-#: lib/Multisites/Util/Base/Workflow.php:31
-#: workflows/function.none_permissioncheck.php:62
-msgid "Approved"
-msgstr "Freigegeben"
-
-#: lib/Multisites/Util/Base/ListEntries.php:207
-#: lib/Multisites/Util/Base/ListEntries.php:229
-#: lib/Multisites/Util/Base/ListEntries.php:251
-#: lib/Multisites/Util/Base/ListEntries.php:305
-#: workflows/function.none_permissioncheck.php:62
-msgid "Content has been approved and is available online."
-msgstr "Der Inhalt wurde freigegeben und ist online verfügbar."
-
-#: lib/Multisites/Util/Base/ListEntries.php:211
-#: lib/Multisites/Util/Base/ListEntries.php:233
-#: lib/Multisites/Util/Base/ListEntries.php:255
-#: lib/Multisites/Util/Base/ListEntries.php:309
-msgid "All except approved"
-msgstr "Alle außer freigegeben"
-
-#: lib/Multisites/Util/Base/ListEntries.php:212
-#: lib/Multisites/Util/Base/ListEntries.php:234
-#: lib/Multisites/Util/Base/ListEntries.php:256
-#: lib/Multisites/Util/Base/ListEntries.php:310
-msgid "Shows all items except these which are approved"
-msgstr "Zeige alle Einträge außer den freigegebenen"
-
-#: lib/Multisites/Util/Base/ListEntries.php:272
-msgid "Module"
-msgstr "Modul"
-
-#: lib/Multisites/Util/Base/ListEntries.php:277
-msgid "Theme"
-msgstr "Theme"
-
-#: lib/Multisites/Util/Base/ListEntries.php:282
-msgid "System plugin"
-msgstr "System-Plugin"
-
-#: lib/Multisites/Util/Base/ListEntries.php:287
-msgid "Module plugin"
-msgstr "Modul-Plugin"
-
-#: lib/Multisites/Util/Base/View.php:220
-msgid "Bytes"
-msgstr "Bytes"
-
-#: lib/Multisites/Util/Base/View.php:223
-msgid "KB"
-msgstr "KB"
-
-#: lib/Multisites/Util/Base/View.php:227
-msgid "MB"
-msgstr "MB"
-
-#: lib/Multisites/Util/Base/View.php:231
-msgid "GB"
-msgstr "GB"
-
-#: lib/Multisites/Util/Base/Workflow.php:28
-#: workflows/function.none_permissioncheck.php:61
-msgid "Initial"
-msgstr "Initial"
-
-#: lib/Multisites/Util/Base/Workflow.php:34
-#: workflows/function.none_permissioncheck.php:63
-msgid "Deleted"
-msgstr "Gelöscht"
-
-#: lib/Multisites/Util/Base/Controller.php:254
-#, php-format
-msgid ""
-"The upload directory \"%s\" does not exist and could not be created. Try to "
-"create it yourself and make sure that this folder is accessible via the web "
-"and writable by the webserver."
+msgid "Error! Storing the site modules in the Multisites database failed."
 msgstr ""
-"Das Upload-Verzeichnis \"%s\" existiert nicht und konnte nicht erstellt "
-"werden. Bitte selbst anlegen und sicherstellen, dass dieser Ordner über das "
-"Web erreichbar und durch den Webserver beschreibbar ist."
+"Fehler! Speichern der Seitenmodule in der Multisites-Datenbank "
+"fehlgeschlagen."
 
-#: lib/Multisites/Util/Base/Controller.php:260
-#, php-format
-msgid ""
-"Warning! The upload directory at \"%s\" exists but is not writable by the "
-"webserver."
-msgstr ""
-"Warnung! Das Upload-Verzeichnis \"%s\" existiert, aber ist nicht durch den "
-"Webserver beschreibbar."
+msgid "Error! The \"mysqldump\" program is not installed."
+msgstr "Fehler! Das Programm \"mysqldump\" ist nicht installiert."
 
-#: lib/Multisites/Util/Base/Controller.php:271
-#, php-format
-msgid "Warning! Could not write the .htaccess file at \"%s\"."
-msgstr "Warnung! Konnte die .htaccess-Datei in \"%s\" nicht schreiben."
-
-#: lib/Multisites/Util/Configurator.php:170
-msgid ""
-"Error: it seems everything is configured correctly, but Multisites is not "
-"running. Please check your configuration file!"
-msgstr ""
-"Fehler: es scheint, als ob alles korrekt konfiguriert ist, aber Multisites "
-"läuft nicht. Bitte überprüfe Deine Konfigurationsdatei!"
-
-#: lib/Multisites/Util/Configurator.php:265
-msgid ""
-"The directory where the sites files have to be created is not defined. "
-"Please, define it."
-msgstr ""
-"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
-"sollen, ist nicht definiert. Bitte definieren."
-
-#: lib/Multisites/Util/Configurator.php:269
-msgid ""
-"The directory where the sites files have to be created does not exist. "
-"Please, create it."
-msgstr ""
-"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
-"sollen, existiert nicht. Bitte anlegen."
-
-#: lib/Multisites/Util/Configurator.php:274
-msgid ""
-"The directory where the sites files have to be created is not writeable. "
-"Please, set it as writeable."
-msgstr ""
-"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
-"sollen, ist nicht beschreibbar. Bitte auf beschreibbar setzen."
-
-#: lib/Multisites/Util/Configurator.php:301
-#: lib/Multisites/Util/Configurator.php:349
-msgid "Error: File config/multisites_config.php could not be found."
-msgstr ""
-"Fehler! Die Datei config/multisites_config.php konnte nicht gefunden werden."
-
-#: lib/Multisites/Util/Configurator.php:318
-#: lib/Multisites/Util/Configurator.php:377
-msgid "Error: Could not write into the config/multiple_config.php file."
-msgstr ""
-"Fehler! Konnte nicht in die Datei config/multisites_config.php schreiben."
-
-#: lib/Multisites/Util/Configurator.php:399
-msgid ""
-"The directory for storing the sites files is not defined. Check your "
-"configuration values."
-msgstr ""
-"Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
-"definiert. Bitte die Konfigurationseinstellungen überprüfen."
-
-#: lib/Multisites/Util/Configurator.php:402
-msgid "The directory for storing the sites files does not exist."
-msgstr ""
-"Fehler! Das Verzeichnis zur Speicherung der Seitendateien existiert nicht."
-
-#: lib/Multisites/Util/Configurator.php:406
-msgid "The directory for storing the sites files is not writeable."
-msgstr ""
-"Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
-"beschreibbar."
-
-#: lib/Multisites/Util/Configurator.php:418
-msgid "Error creating the directory:"
-msgstr "Fehler beim Erstellen des Verzeichnisses:"
-
-#: lib/Multisites/Util/System.php:67
-#, php-format
 msgid ""
 "Error! The <strong>%s</strong> directory does not exist and could not be "
 "created automatically. Please create it and make it writeable."
@@ -784,8 +661,6 @@ msgstr ""
 "automatisch erstellt werden. Bitte erstelle es und stelle es auf "
 "beschreibbar."
 
-#: lib/Multisites/Util/System.php:74
-#, php-format
 msgid ""
 "Error! The <strong>%s</strong> directory is not writeable. Please correct "
 "that."
@@ -793,99 +668,769 @@ msgstr ""
 "Fehler! Das Verzeichnis <strong>%s</strong> ist nicht beschreibbar. Bitte "
 "korrigiere das."
 
-#: lib/Multisites/Util/System.php:197 lib/Multisites/Util/System.php:290
-msgid "DB Query error."
-msgstr "Fehler! Datenbankabfrage fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:201 lib/Multisites/Util/System.php:304
-#: lib/Multisites/Util/System.php:337 lib/Multisites/Util/System.php:410
-msgid "Connection error, because:"
-msgstr "Fehler! Datenbankverbindung fehlgeschlagen, weil:"
-
-#: lib/Multisites/Util/System.php:230
-msgid "Error! Deletion of old database tables failed."
-msgstr "Fehler! Löschen der alten Datenbank-Tabellen fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:235 lib/Multisites/Util/System.php:245
-msgid "Error! Renaming of excluded database tables failed."
-msgstr ""
-"Fehler! Umbenennen der ausgeschlossenen Datenbank-Tabellen fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:240
-msgid "Error! Creation of database tables failed."
-msgstr "Fehler! Erstellung der Datenbank-Tabellen fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:250
-msgid "Error! Updating the site configuration failed."
-msgstr "Fehler! Aktualisierung der Seiten-Konfiguration fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:255
-msgid "Error! Updating the site parameters failed."
-msgstr "Fehler! Ändern der Seitenparameter fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:428
-msgid "Error! The template sql file could not be found."
-msgstr "Fehler! Die SQL-Datei der Vorlage konnte nicht gefunden werden."
-
-#: lib/Multisites/Util/System.php:434
-msgid "Error! Opening the template sql file failed."
-msgstr "Fehler! Öffnen der SQL-Datei der Vorlage fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:456
-msgid "Error importing the database in line"
-msgstr "Fehler! Importieren der Datenbank in Zeile"
-
-#: lib/Multisites/Util/System.php:473
 msgid ""
-"Error! Importing the database failed. Perhaps there is a problem with the "
-"template file."
-msgstr ""
-"Fehler! Importieren der Datenbank fehlgeschlagen. Vielleicht gibt es ein "
-"Problem mit der Vorlagendatei."
-
-#: lib/Multisites/Util/System.php:500 lib/Multisites/Util/System.php:509
-#: lib/Multisites/Util/System.php:518 lib/Multisites/Util/System.php:527
-msgid "Error! Setting configurating value failed."
-msgstr "Fehler! Setzen eines Konfigurationswertes fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:546 lib/Multisites/Util/System.php:561
-#: lib/Multisites/Util/System.php:579
-msgid "Error! Creating the site administrator failed."
-msgstr "Fehler! Erstellung des Seiten-Administrators fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:669
-msgid "Error! Deleting old parameters failed."
-msgstr "Fehler! Löschen der alten Parameter fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:682 lib/Multisites/Util/System.php:691
-#: lib/Multisites/Util/System.php:698
-#, php-format
-msgid "Error! Creating parameter \"%s\" failed."
-msgstr "Fehler! Erstellen des Parameters \"%s\" fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:792 lib/Multisites/Util/System.php:799
-msgid "Error deleting file:"
-msgstr "Fehler beim Löschen der Datei:"
-
-#: lib/Multisites/Util/System.php:856
-msgid "Error! Could not find MySQL program directory."
-msgstr "Fehler! Das MySQL-Programmverzeichnis konnte nicht gefunden werden."
-
-#: lib/Multisites/Util/System.php:860
-msgid "Error! The \"mysqldump\" program is not installed."
-msgstr "Fehler! Das Programm \"mysqldump\" ist nicht installiert."
-
-#: lib/Multisites/Util/System.php:876
-msgid ""
-"Error! The database dump failed. Please ensure that the database user %1%s "
+"Error! The database dump failed. Please ensure that the database user %1$s "
 "has the \"LOCK_TABLES\" permission and the web service may write into the "
 "%2$s folder."
 msgstr ""
-"Fehler! Der Datenbank-Dump ist fehlgeschlagen. Bitte stellen Sie sicher, "
-"dass der Datenbanknutzer %1$s die \"LOCK_TABLES\" Berechtigung besitzt und "
-"der Webservice in den Ordner %2$s schreiben darf."
+"Fehler! Der Datenbank-Dump ist fehlgeschlagen. Bitte sicherstellen, dass der "
+"Datenbanknutzer %1$s die \"LOCK_TABLES\" Berechtigung besitzt und der "
+"Webservice in den Ordner %2$s schreiben darf."
 
-#: lib/Multisites/Util/System.php:897
+msgid "Error! The site alias may contain only lowercase letters."
+msgstr "Fehler! Der Seiten-Alias darf nur Kleinbuchstaben enthalten."
+
+msgid "Error! The template sql file could not be found."
+msgstr "Fehler! Die SQL-Datei der Vorlage konnte nicht gefunden werden."
+
+msgid ""
+"Error! This file type is not allowed. Please choose another file format."
+msgstr ""
+"Fehler! Dieses Dateiformat ist nicht erlaubt. Bitte ein anderes Dateiformat "
+"wählen."
+
+msgid "Error! This file type seems not to be a valid image."
+msgstr "Fehler! Dieser Dateityp scheint kein gültiges Bild zu sein."
+
+msgid "Error! This template does not have any sites assigned yet."
+msgstr "Fehler! Diese Vorlage hat noch keine zugeordneten Seiten."
+
+msgid "Error! Update attempt failed."
+msgstr "Fehler! Änderung fehlgeschlagen."
+
+msgid "Error! Updating global administrator password failed."
+msgstr ""
+"Fehler! Änderung des Passwortes des globalen Administrators fehlgeschlagen."
+
+msgid "Error! Updating the database configuration file failed."
+msgstr "Fehler! Ändern der Datenbank-Konfigurationsdatei fehlgeschlagen."
+
+msgid "Error! Updating the site configuration failed."
+msgstr "Fehler! Aktualisierung der Seiten-Konfiguration fehlgeschlagen."
+
+msgid "Error! Updating the site parameters failed."
+msgstr "Fehler! Ändern der Seitenparameter fehlgeschlagen."
+
+msgid "Error! You need to select a template for new sites."
+msgstr "Fehler! Bitte eine Vorlage für die neue Seite auswählen."
+
+msgid "Error: Could not write into the config/%s file."
+msgstr "Fehler! Konnte nicht in die Datei config/%s schreiben."
+
+msgid "Error: File config/%s could not be found."
+msgstr "Fehler! Die Datei config/%s konnte nicht gefunden werden."
+
+msgid "Error: invalid input."
+msgstr "Fehler! Ungültige Eingabe."
+
+msgid ""
+"Error: it seems everything is configured correctly, but Multisites is not "
+"running. Please check your configuration file!"
+msgstr ""
+"Fehler: es scheint, als ob alles korrekt konfiguriert ist, aber Multisites "
+"läuft nicht. Bitte überprüfe Deine Konfigurationsdatei!"
+
+msgid "Excluded tables"
+msgstr "Ausgeschlossene Tabellen"
+
+msgid "Execute mass queries in site databases"
+msgstr "Massenabfragen in den Seitendatenbanken ausführen"
+
+msgid "Execute tool"
+msgstr "Werkzeug ausführen"
+
+msgid "Export database as template"
+msgstr "Die Datenbank als Vorlage exportieren"
+
+msgid "Export the database as SQL file"
+msgstr "Die Datenbank als SQL-Datei exportieren"
+
+msgid "Extension type"
+msgstr "Typ der Erweiterung"
+
+msgid "Extension version"
+msgstr "Version der Erweiterung"
+
+msgid "Extensions"
+msgstr "Erweiterungen"
+
+msgid "Fav icon"
+msgstr "FavIcon"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Folders"
+msgstr "Ordner"
+
+msgid "Frontend"
+msgstr "Frontend"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Global admin email"
+msgstr "Globaler Admin E-Mail"
+
+msgid "Global admin name"
+msgstr "Globaler Admin Name"
+
+msgid "Global admin password"
+msgstr "Globaler Admin Kennwort"
+
+msgid "Here you can choose a custom creation date"
+msgstr "Hier kann ein abweichendes Erstellungsdatum ausgewählt werden"
+
+msgid "Here you can choose a user which will be set as creator"
+msgstr ""
+"Hier kann ein Benutzer ausgewählt werden, der als Ersteller gesetzt wird"
+
+msgid "Here you can configure parameters for list views."
+msgstr "Hier können Parameter für Listenansichten eingestellt werden."
+
+msgid "Here you can define general settings."
+msgstr "Hier können die grundlegenden Einstellungen verändert werden."
+
+msgid "Here you can define security-related settings."
+msgstr "Hier können sicherheitsbezogene Einstellungen verändert werden."
+
+msgid "Here you can inspect and amend the existing workflows."
+msgstr ""
+"Hier können die bestehenden Workflows inpiziert und verändert verändert "
+"werden."
+
+msgid "Hooks"
+msgstr "Hooks"
+
+msgid "Image settings for sites fav icon"
+msgstr "Bildeinstellungen für FavIcons von Seiten"
+
+msgid "Image settings for sites logo"
+msgstr "Bildeinstellungen für Logos von Seiten"
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "Imported"
+msgstr "Importiert"
+
+msgid "Initial"
+msgstr "Initial"
+
+msgid "Inset"
+msgstr "Inset"
+
+msgid "Invalid user identifier received."
+msgstr "Fehler! Ungültigen Benutzer Identifier erhalten."
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Last update"
+msgstr "Letzte Änderung"
+
+msgid "List views"
+msgstr "Listenansichten"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "Manage extensions"
+msgstr "Seiten-Erweiterungen"
+
+msgid "Manage module updates"
+msgstr "Modulaktualisierungen verwalten"
+
+msgid "Manage settings for this application"
+msgstr "Einstellungen für diese Anwendung verwalten"
+
+msgid "Manage the modules for this site"
+msgstr "Die Module für diese Seite verwalten"
+
+msgid "Manage the themes for this site"
+msgstr "Die Themes für diese Seite verwalten"
+
+msgid "Manage themes"
+msgstr "Seiten-Layouts"
+
+msgid "Moderation"
+msgstr "Moderation"
+
+msgid "Module"
+msgstr "Modul"
+
+msgid "Module plugin"
+msgstr "Modul-Plugin"
+
+msgid "My projects"
+msgstr "Meine Projekte"
+
+msgid "My site extensions"
+msgstr "Meine Seitenerweiterungen"
+
+msgid "My sites"
+msgstr "Meine Seiten"
+
+msgid "My templates"
+msgstr "Meine Vorlagen"
+
+msgid "MySQL"
+msgstr "MySQL"
+
+msgid "MySQL Improved"
+msgstr "MySQL Improved"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "No module name received."
+msgstr "Fehler! Kein Modulname erhalten."
+
+msgid "No new state received."
+msgstr "Fehler! Keinen neuen Zustand erhalten."
+
+msgid "No projects found."
+msgstr "Keine Projekte gefunden."
+
+msgid "No site extensions found."
+msgstr "Keine Erweiterungen gefunden."
+
+msgid "No sites found."
+msgstr "Keine Seiten gefunden."
+
+msgid "No such item found."
+msgstr "Keinen solchen Eintrag gefunden."
+
+msgid "No such item."
+msgstr "Keinen solchen Eintrag gefunden."
+
+msgid "No templates found."
+msgstr "Keine Vorlagen gefunden."
+
+msgid "No theme name received."
+msgstr "Fehler! Keinen Theme-Namen erhalten."
+
+msgid "No tool selected"
+msgstr "Kein Werkzeug ausgewählt"
+
+msgid "Not set."
+msgstr "Nicht angegeben."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Only digits are allowed."
+msgstr "Es sind nur Zahlen erlaubt."
+
+msgid "Only item titles"
+msgstr "Nur Titel der Einträge"
+
+msgid "Open file"
+msgstr "Datei öffnen"
+
+msgid "Operation cancelled."
+msgstr "Operation abgebrochen."
+
+msgid "Outbound"
+msgstr "Outbound"
+
+msgid "Page size"
+msgstr "Seitengröße"
+
+msgid "Parameters"
+msgstr "Parameter"
+
+msgid "Parameters CSV"
+msgstr "Parameter CSV"
+
+msgid "Parameters array"
+msgstr "Parameter Array"
+
+msgid "Parameters csv file"
+msgstr "Parameter CSV-Datei"
+
+msgid "Please choose an option"
+msgstr "Bitte eine Option auswählen"
+
+msgid "Please configure the global administrator settings."
+msgstr "Bitte konfiguriere die Einstellungen zum globalen Administrator."
+
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Project entries per page"
+msgstr "Projekt-Einträge je Seite"
+
+msgid "Project filter hooks subscriber"
+msgstr "Projekt Filter-Hooks Subscriber"
+
+msgid "Project form aware subscriber"
+msgstr "Projekt Form-Aware Subscriber"
+
+msgid "Project ui hooks subscriber"
+msgstr "Projekt UI-Hooks Subscriber"
+
+msgid "Projects"
+msgstr "Projekte"
+
+msgid "Projects list"
+msgstr "Projektliste"
+
+msgid "Projects serve for grouping sites by clients or topics."
+msgstr "Projekte dienen der Gruppierung von Seiten nach Kunden oder Themen."
+
+msgid "Queries"
+msgstr "Abfragen"
+
+msgid "Query successfully executed in database %s."
+msgstr "Abfrage erfolgreich in Datenbank %s ausgeführt."
+
+msgid "Quick navigation"
+msgstr "Schnellnavigation"
+
+msgid "Reapply"
+msgstr "Neu anwenden"
+
+msgid "Reapply template"
+msgstr "Vorlage neu anwenden"
+
+msgid "Reapply template to all assigned sites"
+msgstr "Vorlage auf alle zugeordneten Seiten neu anwenden"
+
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+msgid "Reset to empty value"
+msgstr "Auf leeren Wert zurücksetzen"
+
+msgid "Return control"
+msgstr "Rücksprungskontrolle"
+
+msgid "Reuse"
+msgstr "Wiederverwenden"
+
+msgid "Reuse for new project"
+msgstr "Für neues Projekt wiederverwenden"
+
+msgid "Reuse for new site"
+msgstr "Für neue Seite wiederverwenden"
+
+msgid "Reuse for new template"
+msgstr "Für neue Vorlage wiederverwenden"
+
+msgid "Search"
+msgstr "Suche"
+
+msgid "Security settings"
+msgstr "Sicherheitseinstellungen"
+
+msgid "Send an email"
+msgstr "Eine E-Mail senden"
+
+msgid "Send private message to %userName%"
+msgstr "Private Nachricht an %userName% senden"
+
+msgid "Set theme as default"
+msgstr "Als Standardtheme festlegen"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Show all entries"
+msgstr "Alle Einträge anzeigen"
+
+msgid "Shows all items except these which are approved"
+msgstr "Zeige alle Einträge außer den freigegebenen"
+
+msgid "Shrink height"
+msgstr "Maximale Höhe"
+
+msgid "Shrink width"
+msgstr "Maximale Breite"
+
+msgid "Site"
+msgstr "Seite"
+
+msgid "Site admin email"
+msgstr "Admin E-Mail"
+
+msgid "Site admin name"
+msgstr "Admin Name"
+
+msgid "Site admin password"
+msgstr "Admin Kennwort"
+
+msgid "Site admin real name"
+msgstr "Admin realer Name"
+
+msgid "Site alias"
+msgstr "Seiten-Alias"
+
+msgid "Site company"
+msgstr "Seiten-Firma"
+
+msgid "Site description"
+msgstr "Seiten-Beschreibung"
+
+msgid "Site dns"
+msgstr "Seiten-DNS"
+
+msgid "Site entries per page"
+msgstr "Seiten-Einträge je Seite"
+
+msgid "Site extension entries per page"
+msgstr "Seitenerweiterungen-Einträge je Seite"
+
+msgid "Site extension filter hooks subscriber"
+msgstr "Seitenerweiterung Filter-Hooks Subscriber"
+
+msgid "Site extension ui hooks subscriber"
+msgstr "Seitenerweiterung UI-Hooks Subscriber"
+
+msgid "Site extensions"
+msgstr "Seiten-Erweiterungen"
+
+msgid "Site extensions list"
+msgstr "Liste der Seitenerweiterungen"
+
+msgid "Site filter hooks subscriber"
+msgstr "Seiten Filter-Hooks Subscriber"
+
+msgid "Site form aware subscriber"
+msgstr "Seite Form-Aware Subscriber"
+
+msgid "Site name"
+msgstr "Seiten-Name"
+
+msgid "Site tools"
+msgstr "Seiten-Werkzeuge"
+
+msgid "Site ui hooks subscriber"
+msgstr "Seiten UI-Hooks Subscriber"
+
+msgid "Sites"
+msgstr "Seiten"
+
+msgid "Sites fav icon"
+msgstr "FavIcon der Seite"
+
+msgid "Sites list"
+msgstr "Seitenliste"
+
+msgid "Sites logo"
+msgstr "Logo der Seite"
+
+msgid "Sorry, but an error occured during the %action% action."
+msgstr ""
+"Entschuldigung, aber während der Aktion %action% ist ein Fehler aufgetreten."
+
+msgid ""
+"Sorry, but an error occured during the %action% action. Please apply the "
+"changes again!"
+msgstr ""
+"Entschuldigung, aber während der Aktion %action% ist ein Fehler aufgetreten. "
+"Bitte die Änderungen noch einmal anwenden!"
+
+msgid ""
+"Sorry, but you can not create the project yet as other items are required "
+"which must be created before!"
+msgstr ""
+"Du kannst das Projekt noch nicht erstellen, da andere Einträge benötigt "
+"werden, die zuvor erstellt werden müssen!"
+
+msgid ""
+"Sorry, but you can not create the site yet as other items are required which "
+"must be created before!"
+msgstr ""
+"Du kannst die Seite noch nicht erstellen, da andere Einträge benötigt "
+"werden, die zuvor erstellt werden müssen!"
+
+msgid ""
+"Sorry, but you can not create the template yet as other items are required "
+"which must be created before!"
+msgstr ""
+"Du kannst die Vorlage noch nicht erstellen, da andere Einträge benötigt "
+"werden, die zuvor erstellt werden müssen!"
+
+msgid "Sort by"
+msgstr "Sortieren nach"
+
+msgid "Sort by %s"
+msgstr "Sortieren nach %s"
+
+msgid "Sort direction"
+msgstr "Sortierrichtung"
+
+msgid "Sql file"
+msgstr "SQL-Datei"
+
+msgid "State"
+msgstr "Zustand"
+
+msgid "Submit"
+msgstr "Abschicken"
+
+msgid "Switch to administration area."
+msgstr "Zum Verwaltungsbereich wechseln"
+
+msgid "Switch to user area."
+msgstr "Zum Benutzerbereich wechseln"
+
+msgid "System plugin"
+msgstr "System-Plugin"
+
+msgid "Temp access file content"
+msgstr "Inhalt der .htaccess-Datei des temporären Ordners"
+
+msgid "Template"
+msgstr "Vorlage"
+
+msgid "Template entries per page"
+msgstr "Vorlagen-Einträge je Seite"
+
+msgid "Template filter hooks subscriber"
+msgstr "Vorlage Filter-Hooks Subscriber"
+
+msgid "Template form aware subscriber"
+msgstr "Vorlage Form-Aware Subscriber"
+
+msgid "Template ui hooks subscriber"
+msgstr "Vorlage UI-Hooks Subscriber"
+
+msgid "Templates"
+msgstr "Vorlagen"
+
+msgid "Templates list"
+msgstr "Liste der Vorlagen"
+
+msgid "The administration control has been recovered."
+msgstr "Erledigt! Die Administrationskontrolle wurde wiederhergestellt."
+
+msgid "The amount of projects shown per page"
+msgstr "Die Anzahl der angezeigten Projekte je Seite"
+
+msgid "The amount of site extensions shown per page"
+msgstr "Die Anzahl der angezeigten Seitenerweiterungen je Seite"
+
+msgid "The amount of sites shown per page"
+msgstr "Die Anzahl der angezeigten Seiten je Seite"
+
+msgid "The amount of templates shown per page"
+msgstr "Die Anzahl von je Seite angezeigten Vorlagen"
+
+msgid ""
+"The cache directory \"%directory%\" does not exist. Please create it and "
+"make it writable for the webserver."
+msgstr ""
+"Das Cache-Verzeichnis \"%directory%\" existiert nicht. Bitte erstellen und "
+"für den Webserver beschreibbar machen."
+
+msgid "The directory for storing the sites files does not exist."
+msgstr ""
+"Fehler! Das Verzeichnis zur Speicherung der Seitendateien existiert nicht."
+
+msgid ""
+"The directory for storing the sites files is not defined. Check your "
+"configuration values."
+msgstr ""
+"Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
+"definiert. Bitte die Konfigurationseinstellungen überprüfen."
+
+msgid "The directory for storing the sites files is not writeable."
+msgstr ""
+"Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
+"beschreibbar."
+
+msgid ""
+"The directory where the sites files have to be created does not exist. "
+"Please, create it."
+msgstr ""
+"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+"sollen, existiert nicht. Bitte anlegen."
+
+msgid ""
+"The directory where the sites files have to be created is not defined. "
+"Please, define it."
+msgstr ""
+"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+"sollen, ist nicht definiert. Bitte definieren."
+
+msgid ""
+"The directory where the sites files have to be created is not writeable. "
+"Please, set it as writeable."
+msgstr ""
+"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+"sollen, ist nicht beschreibbar. Bitte auf beschreibbar setzen."
+
+msgid "The enable shrinking option."
+msgstr "Reduzierung großer Bilder aktivieren"
+
+msgid "The maximum image height in pixels."
+msgstr "Die maximale Bildhöhe in Pixeln."
+
+msgid "The maximum image width in pixels."
+msgstr "Die maximale Bildbreite in Pixeln."
+
+msgid "The setting has been successfully changed."
+msgstr "Die Einstellung wurde erfolgreich geändert."
+
+msgid ""
+"The site \"%site%\" does have a table prefix set which is not supported "
+"anymore. You need to rename tables in the \"%database%\" database "
+"accordingly."
+msgstr ""
+"Die Seite \"%site%\" hat einen Tabellenpräfix gesetzt, was nicht mehr "
+"unterstützt wird. Die Tabellen in der Datenbank \"%database%\" müssen "
+"entsprechend umbenannt werden."
+
+msgid ""
+"The template has been reapplied to %s site.|The template has been reapplied "
+"to %s sites."
+msgstr ""
+"Die Vorlage wurde auf %s Seite erneut angewendet.|Die Vorlage wurde auf %s "
+"Seiten erneut angewendet."
+
+msgid "The upload directories at \"%path%\" can be removed manually."
+msgstr "Die Upload-Verzeichnisse in \"%path%\" können manuell entfernt werden."
+
+msgid ""
+"The upload directory \"%path%\" does not exist and could not be created. Try "
+"to create it yourself and make sure that this folder is accessible via the "
+"web and writable by the webserver."
+msgstr ""
+"Das Upload-Verzeichnis \"%path%\" existiert nicht und konnte nicht erstellt "
+"werden. Bitte selbst anlegen und sicherstellen, dass dieser Ordner über das "
+"Web erreichbar und durch den Webserver beschreibbar ist."
+
+msgid "The value \"%value%\" is not allowed for the \"%property%\" property."
+msgstr ""
+"Der Wert \"%value%\" ist für die Eigenschaft \"%property%\" nicht erlaubt."
+
+msgid "Theme"
+msgstr "Theme"
+
+msgid "This setting is disabled. Click here to enable it."
+msgstr "Diese Einstellung ist deaktiviert. Klicke hier um sie zu aktivieren."
+
+msgid "This setting is enabled. Click here to disable it."
+msgstr "Diese Einstellung ist aktiviert. Klicke hier um sie zu deaktivieren."
+
+msgid "This site exists already. The site DNS must be unique."
+msgstr "Diese Seite existiert bereits. Die Seiten-DNS muss eindeutig sein."
+
+msgid "This site exists already. The site alias must be unique."
+msgstr "Diese Seite existiert bereits. Das Seiten-Alias muss eindeutig sein."
+
+msgid "Thumbnail height edit"
+msgstr "Vorschaubildhöhe Bearbeitung"
+
+msgid "Thumbnail height on edit pages in pixels."
+msgstr "Thumbnail-Höhe auf Bearbeitungsseiten in Pixeln."
+
+msgid "Thumbnail height on view pages in pixels."
+msgstr "Thumbnail-Höhe auf Listenseiten in Pixeln."
+
+msgid "Thumbnail height view"
+msgstr "Vorschaubildhöhe Liste"
+
+msgid "Thumbnail mode"
+msgstr "Thumbnailmodus"
+
+msgid "Thumbnail mode (inset or outbound)."
+msgstr "Thumbnail-Modus (inset oder outbound)."
+
+msgid "Thumbnail width edit"
+msgstr "Vorschaubildbreite Bearbeitung"
+
+msgid "Thumbnail width on edit pages in pixels."
+msgstr "Thumbnail-Breite auf Bearbeitungsseiten in Pixeln."
+
+msgid "Thumbnail width on view pages in pixels."
+msgstr "Thumbnail-Breite auf Listenseiten in Pixeln."
+
+msgid "Thumbnail width view"
+msgstr "Vorschaubildbreite Liste"
+
+msgid "Update"
+msgstr "Ändern"
+
+msgid "Update configuration"
+msgstr "Konfiguration ändern"
+
+msgid "Update date"
+msgstr "Änderungsdatum"
+
+msgid "Updated by %user"
+msgstr "Geändert von %user"
+
+msgid "Updated by %user on %date"
+msgstr "Geändert von %user am %date"
+
+msgid "Updated on %date"
+msgstr "Geändert am %date"
+
+msgid "Updater"
+msgstr "Änderer"
+
+msgid "Updates"
+msgstr "Updates"
+
+msgid "Value"
+msgstr "Wert"
+
+msgid "View tools"
+msgstr "Seiten-Werkzeuge"
+
+msgid ""
+"Warning! The upload directory at \"%path%\" exists but is not writable by "
+"the webserver."
+msgstr ""
+"Warnung! Das Upload-Verzeichnis \"%path%\" existiert, aber ist nicht durch "
+"den Webserver beschreibbar."
+
+msgid ""
+"Whether to enable shrinking huge images to maximum dimensions. Stores "
+"downscaled version of the original image."
+msgstr ""
+"Ob große Bilder auf maximale Größen geschrumpft werden sollen. Speichert die "
+"herunterskalierte Version des Originalbildes."
+
+msgid "With description"
+msgstr "Mit Beschreibung"
+
+msgid "With selected projects"
+msgstr "Die ausgewählten Projekte"
+
+msgid "With selected site extensions"
+msgstr "Die ausgewählten Erweiterungen"
+
+msgid "With selected sites"
+msgstr "Die ausgewählten Seiten"
+
+msgid "With selected templates"
+msgstr "Die ausgewählten Vorlagen"
+
+msgid "Workflow state"
+msgstr "Workflow-Zustand"
+
+msgid "Workflows"
+msgstr "Workflows"
+
+msgid "Yes"
+msgstr "Ja"
+
 msgid ""
 "You have not defined the global administrator name or password. Check the "
 "module configuration."
@@ -893,2130 +1438,805 @@ msgstr ""
 "Name oder Password des globalen Administrators wurden nicht definiert. Bitte "
 "die Modulkonfiguration überprüfen."
 
-#: lib/Multisites/Util/System.php:925
-msgid "Error! Creating global administrator failed."
-msgstr "Fehler! Erstellung des globalen Administrators fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:935
-msgid "Error! Getting global administrator values failed."
-msgstr "Fehler! Abrufen der Werte des globalen Administrators fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:943 lib/Multisites/Util/System.php:965
-msgid "Error! Adding global administrator to admin group failed."
-msgstr ""
-"Fehler! Hinzufügen des globalen Administrators zur Admin-Gruppe "
-"fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:957
-msgid "Error! Getting global administrator group failed."
-msgstr "Fehler! Abrufen der Gruppe des globalen Administrators fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:975
-msgid "Error! Updating global administrator password failed."
-msgstr ""
-"Fehler! Änderung des Passwortes des globalen Administrators fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:1003
-msgid "Error! Deleting the permission sequences having a value below 0 failed."
-msgstr ""
-"Fehler! Das Löschen der Sequenzen mit Wert kleiner 0 ist fehlgeschlagen."
-
-#: lib/Multisites/Util/System.php:1011
-msgid "Error! Creating the new permission sequence failed."
-msgstr ""
-"Fehler! Das Erstellen der neuen Berechtigungssequenz ist fehlgeschlagen."
-
-#: lib/Multisites/Controller/Site.php:157
-msgid "Error! No valid theme name received."
-msgstr "Fehler! Keinen gültigen Theme-Namen erhalten."
-
-#: lib/Multisites/Controller/Site.php:219
-msgid "A global administrator has been created."
-msgstr "Erledigt! Ein globaler Administrator wurde erstellt."
-
-#: lib/Multisites/Controller/Site.php:225
-msgid "The administration control has been recovered."
-msgstr "Erledigt! Die Administrationskontrolle wurde wiederhergestellt."
-
-#: lib/Multisites/Controller/Site.php:229
-msgid "Not tool selected"
-msgstr "Kein Werkzeug ausgewählt"
-
-#: lib/Multisites/Controller/Site.php:309
-#: lib/Multisites/Controller/Base/Site.php:245
-#: lib/Multisites/Controller/Template.php:46
-#: lib/Multisites/Controller/Template.php:103
-msgid "Error! Invalid identifier received."
-msgstr "Fehler! Ungültigen Identifier erhalten."
-
-#: lib/Multisites/Controller/Site.php:382
-#, php-format
-msgid "Error! No site with id %s could be found."
-msgstr "Fehler! Es konnte keine Seite mit der ID %s gefunden werden."
-
-#: lib/Multisites/Controller/Site.php:404
-#, php-format
-msgid "Done! Cleared all cache and compile directories for site %s."
-msgstr ""
-"Erledigt! Alle Cache und Compile Verzeichnisse für die Seite %s geleert."
-
-#: lib/Multisites/Controller/Admin.php:110
-msgid "Please configure the global administrator settings."
-msgstr "Bitte konfiguriere die Einstellungen zum globalen Administrator."
-
-#: lib/Multisites/Controller/Admin.php:439
-msgid "Error! Please enter some sql commands or provide a sql file."
-msgstr ""
-"Fehler! Bitte entweder einige SQL-Kommandos oder eine SQL-Datei "
-"bereitstellen."
-
-#: lib/Multisites/Controller/Admin.php:447
-msgid "Error! Please select at least one database host."
-msgstr "Fehler! Bitte mindestens einen Datenbank-Server auswählen."
-
-#: lib/Multisites/Controller/Admin.php:450
-msgid "Error! Please select at least one database type."
-msgstr "Fehler! Bitte mindestens einen Datenbank-Typ auswählen."
-
-#: lib/Multisites/Controller/Admin.php:478
-#: Resources/config/templates/Multisites/site/edit.tpl:59
-#: templates/site/edit.tpl:56 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:91 templates/site/view_quickNav.tpl:76
-msgid "Site alias"
-msgstr "Seiten-Alias"
-
-#: lib/Multisites/Controller/Admin.php:478
-#: Resources/config/templates/Multisites/site/edit.tpl:170
-#: Resources/config/templates/Multisites/site/delete.tpl:42
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:16
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:16
-#: Resources/config/templates/Multisites/site/viewTools.tpl:15
-#: templates/site/edit.tpl:108 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:118 templates/site/view_quickNav.tpl:85
-msgid "Database name"
-msgstr "Datenbank Name"
-
-#: lib/Multisites/Controller/Admin.php:490
-#, php-format
-msgid "Error during executing query in database %s."
-msgstr "Fehler beim Ausführen der Abfrage in Datenbank %s."
-
-#: lib/Multisites/Controller/Admin.php:492
-#, php-format
-msgid "Query executed in database %s successfully."
-msgstr "Abfrage erfolgreich in Datenbank %s ausgeführt."
-
-#: lib/Multisites/Controller/Base/Site.php:272
-msgid "Error! It is not allowed to delete this site."
-msgstr "Fehler! Es ist nicht erlaubt, diese Seite zu löschen."
-
-#: lib/Multisites/Controller/Base/Ajax.php:153
-#: lib/Multisites/Controller/Ajax.php:34 lib/Multisites/Controller/Ajax.php:84
-#: lib/Multisites/Controller/Ajax.php:137
-#: lib/Multisites/Controller/Ajax.php:211
-msgid "Error: invalid input."
-msgstr "Fehler! Ungültige Eingabe."
-
-#: lib/Multisites/Controller/Ajax.php:74
-#: lib/Multisites/Controller/Ajax.php:132
-msgid "No module name received."
-msgstr "Fehler! Kein Modulname erhalten."
-
-#: lib/Multisites/Controller/Ajax.php:79
-msgid "No new state received."
-msgstr "Fehler! Keinen neuen Zustand erhalten."
-
-#: lib/Multisites/Controller/Ajax.php:98
-#: lib/Multisites/Controller/Ajax.php:156
-#: lib/Multisites/Controller/Ajax.php:161
-msgid "Error changing module state."
-msgstr "Fehler! Änderung des Modulzustands fehlgeschlagen."
-
-#: lib/Multisites/Controller/Ajax.php:166
-msgid "Error creating module."
-msgstr "Fehler! Erstellen des Moduls fehlgeschlagen."
-
-#: lib/Multisites/Controller/Ajax.php:171
-msgid "Error deleting module."
-msgstr "Fehler! Löschen des Moduls fehlgeschlagen."
-
-#: lib/Multisites/Controller/Ajax.php:206
-msgid "No theme name received."
-msgstr "Fehler! Keinen Theme-Namen erhalten."
-
-#: lib/Multisites/Controller/Ajax.php:230
-msgid "Error creating theme."
-msgstr "Fehler! Erstellen des Themes fehlgeschlagen."
-
-#: lib/Multisites/Controller/Ajax.php:235
-msgid "Error deleting theme."
-msgstr "Fehler! Löschen des Themes fehlgeschlagen."
-
-#: lib/Multisites/Controller/Template.php:117
-msgid "Error! This template does not have any sites assigned yet."
-msgstr "Fehler! Diese Vorlage hat noch keine zugeordneten Seiten."
-
-#: lib/Multisites/Controller/Template.php:136
-#, php-format
-msgid "The template has been reapplied to %s site."
-msgid_plural "The template has been reapplied to %s sites."
-msgstr[0] "Die Vorlage wurde auf %s Seite erneut angewendet."
-msgstr[1] "Die Vorlage wurde auf %s Seiten erneut angewendet."
-
-#: lib/Multisites/Entity/Validator/Base/Site.php:31
-#: lib/Multisites/Entity/Validator/Base/Site.php:39
-#: lib/Multisites/Entity/Validator/Base/Site.php:51
-#: lib/Multisites/Entity/Validator/Base/Site.php:59
-#: lib/Multisites/Entity/Validator/Base/Site.php:71
-#: lib/Multisites/Entity/Validator/Base/Site.php:79
-#: lib/Multisites/Entity/Validator/Base/Site.php:91
-#: lib/Multisites/Entity/Validator/Base/Site.php:107
-#: lib/Multisites/Entity/Validator/Base/Site.php:115
-#: lib/Multisites/Entity/Validator/Base/Site.php:123
-#: lib/Multisites/Entity/Validator/Base/Site.php:131
-#: lib/Multisites/Entity/Validator/Base/Site.php:139
-#: lib/Multisites/Entity/Validator/Base/Site.php:147
-#: lib/Multisites/Entity/Validator/Base/Project.php:31
-#: lib/Multisites/Entity/Validator/Base/Project.php:39
-#: lib/Multisites/Entity/Validator/Base/SiteExtension.php:31
-#: lib/Multisites/Entity/Validator/Base/SiteExtension.php:39
-#: lib/Multisites/Entity/Validator/Base/SiteExtension.php:47
-#: lib/Multisites/Entity/Validator/Base/SiteExtension.php:51
-#: lib/Multisites/Entity/Validator/Base/Template.php:31
-#: lib/Multisites/Entity/Validator/Base/Template.php:39
-#: lib/Multisites/Entity/Validator/Base/Template.php:51
-#, php-format
-msgid "Error! Field value must not be empty (%s)."
-msgstr "Fehler! Der Wert des Feldes darf nicht leer sein (%s)."
-
-#: lib/Multisites/Entity/Validator/Base/Site.php:35
-#: lib/Multisites/Entity/Validator/Base/Site.php:43
-#: lib/Multisites/Entity/Validator/Base/Site.php:47
-#: lib/Multisites/Entity/Validator/Base/Site.php:55
-#: lib/Multisites/Entity/Validator/Base/Site.php:63
-#: lib/Multisites/Entity/Validator/Base/Site.php:67
-#: lib/Multisites/Entity/Validator/Base/Site.php:75
-#: lib/Multisites/Entity/Validator/Base/Site.php:83
-#: lib/Multisites/Entity/Validator/Base/Site.php:87
-#: lib/Multisites/Entity/Validator/Base/Site.php:99
-#: lib/Multisites/Entity/Validator/Base/Site.php:103
-#: lib/Multisites/Entity/Validator/Base/Site.php:111
-#: lib/Multisites/Entity/Validator/Base/Site.php:119
-#: lib/Multisites/Entity/Validator/Base/Site.php:127
-#: lib/Multisites/Entity/Validator/Base/Site.php:135
-#: lib/Multisites/Entity/Validator/Base/Site.php:143
-#: lib/Multisites/Entity/Validator/Base/Site.php:151
-#: lib/Multisites/Entity/Validator/Base/Site.php:155
-#: lib/Multisites/Entity/Validator/Base/Site.php:159
-#: lib/Multisites/Entity/Validator/Base/Project.php:35
-#: lib/Multisites/Entity/Validator/Base/SiteExtension.php:35
-#: lib/Multisites/Entity/Validator/Base/SiteExtension.php:43
-#: lib/Multisites/Entity/Validator/Base/Template.php:35
-#: lib/Multisites/Entity/Validator/Base/Template.php:43
-#: lib/Multisites/Entity/Validator/Base/Template.php:47
-#, php-format
-msgid "Error! Length of field value must not be higher than %2$s (%1$s)."
-msgstr "Fehler! Die Länge des Feldes darf %2$s nicht überschreiten (%1$s)."
-
-#: lib/Multisites/Entity/Validator/Base/Site.php:95
-#, php-format
-msgid "Error! Field value must be a valid email address (%s)."
-msgstr "Fehler! Das Feld muss eine gültige E-Mail Adresse beinhalten (%s)."
-
-#: lib/Multisites/Entity/Validator/Base/Site.php:163
-#, php-format
-msgid "Error! Field value must be a valid boolean (%s)."
-msgstr "Fehler! Das Feld muss einen gültigen Boolean beinhalten (%s)."
-
-#: lib/Multisites/Entity/Site.php:194
-msgid "Error! Storing the site modules in the Multisites database failed."
-msgstr ""
-"Fehler! Speichern der Seitenmodule in der Multisites-Datenbank "
-"fehlgeschlagen."
-
-#: lib/Multisites/Entity/Site.php:249
-msgid "Error during deleting the database."
-msgstr "Fehler beim Löschen der Datenbank."
-
-#: lib/Multisites/Entity/Site.php:256
-msgid "Error during deleting the site files directory."
-msgstr "Fehler beim Löschen des Seiten-Dateiverzeichnisses."
-
-#: lib/Multisites/Entity/Site.php:321 lib/Multisites/Entity/Base/Site.php:1857
-#: lib/Multisites/Entity/Base/Site.php:1858
-msgid "Create site extension"
-msgstr "Seiten-Erweiterung erstellen"
-
-#: lib/Multisites/Entity/Site.php:323 lib/Multisites/Entity/Base/Site.php:1835
-#: lib/Multisites/Entity/Base/Site.php:1836
-#: workflows/function.none_permissioncheck.php:74
-#: Resources/config/templates/Multisites/template/view.tpl:203
-#: Resources/config/templates/Multisites/project/view.tpl:138
-#: Resources/config/templates/Multisites/site/delete.tpl:12
-#: Resources/config/templates/Multisites/site/delete.tpl:67
-#: Resources/config/templates/Multisites/site/view.tpl:232
-#: templates/template/view.tpl:136 templates/project/view.tpl:116
-#: templates/siteExtension/view.tpl:135 templates/site/delete.tpl:12
-#: templates/site/delete.tpl:28 templates/site/view.tpl:305
-msgid "Delete"
-msgstr "Löschen"
-
-#: lib/Multisites/Entity/Site.php:332
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:9
-msgid "Manage the modules for this site"
-msgstr "Die Module für diese Seite verwalten"
-
-#: lib/Multisites/Entity/Site.php:333
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:6
-msgid "Allowed extensions"
-msgstr "Erlaubte Erweiterungen"
-
-#: lib/Multisites/Entity/Site.php:339
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:9
-msgid "Manage the themes for this site"
-msgstr "Die Themes für diese Seite verwalten"
-
-#: lib/Multisites/Entity/Site.php:340
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:6
-msgid "Allowed layouts"
-msgstr "Erlaubte Layouts"
-
-#: lib/Multisites/Entity/Site.php:348
-msgid "Export the database as SQL file"
-msgstr "Die Datenbank als SQL-Datei exportieren"
-
-#: lib/Multisites/Entity/Site.php:349
-msgid "Database SQL Export"
-msgstr "Datenbank SQL-Export"
-
-#: lib/Multisites/Entity/Site.php:356 lib/Multisites/Entity/Site.php:357
-#: Resources/config/templates/Multisites/site/viewTools.tpl:5
-msgid "Site tools"
-msgstr "Seiten-Werkzeuge"
-
-#: lib/Multisites/Entity/Base/Site.php:1569
-#: lib/Multisites/Entity/Base/Project.php:638
-#: lib/Multisites/Entity/Base/SiteExtension.php:622
-#: lib/Multisites/Entity/Base/Template.php:893
-msgid "Error! Could not remove stored workflow. Deletion has been aborted."
-msgstr ""
-"Fehler! Der gespeicherte Workflow konnte nicht entfernt werden. Die Löschung "
-"wurde abgebrochen."
-
-#: lib/Multisites/Entity/Base/Site.php:1734
-#: lib/Multisites/Entity/Base/Project.php:789
-#: lib/Multisites/Entity/Base/SiteExtension.php:775
-#: lib/Multisites/Entity/Base/Template.php:1058
-msgid "Error! Could not load the associated workflow."
-msgstr "Fehler! Der assoziierte Workflow konnte nicht geladen werden."
-
-#: lib/Multisites/Entity/Base/Site.php:1821
-#: lib/Multisites/Entity/Base/Site.php:1822
-#: lib/Multisites/Entity/Base/Project.php:872
-#: lib/Multisites/Entity/Base/Project.php:873
-#: lib/Multisites/Entity/Base/SiteExtension.php:858
-#: lib/Multisites/Entity/Base/SiteExtension.php:859
-#: lib/Multisites/Entity/Base/Template.php:1141
-#: lib/Multisites/Entity/Base/Template.php:1142
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: lib/Multisites/Entity/Base/Site.php:1827
-#: lib/Multisites/Entity/Base/Project.php:878
-#: lib/Multisites/Entity/Base/SiteExtension.php:864
-#: lib/Multisites/Entity/Base/Template.php:1147
-msgid "Reuse for new item"
-msgstr "Für neuen Eintrag wiederverwenden"
-
-#: lib/Multisites/Entity/Base/Site.php:1828
-#: lib/Multisites/Entity/Base/Project.php:879
-#: lib/Multisites/Entity/Base/SiteExtension.php:865
-#: lib/Multisites/Entity/Base/Template.php:1148
-msgid "Reuse"
-msgstr "Wiederverwenden"
-
-#: lib/Multisites/Entity/Base/Project.php:900
-#: lib/Multisites/Entity/Base/Project.php:901
-#: lib/Multisites/Entity/Base/Template.php:1169
-#: lib/Multisites/Entity/Base/Template.php:1170
-#: Resources/config/templates/Multisites/site/edit.tpl:16
-#: Resources/config/templates/Multisites/site/view.tpl:23
-#: templates/site/edit.tpl:16 templates/site/view.tpl:23
-msgid "Create site"
-msgstr "Seite erstellen"
-
-#: lib/Multisites/Entity/Base/Project.php:914
-#: lib/Multisites/Entity/Base/Project.php:915
-#: Resources/config/templates/Multisites/template/edit.tpl:16
-#: Resources/config/templates/Multisites/template/view.tpl:23
-#: templates/template/edit.tpl:16 templates/template/view.tpl:23
-msgid "Create template"
-msgstr "Vorlage erstellen"
-
-#: lib/Multisites/Entity/Base/Template.php:1183
-#: lib/Multisites/Entity/Base/Template.php:1184
-#: lib/Multisites/Entity/Template.php:166
-#: Resources/config/templates/Multisites/project/edit.tpl:16
-#: Resources/config/templates/Multisites/project/view.tpl:23
-#: templates/project/edit.tpl:16 templates/project/view.tpl:23
-msgid "Create project"
-msgstr "Projekt erstellen"
-
-#: lib/Multisites/Entity/Template.php:175
-msgid "Create a CSV file for the defined parameters"
-msgstr "Eine CSV-Datei für die definierten Parameter erstellen"
-
-#: lib/Multisites/Entity/Template.php:176
-msgid "Parameters CSV"
-msgstr "Parameter CSV"
-
-#: lib/Multisites/Entity/Template.php:182
-msgid "Reapply template to all assigned sites"
-msgstr "Vorlage auf alle zugeordneten Seiten neu anwenden"
-
-#: lib/Multisites/Entity/Template.php:183
-#: Resources/config/templates/Multisites/template/reapply.tpl:8
-msgid "Reapply template"
-msgstr "Vorlage neu anwenden"
-
-#: lib/Multisites/Entity/Repository/Base/Site.php:196
-#: Resources/config/templates/Multisites/site/view.tpl:186
-#: Resources/config/templates/Multisites/site/view.tpl:189
-#: templates/site/view.tpl:246 templates/site/view.tpl:249
-msgid "No"
-msgstr "Nein"
-
-#: lib/Multisites/Entity/Repository/Base/Site.php:197
-#: Resources/config/templates/Multisites/site/view.tpl:185
-#: Resources/config/templates/Multisites/site/view.tpl:188
-#: templates/site/view.tpl:245 templates/site/view.tpl:248
-msgid "Yes"
-msgstr "Ja"
-
-#: lib/Multisites/Entity/Repository/Base/Site.php:281
-#: lib/Multisites/Entity/Repository/Base/Site.php:308
-#: lib/Multisites/Entity/Repository/Base/Site.php:333
-#: lib/Multisites/Entity/Repository/Base/Site.php:358
-#: lib/Multisites/Entity/Repository/Base/Project.php:247
-#: lib/Multisites/Entity/Repository/Base/Project.php:274
-#: lib/Multisites/Entity/Repository/Base/Project.php:299
-#: lib/Multisites/Entity/Repository/Base/Project.php:324
-#: lib/Multisites/Entity/Repository/Base/SiteExtension.php:252
-#: lib/Multisites/Entity/Repository/Base/SiteExtension.php:279
-#: lib/Multisites/Entity/Repository/Base/SiteExtension.php:304
-#: lib/Multisites/Entity/Repository/Base/SiteExtension.php:329
-#: lib/Multisites/Entity/Repository/Base/Template.php:255
-#: lib/Multisites/Entity/Repository/Base/Template.php:282
-#: lib/Multisites/Entity/Repository/Base/Template.php:307
-#: lib/Multisites/Entity/Repository/Base/Template.php:332
-msgid "Invalid user identifier received."
-msgstr "Fehler! Ungültigen Benutzer Identifier erhalten."
-
-#: workflows/function.none_permissioncheck.php:56
-msgid "None workflow (no approval)"
-msgstr "Kein Workflow (keine Freigabe)"
-
-#: workflows/function.none_permissioncheck.php:57
-msgid ""
-"This is like a non-existing workflow. Everything is online immediately after "
-"creation."
-msgstr ""
-"Dies ist wie ein nicht existierender Workflow. Alles ist sofort nach der "
-"Erstellung online."
-
-#: workflows/function.none_permissioncheck.php:61
-msgid "Pseudo-state for content which is just created and not persisted yet."
-msgstr ""
-"Pseudo-Zustand für Inhalt, der gerade erstellt wird und noch nicht "
-"persistiert wurde."
-
-#: workflows/function.none_permissioncheck.php:63
-msgid "Pseudo-state for content which has been deleted from the database."
-msgstr "Pseudo-Zustand für Inhalt, der aus der Datenbank gelöscht wurde."
-
-#: workflows/function.none_permissioncheck.php:69
-#: Resources/config/templates/Multisites/template/view.tpl:205
-#: Resources/config/templates/Multisites/project/view.tpl:140
-#: Resources/config/templates/Multisites/site/view.tpl:234
-#: templates/template/view.tpl:138 templates/project/view.tpl:118
-#: templates/siteExtension/view.tpl:137 templates/site/view.tpl:307
-msgid "Submit"
-msgstr "Abschicken"
-
-#: workflows/function.none_permissioncheck.php:69
-msgid "Submit content."
-msgstr "Inhalt absenden."
-
-#: workflows/function.none_permissioncheck.php:73
-msgid "Update"
-msgstr "Ändern"
-
-#: workflows/function.none_permissioncheck.php:73
-msgid "Update content."
-msgstr "Inhalt ändern."
-
-#: workflows/function.none_permissioncheck.php:74
-#: Resources/config/templates/Multisites/template/view.tpl:203
-#: Resources/config/templates/Multisites/project/view.tpl:138
-#: Resources/config/templates/Multisites/site/view.tpl:232
-#: templates/template/view.tpl:136 templates/project/view.tpl:116
-#: templates/siteExtension/view.tpl:135 templates/site/view.tpl:305
-msgid "Delete content permanently."
-msgstr "Den Inhalt permanent löschen."
-
-#: templates/plugins/function.multisitesValidationError.php:36
-msgid "This is a required field."
-msgstr "Dies ist eine Pflichtangabe."
-
-#: templates/plugins/function.multisitesValidationError.php:37
-msgid "Please enter a valid number in this field."
-msgstr "Bitte eine Zahl eingeben."
-
-#: templates/plugins/function.multisitesValidationError.php:38
-msgid ""
-"Please use numbers only in this field. please avoid spaces or other "
-"characters such as dots or commas."
-msgstr ""
-"Bitte in diesem Feld nur Zahlen verwenden, keine Leerzeichen oder andere "
-"Zeichen wie Punkte oder Kommas."
-
-#: templates/plugins/function.multisitesValidationError.php:39
-msgid "Please use letters only (a-z) in this field."
-msgstr "Bitte in diesem Feld nur Buchstaben (a-z) verwenden."
-
-#: templates/plugins/function.multisitesValidationError.php:40
-msgid ""
-"Please use only letters (a-z) or numbers (0-9) only in this field. No spaces "
-"or other characters are allowed."
-msgstr ""
-"Bitte in diesem Feld nur Buchstaben (a-z) oder Zahlen (0-9) verwenden. "
-"Andere Zeichen wie Leerzeichen sind nicht erlaubt."
-
-#: templates/plugins/function.multisitesValidationError.php:41
-msgid "Please enter a valid date."
-msgstr "Bitte ein Datum eingeben."
-
-#: templates/plugins/function.multisitesValidationError.php:42
-msgid "Please enter a valid email address. For example yourname@example.com ."
-msgstr "Bitte eine E-Mail Adresse eingeben. Zum Beispiel fred@domain.com ."
-
-#: templates/plugins/function.multisitesValidationError.php:43
-msgid "Please enter a valid URL."
-msgstr "Bitte eine URL angeben."
-
-#: templates/plugins/function.multisitesValidationError.php:44
-msgid ""
-"Please use this date format: dd/mm/yyyy. For example 17/03/2010 for the 17th "
-"of March, 2010."
-msgstr ""
-"Bitte dieses Datumsformat verwenden: dd/mm/yyyy. Zum Beispiel 17/03/2010 (= "
-"17. März 2010)."
-
-#: templates/plugins/function.multisitesValidationError.php:45
-msgid "Please enter a valid $ amount. For example $100.00 ."
-msgstr "Bitte einen $-Betrag eingeben. Zum Beispiel $100.00 ."
-
-#: templates/plugins/function.multisitesValidationError.php:46
-msgid "Please make a selection."
-msgstr "Bitte eine Auswahl treffen."
-
-#: templates/plugins/function.multisitesValidationError.php:47
-msgid "Please select one of the above options."
-msgstr "Bitte eine der obigen Optionen auswählen."
-
-#: templates/plugins/function.multisitesValidationError.php:50
-msgid "This value must not contain spaces."
-msgstr "Dieser Wert darf keine Leerzeichen enthalten."
-
-#: templates/plugins/function.multisitesValidationError.php:51
-msgid "Please select an allowed file type."
-msgstr "Bitte einen erlaubten Dateityp auswählen."
-
-#: templates/plugins/function.multisitesValidationError.php:52
-#: templates/plugins/function.multisitesValidationError.php:54
-#: templates/plugins/function.multisitesValidationError.php:56
-msgid "Please select a value in the past."
-msgstr "Bitte einen Wert aus der Vergangenheit auswählen."
-
-#: templates/plugins/function.multisitesValidationError.php:53
-#: templates/plugins/function.multisitesValidationError.php:55
-#: templates/plugins/function.multisitesValidationError.php:57
-msgid "Please select a value in the future."
-msgstr "Bitte einen Wert aus der Zukunft auswählen."
-
-#: templates/plugins/function.multisitesValidationError.php:58
-msgid "This value is already assigned, but must be unique. Please change it."
-msgstr ""
-"Dieser Wert wird bereits verwendet, muss jedoch eindeutig sein. Bitte einen "
-"anderen Wert auswählen."
-
-#: templates/plugins/function.multisitesTemplateSelector.php:30
-msgid "Only item titles"
-msgstr "Nur Titel der Einträge"
-
-#: templates/plugins/function.multisitesTemplateSelector.php:31
-msgid "With description"
-msgstr "Mit Beschreibung"
-
-#: templates/plugins/function.multisitesTemplateSelector.php:32
-msgid "Custom template"
-msgstr "Eigene Vorlage"
-
-#: templates/plugins/function.multisitesTemplateHeaders.php:31
-#, php-format
-msgid "%1$s: missing parameter '%2$s'"
-msgstr "%1$s: Fehlender Parameter '%2$s'"
-
-#: templates/plugins/function.multisitesObjectTypeSelector.php:32
-msgid "Site extensions"
-msgstr "Seiten-Erweiterungen"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:11
-#: Resources/config/templates/Multisites/template/edit.tpl:21
-#: templates/template/edit.tpl:11 templates/template/edit.tpl:21
-msgid "Edit template"
-msgstr "Vorlage bearbeiten"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:42
-#: Resources/config/templates/Multisites/project/edit.tpl:42
-#: templates/template/edit.tpl:42 templates/project/edit.tpl:42
-#: templates/site/edit.tpl:42
-msgid "Content"
-msgstr "Inhalt"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:45
-#: Resources/config/templates/Multisites/template/reapply.tpl:28
-#: Resources/config/templates/Multisites/template/view.tpl:71
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:53
-#: Resources/config/templates/Multisites/project/edit.tpl:45
-#: Resources/config/templates/Multisites/project/view.tpl:66
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:53
-#: Resources/config/templates/Multisites/site/delete.tpl:27
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:13
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:27
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:13
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:27
-#: Resources/config/templates/Multisites/site/view.tpl:83
-#: Resources/config/templates/Multisites/site/viewTools.tpl:12
-#: templates/template/edit.tpl:45 templates/template/view.csv.tpl:3
-#: templates/template/view.tpl:66 templates/template/view_quickNav.tpl:32
-#: templates/project/edit.tpl:45 templates/project/view.csv.tpl:3
-#: templates/project/view.tpl:64 templates/project/view_quickNav.tpl:32
-#: templates/siteExtension/view.csv.tpl:3 templates/siteExtension/view.tpl:61
-#: templates/siteExtension/view_quickNav.tpl:52 templates/site/edit.tpl:45
-#: templates/site/view.csv.tpl:3 templates/site/view.tpl:85
-#: templates/site/view_quickNav.tpl:74
-msgid "Name"
-msgstr "Name"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:46
-#: templates/template/edit.tpl:46
-msgid "Enter the name of the template"
-msgstr "Gebe den Namen der Vorlage ein"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:51
-#: Resources/config/templates/Multisites/template/view.tpl:74
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:54
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:29
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:29
-#: Resources/config/templates/Multisites/site/view.tpl:86
-#: templates/template/edit.tpl:51 templates/template/view.csv.tpl:3
-#: templates/template/view.tpl:69 templates/template/view_quickNav.tpl:33
-#: templates/site/edit.tpl:51 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:88 templates/site/view_quickNav.tpl:75
-msgid "Description"
-msgstr "Beschreibung"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:52
-#: templates/template/edit.tpl:52
-msgid "Enter the description of the template"
-msgstr "Beschreibe die Vorlage ausführlich"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:57
-msgid "Template data"
-msgstr "Vorlagen-Daten"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:60
-#: Resources/config/templates/Multisites/template/view.tpl:77
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:55
-#: templates/template/edit.tpl:60 templates/template/view.csv.tpl:3
-#: templates/template/view.tpl:72 templates/template/view_quickNav.tpl:34
-msgid "Sql file"
-msgstr "SQL-Datei"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:63
-#: Resources/config/templates/Multisites/site/edit.tpl:210
-#: Resources/config/templates/Multisites/site/edit.tpl:237
-#: Resources/config/templates/Multisites/site/edit.tpl:271
-#: templates/template/edit.tpl:65 templates/site/edit.tpl:140
-#: templates/site/edit.tpl:167 templates/site/edit.tpl:194
-msgid "Reset to empty value"
-msgstr "Auf leeren Wert zurücksetzen"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:66
-#: Resources/config/templates/Multisites/site/edit.tpl:212
-#: Resources/config/templates/Multisites/site/edit.tpl:239
-#: Resources/config/templates/Multisites/site/edit.tpl:273
-#: templates/template/edit.tpl:68 templates/site/edit.tpl:142
-#: templates/site/edit.tpl:169 templates/site/edit.tpl:196
-msgid "Allowed file extensions:"
-msgstr "Erlaubte Dateierweiterungen:"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:71
-#: Resources/config/templates/Multisites/site/edit.tpl:216
-#: Resources/config/templates/Multisites/site/edit.tpl:243
-#: Resources/config/templates/Multisites/site/edit.tpl:277
-#: templates/template/edit.tpl:72 templates/site/edit.tpl:146
-#: templates/site/edit.tpl:173 templates/site/edit.tpl:200
-msgid "Current file"
-msgstr "Aktuelle Datei"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:76
-#: Resources/config/templates/Multisites/template/view.tpl:117
-#: Resources/config/templates/Multisites/site/edit.tpl:221
-#: Resources/config/templates/Multisites/site/edit.tpl:248
-#: Resources/config/templates/Multisites/site/edit.tpl:282
-#: Resources/config/templates/Multisites/site/view.tpl:127
-#: templates/template/edit.tpl:77 templates/template/view.tpl:97
-#: templates/site/edit.tpl:151 templates/site/edit.tpl:178
-#: templates/site/edit.tpl:205 templates/site/view.tpl:214
-#: templates/site/view.tpl:225 templates/site/view.tpl:236
-msgid "Download"
-msgstr "Download"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:87
-msgid "or select an existing file"
-msgstr "oder wähle eine bestehende Datei"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:95
-msgid "Advanced options"
-msgstr "Erweiterte Optionen"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:97
-#: Resources/config/templates/Multisites/template/view.tpl:89
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:56
-#: templates/template/view.csv.tpl:3 templates/template/view_quickNav.tpl:36
-msgid "Folders"
-msgstr "Ordner"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:98
-msgid "Enter additional folders of the template"
-msgstr "Gebe zusätzliche Ordner der Vorlage ein"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:99
-msgid ""
-"Enter the folders to be created for new sites separated by line breaks. If "
-"you need a folder within another one you can write expressions like \"folder/"
-"folder\"."
-msgstr ""
-"Gebe Ordner an, die für neue Seiten erstellt werden sollen, getrennt durch "
-"Zeilenumbrüche. Auch Unterordner sind möglich durch Ausdrücke wie \"ordner/"
-"unterordner\"."
-
-#: Resources/config/templates/Multisites/template/edit.tpl:102
-#: Resources/config/templates/Multisites/template/view.tpl:92
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:57
-#: templates/template/view.csv.tpl:3 templates/template/view_quickNav.tpl:37
-msgid "Excluded tables"
-msgstr "Ausgeschlossene Tabellen"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:103
-msgid "Enter table names to be excluded from reapplications"
-msgstr ""
-"Gebe Tabellennamen ein, die von erneuten Anwendungen ausgeschlossen werden "
-"sollen"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:104
-msgid ""
-"Enter the names of database tables which should be skipped during template "
-"reapplications separated by line breaks. With this you can for example avoid "
-"overriding your local user table."
-msgstr ""
-"Gebe die Namen der Datenbanktabellen ein (getrennt durch Zeilenumbrüche), "
-"die während erneuten Anwendungen der Vorlage übersprungen werden sollen. "
-"Damit kann man beispielsweise das Überschreiben der lokalen Benutzertabelle "
-"vermeiden."
-
-#: Resources/config/templates/Multisites/template/edit.tpl:107
-#: Resources/config/templates/Multisites/template/view.tpl:86
-#: templates/template/view.csv.tpl:3 templates/template/view_quickNav.tpl:35
-msgid "Parameters"
-msgstr "Parameter"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:108
-msgid "Enter required parameter names for this template"
-msgstr "Gebe die benötigten Parameternamen für diese Vorlage ein"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:109
-msgid ""
-"Enter parameter names separated by line breaks. Each parameter represents a "
-"variable information which is being replaced by concrete values when "
-"creating a new site or reapplying the template on existing sites. The "
-"parameter names can be used as placeholders anywhere in the template data "
-"accordingly."
-msgstr ""
-"Gebe Parameternamen getrennt durch Zeilenumbrüche ein. Jeder Parameter "
-"repräsentiert eine variable Information, die beim Erstellen einer neuen "
-"Seite oder dem erneuten Anwenden der Vorlage auf bestehende Seiten durch "
-"konkrete Werte ersetzt wird. Die Namen der Parameter können entsprechend als "
-"Platzhalter irgendwo in den Daten der Vorlage verwendet werden."
-
-#: Resources/config/templates/Multisites/template/edit.tpl:110
-msgid "Placeholder syntax: ###PARAMETERNAME###"
-msgstr "Platzhalter-Syntax: ###PARAMETERNAME###"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:137
-#: Resources/config/templates/Multisites/project/edit.tpl:74
-#: Resources/config/templates/Multisites/site/edit.tpl:326
-#: templates/template/edit.tpl:112 templates/project/edit.tpl:74
-#: templates/site/edit.tpl:249
-msgid "Return control"
-msgstr "Rücksprungskontrolle"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:139
-#: Resources/config/templates/Multisites/project/edit.tpl:76
-#: Resources/config/templates/Multisites/site/edit.tpl:328
-#: templates/template/edit.tpl:114 templates/project/edit.tpl:76
-#: templates/site/edit.tpl:251
-msgid "Create another item after save"
-msgstr "Nach dem Speichern noch einen Eintrag erstellen"
-
-#: Resources/config/templates/Multisites/template/edit.tpl:152
-msgid ""
-"Really delete this template? This includes deletion of assigned parameters "
-"and sites, too!"
-msgstr ""
-"Diese Vorlage wirklich löschen? Dies beinhaltet auch die Löschung "
-"zugewiesener Parameter und Seiten!"
-
-#: Resources/config/templates/Multisites/template/reapply.tpl:12
-#: Resources/config/templates/Multisites/template/reapply.tpl:41
-msgid "Reapply"
-msgstr "Neu anwenden"
-
-#: Resources/config/templates/Multisites/template/reapply.tpl:25
-#: Resources/config/templates/Multisites/template/include_selectOne.tpl:9
-#: Resources/config/templates/Multisites/template/include_selectOne.tpl:14
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:15
-#: Resources/config/templates/Multisites/site/view.tpl:165
-#: templates/template/include_selectOne.tpl:9
-#: templates/template/include_selectOne.tpl:14 templates/site/view.csv.tpl:4
-#: templates/site/view.tpl:145
-msgid "Template"
-msgstr "Vorlage"
-
-#: Resources/config/templates/Multisites/template/reapply.tpl:34
-#: Resources/config/templates/Multisites/site/delete.tpl:62
-#: templates/site/delete.tpl:26
-msgid "Confirmation prompt"
-msgstr "Bestätigungsabfrage"
-
-#: Resources/config/templates/Multisites/template/reapply.tpl:36
-msgid "Do you really want to reapply this template ?"
-msgstr "Soll diese Vorlage wirklich neu angewendet werden?"
-
-#: Resources/config/templates/Multisites/template/reapply.tpl:38
-msgid ""
-"Caution: this reapplies the template data again to all assigned sites. All "
-"database tables except excluded ones will be dropped and recreated."
-msgstr ""
-"Achtung: dies wendet die Daten der Vorlage auf alle zugeordneten Seiten neu "
-"an. Alle Datenbanktabellen außer den ausgeschlossenen werden gelöscht und "
-"neu angelegt."
-
-#: Resources/config/templates/Multisites/template/view.tpl:8
-#: templates/template/view.tpl:8
-msgid "Template list"
-msgstr "Liste der Vorlagen"
-
-#: Resources/config/templates/Multisites/template/view.tpl:19
-#: templates/template/view.tpl:19
-msgid ""
-"A site template represents a blueprint for several sites. Each template may "
-"be assigned to all or specific projects."
-msgstr ""
-"Eine Seitenvorlage repräsentiert eine Blaupause für mehrere Seiten. Jede "
-"Vorlage kann allen oder lediglich bestimmten Projekten zugeordnet werden."
-
-#: Resources/config/templates/Multisites/template/view.tpl:33
-#: Resources/config/templates/Multisites/project/view.tpl:33
-#: Resources/config/templates/Multisites/site/view.tpl:33
-#: templates/template/view.tpl:33 templates/project/view.tpl:33
-#: templates/siteExtension/view.tpl:27 templates/site/view.tpl:33
-msgid "Back to paginated view"
-msgstr "Zurück zur Seitenansicht"
-
-#: Resources/config/templates/Multisites/template/view.tpl:37
-#: Resources/config/templates/Multisites/project/view.tpl:37
-#: Resources/config/templates/Multisites/site/view.tpl:37
-#: templates/template/view.tpl:37 templates/project/view.tpl:37
-#: templates/siteExtension/view.tpl:31 templates/site/view.tpl:37
-msgid "Show all entries"
-msgstr "Alle Einträge anzeigen"
-
-#: Resources/config/templates/Multisites/template/view.tpl:94
-#: Resources/config/templates/Multisites/template/view.tpl:170
-#: Resources/config/templates/Multisites/project/view.tpl:74
-#: Resources/config/templates/Multisites/project/view.tpl:105
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:30
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:30
-#: Resources/config/templates/Multisites/site/view.tpl:109
-#: Resources/config/templates/Multisites/site/view.tpl:198
-#: templates/template/view.tpl:74 templates/template/view.tpl:103
-#: templates/project/view.tpl:66 templates/project/view.tpl:83
-#: templates/siteExtension/view.tpl:72 templates/siteExtension/view.tpl:102
-#: templates/site/view.tpl:150 templates/site/view.tpl:272
-msgid "Actions"
-msgstr "Aktionen"
-
-#: Resources/config/templates/Multisites/template/view.tpl:129
-#: Resources/config/templates/Multisites/template/view.tpl:143
-#: Resources/config/templates/Multisites/template/view.tpl:154
-#: Resources/config/templates/Multisites/template/view.tpl:165
-#: Resources/config/templates/Multisites/project/view.tpl:97
-msgid "None"
-msgstr "Keine"
-
-#: Resources/config/templates/Multisites/template/view.tpl:133
-msgid "View sites assigned to this template"
-msgstr "Dieser Vorlage zugeordnete Seiten anschauen"
-
-#: Resources/config/templates/Multisites/template/view.tpl:133
-#: Resources/config/templates/Multisites/project/view.tpl:101
-#: Resources/config/templates/Multisites/site/view.tpl:8
-#: templates/site/view.tpl:8
-msgid "Site list"
-msgstr "Seitenliste"
-
-#: Resources/config/templates/Multisites/template/view.tpl:187
-#: templates/template/view.tpl:120
-msgid "No templates found."
-msgstr "Keine Vorlagen gefunden."
-
-#: Resources/config/templates/Multisites/template/view.tpl:200
-#: templates/template/view.tpl:133
-msgid "With selected templates"
-msgstr "Die ausgewählten Vorlagen"
-
-#: Resources/config/templates/Multisites/template/view.tpl:202
-#: Resources/config/templates/Multisites/project/view.tpl:137
-#: Resources/config/templates/Multisites/site/view.tpl:230
-#: templates/template/view.tpl:135 templates/project/view.tpl:115
-#: templates/siteExtension/view.tpl:134 templates/site/view.tpl:304
-msgid "Choose action"
-msgstr "Aktion wählen"
-
-#: Resources/config/templates/Multisites/template/include_selectOne.tpl:17
-#: templates/template/include_selectOne.tpl:17
-msgid "Choose template"
-msgstr "Vorlage wählen"
-
-#: Resources/config/templates/Multisites/template/include_selectOne.tpl:18
-#: Resources/config/templates/Multisites/template/include_selectOne.tpl:24
-#: templates/template/include_selectOne.tpl:18
-#: templates/template/include_selectOne.tpl:24
-msgid "Choose the template"
-msgstr "Die Vorlage auswählen"
-
-#: Resources/config/templates/Multisites/template/include_selectOne.tpl:36
-msgid ""
-"If you decouple a site from the template it is not affected by future "
-"reapplications of this template anymore, but is configured and maintained "
-"independently. If you reassign a decoupled site to a template again this "
-"template is reapplied for that site."
-msgstr ""
-"Wird eine Seite von der Vorlage entkoppelt, ist diese nicht mehr von "
-"zukünftigen Neuanwendungen dieser Vorlage betroffen, sondern wird unabhängig "
-"konfiguriert und gewartet. Wird eine entkoppelte Seite wieder einer Vorlage "
-"zugewiesen, wird diese Vorlage für die Seite neu angewendet."
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:6
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:6
-#: templates/template/view_quickNav.tpl:6
-#: templates/project/view_quickNav.tpl:6
-#: templates/siteExtension/view_quickNav.tpl:6
-#: templates/site/view_quickNav.tpl:6
-msgid "Quick navigation"
-msgstr "Schnellnavigation"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:13
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:13
-#: Resources/config/templates/Multisites/site/view.tpl:42
-#: Resources/config/templates/Multisites/site/view.tpl:178
-#: templates/template/view_quickNav.tpl:13
-#: templates/project/view_quickNav.tpl:13
-#: templates/siteExtension/view_quickNav.tpl:13
-#: templates/site/view_quickNav.tpl:13
-msgid "All"
-msgstr "Alle"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:15
-#: Resources/config/templates/Multisites/site/view.tpl:164
-#: templates/project/include_selectOne.tpl:9
-#: templates/project/include_selectOne.tpl:14 templates/site/view.csv.tpl:4
-#: templates/site/view.tpl:148
-msgid "Project"
-msgstr "Projekt"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:36
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:36
-#: templates/template/view.csv.tpl:3 templates/template/view_quickNav.tpl:15
-#: templates/project/view.csv.tpl:3 templates/project/view_quickNav.tpl:15
-#: templates/siteExtension/view.csv.tpl:3
-#: templates/siteExtension/view_quickNav.tpl:26 templates/site/view.csv.tpl:3
-#: templates/site/view_quickNav.tpl:57
-msgid "Workflow state"
-msgstr "Workflow-Zustand"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:45
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:45
-#: templates/template/view_quickNav.tpl:24
-#: templates/project/view_quickNav.tpl:24
-#: templates/siteExtension/view_quickNav.tpl:44
-#: templates/site/view_quickNav.tpl:66
-msgid "Search"
-msgstr "Suche"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:49
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:49
-#: templates/template/view_quickNav.tpl:28
-#: templates/project/view_quickNav.tpl:28
-#: templates/siteExtension/view_quickNav.tpl:48
-#: templates/site/view_quickNav.tpl:70
-msgid "Sort by"
-msgstr "Sortieren nach"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:52
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:52
-#: templates/template/view_quickNav.tpl:31
-#: templates/project/view_quickNav.tpl:31
-#: templates/siteExtension/view_quickNav.tpl:51
-#: templates/site/view_quickNav.tpl:73
-msgid "Id"
-msgstr "ID"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:58
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:54
-#: Resources/config/templates/Multisites/site/view.tpl:167
-#: templates/template/view_quickNav.tpl:38
-#: templates/project/view_quickNav.tpl:33
-#: templates/siteExtension/view_quickNav.tpl:55
-#: templates/site/view_quickNav.tpl:96
-msgid "Creation date"
-msgstr "Erstellungsdatum"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:59
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:55
-#: templates/template/view_quickNav.tpl:39
-#: templates/project/view_quickNav.tpl:34
-#: templates/siteExtension/view_quickNav.tpl:56
-#: templates/site/view_quickNav.tpl:97
-msgid "Creator"
-msgstr "Ersteller"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:60
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:56
-#: templates/template/view_quickNav.tpl:40
-#: templates/project/view_quickNav.tpl:35
-#: templates/siteExtension/view_quickNav.tpl:57
-#: templates/site/view_quickNav.tpl:98
-msgid "Update date"
-msgstr "Änderungsdatum"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:63
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:59
-#: templates/template/view_quickNav.tpl:43
-#: templates/project/view_quickNav.tpl:38
-#: templates/siteExtension/view_quickNav.tpl:60
-#: templates/site/view_quickNav.tpl:101
-msgid "ascending"
-msgstr "aufsteigend"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:64
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:60
-#: templates/template/view_quickNav.tpl:44
-#: templates/project/view_quickNav.tpl:39
-#: templates/siteExtension/view_quickNav.tpl:61
-#: templates/site/view_quickNav.tpl:102
-msgid "descending"
-msgstr "absteigend"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:71
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:67
-#: templates/template/view_quickNav.tpl:51
-#: templates/project/view_quickNav.tpl:46
-#: templates/siteExtension/view_quickNav.tpl:68
-#: templates/site/view_quickNav.tpl:109
-msgid "Page size"
-msgstr "Seitengröße"
-
-#: Resources/config/templates/Multisites/template/view_quickNav.tpl:82
-#: Resources/config/templates/Multisites/project/view_quickNav.tpl:78
-#: templates/template/view_quickNav.tpl:62
-#: templates/project/view_quickNav.tpl:57
-#: templates/siteExtension/view_quickNav.tpl:79
-#: templates/site/view_quickNav.tpl:129
-msgid "OK"
-msgstr "OK"
-
-#: Resources/config/templates/Multisites/admin/config.tpl:4
-#: Resources/config/templates/Multisites/admin/config.tpl:7
-#: Resources/config/templates/Multisites/admin/wizard.tpl:7
-#: templates/admin/config.tpl:4 templates/admin/config.tpl:7
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: Resources/config/templates/Multisites/admin/config.tpl:21
-#: templates/admin/config.tpl:16
-msgid "General"
-msgstr "Allgemein"
-
-#: Resources/config/templates/Multisites/admin/config.tpl:26
-#: templates/admin/config.tpl:21
-msgid "Here you can define general settings."
-msgstr "Hier können die grundlegenden Einstellungen verändert werden."
-
-#: Resources/config/templates/Multisites/admin/config.tpl:29
-msgid "Temporal folder .htaccess file content"
-msgstr "Inhalt der .htaccess-Datei des temporären Ordners"
-
-#: Resources/config/templates/Multisites/admin/config.tpl:30
-#: templates/admin/config.tpl:25
-msgid "Enter the temp access file content."
-msgstr "Bitte gebe den Inhalt der .htaccess-Datei des temporären Ordners ein."
-
-#: Resources/config/templates/Multisites/admin/config.tpl:34
-#: templates/admin/config.tpl:29
-msgid "Security settings"
-msgstr "Sicherheitseinstellungen"
-
-#: Resources/config/templates/Multisites/admin/config.tpl:39
-#: templates/admin/config.tpl:34
-msgid "Here you can define security-related settings."
-msgstr "Hier können sicherheitsbezogene Einstellungen verändert werden."
-
-#: Resources/config/templates/Multisites/admin/config.tpl:42
-#: templates/admin/config.tpl:37
-msgid "Global admin name"
-msgstr "Globaler Admin Name"
-
-#: Resources/config/templates/Multisites/admin/config.tpl:43
-#: templates/admin/config.tpl:38
-msgid "Enter the global admin name."
-msgstr "Bitte den (Nutzer-)Namen des globalen Administrators eingeben."
-
-#: Resources/config/templates/Multisites/admin/config.tpl:46
-#: templates/admin/config.tpl:41
-msgid "Global admin password"
-msgstr "Globaler Admin Kennwort"
-
-#: Resources/config/templates/Multisites/admin/config.tpl:47
-#: templates/admin/config.tpl:42
-msgid "Enter the global admin password."
-msgstr "Bitte das Kennwort des globalen Administrators eingeben."
-
-#: Resources/config/templates/Multisites/admin/config.tpl:50
-#: templates/admin/config.tpl:45
-msgid "Global admin email"
-msgstr "Globaler Admin E-Mail"
-
-#: Resources/config/templates/Multisites/admin/config.tpl:51
-#: templates/admin/config.tpl:46
-msgid "Enter the global admin email."
-msgstr "Bitte die E-Mail-Adresse des globalen Administrators eingeben."
-
-#: Resources/config/templates/Multisites/admin/config.tpl:58
-#: templates/admin/config.tpl:53
-msgid "Update configuration"
-msgstr "Konfiguration ändern"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:4
-msgid "Configuration wizard"
-msgstr "Konfigurationsassistent"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:12
-msgid "Step 1 - Checking the correct location of the configuration files"
-msgstr "Schritt 1 - Überprüfung des korrekten Ortes der Konfigurationsdateien"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:14
-#, php-format
-msgid ""
-"Please copy the files <strong>%1$s</strong> and <strong>%2$s</strong> into "
-"the Zikula <strong>config</strong> directory and give them writeable "
-"permissions."
-msgstr ""
-"Bitte kopiere die Dateien <strong>%1$s</strong> und <strong>%2$s</strong> in "
-"das <strong>config</strong>-Verzeichnis von Zikula und stelle ihre Rechte "
-"auf beschreibbar."
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:17
-msgid ""
-"If you have any problem you can recover the system to the previous state at "
-"any time by deleting both files again."
-msgstr ""
-"Bei Problemen kannst Du das System jederzeit durch Löschen beider Dateien in "
-"den vorherigen Zustand zurückversetzen."
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:24
-#: Resources/config/templates/Multisites/admin/wizard.tpl:44
-#, php-format
-msgid ""
-"The file <strong>%s</strong> has not been found and could not be copied "
-"automatically."
-msgstr ""
-"Die Datei <strong>%s</strong> wurde nicht gefunden und konnte nicht "
-"automatisch kopiert werden."
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:29
-#: Resources/config/templates/Multisites/admin/wizard.tpl:49
-#, php-format
-msgid "The file <strong>%s</strong> is located in the correct place."
-msgstr "Die Datei <strong>%s</strong> ist am richtigen Platz."
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:34
-#: Resources/config/templates/Multisites/admin/wizard.tpl:54
-#, php-format
-msgid "The file <strong>%s</strong> is not writeable, but it should be."
-msgstr ""
-"Fehler! Die Datei <strong>%s</strong> ist nicht beschreibbar, was aber der "
-"Fall sein sollte."
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:37
-#: Resources/config/templates/Multisites/admin/wizard.tpl:57
-#, php-format
-msgid "The file <strong>%s</strong> is writeable."
-msgstr "Die Datei <strong>%s</strong> ist beschreibbar."
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:63
-#: Resources/config/templates/Multisites/admin/wizard.tpl:119
-msgid "Check again"
-msgstr "Nochmal prüfen"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:68
-msgid "Step 2 - Checking whether the sites files directory exists"
-msgstr ""
-"Schritt 2 - Überprüfung der Existenz des Verzeichnisses für die Seitendateien"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:72
-msgid "Script Real Path"
-msgstr "Realer Skript-Pfad"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:76
-msgid "Physical location of the directory in the server"
-msgstr "Physischer Ort des Verzeichnisses auf dem Server"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:78
-msgid ""
-"This directory will be used to save the temporary and userdata files for the "
-"different sites."
-msgstr ""
-"Dieses Verzeichnis wird zum Speichern der temporären Dateien und "
-"Nutzerdateien für die unterschiedlichen Seiten verwendet."
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:81
-#: Resources/config/templates/Multisites/admin/wizard.tpl:105
-msgid "Save"
-msgstr "Speichern"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:86
-#, php-format
-msgid ""
-"Step 3 - Writing correct parameters into the <strong>%s.php</strong> file"
-msgstr ""
-"Schritt 3 - Schreiben der korrekten Parameter in die Datei <strong>%s</"
-"strong>"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:88
-#, php-format
-msgid ""
-"If you experience any problem you can delete the <strong>%1$s</strong> and "
-"<strong>%2$s</strong> files to recover the system to the previous state."
-msgstr ""
-"Bei Problemen kannst Du die Dateien <strong>%1$s</strong> und <strong>%2$s</"
-"strong> löschen, um das System in den vorherigen Zustand zurück zu versetzen."
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:93
-msgid "Main domain"
-msgstr "Haupt-Domain"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:97
-msgid "Sites temporal directory"
-msgstr "Temporäres Verzeichnis der Seite"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:101
-msgid "Sites data directory"
-msgstr "Verzeichnis der Seiten-Daten"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:110
-#, php-format
-msgid "Step 4 - Check if the %s file is not writeable anymore"
-msgstr ""
-"Schritt 4 - Sicherstellen, dass die Datei %s nicht mehr beschreibbar ist"
-
-#: Resources/config/templates/Multisites/admin/wizard.tpl:115
-#, php-format
-msgid ""
-"The <strong>%s</strong> file is writeable, but it should not be. Please set "
-"this file as not writeable."
-msgstr ""
-"Die Datei <strong>%s</strong> ist beschreibbar, sollte sie aber nicht sein. "
-"Bitte diese Datei auf nur-lesen stellen."
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:4
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:7
-#: templates/admin/multiplyQueries.tpl:4 templates/admin/multiplyQueries.tpl:7
-msgid "Multiply queries"
-msgstr "Abfragen vervielfachen"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:11
-msgid "This is an expert function! Use it only if you know about the effects."
-msgstr ""
-"Dies ist eine Expertenfunktion! Verwenden Sie sie nur, wenn Sie sich über "
-"die Auswirkungen im Klaren sind."
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:17
-msgid "Input data"
-msgstr "Eingabedaten"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:18
-msgid ""
-"Use <strong>`###DBNAME###`</strong> as a placeholder for the database name."
-msgstr ""
-"Benutzen Sie <strong>`###DBNAME###`</strong> als Platzhalter für den "
-"Datenbanknamen."
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:21
-msgid "Sql query"
-msgstr "SQL-Abfrage"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:25
-msgid "or sql file"
-msgstr "oder SQL-Datei"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:31
-msgid "Options"
-msgstr "Optionen"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:34
-msgid "Database hosts"
-msgstr "Datenbank-Server"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:43
-msgid "Database types"
-msgstr "Datenbank-Typen"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:52
-msgid "Operation mode"
-msgstr "Ausführungsmodus"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:54
-msgid "Show output sql"
-msgstr "Ausgabe-SQL anzeigen"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:55
-msgid "Execute sql directly"
-msgstr "SQL direkt ausführen"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:62
-msgid "Output data"
-msgstr "Ausgabedaten"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:65
-msgid "Output"
-msgstr "Ausgabe"
-
-#: Resources/config/templates/Multisites/admin/multiplyQueries.tpl:72
-msgid "Start"
-msgstr "Starten"
-
-#: Resources/config/templates/Multisites/admin/manageUpdates.tpl:4
-#: Resources/config/templates/Multisites/admin/manageUpdates.tpl:7
-#: templates/admin/manageUpdates.tpl:4 templates/admin/manageUpdates.tpl:7
-msgid "Manage updates"
-msgstr "Updates verwalten"
-
-#: Resources/config/templates/Multisites/admin/manageUpdates.tpl:11
-msgid "This functionality is not implemented yet."
-msgstr "Diese Funktionalität wurde noch nicht implementiert."
-
-#: Resources/config/templates/Multisites/admin/manageUpdates.tpl:12
-msgid "It is going to be added in Multisites version 2.1.0."
-msgstr "Sie wird in Multisites Version 2.1.0 hinzugefügt."
-
-#: Resources/config/templates/Multisites/admin/manageUpdates.tpl:13
-msgid "Please see this issue for more details:"
-msgstr "Für weitere Details bitte dieses Ticket anschauen:"
-
-#: Resources/config/templates/Multisites/admin/manageUpdates.tpl:13
-msgid "View issue at GitHub"
-msgstr "Ticket auf GitHub anschauen"
-
-#: Resources/config/templates/Multisites/project/edit.tpl:11
-#: Resources/config/templates/Multisites/project/edit.tpl:21
-#: templates/project/edit.tpl:11 templates/project/edit.tpl:21
-msgid "Edit project"
-msgstr "Projekt bearbeiten"
-
-#: Resources/config/templates/Multisites/project/edit.tpl:46
-#: templates/project/edit.tpl:46
-msgid "Enter the name of the project"
-msgstr "Gebe den Namen des Projektes ein"
-
-#: Resources/config/templates/Multisites/project/edit.tpl:89
-msgid ""
-"Really delete this project? This includes deletion of assigned templates and "
-"sites, too!"
-msgstr ""
-"Dieses Projekt wirklich löschen? Dies beinhaltet auch die Löschung "
-"zugewiesener Vorlagen und Seiten!"
-
-#: Resources/config/templates/Multisites/project/view.tpl:8
-#: templates/project/view.tpl:8
-msgid "Project list"
-msgstr "Projektliste"
-
-#: Resources/config/templates/Multisites/project/view.tpl:19
-#: templates/project/view.tpl:19
-msgid "Projects serve for grouping sites by clients or topics."
-msgstr "Projekte dienen der Gruppierung von Seiten nach Kunden oder Themen."
-
-#: Resources/config/templates/Multisites/project/view.tpl:101
-msgid "View sites assigned to this project"
-msgstr "Diesem Projekt zugeordnete Seiten anschauen"
-
-#: Resources/config/templates/Multisites/project/view.tpl:122
-#: templates/project/view.tpl:100
-msgid "No projects found."
-msgstr "Keine Projekte gefunden."
-
-#: Resources/config/templates/Multisites/project/view.tpl:135
-#: templates/project/view.tpl:113
-msgid "With selected projects"
-msgstr "Die ausgewählten Projekte"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:11
-#: Resources/config/templates/Multisites/site/edit.tpl:21
-#: templates/site/edit.tpl:11 templates/site/edit.tpl:21
-msgid "Edit site"
-msgstr "Seite bearbeiten"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:37
-msgid ""
-"Caution: updating a site causes reapplying the template data again to it. "
-"All database tables except excluded ones will be dropped and recreated."
-msgstr ""
-"Achtung: das Ändern einer Seite verursacht eine Neuanwendung der Daten der "
-"Vorlage auf diese Seite. Alle Datenbanktabellen außer den ausgeschlossenen "
-"werden gelöscht und neu angelegt."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:45
-msgid "Basic data"
-msgstr "Grundlegende Daten"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:48
-msgid "Name (internal)"
-msgstr "Interner Name"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:49
-#: templates/site/edit.tpl:46
-msgid "Enter the name of the site"
-msgstr "Gebe den internen Namen der Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:54
-msgid "Description (internal)"
-msgstr "Beschreibung (intern)"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:55
-#: templates/site/edit.tpl:52
-msgid "Enter the description of the site"
-msgstr "Gebe die interne Beschreibung der Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:60
-#: templates/site/edit.tpl:57
-msgid "Enter the site alias of the site"
-msgstr "Gebe ein Alias für diese Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:62
-msgid "The alias must be a lower case, unique string containing only letters."
-msgstr ""
-"Das Alias muss ein klein geschriebener, eindeutiger String sein, der nur "
-"Buchstaben enthält."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:67
-#: Resources/config/templates/Multisites/site/delete.tpl:32
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:14
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:14
-#: Resources/config/templates/Multisites/site/view.tpl:89
-#: Resources/config/templates/Multisites/site/viewTools.tpl:13
-#: templates/site/edit.tpl:62 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:94 templates/site/view_quickNav.tpl:77
-msgid "Site name"
-msgstr "Seiten-Name"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:68
-#: Resources/config/templates/Multisites/site/edit.tpl:71
-#: templates/site/edit.tpl:63
-msgid "Enter the site name of the site"
-msgstr "Gebe den Namen der Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:70
-msgid "Original site name"
-msgstr "Originaler Seiten-Name"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:77
-#: Resources/config/templates/Multisites/site/view.tpl:92
-#: templates/site/edit.tpl:68 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:97 templates/site/view_quickNav.tpl:78
-msgid "Site description"
-msgstr "Seiten-Beschreibung"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:78
-#: templates/site/edit.tpl:69
-msgid "Enter the site description of the site"
-msgstr "Gebe die Beschreibung der Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:82
-msgid "Site host or folder"
-msgstr "Seiten-Host oder -Ordner"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:85
-#: Resources/config/templates/Multisites/site/delete.tpl:37
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:15
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:15
-#: Resources/config/templates/Multisites/site/view.tpl:95
-#: Resources/config/templates/Multisites/site/viewTools.tpl:14
-#: templates/site/edit.tpl:102 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:115 templates/site/view_quickNav.tpl:84
-msgid "Site dns"
-msgstr "Seiten-DNS"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:87
-#: Resources/config/templates/Multisites/site/edit.tpl:89
-#: templates/site/edit.tpl:103
-msgid "Enter the site dns of the site"
-msgstr "Gebe die Domain bzw. den Ordnernamen für diese Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:92
-msgid ""
-"This is the domain or folder name under which this site should be reachable."
-msgstr ""
-"Dies ist der Domain- oder Verzeichnisname, unter dem die Seite erreichbar "
-"sein soll."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:96
-#: Resources/config/templates/Multisites/site/view.tpl:107
-#: templates/site/edit.tpl:219 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:142 templates/site/view_quickNav.tpl:95
-#: templates/site/view_quickNav.tpl:121
-msgid "Active"
-msgstr "Aktiv"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:97
-#: templates/site/edit.tpl:220
 msgid "active ?"
 msgstr "aktiv ?"
 
-#: Resources/config/templates/Multisites/site/edit.tpl:101
-msgid "Management information"
-msgstr "Verwaltungsinformationen"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:105
-#: templates/site/edit.tpl:73 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:100 templates/site/view_quickNav.tpl:79
-msgid "Site admin name"
-msgstr "Admin Name"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:106
-#: Resources/config/templates/Multisites/site/edit.tpl:110
-#: templates/site/edit.tpl:74
-msgid "Enter the site admin name of the site"
-msgstr "Gebe den (Nutzer-)Namen des Seiten-Administrators ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:107
-msgid ""
-"User names can contain letters, numbers, underscores, periods, or dashes."
-msgstr ""
-"Benutzernamen können Buchstaben, Zahlen, Unterstriche, Punkte oder Striche "
-"enthalten."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:109
-msgid "Original site admin name"
-msgstr "Originaler Site Admin Name"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:117
-#: templates/site/edit.tpl:79 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:103 templates/site/view_quickNav.tpl:80
-msgid "Site admin password"
-msgstr "Admin Kennwort"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:118
-#: Resources/config/templates/Multisites/site/edit.tpl:121
-#: templates/site/edit.tpl:80
-msgid "Enter the site admin password of the site"
-msgstr "Gebe das Kennwort des Seiten-Administrators ein."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:120
-msgid "Original site admin password"
-msgstr "Ursprüngliches Kennwort des Seiten-Administrators"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:127
-#: templates/site/edit.tpl:85 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:106 templates/site/view_quickNav.tpl:81
-msgid "Site admin real name"
-msgstr "Admin realer Name"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:128
-#: templates/site/edit.tpl:86
-msgid "Enter the site admin real name of the site"
-msgstr "Gebe den realen Namen des Seiten-Administrators ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:133
-#: templates/site/edit.tpl:90 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:109 templates/site/view_quickNav.tpl:82
-msgid "Site admin email"
-msgstr "Admin E-Mail"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:134
-#: Resources/config/templates/Multisites/site/edit.tpl:137
-#: templates/site/edit.tpl:91
-msgid "Enter the site admin email of the site"
-msgstr "Gebe die E-Mail-Adresse des Seiten-Administrators ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:136
-msgid "Original site admin email"
-msgstr "Ursprüngliche E-Mail-Adresse des Seiten-Administrators"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:144
-#: templates/site/edit.tpl:97 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:112 templates/site/view_quickNav.tpl:83
-msgid "Site company"
-msgstr "Seiten-Firma"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:145
-#: templates/site/edit.tpl:98
-msgid "Enter the site company of the site"
-msgstr "Gebe das Unternehmen der Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:149
-msgid "Database data"
-msgstr "Datenbank-Daten"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:152
-msgid ""
-"Caution: the database is emptied, so choose one which is not used by any "
-"other applications. All tables which are defined as excluded in the template "
-"are kept though."
-msgstr ""
-"Achtung: die Datenbank wird geleert, also wählen Sie eine, welche nicht von "
-"anderen Anwendungen benutzt wird. Alle Tabellen, die in der Vorlage als "
-"ausgeschlossen definiert wurden, werden allerdings aufgehoben."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:154
-msgid "Change these values only if database credentials actually changed."
-msgstr ""
-"Verändere diese Werte nur, falls sich die Datenbank-Zugangsdaten tatsächlich "
-"geändert haben."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:158
-#: templates/site/edit.tpl:132 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:130 templates/site/view_quickNav.tpl:89
-msgid "Database type"
-msgstr "Datenbank Typ"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:159
-msgid "Choose the database type of the site"
-msgstr "Wähle den Typ der Datenbank aus"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:164
-#: templates/site/edit.tpl:126 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:127 templates/site/view_quickNav.tpl:88
-msgid "Database host"
-msgstr "Datenbank Host"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:165
-#: templates/site/edit.tpl:127
-msgid "Enter the database host of the site"
-msgstr "Gebe den Hostnamen für die Datenbank ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:171
-#: templates/site/edit.tpl:109
-msgid "Enter the database name of the site"
-msgstr "Gebe den Namen der Datenbank für diese Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:176
-#: templates/site/edit.tpl:114 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:121 templates/site/view_quickNav.tpl:86
-msgid "Database user name"
-msgstr "Datenbank Benutzer"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:177
-#: templates/site/edit.tpl:115
-msgid "Enter the database user name of the site"
-msgstr "Gebe den Benutzernamen für die Datenbank ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:182
-#: templates/site/edit.tpl:120 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:124 templates/site/view_quickNav.tpl:87
-msgid "Database password"
-msgstr "Datenbank Kennwort"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:183
-#: templates/site/edit.tpl:121
-msgid "Enter the database password of the site"
-msgstr "Gebe das Kennwort für die Datenbank ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:189
-msgid "Create database"
-msgstr "Datenank erstellen"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:190
-msgid "Check this if the database does not exist yet."
-msgstr "Kreuze diese Option an, falls die Datenbank noch nicht existiert."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:191
-#: Resources/config/templates/Multisites/site/delete.tpl:57
-msgid ""
-"Expert option! Only possible if the database user has sufficient permissions."
-msgstr ""
-"Expertenoption! Nur möglich, falls der Datenbanknutzer ausreichende "
-"Berechtigungen besitzt."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:192
-msgid "Note: the database user must exist already for this to work."
-msgstr ""
-"Hinweis: der Datenbanknutzer muss bereits existieren, damit dies "
-"funktioniert."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:205
-msgid "Individualisation"
-msgstr "Individualisierung"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:208
-#: Resources/config/templates/Multisites/site/view.tpl:77
-#: templates/site/edit.tpl:138 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:133 templates/site/view_quickNav.tpl:90
-msgid "Logo"
-msgstr "Logo"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:226
-#: templates/site/edit.tpl:156
-msgid "Delete logo ?"
-msgstr "Logo löschen ?"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:227
-#: Resources/config/templates/Multisites/site/edit.tpl:254
-#: Resources/config/templates/Multisites/site/edit.tpl:288
-#: templates/site/edit.tpl:157 templates/site/edit.tpl:184
-#: templates/site/edit.tpl:211
-msgid "Delete existing file"
-msgstr "Existierende Datei löschen"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:235
-#: templates/site/edit.tpl:165 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:136 templates/site/view_quickNav.tpl:91
-msgid "Fav icon"
-msgstr "FavIcon"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:253
-#: templates/site/edit.tpl:183
-msgid "Delete fav icon ?"
-msgstr "FavIcon löschen ?"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:262
-#: Resources/config/templates/Multisites/site/view.tpl:104
-#: templates/site/view.csv.tpl:3 templates/site/view_quickNav.tpl:92
-msgid "Allowed locales"
-msgstr "Erlaubte Sprachen"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:263
-msgid "Enter the allowed locales of the site"
-msgstr "Gebe die erlaubten Sprachen für die Seite ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:264
-msgid ""
-"Expert option! Per default all locales available in the system will be made "
-"available for the site."
-msgstr ""
-"Expertenoption! Per Standard sind alle im System verfügbaren Sprachen auch "
-"für die Seite verfügbar."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:265
-msgid "This feature has not been implemented yet (issue #17)."
-msgstr "Dieses Feature wurde noch nicht implementiert (Issue #17)."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:269
-#: templates/site/edit.tpl:192 templates/site/view.csv.tpl:3
-#: templates/site/view.tpl:139 templates/site/view_quickNav.tpl:93
-msgid "Parameters csv file"
-msgstr "Parameter CSV-Datei"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:287
-#: templates/site/edit.tpl:210
-msgid "Delete parameters csv file ?"
-msgstr "CSV-Datei löschen ?"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:292
-msgid "Note: you should use semicolon as delimiter and UTF-8 as encoding."
-msgstr ""
-"Hinweis: als Trennzeichen sollte Semikolon und als Zeichensatz sollte UTF-8 "
-"verwendet werden."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:296
 msgid "or enter them manually"
 msgstr "oder gebe sie manuell ein"
 
-#: Resources/config/templates/Multisites/site/edit.tpl:297
-msgid "Enter values for the template parameters"
-msgstr "Gebe Werte für die Vorlagen-Parameter ein"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:298
-msgid "Derive placeholders from template"
-msgstr "Platzhalter von der Vorlage ableiten"
-
-#: Resources/config/templates/Multisites/site/edit.tpl:299
-msgid ""
-"Enter values for all parameters specified by the selected template separated "
-"by line breaks."
-msgstr ""
-"Gebe Werte für alle durch die ausgewählte Vorlage spezifizierten Parameter "
-"ein, getrennt durch Zeilenumbrüche."
-
-#: Resources/config/templates/Multisites/site/edit.tpl:386
-msgid "None (decouple site from template)"
-msgstr "Keine (Seite von Vorlage entkoppeln)"
-
-#: Resources/config/templates/Multisites/site/iconsTheme.tpl:2
-msgid "Toggle theme state"
-msgstr "Theme-Status verändern"
-
-#: Resources/config/templates/Multisites/site/iconsTheme.tpl:4
-#: Resources/config/templates/Multisites/site/iconsModule.tpl:4
-msgid "Allowed"
-msgstr "Erlaubt"
-
-#: Resources/config/templates/Multisites/site/iconsTheme.tpl:6
-#: Resources/config/templates/Multisites/site/iconsModule.tpl:6
-msgid "Not allowed"
-msgstr "Nicht erlaubt"
-
-#: Resources/config/templates/Multisites/site/iconsTheme.tpl:8
-msgid "Add theme"
-msgstr "Theme hinzufügen"
-
-#: Resources/config/templates/Multisites/site/iconsTheme.tpl:13
-msgid "Default theme"
-msgstr "Standardtheme"
-
-#: Resources/config/templates/Multisites/site/iconsTheme.tpl:15
-msgid "Set as default theme"
-msgstr "Als Standardtheme festlegen"
-
-#: Resources/config/templates/Multisites/site/delete.tpl:8
-#: templates/site/delete.tpl:8
-msgid "Delete site"
-msgstr "Seite löschen"
-
-#: Resources/config/templates/Multisites/site/delete.tpl:24
-msgid "Basic site data"
-msgstr "Grundlegende Seitendaten"
-
-#: Resources/config/templates/Multisites/site/delete.tpl:48
-msgid "Delete options"
-msgstr "Löschoptionen"
-
-#: Resources/config/templates/Multisites/site/delete.tpl:51
-msgid "Delete site files"
-msgstr "Seiten-Dateien löschen"
-
-#: Resources/config/templates/Multisites/site/delete.tpl:55
-msgid "Delete database"
-msgstr "Datenank löschen"
-
-#: Resources/config/templates/Multisites/site/delete.tpl:64
-#: templates/site/delete.tpl:19
-msgid "Do you really want to delete this site ?"
-msgstr "Soll diese Seite wirklich gelöscht werden?"
-
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:28
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:28
-msgid "Version"
-msgstr "Version"
-
-#: Resources/config/templates/Multisites/site/manageExtensions.tpl:49
-#: Resources/config/templates/Multisites/site/manageThemes.tpl:49
-#: Resources/config/templates/Multisites/site/viewTools.tpl:25
-msgid "Back to site list"
-msgstr "Zurück zur Seitenliste"
-
-#: Resources/config/templates/Multisites/site/iconsModule.tpl:2
-msgid "Toggle module state"
-msgstr "Modul-Status verändern"
-
-#: Resources/config/templates/Multisites/site/iconsModule.tpl:8
-msgid "Add module"
-msgstr "Modul hinzufügen"
-
-#: Resources/config/templates/Multisites/site/iconsModule.tpl:14
-msgid "Active, click to deactivate"
-msgstr "Aktiv, klicken zum Deaktivieren"
-
-#: Resources/config/templates/Multisites/site/iconsModule.tpl:16
-msgid "Inactive, click to activate"
-msgstr "Inaktiv, klicken zum Aktivieren"
-
-#: Resources/config/templates/Multisites/site/iconsModule.tpl:18
-msgid "Not allowed, click to deactivate"
-msgstr "Nicht erlaubt, klicken zum Deaktivieren"
-
-#: Resources/config/templates/Multisites/site/view.tpl:19
-#: templates/site/view.tpl:19
-msgid ""
-"Each site is assigned to a project and instance of a certain site template."
-msgstr ""
-"Jede Seite ist einem Projekt zugeordnet und Ausprägung einer bestimmten "
-"Seitenvorlage."
-
-#: Resources/config/templates/Multisites/site/view.tpl:42
-msgid "All letters"
-msgstr "Alle Buchstaben"
-
-#: Resources/config/templates/Multisites/site/view.tpl:80
-msgid "Alias"
-msgstr "Alias"
-
-#: Resources/config/templates/Multisites/site/view.tpl:98
-msgid "Admin details"
-msgstr "Admin-Details"
-
-#: Resources/config/templates/Multisites/site/view.tpl:101
-msgid "Features"
-msgstr "Features"
-
-#: Resources/config/templates/Multisites/site/view.tpl:137
-#: Resources/config/templates/Multisites/site/view.tpl:139
-msgid "Visit this site"
-msgstr "Diese Seite besuchen"
-
-#: Resources/config/templates/Multisites/site/view.tpl:156
-msgid "User"
-msgstr "Benutzer"
-
-#: Resources/config/templates/Multisites/site/view.tpl:157
-msgid "Real name"
-msgstr "Realer Name"
-
-#: Resources/config/templates/Multisites/site/view.tpl:158
-#: templates/site/view.tpl:186
-msgid "Email"
-msgstr "E-Mail"
-
-#: Resources/config/templates/Multisites/site/view.tpl:158
-#: templates/site/view.tpl:186
-msgid "Send an email"
-msgstr "Eine E-Mail senden"
-
-#: Resources/config/templates/Multisites/site/view.tpl:159
-msgid "Company"
-msgstr "Firma"
-
-#: Resources/config/templates/Multisites/site/view.tpl:164
-#: templates/siteExtension/view.tpl:97 templates/site/view.tpl:260
-#: templates/site/view.tpl:267
-msgid "Not set."
-msgstr "Nicht angegeben."
-
-#: Resources/config/templates/Multisites/site/view.tpl:165
-msgid "None (decoupled)"
-msgstr "Keine (entkoppelt)"
-
-#: Resources/config/templates/Multisites/site/view.tpl:166
-msgid "Site database"
-msgstr "Seiten-Datenbank"
-
-#: Resources/config/templates/Multisites/site/view.tpl:185
-#: Resources/config/templates/Multisites/site/view.tpl:188
-#: templates/site/view.tpl:245 templates/site/view.tpl:248
-msgid "This setting is enabled. Click here to disable it."
-msgstr "Diese Einstellung ist aktiviert. Klicke hier um sie zu deaktivieren."
-
-#: Resources/config/templates/Multisites/site/view.tpl:186
-#: Resources/config/templates/Multisites/site/view.tpl:189
-#: templates/site/view.tpl:246 templates/site/view.tpl:249
-msgid "This setting is disabled. Click here to enable it."
-msgstr "Diese Einstellung ist deaktiviert. Klicke hier um sie zu aktivieren."
-
-#: Resources/config/templates/Multisites/site/view.tpl:215
-#: templates/site/view.tpl:289
-msgid "No sites found."
-msgstr "Keine Seiten gefunden."
-
-#: Resources/config/templates/Multisites/site/view.tpl:228
-#: templates/site/view.tpl:302
-msgid "With selected sites"
-msgstr "Die ausgewählten Seiten"
-
-#: Resources/config/templates/Multisites/site/view.tpl:231
-msgid "Clear all cache and compile directories"
-msgstr "Alle Cache- und Kompilierungsverzeichnisse leeren"
-
-#: Resources/config/templates/Multisites/site/viewTools.tpl:17
-msgid "Available tools"
-msgstr "Verfügbare Werkzeuge"
-
-#: Resources/config/templates/Multisites/site/viewTools.tpl:19
-msgid "Create global administrator"
-msgstr "Globalen Administrator erstellen"
-
-#: Resources/config/templates/Multisites/site/viewTools.tpl:20
-msgid ""
-"This ensures that the global administrator exists. Note that if the site "
-"admin and the global admin have the same user name, the global admin will "
-"override the original site admin."
-msgstr ""
-"Dies stellt sicher, dass der globale Administrator existiert. Zu beachten "
-"ist, dass, falls der Seiten-Admin und der globale Admin den gleichen "
-"Nutzernamen haben, der globale Admin den ursprünglichen Seiten-Admin "
-"überschreibt."
-
-#: Resources/config/templates/Multisites/site/viewTools.tpl:21
-msgid "Recover administrators site control"
-msgstr "Seitenkontrolle des Administrators wiederherstellen"
-
-#: Resources/config/templates/Multisites/site/viewTools.tpl:22
-msgid ""
-"This removes the first permission rule and inserts the default one instead, "
-"ensuring that the original site administrator belongs to the admin group "
-"again."
-msgstr ""
-"Dies entfernt die erste Berechtigungsregel und fügt die Standardregel statt "
-"dessen ein, was sicherstellt, dass der ursprüngliche Seiten-Administrator "
-"wieder zur Admin-Gruppe gehört."
-
-#: templates/helper/include_standardfields_edit.tpl:4
-#: templates/helper/include_standardfields_edit.tpl:9
-#: templates/helper/include_standardfields_display.tpl:4
-#: templates/helper/include_standardfields_display.tpl:7
-msgid "Creation and update"
-msgstr "Erstellung und Änderung"
-
-#: templates/helper/include_standardfields_edit.tpl:13
-#, php-format
-msgid "Created by %s"
-msgstr "Erstellt von %s"
-
-#: templates/helper/include_standardfields_edit.tpl:14
-#, php-format
-msgid "Created on %s"
-msgstr "Erstellt am %s"
-
-#: templates/helper/include_standardfields_edit.tpl:18
-#, php-format
-msgid "Updated by %s"
-msgstr "Geändert von %s"
-
-#: templates/helper/include_standardfields_edit.tpl:19
-#, php-format
-msgid "Updated on %s"
-msgstr "Zuletzt geändert am %s"
-
-#: templates/helper/include_standardfields_display.tpl:11
-msgid "Creation"
-msgstr "Erstellung"
-
-#: templates/helper/include_standardfields_display.tpl:23
-#, php-format
-msgid "Created by %1$s on %2$s"
-msgstr "Erstellt von %1$s am %2$s"
-
-#: templates/helper/include_standardfields_display.tpl:26
-msgid "Last update"
-msgstr "Letzte Änderung"
-
-#: templates/helper/include_standardfields_display.tpl:38
-#, php-format
-msgid "Updated by %1$s on %2$s"
-msgstr "Geändert von %1$s am %2$s"
-
-#: templates/template/edit.tpl:127
-msgid "Really delete this template?"
-msgstr "Diese Vorlage wirklich löschen?"
-
-#: templates/admin/config.tpl:24
-msgid "Temp access file content"
-msgstr "Inhalt der .htaccess-Datei des temporären Ordners"
-
-#: templates/project/edit.tpl:89
-msgid "Really delete this project?"
-msgstr "Dieses Projekt wirklich löschen?"
-
-#: templates/project/include_selectMany.tpl:17
-msgid "Choose projects"
-msgstr "Projekte wählen"
-
-#: templates/project/include_selectMany.tpl:18
-#: templates/project/include_selectMany.tpl:24
-msgid "Choose the projects"
-msgstr "Die Projekte auswählen"
-
-#: templates/project/include_selectOne.tpl:17
-msgid "Choose project"
-msgstr "Projekt wählen"
-
-#: templates/project/include_selectOne.tpl:18
-#: templates/project/include_selectOne.tpl:24
-msgid "Choose the project"
-msgstr "Das Projekt auswählen"
-
-#: templates/siteExtension/view.csv.tpl:3 templates/siteExtension/view.tpl:64
-#: templates/siteExtension/view_quickNav.tpl:53
-msgid "Extension version"
-msgstr "Version der Erweiterung"
-
-#: templates/siteExtension/view.csv.tpl:3 templates/siteExtension/view.tpl:67
-#: templates/siteExtension/view_quickNav.tpl:35
-#: templates/siteExtension/view_quickNav.tpl:54
-msgid "Extension type"
-msgstr "Typ der Erweiterung"
-
-#: templates/siteExtension/view.csv.tpl:4 templates/siteExtension/view.tpl:70
-msgid "Site"
-msgstr "Seite"
-
-#: templates/siteExtension/view.tpl:8
-msgid "Site extension list"
-msgstr "Liste der Seiten-Erweiterungen"
-
-#: templates/siteExtension/view.tpl:19
-msgid ""
-"A site consists of several extensions, which may be modules, themes or "
-"plugins."
-msgstr ""
-"Eine Seite besteht aus mehreren Erweiterungen, welche Module, Themes oder "
-"Plugins sein können."
-
-#: templates/siteExtension/view.tpl:119
-msgid "No site extensions found."
-msgstr "Keine Erweiterungen gefunden."
-
-#: templates/siteExtension/view.tpl:132
-msgid "With selected site extensions"
-msgstr "Die ausgewählten Erweiterungen"
-
-#: templates/site/edit.tpl:133
-msgid "Enter the database type of the site"
-msgstr "Wähle den Typ der Datenbank aus"
-
-#: templates/site/edit.tpl:264
-msgid "Really delete this site?"
-msgstr "Diese Seite wirklich löschen?"
-
-#: templates/site/view.csv.tpl:3 templates/site/view_quickNav.tpl:94
-msgid "Parameters array"
-msgstr "Parameter Array"
-
-#: templates/site/view.csv.tpl:5
-msgid "Extensions"
-msgstr "Erweiterungen"
+msgid "pixels"
+msgstr "Pixel"
+
+#~ msgid ""
+#~ "An error was encountered while creating the tables for the %s extension."
+#~ msgstr ""
+#~ "Beim Erstellen der Tabellen für die Erweiterung %s ist ein Fehler "
+#~ "aufgetreten."
+
+#~ msgid ""
+#~ "Please enable the development mode by editing the /config/config.php file "
+#~ "in order to reveal the error details."
+#~ msgstr ""
+#~ "Bitte aktiviere den Entwicklungsmodus durch Bearbeiten der Datei /config/"
+#~ "config.php um die Fehlerdetails zu enthüllen."
+
+#~ msgid "Zikula Multisites module"
+#~ msgstr "Zikula Multisites Modul"
+
+#~ msgid "Multisites manager"
+#~ msgstr "Multisites Manager"
+
+#~ msgid ""
+#~ "An error was encountered while removing stored object workflows for the "
+#~ "%s extension."
+#~ msgstr ""
+#~ "Beim Entfernen der gespeicherten Workflows für die Erweiterung %s ist ein "
+#~ "Fehler aufgetreten."
+
+#~ msgid "An error was encountered while dropping tables for the %s extension."
+#~ msgstr ""
+#~ "Beim Entfernen der Tabellen für die Erweiterung %s ist ein Fehler "
+#~ "aufgetreten."
+
+#~ msgid "Multisites"
+#~ msgstr "Multisites"
+
+#~ msgid "Multisites module generated by ModuleStudio 0.7.0."
+#~ msgstr "Das Multisites-Modul, generiert von ModuleStudio 0.7.0."
+
+#~ msgid "multisites"
+#~ msgstr "multisites"
+
+#~ msgid "multisites Sites Display Hooks"
+#~ msgstr "Multisites Seiten Display-Hooks"
+
+#~ msgid "multisites Sites Filter Hooks"
+#~ msgstr "Multisites Seiten Filter-Hooks"
+
+#~ msgid "multisites Templates Display Hooks"
+#~ msgstr "Multisites Vorlagen Display-Hooks"
+
+#~ msgid "multisites Templates Filter Hooks"
+#~ msgstr "Multisites Vorlagen Filter-Hooks"
+
+#~ msgid "multisites Site extensions Display Hooks"
+#~ msgstr "Multisites Seiten-AddOns Display-Hooks"
+
+#~ msgid "multisites Projects Display Hooks"
+#~ msgstr "Multisites Projekte Display-Hooks"
+
+#~ msgid "multisites Projects Filter Hooks"
+#~ msgstr "Multisites Projekte Filter-Hooks"
+
+#~ msgid "Error! Could not move your file to the destination folder."
+#~ msgstr "Fehler! Die Datei konnte nicht in den Zielordner verschoben werden."
+
+#~ msgid "Error! No file found."
+#~ msgstr "Fehler! Keine Datei gefunden."
+
+#~ msgid ""
+#~ "Error! Your file is too big. Please keep it smaller than %s kilobytes."
+#~ msgstr ""
+#~ "Fehler! Die Datei ist zu groß. Bitte eine Größe von weniger als %s KB "
+#~ "wählen."
+
+#~ msgid ""
+#~ "Error! Your file is too big. Please keep it smaller than %s megabytes."
+#~ msgstr ""
+#~ "Fehler! Die Datei ist zu groß. Bitte eine Größe von weniger als %s MB "
+#~ "wählen."
+
+#~ msgid "Unknown error"
+#~ msgstr "Unbekannter Fehler."
+
+#~ msgid "File too big"
+#~ msgstr "Die Datei ist zu groß."
+
+#~ msgid "File uploaded partially"
+#~ msgstr "Die Datei wurde nur teilweise hochgeladen."
+
+#~ msgid "No file uploaded"
+#~ msgstr "Keine Datei hochgeladen."
+
+#~ msgid "No tmp folder"
+#~ msgstr "Kein temporärer Ordner."
+
+#~ msgid "Error with upload: "
+#~ msgstr "Fehler! Upload fehlgeschlagen:"
+
+#~ msgid "site"
+#~ msgstr "Seite"
+
+#~ msgid "Add %s"
+#~ msgstr "%s hinzufügen"
+
+#~ msgid "Select %s"
+#~ msgstr "%s wählen"
+
+#~ msgid "Find %s"
+#~ msgstr "%s finden"
+
+#~ msgid "Search %s"
+#~ msgstr "%s suchen"
+
+#~ msgid "Create new %s"
+#~ msgstr "%s neu erstellen"
+
+#~ msgid "Create"
+#~ msgstr "Erstellen"
+
+#~ msgid "No results found!"
+#~ msgstr "Keine Ergebnisse gefunden."
+
+#~ msgid "This function requires JavaScript activated!"
+#~ msgstr "Diese Funktion erfordert aktiviertes JavaScript!"
+
+#~ msgid "Error! in %1$s: the %2$s parameter must be specified."
+#~ msgstr "Fehler! in %1$s: der Parameter %2$s muss angegeben werden."
+
+#~ msgid "Select an existing file..."
+#~ msgstr "Eine existierende Datei auswählen..."
+
+#~ msgid "Error! Please either provide a sql file or select an existing one."
+#~ msgstr ""
+#~ "Fehler! Bitte entweder eine SQL-Datei bereitstellen oder eine bestehende "
+#~ "auswählen."
+
+#~ msgid "Error! Failed to set configuration variables."
+#~ msgstr "Fehler! Aktualisierung der Einstellungen fehlgeschlagen."
+
+#~ msgid ""
+#~ "The user name you entered for the site administrator contains "
+#~ "unacceptable characters. A valid user name consists of lowercase letters, "
+#~ "numbers, underscores, periods, and/or dashes."
+#~ msgstr ""
+#~ "Der eingegebene Benutzername für den Seiten-Administrator enthält "
+#~ "ungültige Zeichen. Ein gültiger Benutzername besteht aus Kleinbuchstaben, "
+#~ "Ziffern, Unterstrichen, Punkten und/oder Bindestrichen."
+
+#~ msgid "View projects"
+#~ msgstr "Projektliste"
+
+#~ msgid "View site templates"
+#~ msgstr "Liste der Seitenvorlagen"
+
+#~ msgid "Invalid identifier received."
+#~ msgstr "Fehler! Ungültigen Identifier erhalten."
+
+#~ msgid "Error! Could not include %s"
+#~ msgstr "Fehler beim Einbinden von %s"
+
+#~ msgid "Warning! Could not write the .htaccess file at \"%s\"."
+#~ msgstr "Warnung! Konnte die .htaccess-Datei in \"%s\" nicht schreiben."
+
+#~ msgid "Error! Opening the template sql file failed."
+#~ msgstr "Fehler! Öffnen der SQL-Datei der Vorlage fehlgeschlagen."
+
+#~ msgid "Error! Field value must not be empty (%s)."
+#~ msgstr "Fehler! Der Wert des Feldes darf nicht leer sein (%s)."
+
+#~ msgid "Error! Length of field value must not be higher than %2$s (%1$s)."
+#~ msgstr "Fehler! Die Länge des Feldes darf %2$s nicht überschreiten (%1$s)."
+
+#~ msgid "Error! Field value must be a valid email address (%s)."
+#~ msgstr "Fehler! Das Feld muss eine gültige E-Mail Adresse beinhalten (%s)."
+
+#~ msgid "Error! Field value must be a valid boolean (%s)."
+#~ msgstr "Fehler! Das Feld muss einen gültigen Boolean beinhalten (%s)."
+
+#~ msgid "Error! Could not remove stored workflow. Deletion has been aborted."
+#~ msgstr ""
+#~ "Fehler! Der gespeicherte Workflow konnte nicht entfernt werden. Die "
+#~ "Löschung wurde abgebrochen."
+
+#~ msgid "Error! Could not load the associated workflow."
+#~ msgstr "Fehler! Der assoziierte Workflow konnte nicht geladen werden."
+
+#~ msgid "None workflow (no approval)"
+#~ msgstr "Kein Workflow (keine Freigabe)"
+
+#~ msgid ""
+#~ "This is like a non-existing workflow. Everything is online immediately "
+#~ "after creation."
+#~ msgstr ""
+#~ "Dies ist wie ein nicht existierender Workflow. Alles ist sofort nach der "
+#~ "Erstellung online."
+
+#~ msgid ""
+#~ "Pseudo-state for content which is just created and not persisted yet."
+#~ msgstr ""
+#~ "Pseudo-Zustand für Inhalt, der gerade erstellt wird und noch nicht "
+#~ "persistiert wurde."
+
+#~ msgid "Pseudo-state for content which has been deleted from the database."
+#~ msgstr "Pseudo-Zustand für Inhalt, der aus der Datenbank gelöscht wurde."
+
+#~ msgid "Submit content."
+#~ msgstr "Inhalt absenden."
+
+#~ msgid "Update content."
+#~ msgstr "Inhalt ändern."
+
+#~ msgid "This is a required field."
+#~ msgstr "Dies ist eine Pflichtangabe."
+
+#~ msgid "Please enter a valid number in this field."
+#~ msgstr "Bitte eine Zahl eingeben."
+
+#~ msgid ""
+#~ "Please use numbers only in this field. please avoid spaces or other "
+#~ "characters such as dots or commas."
+#~ msgstr ""
+#~ "Bitte in diesem Feld nur Zahlen verwenden, keine Leerzeichen oder andere "
+#~ "Zeichen wie Punkte oder Kommas."
+
+#~ msgid "Please use letters only (a-z) in this field."
+#~ msgstr "Bitte in diesem Feld nur Buchstaben (a-z) verwenden."
+
+#~ msgid ""
+#~ "Please use only letters (a-z) or numbers (0-9) only in this field. No "
+#~ "spaces or other characters are allowed."
+#~ msgstr ""
+#~ "Bitte in diesem Feld nur Buchstaben (a-z) oder Zahlen (0-9) verwenden. "
+#~ "Andere Zeichen wie Leerzeichen sind nicht erlaubt."
+
+#~ msgid "Please enter a valid date."
+#~ msgstr "Bitte ein Datum eingeben."
+
+#~ msgid ""
+#~ "Please enter a valid email address. For example yourname@example.com ."
+#~ msgstr "Bitte eine E-Mail Adresse eingeben. Zum Beispiel fred@domain.com ."
+
+#~ msgid "Please enter a valid URL."
+#~ msgstr "Bitte eine URL angeben."
+
+#~ msgid ""
+#~ "Please use this date format: dd/mm/yyyy. For example 17/03/2010 for the "
+#~ "17th of March, 2010."
+#~ msgstr ""
+#~ "Bitte dieses Datumsformat verwenden: dd/mm/yyyy. Zum Beispiel 17/03/2010 "
+#~ "(= 17. März 2010)."
+
+#~ msgid "Please enter a valid $ amount. For example $100.00 ."
+#~ msgstr "Bitte einen $-Betrag eingeben. Zum Beispiel $100.00 ."
+
+#~ msgid "Please make a selection."
+#~ msgstr "Bitte eine Auswahl treffen."
+
+#~ msgid "This value must not contain spaces."
+#~ msgstr "Dieser Wert darf keine Leerzeichen enthalten."
+
+#~ msgid "Please select an allowed file type."
+#~ msgstr "Bitte einen erlaubten Dateityp auswählen."
+
+#~ msgid "Please select a value in the past."
+#~ msgstr "Bitte einen Wert aus der Vergangenheit auswählen."
+
+#~ msgid "Please select a value in the future."
+#~ msgstr "Bitte einen Wert aus der Zukunft auswählen."
+
+#~ msgid ""
+#~ "This value is already assigned, but must be unique. Please change it."
+#~ msgstr ""
+#~ "Dieser Wert wird bereits verwendet, muss jedoch eindeutig sein. Bitte "
+#~ "einen anderen Wert auswählen."
+
+#~ msgid "%1$s: missing parameter '%2$s'"
+#~ msgstr "%1$s: Fehlender Parameter '%2$s'"
+
+#~ msgid "Template data"
+#~ msgstr "Vorlagen-Daten"
+
+#~ msgid "or select an existing file"
+#~ msgstr "oder wähle eine bestehende Datei"
+
+#~ msgid "Advanced options"
+#~ msgstr "Erweiterte Optionen"
+
+#~ msgid "Enter additional folders of the template"
+#~ msgstr "Gebe zusätzliche Ordner der Vorlage ein"
+
+#~ msgid ""
+#~ "Enter the folders to be created for new sites separated by line breaks. "
+#~ "If you need a folder within another one you can write expressions like "
+#~ "\"folder/folder\"."
+#~ msgstr ""
+#~ "Gebe Ordner an, die für neue Seiten erstellt werden sollen, getrennt "
+#~ "durch Zeilenumbrüche. Auch Unterordner sind möglich durch Ausdrücke wie "
+#~ "\"ordner/unterordner\"."
+
+#~ msgid "Enter table names to be excluded from reapplications"
+#~ msgstr ""
+#~ "Gebe Tabellennamen ein, die von erneuten Anwendungen ausgeschlossen "
+#~ "werden sollen"
+
+#~ msgid ""
+#~ "Enter the names of database tables which should be skipped during "
+#~ "template reapplications separated by line breaks. With this you can for "
+#~ "example avoid overriding your local user table."
+#~ msgstr ""
+#~ "Gebe die Namen der Datenbanktabellen ein (getrennt durch Zeilenumbrüche), "
+#~ "die während erneuten Anwendungen der Vorlage übersprungen werden sollen. "
+#~ "Damit kann man beispielsweise das Überschreiben der lokalen "
+#~ "Benutzertabelle vermeiden."
+
+#~ msgid "Enter required parameter names for this template"
+#~ msgstr "Gebe die benötigten Parameternamen für diese Vorlage ein"
+
+#~ msgid ""
+#~ "Enter parameter names separated by line breaks. Each parameter represents "
+#~ "a variable information which is being replaced by concrete values when "
+#~ "creating a new site or reapplying the template on existing sites. The "
+#~ "parameter names can be used as placeholders anywhere in the template data "
+#~ "accordingly."
+#~ msgstr ""
+#~ "Gebe Parameternamen getrennt durch Zeilenumbrüche ein. Jeder Parameter "
+#~ "repräsentiert eine variable Information, die beim Erstellen einer neuen "
+#~ "Seite oder dem erneuten Anwenden der Vorlage auf bestehende Seiten durch "
+#~ "konkrete Werte ersetzt wird. Die Namen der Parameter können entsprechend "
+#~ "als Platzhalter irgendwo in den Daten der Vorlage verwendet werden."
+
+#~ msgid "Placeholder syntax: ###PARAMETERNAME###"
+#~ msgstr "Platzhalter-Syntax: ###PARAMETERNAME###"
+
+#~ msgid ""
+#~ "Really delete this template? This includes deletion of assigned "
+#~ "parameters and sites, too!"
+#~ msgstr ""
+#~ "Diese Vorlage wirklich löschen? Dies beinhaltet auch die Löschung "
+#~ "zugewiesener Parameter und Seiten!"
+
+#~ msgid "Do you really want to reapply this template ?"
+#~ msgstr "Soll diese Vorlage wirklich neu angewendet werden?"
+
+#~ msgid ""
+#~ "Caution: this reapplies the template data again to all assigned sites. "
+#~ "All database tables except excluded ones will be dropped and recreated."
+#~ msgstr ""
+#~ "Achtung: dies wendet die Daten der Vorlage auf alle zugeordneten Seiten "
+#~ "neu an. Alle Datenbanktabellen außer den ausgeschlossenen werden gelöscht "
+#~ "und neu angelegt."
+
+#~ msgid "None"
+#~ msgstr "Keine"
+
+#~ msgid "View sites assigned to this template"
+#~ msgstr "Dieser Vorlage zugeordnete Seiten anschauen"
+
+#~ msgid "Choose template"
+#~ msgstr "Vorlage wählen"
+
+#~ msgid ""
+#~ "If you decouple a site from the template it is not affected by future "
+#~ "reapplications of this template anymore, but is configured and maintained "
+#~ "independently. If you reassign a decoupled site to a template again this "
+#~ "template is reapplied for that site."
+#~ msgstr ""
+#~ "Wird eine Seite von der Vorlage entkoppelt, ist diese nicht mehr von "
+#~ "zukünftigen Neuanwendungen dieser Vorlage betroffen, sondern wird "
+#~ "unabhängig konfiguriert und gewartet. Wird eine entkoppelte Seite wieder "
+#~ "einer Vorlage zugewiesen, wird diese Vorlage für die Seite neu angewendet."
+
+#~ msgid "Id"
+#~ msgstr "ID"
+
+#~ msgid "Temporal folder .htaccess file content"
+#~ msgstr "Inhalt der .htaccess-Datei des temporären Ordners"
+
+#~ msgid "Configuration wizard"
+#~ msgstr "Konfigurationsassistent"
+
+#~ msgid "Step 1 - Checking the correct location of the configuration files"
+#~ msgstr ""
+#~ "Schritt 1 - Überprüfung des korrekten Ortes der Konfigurationsdateien"
+
+#~ msgid ""
+#~ "Please copy the files <strong>%1$s</strong> and <strong>%2$s</strong> "
+#~ "into the Zikula <strong>config</strong> directory and give them writeable "
+#~ "permissions."
+#~ msgstr ""
+#~ "Bitte kopiere die Dateien <strong>%1$s</strong> und <strong>%2$s</strong> "
+#~ "in das <strong>config</strong>-Verzeichnis von Zikula und stelle ihre "
+#~ "Rechte auf beschreibbar."
+
+#~ msgid ""
+#~ "If you have any problem you can recover the system to the previous state "
+#~ "at any time by deleting both files again."
+#~ msgstr ""
+#~ "Bei Problemen kannst Du das System jederzeit durch Löschen beider Dateien "
+#~ "in den vorherigen Zustand zurückversetzen."
+
+#~ msgid ""
+#~ "The file <strong>%s</strong> has not been found and could not be copied "
+#~ "automatically."
+#~ msgstr ""
+#~ "Die Datei <strong>%s</strong> wurde nicht gefunden und konnte nicht "
+#~ "automatisch kopiert werden."
+
+#~ msgid "The file <strong>%s</strong> is located in the correct place."
+#~ msgstr "Die Datei <strong>%s</strong> ist am richtigen Platz."
+
+#~ msgid "The file <strong>%s</strong> is not writeable, but it should be."
+#~ msgstr ""
+#~ "Fehler! Die Datei <strong>%s</strong> ist nicht beschreibbar, was aber "
+#~ "der Fall sein sollte."
+
+#~ msgid "The file <strong>%s</strong> is writeable."
+#~ msgstr "Die Datei <strong>%s</strong> ist beschreibbar."
+
+#~ msgid "Check again"
+#~ msgstr "Nochmal prüfen"
+
+#~ msgid "Step 2 - Checking whether the sites files directory exists"
+#~ msgstr ""
+#~ "Schritt 2 - Überprüfung der Existenz des Verzeichnisses für die "
+#~ "Seitendateien"
+
+#~ msgid "Script Real Path"
+#~ msgstr "Realer Skript-Pfad"
+
+#~ msgid "Physical location of the directory in the server"
+#~ msgstr "Physischer Ort des Verzeichnisses auf dem Server"
+
+#~ msgid ""
+#~ "This directory will be used to save the temporary and userdata files for "
+#~ "the different sites."
+#~ msgstr ""
+#~ "Dieses Verzeichnis wird zum Speichern der temporären Dateien und "
+#~ "Nutzerdateien für die unterschiedlichen Seiten verwendet."
+
+#~ msgid "Save"
+#~ msgstr "Speichern"
+
+#~ msgid ""
+#~ "Step 3 - Writing correct parameters into the <strong>%s.php</strong> file"
+#~ msgstr ""
+#~ "Schritt 3 - Schreiben der korrekten Parameter in die Datei <strong>%s</"
+#~ "strong>"
+
+#~ msgid ""
+#~ "If you experience any problem you can delete the <strong>%1$s</strong> "
+#~ "and <strong>%2$s</strong> files to recover the system to the previous "
+#~ "state."
+#~ msgstr ""
+#~ "Bei Problemen kannst Du die Dateien <strong>%1$s</strong> und <strong>"
+#~ "%2$s</strong> löschen, um das System in den vorherigen Zustand zurück zu "
+#~ "versetzen."
+
+#~ msgid "Main domain"
+#~ msgstr "Haupt-Domain"
+
+#~ msgid "Sites temporal directory"
+#~ msgstr "Temporäres Verzeichnis der Seite"
+
+#~ msgid "Sites data directory"
+#~ msgstr "Verzeichnis der Seiten-Daten"
+
+#~ msgid "Step 4 - Check if the %s file is not writeable anymore"
+#~ msgstr ""
+#~ "Schritt 4 - Sicherstellen, dass die Datei %s nicht mehr beschreibbar ist"
+
+#~ msgid ""
+#~ "The <strong>%s</strong> file is writeable, but it should not be. Please "
+#~ "set this file as not writeable."
+#~ msgstr ""
+#~ "Die Datei <strong>%s</strong> ist beschreibbar, sollte sie aber nicht "
+#~ "sein. Bitte diese Datei auf nur-lesen stellen."
+
+#~ msgid "Multiply queries"
+#~ msgstr "Abfragen vervielfachen"
+
+#~ msgid ""
+#~ "This is an expert function! Use it only if you know about the effects."
+#~ msgstr ""
+#~ "Dies ist eine Expertenfunktion! Verwenden Sie sie nur, wenn Sie sich über "
+#~ "die Auswirkungen im Klaren sind."
+
+#~ msgid "Input data"
+#~ msgstr "Eingabedaten"
+
+#~ msgid ""
+#~ "Use <strong>`###DBNAME###`</strong> as a placeholder for the database "
+#~ "name."
+#~ msgstr ""
+#~ "Benutzen Sie <strong>`###DBNAME###`</strong> als Platzhalter für den "
+#~ "Datenbanknamen."
+
+#~ msgid "Sql query"
+#~ msgstr "SQL-Abfrage"
+
+#~ msgid "or sql file"
+#~ msgstr "oder SQL-Datei"
+
+#~ msgid "Options"
+#~ msgstr "Optionen"
+
+#~ msgid "Database hosts"
+#~ msgstr "Datenbank-Server"
+
+#~ msgid "Database types"
+#~ msgstr "Datenbank-Typen"
+
+#~ msgid "Show output sql"
+#~ msgstr "Ausgabe-SQL anzeigen"
+
+#~ msgid "Execute sql directly"
+#~ msgstr "SQL direkt ausführen"
+
+#~ msgid "Output data"
+#~ msgstr "Ausgabedaten"
+
+#~ msgid "Output"
+#~ msgstr "Ausgabe"
+
+#~ msgid "Start"
+#~ msgstr "Starten"
+
+#~ msgid "This functionality is not implemented yet."
+#~ msgstr "Diese Funktionalität wurde noch nicht implementiert."
+
+#~ msgid "It is going to be added in Multisites version 2.1.0."
+#~ msgstr "Sie wird in Multisites Version 2.1.0 hinzugefügt."
+
+#~ msgid "Please see this issue for more details:"
+#~ msgstr "Für weitere Details bitte dieses Ticket anschauen:"
+
+#~ msgid "View issue at GitHub"
+#~ msgstr "Ticket auf GitHub anschauen"
+
+#~ msgid ""
+#~ "Really delete this project? This includes deletion of assigned templates "
+#~ "and sites, too!"
+#~ msgstr ""
+#~ "Dieses Projekt wirklich löschen? Dies beinhaltet auch die Löschung "
+#~ "zugewiesener Vorlagen und Seiten!"
+
+#~ msgid "View sites assigned to this project"
+#~ msgstr "Diesem Projekt zugeordnete Seiten anschauen"
+
+#~ msgid ""
+#~ "Caution: updating a site causes reapplying the template data again to it. "
+#~ "All database tables except excluded ones will be dropped and recreated."
+#~ msgstr ""
+#~ "Achtung: das Ändern einer Seite verursacht eine Neuanwendung der Daten "
+#~ "der Vorlage auf diese Seite. Alle Datenbanktabellen außer den "
+#~ "ausgeschlossenen werden gelöscht und neu angelegt."
+
+#~ msgid "Basic data"
+#~ msgstr "Grundlegende Daten"
+
+#~ msgid "Name (internal)"
+#~ msgstr "Interner Name"
+
+#~ msgid "Description (internal)"
+#~ msgstr "Beschreibung (intern)"
+
+#~ msgid ""
+#~ "The alias must be a lower case, unique string containing only letters."
+#~ msgstr ""
+#~ "Das Alias muss ein klein geschriebener, eindeutiger String sein, der nur "
+#~ "Buchstaben enthält."
+
+#~ msgid "Original site name"
+#~ msgstr "Originaler Seiten-Name"
+
+#~ msgid "Site host or folder"
+#~ msgstr "Seiten-Host oder -Ordner"
+
+#~ msgid ""
+#~ "This is the domain or folder name under which this site should be "
+#~ "reachable."
+#~ msgstr ""
+#~ "Dies ist der Domain- oder Verzeichnisname, unter dem die Seite erreichbar "
+#~ "sein soll."
+
+#~ msgid "Management information"
+#~ msgstr "Verwaltungsinformationen"
+
+#~ msgid ""
+#~ "User names can contain letters, numbers, underscores, periods, or dashes."
+#~ msgstr ""
+#~ "Benutzernamen können Buchstaben, Zahlen, Unterstriche, Punkte oder "
+#~ "Striche enthalten."
+
+#~ msgid "Original site admin name"
+#~ msgstr "Originaler Site Admin Name"
+
+#~ msgid "Original site admin password"
+#~ msgstr "Ursprüngliches Kennwort des Seiten-Administrators"
+
+#~ msgid "Original site admin email"
+#~ msgstr "Ursprüngliche E-Mail-Adresse des Seiten-Administrators"
+
+#~ msgid "Database data"
+#~ msgstr "Datenbank-Daten"
+
+#~ msgid ""
+#~ "Caution: the database is emptied, so choose one which is not used by any "
+#~ "other applications. All tables which are defined as excluded in the "
+#~ "template are kept though."
+#~ msgstr ""
+#~ "Achtung: die Datenbank wird geleert, also wählen Sie eine, welche nicht "
+#~ "von anderen Anwendungen benutzt wird. Alle Tabellen, die in der Vorlage "
+#~ "als ausgeschlossen definiert wurden, werden allerdings aufgehoben."
+
+#~ msgid "Change these values only if database credentials actually changed."
+#~ msgstr ""
+#~ "Verändere diese Werte nur, falls sich die Datenbank-Zugangsdaten "
+#~ "tatsächlich geändert haben."
+
+#~ msgid "Create database"
+#~ msgstr "Datenank erstellen"
+
+#~ msgid "Check this if the database does not exist yet."
+#~ msgstr "Kreuze diese Option an, falls die Datenbank noch nicht existiert."
+
+#~ msgid ""
+#~ "Expert option! Only possible if the database user has sufficient "
+#~ "permissions."
+#~ msgstr ""
+#~ "Expertenoption! Nur möglich, falls der Datenbanknutzer ausreichende "
+#~ "Berechtigungen besitzt."
+
+#~ msgid "Note: the database user must exist already for this to work."
+#~ msgstr ""
+#~ "Hinweis: der Datenbanknutzer muss bereits existieren, damit dies "
+#~ "funktioniert."
+
+#~ msgid "Individualisation"
+#~ msgstr "Individualisierung"
+
+#~ msgid "Delete logo ?"
+#~ msgstr "Logo löschen ?"
+
+#~ msgid ""
+#~ "Expert option! Per default all locales available in the system will be "
+#~ "made available for the site."
+#~ msgstr ""
+#~ "Expertenoption! Per Standard sind alle im System verfügbaren Sprachen "
+#~ "auch für die Seite verfügbar."
+
+#~ msgid "This feature has not been implemented yet (issue #17)."
+#~ msgstr "Dieses Feature wurde noch nicht implementiert (Issue #17)."
+
+#~ msgid "Note: you should use semicolon as delimiter and UTF-8 as encoding."
+#~ msgstr ""
+#~ "Hinweis: als Trennzeichen sollte Semikolon und als Zeichensatz sollte "
+#~ "UTF-8 verwendet werden."
+
+#~ msgid "Derive placeholders from template"
+#~ msgstr "Platzhalter von der Vorlage ableiten"
+
+#~ msgid ""
+#~ "Enter values for all parameters specified by the selected template "
+#~ "separated by line breaks."
+#~ msgstr ""
+#~ "Gebe Werte für alle durch die ausgewählte Vorlage spezifizierten "
+#~ "Parameter ein, getrennt durch Zeilenumbrüche."
+
+#~ msgid "None (decouple site from template)"
+#~ msgstr "Keine (Seite von Vorlage entkoppeln)"
+
+#~ msgid "Toggle theme state"
+#~ msgstr "Theme-Status verändern"
+
+#~ msgid "Allowed"
+#~ msgstr "Erlaubt"
+
+#~ msgid "Not allowed"
+#~ msgstr "Nicht erlaubt"
+
+#~ msgid "Add theme"
+#~ msgstr "Theme hinzufügen"
+
+#~ msgid "Default theme"
+#~ msgstr "Standardtheme"
+
+#~ msgid "Basic site data"
+#~ msgstr "Grundlegende Seitendaten"
+
+#~ msgid "Delete options"
+#~ msgstr "Löschoptionen"
+
+#~ msgid "Delete database"
+#~ msgstr "Datenank löschen"
+
+#~ msgid "Version"
+#~ msgstr "Version"
+
+#~ msgid "Back to site list"
+#~ msgstr "Zurück zur Seitenliste"
+
+#~ msgid "Toggle module state"
+#~ msgstr "Modul-Status verändern"
+
+#~ msgid "Add module"
+#~ msgstr "Modul hinzufügen"
+
+#~ msgid "Active, click to deactivate"
+#~ msgstr "Aktiv, klicken zum Deaktivieren"
+
+#~ msgid "Inactive, click to activate"
+#~ msgstr "Inaktiv, klicken zum Aktivieren"
+
+#~ msgid "Not allowed, click to deactivate"
+#~ msgstr "Nicht erlaubt, klicken zum Deaktivieren"
+
+#~ msgid "All letters"
+#~ msgstr "Alle Buchstaben"
+
+#~ msgid "Alias"
+#~ msgstr "Alias"
+
+#~ msgid "Admin details"
+#~ msgstr "Admin-Details"
+
+#~ msgid "Features"
+#~ msgstr "Features"
+
+#~ msgid "User"
+#~ msgstr "Benutzer"
+
+#~ msgid "Real name"
+#~ msgstr "Realer Name"
+
+#~ msgid "Email"
+#~ msgstr "E-Mail"
+
+#~ msgid "Company"
+#~ msgstr "Firma"
+
+#~ msgid "None (decoupled)"
+#~ msgstr "Keine (entkoppelt)"
+
+#~ msgid "Site database"
+#~ msgstr "Seiten-Datenbank"
+
+#~ msgid "Clear all cache and compile directories"
+#~ msgstr "Alle Cache- und Kompilierungsverzeichnisse leeren"
+
+#~ msgid "Available tools"
+#~ msgstr "Verfügbare Werkzeuge"
+
+#~ msgid "Create global administrator"
+#~ msgstr "Globalen Administrator erstellen"
+
+#~ msgid ""
+#~ "This ensures that the global administrator exists. Note that if the site "
+#~ "admin and the global admin have the same user name, the global admin will "
+#~ "override the original site admin."
+#~ msgstr ""
+#~ "Dies stellt sicher, dass der globale Administrator existiert. Zu beachten "
+#~ "ist, dass, falls der Seiten-Admin und der globale Admin den gleichen "
+#~ "Nutzernamen haben, der globale Admin den ursprünglichen Seiten-Admin "
+#~ "überschreibt."
+
+#~ msgid "Recover administrators site control"
+#~ msgstr "Seitenkontrolle des Administrators wiederherstellen"
+
+#~ msgid ""
+#~ "This removes the first permission rule and inserts the default one "
+#~ "instead, ensuring that the original site administrator belongs to the "
+#~ "admin group again."
+#~ msgstr ""
+#~ "Dies entfernt die erste Berechtigungsregel und fügt die Standardregel "
+#~ "statt dessen ein, was sicherstellt, dass der ursprüngliche Seiten-"
+#~ "Administrator wieder zur Admin-Gruppe gehört."
+
+#~ msgid "Really delete this template?"
+#~ msgstr "Diese Vorlage wirklich löschen?"
+
+#~ msgid "Really delete this project?"
+#~ msgstr "Dieses Projekt wirklich löschen?"
+
+#~ msgid "Choose projects"
+#~ msgstr "Projekte wählen"
+
+#~ msgid "Choose project"
+#~ msgstr "Projekt wählen"
+
+#~ msgid "Really delete this site?"
+#~ msgstr "Diese Seite wirklich löschen?"
 
 #~ msgid "Models folder"
 #~ msgstr "Modell-Ordner"

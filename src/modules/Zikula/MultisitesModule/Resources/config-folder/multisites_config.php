@@ -31,11 +31,11 @@ if ($sitedns == $ZConfig['Multisites']['mainsiteurl'] || true !== $ZConfig['Mult
 include_once 'multisites_dbconfig.php';
 if (!isset($databaseArray[$sitedns]) ||
      !is_array($databaseArray[$sitedns]) ||
-     !isset($databaseArray[$sitedns]['dbname']) || empty($databaseArray[$sitedns]['dbname']) ||
-     !isset($databaseArray[$sitedns]['dbuname']) || empty($databaseArray[$sitedns]['dbuname']) ||
-     !isset($databaseArray[$sitedns]['dbpass']) || empty($databaseArray[$sitedns]['dbpass']) ||
-     !isset($databaseArray[$sitedns]['dbtype']) || empty($databaseArray[$sitedns]['dbtype']) ||
-     !isset($databaseArray[$sitedns]['dbhost']) || empty($databaseArray[$sitedns]['dbhost'])
+     !isset($databaseArray[$sitedns]['dbName']) || empty($databaseArray[$sitedns]['dbName']) ||
+     !isset($databaseArray[$sitedns]['dbUname']) || empty($databaseArray[$sitedns]['dbUname']) ||
+     !isset($databaseArray[$sitedns]['dbPass']) || empty($databaseArray[$sitedns]['dbPass']) ||
+     !isset($databaseArray[$sitedns]['dbType']) || empty($databaseArray[$sitedns]['dbType']) ||
+     !isset($databaseArray[$sitedns]['dbHost']) || empty($databaseArray[$sitedns]['dbHost'])
     ) {
     // if the site doesn't exist the user is sent to the main page
     header("HTTP/1.1 301 Moved Permanently");
@@ -51,11 +51,11 @@ $tempFolder .= $siteAlias . '/';
 $tempFolder .= $ZConfig['Multisites']['site_temp_files_folder'];
 
 // set the correct connection values for this site
-$ZConfig['DBInfo']['databases']['default']['host'] = $siteDbData['dbhost'];
-$ZConfig['DBInfo']['databases']['default']['user'] = $siteDbData['dbuname'];
-$ZConfig['DBInfo']['databases']['default']['password'] = $siteDbData['dbpass'];
-$ZConfig['DBInfo']['databases']['default']['dbname'] = $siteDbData['dbname'];
-$ZConfig['DBInfo']['databases']['default']['dbdriver'] = $siteDbData['dbtype'];
+$ZConfig['DBInfo']['databases']['default']['host'] = $siteDbData['dbHost'];
+$ZConfig['DBInfo']['databases']['default']['user'] = $siteDbData['dbUname'];
+$ZConfig['DBInfo']['databases']['default']['password'] = $siteDbData['dbPass'];
+$ZConfig['DBInfo']['databases']['default']['dbname'] = $siteDbData['dbName'];
+$ZConfig['DBInfo']['databases']['default']['dbdriver'] = $siteDbData['dbType'];
 $ZConfig['System']['prefix'] = '';
 $ZConfig['System']['temp'] = $tempFolder;
 $ZConfig['Multisites']['sitealias'] = $siteAlias;

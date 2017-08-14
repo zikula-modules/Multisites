@@ -12,16 +12,15 @@
 
 namespace Zikula\MultisitesModule\Helper;
 
-use DataUtil;
-use ModUtil;
-use ThemeUtil;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Twig_Environment;
+use Zikula\Bundle\CoreBundle\HttpKernel\ZikulaHttpKernelInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\ExtensionsModule\Api\ExtensionApi;
+use Zikula\ExtensionsModule\Constant as ExtensionsConstant;
+use Zikula\MultisitesModule\DatabaseInfo;
 use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 
@@ -31,6 +30,11 @@ use Zikula\MultisitesModule\Entity\SiteEntity;
 class SiteExtensionHelper
 {
     use TranslatorTrait;
+
+    /**
+     * @var ZikulaHttpKernelInterface
+     */
+    protected $kernel;
 
     /**
      * The current request.
@@ -76,16 +80,18 @@ class SiteExtensionHelper
      * Constructor.
      * Initialises member vars.
      *
-     * @param TranslatorInterface $translator     Translator service instance
-     * @param RequestStack        $requestStack   RequestStack service instance
-     * @param SessionInterface    $session        Session service instance
-     * @param Twig_Environment    $twig           Twig service instance
-     * @param EntityFactory       $entityFactory  EntityFactory service instance
-     * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
-     * @param SystemHelper        $systemHelper   SystemHelper service instance
+     * @param TranslatorInterface       $translator     Translator service instance
+     * @param ZikulaHttpKernelInterface $kernel         Kernel service instance
+     * @param RequestStack              $requestStack   RequestStack service instance
+     * @param SessionInterface          $session        Session service instance
+     * @param Twig_Environment          $twig           Twig service instance
+     * @param EntityFactory             $entityFactory  EntityFactory service instance
+     * @param WorkflowHelper            $workflowHelper WorkflowHelper service instance
+     * @param SystemHelper              $systemHelper   SystemHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
+        ZikulaHttpKernelInterface $kernel,
         RequestStack $requestStack,
         SessionInterface $session,
         Twig_Environment $twig,
@@ -94,6 +100,7 @@ class SiteExtensionHelper
         SystemHelper $systemHelper
     ) {
         $this->setTranslator($translator);
+        $this->kernel = $kernel;
         $this->request = $requestStack->getCurrentRequest();
         $this->session = $session;
         $this->twig = $twig;
@@ -171,7 +178,7 @@ class SiteExtensionHelper
      */
     public function getAllModulesFromSiteDb(SiteEntity $site)
     {
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $this->session->getFlashBag()->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
@@ -235,15 +242,17 @@ class SiteExtensionHelper
             return false;
         }
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
             return false;
         }
 
-        $sql = 'SELECT `name`, `state` FROM `modules`
-                WHERE `name` = :moduleName';
+        $sql = '
+            SELECT `name`, `state` FROM `modules`
+            WHERE `name` = :moduleName
+        ';
         $stmt = $connect->prepare($sql);
         $stmt->execute([':moduleName' => $moduleName]);
 
@@ -252,12 +261,10 @@ class SiteExtensionHelper
             return false;
         }
 
-        $item = [
+        return [
             'name' => $rs['name'],
             'state' => $rs['state']
         ];
-
-        return $item;
     }
 
     /**
@@ -278,31 +285,18 @@ class SiteExtensionHelper
             return false;
         }
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
             return false;
         }
 
-        $allModules = ModUtil::apiFunc('ZikulaExtensionsModule', 'admin', 'getfilemodules');
+        $allModules = $this->kernel->getModules();
         $module = $allModules[$moduleName];
 
-        $fields = '';
-        $values = '';
-
-        $textual = [
-            'name',
-            'displayname',
-            'url',
-            'description',
-            'directory',
-            'version',
-            'capabilities',
-            'securityschema',
-            'core_min',
-            'core_max'
-        ];
+        $fields = [];
+        $parameters = [];
 
         $exclude = [
             'oldnames',
@@ -310,25 +304,27 @@ class SiteExtensionHelper
         ];
 
         foreach ($module as $key => $value) {
-            if (!in_array($key, $exclude)) {
-                $fields .= $key . ',';
-                $apos = in_array($key, $textual) ? "'" : '';
-                $valueString = ($value == '') ? "''" : $apos . DataUtil::formatForStore($value) . $apos;
-                $values .= $valueString . ',';
+            if (in_array($key, $exclude)) {
+                continue;
             }
+            $fields[] = $key;
+            $parameters[':' . $key] = $value;
         }
-        $fields = substr($fields, 0, -1);
-        $values = substr($values, 0, -1);
         // set module state to 1
-        $fields .= ', state';
-        $values .= ', 1';
+        $fields[] = 'state';
+        $parameters[':state'] = '1';
 
-        //create the module in the site
-        $sql = "INSERT INTO modules ($fields)
-                VALUES ($values)";
-        $rs = $connect->query($sql);
+        // create the module in the site
+        $sql = '
+            INSERT INTO modules (' . implode(', ', $fields) . ')
+            VALUES (' . implode(', ', array_keys($parameters)) . ')
+        ';
+        $stmt = $connect->prepare($sql);
+        $stmt->execute($parameters);
+
+        $rs = $stmt->fetch();
         if (!$rs) {
-            $flashBag->add('error', $this->__('Error! Creation attempt failed.' . $sql));
+            $flashBag->add('error', $this->__('Error! Creation attempt failed.') . ' ' . $sql);
 
             return false;
         }
@@ -354,7 +350,7 @@ class SiteExtensionHelper
             return false;
         }
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
@@ -364,21 +360,23 @@ class SiteExtensionHelper
         // get module information
         $siteModule = $this->getModuleFromSiteDb($site, $moduleName);
 
-        if ($siteModule['state'] == ExtensionApi::STATE_ACTIVE) {
+        if ($siteModule['state'] == ExtensionsConstant::STATE_ACTIVE) {
             $this->modifyModuleActivation($site, [
                 'moduleName' => $moduleName,
-                'newState' => ExtensionApi::STATE_INACTIVE
+                'newState' => ExtensionsConstant::STATE_INACTIVE
             ]);
 
             return true;
         }
 
-        if ($siteModule['state'] == ExtensionApi::STATE_INACTIVE) {
+        if ($siteModule['state'] == ExtensionsConstant::STATE_INACTIVE) {
             return true;
         }
 
-        $sql = 'DELETE FROM `modules`
-                WHERE `name` = :moduleName';
+        $sql = '
+            DELETE FROM `modules`
+            WHERE `name` = :moduleName
+        ';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':moduleName' => $moduleName])) {
             $flashBag->add('error', $this->__('Error! Sorry! Deletion attempt failed.'));
@@ -392,19 +390,17 @@ class SiteExtensionHelper
     /**
      * Modifies the state of a module in a site database.
      *
-     * @param SiteEntity $site The given site instance
-     * @param array      $args Additional arguments
+     * @param SiteEntity $site       The given site instance
+     * @param string     $moduleName Module name
+     * @param integer    $newState   New state
      *
      * @return boolean True on success or false otherwise
      */
-    public function modifyModuleActivation(SiteEntity $site, $args)
+    public function modifyModuleActivation(SiteEntity $site, $moduleName = '', $newState = 0)
     {
-        $moduleName = $args['moduleName'];
-        $newState = $args['newState'];
-
         $flashBag = $this->session->getFlashBag();
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
@@ -412,9 +408,11 @@ class SiteExtensionHelper
         }
 
         // update the module state
-        $sql = 'UPDATE `modules`
-                SET `state` = :newState
-                WHERE `name` = :moduleName';
+        $sql = '
+            UPDATE `modules`
+            SET `state` = :newState
+            WHERE `name` = :moduleName
+        ';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':moduleName' => $moduleName, ':newState' => $newState])) {
             $flashBag->add('error', $this->__('Error! Update attempt failed.'));
@@ -423,118 +421,6 @@ class SiteExtensionHelper
         }
 
         return true;
-    }
-
-    /**
-     * Retrieves all themes available in the themes directory.
-     *
-     * @return array All existing theme names
-     */
-    public function getAllThemesInSystem()
-    {
-        $themeBaseFolder = 'themes';
-        $themes = [];
-        if (!file_exists($themeBaseFolder) || !is_dir($themeBaseFolder)) {
-            return $themes;
-        }
-
-        $flashBag = $this->session->getFlashBag();
-
-        $dh = opendir($themeBaseFolder);
-        $dirArray = [];
-        while ($dir = readdir($dh)) {
-            if (in_array($dir, ['.', '..', '.git', '.svn', 'CVS', 'index.html', 'index.htm', '.htaccess'])) {
-                continue;
-            }
-            if (!is_dir($themeBaseFolder . '/' . $dir)) {
-                continue;
-            }
-            $dirArray[] = $dir;
-        }
-        closedir($dh);
-
-        foreach ($dirArray as $dir) {
-            $themeFolder = $themeBaseFolder . '/' . $dir . '/';
-            $themeType = 0;
-            $themeversion = [];
-
-            // Work out the theme type
-            if (file_exists($themeFolder . 'theme.cfg') && file_exists($themeFolder . 'theme.php')) {
-                $themeType = 4;
-            } elseif (file_exists($themeFolder . 'version.php') && !file_exists($themeFolder . 'theme.php')) {
-                $themeType = 3;
-            } elseif (file_exists($themeFolder . 'xaninit.php') && file_exists($themeFolder . 'theme.php')) {
-                // xanthia 2.0 themes will need upgrading so set the theme state to inactive
-                $themeversion['state'] = ThemeUtil::STATE_INACTIVE;
-                $themeType = 2;
-            } elseif (file_exists($themeFolder . 'theme.php')) {
-                $themeType = 1;
-            } else {
-                // anything else isn't a theme
-                continue;
-            }
-
-            // Set some defaults in case we don't have a theme version file
-            $themeversion['name'] = preg_replace('/_/', ' ', $dir);
-            $themeversion['displayname'] = preg_replace('/_/', ' ', $dir);
-            $themeversion['version'] = '0';
-            $themeversion['description'] = '';
-            // include the correct version file based on theme type and
-            // manipulate the theme version information
-            if (file_exists($file = $themeFolder . 'version.php')) {
-                if (!include($file)) {
-                    $flashBag->add('error', $this->__f('Error! Could not include %s', ['%s' => $file]));
-                }
-            } elseif ($themeType == 4 && file_exists($file = $themeFolder . 'theme.cfg')) {
-                if (!include($file)) {
-                    $flashBag->add('error', $this->__f('Error! Could not include %s', ['%s' => $file]));
-                }
-                if (!isset($themeversion['name'])) {
-                    $themeversion['name'] = $dir;
-                }
-                $themeversion['displayname'] = $themeversion['name'];
-            } elseif ($themeType == 2 && file_exists($file = $themeFolder . 'xaninfo.php')) {
-                $themeinfo = [];
-                if (!include($file)) {
-                    $flashBag->add('error', $this->__f('Error! Could not include %s', ['%s' => $file]));
-
-                    return false;
-                }
-                $themeversion['author'] = $themeinfo['author'];
-                $themeversion['contact'] = $themeinfo['download'];
-                $themeversion['name'] = $themeinfo['name'];
-                $themeversion['displayname'] = $themeinfo['name'];
-                $themeversion['xhtml'] = $themeinfo['xhtmlsupport'];
-            }
-            $themes[$themeversion['name']] = [
-                'directory'     => $dir,
-                'name'          => $themeversion['name'],
-                'type'          => $themeType,
-                'displayname'   => (isset($themeversion['displayname']) ? $themeversion['displayname'] : $themeversion['name']),
-                'version'       => (isset($themeversion['version']) ? $themeversion['version'] : '1.0'),
-                'description'   => (isset($themeversion['description']) ? $themeversion['description'] : $themeversion['displayname']),
-                'admin'         => (isset($themeversion['admin']) ? (int) $themeversion['admin'] : '0'),
-                'user'          => (isset($themeversion['user']) ? (int) $themeversion['user'] : '1'),
-                'system'        => (isset($themeversion['system']) ? (int) $themeversion['system'] : '0'),
-                'state'         => (isset($themeversion['state']) ? $themeversion['state'] : ThemeUtil::STATE_ACTIVE),
-                'official'      => (isset($themeversion['offical']) ? (int) $themeversion['offical'] : '0'),
-                'author'        => (isset($themeversion['author']) ? $themeversion['author'] : ''),
-                'contact'       => (isset($themeversion['contact']) ? $themeversion['contact'] : ''),
-                'credits'       => (isset($themeversion['credits']) ? $themeversion['credits'] : ''),
-                'help'          => (isset($themeversion['help']) ? $themeversion['help'] : ''),
-                'changelog'     => (isset($themeversion['changelog']) ? $themeversion['changelog'] : ''),
-                'license'       => (isset($themeversion['license']) ? $themeversion['license'] : ''),
-                'xhtml'         => (isset($themeversion['xhtml']) ? (int) $themeversion['xhtml'] : 1)
-            ];
-
-            // reset vars for next iteration
-            unset($themeversion);
-            unset($themeType);
-        }
-
-        ksort($themes);
-
-        return $themes;
     }
 
     /**
@@ -548,7 +434,7 @@ class SiteExtensionHelper
     {
         $flashBag = $this->session->getFlashBag();
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
@@ -584,31 +470,30 @@ class SiteExtensionHelper
             return false;
         }
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
             return false;
         }
 
-        $sql = 'SELECT `name`, `state`
-                FROM `themes`
-                WHERE `name` = :themeName';
+        $sql = '
+            SELECT `name`, `state`
+            FROM `themes`
+            WHERE `name` = :themeName
+        ';
         $stmt = $connect->prepare($sql);
         $stmt->execute([':themeName' => $themeName]);
 
         $rs = $stmt->fetch();
         if (!$rs) {
-            //$flashBag->add('error', $this->__('Error! Could not load items.'));
-
-            //return false;
+            return false;
         }
-        $item = [
+
+        return [
             'name' => $rs['name'],
             'state' => $rs['state']
         ];
-
-        return $item;
     }
 
     /**
@@ -629,7 +514,7 @@ class SiteExtensionHelper
             return false;
         }
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
@@ -639,17 +524,8 @@ class SiteExtensionHelper
         $allThemes = $this->getAllThemesInSystem();
         $theme = $allThemes[$themeName];
 
-        $fields = '';
-        $values = '';
-
-        $textual = [
-            'name',
-            'displayname',
-            'description',
-            'directory',
-            'version',
-            'contact'
-        ];
+        $fields = [];
+        $parameters = [];
 
         $exclude = [
             'official',
@@ -661,23 +537,24 @@ class SiteExtensionHelper
         ];
 
         foreach ($theme as $key => $value) {
-            if (!in_array($key, $exclude)) {
-                $fields .= $key . ',';
-                $apos = (in_array($key, $textual)) ? "'" : '';
-                $valueString = ($value == '') ? "''" : $apos . DataUtil::formatForStore($value) . $apos;
-                $values .= $valueString . ',';
+            if (in_array($key, $exclude)) {
+                continue;
             }
+            $fields[] = $key;
+            $parameters[':' . $key] = $value;
         }
 
-        $fields = substr($fields, 0, -1);
-        $values = substr($values, 0, -1);
+        // create the theme in the site
+        $sql = '
+            INSERT INTO themes (' . implode(', ', $fields) . ')
+            VALUES (' . implode(', ', array_keys($parameters)) . ')
+        ';
+        $stmt = $connect->prepare($sql);
+        $stmt->execute($parameters);
 
-        //create the theme in the site
-        $sql = "INSERT INTO themes ($fields)
-                VALUES ($values)";
-        $rs = $connect->query($sql);
+        $rs = $stmt->fetch();
         if (!$rs) {
-            $flashBag->add('error', $this->__('Error! Creation attempt failed.' . $sql));
+            $flashBag->add('error', $this->__('Error! Creation attempt failed.') . ' ' . $sql);
 
             return false;
         }
@@ -703,15 +580,17 @@ class SiteExtensionHelper
             return false;
         }
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
             return false;
         }
 
-        $sql = 'DELETE FROM `themes`
-                WHERE `name` = :themeName';
+        $sql = '
+            DELETE FROM `themes`
+            WHERE `name` = :themeName
+        ';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':themeName' => $themeName])) {
             $flashBag->add('error', $this->__('Error! Sorry! Deletion attempt failed.'));
@@ -733,17 +612,19 @@ class SiteExtensionHelper
     {
         $flashBag = $this->session->getFlashBag();
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
             return false;
         }
 
-        $sql = 'SELECT `value`
-                FROM `module_vars`
-                WHERE `modname` = \'ZConfig\'
-                AND `name` = \'Default_Theme\'';
+        $sql = '
+            SELECT `value`
+            FROM `module_vars`
+            WHERE `modname` = \'ZConfig\'
+            AND `name` = \'Default_Theme\'
+        ';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute()) {
             $flashBag->add('error', $this->__('Error! Could not load default theme.'));
@@ -768,7 +649,7 @@ class SiteExtensionHelper
     {
         $flashBag = $this->session->getFlashBag();
 
-        $connect = $this->systemHelper->connectToExternalDatabase($site->getDatabaseData());
+        $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
             $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
 
@@ -776,10 +657,12 @@ class SiteExtensionHelper
         }
 
         $value = serialize($themeName);
-        $sql = 'UPDATE `module_vars`
-                SET `value` = :value
-                WHERE `modname` = \'ZConfig\'
-                AND `name` = \'Default_Theme\'';
+        $sql = '
+            UPDATE `module_vars`
+            SET `value` = :value
+            WHERE `modname` = \'ZConfig\'
+            AND `name` = \'Default_Theme\'
+        ';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':value' => $value])) {
             $flashBag->add('error', $this->__('Error! Could not save the new default theme.'));

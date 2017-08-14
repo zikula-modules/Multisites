@@ -12,6 +12,7 @@
 
 namespace Zikula\MultisitesModule\Helper;
 
+use Zikula\MultisitesModule\Entity\TemplateEntity;
 use Zikula\MultisitesModule\Helper\Base\AbstractModelHelper;
 
 /**

@@ -11,7 +11,7 @@
 
     {% if routeArea == 'admin' %}
         <div class="text-center bold">
-            [{{ pagerabc(route='zikulamultisitesmodule_site_adminview', posvar='letter', forwardvars='module,type,func') }} | <a href="{{ path('zikulamultisitesmodule_site_adminview') }}" title="{{ __('All letters') }}">{{ __('All') }}</a>]
+            {#[#}{{ pagerabc({posvar:'letter', forwardvars:'', printempty:true, route:'zikulamultisitesmodule_site_adminview'}) }}{# | <a href="{{ path('zikulamultisitesmodule_site_adminview') }}" title="{{ __('All letters') }}">{{ __('All') }}</a>]#}
         </div>
     {% endif %}
 
@@ -111,14 +111,14 @@
                         <a href="http://{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.name|notifyFilters('zikulamultisitesmodule.filterhook.sites')|safeHtml }}</a>
                     {% else %}
                         <a href="{{ wwwroot }}/{{ site.siteDns }}/" title="{{ __('Visit this site') }}" class="sitelink">{{ site.name|notifyFilters('zikulamultisitesmodule.filterhook.sites')|safeHtml }}</a>
-                    {/if}
-                    {% if site.description not empty %}
+                    {% endif %}
+                    {% if site.description is not empty %}
                         <br /><span class="z-sub">{{ site.description }}</span>
                     {% endif %}
                 </td>
                 <td headers="hSiteName" class="text-left">
                     {{ site.siteName }}
-                    {% if site.siteDescription not empty %}
+                    {% if site.siteDescription is not empty %}
                         <br /><span class="z-sub">{{ site.siteDescription }}</span>
                     {% endif %}
                 </td>

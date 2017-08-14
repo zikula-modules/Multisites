@@ -19,5 +19,38 @@ use Zikula\MultisitesModule\Helper\Base\AbstractControllerHelper;
  */
 class ControllerHelper extends AbstractControllerHelper
 {
-    // feel free to add your own convenience methods here
+    /**
+     * @var array
+     */
+    private $multisitesParameters;
+
+    /**
+     * Sets the multisites parameters.
+     *
+     * @param array $multisitesParameters
+     */
+    public function setMultisitesParameters(array $multisitesParameters = [])
+    {
+        $this->multisitesParameters = $multisitesParameters;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addTemplateParameters($objectType = '', array $parameters = [], $context = '', array $args = [])
+    {
+        if (!in_array($context, ['controllerAction', 'api', 'actionHandler', 'block', 'contentType', 'mailz'])) {
+            $context = 'controllerAction';
+        }
+
+        $parameters = parent::addTemplateParameters($objectType, $parameters, $context, $args);
+
+        if ($objectType == 'site' && $context == 'controllerAction' && isset($args['action']) && $args['action'] == 'view') {
+            $msConfig = $this->multisitesParameters;
+            $parameters['wwwroot'] = isset($msConfig['wwwroot']) ? $msConfig['wwwroot'] : $this->request->getSchemeAndHttpHost() . $this->request->getBasePath();
+            $parameters['basedOnDomains'] = $msConfig['based_on_domains'];
+        }
+
+        return $parameters;
+    }
 }

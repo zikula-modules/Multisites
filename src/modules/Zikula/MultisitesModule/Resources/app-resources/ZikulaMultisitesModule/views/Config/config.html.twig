@@ -5,7 +5,7 @@
 {% block content %}
     <div class="zikulamultisitesmodule-config">
         {% set globalAdminStatus = app.request.getSession().get('globalAdminStatus', '') %}
-        {% if globalAdminStatus not empty %}
+        {% if globalAdminStatus is not empty %}
             <p class="alert alert-warning">{{ globalAdminStatus }}</p>
         {% endif %}
 

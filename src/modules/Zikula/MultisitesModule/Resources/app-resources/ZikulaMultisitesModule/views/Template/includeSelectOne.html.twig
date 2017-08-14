@@ -21,7 +21,7 @@
         </div>
         <br style="clear: both" />
     {% endif %}
-    {% if group == 'site' and mandatory not true %}
+    {% if group == 'site' and mandatory != true %}
         <p class="alert alert-info">{{ __('If you decouple a site from the template it is not affected by future reapplications of this template anymore, but is configured and maintained independently. If you reassign a decoupled site to a template again this template is reapplied for that site.') }}</p>
     {% endif %}
 {% if tabs|default(false) == true %}

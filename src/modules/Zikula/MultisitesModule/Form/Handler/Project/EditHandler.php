@@ -15,7 +15,7 @@ namespace Zikula\MultisitesModule\Form\Handler\Project;
 use Zikula\MultisitesModule\Form\Handler\Project\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the zikulaMultisitesModule_project_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the project object type.
  */
 class EditHandler extends AbstractEditHandler

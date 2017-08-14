@@ -1,0 +1,770 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.0.1\n"
+"Last-Translator: Axel Guckelsberger <info@guite.de>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
+
+msgid ""
+"A site template represents a blueprint for several sites. Each template may "
+"be assigned to all or specific projects."
+msgstr ""
+"Eine Seitenvorlage repräsentiert eine Blaupause für mehrere Seiten. Jede "
+"Vorlage kann allen oder lediglich bestimmten Projekten zugeordnet werden."
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Active, click to deactivate"
+msgstr "Aktiv, klicken zum Deaktivieren"
+
+msgid "Add module"
+msgstr "Modul hinzufügen"
+
+msgid "Add theme"
+msgstr "Theme hinzufügen"
+
+msgid "Admin details"
+msgstr "Admin-Details"
+
+msgid "Advanced options"
+msgstr "Erweiterte Optionen"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "Allowed"
+msgstr "Erlaubt"
+
+msgid "Allowed extensions"
+msgstr "Erlaubte Erweiterungen"
+
+msgid "Allowed layouts"
+msgstr "Erlaubte Layouts"
+
+msgid "Available tools"
+msgstr "Verfügbare Werkzeuge"
+
+msgid "Back to paginated view"
+msgstr "Zurück zur Seitenansicht"
+
+msgid "Back to site list"
+msgstr "Zurück zur Seitenliste"
+
+msgid "Basic data"
+msgstr "Basis-Daten"
+
+msgid "Basic site data"
+msgstr "Grundlegende Seitendaten"
+
+msgid "Cancel"
+msgstr "Abbruch"
+
+msgid ""
+"Caution: the database is emptied, so choose one which is not used by any "
+"other applications. All tables which are defined as excluded in the template "
+"are kept though."
+msgstr ""
+"Achtung: die Datenbank wird geleert, also wählen Sie eine, welche nicht von "
+"anderen Anwendungen benutzt wird. Alle Tabellen, die in der Vorlage als "
+"ausgeschlossen definiert wurden, werden allerdings aufgehoben."
+
+msgid ""
+"Caution: this reapplies the template data again to all assigned sites. All "
+"database tables except excluded ones will be dropped and recreated."
+msgstr ""
+"Achtung: dies wendet die Daten der Vorlage auf alle zugeordneten Seiten neu "
+"an. Alle Datenbanktabellen außer den ausgeschlossenen werden gelöscht und "
+"neu angelegt."
+
+msgid ""
+"Caution: updating a site causes reapplying the template data again to it. "
+"All database tables except excluded ones will be dropped and recreated."
+msgstr ""
+"Achtung: das Ändern einer Seite verursacht eine Neuanwendung der Daten der "
+"Vorlage auf diese Seite. Alle Datenbanktabellen außer den ausgeschlossenen "
+"werden gelöscht und neu angelegt."
+
+msgid "Change these values only if database credentials actually changed."
+msgstr ""
+"Verändere diese Werte nur, falls sich die Datenbank-Zugangsdaten tatsächlich "
+"geändert haben."
+
+msgid "Check again"
+msgstr "Erneut prüfen"
+
+msgid "Check this if the database does not exist yet."
+msgstr "Kreuze diese Option an, falls die Datenbank noch nicht existiert."
+
+msgid "Choose action"
+msgstr "Aktion wählen"
+
+msgid "Clear all cache and compile directories"
+msgstr "Alle Cache- und Kompilierungsverzeichnisse leeren"
+
+msgid "Company"
+msgstr "Firma"
+
+msgid "Configuration wizard"
+msgstr "Konfigurationsassistent"
+
+msgid "Confirmation prompt"
+msgstr "Sicherheitsabfrage"
+
+msgid "Content"
+msgstr "Inhalt"
+
+msgid "Create database"
+msgstr "Datenbank erstellen"
+
+msgid "Create global administrator"
+msgstr "Globalen Administrator erstellen"
+
+msgid "Create project"
+msgstr "Projekt erstellen"
+
+msgid "Create site"
+msgstr "Seite erstellen"
+
+msgid "Create template"
+msgstr "Vorlage erstellen"
+
+msgid "Creation date"
+msgstr "Erstellungsdatum"
+
+msgid "Database data"
+msgstr "Datenbank-Daten"
+
+msgid "Database hosts"
+msgstr "Datenbank-Server"
+
+msgid "Database name"
+msgstr "Datenbankname"
+
+msgid "Database types"
+msgstr "Datenbank-Typen"
+
+msgid "Default theme"
+msgstr "Standardtheme"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Delete content permanently."
+msgstr "Den Inhalt permanent löschen."
+
+msgid "Delete database"
+msgstr "Datenank löschen"
+
+msgid "Delete options"
+msgstr "Löschoptionen"
+
+msgid "Delete site"
+msgstr "Seite löschen"
+
+msgid "Delete site files"
+msgstr "Seiten-Dateien löschen"
+
+msgid "Derive placeholders from template"
+msgstr "Platzhalter von der Vorlage ableiten"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Description (internal)"
+msgstr "Beschreibung (intern)"
+
+msgid "Do you really want to delete this site: \"%name%\" ?"
+msgstr "Soll diese Seite wirklich gelöscht werden: \"%name%\" ?"
+
+msgid "Do you really want to reapply this template ?"
+msgstr "Soll diese Vorlage wirklich neu angewendet werden ?"
+
+msgid "Download"
+msgstr "Herunterladen"
+
+msgid ""
+"Each site is assigned to a project and instance of a certain site template."
+msgstr ""
+"Jede Seite ist einem Projekt zugeordnet und Ausprägung einer bestimmten "
+"Seitenvorlage."
+
+msgid "Edit project"
+msgstr "Projekt bearbeiten"
+
+msgid "Edit projects workflow"
+msgstr "Workflow für Projekte bearbeiten"
+
+msgid "Edit site"
+msgstr "Seite bearbeiten"
+
+msgid "Edit site extensions workflow"
+msgstr "Workflow für Seitenerweiterungen bearbeiten"
+
+msgid "Edit sites workflow"
+msgstr "Workflow für Seiten bearbeiten"
+
+msgid "Edit template"
+msgstr "Vorlage bearbeiten"
+
+msgid "Edit templates workflow"
+msgstr "Workflow für Vorlagen bearbeiten"
+
+msgid "Edit workflow for projects"
+msgstr "Workflow für Projekte bearbeiten"
+
+msgid "Edit workflow for site extensions"
+msgstr "Workflow für Seitenerweiterungen bearbeiten"
+
+msgid "Edit workflow for sites"
+msgstr "Workflow für Seiten bearbeiten"
+
+msgid "Edit workflow for templates"
+msgstr "Workflow für Vorlagen bearbeiten"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid ""
+"Enter parameter names separated by line breaks. Each parameter represents a "
+"variable information which is being replaced by concrete values when "
+"creating a new site or reapplying the template on existing sites. The "
+"parameter names can be used as placeholders anywhere in the template data "
+"accordingly."
+msgstr ""
+"Geben Sie Parameternamen getrennt durch Zeilenumbrüche ein. Jeder Parameter "
+"repräsentiert eine variable Information, die beim Erstellen einer neuen "
+"Seite oder dem erneuten Anwenden der Vorlage auf bestehende Seiten durch "
+"konkrete Werte ersetzt wird. Die Namen der Parameter können entsprechend als "
+"Platzhalter irgendwo in den Daten der Vorlage verwendet werden."
+
+msgid ""
+"Enter the folders to be created for new sites separated by line breaks. If "
+"you need a folder within another one you can write expressions like \"folder/"
+"folder\"."
+msgstr ""
+"Geben Sie Ordner an, die für neue Seiten erstellt werden sollen, getrennt "
+"durch Zeilenumbrüche. Auch Unterordner sind möglich durch Ausdrücke wie "
+"\"ordner/unterordner\"."
+
+msgid ""
+"Enter the names of database tables which should be skipped during template "
+"reapplications separated by line breaks. With this you can for example avoid "
+"overriding your local user table. Note you can use * as a placeholder, like "
+"content_* for all Content tables for only * for all tables; ensure to use "
+"this if you want to use a template for different sites without any "
+"parameters, otherwise you will end up with overriding your data later on "
+"when the template is reapplied."
+msgstr ""
+"Geben Sie die Namen der Datenbanktabellen (getrennt durch Zeilenumbrüche) "
+"ein, die während dem Neuanwenden der Vorlage übersprungen werden sollen. "
+"Damit lässt sich zum Beispiel ein Überschreiben der lokalen Benutzertabelle "
+"vermeiden. Man kann übrigens * als Platzhalter verwenden, etwa content_* für "
+"alle Content-Tabellen oder nur * für alle Tabellen; dies sollte benutzt "
+"werden, wenn man eine Vorlage für unterschiedliche Seiten ohne jegliche "
+"Parameter nutzen möchte, ansonsten werden die Daten später beim Neuanwenden "
+"der Vorlage überschrieben."
+
+msgid ""
+"Enter values for all parameters specified by the selected template separated "
+"by line breaks."
+msgstr ""
+"Gebe Werte für alle durch die ausgewählte Vorlage spezifizierten Parameter "
+"ein, getrennt durch Zeilenumbrüche."
+
+msgid "Excluded tables"
+msgstr "Ausgeschlossene Tabellen"
+
+msgid "Execute sql directly"
+msgstr "SQL direkt ausführen"
+
+msgid ""
+"Expert option! Only possible if the database user has sufficient permissions."
+msgstr ""
+"Expertenoption! Nur möglich, falls der Datenbanknutzer ausreichende "
+"Berechtigungen besitzt."
+
+msgid ""
+"Expert option! Per default all locales available in the system will be made "
+"available for the site."
+msgstr ""
+"Expertenoption! Per Standard sind alle im System verfügbaren Sprachen auch "
+"für die Seite verfügbar."
+
+msgid "Features"
+msgstr "Features"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Folders"
+msgstr "Ordner"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Here you can configure parameters for list views."
+msgstr "Hier können Parameter für Listenansichten eingestellt werden."
+
+msgid "Here you can define general settings."
+msgstr "Hier können die grundlegenden Einstellungen verändert werden."
+
+msgid "Here you can define security-related settings."
+msgstr "Hier können sicherheitsbezogene Einstellungen verändert werden."
+
+msgid "Here you can inspect and amend the existing workflows."
+msgstr ""
+"Hier können die bestehenden Workflows inpiziert und verändert verändert "
+"werden."
+
+msgid "Hooks"
+msgstr "Hooks"
+
+msgid ""
+"If you decouple a site from the template it is not affected by future "
+"reapplications of this template anymore, but is configured and maintained "
+"independently. If you reassign a decoupled site to a template again this "
+"template is reapplied for that site."
+msgstr ""
+"Wird eine Seite von der Vorlage entkoppelt, ist diese nicht mehr von "
+"zukünftigen Neuanwendungen dieser Vorlage betroffen, sondern wird unabhängig "
+"konfiguriert und gewartet. Wird eine entkoppelte Seite wieder einer Vorlage "
+"zugewiesen, wird diese Vorlage für die Seite neu angewendet."
+
+msgid ""
+"If you experience any problem you can delete the <strong>%1$s</strong> and "
+"<strong>%2$s</strong> files to recover the system to the previous state."
+msgstr ""
+"Bei Problemen können Sie die Dateien <strong>%1$s</strong> und <strong>%2$s</"
+"strong> löschen, um das System in den vorherigen Zustand zurück zu versetzen."
+
+msgid ""
+"If you have any problem you can recover the system to the previous state at "
+"any time by deleting both files again."
+msgstr ""
+"Bei Problemen können Sie das System jederzeit durch Löschen beider Dateien "
+"in den vorherigen Zustand zurückversetzen."
+
+msgid "Image settings for sites fav icon"
+msgstr "Bildeinstellungen für FavIcons von Seiten"
+
+msgid "Image settings for sites logo"
+msgstr "Bildeinstellungen für Logos von Seiten"
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "Inactive, click to activate"
+msgstr "Inaktiv, klicken zum Aktivieren"
+
+msgid "Individualisation"
+msgstr "Individualisierung"
+
+msgid "Input data"
+msgstr "Eingabedaten"
+
+msgid "It is going to be added in Multisites version 2.1.0."
+msgstr "Sie wird in Multisites Version 2.1.0 hinzugefügt."
+
+msgid "List views"
+msgstr "Listenansichten"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Manage the modules for this site"
+msgstr "Die Module für diese Seite verwalten"
+
+msgid "Manage the themes for this site"
+msgstr "Die Themes für diese Seite verwalten"
+
+msgid "Manage updates"
+msgstr "Updates verwalten"
+
+msgid "Management information"
+msgstr "Verwaltungsinformationen"
+
+msgid "Moderation"
+msgstr "Moderation"
+
+msgid "Multiply queries"
+msgstr "Abfragen vervielfachen"
+
+msgid "My projects"
+msgstr "Meine Projekte"
+
+msgid "My sites"
+msgstr "Meine Seiten"
+
+msgid "My templates"
+msgstr "Meine Vorlagen"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Name (internal)"
+msgstr "Interner Name"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "No projects found."
+msgstr "Keine Projekte gefunden."
+
+msgid "No sites found."
+msgstr "Keine Seiten gefunden."
+
+msgid "No templates found."
+msgstr "Keine Vorlagen gefunden."
+
+msgid "None"
+msgstr "Keine"
+
+msgid "None (decouple site from template)"
+msgstr "Keine (Seite von Vorlage entkoppeln)"
+
+msgid "None (decoupled)"
+msgstr "Keine (entkoppelt)"
+
+msgid "Not allowed"
+msgstr "Nicht erlaubt"
+
+msgid "Not allowed, click to deactivate"
+msgstr "Nicht erlaubt, klicken zum Deaktivieren"
+
+msgid "Not available"
+msgstr "Nicht verfügbar"
+
+msgid "Not default theme"
+msgstr "Standardtheme"
+
+msgid "Not set."
+msgstr "Nicht festgelegt."
+
+msgid "Note: the database user must exist already for this to work."
+msgstr ""
+"Hinweis: der Datenbanknutzer muss bereits existieren, damit dies "
+"funktioniert."
+
+msgid "Note: you should use semicolon as delimiter and UTF-8 as encoding."
+msgstr ""
+"Hinweis: als Trennzeichen sollte Semikolon und als Zeichensatz sollte UTF-8 "
+"verwendet werden."
+
+msgid "Operation mode"
+msgstr "Ausführungsmodus"
+
+msgid "Options"
+msgstr "Optionen"
+
+msgid "Original site admin email"
+msgstr "Ursprüngliche E-Mail-Adresse des Seiten-Administrators"
+
+msgid "Original site admin name"
+msgstr "Ursprünglicher Name des Seiten-Administrators"
+
+msgid "Original site admin password"
+msgstr "Ursprüngliches Kennwort des Seiten-Administrators"
+
+msgid "Original site name"
+msgstr "Originaler Seiten-Name"
+
+msgid "Output"
+msgstr "Ausgabe"
+
+msgid "Output data"
+msgstr "Ausgabedaten"
+
+msgid "Parameter specification is not available yet."
+msgstr "Die Spezifikation von Parametern ist noch nicht verfügbar."
+
+msgid "Parameters"
+msgstr "Parameter"
+
+msgid "Physical location of the directory in the server"
+msgstr "Physischer Ort des Verzeichnisses auf dem Server"
+
+msgid "Placeholder syntax: ###PARAMETERNAME###"
+msgstr "Platzhalter-Syntax: ###PARAMETERNAME###"
+
+msgid ""
+"Please copy the files <strong>%1$s</strong> and <strong>%2$s</strong> into "
+"the Zikula <strong>config</strong> directory and give them writeable "
+"permissions."
+msgstr ""
+"Bitte die Dateien <strong>%1$s</strong> und <strong>%2$s</strong> in das "
+"<strong>config</strong>-Verzeichnis von Zikula kopieren und ihre Rechte auf "
+"beschreibbar stellen."
+
+msgid "Please see this issue for more details:"
+msgstr "Für weitere Details bitte dieses Ticket anschauen:"
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Projects"
+msgstr "Projekte"
+
+msgid "Projects list"
+msgstr "Projektliste"
+
+msgid "Projects serve for grouping sites by clients or topics."
+msgstr "Projekte dienen der Gruppierung von Seiten nach Kunden oder Themen."
+
+msgid "Quick navigation"
+msgstr "Schnellnavigation"
+
+msgid "Real name"
+msgstr "Echter Name"
+
+msgid "Reapply"
+msgstr "Neu anwenden"
+
+msgid "Recover administrators site control"
+msgstr "Seitenkontrolle des Administrators wiederherstellen"
+
+msgid "Return control"
+msgstr "Rücksprungskontrolle"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Script Real Path"
+msgstr "Realer Skript-Pfad"
+
+msgid "Security settings"
+msgstr "Sicherheitseinstellungen"
+
+msgid "Send an email"
+msgstr "Eine E-Mail senden"
+
+msgid "Set as default theme"
+msgstr "Als Standardtheme festlegen"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Show all entries"
+msgstr "Alle Einträge anzeigen"
+
+msgid "Show output sql"
+msgstr "Ausgabe-SQL anzeigen"
+
+msgid "Site alias"
+msgstr "Seiten-Alias"
+
+msgid "Site database"
+msgstr "Seiten-Datenbank"
+
+msgid "Site dns"
+msgstr "Seiten-DNS"
+
+msgid "Site extensions"
+msgstr "Seitenerweiterungen"
+
+msgid "Site host or folder"
+msgstr "Seiten-Host oder -Ordner"
+
+msgid "Site list"
+msgstr "Seitenliste"
+
+msgid "Site name"
+msgstr "Seitenname"
+
+msgid "Site tools"
+msgstr "Seiten-Werkzeuge"
+
+msgid "Sites"
+msgstr "Seiten"
+
+msgid "Sites fav icon"
+msgstr "FavIcon der Seite"
+
+msgid "Sites list"
+msgstr "Seitenliste"
+
+msgid "Sites logo"
+msgstr "Logo der Seite"
+
+msgid "Sort by %s"
+msgstr "Sortieren nach %s"
+
+msgid "Sql file"
+msgstr "SQL-Datei"
+
+msgid "Sql query"
+msgstr "SQL-Abfrage"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Step 1 - Checking the correct location of the configuration files"
+msgstr "Schritt 1 - Überprüfung des korrekten Ortes der Konfigurationsdateien"
+
+msgid "Step 2 - Checking whether the sites files directory exists"
+msgstr ""
+"Schritt 2 - Überprüfung der Existenz des Verzeichnisses für die Seitendateien"
+
+msgid ""
+"Step 3 - Writing correct parameters into the <strong>%s.php</strong> file"
+msgstr ""
+"Schritt 3 - Schreiben der korrekten Parameter in die Datei <strong>%s</"
+"strong>"
+
+msgid "Step 4 - Check if the %s file is not writeable anymore"
+msgstr ""
+"Schritt 4 - Sicherstellen, dass die Datei %s nicht mehr beschreibbar ist"
+
+msgid "Submit"
+msgstr "Abschicken"
+
+msgid "Template"
+msgstr "Vorlage"
+
+msgid "Template data"
+msgstr "Vorlagen-Daten"
+
+msgid "Templates"
+msgstr "Vorlagen"
+
+msgid "Templates list"
+msgstr "Liste der Vorlagen"
+
+msgid "The alias must be a lower case, unique string containing only letters."
+msgstr ""
+"Das Alias muss ein klein geschriebener, eindeutiger String sein, der nur "
+"Buchstaben enthält."
+
+msgid ""
+"The file <strong>%s</strong> has not been found and could not be copied "
+"automatically."
+msgstr ""
+"Die Datei <strong>%s</strong> wurde nicht gefunden und konnte nicht "
+"automatisch kopiert werden."
+
+msgid "The file <strong>%s</strong> is located in the correct place."
+msgstr "Die Datei <strong>%s</strong> ist am richtigen Platz."
+
+msgid "The file <strong>%s</strong> is not writeable, but it should be."
+msgstr ""
+"Fehler! Die Datei <strong>%s</strong> ist nicht beschreibbar, was aber der "
+"Fall sein sollte."
+
+msgid ""
+"The file <strong>%s</strong> is writeable, but it should not be. Please set "
+"this file as not writeable."
+msgstr ""
+"Die Datei <strong>%s</strong> ist beschreibbar, sollte sie aber nicht sein. "
+"Bitte diese Datei auf nur-lesen stellen."
+
+msgid "The file <strong>%s</strong> is writeable."
+msgstr "Die Datei <strong>%s</strong> ist beschreibbar."
+
+msgid ""
+"This directory will be used to save the temporary and userdata files for the "
+"different sites."
+msgstr ""
+"Dieses Verzeichnis wird zum Speichern der temporären Dateien und "
+"Nutzerdateien für die unterschiedlichen Seiten verwendet."
+
+msgid ""
+"This ensures that the global administrator exists. Note that if the site "
+"admin and the global admin have the same user name, the global admin will "
+"override the original site admin."
+msgstr ""
+"Dies stellt sicher, dass der globale Administrator existiert. Zu beachten "
+"ist, dass, falls der Seiten-Admin und der globale Admin den gleichen "
+"Nutzernamen haben, der globale Admin den ursprünglichen Seiten-Admin "
+"überschreibt."
+
+msgid "This feature has not been implemented yet (issue #17)."
+msgstr "Dieses Feature wurde noch nicht implementiert (Issue #17)."
+
+msgid "This functionality is not implemented yet."
+msgstr "Diese Funktionalität wurde noch nicht implementiert."
+
+msgid "This is an expert function! Use it only if you know about the effects."
+msgstr ""
+"Dies ist eine Expertenfunktion! Verwenden Sie sie nur, wenn Sie sich über "
+"die Auswirkungen im Klaren sind."
+
+msgid ""
+"This is the domain or folder name under which this site should be reachable."
+msgstr ""
+"Dies ist der Domain- oder Verzeichnisname, unter dem die Seite erreichbar "
+"sein soll."
+
+msgid ""
+"This removes the first permission rule and inserts the default one instead, "
+"ensuring that the original site administrator belongs to the admin group "
+"again."
+msgstr ""
+"Dies entfernt die erste Berechtigungsregel und fügt die Standardregel statt "
+"dessen ein, was sicherstellt, dass der ursprüngliche Seiten-Administrator "
+"wieder zur Admin-Gruppe gehört."
+
+msgid "This setting is disabled. Click here to enable it."
+msgstr ""
+"Diese Einstellung ist deaktiviert. Klicken Sie hier, um sie zu aktivieren."
+
+msgid "This setting is enabled. Click here to disable it."
+msgstr ""
+"Diese Einstellung ist aktiviert. Klicken Sie hier, um sie zu deaktivieren."
+
+msgid "Toggle module state"
+msgstr "Modul-Status verändern"
+
+msgid "Toggle theme state"
+msgstr "Theme-Status verändern"
+
+msgid ""
+"Use <strong>`###DBNAME###`</strong> as a placeholder for the database name."
+msgstr ""
+"Benutzen Sie <strong>`###DBNAME###`</strong> als Platzhalter für den "
+"Datenbanknamen."
+
+msgid "User"
+msgstr "Benutzer"
+
+msgid ""
+"User names can contain letters, numbers, underscores, periods, or dashes."
+msgstr ""
+"Benutzernamen können Buchstaben, Zahlen, Unterstriche, Punkte oder Striche "
+"enthalten."
+
+msgid "Version"
+msgstr "Version"
+
+msgid "View issue at GitHub"
+msgstr "Ticket auf GitHub anschauen"
+
+msgid "View sites assigned to this project"
+msgstr "Diesem Projekt zugeordnete Seiten anschauen"
+
+msgid "View sites assigned to this template"
+msgstr "Dieser Vorlage zugeordnete Seiten anschauen"
+
+msgid "Visit this site"
+msgstr "Diese Seite besuchen"
+
+msgid "With selected sites"
+msgstr "Die ausgewählten Seiten"
+
+msgid "Workflows"
+msgstr "Workflows"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "or sql file"
+msgstr "oder SQL-Datei"

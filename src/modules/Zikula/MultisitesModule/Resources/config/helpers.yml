@@ -19,6 +19,8 @@ services:
             - "@zikula_multisites_module.collection_filter_helper"
             - "@zikula_multisites_module.model_helper"
             - "@zikula_multisites_module.image_helper"
+        calls:
+            - [setMultisitesParameters, ["%multisites%"]]
     
     zikula_multisites_module.entity_display_helper:
         class: Zikula\MultisitesModule\Helper\EntityDisplayHelper
@@ -49,7 +51,7 @@ services:
             - "@zikula_multisites_module.entity_factory"
     
     zikula_multisites_module.upload_helper:
-        class: «nsBase»UploadHelper
+        class: Zikula\MultisitesModule\Helper\UploadHelper
         arguments:
             - "@translator.default"
             - "@session"

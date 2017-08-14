@@ -120,7 +120,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_site_' . $routeArea . 'view'),
                 'text' => $this->__('Sites', 'zikulamultisitesmodule'),
-                'title' => $this->__('Site list', 'zikulamultisitesmodule')
+                'title' => $this->__('Sites list', 'zikulamultisitesmodule')
             ];
         }
         if (in_array('template', $allowedObjectTypes)
@@ -128,7 +128,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_template_' . $routeArea . 'view'),
                 'text' => $this->__('Templates', 'zikulamultisitesmodule'),
-                'title' => $this->__('Template list', 'zikulamultisitesmodule')
+                'title' => $this->__('Templates list', 'zikulamultisitesmodule')
             ];
         }
         if (in_array('siteExtension', $allowedObjectTypes)
@@ -136,7 +136,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_siteextension_' . $routeArea . 'view'),
                 'text' => $this->__('Site extensions', 'zikulamultisitesmodule'),
-                'title' => $this->__('Site extension list', 'zikulamultisitesmodule')
+                'title' => $this->__('Site extensions list', 'zikulamultisitesmodule')
             ];
         }
         if (in_array('project', $allowedObjectTypes)
@@ -144,7 +144,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_project_' . $routeArea . 'view'),
                 'text' => $this->__('Projects', 'zikulamultisitesmodule'),
-                'title' => $this->__('Project list', 'zikulamultisitesmodule')
+                'title' => $this->__('Projects list', 'zikulamultisitesmodule')
             ];
         }
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {

@@ -46,8 +46,7 @@ class ConfigController extends AbstractConfigController
         }
 
         // return error if no permissions are granted
-        $permLevel = ACCESS_ADMIN;
-        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', $permLevel)) {
+        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 

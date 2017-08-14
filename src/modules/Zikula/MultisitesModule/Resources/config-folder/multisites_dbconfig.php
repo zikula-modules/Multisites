@@ -1,12 +1,12 @@
 <?php
 
-$databaseArray = array (
-    'myhost.net' => array (
+$databaseArray = [
+    'myhost.net' => [
         'alias' => 'myhost',
-        'dbname' => 'first77',
-        'dbhost' => 'localhost',
-        'dbtype' => 'mysql',
-        'dbuname' => 'root',
-        'dbpass' => 'root',
-    ),
-);
+        'dbName' => 'first77',
+        'dbHost' => 'localhost',
+        'dbType' => 'mysql',
+        'dbUname' => 'root',
+        'dbPass' => 'root',
+    ],
+];

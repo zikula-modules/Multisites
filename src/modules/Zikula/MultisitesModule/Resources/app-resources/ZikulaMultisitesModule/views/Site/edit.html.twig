@@ -167,60 +167,55 @@
         <script type="text/javascript">
         /* <![CDATA[ */
 
-            var parameterSpec = null;
+            ( function($) {
+                var parameterSpec = null;
 
-            function filterTemplatesByProject()
-            {
-                var oldTemplateId = $('#template').val();
+                function filterTemplatesByProject()
+                {
+                    var oldTemplateId = $('#template').val();
 
-                $('#template option').remove();
+                    $('#template option').remove();
 
-                {% if mode != 'create' %}
-                    var opt = document.createElement('option');
-                    opt.text = '{{ __('None (decouple site from template)') }}';
-                    opt.value = '';
-                    $('#template').options.add(opt);
-                {% endif %}
+                    {% if mode != 'create' %}
+                        var opt = document.createElement('option');
+                        opt.text = '{{ __('None (decouple site from template)') }}';
+                        opt.value = '';
+                        $('#template').options.add(opt);
+                    {% endif %}
 
-                if (!$('#project').val()) {
-                    return;
+                    if (!$('#project').val()) {
+                        return;
+                    }
+
+                    $.getJSON(Routing.generate('zikulamultisitesmodule_ajax_getprojecttemplates'), { id: $('#project').val() }, function(data) {
+                        var templates = data.templates;
+                        var includesOldId = false;
+
+                        templates.each(function() {
+                            var template = $(this);
+                            var opt = document.createElement('option');
+                            opt.text = template.name;
+                            opt.value = template.id;
+                            if (template.id == oldTemplateId) {
+                                includesOldId = true;
+                            }
+                            {% if mode == 'create' or site.template is null %}
+                                $('#template').options.add(opt);
+                            {% else %}
+                                if (template.id == oldTemplateId) {
+                                    $('#template').options.add(opt);
+                                }
+                            {% endif %}
+
+                            parameterSpec = template.parameters;
+                        });
+
+                        if (includesOldId === true) {
+                            $('#template').value = oldTemplateId;
+                        }
+                    });
                 }
 
-                jQuery.ajax({
-                    method: 'POST',
-                    url: Routing.generate('zikulamultisitesmodule_ajax_getprojecttemplates'),
-                    data: 'id=' + $('#project').val()
-                }).done(function(res) {
-                    var data = res.data;
-                    var templates = data.templates;
-                    var includesOldId = false;
-
-                    templates.each(function() {
-                        var template = $(this);
-                        var opt = document.createElement('option');
-                        opt.text = template.name;
-                        opt.value = template.id;
-                        if (template.id == oldTemplateId) {
-                            includesOldId = true;
-                        }
-                        {% if mode == 'create' || site.template is null %}
-                            $('#template').options.add(opt);
-                        {% else %}
-                            if (template.id == oldTemplateId) {
-                                $('#template').options.add(opt);
-                            }
-                        {% endif %}
-
-                        parameterSpec = template.parameters;
-                    });
-
-                    if (includesOldId === true) {
-                        $('#template').value = oldTemplateId;
-                    }
-                });
-            }
-
-            ( function($) {
                 $(document).ready(function() {
                     // initialise auto completion for user fields
                     {% if form.moderationSpecificCreator is defined %}
