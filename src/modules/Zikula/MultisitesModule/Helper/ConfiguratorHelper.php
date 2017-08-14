@@ -194,7 +194,8 @@ class ConfiguratorHelper
                 }
                 if (true !== $paramsValid) {
                     // ask for the correct location for the sites folder where the Temp folders will be created.
-                    $scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0, strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
+                    $pathToThisFile = $this->request->server->get('SCRIPT_FILENAME');
+                    $scriptRealPath = substr($pathToThisFile, 0, strrpos($pathToThisFile, '/'));
                     $filesRealPath = $scriptRealPath . '/' . $this->dataDirectory . '/msData';
 
                     $this->templateParameters = [
@@ -471,9 +472,9 @@ class ConfiguratorHelper
     {
         // get server zikula folder installation
         /** TODO: write rule to convert domains from www.foo.dom to foo.dom */
-        $pathToThisFile = $this->request->server->get('PHP_SELF');
-        $path = substr($pathToThisFile, 0, strrpos($pathToThisFile, '/'));
-        $basePath = substr($path, 0 ,  strrpos($path, '/'));
+        $pathToThisFile = $this->request->server->get('SCRIPT_FILENAME');
+        $scriptRealPath = substr($pathToThisFile, 0, strrpos($pathToThisFile, '/'));
+        $basePath = substr($scriptRealPath, 0, strrpos($scriptRealPath, '/'));
         $wwwroot = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath();
 
         $flashBag = $this->session->getFlashBag();
