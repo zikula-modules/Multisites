@@ -56,3 +56,10 @@ services:
     zikula_multisites_module.group_listener:
         class: Zikula\MultisitesModule\Listener\GroupListener
         tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.workflow_events_listener:
+        class: Zikula\MultisitesModule\Listener\WorkflowEventsListener
+        arguments:
+            - "@zikula_permissions_module.api.permission"
+        tags: ['kernel.event_subscriber']
+    
