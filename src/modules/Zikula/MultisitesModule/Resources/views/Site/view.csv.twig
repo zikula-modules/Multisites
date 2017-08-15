@@ -1,7 +1,6 @@
 {# purpose of this template: sites view csv view #}
 {% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Site alias') }}";"{{ __('Site name') }}";"{{ __('Site description') }}";"{{ __('Site admin name') }}";"{{ __('Site admin password') }}";"{{ __('Site admin real name') }}";"{{ __('Site admin email') }}";"{{ __('Site company') }}";"{{ __('Site dns') }}";"{{ __('Database name') }}";"{{ __('Database user name') }}";"{{ __('Database password') }}";"{{ __('Database host') }}";"{{ __('Database type') }}";"{{ __('Logo') }}";"{{ __('Fav icon') }}";"{{ __('Allowed locales') }}";"{{ __('Parameters csv file') }}";"{{ __('Parameters array') }}";"{{ __('Active') }}";"{{ __('Workflow state') }}"
 ;"{{ __('Template') }}";"{{ __('Project') }}"
-;"{{ __('Extensions') }}"
 {% endspaceless %}
 {% for site in items %}
 {% spaceless %}
@@ -21,12 +20,5 @@
     {% endif %}
     ";"{% if not site.active %}0{% else %}1{% endif %}";"{{ site.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
     ;"{% if site.template|default %}{{ site.template|zikulamultisitesmodule_formattedTitle }}{% endif %}";"{% if site.project|default %}{{ site.project|zikulamultisitesmodule_formattedTitle }}{% endif %}"
-    ;"
-    {% if site.extensions|default %}
-        {% for relatedItem in site.extensions %}
-        {{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
-        {% endfor %}
-    {% endif %}
-    "
 {% endspaceless %}
 {% endfor %}

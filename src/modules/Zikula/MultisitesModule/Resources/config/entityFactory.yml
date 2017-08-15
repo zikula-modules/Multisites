@@ -10,5 +10,3 @@ services:
     # Entity initialiser
     zikula_multisites_module.entity_initialiser:
         class: Zikula\MultisitesModule\Entity\Factory\EntityInitialiser
-        arguments:
-        - "@zikula_multisites_module.listentries_helper"
