@@ -76,6 +76,7 @@ pipeline {
         stage('Generate documentation') {
             steps {
                 sh 'vendor/bin/phpdox -f build/phpdox.xml'
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/api', reportFiles: 'index.html', reportName: 'API Documentation', reportTitles: ''])
             }
         }
     }
