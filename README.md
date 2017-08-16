@@ -248,10 +248,10 @@ At the moment you are required to edit the _/lib/legacy/util/FileUtil.php_ file 
 
   Use in templates:
 ```
-    {modgetvar module='ZikulaMultisitesModule' name='parameterValueCity' default='default value' assign='city'}
-    {if $city eq 'Munich'}
+    {% set city = getModVar('ZikulaMultisitesModule', 'parameterValueCity', 'default value') %}
+    {% if city == 'Munich' %}
         <h2>Hello Munich</h2>
-    {/if}
+    {% endif %}
 ```
 
 
