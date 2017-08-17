@@ -663,7 +663,7 @@ abstract class AbstractSiteRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblTemplate, tblProject, tblExtensions';
+        $selection = ', tblTemplate, tblProject';
     
         return $selection;
     }
@@ -679,7 +679,6 @@ abstract class AbstractSiteRepository extends EntityRepository
     {
         $qb->leftJoin('tbl.template', 'tblTemplate');
         $qb->leftJoin('tbl.project', 'tblProject');
-        $qb->leftJoin('tbl.extensions', 'tblExtensions');
     
         return $qb;
     }

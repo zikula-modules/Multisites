@@ -13,7 +13,6 @@
 namespace Zikula\MultisitesModule\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -326,7 +325,6 @@ abstract class AbstractSiteEntity extends EntityAccess
      */
     public function __construct()
     {
-        $this->extensions = new ArrayCollection();
     }
     
     /**
