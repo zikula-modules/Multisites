@@ -30,7 +30,6 @@ application "Multisites" {
             CHANGELOG.md,
             Container/LinkContainer.php,
             Entity/Repository/ProjectRepository.php,
-            Entity/Repository/SiteRepository.php,
             Form/Handler/Site/EditHandler.php,
             Form/Type/ConfigType.php,
             Form/Type/QuickNavigation/ProjectQuickNavType.php,

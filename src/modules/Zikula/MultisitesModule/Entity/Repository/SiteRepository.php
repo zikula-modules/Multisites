@@ -14,9 +14,6 @@ namespace Zikula\MultisitesModule\Entity\Repository;
 
 use Zikula\MultisitesModule\Entity\Repository\Base\AbstractSiteRepository;
 
-use Doctrine\ORM\QueryBuilder;
-use Zikula\MultisitesModule\Entity\SiteEntity;
-
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
@@ -24,25 +21,5 @@ use Zikula\MultisitesModule\Entity\SiteEntity;
  */
 class SiteRepository extends AbstractSiteRepository
 {
-    /**
-     * @inheritDoc
-     */
-    protected function addJoinsToSelection()
-    {
-        $selection = ', tblTemplate, tblProject';//, tblExtensions';
-    
-        return $selection;
-    }
-    
-    /**
-     * @inheritDoc
-     */
-    protected function addJoinsToFrom(QueryBuilder $qb)
-    {
-        $qb->leftJoin('tbl.template', 'tblTemplate');
-        $qb->leftJoin('tbl.project', 'tblProject');
-        //$qb->leftJoin('tbl.extensions', 'tblExtensions');
-    
-        return $qb;
-    }
+    // feel free to add your own methods here, like for example reusable DQL queries
 }
