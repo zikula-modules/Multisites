@@ -80,7 +80,7 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         foreach ($oldTables as $tableName) {
             $conn->executeQuery('
                 RENAME TABLE `' . $tableName . '`
-                TO `' $newTableName . 'Old`
+                TO `' . $tableName . 'Old`
             ');
         }
 
