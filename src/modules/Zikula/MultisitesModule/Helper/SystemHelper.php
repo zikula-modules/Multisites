@@ -39,7 +39,12 @@ class SystemHelper
     use ExtensionVariablesTrait;
     use TranslatorTrait;
 
-    private $dbConfigFile = 'config/multisites_dbconfig.php';
+    /**
+     * Subsites configuration file.
+     *
+     * @var string
+     */
+    private $subsitesConfigFile = 'var/multisites.json';
 
     /**
      * @var SessionInterface
@@ -815,14 +820,14 @@ class SystemHelper
     }
 
     /**
-     * Updates the multisites_dbconfig.php configuration file.
+     * Updates the dynamic multisites configuration file.
      *
      * @return boolean True on success or false otherwise
      */
-    public function updateDatabaseConfigFile()
+    public function updateSubsitesConfigFile()
     {
         $fs = new Filesystem();
-        if (!$fs->exists($this->dbConfigFile)) {
+        if (!$fs->exists($this->subsitesConfigFile)) {
             return false;
         }
 
@@ -834,19 +839,16 @@ class SystemHelper
             return false;
         }
 
-        $dbArray = [];
+        $siteData = [];
         foreach ($sites as $site) {
             $dbInfo = new DatabaseInfo($site);
-            $dbArray[$site->getSiteDns()] = $dbInfo->getConfigData();
+            $siteData[$site->getSiteDns()] = $dbInfo->getConfigData();
         }
 
         // write file
-        $dbConfig = var_export($dbArray, true);
-        $phpCode = "<?php\n\$databaseArray = $dbConfig;";
-
         $result = false;
         try {
-            $fs->dumpFile($this->dbConfigFile, $phpCode);
+            $fs->dumpFile($this->subsitesConfigFile, json_encode($siteData));
             $result = true;
         } catch (IOExceptionInterface $e) {
             $result = false;

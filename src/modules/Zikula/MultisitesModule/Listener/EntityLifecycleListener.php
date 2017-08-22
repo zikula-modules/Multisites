@@ -78,8 +78,8 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
         if ($entity instanceof ProjectEntity || $entity instanceof TemplateEntity || $entity instanceof SiteEntity) {
             $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
 
-            // update db config removing all obsolete databases
-            if (!$systemHelper->updateDatabaseConfigFile()) {
+            // update subsites config removing all obsolete sites
+            if (!$systemHelper->updateSubsitesConfigFile()) {
                 $flashBag = $this->container->get('session')->getFlashBag();
                 $flashBag->add('error', $this->container->get('translator.default')->__('Error! Updating the database configuration file failed.'));
 
@@ -104,8 +104,8 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
             $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
             $flashBag = $this->container->get('session')->getFlashBag();
 
-            // update db config adding the new database
-            if (!$systemHelper->updateDatabaseConfigFile()) {
+            // update subsites config adding the new site data
+            if (!$systemHelper->updateSubsitesConfigFile()) {
                 $flashBag->add('error', $this->container->get('translator.default')->__('Error! Updating the database configuration file failed.'));
 
                 return false;
@@ -128,8 +128,8 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
         if ($entity instanceof SiteEntity) {
             $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
 
-            // update db config adding the new database
-            if (!$systemHelper->updateDatabaseConfigFile()) {
+            // update subsites config updating the site data
+            if (!$systemHelper->updateSubsitesConfigFile()) {
                 $flashBag = $this->container->get('session')->getFlashBag();
                 $flashBag->add('error', $this->container->get('translator.default')->__('Error! Updating the database configuration file failed.'));
 

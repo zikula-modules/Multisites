@@ -80,13 +80,6 @@ class ConfiguratorHelper
     private $configFile;
 
     /**
-     * Database configuration file path.
-     *
-     * @var string
-     */
-    private $dbConfigFile;
-
-    /**
      * Primary configuration template file path.
      *
      * @var string
@@ -94,11 +87,11 @@ class ConfiguratorHelper
     private $configTemplateFile;
 
     /**
-     * Database configuration template file path.
+     * Subsites configuration file.
      *
      * @var string
      */
-    private $dbConfigTemplateFile;
+    private $subsitesConfigFile;
 
     /**
      * List of template parameters.
@@ -143,9 +136,8 @@ class ConfiguratorHelper
         $this->tempDirectory = $tempDirectory;
 
         $this->configFile = 'config/multisites_config.php';
-        $this->dbConfigFile = 'config/multisites_dbconfig.php';
         $this->configTemplateFile = 'modules/Zikula/MultisitesModule/Resources/' . str_replace('config/', 'config-folder/', $this->configFile);
-        $this->dbConfigTemplateFile = 'modules/Zikula/MultisitesModule/Resources/' . str_replace('config/', 'config-folder/', $this->dbConfigFile);
+        $this->subsitesConfigFile = 'var/multisites.json';
     }
 
     /**
@@ -245,7 +237,6 @@ class ConfiguratorHelper
                     $this->templateParameters = [
                         'step' => 3,
                         'configFile' => $this->configFile,
-                        'dbConfigFile' => $this->dbConfigFile,
                         'mainSiteUrl' => $_SERVER['HTTP_HOST'],
                         'siteTempFilesFolder' => $this->tempDirectory,
                         'siteFilesFolder' => 'data'
@@ -329,39 +320,25 @@ class ConfiguratorHelper
             $configFileExists = $fs->exists($this->configFile);
         }
 
-        $dbConfigFileExists = $fs->exists($this->dbConfigFile);
-        if (!$dbConfigFileExists && $fs->copy($this->dbConfigTemplateFile, $this->dbConfigFile)) {
-            $dbConfigFileExists = $fs->exists($this->dbConfigFile);
-        }
-
         $configFileWriteable = $configFileExists && is_writeable($this->configFile);
         if ($configFileExists && !$configFileWriteable && @chmod($this->configFile, 0755)) {
             $configFileWriteable = is_writeable($this->configFile);
         }
 
-        $dbConfigFileWriteable = $dbConfigFileExists && is_writeable($this->dbConfigFile);
-        if ($dbConfigFileExists && !$dbConfigFileWriteable && @chmod($this->dbConfigFile, 0755)) {
-            $dbConfigFileWriteable = is_writeable($this->dbConfigFile);
-        }
-
-        $result = ($configFileWriteable && $dbConfigFileWriteable);
+        $result = $configFileWriteable;
 
         $mainSiteUrl = $this->getVar('mainsiteurl', '');
         if ($mainSiteUrl != '') {
             // configuration has been done almost completely
             // primary config file does not need to be writeable anymore
-            $result = $dbConfigFileWriteable;
+            $result = true;
         }
 
         $this->templateParameters = [
             'configFile' => $this->configFile,
-            'dbConfigFile' => $this->dbConfigFile,
             'configTemplateFile' => $this->configTemplateFile,
-            'dbConfigTemplateFile' => $this->dbConfigTemplateFile,
             'configFileExists' => $configFileExists,
-            'dbConfigFileExists' => $dbConfigFileExists,
-            'configFileWriteable' => $configFileWriteable,
-            'dbConfigFileWriteable' => $dbConfigFileWriteable
+            'configFileWriteable' => $configFileWriteable
         ];
 
         return $result;

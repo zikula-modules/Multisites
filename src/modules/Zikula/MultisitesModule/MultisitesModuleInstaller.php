@@ -109,9 +109,9 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
             return false;
         }
 
-        // finally update the database configuration file
+        // finally update the subsites configuration file
         $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
-        if (!$systemHelper->updateDatabaseConfigFile()) {
+        if (!$systemHelper->updateSubsitesConfigFile()) {
             $this->addFlash('error', $this->__('Error! Updating the database configuration file failed.'));
 
             return false;

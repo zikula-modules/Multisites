@@ -7,7 +7,7 @@
         {% if step == 1 %}
             <h3>{{ __('Step 1 - Checking the correct location of the configuration files') }}</h3>
             <div class="alert alert-info">
-                {{ __f('Please copy the files <strong>%1$s</strong> and <strong>%2$s</strong> into the Zikula <strong>config</strong> directory and give them writeable permissions.', {'%1$s': configTemplateFile, '%2$s': dbConfigTemplateFile}) }}
+                {{ __f('Please copy the <strong>%s</strong> file into the Zikula <strong>config</strong> directory and give it writeable permissions.', {'%s': configTemplateFile}) }}
             </div>
             <div class="z-warningmsg">
                 {{ __('If you have any problem you can recover the system to the previous state at any time by deleting both files again.') }}
@@ -33,28 +33,6 @@
                             <p class="alert alert-success">
                                 <i class="fa fa-check"></i>
                                 {{ __f('The file <strong>%s</strong> is writeable.', {'%s': configFile}) }}
-                            </p>
-                        {% endif %}
-                    {% endif %}
-                    {% if not dbConfigFileExists %}
-                        <p class="alert alert-danger">
-                            <i class="fa fa-times"></i>
-                            {{ __f('The file <strong>%s</strong> has not been found and could not be copied automatically.', {'%s': dbConfigFile}) }}
-                        </p>
-                    {% else %}
-                        <p class="alert alert-danger">
-                            <i class="fa fa-times"></i>
-                            {{ __f('The file <strong>%s</strong> is located in the correct place.', {'%s': dbConfigFile}) }}
-                        </p>
-                        {% if not configFileWriteable %}
-                            <p class="alert alert-danger">
-                                <i class="fa fa-times"></i>
-                                {{ __f('The file <strong>%s</strong> is not writeable, but it should be.', {'%s': dbConfigFile}) }}
-                            </p>
-                        {% else %}
-                            <p class="alert alert-success">
-                                <i class="fa fa-check"></i>
-                                {{ __f('The file <strong>%s</strong> is writeable.', {'%s': dbConfigFile}) }}
                             </p>
                         {% endif %}
                     {% endif %}
@@ -85,7 +63,7 @@
         {% elseif step == 3 %}
             <h3>{{ __f('Step 3 - Writing correct parameters into the <strong>%s.php</strong> file', {'%s': configFile}) }}</h3>
             <p class="alert alert-warning">
-                {{ __f('If you experience any problem you can delete the <strong>%1$s</strong> and <strong>%2$s</strong> files to recover the system to the previous state.', { '%1$s': configFile, '%2$s': dbConfigFile }) }}
+                {{ __f('If you experience any problem you can delete the <strong>%s</strong> file to recover the system to the previous state.', {'%s': configFile}) }}
             </p>
             <form method="post" action="{{ path('zikulamultisitesmodule_config_config') }}" class="form" role="form">
                 <fieldset>
