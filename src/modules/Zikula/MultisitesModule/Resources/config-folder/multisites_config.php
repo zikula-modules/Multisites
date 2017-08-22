@@ -32,7 +32,7 @@ include_once 'multisites_dbconfig.php';
 if (!isset($databaseArray[$sitedns]) ||
      !is_array($databaseArray[$sitedns]) ||
      !isset($databaseArray[$sitedns]['dbName']) || empty($databaseArray[$sitedns]['dbName']) ||
-     !isset($databaseArray[$sitedns]['dbUname']) || empty($databaseArray[$sitedns]['dbUname']) ||
+     !isset($databaseArray[$sitedns]['dbUser']) || empty($databaseArray[$sitedns]['dbUser']) ||
      !isset($databaseArray[$sitedns]['dbPass']) || empty($databaseArray[$sitedns]['dbPass']) ||
      !isset($databaseArray[$sitedns]['dbType']) || empty($databaseArray[$sitedns]['dbType']) ||
      !isset($databaseArray[$sitedns]['dbHost']) || empty($databaseArray[$sitedns]['dbHost'])
@@ -52,7 +52,7 @@ $tempFolder .= $ZConfig['Multisites']['site_temp_files_folder'];
 
 // set the correct connection values for this site
 $ZConfig['DBInfo']['databases']['default']['host'] = $siteDbData['dbHost'];
-$ZConfig['DBInfo']['databases']['default']['user'] = $siteDbData['dbUname'];
+$ZConfig['DBInfo']['databases']['default']['user'] = $siteDbData['dbUser'];
 $ZConfig['DBInfo']['databases']['default']['password'] = $siteDbData['dbPass'];
 $ZConfig['DBInfo']['databases']['default']['dbname'] = $siteDbData['dbName'];
 $ZConfig['DBInfo']['databases']['default']['dbdriver'] = $siteDbData['dbType'];

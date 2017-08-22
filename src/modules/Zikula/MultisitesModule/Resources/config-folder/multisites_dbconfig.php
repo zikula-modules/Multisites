@@ -6,7 +6,7 @@ $databaseArray = [
         'dbName' => 'first77',
         'dbHost' => 'localhost',
         'dbType' => 'mysql',
-        'dbUname' => 'root',
+        'dbUser' => 'root',
         'dbPass' => 'root',
     ],
 ];

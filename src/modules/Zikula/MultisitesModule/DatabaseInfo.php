@@ -67,7 +67,7 @@ class DatabaseInfo
             $this->name = $dbInfo['dbName'];
             $this->host = $dbInfo['dbHost'];
             $this->type = $dbInfo['dbType'];
-            $this->userName = $dbInfo['dbUname'];
+            $this->userName = $dbInfo['dbUser'];
             $this->password = $dbInfo['dbPass'];
         }
     }

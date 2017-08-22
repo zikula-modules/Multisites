@@ -14,7 +14,7 @@ use Zikula\ThemeModule\Bridge\Event\TwigPostRenderEvent;
 use Zikula\ThemeModule\ThemeEvents;
 
 /**
- * This event handler cares for replacing parameter placeholders by concrete values.
+ * This event subscriber cares for replacing parameter placeholders by concrete values.
  */
 class ReplaceParametersListener implements EventSubscriberInterface
 {

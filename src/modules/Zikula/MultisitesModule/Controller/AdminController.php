@@ -185,7 +185,7 @@ class AdminController extends AbstractController
             'dbName' => $container->getParameter('database_name'),
             'dbHost' => $container->getParameter('database_host'),
             'dbType' => str_replace('pdo_', '', $container->getParameter('database_driver')),
-            'dbUname' => $container->getParameter('database_user'),
+            'dbUser' => $container->getParameter('database_user'),
             'dbPass' => $container->getParameter('database_password')
         ];
 

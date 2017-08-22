@@ -1,4 +1,11 @@
 services:
+    zikula_subsite_module.dynamic_configuration_listener:
+        class: Zikula\SubsiteModule\Listener\DynamicConfigurationListener
+        arguments:
+            - "@service_container"
+            - "%multisites%"
+        tags: ['kernel.event_subscriber']
+
     zikula_subsite_module.replace_parameters_listener:
         class: Zikula\SubsiteModule\Listener\ReplaceParametersListener
         arguments:
