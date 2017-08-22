@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -88,7 +89,7 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
 
         $siteIdentifier = $this->getSiteIdentifier($request);
         if (!array_key_exists($siteIdentifier, $sitesConfig)) {
-            $event->setResponse(new RedirectResponse($this->multisitesParameters['mainsiteurl'], 301));
+            $event->setResponse(new RedirectResponse($this->multisitesParameters['mainsiteurl'], Response::HTTP_MOVED_PERMANENTLY));
 
             return;
         }
