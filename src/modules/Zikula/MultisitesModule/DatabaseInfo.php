@@ -133,7 +133,7 @@ class DatabaseInfo
             'dbName' => $this->getName(),
             'dbHost' => $this->getHost(),
             'dbType' => $this->getType(),
-            'dbUname' => $this->getUserName(),
+            'dbUser' => $this->getUserName(),
             'dbPass' => $this->getPassword()
         ];
     }
