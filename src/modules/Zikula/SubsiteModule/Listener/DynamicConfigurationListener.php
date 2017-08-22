@@ -105,6 +105,10 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
         $cacheDirectory = $container->getParameter('kernel.cache_dir') . '/' . $siteAlias;
         $container->setParameter('kernel.cache_dir', $cacheDirectory);
 
+        // set site-specific logs directory
+        $logsDirectory = $container->getParameter('kernel.logs_dir') . '/' . $siteAlias;
+        $container->setParameter('kernel.logs_dir', $logsDirectory);
+
         // set site-specific upload directory
         $dataDirectory = $container->getParameter('datadir') . '/' . $siteAlias;
         $container->setParameter('datadir', $dataDirectory);
