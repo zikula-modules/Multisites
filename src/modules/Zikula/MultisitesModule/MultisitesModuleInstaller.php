@@ -39,7 +39,12 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
                     return false;
                 }
             case '2.0.0':
-/*            case '2.1.0':
+                // drop site extensions table
+                $conn = $this->getConnection();
+                $conn->executeQuery('DROP TABLE IF EXISTS `multisites_siteextension`');
+            case '2.1.0':
+                // current version
+/*            case '2.2.0':
                 // do something
                 // ...
                 // update the database schema
@@ -66,7 +71,6 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
     protected function upgradeToV2()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
 
         // first the access table can be removed, too, as it was actually never used
         $conn->executeQuery('DROP TABLE IF EXISTS `multisitesaccess`');
@@ -75,8 +79,8 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         $oldTables = ['sites', 'models', 'sitemodules'];
         foreach ($oldTables as $tableName) {
             $conn->executeQuery('
-                RENAME TABLE ' . $dbName . '.' . $tableName . '
-                TO ' . $dbName . '.' . $newTableName . 'Old
+                RENAME TABLE `' . $tableName . '`
+                TO `' $newTableName . 'Old`
             ');
         }
 
@@ -363,5 +367,18 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         }
 
         return true;
+    }
+
+    /**
+     * Returns connection to the database.
+     *
+     * @return Connection the current connection
+     */
+    private function getConnection()
+    {
+        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
+        $connection = $entityManager->getConnection();
+
+        return $connection;
     }
 }

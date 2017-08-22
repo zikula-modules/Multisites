@@ -181,7 +181,7 @@ automatically.
 
   Use in code files:
 ```php
-    $city = ModUtil::getVar('ZikulaMultisitesModule', 'parameterValueCity', 'default value');
+    $city = ModUtil::getVar('ZikulaSubsiteModule', 'parameterValueCity', 'default value');
     if ($city == 'Berlin') {
         echo '<h2>Hello Berlin</h2>';
     }
@@ -189,7 +189,7 @@ automatically.
 
   Use in templates:
 ```
-    {% set city = getModVar('ZikulaMultisitesModule', 'parameterValueCity', 'default value') %}
+    {% set city = getModVar('ZikulaSubsiteModule', 'parameterValueCity', 'default value') %}
     {% if city == 'Munich' %}
         <h2>Hello Munich</h2>
     {% endif %}
