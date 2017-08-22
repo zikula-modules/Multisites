@@ -62,11 +62,9 @@ class ConfigController extends AbstractConfigController
         }
 
         // check whether the global administrator has already been configured
-        $globalAdminStatus = '';
         if ($this->getVar('globalAdminName', '') == '' || $this->getVar('globalAdminPassword', '') == '' || $this->getVar('globalAdminEmail', '') == '') {
-            $globalAdminStatus = $this->__('Please configure the global administrator settings.');
+            $this->get('session')->getFlashBag()->add('warning', $this->__('Please configure the global administrator settings.'));
         }
-        $this->get('session')->set('globalAdminStatus', $globalAdminStatus);
 
         // else we call the parent method to render the default configuration form
         return parent::configAction($request);
