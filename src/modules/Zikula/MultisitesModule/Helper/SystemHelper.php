@@ -762,7 +762,7 @@ class SystemHelper
         // delete obsolete parameter modvars which could exist due to another (earlier) template
         $sql = '
             DELETE FROM `module_vars`
-            WHERE `modname` = \'ZikulaClientModule\'
+            WHERE `modname` = \'ZikulaSubsiteModule\'
             AND `name` LIKE \'' . $parameterPrefix . '%\'
         ';
         $stmt = $connect->prepare($sql);
@@ -775,7 +775,7 @@ class SystemHelper
         // insert new parameters
         $sql = '
             INSERT INTO `module_vars` (`modname`, `name`, `value`)
-            VALUES (\'ZikulaClientModule\', :name, :value)
+            VALUES (\'ZikulaSubsiteModule\', :name, :value)
         ';
 
         // determine new parameter names and values

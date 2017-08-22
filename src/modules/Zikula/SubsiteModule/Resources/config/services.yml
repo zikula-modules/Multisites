@@ -1,0 +1,7 @@
+services:
+    zikula_subsite_module.replace_parameters_listener:
+        class: Zikula\SubsiteModule\Listener\ReplaceParametersListener
+        arguments:
+            - "@annotation_reader"
+            - "@=service('zikula_extensions_module.api.variable').getAll('ZikulaSubsiteModule')"
+        tags: ['kernel.event_subscriber']

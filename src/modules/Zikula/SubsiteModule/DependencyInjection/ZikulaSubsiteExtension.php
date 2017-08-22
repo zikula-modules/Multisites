@@ -1,9 +1,9 @@
 <?php
 /**
- * Client.
+ * Subsite.
  */
 
-namespace Zikula\ClientModule\DependencyInjection;
+namespace Zikula\SubsiteModule\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * Class for service definition loader using the DependencyInjection extension.
  */
-class ZikulaClientExtension extends Extension
+class ZikulaSubsiteExtension extends Extension
 {
     /**
      * Loads service definition file containing persistent event handlers.

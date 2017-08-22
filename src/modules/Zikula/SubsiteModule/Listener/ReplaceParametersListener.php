@@ -1,9 +1,9 @@
 <?php
 /**
- * Client.
+ * Subsite.
  */
 
-namespace Zikula\ClientModule\Listener;
+namespace Zikula\SubsiteModule\Listener;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Util\ClassUtils;

@@ -1,7 +1,7 @@
 {
-    "name": "zikula/client-module",
+    "name": "zikula/subsite-module",
     "version": "1.0.0",
-    "description": "Zikula client module.",
+    "description": "Zikula subsite module.",
     "type": "zikula-module",
     "license": "LGPL-3.0+",
     "authors": [
@@ -13,7 +13,7 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Zikula\\ClientModule\\": "" }
+        "psr-4": { "Zikula\\SubsiteModule\\": "" }
     },
     "require": {
         "php": ">=5.5.9"
@@ -21,11 +21,11 @@
     "extra": {
         "zikula": {
             "core-compatibility": ">=2.0.0 <3.0",
-            "class": "Zikula\\ClientModule\\ZikulaClientModule",
-            "displayname": "Multisites Client",
-            "url": "client",
+            "class": "Zikula\\SubsiteModule\\ZikulaSubsiteModule",
+            "displayname": "Multisites Subsite Client",
+            "url": "subsite",
             "securityschema": {
-                "ZikulaClientModule::": "::"
+                "ZikulaSubsiteModule::": "::"
             }
         }
     }
