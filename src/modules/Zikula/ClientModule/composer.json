@@ -1,0 +1,32 @@
+{
+    "name": "zikula/client-module",
+    "version": "1.0.0",
+    "description": "Zikula client module.",
+    "type": "zikula-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Axel Guckelsberger",
+            "email": "info@guite.de",
+            "homepage": "https://modulestudio.de",
+            "role": "owner"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Zikula\\ClientModule\\": "" }
+    },
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "extra": {
+        "zikula": {
+            "core-compatibility": ">=2.0.0 <3.0",
+            "class": "Zikula\\ClientModule\\ZikulaClientModule",
+            "displayname": "Multisites Client",
+            "url": "client",
+            "securityschema": {
+                "ZikulaClientModule::": "::"
+            }
+        }
+    }
+}

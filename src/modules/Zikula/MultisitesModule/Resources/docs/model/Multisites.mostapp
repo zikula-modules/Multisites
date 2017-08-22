@@ -3,7 +3,7 @@ application "Multisites" {
     vendor "Zikula"
     author "Albert Pérez Monfort"
     email "aperezm@xtec.cat"
-    url "http://modulestudio.de"
+    url "https://modulestudio.de"
     version "2.1.0"
     prefix "multisites"
     generatorSettings {

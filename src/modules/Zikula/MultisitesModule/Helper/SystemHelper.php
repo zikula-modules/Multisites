@@ -762,7 +762,7 @@ class SystemHelper
         // delete obsolete parameter modvars which could exist due to another (earlier) template
         $sql = '
             DELETE FROM `module_vars`
-            WHERE `modname` = \'ZikulaMultisitesModule\'
+            WHERE `modname` = \'ZikulaClientModule\'
             AND `name` LIKE \'' . $parameterPrefix . '%\'
         ';
         $stmt = $connect->prepare($sql);
@@ -775,7 +775,7 @@ class SystemHelper
         // insert new parameters
         $sql = '
             INSERT INTO `module_vars` (`modname`, `name`, `value`)
-            VALUES (\'ZikulaMultisitesModule\', :name, :value)
+            VALUES (\'ZikulaClientModule\', :name, :value)
         ';
 
         // determine new parameter names and values
@@ -794,7 +794,7 @@ class SystemHelper
         $fs = new Filesystem();
 
         // add logo path as parameter
-        $logo = ($site['logo'] !== null && $site['logo'] != '' && $fs->exists($site['logoFullPath'])) ? $site['logoFullPath'] : '';
+        $logo = (null !== $site['logo'] && $site['logo'] != '' && $fs->exists($site['logoFullPath'])) ? $site['logoFullPath'] : '';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':name' => $parameterPrefix . 'Logo', ':value' => serialize($logo)])) {
             $flashBag->add('error', $this->__f('Error! Creating parameter "%s" failed.', ['%s' => 'Logo']));
@@ -803,7 +803,7 @@ class SystemHelper
         }
 
         // add favicon path as parameter
-        $favIcon = ($site['favIcon'] !== null && $site['favIcon'] != '' && $fs->exists($site['favIconFullPath'])) ? $site['favIconFullPath'] : '';
+        $favIcon = (null !== $site['favIcon'] && $site['favIcon'] != '' && $fs->exists($site['favIconFullPath'])) ? $site['favIconFullPath'] : '';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':name' => $parameterPrefix . 'FavIcon', ':value' => serialize($favIcon)])) {
             $flashBag->add('error', $this->__f('Error! Creating parameter "%s" failed.', ['%s' => 'FavIcon']));

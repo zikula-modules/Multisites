@@ -1,0 +1,7 @@
+services:
+    zikula_client_module.replace_parameters_listener:
+        class: Zikula\ClientModule\Listener\ReplaceParametersListener
+        arguments:
+            - "@annotation_reader"
+            - "@=service('zikula_extensions_module.api.variable').getAll('ZikulaClientModule')"
+        tags: ['kernel.event_subscriber']
