@@ -57,7 +57,9 @@ class ReplaceParametersListener implements EventSubscriberInterface
     }
 
     /**
-     * Read the controller annotations and change theme if the annotation indicate that need
+     * Reads controller annotations to determine whether the current page is rendered
+     * inside the admin panel or not.
+     *
      * @param FilterControllerEvent $event
      */
     public function determineAdminArea(FilterControllerEvent $event)
