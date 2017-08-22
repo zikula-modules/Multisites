@@ -73,7 +73,7 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
             return;
         }
 
-        if ($this->isMainSite($event->getRequest()) {
+        if ($this->isMainSite($event->getRequest())) {
             return;
         }
 
