@@ -49,6 +49,8 @@ The Multisites module is installed like this:
    Note this step is optional as the install process can create these folders, too.
 5. Make the directory `/web/uploads/ZikulaMultisitesModule/` writable including all sub folders.
 
+Note the Multisites module should only be installed and activated at the main page. This repository also contains a second module, `ZikulaSubsiteModule`, which is required to be enabled for all sites except the main page.
+
 
 <a name="upgrading" />
 
@@ -179,7 +181,7 @@ automatically.
 
   Use in code files:
 ```php
-    $city = ModUtil::getVar('ZikulaSubsiteModule', 'parameterValueCity', 'default value');
+    $city = $variableApi->get('ZikulaSubsiteModule', 'parameterValueCity', 'default value');
     if ($city == 'Berlin') {
         echo '<h2>Hello Berlin</h2>';
     }
