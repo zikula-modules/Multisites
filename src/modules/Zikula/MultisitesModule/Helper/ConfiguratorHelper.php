@@ -20,15 +20,12 @@ use Zikula\Bundle\CoreBundle\CacheClearer;
 use Zikula\Bundle\CoreBundle\DynamicConfigDumper;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
-use Zikula\ExtensionsModule\ExtensionVariablesTrait;
 
 /**
  * Utility class for configuration related functionality.
  */
 class ConfiguratorHelper
 {
-    use ExtensionVariablesTrait;
     use TranslatorTrait;
 
     /**
@@ -83,7 +80,6 @@ class ConfiguratorHelper
      * @param TranslatorInterface  $translator           Translator service instance
      * @param RequestStack         $requestStack         RequestStack service instance
      * @param SessionInterface     $session              Session service instance
-     * @param VariableApiInterface $variableApi          VariableApi service instance
      * @param DynamicConfigDumper  $configDumper         DynamicConfigDumper service instance
      * @param CacheClearer         $cacheClearer         CacheClearer service instance
      * @param array                $multisitesParameters Multisites parameters array
@@ -92,7 +88,6 @@ class ConfiguratorHelper
         TranslatorInterface $translator,
         RequestStack $requestStack,
         SessionInterface $session,
-        VariableApiInterface $variableApi,
         DynamicConfigDumper $configDumper,
         CacheClearer $cacheClearer,
         array $multisitesParameters
@@ -100,7 +95,6 @@ class ConfiguratorHelper
         $this->setTranslator($translator);
         $this->request = $requestStack->getCurrentRequest();
         $this->session = $session;
-        $this->variableApi = $variableApi;
         $this->configDumper = $configDumper;
         $this->cacheClearer = $cacheClearer;
         $this->multisitesParameters = $multisitesParameters;
@@ -132,31 +126,25 @@ class ConfiguratorHelper
             $postData = $this->request->request;
 
             // define multisites system parameters
-            $mainSiteUrl = $this->getVar('mainsiteurl', '');
-            if (empty($mainSiteUrl)) {
-                $paramsValid = false;
-                $mainSiteUrl = $postData->get('mainsiteurl', null);
-                if (null !== $mainSiteUrl) {
-                    // values are sent via POST, try to save them
-                    if ($this->writeSystemParametersToConfig($mainSiteUrl)) {
-                        if ($this->createAdditionalDirectories()) {
-                            // save parameters in modvars temporarily
-                            $this->setVar('mainsiteurl', $mainSiteUrl);
-                            $paramsValid = true;
-                        }
-                    }
+            $paramsValid = false;
+            $mainSiteUrl = $postData->get('mainSiteUrl', null);
+            $siteMode = $postData->get('siteMode', null);
+            if (null !== $mainSiteUrl && null !== $siteMode && in_array($siteMode, ['domain', 'folder'])) {
+                // values are sent via POST, try to save them
+                if ($this->writeSystemParametersToConfig($mainSiteUrl, $siteMode)) {
+                    $paramsValid = true;
                 }
+            }
 
-                if (true !== $paramsValid) {
-                    // ask for multisites system parameters
+            if (true !== $paramsValid) {
+                // ask for multisites system parameters
 
-                    $this->templateParameters = [
-                        'step' => 2,
-                        'mainSiteUrl' => $this->request->server->get('HTTP_HOST')
-                    ];
+                $this->templateParameters = [
+                    'mainSiteUrl' => $this->request->server->get('HTTP_HOST'),
+                    'siteMode' => 'domain'
+                ];
 
-                    return false;
-                }
+                return false;
             }
 
             $this->session->getFlashBag()->add('error', $this->__('Error: it seems everything is configured correctly, but Multisites is not running. Please check your configuration file!'));
@@ -165,9 +153,6 @@ class ConfiguratorHelper
         }
 
         // Multisites is enabled
-
-        // cleanup
-        $this->delVar('mainsiteurl');
 
         return true;
     }
@@ -196,75 +181,20 @@ class ConfiguratorHelper
      * Writes multisites system parameters into the app/config/dynamic/generated.yml file.
      *
      * @param string $mainSiteUrl Domain for the main site
+     * @param string $siteMode    Which mode to use (domain or folder)
      *
      * @return boolean True if everything worked, false otherwise
      */
-    private function writeSystemParametersToConfig($mainSiteUrl)
+    private function writeSystemParametersToConfig($mainSiteUrl, $siteMode)
     {
-        // get server zikula folder installation
-        /** TODO: write rule to convert domains from www.foo.dom to foo.dom */
-        $pathToThisFile = $this->request->server->get('SCRIPT_FILENAME');
-        $scriptRealPath = substr($pathToThisFile, 0, strrpos($pathToThisFile, '/'));
-        $basePath = substr($scriptRealPath, 0, strrpos($scriptRealPath, '/'));
-
-        $flashBag = $this->session->getFlashBag();
-
         // write parameters into app/config/dynamic/generated.yml
         $parameters = $this->configDumper->getParameters();
         $parameters['multisites']['enabled'] = true;
         $parameters['multisites']['mainsiteurl'] = $mainSiteUrl;
-        $parameters['multisites']['based_on_domains'] = 1; // TODO
-        $parameters['multisites']['protected.systemvars'] = []; // TODO
+        $parameters['multisites']['based_on_domains'] = ($siteMode == 'domain' ? 1 : 0);
+        $parameters['multisites']['protected.systemvars'] = [];
         $this->configDumper->setParameters($parameters);
         $this->cacheClearer->clear('symfony');
-
-        return true;
-    }
-
-    /**
-     * Writes multisites system parameters into the config/multisites_config.php file.
-     *
-     * @return boolean True if everything worked, false otherwise
-     */
-    private function createAdditionalDirectories()
-    {
-        $flashBag = $this->session->getFlashBag();
-
-        // TODO update to new structure
-        /*
-        // check if the sites files directory exists
-        $path = $this->getVar('files_real_path', '');
-        if ($path == '') {
-            $flashBag->add('error', $this->__('The directory for storing the sites files is not defined. Check your configuration values.'));
-
-            return false;
-        }
-
-        $fs = new Filesystem();
-        if (!$fs->exists($path)) {
-            $flashBag->add('error', $this->__('The directory for storing the sites files does not exist.'));
-
-            return false;
-        }
-        // check if the sites files directory is writeable
-        if (!is_writeable($path)) {
-            $flashBag->add('error', $this->__('The directory for storing the sites files is not writeable.'));
-
-            return false;
-        }
-
-        // create the main site folder
-        /*
-        $path .= '/' . $this->request->query->get('sitedns', null);
-        if (!$fs->exists($path)) {
-            $fs->mkdir($path, 0777);
-            if (!$fs->exists($path)) {
-                $flashBag->add('error', $this->__('Error creating the directory:') . ' ' . $path);
-
-                return false;
-            }
-        }* /
-        */
 
         return true;
     }

@@ -64,20 +64,32 @@ class SystemHelper
     protected $entityFactory = null;
 
     /**
-     * @var array
+     * @var string
      */
-    private $multisitesParameters;
+    private $cacheDirectory;
+
+    /**
+     * @var string
+     */
+    private $logsDirectory;
+
+    /**
+     * @var string
+     */
+    private $dataDirectory;
 
     /**
      * Constructor.
      * Initialises member vars.
      *
-     * @param TranslatorInterface  $translator           Translator service instance
-     * @param SessionInterface     $session              Session service instance
-     * @param VariableApiInterface $variableApi          VariableApi service instance
-     * @param PasswordApiInterface $passwordApi          PasswordApi service instance
-     * @param EntityFactory        $entityFactory        EntityFactory service instance
-     * @param array                $multisitesParameters Multisites parameters array
+     * @param TranslatorInterface  $translator     Translator service instance
+     * @param SessionInterface     $session        Session service instance
+     * @param VariableApiInterface $variableApi    VariableApi service instance
+     * @param PasswordApiInterface $passwordApi    PasswordApi service instance
+     * @param EntityFactory        $entityFactory  EntityFactory service instance
+     * @param string               $cacheDirectory Cache directory
+     * @param string               $logsDirectory  Logs directory
+     * @param string               $dataDirectory  Data directory
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -85,7 +97,9 @@ class SystemHelper
         VariableApiInterface $variableApi,
         PasswordApiInterface $passwordApi,
         EntityFactory $entityFactory,
-        array $multisitesParameters
+        $cacheDirectory,
+        $logsDirectory,
+        $dataDirectory
     ) {
         $this->setTranslator($translator);
         $this->session = $session;
@@ -93,6 +107,9 @@ class SystemHelper
         $this->passwordApi = $passwordApi;
         $this->entityFactory = $entityFactory;
         $this->multisitesParameters = $multisitesParameters;
+        $this->cacheDirectory = $cacheDirectory;
+        $this->logsDirectory = $logsDirectory;
+        $this->dataDirectory = $dataDirectory;
     }
 
     /**
@@ -114,28 +131,23 @@ class SystemHelper
      */
     public function createSiteFolders(SiteEntity $site)
     {
-        $msConfig = $this->multisitesParameters;
+        $suffix = '/' . $site->getSiteAlias();
+        $filesDirectory = $this->dataDirectory . $suffix;
 
-        $baseFolder = ''; // TODO
-        $siteDirectory = $baseFolder . '/' . $site['siteAlias'];
-        $siteFiles = $siteDirectory;
-        $siteTemp = '';// TODO
-
-        // TODO update list
         $directoryList = [
-            $baseFolder,
-            $siteDirectory,
-            $siteTemp
+            $this->cacheDirectory . $suffix,
+            $this->logsDirectory . $suffix,
+            $filesDirectory
         ];
 
         // add additional template folders to the list of directories
-        if (!is_null($site['template']) && isset($site['template']['folders'])) {
+        if (null !== $site['template'] && isset($site['template']['folders'])) {
             foreach ($site['template']['folders'] as $folder) {
                 // check for empty value (just for BC)
                 if ($folder == '') {
                     continue;
                 }
-                $directoryList[] = $siteFiles . '/' . trim($folder);
+                $directoryList[] = $filesDirectory . '/' . trim($folder);
             }
         }
 
@@ -148,21 +160,17 @@ class SystemHelper
             if (!$fs->exists($directory)) {
                 $fs->mkdir($directory, 0777);
                 if (!$fs->exists($directory)) {
-                    $flashBag->add('error', $this->__f('Error! The <strong>%s</strong> directory does not exist and could not be created automatically. Please create it and make it writeable.', ['%s' => $directory]));
+                    $flashBag->add('error', $this->__f('Error! The <strong>%directory</strong> directory does not exist and could not be created automatically. Please create it and make it writeable.', ['%directory' => $directory]));
 
                     $result = false;
                 }
             } elseif (!is_writeable($directory)) {
                 $fs->chmod($directory, 0777);
                 if (!is_writeable($directory)) {
-                    $flashBag->add('error', $this->__f('Error! The <strong>%s</strong> directory is not writeable. Please correct that.', ['%s' => $directory]));
+                    $flashBag->add('error', $this->__f('Error! The <strong>%directory</strong> directory is not writeable. Please correct that.', ['%directory' => $directory]));
 
                     $result = false;
                 }
-            }
-
-            if (false === $result) {
-                break;
             }
         }
 
@@ -252,7 +260,7 @@ class SystemHelper
                 }
             }
         } catch (\Exception $exception) {
-            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $exception->getMessage());
+            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]);
 
             return false;
         }
@@ -406,7 +414,7 @@ class SystemHelper
                 }
             }
         } catch (\Exception $exception) {
-            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $exception->getMessage());
+            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]);
 
             return false;
         }
@@ -449,7 +457,7 @@ class SystemHelper
         try {
             $stmt->execute();
         } catch (\Exception $exception) {
-            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $exception->getMessage());
+            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]);
 
             return false;
         }
@@ -528,7 +536,7 @@ class SystemHelper
                 $stmt->execute();
             }
         } catch (\Exception $exception) {
-            $flashBag->add('error', $this->__('Connection error, because:') . ' ' . $exception->getMessage());
+            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]);
 
             return false;
         }
@@ -875,7 +883,7 @@ class SystemHelper
             try {
                 $fs->remove($file->getRealPath());
             } catch (IOExceptionInterface $e) {
-                $flashBag->add('error', $this->__('Error deleting file:') . ' ' . $file->getRealPath());
+                $flashBag->add('error', $this->__f('Error deleting file <strong>%file</strong>.', ['%file' => $file->getRealPath()]));
 
                 return false;
             }
@@ -884,7 +892,7 @@ class SystemHelper
         try {
             $fs->remove($dirname);
         } catch (IOExceptionInterface $e) {
-            $flashBag->add('error', $this->__('Error deleting file:') . ' ' . $dirName);
+            $flashBag->add('error', $this->__f('Error deleting directory <strong>%directory</strong>.', ['%directory' => $dirName]));
 
             return false;
         }
@@ -909,21 +917,32 @@ class SystemHelper
      */
     protected function getMySQLFilePath()
     {
-        $fs = new Filesystem();
+        $candidates = [];
         if ($this->isOnWindows()) {
-            if ($fs->exists('/xampp/mysql/bin/mysql.exe')) return realpath('/xampp/mysql/bin/mysql.exe');   
-            if ($fs->exists('/mysql/bin/mysql.exe')) return realpath('/mysql/bin/mysql.exe'); 
-            if ($fs->exists('/Programme/mysql/bin/mysql.exe')) return realpath('/Programme/mysql/bin/mysql.exe'); 
-            if ($fs->exists('/Programme/xampp/mysql/bin/mysql.exe')) return realpath('/Programme/xampp/mysql/bin/mysql.exe');   
-            if ($fs->exists('/Program Files/mysql/bin/mysql.exe')) return realpath('/Program Files/mysql/bin/mysql.exe'); 
-            if ($fs->exists('/Program Files/xampp/mysql/bin/mysql.exe')) return realpath('/Program Files/xampp/mysql/bin/mysql.exe');   
+            $candidates = [
+                '/xampp/mysql/bin/mysql.exe',
+                '/mysql/bin/mysql.exe',
+                '/Programme/mysql/bin/mysql.exe',
+                '/Programme/xampp/mysql/bin/mysql.exe',
+                '/Program Files/mysql/bin/mysql.exe',
+                '/Program Files/xampp/mysql/bin/mysql.exe'
+            ];
         } else {
-            if ($fs->exists('/usr/bin/mysql')) return '/usr/bin/mysql'; 
-            if ($fs->exists('/usr/sbin/mysql')) return '/usr/sbin/mysql'; 
-            if ($fs->exists('/usr/etc/mysql')) return '/usr/etc/mysql'; 
-            if ($fs->exists('/etc/mysql')) return '/etc/mysql'; 
-            if ($fs->exists('/usr/ucblib/mysql')) return '/usr/ucblib/mysql'; 
-            if ($fs->exists('/usr/lib/mysql')) return '/usr/lib/mysql'; 
+            $candidates = [
+                '/usr/bin/mysql',
+                '/usr/sbin/mysql',
+                '/usr/etc/mysql',
+                '/etc/mysql',
+                '/usr/ucblib/mysql',
+                '/usr/lib/mysql'
+            ];
+        }
+
+        $fs = new Filesystem();
+        foreach ($candidates as $path) {
+            if ($fs->exists($path)) {
+                return realpath($path);
+            }
         }
 
         return null;
@@ -971,6 +990,7 @@ class SystemHelper
         $cmd .= ' --quote-names --opt --compress --default-character-set=utf8';
         $cmd .= ' ' . $site['databaseName'];
         $cmd .= ' > ' . $outputFilePath;
+
         system($cmd, $retval);
         if ($retval != 0) {
             $flashBag->add('error', $this->__f('Error! The database dump failed. Please ensure that the database user %1$s has the "LOCK_TABLES" permission and the web service may write into the %2$s folder.', ['%1$s' => $site['databaseUserName'], '%2$s' => dirname($outputFilePath)]));

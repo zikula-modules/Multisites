@@ -8,8 +8,15 @@
         <form method="post" action="{{ path('zikulamultisitesmodule_config_config') }}" class="form" role="form">
             <fieldset>
                 <div class="form-group">
-                    <label for="mainSiteUrl" class="control-label">{gt text='Main domain'}:</label>
-                    <input type="text" id="mainSiteUrl" name="mainsiteurl" size="50" maxlength="50" value="{{ mainSiteUrl|e('html_attr') }}" class="form-control" />
+                    <label for="mainSiteUrl" class="control-label">{{ __('Main domain') }}:</label>
+                    <input type="text" id="mainSiteUrl" name="mainSiteUrl" size="50" maxlength="50" value="{{ mainSiteUrl|e('html_attr') }}" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="siteMode" class="control-label">{{ __('Site mode') }}:</label>
+                    <select id="siteMode" name="siteMode">
+                        <option value="domain"{{ siteMode != 'folder' ? ' selected="selected"' : '' }}>{{ __('Based on domains') }}</option>
+                        <option value="folder"{{ siteMode == 'folder' ? ' selected="selected"' : '' }}>{{ __('Based on sub folders') }}</option>
+                    </select>
                 </div>
                 <div class="form-group form-buttons text-center">
                     <input type="submit" value="{{ __('Save') }}" class="btn btn-sucess" />

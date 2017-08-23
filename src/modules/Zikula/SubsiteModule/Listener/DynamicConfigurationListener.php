@@ -103,6 +103,7 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
         $container = $this->container;
 
         if ($siteIdentifier == $request->server->get('HTTP_HOST')) {
+            // modify only if based_on_domains setting is enabled
             $container->setParameter('router.request_context.host', $siteIdentifier);
         }
 

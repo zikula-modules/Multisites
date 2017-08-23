@@ -20,11 +20,12 @@
         ] %}
         {{ form_start(form, {attr: {id: 'siteEditForm', class: 'zikulamultisites-edit-form'}}) }}
         {{ form_errors(form) }}
+        {% set isNotCreation = mode != 'create' %}
         <fieldset>
             <legend>{{ __('Basic data') }}</legend>
             {{ form_row(form.name, {label: __('Name (internal)')}) }}
             {{ form_row(form.description, {label: __('Description (internal)')}) }}
-            {{ form_row(form.siteAlias, {help: __('The alias must be a lower case, unique string containing only letters.')}) }}
+            {{ form_row(form.siteAlias, {help: __('The alias must be a lower case, unique string containing only letters.'), disabled: isNotCreation}) }}
             {% if mode == 'create' %}
                 {{ form_row(form.siteName) }}
             {% else %}
@@ -34,11 +35,7 @@
         </fieldset>
         <fieldset>
             <legend>{{ __('Site host or folder') }}</legend>
-            {% if mode == 'create' %}
-                {{ form_row(form.siteDns, {help: __('This is the domain or folder name under which this site should be reachable.')}) }}
-            {% else %}
-                {{ form_row(form.siteDns, {help: __('This is the domain or folder name under which this site should be reachable.'), disabled: true}) }}
-            {% endif %}
+            {{ form_row(form.siteDns, {help: __('This is the domain or folder name under which this site should be reachable.'), disabled: isNotCreation}) }}
             {{ form_row(form.active) }}
         </fieldset>
         <fieldset>

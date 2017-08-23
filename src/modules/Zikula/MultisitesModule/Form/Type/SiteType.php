@@ -53,7 +53,6 @@ class SiteType extends AbstractSiteType
             'placeholder' => '',
             'choices' => [
                 $this->__('MySQL') => 'mysql',
-                $this->__('MySQL Improved') => 'mysqli',
                 $this->__('PostgreSQL') => 'postgres',
                 //$this->__('Oracle') => 'oci'
             ],
