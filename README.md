@@ -54,12 +54,10 @@ The Multisites module is installed like this:
 
 ## Upgrading
 
-The upgrade process from 2.0.0 to 2.1.0 has *NOT* been implemented yet.
+The upgrade process from 1.0.x to 2.0.0 and from 2.0.0 to 2.1.0 has been implemented.
+It has not been tested throughly yet though (please report your experience).
 
-The upgrade process from 1.0.x to 2.0.0 has been implemented.
-It has not been tested throughly yet though.
-
-Please report your experience.
+Also when updating to 2.1.0 you need to manually update `app/config/dynamic/generated.yml` and adjust the Multisites properties following the values in your old `/config/mutisites_config.php`. The old configuration files are not used anymore, because the whole `/config` directory is gone in Zikula 2.x.
 
 
 <a name="configuration" />

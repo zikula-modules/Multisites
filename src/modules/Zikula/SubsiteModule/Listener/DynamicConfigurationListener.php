@@ -69,6 +69,10 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
      */
     public function onRequest(GetResponseEvent $event)
     {
+        if (php_sapi_name() == 'cli') {
+            return;
+        }
+
         if (!$this->multisitesParameters['enabled']) {
             return;
         }

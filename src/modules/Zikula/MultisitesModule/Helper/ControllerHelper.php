@@ -46,9 +46,7 @@ class ControllerHelper extends AbstractControllerHelper
         $parameters = parent::addTemplateParameters($objectType, $parameters, $context, $args);
 
         if ($objectType == 'site' && $context == 'controllerAction' && isset($args['action']) && $args['action'] == 'view') {
-            $msConfig = $this->multisitesParameters;
-            $parameters['wwwroot'] = isset($msConfig['wwwroot']) ? $msConfig['wwwroot'] : $this->request->getSchemeAndHttpHost() . $this->request->getBasePath();
-            $parameters['basedOnDomains'] = $msConfig['based_on_domains'];
+            $parameters['basedOnDomains'] = $this->multisitesParameters['based_on_domains'];
         }
 
         return $parameters;

@@ -11,17 +11,13 @@
         {{ form_start(form) }}
         <div class="zikula-bootstrap-tab-container">
             <ul class="nav nav-tabs">
-                {% set tabTitle = __('General') %}
+                {% set tabTitle = __('Security settings') %}
                 <li role="presentation" class="active">
                     <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
                 </li>
-                {% set tabTitle = __('Security settings') %}
-                <li role="presentation">
-                    <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
-                </li>
                 {% set tabTitle = __('List views') %}
                 <li role="presentation">
-                    <a id="vars3Tab" href="#tab3" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                    <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
                 </li>
                 {% set tabTitle = __('Images') %}
                 <li role="presentation" class=" dropdown">
@@ -44,16 +40,6 @@
             {{ form_errors(form) }}
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="tab1" aria-labelledby="vars1Tab">
-                    {% set tabTitle = __('General') %}
-                    <fieldset>
-                        <legend>{{ tabTitle }}</legend>
-                    
-                        <p class="alert alert-info">{{ __('Here you can define general settings.')|nl2br }}</p>
-                    
-                        {{ form_row(form.tempAccessFileContent) }}
-                    </fieldset>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
                     {% set tabTitle = __('Security settings') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>
@@ -65,7 +51,7 @@
                         {{ form_row(form.globalAdminEmail) }}
                     </fieldset>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="tab3" aria-labelledby="vars3Tab">
+                <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
                     {% set tabTitle = __('List views') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>

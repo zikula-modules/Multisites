@@ -4,100 +4,17 @@
 {% block admin_page_icon 'wrench' %}
 {% block content %}
     <div class="zikulamultisitesmodule-wizard">
-        {% if step == 1 %}
-            <h3>{{ __('Step 1 - Checking the correct location of the configuration files') }}</h3>
-            <div class="alert alert-info">
-                {{ __f('Please copy the <strong>%s</strong> file into the Zikula <strong>config</strong> directory and give it writeable permissions.', {'%s': configTemplateFile}) }}
-            </div>
-            <div class="z-warningmsg">
-                {{ __('If you have any problem you can recover the system to the previous state at any time by deleting both files again.') }}
-            </div>
-            <div class="form">
-                <fieldset>
-                    {% if not configFileExists %}
-                        <div>
-                            {icon type='error' size='extrasmall'}
-                            {{ __f('The file <strong>%s</strong> has not been found and could not be copied automatically.', {'%s': configFile}) }}
-                        </div>
-                    {% else %}
-                        <p class="alert alert-danger">
-                            <i class="fa fa-times"></i>
-                            {{ __f('The file <strong>%s</strong> is located in the correct place.', {'%s': configFile}) }}
-                        </p>
-                        {% if not configFileWriteable %}
-                            <p class="alert alert-danger">
-                                <i class="fa fa-times"></i>
-                                {{ __f('The file <strong>%s</strong> is not writeable, but it should be.', {'%s': configFile}) }}
-                            </p>
-                        {% else %}
-                            <p class="alert alert-success">
-                                <i class="fa fa-check"></i>
-                                {{ __f('The file <strong>%s</strong> is writeable.', {'%s': configFile}) }}
-                            </p>
-                        {% endif %}
-                    {% endif %}
-                    <br />
-                    <div class="form-group form-buttons text-center">
-                        <p><a href="{{ path('zikulamultisitesmodule_config_config') }}" title="{{ __('Check again') }}" class='btn btn-success'>{{ __('Check again') }}</a></p>
-                    </div>
-                </fieldset>
-            </div>
-        {% elseif step == 2 %}
-            <h3>{{ __('Step 2 - Checking whether the sites files directory exists') }}</h3>
-            <form method="post" action="{{ path('zikulamultisitesmodule_config_config') }}" class="form" role="form">
-                <fieldset>
-                    <div class="form-group">
-                        <label class="control-label">{{ __('Script Real Path') }}:</label>
-                        <p class="form-control-static">{{ scriptRealPath }}</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="filesRealPath" class="control-label">{{ __('Physical location of the directory in the server') }}:</label>
-                        <input type="text" id="filesRealPath" name="files_real_path" size="30" maxlength="80" value="{{ files_real_path }}" class="form-control" />
-                        <span class="help-block">{{ __('This directory will be used to save the temporary and userdata files for the different sites.') }}</span>
-                    </div>
-                    <div class="form-group form-buttons text-center">
-                        <input type="submit" value="{{ __('Save') }}" class="btn btn-sucess" />
-                    </div>
-                </fieldset>
-            </form>
-        {% elseif step == 3 %}
-            <h3>{{ __f('Step 3 - Writing correct parameters into the <strong>%s.php</strong> file', {'%s': configFile}) }}</h3>
-            <p class="alert alert-warning">
-                {{ __f('If you experience any problem you can delete the <strong>%s</strong> file to recover the system to the previous state.', {'%s': configFile}) }}
-            </p>
-            <form method="post" action="{{ path('zikulamultisitesmodule_config_config') }}" class="form" role="form">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="mainSiteUrl" class="control-label">{gt text='Main domain'}:</label>
-                        <input type="text" id="mainSiteUrl" name="mainsiteurl" size="50" maxlength="50" value="{{ mainSiteUrl|e('html_attr') }}" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="siteTempFilesFolder" class="control-label">{gt text='Sites temporal directory'}:</label>
-                        <input type="text" id="siteTempFilesFolder" name="site_temp_files_folder" size="50" maxlength="50" value="{{ siteTempFilesFolder|e('html_attr') }}" class="form-control" />
-                    </div>
-                    <div class="form-group" class="control-label">
-                        <label for="siteFilesFolder">{gt text='Sites data directory'}:</label>
-                        <input type="text" id="siteFilesFolder" name="site_files_folder" size="50" maxlength="50" value="{{ siteFilesFolder|e('html_attr') }}" class="form-control" />
-                    </div>
-                    <div class="form-group form-buttons text-center">
-                        <input type="submit" value="{{ __('Save') }}" class="btn btn-sucess" />
-                    </div>
-                </fieldset>
-            </form>
-        {% elseif step == 4 %}
-            <h3>{{ __f('Step 4 - Check if the %s file is not writeable anymore', {'%s': configFile}) }}</h3>
-            <div class="form">
-                <fieldset>
-                    <p class="alert alert-danger">
-                        <i class="fa fa-times"></i>
-                        {{ __f('The file <strong>%s</strong> is writeable, but it should not be. Please set this file as not writeable.', {'%s': configFile}) }}
-                    </p>
-                    <br />
-                    <div class="form-group form-buttons text-center">
-                        <p><a href="{{ path('zikulamultisitesmodule_config_config') }}" title="{{ __('Check again') }}" class='btn btn-success'>{{ __('Check again') }}</a></p>
-                    </div>
-                </fieldset>
-            </div>
-        {% endif %}
+        <h3>{{ __('Determine system parameters') }}</h3>
+        <form method="post" action="{{ path('zikulamultisitesmodule_config_config') }}" class="form" role="form">
+            <fieldset>
+                <div class="form-group">
+                    <label for="mainSiteUrl" class="control-label">{gt text='Main domain'}:</label>
+                    <input type="text" id="mainSiteUrl" name="mainsiteurl" size="50" maxlength="50" value="{{ mainSiteUrl|e('html_attr') }}" class="form-control" />
+                </div>
+                <div class="form-group form-buttons text-center">
+                    <input type="submit" value="{{ __('Save') }}" class="btn btn-sucess" />
+                </div>
+            </fieldset>
+        </form>
     </div>
 {% endblock %}

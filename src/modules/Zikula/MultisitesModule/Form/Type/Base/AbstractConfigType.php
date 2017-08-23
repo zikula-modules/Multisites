@@ -63,7 +63,6 @@ abstract class AbstractConfigType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addGeneralFields($builder, $options);
         $this->addSecuritySettingsFields($builder, $options);
         $this->addListViewsFields($builder, $options);
         $this->addImagesFields($builder, $options);
@@ -83,28 +82,6 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'btn btn-default',
                     'formnovalidate' => 'formnovalidate'
                 ]
-            ])
-        ;
-    }
-
-    /**
-     * Adds fields for general fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addGeneralFields(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('tempAccessFileContent', TextType::class, [
-                'label' => $this->__('Temp access file content') . ':',
-                'required' => false,
-                'data' => isset($this->moduleVars['tempAccessFileContent']) ? $this->moduleVars['tempAccessFileContent'] : '',
-                'empty_data' => '',
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the temp access file content.')
-                ],
             ])
         ;
     }

@@ -55,7 +55,6 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         }
     
         // set up all our vars with initial values
-        $this->setVar('tempAccessFileContent', '');
         $this->setVar('globalAdminName', '');
         $this->setVar('globalAdminPassword', '');
         $this->setVar('globalAdminEmail', '');

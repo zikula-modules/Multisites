@@ -116,25 +116,16 @@ class SystemHelper
     {
         $msConfig = $this->multisitesParameters;
 
-        $baseFolder = $msConfig['files_real_path'];
+        $baseFolder = ''; // TODO
         $siteDirectory = $baseFolder . '/' . $site['siteAlias'];
-        $siteFiles = $siteDirectory . $msConfig['site_files_folder'];
-        $siteTemp = $siteDirectory . $msConfig['site_temp_files_folder'];
+        $siteFiles = $siteDirectory;
+        $siteTemp = '';// TODO
 
         // TODO update list
         $directoryList = [
             $baseFolder,
             $siteDirectory,
-            $siteDirectory . $msConfig['site_files_folder'],
-            $siteTemp,
-            $siteTemp . '/error_logs',
-            $siteTemp . '/idsTmp',
-            $siteTemp . '/purifierCache',
-            $siteTemp . '/view_cache',
-            $siteTemp . '/view_compiled',
-            $siteTemp . '/Theme_cache',
-            $siteTemp . '/Theme_compiled',
-            $siteTemp . '/Theme_Config'
+            $siteTemp
         ];
 
         // add additional template folders to the list of directories
@@ -170,45 +161,11 @@ class SystemHelper
                 }
             }
 
-            if ($result === false) {
+            if (false === $result) {
                 break;
             }
         }
 
-
-        return $result;
-    }
-
-    /**
-     * Creates a .htaccess file in the temp folder of a given site.
-     *
-     * @param SiteEntity $site The given site instance
-     *
-     * @return boolean True on success or false otherwise
-     */
-    public function createHtAccessForTempFolder(SiteEntity $site)
-    {
-        // create a .htaccess file in the temp folder
-        $tempAccessFileContent = $this->getVar('tempAccessFileContent', '');
-        if ($tempAccessFileContent == '') {
-            return true;
-        }
-
-        $msConfig = $this->multisitesParameters;
-
-        // create .htaccess file
-        $siteDirectory = $msConfig['files_real_path'] . '/' . $site['siteAlias'];
-        $siteTemp = $siteDirectory . $msConfig['site_temp_files_folder'];
-
-        $fs = new Filesystem();
-        $file = $siteTemp . '/.htaccess';
-        $result = false;
-        try {
-            $fs->dumpFile($file, $tempAccessFileContent);
-            $result = true;
-        } catch (IOExceptionInterface $e) {
-            $result = false;
-        }
 
         return $result;
     }

@@ -18,8 +18,6 @@ services:
             - "@zikula.dynamic_config_dumper"
             - "@zikula.cache_clearer"
             - "%multisites%"
-            - "%datadir%"
-            - "%temp_dir%"
 
     zikula_multisites_module.siteextension_helper:
         class: Zikula\MultisitesModule\Helper\SiteExtensionHelper

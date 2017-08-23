@@ -52,6 +52,7 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
             }
             if (true === $deleteFiles) {
                 // delete the site files and directories
+                // TODO update to new structure
                 $msConfig = $this->container->getParameter('multisites');
                 $siteFolder = $msConfig['files_real_path'] . '/' . $this->getSiteAlias();
                 if (!$systemHelper->deleteDir($siteFolder)) {

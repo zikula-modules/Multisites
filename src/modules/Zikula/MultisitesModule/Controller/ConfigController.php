@@ -63,7 +63,7 @@ class ConfigController extends AbstractConfigController
 
         // check whether the global administrator has already been configured
         if ($this->getVar('globalAdminName', '') == '' || $this->getVar('globalAdminPassword', '') == '' || $this->getVar('globalAdminEmail', '') == '') {
-            $this->get('session')->getFlashBag()->add('warning', $this->__('Please configure the global administrator settings.'));
+            $this->addFlash('warning', $this->__('Please configure the global administrator settings.'));
         }
 
         // else we call the parent method to render the default configuration form
@@ -79,7 +79,7 @@ class ConfigController extends AbstractConfigController
     {
         $msConfig = $this->get('service_container')->getParameter('multisites');
 
-        return (isset($msConfig['enabled']) && $msConfig['enabled'] == true
+        return (isset($msConfig['enabled']) && true == $msConfig['enabled']
              && isset($msConfig['mainsiteurl'])
              && isset($msConfig['based_on_domains']));
     }

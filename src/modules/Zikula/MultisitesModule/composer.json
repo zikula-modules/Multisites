@@ -36,7 +36,7 @@
             "url": "multisites",
             "capabilities": {
                 "user": {"route": "zikulamultisitesmodule_site_view"},
-                "admin": {"route": "zikulamultisitesmodule_site_adminview"}
+                "admin": {"route": "zikulamultisitesmodule_admin_index"}
             },
             "securityschema": {
                 "ZikulaMultisitesModule::": "::",

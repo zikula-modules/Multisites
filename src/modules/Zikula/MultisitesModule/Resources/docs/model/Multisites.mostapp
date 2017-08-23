@@ -44,6 +44,7 @@ application "Multisites" {
             README.md
         "
         markFiles "
+            composer.json,
             Controller/AdminController.php,
             Controller/AjaxController.php,
             Controller/ConfigController.php,
@@ -254,15 +255,8 @@ application "Multisites" {
         }
     }
     variables {
-        varContainer "General" {
-            documentation "Here you can define general settings."
-            vars {
-                textVar "tempAccessFileContent"
-            }
-        },
         varContainer "SecuritySettings" {
             documentation "Here you can define security-related settings."
-            sortOrder 2
             vars {
                 textVar "globalAdminName",
                 textVar "globalAdminPassword",

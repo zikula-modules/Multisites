@@ -425,12 +425,12 @@ class SiteController extends AbstractSiteController
         $container = $this->get('service_container');
 
         // Initialize and prepare the action
-        $originalTempFolder = '';
+        $originalCacheDirectory = '';
         $needsDatabaseAccess = false;
         switch ($action) {
             case 'cleartemplates':
-                // Backup temp folder setting of main site
-                $originalTempFolder = $container->getParameter('temp_dir');
+                // Backup cache folder setting of main site
+                $originalCacheDirectory = $container->getParameter('kernel.cache_dir');
                 break;
             case 'anotherOne':
                 // This one needs the database
@@ -438,12 +438,11 @@ class SiteController extends AbstractSiteController
                 break;
         }
 
-        $msConfig = $container->getParameter('multisites');
-        $siteBasePath = $msConfig['files_real_path'];
         $zikula = $this->get('zikula');
-
         $repository = $this->get('zikula_multisites_module.entity_factory')->getRepository('site');
         $systemHelper = $needsDatabaseAccess ? $this->get('zikula_multisites_module.system_helper') : null;
+        $entityDisplayHelper = $this->get('zikula_multisites_module.entity_display_helper');
+        $cacheClearer = $this->get('zikula.cache_clearer');
 
         // process each item
         foreach ($items as $itemid) {
@@ -469,13 +468,11 @@ class SiteController extends AbstractSiteController
             // Execute action for current site
             switch ($action) {
                 case 'cleartemplates':
-                    // Set temp folder for this site instance
-                    $siteTempDirectory = $siteBasePath . '/' . $entity['sitedns'] . '/' . $msConfig['site_temp_files_folder'];
-                    $container->setParameter('temp_dir', $siteTempDirectory);
-                    $entityDisplayHelper = $this->get('zikula_multisites_module.entity_display_helper');
+                    // Set cache folder for this site instance
+                    $container->setParameter('kernel.cache_dir', $originalCacheDirectory . '/' . $entity->getSiteAlias());
 
-                    $this->get('zikula.cache_clearer')->clear('twig');
-                    $this->get('zikula.cache_clearer')->clear('assets');
+                    $cacheClearer->clear('twig');
+                    $cacheClearer->clear('assets');
 
                     $this->addFlash('error', $this->__f('Done! Cleared all cache and compile directories for site %s.', ['%s' => $entityDisplayHelper->getFormattedTitle($entity)]));
                     break;
@@ -486,8 +483,8 @@ class SiteController extends AbstractSiteController
         $needsDatabaseAccess = false;
         switch ($action) {
             case 'cleartemplates':
-                // Restore temp folder setting for main site
-                $container->setParameter('temp_dir', $originalTempFolder);
+                // Restore cache folder setting for main site
+                $container->setParameter('kernel.cache_dir', $originalCacheDirectory);
                 break;
         }
 

@@ -190,11 +190,6 @@ class EditHandler extends AbstractEditHandler
             return false; // error has been registered already
         }
 
-        // create .htaccess file
-        if (!$this->systemHelper->createHtAccessForTempFolder($site)) {
-            return false; // error has been registered already
-        }
-
         return true;
     }
 }

@@ -42,6 +42,8 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
                 // drop site extensions table
                 $conn = $this->getConnection();
                 $conn->executeQuery('DROP TABLE IF EXISTS `multisites_siteextension`');
+                // remove obsolete modvar
+                $this->delVar('tempAccessFileContent');
             case '2.1.0':
                 // current version
 /*            case '2.2.0':
@@ -105,7 +107,7 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         }
 
         // update the primary configuration file
-        if (!$this->migratePrimaryConfigFile()) {
+        if (!$this->migratePrimaryConfigFileToV2()) {
             return false;
         }
 
@@ -324,47 +326,12 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
      *
      * @return boolean True on success or false otherwise.
      */
-    protected function migratePrimaryConfigFile()
+    protected function migratePrimaryConfigFileToV2()
     {
         $configFile = 'config/multisites_config.php';
-        $configFileTemplate = 'modules/Zikula/MultisitesModule/Resources/config-folder/multisites_config.php';
-        $configUpdated = false;
+        $configFileTemplate = 'https://github.com/zikula-modules/Multisites/blob/9d2e66e72a17757b36c26c6889c700d88868b345/src/modules/Multisites/Resources/config/multisites_config.php';
 
-        $fs = new Filesystem();
-        if ($fs->exists($configFile) && is_writeable($configFile)) {
-            $configLinesTemplate = explode("\n". file_get_contents($configFileTemplate));
-            $configLines = explode("\n". file_get_contents($configFile));
-            if (false !== $configLinesTemplate && is_array($configLinesTemplate) && count($configLinesTemplate) > 0) {
-                if (false !== $configLines && is_array($configLines) && count($configLines) > 0) {
-                    $configLinesNew = [];
-                    $configChangeLine = "//****** DON'T CHANGE AFTER THIS LINE *******";
-
-                    foreach ($configLines as $line) {
-                        if ($line == $configChangeLine) {
-                            break;
-                        }
-                        $configLinesNew[] = $line;
-                    }
-
-                    $hasReachedChange = false;
-                    foreach ($configLinesTemplate as $line) {
-                        if ($hasReachedChange) {
-                            $configLinesNew[] = $line;
-                        }
-                        if ($line == $configChangeLine) {
-                            $hasReachedChange = true;
-                        }
-                    }
-
-                    $fs->dumpFile($configFile. implode("\n", $configLinesNew));
-                    $configUpdated = true;
-                }
-            }
-        }
-
-        if (!$configUpdated) {
-            $this->addFlash('error', $this->__f('Could not update the %file% file automatically. Please compare it with %template% and update it manually.', ['%file%' => $configFile, '%template%' => $configFileTemplate]));
-        }
+        $this->addFlash('error', $this->__f('Could not update the %file% file automatically. Please compare it with %template% and update it manually.', ['%file%' => $configFile, '%template%' => $configFileTemplate]));
 
         return true;
     }
@@ -377,8 +344,7 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
     private function getConnection()
     {
         $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-        $connection = $entityManager->getConnection();
 
-        return $connection;
+        return $entityManager->getConnection();
     }
 }
