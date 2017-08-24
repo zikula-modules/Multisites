@@ -260,7 +260,7 @@ class SystemHelper
                 }
             }
         } catch (\Exception $exception) {
-            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]);
+            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]));
 
             return false;
         }
@@ -414,7 +414,7 @@ class SystemHelper
                 }
             }
         } catch (\Exception $exception) {
-            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]);
+            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]));
 
             return false;
         }
@@ -457,7 +457,7 @@ class SystemHelper
         try {
             $stmt->execute();
         } catch (\Exception $exception) {
-            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]);
+            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]));
 
             return false;
         }
@@ -536,7 +536,7 @@ class SystemHelper
                 $stmt->execute();
             }
         } catch (\Exception $exception) {
-            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]);
+            $flashBag->add('error', $this->__f('Connection error: %message', ['%message' => $exception->getMessage()]));
 
             return false;
         }
