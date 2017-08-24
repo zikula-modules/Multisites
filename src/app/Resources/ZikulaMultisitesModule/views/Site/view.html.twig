@@ -45,7 +45,7 @@
                         <input type="checkbox" class="zikulamultisites-mass-toggle" />
                     </th>
                 {% endif %}
-                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hLogo" scope="col" class="text-left">
                     <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', {'%s': 'logo'}) }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
                 </th>
@@ -61,13 +61,13 @@
 {#                <th id="hSiteDns" scope="col" class="text-left">
                     <a href="{{ sort.siteDns.url }}" title="{{ __f('Sort by %s', {'%s': 'site dns'}) }}" class="{{ sort.siteDns.class }}">{{ __('Site dns') }}</a>
                 </th>#}
-                <th id="hSiteAdminName" scope="col" class="text-left z-order-unsorted">
+                <th id="hSiteAdminName" scope="col" class="text-left unsorted">
                     {{ __('Admin details') }}
                 </th>
-                <th id="hFeatures" scope="col" class="text-left z-order-unsorted">
+                <th id="hFeatures" scope="col" class="text-left unsorted">
                     {{ __('Features') }}
                 </th>
-{#                <th id="hAllowedLocales" scope="col" class="text-left z-order-unsorted">
+{#                <th id="hAllowedLocales" scope="col" class="text-left unsorted">
                     {{ __('Allowed locales') }}
                 </th>#}
                 <th id="hActive" scope="col" class="text-center">

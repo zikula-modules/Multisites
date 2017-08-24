@@ -38,7 +38,7 @@
                         <input type="checkbox" class="zikulamultisites-mass-toggle" />
                     </th>
                 {% endif %#}
-                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
@@ -48,19 +48,19 @@
                 <th id="hSqlFile" scope="col" class="text-left">
                     <a href="{{ sort.sqlFile.url }}" title="{{ __f('Sort by %s', {'%s': 'sql file'}) }}" class="{{ sort.sqlFile.class }}">{{ __('Sql file') }}</a>
                 </th>
-                <th id="hProjects" scope="col" class="text-left z-order-unsorted">
+                <th id="hProjects" scope="col" class="text-left unsorted">
                     {{ __('Projects') }}
                 </th>
-                <th id="hSites" scope="col" class="text-left z-order-unsorted">
+                <th id="hSites" scope="col" class="text-left unsorted">
                     {{ __('Sites') }}
                 </th>
-                <th id="hParameters" scope="col" class="text-left z-order-unsorted">
+                <th id="hParameters" scope="col" class="text-left unsorted">
                     {{ __('Parameters') }}
                 </th>
-                <th id="hFolders" scope="col" class="text-left z-order-unsorted">
+                <th id="hFolders" scope="col" class="text-left unsorted">
                     {{ __('Folders') }}
                 </th>
-                <th id="hExcludedTables" scope="col" class="text-left z-order-unsorted">
+                <th id="hExcludedTables" scope="col" class="text-left unsorted">
                     {{ __('Excluded tables') }}
                 </th>
             </tr>
