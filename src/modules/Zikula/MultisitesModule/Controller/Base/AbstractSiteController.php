@@ -721,6 +721,6 @@ abstract class AbstractSiteController extends AbstractController
             $hookHelper->callProcessHooks($entity, $hookType, $url);
         }
         
-        return $this->redirectToRoute('zikulamultisitesmodule_site_' . ($isAdmin ? 'admin' : '') . 'index');
+        return $this->redirectToRoute('zikulamultisitesmodule_site_' . ($isAdmin ? 'admin' : '') . 'view');
     }
 }
