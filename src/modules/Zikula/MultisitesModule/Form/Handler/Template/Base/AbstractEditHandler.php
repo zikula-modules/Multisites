@@ -264,18 +264,6 @@ abstract class AbstractEditHandler extends EditHandler
      */
     protected function getRedirectUrl($args)
     {
-        if (true === $this->templateParameters['inlineUsage']) {
-            $commandName = substr($args['commandName'], 0, 6) == 'submit' ? 'create' : $args['commandName'];
-            $urlArgs = [
-                'idPrefix' => $this->idPrefix,
-                'commandName' => $commandName,
-                'id' => $this->idValue
-            ];
-    
-            // inline usage, return to special function for closing the modal window instance
-            return $this->router->generate('zikulamultisitesmodule_' . $this->objectTypeLower . '_handleinlineredirect', $urlArgs);
-        }
-    
         if ($this->repeatCreateAction) {
             return $this->repeatReturnUrl;
         }
