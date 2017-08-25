@@ -88,6 +88,7 @@ abstract class AbstractHookHelper
     public function callFormDisplayHooks(Form $form, $entity, $hookType)
     {
         $hookAreaPrefix = $entity->getHookAreaPrefix();
+        $hookAreaPrefix = str_replace('.ui_hooks.', '.form_aware_hook.', $hookAreaPrefix);
     
         $hook = new FormAwareHook($form);
         $this->dispatchHooks($hookAreaPrefix . '.' . $hookType, $hook);
@@ -107,6 +108,7 @@ abstract class AbstractHookHelper
     {
         $formResponse = new FormAwareResponse($form, $entity, $routeUrl);
         $hookAreaPrefix = $entity->getHookAreaPrefix();
+        $hookAreaPrefix = str_replace('.ui_hooks.', '.form_aware_hook.', $hookAreaPrefix);
     
         $this->dispatchHooks($hookAreaPrefix . '.' . $hookType, $formResponse);
     }
