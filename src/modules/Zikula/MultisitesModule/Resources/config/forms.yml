@@ -45,6 +45,7 @@ services:
 
     zikula_multisites_module.form.handler.site:
         class: Zikula\MultisitesModule\Form\Handler\Site\EditHandler
+        parent: zikula_multisites_module.form.handler.common
         calls:
             - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
             - [setSystemHelper, ["@zikula_multisites_module.system_helper"]]
@@ -62,6 +63,7 @@ services:
     
     zikula_multisites_module.form.handler.template:
         class: Zikula\MultisitesModule\Form\Handler\Template\EditHandler
+        parent: zikula_multisites_module.form.handler.common
         tags: ['form.type']
     
     zikula_multisites_module.form.type.template:
@@ -76,6 +78,7 @@ services:
     
     zikula_multisites_module.form.handler.project:
         class: Zikula\MultisitesModule\Form\Handler\Project\EditHandler
+        parent: zikula_multisites_module.form.handler.common
         tags: ['form.type']
     
     zikula_multisites_module.form.type.project:

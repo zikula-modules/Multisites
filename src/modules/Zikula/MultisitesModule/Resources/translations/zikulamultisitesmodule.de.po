@@ -17,9 +17,6 @@ msgstr ""
 msgid "%name%"
 msgstr "%name%"
 
-msgid "%name% v%extensionVersion%"
-msgstr "%name% v%extensionVersion%"
-
 msgid "10"
 msgstr "10"
 
@@ -43,13 +40,6 @@ msgstr "50"
 
 msgid "A global administrator has been created."
 msgstr "Erledigt! Ein globaler Administrator wurde erstellt."
-
-msgid ""
-"A site consists of several extensions, which may be modules, themes or "
-"plugins."
-msgstr ""
-"Eine Seite besteht aus mehreren Erweiterungen, welche Module, Themes oder "
-"Plugins sein können."
 
 msgid ""
 "A site template represents a blueprint for several sites. Each template may "
@@ -134,8 +124,8 @@ msgstr "Konfiguration"
 msgid "Confirmation prompt"
 msgstr "Bestätigungsabfrage"
 
-msgid "Connection error, because:"
-msgstr "Fehler! Datenbankverbindung fehlgeschlagen, weil:"
+msgid "Connection error: %message"
+msgstr "Verbindungsfehler: %message"
 
 msgid "Content"
 msgstr "Inhalt"
@@ -255,9 +245,6 @@ msgstr "Soll diese Seite wirklich gelöscht werden: \"%name%\" ?"
 msgid "Doctrine Exception"
 msgstr "Doctrine Ausnahme"
 
-msgid "Doctrine Exception: "
-msgstr "Doctrine Exception: "
-
 msgid "Done! Cleared all cache and compile directories for site %s."
 msgstr ""
 "Erledigt! Alle Cache und Compile Verzeichnisse für die Seite %s geleert."
@@ -322,9 +309,6 @@ msgstr "Workflow für Projekte bearbeiten"
 msgid "Edit site"
 msgstr "Seite bearbeiten"
 
-msgid "Edit site extensions workflow"
-msgstr "Workflow für Seitenerweiterungen bearbeiten"
-
 msgid "Edit sites workflow"
 msgstr "Workflow für Seiten bearbeiten"
 
@@ -345,9 +329,6 @@ msgstr "Diese Vorlage bearbeiten"
 
 msgid "Edit workflow for projects"
 msgstr "Workflow für Projekte bearbeiten"
-
-msgid "Edit workflow for site extensions"
-msgstr "Workflow für Seitenerweiterungen bearbeiten"
 
 msgid "Edit workflow for sites"
 msgstr "Workflow für Seiten bearbeiten"
@@ -460,17 +441,11 @@ msgstr "Gebe die Domain bzw. den Ordnernamen für diese Seite ein"
 msgid "Enter the site entries per page."
 msgstr "Die Seiten-Einträge je Seite eingeben."
 
-msgid "Enter the site extension entries per page."
-msgstr "Die Seitenerweiterungen-Einträge je Seite eingeben."
-
 msgid "Enter the site name of the site"
 msgstr "Gebe den Namen der Seite ein"
 
 msgid "Enter the sql file of the template"
 msgstr "Die SQL-Datei der Vorlage eingeben."
-
-msgid "Enter the temp access file content."
-msgstr "Bitte gebe den Inhalt der .htaccess-Datei des temporären Ordners ein."
 
 msgid "Enter the template entries per page."
 msgstr "Die Vorlagen-Eitnräge je Seite eingeben."
@@ -496,14 +471,14 @@ msgstr "Fehler! Änderung des Modulzustands fehlgeschlagen."
 msgid "Error creating module."
 msgstr "Fehler! Erstellen des Moduls fehlgeschlagen."
 
-msgid "Error creating the directory:"
-msgstr "Fehler beim Erstellen des Verzeichnisses:"
-
 msgid "Error creating theme."
 msgstr "Fehler! Erstellen des Themes fehlgeschlagen."
 
-msgid "Error deleting file:"
-msgstr "Fehler beim Löschen der Datei:"
+msgid "Error deleting directory <strong>%directory</strong>."
+msgstr "Fehler beim Löschen des Verzeichnisses <strong>%directory</strong>."
+
+msgid "Error deleting file <strong>%file</strong>."
+msgstr "Fehler beim Löschen der Datei <strong>%file</strong>."
 
 msgid "Error deleting module."
 msgstr "Fehler! Löschen des Moduls fehlgeschlagen."
@@ -523,11 +498,6 @@ msgstr "Fehler beim Ausführen der Abfrage in Datenbank %s."
 msgid "Error importing the database in line"
 msgstr "Fehler! Importieren der Datenbank in Zeile"
 
-msgid "Error! Adding global administrator to admin group failed."
-msgstr ""
-"Fehler! Hinzufügen des globalen Administrators zur Admin-Gruppe "
-"fehlgeschlagen."
-
 msgid "Error! Connecting to the database %s failed."
 msgstr "Fehler! Das Verbinden zur Datenbank %s ist fehlgeschlagen."
 
@@ -545,24 +515,8 @@ msgstr ""
 msgid "Error! Could not find MySQL program directory."
 msgstr "Fehler! Das MySQL-Programmverzeichnis konnte nicht gefunden werden."
 
-msgid "Error! Could not load default theme."
-msgstr "Fehler! Das Standard-Theme konnte nicht geladen werden."
-
-msgid "Error! Could not save the new default theme."
-msgstr "Fehler! Das neue Standard-Theme konnte nicht gespeichert werden."
-
-msgid "Error! Creating global administrator failed."
-msgstr "Fehler! Erstellung des globalen Administrators fehlgeschlagen."
-
 msgid "Error! Creating parameter \"%s\" failed."
 msgstr "Fehler! Erstellen des Parameters \"%s\" fehlgeschlagen."
-
-msgid "Error! Creating the new permission sequence failed."
-msgstr ""
-"Fehler! Das Erstellen der neuen Berechtigungssequenz ist fehlgeschlagen."
-
-msgid "Error! Creating the site administrator failed."
-msgstr "Fehler! Erstellung des Seiten-Administrators fehlgeschlagen."
 
 msgid "Error! Creation attempt failed."
 msgstr "Fehler! Erstellung fehlgeschlagen."
@@ -585,12 +539,6 @@ msgstr "Fehler! Löschversuch fehlgeschlagen."
 
 msgid "Error! Deletion of old database tables failed."
 msgstr "Fehler! Löschen der alten Datenbank-Tabellen fehlgeschlagen."
-
-msgid "Error! Getting global administrator group failed."
-msgstr "Fehler! Abrufen der Gruppe des globalen Administrators fehlgeschlagen."
-
-msgid "Error! Getting global administrator values failed."
-msgstr "Fehler! Abrufen der Werte des globalen Administrators fehlgeschlagen."
 
 msgid ""
 "Error! Importing the database failed. Perhaps there is a problem with the "
@@ -639,34 +587,23 @@ msgid "Error! Renaming of excluded database tables failed."
 msgstr ""
 "Fehler! Umbenennen der ausgeschlossenen Datenbank-Tabellen fehlgeschlagen."
 
-msgid "Error! Setting configurating value failed."
-msgstr "Fehler! Setzen eines Konfigurationswertes fehlgeschlagen."
-
-msgid "Error! Sorry! Deletion attempt failed."
-msgstr "Fehler! Löschversuch fehlgeschlagen."
-
-msgid "Error! Storing the site modules in the Multisites database failed."
-msgstr ""
-"Fehler! Speichern der Seitenmodule in der Multisites-Datenbank "
-"fehlgeschlagen."
-
 msgid "Error! The \"mysqldump\" program is not installed."
 msgstr "Fehler! Das Programm \"mysqldump\" ist nicht installiert."
 
 msgid ""
-"Error! The <strong>%s</strong> directory does not exist and could not be "
-"created automatically. Please create it and make it writeable."
+"Error! The <strong>%directory</strong> directory does not exist and could "
+"not be created automatically. Please create it and make it writeable."
 msgstr ""
-"Fehler! Das Verzeichnis <strong>%s</strong> existiert nicht und konnte nicht "
-"automatisch erstellt werden. Bitte erstelle es und stelle es auf "
+"Fehler! Das Verzeichnis <strong>%directory</strong> existiert nicht und "
+"konnte nicht automatisch erstellt werden. Bitte lege es an und stelle es auf "
 "beschreibbar."
 
 msgid ""
-"Error! The <strong>%s</strong> directory is not writeable. Please correct "
-"that."
+"Error! The <strong>%directory</strong> directory is not writeable. Please "
+"correct that."
 msgstr ""
-"Fehler! Das Verzeichnis <strong>%s</strong> ist nicht beschreibbar. Bitte "
-"korrigiere das."
+"Fehler! Das Verzeichnis <strong>%directory</strong> ist nicht beschreibbar. "
+"Bitte korrigiere das."
 
 msgid ""
 "Error! The database dump failed. Please ensure that the database user %1$s "
@@ -698,10 +635,6 @@ msgstr "Fehler! Diese Vorlage hat noch keine zugeordneten Seiten."
 msgid "Error! Update attempt failed."
 msgstr "Fehler! Änderung fehlgeschlagen."
 
-msgid "Error! Updating global administrator password failed."
-msgstr ""
-"Fehler! Änderung des Passwortes des globalen Administrators fehlgeschlagen."
-
 msgid "Error! Updating the database configuration file failed."
 msgstr "Fehler! Ändern der Datenbank-Konfigurationsdatei fehlgeschlagen."
 
@@ -713,12 +646,6 @@ msgstr "Fehler! Ändern der Seitenparameter fehlgeschlagen."
 
 msgid "Error! You need to select a template for new sites."
 msgstr "Fehler! Bitte eine Vorlage für die neue Seite auswählen."
-
-msgid "Error: Could not write into the config/%s file."
-msgstr "Fehler! Konnte nicht in die Datei config/%s schreiben."
-
-msgid "Error: File config/%s could not be found."
-msgstr "Fehler! Die Datei config/%s konnte nicht gefunden werden."
 
 msgid "Error: invalid input."
 msgstr "Fehler! Ungültige Eingabe."
@@ -745,15 +672,6 @@ msgstr "Die Datenbank als Vorlage exportieren"
 msgid "Export the database as SQL file"
 msgstr "Die Datenbank als SQL-Datei exportieren"
 
-msgid "Extension type"
-msgstr "Typ der Erweiterung"
-
-msgid "Extension version"
-msgstr "Version der Erweiterung"
-
-msgid "Extensions"
-msgstr "Erweiterungen"
-
 msgid "Fav icon"
 msgstr "FavIcon"
 
@@ -768,9 +686,6 @@ msgstr "Frontend"
 
 msgid "GB"
 msgstr "GB"
-
-msgid "General"
-msgstr "Allgemein"
 
 msgid "Global admin email"
 msgstr "Globaler Admin E-Mail"
@@ -791,9 +706,6 @@ msgstr ""
 msgid "Here you can configure parameters for list views."
 msgstr "Hier können Parameter für Listenansichten eingestellt werden."
 
-msgid "Here you can define general settings."
-msgstr "Hier können die grundlegenden Einstellungen verändert werden."
-
 msgid "Here you can define security-related settings."
 msgstr "Hier können sicherheitsbezogene Einstellungen verändert werden."
 
@@ -801,9 +713,6 @@ msgid "Here you can inspect and amend the existing workflows."
 msgstr ""
 "Hier können die bestehenden Workflows inpiziert und verändert verändert "
 "werden."
-
-msgid "Hooks"
-msgstr "Hooks"
 
 msgid "Image settings for sites fav icon"
 msgstr "Bildeinstellungen für FavIcons von Seiten"
@@ -862,17 +771,8 @@ msgstr "Seiten-Layouts"
 msgid "Moderation"
 msgstr "Moderation"
 
-msgid "Module"
-msgstr "Modul"
-
-msgid "Module plugin"
-msgstr "Modul-Plugin"
-
 msgid "My projects"
 msgstr "Meine Projekte"
-
-msgid "My site extensions"
-msgstr "Meine Seitenerweiterungen"
 
 msgid "My sites"
 msgstr "Meine Seiten"
@@ -882,9 +782,6 @@ msgstr "Meine Vorlagen"
 
 msgid "MySQL"
 msgstr "MySQL"
-
-msgid "MySQL Improved"
-msgstr "MySQL Improved"
 
 msgid "Name"
 msgstr "Name"
@@ -900,9 +797,6 @@ msgstr "Fehler! Keinen neuen Zustand erhalten."
 
 msgid "No projects found."
 msgstr "Keine Projekte gefunden."
-
-msgid "No site extensions found."
-msgstr "Keine Erweiterungen gefunden."
 
 msgid "No sites found."
 msgstr "Keine Seiten gefunden."
@@ -1060,9 +954,6 @@ msgstr "Maximale Höhe"
 msgid "Shrink width"
 msgstr "Maximale Breite"
 
-msgid "Site"
-msgstr "Seite"
-
 msgid "Site admin email"
 msgstr "Admin E-Mail"
 
@@ -1089,21 +980,6 @@ msgstr "Seiten-DNS"
 
 msgid "Site entries per page"
 msgstr "Seiten-Einträge je Seite"
-
-msgid "Site extension entries per page"
-msgstr "Seitenerweiterungen-Einträge je Seite"
-
-msgid "Site extension filter hooks subscriber"
-msgstr "Seitenerweiterung Filter-Hooks Subscriber"
-
-msgid "Site extension ui hooks subscriber"
-msgstr "Seitenerweiterung UI-Hooks Subscriber"
-
-msgid "Site extensions"
-msgstr "Seiten-Erweiterungen"
-
-msgid "Site extensions list"
-msgstr "Liste der Seitenerweiterungen"
 
 msgid "Site filter hooks subscriber"
 msgstr "Seiten Filter-Hooks Subscriber"
@@ -1188,12 +1064,6 @@ msgstr "Zum Verwaltungsbereich wechseln"
 msgid "Switch to user area."
 msgstr "Zum Benutzerbereich wechseln"
 
-msgid "System plugin"
-msgstr "System-Plugin"
-
-msgid "Temp access file content"
-msgstr "Inhalt der .htaccess-Datei des temporären Ordners"
-
 msgid "Template"
 msgstr "Vorlage"
 
@@ -1221,9 +1091,6 @@ msgstr "Erledigt! Die Administrationskontrolle wurde wiederhergestellt."
 msgid "The amount of projects shown per page"
 msgstr "Die Anzahl der angezeigten Projekte je Seite"
 
-msgid "The amount of site extensions shown per page"
-msgstr "Die Anzahl der angezeigten Seitenerweiterungen je Seite"
-
 msgid "The amount of sites shown per page"
 msgstr "Die Anzahl der angezeigten Seiten je Seite"
 
@@ -1236,43 +1103,6 @@ msgid ""
 msgstr ""
 "Das Cache-Verzeichnis \"%directory%\" existiert nicht. Bitte erstellen und "
 "für den Webserver beschreibbar machen."
-
-msgid "The directory for storing the sites files does not exist."
-msgstr ""
-"Fehler! Das Verzeichnis zur Speicherung der Seitendateien existiert nicht."
-
-msgid ""
-"The directory for storing the sites files is not defined. Check your "
-"configuration values."
-msgstr ""
-"Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
-"definiert. Bitte die Konfigurationseinstellungen überprüfen."
-
-msgid "The directory for storing the sites files is not writeable."
-msgstr ""
-"Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
-"beschreibbar."
-
-msgid ""
-"The directory where the sites files have to be created does not exist. "
-"Please, create it."
-msgstr ""
-"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
-"sollen, existiert nicht. Bitte anlegen."
-
-msgid ""
-"The directory where the sites files have to be created is not defined. "
-"Please, define it."
-msgstr ""
-"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
-"sollen, ist nicht definiert. Bitte definieren."
-
-msgid ""
-"The directory where the sites files have to be created is not writeable. "
-"Please, set it as writeable."
-msgstr ""
-"Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
-"sollen, ist nicht beschreibbar. Bitte auf beschreibbar setzen."
 
 msgid "The enable shrinking option."
 msgstr "Reduzierung großer Bilder aktivieren"
@@ -1317,9 +1147,6 @@ msgstr ""
 msgid "The value \"%value%\" is not allowed for the \"%property%\" property."
 msgstr ""
 "Der Wert \"%value%\" ist für die Eigenschaft \"%property%\" nicht erlaubt."
-
-msgid "Theme"
-msgstr "Theme"
 
 msgid "This setting is disabled. Click here to enable it."
 msgstr "Diese Einstellung ist deaktiviert. Klicke hier um sie zu aktivieren."
@@ -1413,9 +1240,6 @@ msgstr "Mit Beschreibung"
 msgid "With selected projects"
 msgstr "Die ausgewählten Projekte"
 
-msgid "With selected site extensions"
-msgstr "Die ausgewählten Erweiterungen"
-
 msgid "With selected sites"
 msgstr "Die ausgewählten Seiten"
 
@@ -1446,6 +1270,192 @@ msgstr "oder gebe sie manuell ein"
 
 msgid "pixels"
 msgstr "Pixel"
+
+#~ msgid "%name% v%extensionVersion%"
+#~ msgstr "%name% v%extensionVersion%"
+
+#~ msgid ""
+#~ "A site consists of several extensions, which may be modules, themes or "
+#~ "plugins."
+#~ msgstr ""
+#~ "Eine Seite besteht aus mehreren Erweiterungen, welche Module, Themes oder "
+#~ "Plugins sein können."
+
+#~ msgid "Doctrine Exception: "
+#~ msgstr "Doctrine Exception: "
+
+#~ msgid "Edit site extensions workflow"
+#~ msgstr "Workflow für Seitenerweiterungen bearbeiten"
+
+#~ msgid "Edit workflow for site extensions"
+#~ msgstr "Workflow für Seitenerweiterungen bearbeiten"
+
+#~ msgid "Enter the site extension entries per page."
+#~ msgstr "Die Seitenerweiterungen-Einträge je Seite eingeben."
+
+#~ msgid "Enter the temp access file content."
+#~ msgstr ""
+#~ "Bitte gebe den Inhalt der .htaccess-Datei des temporären Ordners ein."
+
+#~ msgid "Error creating the directory:"
+#~ msgstr "Fehler beim Erstellen des Verzeichnisses:"
+
+#~ msgid "Error deleting file:"
+#~ msgstr "Fehler beim Löschen der Datei:"
+
+#~ msgid "Error! Adding global administrator to admin group failed."
+#~ msgstr ""
+#~ "Fehler! Hinzufügen des globalen Administrators zur Admin-Gruppe "
+#~ "fehlgeschlagen."
+
+#~ msgid "Error! Could not load default theme."
+#~ msgstr "Fehler! Das Standard-Theme konnte nicht geladen werden."
+
+#~ msgid "Error! Could not save the new default theme."
+#~ msgstr "Fehler! Das neue Standard-Theme konnte nicht gespeichert werden."
+
+#~ msgid "Error! Creating global administrator failed."
+#~ msgstr "Fehler! Erstellung des globalen Administrators fehlgeschlagen."
+
+#~ msgid "Error! Creating the new permission sequence failed."
+#~ msgstr ""
+#~ "Fehler! Das Erstellen der neuen Berechtigungssequenz ist fehlgeschlagen."
+
+#~ msgid "Error! Creating the site administrator failed."
+#~ msgstr "Fehler! Erstellung des Seiten-Administrators fehlgeschlagen."
+
+#~ msgid "Error! Getting global administrator group failed."
+#~ msgstr ""
+#~ "Fehler! Abrufen der Gruppe des globalen Administrators fehlgeschlagen."
+
+#~ msgid "Error! Getting global administrator values failed."
+#~ msgstr ""
+#~ "Fehler! Abrufen der Werte des globalen Administrators fehlgeschlagen."
+
+#~ msgid "Error! Setting configurating value failed."
+#~ msgstr "Fehler! Setzen eines Konfigurationswertes fehlgeschlagen."
+
+#~ msgid "Error! Sorry! Deletion attempt failed."
+#~ msgstr "Fehler! Löschversuch fehlgeschlagen."
+
+#~ msgid "Error! Storing the site modules in the Multisites database failed."
+#~ msgstr ""
+#~ "Fehler! Speichern der Seitenmodule in der Multisites-Datenbank "
+#~ "fehlgeschlagen."
+
+#~ msgid "Error! Updating global administrator password failed."
+#~ msgstr ""
+#~ "Fehler! Änderung des Passwortes des globalen Administrators "
+#~ "fehlgeschlagen."
+
+#~ msgid "Error: Could not write into the config/%s file."
+#~ msgstr "Fehler! Konnte nicht in die Datei config/%s schreiben."
+
+#~ msgid "Error: File config/%s could not be found."
+#~ msgstr "Fehler! Die Datei config/%s konnte nicht gefunden werden."
+
+#~ msgid "Extension type"
+#~ msgstr "Typ der Erweiterung"
+
+#~ msgid "Extension version"
+#~ msgstr "Version der Erweiterung"
+
+#~ msgid "Extensions"
+#~ msgstr "Erweiterungen"
+
+#~ msgid "General"
+#~ msgstr "Allgemein"
+
+#~ msgid "Here you can define general settings."
+#~ msgstr "Hier können die grundlegenden Einstellungen verändert werden."
+
+#~ msgid "Hooks"
+#~ msgstr "Hooks"
+
+#~ msgid "Module"
+#~ msgstr "Modul"
+
+#~ msgid "Module plugin"
+#~ msgstr "Modul-Plugin"
+
+#~ msgid "My site extensions"
+#~ msgstr "Meine Seitenerweiterungen"
+
+#~ msgid "MySQL Improved"
+#~ msgstr "MySQL Improved"
+
+#~ msgid "No site extensions found."
+#~ msgstr "Keine Erweiterungen gefunden."
+
+#~ msgid "Site"
+#~ msgstr "Seite"
+
+#~ msgid "Site extension entries per page"
+#~ msgstr "Seitenerweiterungen-Einträge je Seite"
+
+#~ msgid "Site extension filter hooks subscriber"
+#~ msgstr "Seitenerweiterung Filter-Hooks Subscriber"
+
+#~ msgid "Site extension ui hooks subscriber"
+#~ msgstr "Seitenerweiterung UI-Hooks Subscriber"
+
+#~ msgid "Site extensions"
+#~ msgstr "Seiten-Erweiterungen"
+
+#~ msgid "Site extensions list"
+#~ msgstr "Liste der Seitenerweiterungen"
+
+#~ msgid "System plugin"
+#~ msgstr "System-Plugin"
+
+#~ msgid "Temp access file content"
+#~ msgstr "Inhalt der .htaccess-Datei des temporären Ordners"
+
+#~ msgid "The amount of site extensions shown per page"
+#~ msgstr "Die Anzahl der angezeigten Seitenerweiterungen je Seite"
+
+#~ msgid "The directory for storing the sites files does not exist."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis zur Speicherung der Seitendateien existiert nicht."
+
+#~ msgid ""
+#~ "The directory for storing the sites files is not defined. Check your "
+#~ "configuration values."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
+#~ "definiert. Bitte die Konfigurationseinstellungen überprüfen."
+
+#~ msgid "The directory for storing the sites files is not writeable."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
+#~ "beschreibbar."
+
+#~ msgid ""
+#~ "The directory where the sites files have to be created does not exist. "
+#~ "Please, create it."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+#~ "sollen, existiert nicht. Bitte anlegen."
+
+#~ msgid ""
+#~ "The directory where the sites files have to be created is not defined. "
+#~ "Please, define it."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+#~ "sollen, ist nicht definiert. Bitte definieren."
+
+#~ msgid ""
+#~ "The directory where the sites files have to be created is not writeable. "
+#~ "Please, set it as writeable."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+#~ "sollen, ist nicht beschreibbar. Bitte auf beschreibbar setzen."
+
+#~ msgid "Theme"
+#~ msgstr "Theme"
+
+#~ msgid "With selected site extensions"
+#~ msgstr "Die ausgewählten Erweiterungen"
 
 #~ msgid ""
 #~ "An error was encountered while creating the tables for the %s extension."
@@ -1860,9 +1870,6 @@ msgstr "Pixel"
 #~ msgstr ""
 #~ "Fehler! Die Datei <strong>%s</strong> ist nicht beschreibbar, was aber "
 #~ "der Fall sein sollte."
-
-#~ msgid "The file <strong>%s</strong> is writeable."
-#~ msgstr "Die Datei <strong>%s</strong> ist beschreibbar."
 
 #~ msgid "Check again"
 #~ msgstr "Nochmal prüfen"
