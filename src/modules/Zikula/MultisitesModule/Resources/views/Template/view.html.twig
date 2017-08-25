@@ -136,9 +136,6 @@
     
     {# here you can activate calling display hooks for the view page if you need it #}
     {# % if routeArea != 'admin' %}
-        {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.templates.display_view', urlObject=currentUrlObject) %}
-        {% for providerArea, hook in hooks %}
-            {{ hook }}
-        {% endfor %}
+        {{ notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.templates.display_view', urlObject=currentUrlObject) }}
     {% endif % #}
 {% endblock %}

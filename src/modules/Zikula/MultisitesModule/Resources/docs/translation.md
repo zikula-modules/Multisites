@@ -16,7 +16,7 @@ Note you can even include custom views in `app/Resources/ZikulaMultisitesModule/
 
 `php bin/console translation:extract en --bundle=ZikulaMultisitesModule --enable-extractor=jms_i18n_routing --output-format=po --dir=./modules/Zikula/MultisitesModule --dir=./app/Resources/ZikulaMultisitesModule`
 
-For questions and other remarks visit our homepage http://modulestudio.de.
+For questions and other remarks visit our homepage https://modulestudio.de.
 
 Albert Pérez Monfort (aperezm@xtec.cat)
-http://modulestudio.de
+https://modulestudio.de

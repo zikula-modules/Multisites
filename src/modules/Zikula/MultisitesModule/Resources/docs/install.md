@@ -6,7 +6,7 @@
    Note this step is optional as the install process can create these folders, too.
 4. Make the directory `/web/uploads/ZikulaMultisitesModule/` writable including all sub folders.
 
-For questions and other remarks visit our homepage http://modulestudio.de.
+For questions and other remarks visit our homepage https://modulestudio.de.
 
 Albert Pérez Monfort (aperezm@xtec.cat)
-http://modulestudio.de
+https://modulestudio.de
