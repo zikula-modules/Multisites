@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Component\SortableColumns\Column;
 use Zikula\Component\SortableColumns\SortableColumns;
@@ -33,7 +31,6 @@ abstract class AbstractProjectController extends AbstractController
 {
     /**
      * This action provides an item list overview in the admin area.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -52,7 +49,6 @@ abstract class AbstractProjectController extends AbstractController
     
     /**
      * This action provides an item list overview.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -108,7 +104,6 @@ abstract class AbstractProjectController extends AbstractController
     }
     /**
      * This action provides a handling of edit requests in the admin area.
-     * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -125,7 +120,6 @@ abstract class AbstractProjectController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
-     * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *

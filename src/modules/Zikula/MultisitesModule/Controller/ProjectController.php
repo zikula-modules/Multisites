@@ -15,6 +15,7 @@ namespace Zikula\MultisitesModule\Controller;
 use Zikula\MultisitesModule\Controller\Base\AbstractProjectController;
 
 use RuntimeException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -35,6 +36,7 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -60,6 +62,7 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -83,6 +86,7 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -106,6 +110,7 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
