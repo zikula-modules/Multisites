@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Component\SortableColumns\Column;
 use Zikula\Component\SortableColumns\SortableColumns;
@@ -33,7 +31,14 @@ abstract class AbstractTemplateController extends AbstractController
 {
     /**
      * This action provides an item list overview in the admin area.
+     *
+     * @Route("/admin/templates/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
+     *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
+     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
+     *        methods = {"GET"}
+     * )
      * @Cache(expires="+2 hours", public=false)
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -52,6 +57,12 @@ abstract class AbstractTemplateController extends AbstractController
     
     /**
      * This action provides an item list overview.
+     *
+     * @Route("/templates/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
+     *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
+     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
+     *        methods = {"GET"}
+     * )
      * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
@@ -110,7 +121,14 @@ abstract class AbstractTemplateController extends AbstractController
     }
     /**
      * This action provides a handling of edit requests in the admin area.
+     *
+     * @Route("/admin/template/edit/{id}.{_format}",
+     *        requirements = {"id" = "\d+", "_format" = "html"},
+     *        defaults = {"id" = "0", "_format" = "html"},
+     *        methods = {"GET", "POST"}
+     * )
      * @Cache(lastModified="template.getUpdatedDate()", ETag="'Template' ~ template.getid() ~ template.getUpdatedDate().format('U')")
+     * @Theme("admin")
      *
      * @param Request $request Current request instance
      *
@@ -127,6 +145,12 @@ abstract class AbstractTemplateController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
+     *
+     * @Route("/template/edit/{id}.{_format}",
+     *        requirements = {"id" = "\d+", "_format" = "html"},
+     *        defaults = {"id" = "0", "_format" = "html"},
+     *        methods = {"GET", "POST"}
+     * )
      * @Cache(lastModified="template.getUpdatedDate()", ETag="'Template' ~ template.getid() ~ template.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -175,6 +199,11 @@ abstract class AbstractTemplateController extends AbstractController
     /**
      * This is a custom action in the admin area.
      *
+     * @Route("/admin/templates/createParametersCsvTemplate",
+     *        methods = {"GET", "POST"}
+     * )
+     * @Theme("admin")
+     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -188,6 +217,10 @@ abstract class AbstractTemplateController extends AbstractController
     
     /**
      * This is a custom action.
+     *
+     * @Route("/templates/createParametersCsvTemplate",
+     *        methods = {"GET", "POST"}
+     * )
      *
      * @param Request $request Current request instance
      *
@@ -222,6 +255,11 @@ abstract class AbstractTemplateController extends AbstractController
     /**
      * This is a custom action in the admin area.
      *
+     * @Route("/admin/templates/reapply",
+     *        methods = {"GET", "POST"}
+     * )
+     * @Theme("admin")
+     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -235,6 +273,10 @@ abstract class AbstractTemplateController extends AbstractController
     
     /**
      * This is a custom action.
+     *
+     * @Route("/templates/reapply",
+     *        methods = {"GET", "POST"}
+     * )
      *
      * @param Request $request Current request instance
      *
