@@ -33,14 +33,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This action provides an item list overview in the admin area.
      *
-     * @Route("/admin/sites/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
-     *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
-     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
-     *        methods = {"GET"}
-     * )
-     * @Cache(expires="+2 hours", public=false)
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
      * @param string $sortdir      Sorting direction
@@ -58,13 +50,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This action provides an item list overview.
-     *
-     * @Route("/sites/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
-     *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
-     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
-     *        methods = {"GET"}
-     * )
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -142,14 +127,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This action provides a handling of edit requests in the admin area.
      *
-     * @Route("/admin/site/edit/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html"},
-     *        defaults = {"id" = "0", "_format" = "html"},
-     *        methods = {"GET", "POST"}
-     * )
-     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -165,13 +142,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
-     *
-     * @Route("/site/edit/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html"},
-     *        defaults = {"id" = "0", "_format" = "html"},
-     *        methods = {"GET", "POST"}
-     * )
-     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -219,15 +189,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This action provides a handling of simple delete requests in the admin area.
      *
-     * @Route("/admin/site/delete/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html"},
-     *        defaults = {"_format" = "html"},
-     *        methods = {"GET", "POST"}
-     * )
-     * @ParamConverter("site", class="ZikulaMultisitesModule:SiteEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      * @param SiteEntity $site Treated site instance
      *
@@ -244,14 +205,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     *
-     * @Route("/site/delete/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html"},
-     *        defaults = {"_format" = "html"},
-     *        methods = {"GET", "POST"}
-     * )
-     * @ParamConverter("site", class="ZikulaMultisitesModule:SiteEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param SiteEntity $site Treated site instance
@@ -363,11 +316,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This is a custom action in the admin area.
      *
-     * @Route("/admin/sites/manageExtensions",
-     *        methods = {"GET", "POST"}
-     * )
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -381,10 +329,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This is a custom action.
-     *
-     * @Route("/sites/manageExtensions",
-     *        methods = {"GET", "POST"}
-     * )
      *
      * @param Request $request Current request instance
      *
@@ -419,11 +363,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This is a custom action in the admin area.
      *
-     * @Route("/admin/sites/manageThemes",
-     *        methods = {"GET", "POST"}
-     * )
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -437,10 +376,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This is a custom action.
-     *
-     * @Route("/sites/manageThemes",
-     *        methods = {"GET", "POST"}
-     * )
      *
      * @param Request $request Current request instance
      *
@@ -475,11 +410,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This is a custom action in the admin area.
      *
-     * @Route("/admin/sites/setThemeAsDefault",
-     *        methods = {"GET", "POST"}
-     * )
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -493,10 +423,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This is a custom action.
-     *
-     * @Route("/sites/setThemeAsDefault",
-     *        methods = {"GET", "POST"}
-     * )
      *
      * @param Request $request Current request instance
      *
@@ -531,11 +457,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This is a custom action in the admin area.
      *
-     * @Route("/admin/sites/viewTools",
-     *        methods = {"GET", "POST"}
-     * )
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -549,10 +470,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This is a custom action.
-     *
-     * @Route("/sites/viewTools",
-     *        methods = {"GET", "POST"}
-     * )
      *
      * @param Request $request Current request instance
      *
@@ -587,11 +504,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This is a custom action in the admin area.
      *
-     * @Route("/admin/sites/executeTool",
-     *        methods = {"GET", "POST"}
-     * )
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -605,10 +517,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This is a custom action.
-     *
-     * @Route("/sites/executeTool",
-     *        methods = {"GET", "POST"}
-     * )
      *
      * @param Request $request Current request instance
      *
@@ -643,11 +551,6 @@ abstract class AbstractSiteController extends AbstractController
     /**
      * This is a custom action in the admin area.
      *
-     * @Route("/admin/sites/exportDatabaseAsTemplate",
-     *        methods = {"GET", "POST"}
-     * )
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -661,10 +564,6 @@ abstract class AbstractSiteController extends AbstractController
     
     /**
      * This is a custom action.
-     *
-     * @Route("/sites/exportDatabaseAsTemplate",
-     *        methods = {"GET", "POST"}
-     * )
      *
      * @param Request $request Current request instance
      *

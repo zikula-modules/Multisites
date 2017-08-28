@@ -32,14 +32,6 @@ abstract class AbstractProjectController extends AbstractController
     /**
      * This action provides an item list overview in the admin area.
      *
-     * @Route("/admin/projects/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
-     *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
-     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
-     *        methods = {"GET"}
-     * )
-     * @Cache(expires="+2 hours", public=false)
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
      * @param string $sortdir      Sorting direction
@@ -57,13 +49,6 @@ abstract class AbstractProjectController extends AbstractController
     
     /**
      * This action provides an item list overview.
-     *
-     * @Route("/projects/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
-     *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
-     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
-     *        methods = {"GET"}
-     * )
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -120,14 +105,6 @@ abstract class AbstractProjectController extends AbstractController
     /**
      * This action provides a handling of edit requests in the admin area.
      *
-     * @Route("/admin/project/edit/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html"},
-     *        defaults = {"id" = "0", "_format" = "html"},
-     *        methods = {"GET", "POST"}
-     * )
-     * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
-     * @Theme("admin")
-     *
      * @param Request $request Current request instance
      *
      * @return Response Output
@@ -143,13 +120,6 @@ abstract class AbstractProjectController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
-     *
-     * @Route("/project/edit/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html"},
-     *        defaults = {"id" = "0", "_format" = "html"},
-     *        methods = {"GET", "POST"}
-     * )
-     * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
