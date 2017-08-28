@@ -13,6 +13,8 @@
 namespace Zikula\MultisitesModule\Controller;
 
 use RuntimeException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -36,6 +38,7 @@ class SiteController extends AbstractSiteController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      * @Theme("admin")
      *
      * @param Request  $request      Current request instance
@@ -61,6 +64,7 @@ class SiteController extends AbstractSiteController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 0, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request  $request      Current request instance
      * @param string  $sort         Sorting field
@@ -85,6 +89,7 @@ class SiteController extends AbstractSiteController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -108,6 +113,7 @@ class SiteController extends AbstractSiteController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -130,6 +136,8 @@ class SiteController extends AbstractSiteController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("site", class="ZikulaMultisitesModule:SiteEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request  $request      Current request instance
@@ -154,6 +162,8 @@ class SiteController extends AbstractSiteController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("site", class="ZikulaMultisitesModule:SiteEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
+     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
      *
      * @param Request  $request      Current request instance
      * @param SiteEntity $site      Treated site instance
