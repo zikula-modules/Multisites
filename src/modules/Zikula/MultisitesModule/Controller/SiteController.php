@@ -89,7 +89,7 @@ class SiteController extends AbstractSiteController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
+     * @Cache(expires="+30 minutes", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -113,7 +113,7 @@ class SiteController extends AbstractSiteController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @Cache(lastModified="site.getUpdatedDate()", ETag="'Site' ~ site.getid() ~ site.getUpdatedDate().format('U')")
+     * @Cache(expires="+30 minutes", public=false)
      *
      * @param Request $request Current request instance
      *

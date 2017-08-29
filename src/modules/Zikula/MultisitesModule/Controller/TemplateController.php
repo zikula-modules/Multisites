@@ -86,7 +86,7 @@ class TemplateController extends AbstractTemplateController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @Cache(lastModified="template.getUpdatedDate()", ETag="'Template' ~ template.getid() ~ template.getUpdatedDate().format('U')")
+     * @Cache(expires="+30 minutes", public=false)
      * @Theme("admin")
      *
      * @param Request  $request      Current request instance
@@ -110,7 +110,7 @@ class TemplateController extends AbstractTemplateController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @Cache(lastModified="template.getUpdatedDate()", ETag="'Template' ~ template.getid() ~ template.getUpdatedDate().format('U')")
+     * @Cache(expires="+30 minutes", public=false)
      *
      * @param Request  $request      Current request instance
      *
