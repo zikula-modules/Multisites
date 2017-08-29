@@ -86,7 +86,7 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
+     * @Cache(expires="+30 minutes", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -110,7 +110,7 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @Cache(lastModified="project.getUpdatedDate()", ETag="'Project' ~ project.getid() ~ project.getUpdatedDate().format('U')")
+     * @Cache(expires="+30 minutes", public=false)
      *
      * @param Request $request Current request instance
      *
