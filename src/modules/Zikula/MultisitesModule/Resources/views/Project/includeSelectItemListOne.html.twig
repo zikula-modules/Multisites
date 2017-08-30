@@ -1,14 +1,10 @@
 {# purpose of this template: inclusion template for display of related project #}
-{% set removeImage = '<span class="fa fa-trash-o"></span>' %}
-
-<input type="hidden" id="{{ idPrefix }}Mode" name="{{ idPrefix }}Mode" value="0" />
-
 <ul id="{{ idPrefix }}ReferenceList">
 {% if item is defined and item.getKey()|default %}
 {% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.getKey() %}
 <li id="{{ idPrefixItem }}">
     {{ item|zikulamultisitesmodule_formattedTitle }}
-     <a id="{{ idPrefixItem }}Remove" href="javascript:zikulaMultisitesRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');">{{ removeImage|raw }}</a>
+     <a id="{{ idPrefixItem }}Remove" href="javascript:zikulaMultisitesRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');"><span class="fa fa-trash-o"></span></a>
 </li>
 {% endif %}
 </ul>
