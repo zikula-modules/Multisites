@@ -230,7 +230,7 @@ abstract class AbstractSiteType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 40,
-                'class' => ' validate-email',
+                'class' => '',
                 'title' => $this->__('Enter the site admin email of the site')
             ],
             'required' => true,
@@ -444,13 +444,15 @@ abstract class AbstractSiteType extends AbstractType
         if (!$options['has_moderate_permission']) {
             return;
         }
+        if ($options['inline_usage']) {
+            return;
+        }
     
         $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
                 'title' => $this->__('Here you can choose a user which will be set as creator')
             ],
             'empty_data' => 0,

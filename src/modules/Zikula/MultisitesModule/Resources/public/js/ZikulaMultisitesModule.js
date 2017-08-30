@@ -83,7 +83,7 @@ function zikulaMultisitesInitAjaxToggles()
 /**
  * Simulates a simple alert using bootstrap.
  */
-function zikulaMultisitesSimpleAlert(beforeElem, title, content, alertId, cssClass)
+function zikulaMultisitesSimpleAlert(anchorElement, title, content, alertId, cssClass)
 {
     var alertBox;
 
@@ -94,8 +94,8 @@ function zikulaMultisitesSimpleAlert(beforeElem, title, content, alertId, cssCla
           <p>' + content + '</p> \
         </div>';
 
-    // insert alert before the given element
-    beforeElem.before(alertBox);
+    // insert alert before the given anchor element
+    anchorElement.before(alertBox);
 
     jQuery('#' + alertId).delay(200).addClass('in').fadeOut(4000, function () {
         jQuery(this).remove();
