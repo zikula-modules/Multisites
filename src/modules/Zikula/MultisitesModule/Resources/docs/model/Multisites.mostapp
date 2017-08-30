@@ -12,6 +12,7 @@ application "Multisites" {
         generateSearchApi false
         generateMailzApi false
         generateListBlock false
+        generateDetailBlock false
         generateModerationBlock false
         generateListContentType false
         generateDetailContentType false
