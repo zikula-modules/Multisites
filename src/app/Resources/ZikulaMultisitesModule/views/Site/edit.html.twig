@@ -84,13 +84,13 @@
         <div{% if mode != 'create' %} class="hidden"{% endif %}>
             {{ include(
                 '@ZikulaMultisitesModule/Project/includeSelectOne.html.twig',
-                { group: 'site', alias: 'project', aliasReverse: 'sites', mandatory: true, idPrefix: 'multisitesSite_Project', linkingItem: site, displayMode: 'choices' }
+                { group: 'site', heading: __('Template'), alias: 'template', mandatory: true, idPrefix: 'multisitesSite_Project', linkingItem: site, displayMode: 'choices' }
             ) }}
         </div>
         {% set templateMandatory = (mode == 'create' ? true : false) %}
         {{ include(
             '@ZikulaMultisitesModule/Template/includeSelectOne.html.twig',
-            {group: 'site', alias: 'template', aliasReverse: 'sites', mandatory: templateMandatory, idPrefix: 'multisitesSite_Template', linkingItem: site, displayMode: 'choices'}
+            {group: 'site', heading: __('Project'), alias: 'project', mandatory: templateMandatory, idPrefix: 'multisitesSite_Template', linkingItem: site, displayMode: 'choices'}
         ) }}
         <fieldset>
             <legend>{{ __('Individualisation') }}</legend>
@@ -126,7 +126,7 @@
         {% endif %}
 
         {# include return control #}
-        {% if mode == 'create' %}
+        {% if mode == 'create' and form.repeatCreation is defined %}
             <fieldset>
                 <legend>{{ __('Return control') }}</legend>
                 {{ form_row(form.repeatCreation) }}
