@@ -486,6 +486,9 @@ abstract class AbstractSiteType extends AbstractType
         if ($options['mode'] != 'create') {
             return;
         }
+        if ($options['inline_usage']) {
+            return;
+        }
         $builder->add('repeatCreation', CheckboxType::class, [
             'mapped' => false,
             'label' => $this->__('Create another item after save'),

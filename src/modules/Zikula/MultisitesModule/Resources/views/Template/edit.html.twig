@@ -29,7 +29,7 @@
         
         {{ include(
             '@ZikulaMultisitesModule/Project/includeSelectMany.html.twig',
-            {group: 'template', alias: 'projects', aliasReverse: 'templates', mandatory: false, idPrefix: 'multisitesTemplate_Projects', linkingItem: template, displayMode: 'choices'}
+            {group: 'template', heading: __('Projects'), alias: 'projects', mandatory: false, idPrefix: 'multisitesTemplate_Projects', linkingItem: template, displayMode: 'choices'}
         ) }}
         {% if mode != 'create' %}
             {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', {obj: template}) }}
@@ -54,7 +54,7 @@
         {% endif %}
         
         {# include return control #}
-        {% if mode == 'create' %}
+        {% if mode == 'create' and form.repeatCreation is defined %}
             <fieldset>
                 <legend>{{ __('Return control') }}</legend>
                 {{ form_row(form.repeatCreation) }}

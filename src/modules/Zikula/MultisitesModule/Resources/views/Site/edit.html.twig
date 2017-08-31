@@ -45,11 +45,11 @@
         
         {{ include(
             '@ZikulaMultisitesModule/Template/includeSelectOne.html.twig',
-            {group: 'site', alias: 'template', aliasReverse: 'sites', mandatory: false, idPrefix: 'multisitesSite_Template', linkingItem: site, displayMode: 'choices'}
+            {group: 'site', heading: __('Template'), alias: 'template', mandatory: false, idPrefix: 'multisitesSite_Template', linkingItem: site, displayMode: 'choices'}
         ) }}
         {{ include(
             '@ZikulaMultisitesModule/Project/includeSelectOne.html.twig',
-            {group: 'site', alias: 'project', aliasReverse: 'sites', mandatory: false, idPrefix: 'multisitesSite_Project', linkingItem: site, displayMode: 'choices'}
+            {group: 'site', heading: __('Project'), alias: 'project', mandatory: false, idPrefix: 'multisitesSite_Project', linkingItem: site, displayMode: 'choices'}
         ) }}
         {% if mode != 'create' %}
             {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', {obj: site}) }}
@@ -74,7 +74,7 @@
         {% endif %}
         
         {# include return control #}
-        {% if mode == 'create' %}
+        {% if mode == 'create' and form.repeatCreation is defined %}
             <fieldset>
                 <legend>{{ __('Return control') }}</legend>
                 {{ form_row(form.repeatCreation) }}
