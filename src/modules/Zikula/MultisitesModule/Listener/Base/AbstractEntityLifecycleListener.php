@@ -160,22 +160,18 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             return;
         }
         
-        $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-        $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
         $uploadFields = $this->getUploadFields($entity->get_objectType());
         foreach ($uploadFields as $uploadField) {
             if (empty($entity[$uploadField])) {
                 continue;
             }
         
-            if (!($entity[$uploadField] instanceof File)) {
-                if (false === strpos($entity[$uploadField], '/')) {
-                    $entity[$uploadField] = $uploadHelper->getFileBaseFolder($entity->get_objectType(), $uploadField) . $entity[$uploadField];
-                }
-                $entity[$uploadField] = new File($entity[$uploadField]);
+            if ($entity[$uploadField] instanceof File) {
+                $entity[$uploadField] = $entity[$uploadField]->getFilename();
+            } elseif (false !== strpos($entity[$uploadField], '/')) {
+                $fileParts = explode('/', $entity[$uploadField]);
+                $entity[$uploadField] = end($fileParts);
             }
-            $entity[$uploadField] = $entity[$uploadField]->getFilename();
         }
         
         // create the filter event and dispatch it
@@ -224,22 +220,18 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             return;
         }
         
-        $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-        $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
         $uploadFields = $this->getUploadFields($entity->get_objectType());
         foreach ($uploadFields as $uploadField) {
             if (empty($entity[$uploadField])) {
                 continue;
             }
         
-            if (!($entity[$uploadField] instanceof File)) {
-                if (false === strpos($entity[$uploadField], '/')) {
-                    $entity[$uploadField] = $uploadHelper->getFileBaseFolder($entity->get_objectType(), $uploadField) . $entity[$uploadField];
-                }
-                $entity[$uploadField] = new File($entity[$uploadField]);
+            if ($entity[$uploadField] instanceof File) {
+                $entity[$uploadField] = $entity[$uploadField]->getFilename();
+            } elseif (false !== strpos($entity[$uploadField], '/')) {
+                $fileParts = explode('/', $entity[$uploadField]);
+                $entity[$uploadField] = end($fileParts);
             }
-            $entity[$uploadField] = $entity[$uploadField]->getFilename();
         }
         
         // create the filter event and dispatch it
