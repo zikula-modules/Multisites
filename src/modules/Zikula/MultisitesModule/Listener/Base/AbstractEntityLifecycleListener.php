@@ -160,6 +160,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             return;
         }
         
+        $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
         $uploadFields = $this->getUploadFields($entity->get_objectType());
         foreach ($uploadFields as $uploadField) {
             if (empty($entity[$uploadField])) {
@@ -167,6 +170,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             }
         
             if (!($entity[$uploadField] instanceof File)) {
+                if (false === strpos($entity[$uploadField], '/')) {
+                    $entity[$uploadField] = $uploadHelper->getFileBaseFolder($entity->get_objectType(), $uploadField) . $entity[$uploadField];
+                }
                 $entity[$uploadField] = new File($entity[$uploadField]);
             }
             $entity[$uploadField] = $entity[$uploadField]->getFilename();
@@ -218,6 +224,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             return;
         }
         
+        $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
         $uploadFields = $this->getUploadFields($entity->get_objectType());
         foreach ($uploadFields as $uploadField) {
             if (empty($entity[$uploadField])) {
@@ -225,6 +234,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             }
         
             if (!($entity[$uploadField] instanceof File)) {
+                if (false === strpos($entity[$uploadField], '/')) {
+                    $entity[$uploadField] = $uploadHelper->getFileBaseFolder($entity->get_objectType(), $uploadField) . $entity[$uploadField];
+                }
                 $entity[$uploadField] = new File($entity[$uploadField]);
             }
             $entity[$uploadField] = $entity[$uploadField]->getFilename();
