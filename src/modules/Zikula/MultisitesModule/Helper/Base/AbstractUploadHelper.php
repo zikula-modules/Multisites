@@ -440,6 +440,10 @@ abstract class AbstractUploadHelper
             if (file_exists($filePath) && !unlink($filePath)) {
                 return false;
             }
+        } elseif (!empty($entity[$fieldName]) && file_exists($entity[$fieldName])) {
+            if (!unlink($entity[$fieldName])) {
+                return false;
+            }
         }
     
         $entity[$fieldName] = null;
