@@ -33,7 +33,7 @@ multiple sites.
 
 ## Requirements
 
-This module is intended for being used with Zikula 2.0.0+.
+This module is intended for being used with Zikula 2.0.1+.
 
 
 <a name="installation" />
