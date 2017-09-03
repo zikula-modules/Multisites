@@ -292,6 +292,7 @@ abstract class AbstractEditHandler
     public function processForm(array $templateParameters)
     {
         $this->templateParameters = $templateParameters;
+        $this->templateParameters['inlineUsage'] = $this->request->query->getBoolean('raw', false);
     
         $this->idPrefix = $this->request->query->get('idp', '');
     
