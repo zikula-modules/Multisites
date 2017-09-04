@@ -35,6 +35,7 @@ services:
         arguments:
             - "@translator.default"
             - "@session"
+            - "@filesystem"
             - "@zikula_extensions_module.api.variable"
             - "@zikula_zauth_module.api.password"
             - "@zikula_multisites_module.entity_factory"

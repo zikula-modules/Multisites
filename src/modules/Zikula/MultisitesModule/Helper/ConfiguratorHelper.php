@@ -12,7 +12,6 @@
 
 namespace Zikula\MultisitesModule\Helper;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -120,7 +119,6 @@ class ConfiguratorHelper
     public function verify()
     {
         $this->templateParameters = [];
-        $fs = new Filesystem();
 
         if (!$this->isMultisitesEnabled()) {
             $postData = $this->request->request;

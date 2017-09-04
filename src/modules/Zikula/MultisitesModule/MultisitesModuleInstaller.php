@@ -13,7 +13,6 @@
 namespace Zikula\MultisitesModule;
 
 use RuntimeException;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Zikula\MultisitesModule\Base\AbstractMultisitesModuleInstaller;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
@@ -302,8 +301,8 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
             $filesArray[] = $file;
         }
 
-        $fs = new Filesystem();
-        $uploadHelper = $this->container->get('zikula_multisites_module.controller_helper');
+        $fs = $this->container->get('filesystem');
+        $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
         $destinationPath = $uploadHelper->getFileBaseFolder('template', 'sqlFile');
         foreach ($filesArray as $file) {
             $fs->rename($file->getRealPath(), $destinationPath . $file->getFilename());

@@ -3,6 +3,7 @@ services:
         class: Zikula\SubsiteModule\Listener\DynamicConfigurationListener
         arguments:
             - "@service_container"
+            - "@filesystem"
             - "%multisites%"
         tags: ['kernel.event_subscriber']
 

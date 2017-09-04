@@ -24,9 +24,9 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
     use ContainerAwareTrait;
 
     /**
-     * @var EventDispatcherInterface
+     * @var Filesystem
      */
-    protected $eventDispatcher;
+    protected $filesystem;
 
     /**
      * @var string
@@ -42,13 +42,16 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
      * DynamicConfigurationListener constructor.
      *
      * @param ContainerInterface $container
+     * @param Filesystem         $filesystem
      * @param array              $multisitesParameters
      */
     public function __construct(
         ContainerInterface $container,
+        Filesystem $filesystem,
         array $multisitesParameters
     ) {
         $this->setContainer($container);
+        $this->filesystem = $filesystem;
         $this->multisitesParameters = $multisitesParameters;
     }
 
@@ -81,8 +84,7 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
             return;
         }
 
-        $fs = new Filesystem();
-        if (!$fs->exists($this->sitesConfigFile)) {
+        if (!$this->filesystem->exists($this->sitesConfigFile)) {
             return;
         }
 

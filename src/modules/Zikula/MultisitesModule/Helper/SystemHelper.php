@@ -52,6 +52,11 @@ class SystemHelper
     protected $session;
 
     /**
+     * @var Filesystem
+     */
+    protected $filesystem;
+
+    /**
      * @var PasswordApiInterface
      */
     protected $passwordApi;
@@ -84,6 +89,7 @@ class SystemHelper
      *
      * @param TranslatorInterface  $translator     Translator service instance
      * @param SessionInterface     $session        Session service instance
+     * @param Filesystem           $filesystem     Filesystem service instance
      * @param VariableApiInterface $variableApi    VariableApi service instance
      * @param PasswordApiInterface $passwordApi    PasswordApi service instance
      * @param EntityFactory        $entityFactory  EntityFactory service instance
@@ -94,6 +100,7 @@ class SystemHelper
     public function __construct(
         TranslatorInterface $translator,
         SessionInterface $session,
+        Filesystem $filesystem,
         VariableApiInterface $variableApi,
         PasswordApiInterface $passwordApi,
         EntityFactory $entityFactory,
@@ -103,6 +110,7 @@ class SystemHelper
     ) {
         $this->setTranslator($translator);
         $this->session = $session;
+        $this->filesystem = $filesystem;
         $this->variableApi = $variableApi;
         $this->passwordApi = $passwordApi;
         $this->entityFactory = $entityFactory;
@@ -151,21 +159,20 @@ class SystemHelper
             }
         }
 
-        $fs = new Filesystem();
         $flashBag = $this->session->getFlashBag();
 
         // check and create the directories
         $result = true;
         foreach ($directoryList as $directory) {
-            if (!$fs->exists($directory)) {
-                $fs->mkdir($directory, 0777);
-                if (!$fs->exists($directory)) {
+            if (!$this->filesystem->exists($directory)) {
+                $this->filesystem->mkdir($directory, 0777);
+                if (!$this->filesystem->exists($directory)) {
                     $flashBag->add('error', $this->__f('Error! The <strong>%directory</strong> directory does not exist and could not be created automatically. Please create it and make it writeable.', ['%directory' => $directory]));
 
                     $result = false;
                 }
             } elseif (!is_writeable($directory)) {
-                $fs->chmod($directory, 0777);
+                $this->filesystem->chmod($directory, 0777);
                 if (!is_writeable($directory)) {
                     $flashBag->add('error', $this->__f('Error! The <strong>%directory</strong> directory is not writeable. Please correct that.', ['%directory' => $directory]));
 
@@ -557,8 +564,7 @@ class SystemHelper
 
         // check if the sql exists and it is readable
         $sqlFile = $site['template']['sqlFileFullPath'];
-        $fs = new Filesystem();
-        if (!$fs->exists($sqlFile) || !is_readable($sqlFile)) {
+        if (!$this->filesystem->exists($sqlFile) || !is_readable($sqlFile)) {
             $flashBag->add('error', $this->__('Error! The template sql file could not be found.'));
 
             return false;
@@ -671,8 +677,7 @@ class SystemHelper
         if (null !== $site['parametersCsvFile'] && $site['parametersCsvFile'] != '') {
             $row = 1;
             $csvFilePath = $site['parametersCsvFileFullPath'];
-            $fs = new Filesystem();
-            if ($fs->exists($csvFilePath) && false !== ($handle = fopen($csvFilePath, 'r'))) {
+            if ($this->filesystem->exists($csvFilePath) && false !== ($handle = fopen($csvFilePath, 'r'))) {
                 $delimiter = ';';
                 while (false !== ($paramParts = fgetcsv($handle, 1000, $delimiter))) {
                     if (count($paramParts) != 2) {
@@ -761,10 +766,8 @@ class SystemHelper
             }
         }
 
-        $fs = new Filesystem();
-
         // add logo path as parameter
-        $logo = (null !== $site['logo'] && $site['logo'] != '' && $fs->exists($site['logoFullPath'])) ? $site['logoFullPath'] : '';
+        $logo = (null !== $site['logo'] && $site['logo'] != '' && $this->filesystem->exists($site['logoFullPath'])) ? $site['logoFullPath'] : '';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':name' => $parameterPrefix . 'Logo', ':value' => serialize($logo)])) {
             $flashBag->add('error', $this->__f('Error! Creating parameter "%s" failed.', ['%s' => 'Logo']));
@@ -773,7 +776,7 @@ class SystemHelper
         }
 
         // add favicon path as parameter
-        $favIcon = (null !== $site['favIcon'] && $site['favIcon'] != '' && $fs->exists($site['favIconFullPath'])) ? $site['favIconFullPath'] : '';
+        $favIcon = (null !== $site['favIcon'] && $site['favIcon'] != '' && $this->filesystem->exists($site['favIconFullPath'])) ? $site['favIconFullPath'] : '';
         $stmt = $connect->prepare($sql);
         if (!$stmt->execute([':name' => $parameterPrefix . 'FavIcon', ':value' => serialize($favIcon)])) {
             $flashBag->add('error', $this->__f('Error! Creating parameter "%s" failed.', ['%s' => 'FavIcon']));
@@ -791,8 +794,7 @@ class SystemHelper
      */
     public function updateSubsitesConfigFile()
     {
-        $fs = new Filesystem();
-        if (!$fs->exists($this->subsitesConfigFile)) {
+        if (!$this->filesystem->exists($this->subsitesConfigFile)) {
             return false;
         }
 
@@ -813,7 +815,7 @@ class SystemHelper
         // write file
         $result = false;
         try {
-            $fs->dumpFile($this->subsitesConfigFile, json_encode($siteData));
+            $this->filesystem->dumpFile($this->subsitesConfigFile, json_encode($siteData));
             $result = true;
         } catch (IOExceptionInterface $e) {
             $result = false;
@@ -862,8 +864,7 @@ class SystemHelper
      */
     public function deleteDir($dirName)
     {
-        $fs = new Filesystem();
-        if (!$fs->exists($dirName)) {
+        if (!$this->filesystem->exists($dirName)) {
             return true;
         }
 
@@ -881,7 +882,7 @@ class SystemHelper
             }
 
             try {
-                $fs->remove($file->getRealPath());
+                $this->filesystem->remove($file->getRealPath());
             } catch (IOExceptionInterface $e) {
                 $flashBag->add('error', $this->__f('Error deleting file <strong>%file</strong>.', ['%file' => $file->getRealPath()]));
 
@@ -890,7 +891,7 @@ class SystemHelper
         }
 
         try {
-            $fs->remove($dirname);
+            $this->filesystem->remove($dirname);
         } catch (IOExceptionInterface $e) {
             $flashBag->add('error', $this->__f('Error deleting directory <strong>%directory</strong>.', ['%directory' => $dirName]));
 
@@ -938,9 +939,8 @@ class SystemHelper
             ];
         }
 
-        $fs = new Filesystem();
         foreach ($candidates as $path) {
-            if ($fs->exists($path)) {
+            if ($this->filesystem->exists($path)) {
                 return realpath($path);
             }
         }
@@ -970,17 +970,15 @@ class SystemHelper
             return false;
         }
 
-        $fs = new Filesystem();
-
         $dumper = dirname($mysqlPath) . ($this->isOnWindows() ? '/mysqldump.exe' : '/mysqldump');
-        if (!$fs->exists($dumper)) {
+        if (!$this->filesystem->exists($dumper)) {
             $flashBag->add('error', $this->__('Error! The "mysqldump" program is not installed.'));
 
             return false;
         }
 
-        if ($fs->exists($outputFilePath)) {
-            $fs->remove($outputFilePath);
+        if ($this->filesystem->exists($outputFilePath)) {
+            $this->filesystem->remove($outputFilePath);
         }
 
         $cmd = $dumper;
