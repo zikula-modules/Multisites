@@ -12,9 +12,6 @@
 
 namespace Zikula\MultisitesModule\Helper\Base;
 
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -39,11 +36,6 @@ abstract class AbstractControllerHelper
      * @var Request
      */
     protected $request;
-
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
 
     /**
      * @var FormFactoryInterface
@@ -80,7 +72,6 @@ abstract class AbstractControllerHelper
      *
      * @param TranslatorInterface $translator      Translator service instance
      * @param RequestStack        $requestStack    RequestStack service instance
-     * @param LoggerInterface     $logger          Logger service instance
      * @param FormFactoryInterface $formFactory    FormFactory service instance
      * @param VariableApiInterface $variableApi     VariableApi service instance
      * @param EntityFactory       $entityFactory   EntityFactory service instance
@@ -91,7 +82,6 @@ abstract class AbstractControllerHelper
     public function __construct(
         TranslatorInterface $translator,
         RequestStack $requestStack,
-        LoggerInterface $logger,
         FormFactoryInterface $formFactory,
         VariableApiInterface $variableApi,
         EntityFactory $entityFactory,
@@ -101,7 +91,6 @@ abstract class AbstractControllerHelper
     ) {
         $this->setTranslator($translator);
         $this->request = $requestStack->getCurrentRequest();
-        $this->logger = $logger;
         $this->formFactory = $formFactory;
         $this->variableApi = $variableApi;
         $this->entityFactory = $entityFactory;
