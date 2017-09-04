@@ -32,6 +32,11 @@ abstract class AbstractUploadHelper
     use TranslatorTrait;
 
     /**
+     * @var Filesystem
+     */
+    protected $filesystem;
+
+    /**
      * @var SessionInterface
      */
     protected $session;
@@ -75,6 +80,7 @@ abstract class AbstractUploadHelper
      * UploadHelper constructor.
      *
      * @param TranslatorInterface     $translator     Translator service instance
+     * @param Filesystem              $filesystem     Filesystem service instance
      * @param SessionInterface        $session        Session service instance
      * @param LoggerInterface         $logger         Logger service instance
      * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
@@ -83,6 +89,7 @@ abstract class AbstractUploadHelper
      */
     public function __construct(
         TranslatorInterface $translator,
+        Filesystem $filesystem,
         SessionInterface $session,
         LoggerInterface $logger,
         CurrentUserApiInterface $currentUserApi,
@@ -90,6 +97,7 @@ abstract class AbstractUploadHelper
         $dataDirectory
     ) {
         $this->setTranslator($translator);
+        $this->filesystem = $filesystem;
         $this->session = $session;
         $this->logger = $logger;
         $this->currentUserApi = $currentUserApi;
@@ -563,13 +571,12 @@ abstract class AbstractUploadHelper
     {
         $uploadPath = $this->getFileBaseFolder($objectType, $fieldName, true);
     
-        $fs = new Filesystem();
         $flashBag = $this->session->getFlashBag();
     
         // Check if directory exist and try to create it if needed
-        if (!$fs->exists($uploadPath)) {
+        if (!$this->filesystem->exists($uploadPath)) {
             try {
-                $fs->mkdir($uploadPath, 0777);
+                $this->filesystem->mkdir($uploadPath, 0777);
             } catch (IOExceptionInterface $exception) {
                 $flashBag->add('error', $this->__f('The upload directory "%path%" does not exist and could not be created. Try to create it yourself and make sure that this folder is accessible via the web and writable by the webserver.', ['%path%' => $exception->getPath()]));
                 $this->logger->error('{app}: The upload directory {directory} does not exist and could not be created.', ['app' => 'ZikulaMultisitesModule', 'directory' => $uploadPath]);
@@ -581,7 +588,7 @@ abstract class AbstractUploadHelper
         // Check if directory is writable and change permissions if needed
         if (!is_writable($uploadPath)) {
             try {
-                $fs->chmod($uploadPath, 0777);
+                $this->filesystem->chmod($uploadPath, 0777);
             } catch (IOExceptionInterface $exception) {
                 $flashBag->add('warning', $this->__f('Warning! The upload directory at "%path%" exists but is not writable by the webserver.', ['%path%' => $exception->getPath()]));
                 $this->logger->error('{app}: The upload directory {directory} exists but is not writable by the webserver.', ['app' => 'ZikulaMultisitesModule', 'directory' => $uploadPath]);
@@ -593,11 +600,11 @@ abstract class AbstractUploadHelper
         // Write a htaccess file into the upload directory
         $htaccessFilePath = $uploadPath . '/.htaccess';
         $htaccessFileTemplate = 'modules/Zikula/MultisitesModule/Resources/docs/htaccessTemplate';
-        if (!$fs->exists($htaccessFilePath) && $fs->exists($htaccessFileTemplate)) {
+        if (!$this->filesystem->exists($htaccessFilePath) && $this->filesystem->exists($htaccessFileTemplate)) {
             try {
                 $extensions = str_replace(',', '|', str_replace(' ', '', $allowedExtensions));
                 $htaccessContent = str_replace('__EXTENSIONS__', $extensions, file_get_contents($htaccessFileTemplate, false));
-                $fs->dumpFile($htaccessFilePath, $htaccessContent);
+                $this->filesystem->dumpFile($htaccessFilePath, $htaccessContent);
             } catch (IOExceptionInterface $exception) {
                 $flashBag->add('error', $this->__f('An error occured during creation of the .htaccess file in directory "%path%".', ['%path%' => $exception->getPath()]));
     
