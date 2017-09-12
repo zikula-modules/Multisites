@@ -36,7 +36,15 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         // Check if upload directories exist and if needed create them
         try {
             $container = $this->container;
-            $uploadHelper = new \Zikula\MultisitesModule\Helper\UploadHelper($container->get('translator.default'), $container->get('session'), $container->get('logger'), $container->get('zikula_users_module.current_user'), $container->get('zikula_extensions_module.api.variable'), $container->getParameter('datadir'));
+            $uploadHelper = new \Zikula\MultisitesModule\Helper\UploadHelper(
+                $container->get('translator.default'),
+                $container->get('filesystem'),
+                $container->get('session'),
+                $container->get('logger'),
+                $container->get('zikula_users_module.current_user'),
+                $container->get('zikula_extensions_module.api.variable'),
+                $container->getParameter('datadir')
+            );
             $uploadHelper->checkAndCreateAllUploadFolders();
         } catch (\Exception $exception) {
             $this->addFlash('error', $exception->getMessage());
