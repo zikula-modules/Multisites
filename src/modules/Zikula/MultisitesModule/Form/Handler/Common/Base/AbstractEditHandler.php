@@ -520,6 +520,10 @@ abstract class AbstractEditHandler
                 $args['commandName'] = $action['id'];
             }
         }
+        if ($this->templateParameters['mode'] == 'create' && $this->form->get('submitrepeat')->isClicked()) {
+            $args['commandName'] = 'submit';
+            $this->repeatCreateAction = true;
+        }
         if ($this->form->get('cancel')->isClicked()) {
             $args['commandName'] = 'cancel';
         }
@@ -651,11 +655,6 @@ abstract class AbstractEditHandler
     {
         // fetch posted data input values as an associative array
         $formData = $this->form->getData();
-    
-        if ($args['commandName'] == 'submitrepeat') {
-            $args['commandName'] = 'submit';
-            $this->repeatCreateAction = true;
-        }
     
         if (method_exists($this->entityRef, 'getCreatedBy')) {
             if (isset($this->form['moderationSpecificCreator']) && null !== $this->form['moderationSpecificCreator']->getData()) {
