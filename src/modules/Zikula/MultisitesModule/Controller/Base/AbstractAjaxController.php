@@ -57,10 +57,11 @@ abstract class AbstractAjaxController extends AbstractController
             return $this->json($this->__('No such item.'), JsonResponse::HTTP_NOT_FOUND);
         }
         
-        $entityFactory->getObjectManager()->transactional(function($entityManager) use($entity) {
-            // toggle the flag
-            $entity[$field] = !$entity[$field];
-        });
+        // toggle the flag
+        $entity[$field] = !$entity[$field];
+        
+        // save entity back to database
+        $entityFactory->getObjectManager()->flush();
         
         $logger = $this->get('logger');
         $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'field' => $field, 'entity' => $objectType, 'id' => $id];
