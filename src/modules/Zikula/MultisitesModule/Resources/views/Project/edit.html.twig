@@ -60,7 +60,7 @@
         </div>
         {{ form_end(form) }}
         {% set hookId = mode != 'create' ? project.id : null %}
-        {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.projects.form_edit', id=hookId, true) %}
+        {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.projects.form_edit', id=hookId, outputAsArray=true) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for area, hook in hooks %}
                 <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
