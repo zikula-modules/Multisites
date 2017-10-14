@@ -92,5 +92,10 @@
     </div>
 {% endblock %}
 {% block display_hooks %}
-    {{ notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_delete', id=site.getKey()) }}
+    {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_delete', id=site.getKey(), outputAsArray=true) %}
+    {% if hooks is iterable and hooks|length > 0 %}
+        {% for area, hook in hooks %}
+            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
