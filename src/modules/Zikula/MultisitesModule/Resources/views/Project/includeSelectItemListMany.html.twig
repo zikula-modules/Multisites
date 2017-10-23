@@ -5,7 +5,7 @@
 {% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.getKey() %}
 <li id="{{ idPrefixItem }}">
     {{ item|zikulamultisitesmodule_formattedTitle }}
-     <a id="{{ idPrefixItem }}Remove" href="javascript:zikulaMultisitesRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');"><span class="fa fa-trash-o"></span></a>
+     <a id="{{ idPrefixItem }}Remove" href="javascript:zikulaMultisitesRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');"><i class="fa fa-trash-o"></i></a>
 </li>
 {% endfor %}
 {% endif %}
