@@ -13,7 +13,6 @@
 namespace Zikula\MultisitesModule\Controller;
 
 use RuntimeException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -36,7 +35,6 @@ class TemplateController extends AbstractTemplateController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @Cache(expires="+2 hours", public=false)
      * @Theme("admin")
      *
      * @param Request  $request      Current request instance
@@ -62,7 +60,6 @@ class TemplateController extends AbstractTemplateController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 0, "_format" = "html"},
      *        methods = {"GET"}
      * )
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request  $request      Current request instance
      * @param string  $sort         Sorting field
@@ -86,7 +83,6 @@ class TemplateController extends AbstractTemplateController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @Cache(expires="+30 minutes", public=false)
      * @Theme("admin")
      *
      * @param Request  $request      Current request instance
@@ -110,7 +106,6 @@ class TemplateController extends AbstractTemplateController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @Cache(expires="+30 minutes", public=false)
      *
      * @param Request  $request      Current request instance
      *
