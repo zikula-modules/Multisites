@@ -79,7 +79,7 @@
             <div class="col-sm-offset-3 col-sm-9">
                 {% for action in actions %}
                     {{ form_widget(attribute(form, action.id)) }}
-                    {% if mode == 'create' and action.id == 'submit' %}
+                    {% if mode == 'create' and action.id == 'submit' and form.submitrepeat is defined %}
                         {{ form_widget(attribute(form, 'submitrepeat')) }}
                     {% endif %}
                 {% endfor %}
