@@ -50,7 +50,7 @@
             <div class="col-sm-offset-3 col-sm-9">
                 {% for action in actions %}
                     {{ form_widget(attribute(form, action.id)) }}
-                    {% if mode == 'create' and action.id == 'submit' %}
+                    {% if mode == 'create' and action.id == 'submit' and form.submitrepeat is defined %}
                         {{ form_widget(attribute(form, 'submitrepeat')) }}
                     {% endif %}
                 {% endfor %}
@@ -63,7 +63,7 @@
         {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.projects.form_edit', id=hookId, outputAsArray=true) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for area, hook in hooks %}
-                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
             {% endfor %}
         {% endif %}
         
