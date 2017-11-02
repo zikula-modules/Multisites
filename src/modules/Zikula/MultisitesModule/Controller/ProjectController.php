@@ -36,7 +36,6 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
-    
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -62,7 +61,6 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
-    
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -86,7 +84,6 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-    
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -110,7 +107,6 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-    
      *
      * @param Request $request Current request instance
      *
