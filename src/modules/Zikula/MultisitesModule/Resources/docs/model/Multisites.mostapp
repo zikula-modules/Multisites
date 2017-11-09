@@ -258,10 +258,12 @@ application "Multisites" {
     variables {
         varContainer "SecuritySettings" {
             documentation "Here you can define security-related settings."
-            vars {
-                textVar "globalAdminName",
-                textVar "globalAdminPassword",
-                textVar "globalAdminEmail"
+            fields {
+                string "globalAdminName",
+                string "globalAdminPassword" {
+                    role PASSWORD
+                },
+                email "globalAdminEmail"
             }
         }
     }
