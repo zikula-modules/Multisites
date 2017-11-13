@@ -36,7 +36,7 @@ class AbstractFilterTemplateEvent extends Event
      * @param TemplateEntity $template Processed entity
      * @param array $entityChangeSet Change set for preUpdate events
      */
-    public function __construct(TemplateEntity $template, $entityChangeSet = [])
+    public function __construct(TemplateEntity $template, array $entityChangeSet = [])
     {
         $this->template = $template;
         $this->entityChangeSet = $entityChangeSet;
@@ -55,7 +55,7 @@ class AbstractFilterTemplateEvent extends Event
     /**
      * Returns the change set.
      *
-     * @return array
+     * @return array Entity change set
      */
     public function getEntityChangeSet()
     {

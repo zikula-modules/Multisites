@@ -36,7 +36,7 @@ class AbstractFilterSiteEvent extends Event
      * @param SiteEntity $site Processed entity
      * @param array $entityChangeSet Change set for preUpdate events
      */
-    public function __construct(SiteEntity $site, $entityChangeSet = [])
+    public function __construct(SiteEntity $site, array $entityChangeSet = [])
     {
         $this->site = $site;
         $this->entityChangeSet = $entityChangeSet;
@@ -55,7 +55,7 @@ class AbstractFilterSiteEvent extends Event
     /**
      * Returns the change set.
      *
-     * @return array
+     * @return array Entity change set
      */
     public function getEntityChangeSet()
     {

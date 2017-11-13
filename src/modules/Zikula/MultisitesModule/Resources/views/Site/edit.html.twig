@@ -2,11 +2,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'ZikulaMultisitesModule::' ~ baseTemplate ~ '.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
-    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
-{% endblock %}
 {% block title mode == 'create' ? __('Create site') : __('Edit site') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
@@ -100,22 +95,23 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
             var zikulaMultisitesInlineEditHandlers = [];
             var zikulaMultisitesEditHandler = null;
             
             ( function($) {
                 $(document).ready(function() {
-                    // initialise auto completion for user fields
-                    {% if form.moderationSpecificCreator is defined %}
-                        initUserLiveSearch('zikulamultisitesmodule_site_moderationSpecificCreator');
-                    {% endif %}
                     zikulaMultisitesInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ site.id }}{% endif %}');
                     zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_logo_logo');
                     zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_favIcon_favIcon');
                     zikulaMultisitesInitUploadField('zikulamultisitesmodule_site_parametersCsvFile_parametersCsvFile');
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('zikulamultisitesmodule_site_moderationSpecificCreator');
+                    {% endif %}
                 });
             })(jQuery);
         /* ]]> */

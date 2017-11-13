@@ -1,15 +1,13 @@
 'use strict';
 
-function zikulaMultisitesCapitaliseFirstLetter(string)
-{
+function zikulaMultisitesCapitaliseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.substring(1);
 }
 
 /**
  * Initialise the quick navigation form in list views.
  */
-function zikulaMultisitesInitQuickNavigation()
-{
+function zikulaMultisitesInitQuickNavigation() {
     var quickNavForm;
     var objectType;
 
@@ -34,8 +32,7 @@ function zikulaMultisitesInitQuickNavigation()
 /**
  * Toggles a certain flag for a given item.
  */
-function zikulaMultisitesToggleFlag(objectType, fieldName, itemId)
-{
+function zikulaMultisitesToggleFlag(objectType, fieldName, itemId) {
     jQuery.ajax({
         method: 'POST',
         url: Routing.generate('zikulamultisitesmodule_ajax_toggleflag'),
@@ -44,7 +41,7 @@ function zikulaMultisitesToggleFlag(objectType, fieldName, itemId)
             field: fieldName,
             id: itemId
         },
-        success: function(data) {
+        success: function (data) {
             var idSuffix;
             var toggleLink;
 
@@ -64,8 +61,7 @@ function zikulaMultisitesToggleFlag(objectType, fieldName, itemId)
 /**
  * Initialise ajax-based toggle for all affected boolean fields on the current page.
  */
-function zikulaMultisitesInitAjaxToggles()
-{
+function zikulaMultisitesInitAjaxToggles() {
     jQuery('.zikulamultisites-ajax-toggle').click(function (event) {
         var objectType;
         var fieldName;
@@ -83,8 +79,7 @@ function zikulaMultisitesInitAjaxToggles()
 /**
  * Simulates a simple alert using bootstrap.
  */
-function zikulaMultisitesSimpleAlert(anchorElement, title, content, alertId, cssClass)
-{
+function zikulaMultisitesSimpleAlert(anchorElement, title, content, alertId, cssClass) {
     var alertBox;
 
     alertBox = ' \
@@ -105,8 +100,7 @@ function zikulaMultisitesSimpleAlert(anchorElement, title, content, alertId, css
 /**
  * Initialises the mass toggle functionality for admin view pages.
  */
-function zikulaMultisitesInitMassToggle()
-{
+function zikulaMultisitesInitMassToggle() {
     if (jQuery('.zikulamultisites-mass-toggle').length > 0) {
         jQuery('.zikulamultisites-mass-toggle').unbind('click').click(function (event) {
             if (jQuery('.table.fixed-columns').length > 0) {
@@ -122,10 +116,9 @@ function zikulaMultisitesInitMassToggle()
 /**
  * Initialises fixed table columns.
  */
-function zikulaMultisitesInitFixedColumns()
-{
+function zikulaMultisitesInitFixedColumns() {
     jQuery('.table.fixed-columns').remove();
-    jQuery('.table').each(function() {
+    jQuery('.table').each(function () {
         var originalTable, fixedColumnsTable, fixedTableWidth;
 
         originalTable = jQuery(this);
@@ -154,8 +147,7 @@ function zikulaMultisitesInitFixedColumns()
 /**
  * Creates a dropdown menu for the item actions.
  */
-function zikulaMultisitesInitItemActions(context)
-{
+function zikulaMultisitesInitItemActions(context) {
     var containerSelector;
     var containers;
     var listClasses;
@@ -195,8 +187,7 @@ function zikulaMultisitesInitItemActions(context)
 /**
  * Initialises image viewing behaviour.
  */
-function zikulaMultisitesInitImageViewer()
-{
+function zikulaMultisitesInitImageViewer() {
     jQuery('a.image-link').magnificPopup({
         type: 'image',
         closeOnContentClick: true,
@@ -220,7 +211,7 @@ function zikulaMultisitesInitImageViewer()
     });
 }
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     var isViewPage;
     var isDisplayPage;
 

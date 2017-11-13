@@ -34,7 +34,7 @@ abstract class AbstractEditHandler extends EditHandler
      *
      * @return boolean False in case of initialisation errors, otherwise true
      */
-    public function processForm(array $templateParameters)
+    public function processForm(array $templateParameters = [])
     {
         $this->objectType = 'template';
         $this->objectTypeCapital = 'Template';
@@ -74,14 +74,8 @@ abstract class AbstractEditHandler extends EditHandler
     
         
         // assign identifiers of predefined incoming relationships
-        // editable relation, we store the id and assign it now to show it in UI
+        // non-editable relation, we store the id and assign it in handleCommand
         $this->relationPresets['projects'] = $this->request->get('projects', '');
-        if (!empty($this->relationPresets['projects'])) {
-            $relObj = $this->entityFactory->getRepository('project')->selectById($this->relationPresets['projects']);
-            if (null !== $relObj) {
-                $entity->addProjects($relObj);
-            }
-        }
     
         // save entity reference for later reuse
         $this->entityRef = $entity;
@@ -96,7 +90,7 @@ abstract class AbstractEditHandler extends EditHandler
             'entity' => $this->entityRef,
             'mode' => $this->templateParameters['mode'],
             'actions' => $this->templateParameters['actions'],
-            'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_MODERATE),
+            'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_ADMIN),
             'filter_by_ownership' => !$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_ADD),
             'inline_usage' => $this->templateParameters['inlineUsage']
         ];
@@ -135,7 +129,7 @@ abstract class AbstractEditHandler extends EditHandler
      *
      * @return string The default redirect url
      */
-    protected function getDefaultReturnUrl($args)
+    protected function getDefaultReturnUrl(array $args = [])
     {
         $objectIsPersisted = $args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel');
     
@@ -193,8 +187,8 @@ abstract class AbstractEditHandler extends EditHandler
     /**
      * Get success or error message for default operations.
      *
-     * @param array   $args    Arguments from handleCommand method
-     * @param Boolean $success Becomes true if this is a success, false for default error
+     * @param array   $args    List of arguments from handleCommand method
+     * @param boolean $success Becomes true if this is a success, false for default error
      *
      * @return String desired status or error message
      */
@@ -227,9 +221,9 @@ abstract class AbstractEditHandler extends EditHandler
     /**
      * This method executes a certain workflow action.
      *
-     * @param array $args Arguments from handleCommand method
+     * @param array $args List of arguments from handleCommand method
      *
-     * @return bool Whether everything worked well or not
+     * @return boolean Whether everything worked well or not
      *
      * @throws RuntimeException Thrown if concurrent editing is recognised or another error occurs
      */
@@ -257,6 +251,17 @@ abstract class AbstractEditHandler extends EditHandler
             // store new identifier
             $this->idValue = $entity->getKey();
         }
+        
+        if ($args['commandName'] == 'create') {
+            // save predefined incoming relationship from parent entity
+            if (!empty($this->relationPresets['projects'])) {
+                $relObj = $this->entityFactory->getRepository('project')->selectById($this->relationPresets['projects']);
+                if (null !== $relObj) {
+                    $entity->addProjects($relObj);
+                }
+            }
+            $this->entityFactory->getObjectManager()->flush();
+        }
     
         return $success;
     }
@@ -268,7 +273,7 @@ abstract class AbstractEditHandler extends EditHandler
      *
      * @return string The redirect url
      */
-    protected function getRedirectUrl($args)
+    protected function getRedirectUrl(array $args = [])
     {
         if ($this->repeatCreateAction) {
             return $this->repeatReturnUrl;

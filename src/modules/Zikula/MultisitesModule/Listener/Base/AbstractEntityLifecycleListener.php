@@ -66,7 +66,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
     /**
      * Returns list of events to subscribe.
      *
-     * @return array list of events
+     * @return string[] List of events
      */
     public function getSubscribedEvents()
     {
@@ -336,7 +336,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
      *
      * @param string $objectType The object type
      *
-     * @return array List of upload fields
+     * @return string[] List of upload field names
      */
     protected function getUploadFields($objectType = '')
     {

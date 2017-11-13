@@ -2,11 +2,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'ZikulaMultisitesModule::' ~ baseTemplate ~ '.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
-    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
-{% endblock %}
 {% block title mode == 'create' ? __('Create template') : __('Edit template') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
@@ -27,10 +22,6 @@
             {{ form_row(form.excludedTables) }}
         </fieldset>
         
-        {{ include(
-            '@ZikulaMultisitesModule/Project/includeSelectMany.html.twig',
-            {group: 'template', heading: __('Projects'), alias: 'projects', mandatory: false, idPrefix: 'multisitesTemplate_Projects', linkingItem: template, displayMode: 'choices'}
-        ) }}
         {% if mode != 'create' %}
             {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', {obj: template}) }}
         {% endif %}
@@ -80,20 +71,19 @@
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
-            var zikulaMultisitesInlineEditHandlers = [];
-            var zikulaMultisitesEditHandler = null;
             
             ( function($) {
                 $(document).ready(function() {
-                    // initialise auto completion for user fields
+                    zikulaMultisitesInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ template.id }}{% endif %}');
+                    zikulaMultisitesInitUploadField('zikulamultisitesmodule_template_sqlFile_sqlFile');
                     {% if form.moderationSpecificCreator is defined %}
                         initUserLiveSearch('zikulamultisitesmodule_template_moderationSpecificCreator');
                     {% endif %}
-                    zikulaMultisitesInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ template.id }}{% endif %}');
-                    zikulaMultisitesInitUploadField('zikulamultisitesmodule_template_sqlFile_sqlFile');
                 });
             })(jQuery);
         /* ]]> */

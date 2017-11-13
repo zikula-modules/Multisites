@@ -259,7 +259,7 @@ abstract class AbstractUploadHelper
      * @param string $fileName  Name of file to be processed
      * @param string $filePath  Path to file to be processed
      *
-     * @return array collected meta data
+     * @return array Collected meta data
      */
     public function readMetaDataForFile($fileName, $filePath)
     {
@@ -307,7 +307,7 @@ abstract class AbstractUploadHelper
      * @param string $fieldName  Name of upload field
      * @param string $extension  Input file extension
      *
-     * @return array the list of allowed file extensions
+     * @return string[] List of allowed file extensions
      */
     protected function isAllowedFileExtension($objectType, $fieldName, $extension)
     {
@@ -360,10 +360,7 @@ abstract class AbstractUploadHelper
      */
     protected function determineFileName($objectType, $fieldName, $basePath, $fileName, $extension)
     {
-        $backupFileName = $fileName;
-    
         $namingScheme = 0;
-    
         switch ($objectType) {
             case 'site':
                 switch ($fieldName) {
@@ -383,22 +380,25 @@ abstract class AbstractUploadHelper
                     break;
         }
     
+        if ($namingScheme == 0 || $namingScheme == 3) {
+            // clean the given file name
+            $fileNameCharCount = strlen($fileName);
+            for ($y = 0; $y < $fileNameCharCount; $y++) {
+                if (preg_match('/[^0-9A-Za-z_\.]/', $fileName[$y])) {
+                    $fileName[$y] = '_';
+                }
+            }
+        }
+        $backupFileName = $fileName;
     
         $iterIndex = -1;
         do {
-            if ($namingScheme == 0) {
-                // original file name
-                $fileNameCharCount = strlen($fileName);
-                for ($y = 0; $y < $fileNameCharCount; $y++) {
-                    if (preg_match('/[^0-9A-Za-z_\.]/', $fileName[$y])) {
-                        $fileName[$y] = '_';
-                    }
-                }
-                // append incremented number
+            if ($namingScheme == 0 || $namingScheme == 3) {
+                // original (0) or user defined (3) file name with counter
                 if ($iterIndex > 0) {
                     // strip off extension
                     $fileName = str_replace('.' . $extension, '', $backupFileName);
-                    // add iterated number
+                    // append incremented number
                     $fileName .= (string) ++$iterIndex;
                     // readd extension
                     $fileName .= '.' . $extension;
@@ -407,7 +407,7 @@ abstract class AbstractUploadHelper
                 }
             } elseif ($namingScheme == 1) {
                 // md5 name
-                $fileName = md5(uniqid(mt_rand(), TRUE)) . '.' . $extension;
+                $fileName = md5(uniqid(mt_rand(), true)) . '.' . $extension;
             } elseif ($namingScheme == 2) {
                 // prefix with random number
                 $fileName = $fieldName . mt_rand(1, 999999) . '.' . $extension;
@@ -415,7 +415,7 @@ abstract class AbstractUploadHelper
         }
         while (file_exists($basePath . $fileName)); // repeat until we have a new name
     
-        // return the new file name
+        // return the final file name
         return $fileName;
     }
 

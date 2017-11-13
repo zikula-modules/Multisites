@@ -71,7 +71,7 @@ abstract class AbstractImageHelper
      *
      * @return array The selected runtime options
      */
-    public function getRuntimeOptions($objectType = '', $fieldName = '', $context = '', $args = [])
+    public function getRuntimeOptions($objectType = '', $fieldName = '', $context = '', array $args = [])
     {
         $this->checkIfImagineCacheDirectoryExists();
     
@@ -108,7 +108,7 @@ abstract class AbstractImageHelper
      *
      * @return array The selected runtime options
      */
-    public function getCustomRuntimeOptions($objectType = '', $fieldName = '', $contextName = '', $context = '', $args = [])
+    public function getCustomRuntimeOptions($objectType = '', $fieldName = '', $contextName = '', $context = '', array $args = [])
     {
         $options = [
             'thumbnail' => [

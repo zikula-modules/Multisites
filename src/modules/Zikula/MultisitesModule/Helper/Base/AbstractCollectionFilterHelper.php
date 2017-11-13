@@ -46,7 +46,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @param RequestStack $requestStack RequestStack service instance
      * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
-     * @param bool           $showOnlyOwnEntries  Fallback value to determine whether only own entries should be selected or not
+     * @param boolean        $showOnlyOwnEntries  Fallback value to determine whether only own entries should be selected or not
      */
     public function __construct(
         RequestStack $requestStack,
@@ -67,7 +67,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return array List of template variables to be assigned
      */
-    public function getViewQuickNavParameters($objectType = '', $context = '', $args = [])
+    public function getViewQuickNavParameters($objectType = '', $context = '', array $args = [])
     {
         if (!in_array($context, ['controllerAction', 'api', 'actionHandler', 'block', 'contentType'])) {
             $context = 'controllerAction';
@@ -118,7 +118,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    public function applyDefaultFilters($objectType, QueryBuilder $qb, $parameters = [])
+    public function applyDefaultFilters($objectType, QueryBuilder $qb, array $parameters = [])
     {
         if ($objectType == 'site') {
             return $this->applyDefaultFiltersForSite($qb, $parameters);
@@ -141,7 +141,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return array List of template variables to be assigned
      */
-    protected function getViewQuickNavParametersForSite($context = '', $args = [])
+    protected function getViewQuickNavParametersForSite($context = '', array $args = [])
     {
         $parameters = [];
         if (null === $this->request) {
@@ -165,7 +165,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return array List of template variables to be assigned
      */
-    protected function getViewQuickNavParametersForTemplate($context = '', $args = [])
+    protected function getViewQuickNavParametersForTemplate($context = '', array $args = [])
     {
         $parameters = [];
         if (null === $this->request) {
@@ -186,7 +186,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return array List of template variables to be assigned
      */
-    protected function getViewQuickNavParametersForProject($context = '', $args = [])
+    protected function getViewQuickNavParametersForProject($context = '', array $args = [])
     {
         $parameters = [];
         if (null === $this->request) {
@@ -230,19 +230,21 @@ abstract class AbstractCollectionFilterHelper
                 } elseif ($v == 'yes' || $v == '1') {
                     $qb->andWhere('tbl.' . $k . ' = 1');
                 }
-            } else if (!is_array($v)) {
-                // field filter
-                if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
-                    if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
-                        $qb->andWhere('tbl.' . $k . ' != :' . $k)
-                           ->setParameter($k, substr($v, 1, strlen($v)-1));
-                    } elseif (substr($v, 0, 1) == '%') {
-                        $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
-                           ->setParameter($k, '%' . $v . '%');
-                    } else {
-                        $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                           ->setParameter($k, $v);
-                   }
+            } else if (is_array($v)) {
+                continue;
+            }
+    
+            // field filter
+            if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
+                if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
+                    $qb->andWhere('tbl.' . $k . ' != :' . $k)
+                       ->setParameter($k, substr($v, 1, strlen($v)-1));
+                } elseif (substr($v, 0, 1) == '%') {
+                    $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
+                       ->setParameter($k, '%' . substr($v, 1) . '%');
+                } else {
+                    $qb->andWhere('tbl.' . $k . ' = :' . $k)
+                       ->setParameter($k, $v);
                 }
             }
         }
@@ -276,19 +278,21 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('template', $qb, $v);
                 }
-            } else if (!is_array($v)) {
-                // field filter
-                if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
-                    if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
-                        $qb->andWhere('tbl.' . $k . ' != :' . $k)
-                           ->setParameter($k, substr($v, 1, strlen($v)-1));
-                    } elseif (substr($v, 0, 1) == '%') {
-                        $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
-                           ->setParameter($k, '%' . $v . '%');
-                    } else {
-                        $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                           ->setParameter($k, $v);
-                   }
+            } else if (is_array($v)) {
+                continue;
+            }
+    
+            // field filter
+            if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
+                if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
+                    $qb->andWhere('tbl.' . $k . ' != :' . $k)
+                       ->setParameter($k, substr($v, 1, strlen($v)-1));
+                } elseif (substr($v, 0, 1) == '%') {
+                    $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
+                       ->setParameter($k, '%' . substr($v, 1) . '%');
+                } else {
+                    $qb->andWhere('tbl.' . $k . ' = :' . $k)
+                       ->setParameter($k, $v);
                 }
             }
         }
@@ -322,19 +326,21 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('project', $qb, $v);
                 }
-            } else if (!is_array($v)) {
-                // field filter
-                if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
-                    if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
-                        $qb->andWhere('tbl.' . $k . ' != :' . $k)
-                           ->setParameter($k, substr($v, 1, strlen($v)-1));
-                    } elseif (substr($v, 0, 1) == '%') {
-                        $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
-                           ->setParameter($k, '%' . $v . '%');
-                    } else {
-                        $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                           ->setParameter($k, $v);
-                   }
+            } else if (is_array($v)) {
+                continue;
+            }
+    
+            // field filter
+            if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
+                if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
+                    $qb->andWhere('tbl.' . $k . ' != :' . $k)
+                       ->setParameter($k, substr($v, 1, strlen($v)-1));
+                } elseif (substr($v, 0, 1) == '%') {
+                    $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
+                       ->setParameter($k, '%' . substr($v, 1) . '%');
+                } else {
+                    $qb->andWhere('tbl.' . $k . ' = :' . $k)
+                       ->setParameter($k, $v);
                 }
             }
         }
@@ -352,7 +358,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function applyDefaultFiltersForSite(QueryBuilder $qb, $parameters = [])
+    protected function applyDefaultFiltersForSite(QueryBuilder $qb, array $parameters = [])
     {
         if (null === $this->request) {
             return $qb;
@@ -380,7 +386,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function applyDefaultFiltersForTemplate(QueryBuilder $qb, $parameters = [])
+    protected function applyDefaultFiltersForTemplate(QueryBuilder $qb, array $parameters = [])
     {
         if (null === $this->request) {
             return $qb;
@@ -408,7 +414,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function applyDefaultFiltersForProject(QueryBuilder $qb, $parameters = [])
+    protected function applyDefaultFiltersForProject(QueryBuilder $qb, array $parameters = [])
     {
         if (null === $this->request) {
             return $qb;
