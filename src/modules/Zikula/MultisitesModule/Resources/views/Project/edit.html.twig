@@ -17,10 +17,6 @@
             {{ form_row(form.name) }}
         </fieldset>
         
-        {{ include(
-            '@ZikulaMultisitesModule/Template/includeSelectMany.html.twig',
-            {group: 'project', heading: __('Templates'), alias: 'templates', mandatory: false, idPrefix: 'multisitesProject_Templates', linkingItem: project, displayMode: 'choices'}
-        ) }}
         {% if mode != 'create' %}
             {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', {obj: project}) }}
         {% endif %}
@@ -75,8 +71,6 @@
     {% set formInitScript %}
         <script>
         /* <![CDATA[ */
-            var zikulaMultisitesInlineEditHandlers = [];
-            var zikulaMultisitesEditHandler = null;
             
             ( function($) {
                 $(document).ready(function() {

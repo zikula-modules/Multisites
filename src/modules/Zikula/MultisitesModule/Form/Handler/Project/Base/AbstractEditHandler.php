@@ -74,14 +74,8 @@ abstract class AbstractEditHandler extends EditHandler
     
         
         // assign identifiers of predefined outgoing many to many relationships
-        // editable relation, we store the id and assign it now to show it in UI
+        // non-editable relation, we store the id and assign it in handleCommand
         $this->relationPresets['templates'] = $this->request->get('templates', '');
-        if (!empty($this->relationPresets['templates'])) {
-            $relObj = $this->entityFactory->getRepository('template')->selectById($this->relationPresets['templates']);
-            if (null !== $relObj) {
-                $relObj->addProjects($entity);
-            }
-        }
     
         // save entity reference for later reuse
         $this->entityRef = $entity;
@@ -255,6 +249,17 @@ abstract class AbstractEditHandler extends EditHandler
         if ($success && $this->templateParameters['mode'] == 'create') {
             // store new identifier
             $this->idValue = $entity->getKey();
+        }
+        
+        if ($args['commandName'] == 'create') {
+            // save predefined outgoing relationship to child entity
+            if (!empty($this->relationPresets['templates'])) {
+                $relObj = $this->entityFactory->getRepository('template')->selectById($this->relationPresets['templates']);
+                if (null !== $relObj) {
+                    $relObj->addProjects($entity);
+                }
+            }
+            $this->entityFactory->getObjectManager()->flush();
         }
     
         return $success;
