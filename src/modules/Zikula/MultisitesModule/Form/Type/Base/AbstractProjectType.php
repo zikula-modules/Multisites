@@ -12,7 +12,6 @@
 
 namespace Zikula\MultisitesModule\Form\Type\Base;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -97,7 +96,6 @@ abstract class AbstractProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        $this->addOutgoingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addSubmitButtons($builder, $options);
     }
@@ -120,37 +118,6 @@ abstract class AbstractProjectType extends AbstractType
                 'title' => $this->__('Enter the name of the project')
             ],
             'required' => true,
-        ]);
-    }
-
-    /**
-     * Adds fields for outgoing relationships.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options = [])
-    {
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('templates', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'ZikulaMultisitesModule:TemplateEntity',
-            'choice_label' => $choiceLabelClosure,
-            'by_reference' => false,
-            'multiple' => true,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'required' => false,
-            'label' => $this->__('Templates'),
-            'attr' => [
-                'title' => $this->__('Choose the templates')
-            ]
         ]);
     }
 
