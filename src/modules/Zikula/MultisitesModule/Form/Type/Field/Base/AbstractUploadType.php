@@ -102,18 +102,16 @@ abstract class AbstractUploadType extends AbstractType
         $uploadFileTransformer = new UploadFileTransformer($this, $this->requestStack, $this->uploadHelper, $fieldName);
         $builder->get($fieldName)->addModelTransformer($uploadFileTransformer);
 
-        if ($options['required']) {
-            return;
+        if (!$options['required']) {
+            $builder->add($fieldName . 'DeleteFile', CheckboxType::class, [
+                'mapped' => false,
+                'label' => $this->translator->__('Delete existing file'),
+                'required' => false,
+                'attr' => [
+                    'title' => $this->translator->__('Delete this file ?')
+                ]
+            ]);
         }
-
-        $builder->add($fieldName . 'DeleteFile', CheckboxType::class, [
-            'mapped' => false,
-            'label' => $this->translator->__('Delete existing file'),
-            'required' => false,
-            'attr' => [
-                'title' => $this->translator->__('Delete this file ?')
-            ]
-        ]);
     }
 
     /**

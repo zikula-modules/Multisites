@@ -151,6 +151,16 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
+            case 'appSettings':
+                switch ($fieldName) {
+                    case 'thumbnailModeSiteLogo':
+                        $result = false;
+                        break;
+                    case 'thumbnailModeSiteFavIcon':
+                        $result = false;
+                        break;
+                }
+                break;
         }
     
         return $result;
@@ -191,6 +201,16 @@ abstract class AbstractListEntriesHelper
                 switch ($fieldName) {
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForProject();
+                        break;
+                }
+                break;
+            case 'appSettings':
+                switch ($fieldName) {
+                    case 'thumbnailModeSiteLogo':
+                        $entries = $this->getThumbnailModeSiteLogoEntriesForAppSettings();
+                        break;
+                    case 'thumbnailModeSiteFavIcon':
+                        $entries = $this->getThumbnailModeSiteFavIconEntriesForAppSettings();
                         break;
                 }
                 break;
@@ -271,6 +291,58 @@ abstract class AbstractListEntriesHelper
             'value'   => '!approved',
             'text'    => $this->__('All except approved'),
             'title'   => $this->__('Shows all items except these which are approved'),
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'thumbnail mode site logo' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getThumbnailModeSiteLogoEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'inset',
+            'text'    => $this->__('Inset'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'outbound',
+            'text'    => $this->__('Outbound'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'thumbnail mode site fav icon' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getThumbnailModeSiteFavIconEntriesForAppSettings()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'inset',
+            'text'    => $this->__('Inset'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
+            'value'   => 'outbound',
+            'text'    => $this->__('Outbound'),
+            'title'   => '',
             'image'   => '',
             'default' => false
         ];

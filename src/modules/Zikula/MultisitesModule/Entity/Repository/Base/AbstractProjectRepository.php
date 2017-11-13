@@ -241,14 +241,14 @@ abstract class AbstractProjectRepository extends EntityRepository
     /**
      * Adds an array of id filters to given query instance.
      *
-     * @param array        $idList The array of ids to use to retrieve the object
+     * @param array        $idList List of identifiers to use to retrieve the object
      * @param QueryBuilder $qb     Query builder to be enhanced
      *
      * @return QueryBuilder Enriched query builder instance
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    protected function addIdListFilter($idList, QueryBuilder $qb)
+    protected function addIdListFilter(array $idList, QueryBuilder $qb)
     {
         $orX = $qb->expr()->orX();
     
@@ -307,7 +307,7 @@ abstract class AbstractProjectRepository extends EntityRepository
      * Adds where clauses excluding desired identifiers from selection.
      *
      * @param QueryBuilder $qb         Query builder to be enhanced
-     * @param array        $exclusions Array of ids to be excluded from selection
+     * @param array        $exclusions List of identifiers to be excluded from selection
      *
      * @return QueryBuilder Enriched query builder instance
      */
@@ -404,7 +404,7 @@ abstract class AbstractProjectRepository extends EntityRepository
      * Selects entities by a given search fragment.
      *
      * @param string  $fragment       The fragment to search for
-     * @param array   $exclude        List with identifiers to be excluded from search
+     * @param array   $exclude        List of identifiers to be excluded from search
      * @param string  $orderBy        The order-by clause to use when retrieving the collection (optional) (default='')
      * @param integer $currentPage    Where to start selection
      * @param integer $resultsPerPage Amount of items to select
@@ -412,7 +412,7 @@ abstract class AbstractProjectRepository extends EntityRepository
      *
      * @return array Retrieved collection and amount of total records affected by this query
      */
-    public function selectSearch($fragment = '', $exclude = [], $orderBy = '', $currentPage = 1, $resultsPerPage = 25, $useJoins = true)
+    public function selectSearch($fragment = '', array $exclude = [], $orderBy = '', $currentPage = 1, $resultsPerPage = 25, $useJoins = true)
     {
         $qb = $this->getListQueryBuilder('', $orderBy, $useJoins);
         if (count($exclude) > 0) {
@@ -494,7 +494,7 @@ abstract class AbstractProjectRepository extends EntityRepository
      *
      * @return integer Amount of affected records
      */
-    public function selectCount($where = '', $useJoins = false, $parameters = [])
+    public function selectCount($where = '', $useJoins = false, array $parameters = [])
     {
         $qb = $this->getCountQuery($where, $useJoins);
     

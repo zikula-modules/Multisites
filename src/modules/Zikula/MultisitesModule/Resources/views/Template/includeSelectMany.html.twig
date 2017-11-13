@@ -1,14 +1,14 @@
-{# purpose of this template: inclusion template for managing related template #}
+{# purpose of this template: inclusion template for managing related templates #}
 {% if displayMode is not defined or displayMode is empty %}
     {% set displayMode = 'choices' %}
 {% endif %}
 {% if tabs|default(false) == true %}
-    <div role="tabpanel" class="tab-pane fade" id="tabTemplate" aria-labelledby="templateTab">
-        <h3>{{ heading|default ? heading : __('Template') }}</h3>
+    <div role="tabpanel" class="tab-pane fade" id="tabTemplates" aria-labelledby="templatesTab">
+        <h3>{{ heading|default ? heading : __('Templates') }}</h3>
 {% else %}
-    <fieldset class="template">
+    <fieldset class="templates">
 {% endif %}
-    <legend>{{ heading|default ? heading : __('Template') }}</legend>
+    <legend>{{ heading|default ? heading : __('Templates') }}</legend>
     {% if displayMode == 'embedded' %}
         {% set subFields = attribute(form, alias) %}
         <fieldset>
@@ -26,8 +26,8 @@
         {{ form_row(attribute(form, alias)) }}
         <div class="zikulamultisitesmodule-relation-leftside">
             {{ include(
-                '@ZikulaMultisitesModule/Template/includeSelectItemListOne.html.twig',
-                attribute(linkingItem, alias) is defined ? {item: attribute(linkingItem, alias)} : {}
+                '@ZikulaMultisitesModule/Template/includeSelectItemListMany.html.twig',
+                attribute(linkingItem, alias) is defined ? {items: attribute(linkingItem, alias)} : {}
             ) }}
         </div>
         <br style="clear: both" />

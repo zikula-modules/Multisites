@@ -66,25 +66,25 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         $this->setVar('globalAdminName', '');
         $this->setVar('globalAdminPassword', '');
         $this->setVar('globalAdminEmail', '');
-        $this->setVar('siteEntriesPerPage', '10');
-        $this->setVar('templateEntriesPerPage', '10');
-        $this->setVar('projectEntriesPerPage', '10');
+        $this->setVar('siteEntriesPerPage', 10);
+        $this->setVar('templateEntriesPerPage', 10);
+        $this->setVar('projectEntriesPerPage', 10);
         $this->setVar('enableShrinkingForSiteLogo', false);
-        $this->setVar('shrinkWidthSiteLogo', '800');
-        $this->setVar('shrinkHeightSiteLogo', '600');
-        $this->setVar('thumbnailModeSiteLogo',  'inset' );
-        $this->setVar('thumbnailWidthSiteLogoView', '32');
-        $this->setVar('thumbnailHeightSiteLogoView', '24');
-        $this->setVar('thumbnailWidthSiteLogoEdit', '240');
-        $this->setVar('thumbnailHeightSiteLogoEdit', '180');
+        $this->setVar('shrinkWidthSiteLogo', 800);
+        $this->setVar('shrinkHeightSiteLogo', 600);
+        $this->setVar('thumbnailModeSiteLogo', 'inset');
+        $this->setVar('thumbnailWidthSiteLogoView', 32);
+        $this->setVar('thumbnailHeightSiteLogoView', 24);
+        $this->setVar('thumbnailWidthSiteLogoEdit', 240);
+        $this->setVar('thumbnailHeightSiteLogoEdit', 180);
         $this->setVar('enableShrinkingForSiteFavIcon', false);
-        $this->setVar('shrinkWidthSiteFavIcon', '800');
-        $this->setVar('shrinkHeightSiteFavIcon', '600');
-        $this->setVar('thumbnailModeSiteFavIcon',  'inset' );
-        $this->setVar('thumbnailWidthSiteFavIconView', '32');
-        $this->setVar('thumbnailHeightSiteFavIconView', '24');
-        $this->setVar('thumbnailWidthSiteFavIconEdit', '240');
-        $this->setVar('thumbnailHeightSiteFavIconEdit', '180');
+        $this->setVar('shrinkWidthSiteFavIcon', 800);
+        $this->setVar('shrinkHeightSiteFavIcon', 600);
+        $this->setVar('thumbnailModeSiteFavIcon', 'inset');
+        $this->setVar('thumbnailWidthSiteFavIconView', 32);
+        $this->setVar('thumbnailHeightSiteFavIconView', 24);
+        $this->setVar('thumbnailWidthSiteFavIconEdit', 240);
+        $this->setVar('thumbnailHeightSiteFavIconEdit', 180);
     
         // initialisation successful
         return true;
@@ -161,7 +161,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
     /**
      * Build array with all entity classes for ZikulaMultisitesModule.
      *
-     * @return array list of class names
+     * @return string[] List of class names
      */
     protected function listEntityClasses()
     {

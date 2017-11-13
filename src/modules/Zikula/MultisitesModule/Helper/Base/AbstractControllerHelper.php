@@ -256,7 +256,6 @@ abstract class AbstractControllerHelper
         $templateParameters['sortdir'] = $sortdir;
         $templateParameters['items'] = $entities;
     
-    
         if (true === $hasHookSubscriber) {
             // build RouteUrl instance for display hooks
             $urlParameters['_locale'] = $request->getLocale();
