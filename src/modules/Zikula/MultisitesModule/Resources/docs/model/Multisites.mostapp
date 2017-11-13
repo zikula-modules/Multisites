@@ -234,7 +234,6 @@ application "Multisites" {
             sourceAlias "template"
             target "site"
             targetAlias "sites"
-            editType ACTIVE_NONE_PASSIVE_CHOOSE
             cascade REMOVE
             orderBy "name"
         },
@@ -243,7 +242,6 @@ application "Multisites" {
             sourceAlias "project"
             target "site"
             targetAlias "sites"
-            editType ACTIVE_NONE_PASSIVE_CHOOSE
             cascade REMOVE
         },
         many2many bidirectional {
@@ -251,7 +249,8 @@ application "Multisites" {
             sourceAlias "projects"
             target "template"
             targetAlias "templates"
-            editType ACTIVE_NONE_PASSIVE_CHOOSE
+            sourceEditing NONE
+            targetEditing CHOOSE
             refClass "ProjectTemplate"
         }
     }
