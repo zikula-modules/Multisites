@@ -103,45 +103,9 @@ function zikulaMultisitesSimpleAlert(anchorElement, title, content, alertId, css
 function zikulaMultisitesInitMassToggle() {
     if (jQuery('.zikulamultisites-mass-toggle').length > 0) {
         jQuery('.zikulamultisites-mass-toggle').unbind('click').click(function (event) {
-            if (jQuery('.table.fixed-columns').length > 0) {
-                jQuery('.zikulamultisites-toggle-checkbox').prop('checked', false);
-                jQuery('.table.fixed-columns .zikulamultisites-toggle-checkbox').prop('checked', jQuery(this).prop('checked'));
-            } else {
-                jQuery('.zikulamultisites-toggle-checkbox').prop('checked', jQuery(this).prop('checked'));
-            }
+            jQuery('.zikulamultisites-toggle-checkbox').prop('checked', jQuery(this).prop('checked'));
         });
     }
-}
-
-/**
- * Initialises fixed table columns.
- */
-function zikulaMultisitesInitFixedColumns() {
-    jQuery('.table.fixed-columns').remove();
-    jQuery('.table').each(function () {
-        var originalTable, fixedColumnsTable, fixedTableWidth;
-
-        originalTable = jQuery(this);
-        fixedTableWidth = 0;
-        if (originalTable.find('.fixed-column').length > 0) {
-            fixedColumnsTable = originalTable.clone().insertBefore(originalTable).addClass('fixed-columns').removeAttr('id');
-            originalTable.find('.dropdown').addClass('hidden');
-            fixedColumnsTable.find('.dropdown').removeClass('hidden');
-            fixedColumnsTable.css('left', originalTable.parent().position().left);
-
-            fixedColumnsTable.find('th, td').not('.fixed-column').remove();
-            fixedColumnsTable.find('th').each(function (i, elem) {
-                jQuery(this).css('width', originalTable.find('th').eq(i).css('width'));
-                fixedTableWidth += originalTable.find('th').eq(i).width();
-            });
-            fixedColumnsTable.css('width', fixedTableWidth + 'px');
-
-            fixedColumnsTable.find('tr').each(function (i, elem) {
-                jQuery(this).height(originalTable.find('tr:eq(' + i + ')').height());
-            });
-        }
-    });
-    zikulaMultisitesInitMassToggle();
 }
 
 /**
@@ -223,9 +187,6 @@ jQuery(document).ready(function () {
     if (isViewPage) {
         zikulaMultisitesInitQuickNavigation();
         zikulaMultisitesInitMassToggle();
-        jQuery(window).resize(zikulaMultisitesInitFixedColumns);
-        zikulaMultisitesInitFixedColumns();
-        window.setTimeout(zikulaMultisitesInitFixedColumns, 1000);
         zikulaMultisitesInitItemActions('view');
         zikulaMultisitesInitAjaxToggles();
     } else if (isDisplayPage) {
