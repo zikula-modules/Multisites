@@ -1,0 +1,2282 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Zikula Multisites manager.">
+    <meta name="author" content="Albert Pérez Monfort">
+    <title>Multisites &ndash; Technische Struktur</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="icon" href="../../public/images/admin.png">
+    <style>
+        body {
+            padding-bottom: 80px;
+        }
+        h2 {
+            margin-top: 80px;
+        }
+        h3 {
+            margin-top: 50px;
+        }
+        table {
+            width: 100%;
+        }
+        th, td {
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+      <div class="container">
+          <h1>
+              <img src="../../public/images/admin.png" width="48" height="48" alt="Icon" class="img-thumbnail pull-right" />
+              Multisites &ndash; Technische Struktur
+          </h1>
+          <p>Zikula Multisites manager.</p>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cBasicField" />
+            <col id="cBasicValue" />
+        </colgroup>
+        <thead>
+            <tr class="sr-only">
+                <th id="hBasicField" scope="col">Feld</th>
+                <th id="hBasicValue" scope="col">Wert</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hVendor" scope="row" headers="hBasicField">Anbieter</th>
+                <td headers="hBasicValue hVendor">Zikula</td>
+            </tr>
+            <tr>
+                <th id="hAuthor" scope="row" headers="hBasicField">Autor</th>
+                <td headers="hBasicValue hAuthor">Albert Pérez Monfort</td>
+            </tr>
+            <tr>
+                <th id="hEmail" scope="row" headers="hBasicField">E-Mail</th>
+                <td headers="hBasicValue hEmail"><a href="mailto:aperezm@xtec.cat"><i class="fa fa-envelope"></i> aperezm@xtec.cat</a></td>
+            </tr>
+            <tr>
+                <th id="hUrl" scope="row" headers="hBasicField">URL</th>
+                <td headers="hBasicValue hUrl"><a href="https://modulestudio.de" title="Projektseite" target="_blank"><i class="fa fa-external-link-square"></i> https://modulestudio.de</a></td>
+            </tr>
+            <tr>
+                <th id="hVersion" scope="row" headers="hBasicField">Version</th>
+                <td headers="hBasicValue hVersion">2.1.0</td>
+            </tr>
+            <tr>
+                <th id="hLicense" scope="row" headers="hBasicField">Lizenz</th>
+                <td headers="hBasicValue hLicense">http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License</td>
+            </tr>
+            <tr>
+                <th id="hPlatform" scope="row" headers="hBasicField">Plattform</th>
+                <td headers="hBasicValue hPlatform"><a href="https://zikula.de/de/" title="Internetseite von Zikula" target="_blank">Zikula</a> 2.0.3</td>
+            </tr>
+            <tr>
+                <th id="hGenerated" scope="row" headers="hBasicField">Generiert</th>
+                <td headers="hBasicValue hGenerated">durch <a href="https://modulestudio.de" title="Internetseite von ModuleStudio" target="_blank">ModuleStudio</a> 1.1.0 am Tue Nov 21 17:18:12 CET 2017</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h2><i class="fa fa-sitemap"></i> Modell der Anwendung</h2>
+<p><img src="Multisites_Entities%20Diagram.jpg" alt="Multisites Modell" class="img-thumbnail img-responsive" /></p>
+<h2><i class="fa fa-database"></i> Datentabellen</h2>
+<h3><i class="fa fa-vcard-o"></i> Site / Sites</h3>
+<p>Each site is assigned to a project and instance of a certain site template.</p>
+<h4><i class="fa fa-cog"></i> Grundlegende Einstellungen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cSiteSettingsName" />
+            <col id="cSiteSettingsValue" />
+            <col id="cSiteSettingsDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hSiteSettingsName" scope="col">Name</th>
+                <th id="hSiteSettingsValue" scope="col">Wert</th>
+                <th id="hSiteSettingsDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hSiteSettingsLeading" scope="row" headers="hSiteSettingsName">Führend</th>
+                <td headers="hSiteSettingsLeading hSiteSettingsValue" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <td headers="hSiteSettingsLeading hSiteSettingsDescription">Ob dies die primäre Entität der Anwendung darstellt</td>
+            </tr>
+            <tr>
+                <th id="hSiteSettingsDisplayPattern" scope="row" headers="hSiteSettingsName">Anzeigemuster</th>
+                <td headers="hSiteSettingsDisplayPattern hSiteSettingsValue">#name#</td>
+                <td headers="hSiteSettingsDisplayPattern hSiteSettingsDescription">Muster zur Anzeige von Instanzen dieser Entität</td>
+            </tr>
+            <tr>
+                <th id="hSiteSettingsIdentifierStrategy" scope="row" headers="hSiteSettingsName">ID-Strategie</th>
+                <td headers="hSiteSettingsIdentifierStrategy hSiteSettingsValue">AUTO &ndash; Automatische Auswahl.</td>
+                <td headers="hSiteSettingsIdentifierStrategy hSiteSettingsDescription">Ob und welche Strategie zur Generierung von IDs angewendet wird</td>
+            </tr>
+            <tr>
+                <th id="hSiteSettingsChangeTrackingPolicy" scope="row" headers="hSiteSettingsName">Methode zur Erkennung von Änderungen</th>
+                <td headers="hSiteSettingsChangeTrackingPolicy hSiteSettingsValue">DEFERRED_IMPLICIT &ndash; Änderungen werden durch Vergleich der Eigenschaften während des Commits ermittelt.</td>
+                <td headers="hSiteSettingsChangeTrackingPolicy hSiteSettingsDescription">Wie die Erkennung von Änderungen durchgeführt wird</td>
+            </tr>
+            <tr>
+                <th id="hSiteSettingsLockType" scope="row" headers="hSiteSettingsName">Sperrstrategie</th>
+                <td headers="hSiteSettingsLockType hSiteSettingsValue">PAGELOCK &ndash; Verwendet das PageLock-Modul.</td>
+                <td headers="hSiteSettingsLockType hSiteSettingsDescription">Ob und welche Strategie zum Sperren angewendet wird</td>
+            </tr>
+            <tr>
+                <th id="hSiteSettingsReadOnly" scope="row" headers="hSiteSettingsName">Nur Lesen</th>
+                <td headers="hSiteSettingsReadOnly hSiteSettingsValue" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSiteSettingsReadOnly hSiteSettingsDescription">Ob diese Entität nur gelesen werden darf oder nicht. Falls ja, ist das Bearbeiten nicht möglich.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-bars"></i> Felder</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cEntitySiteFieldName" />
+            <col id="cEntitySiteFieldType" />
+            <col id="cEntitySiteFieldMandatory" />
+            <col id="cEntitySiteFieldDefault" />
+            <col id="cEntitySiteFieldDisplayType" />
+            <col id="cEntitySiteFieldConstraints" />
+            <col id="cEntitySiteFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hEntitySiteFieldName" scope="col">Name</th>
+                <th id="hEntitySiteFieldType" scope="col">Typ</th>
+                <th id="hEntitySiteFieldMandatory" scope="col">Pflicht</th>
+                <th id="hEntitySiteFieldDefault" scope="col">Standardwert</th>
+                <th id="hEntitySiteFieldDisplayType" scope="col">Anzeige</th>
+                <th id="hEntitySiteFieldConstraints" scope="col">Beschränkungen</th>
+                <th id="hEntitySiteFieldRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hEntitySiteFieldId" scope="row" headers="hEntitySiteFieldName">Id</th>
+                <td headers="hEntitySiteFieldId hEntitySiteFieldType">Ganzzahl</td>
+                <td headers="hEntitySiteFieldId hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldId hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldId hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldId hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 9.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldId hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist null eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Fungiert als Primärschlüssel.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldWorkflowState" scope="row" headers="hEntitySiteFieldName">Workflow state</th>
+                <td headers="hEntitySiteFieldWorkflowState hEntitySiteFieldType">Liste</td>
+                <td headers="hEntitySiteFieldWorkflowState hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldWorkflowState hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldWorkflowState hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldWorkflowState hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 20 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldWorkflowState hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>the current workflow state </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Die Liste wird durch eine einwertige Dropdownliste repräsentiert.</li>
+                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Deleted (deleted)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldName" scope="row" headers="hEntitySiteFieldName">Name</th>
+                <td headers="hEntitySiteFieldName hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldName hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldName hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldName hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldName hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 150 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldName hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldDescription" scope="row" headers="hEntitySiteFieldName">Description</th>
+                <td headers="hEntitySiteFieldDescription hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldDescription hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldDescription hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldDescription hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldDescription hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldDescription hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteAlias" scope="row" headers="hEntitySiteFieldName">Site alias</th>
+                <td headers="hEntitySiteFieldSiteAlias hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldSiteAlias hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldSiteAlias hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldSiteAlias hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteAlias hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 80 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteAlias hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteName" scope="row" headers="hEntitySiteFieldName">Site name</th>
+                <td headers="hEntitySiteFieldSiteName hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldSiteName hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldSiteName hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldSiteName hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteName hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 150 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteName hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteDescription" scope="row" headers="hEntitySiteFieldName">Site description</th>
+                <td headers="hEntitySiteFieldSiteDescription hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldSiteDescription hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldSiteDescription hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldSiteDescription hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteDescription hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteDescription hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteAdminName" scope="row" headers="hEntitySiteFieldName">Site admin name</th>
+                <td headers="hEntitySiteFieldSiteAdminName hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldSiteAdminName hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldSiteAdminName hEntitySiteFieldDefault">admin</td>
+                <td headers="hEntitySiteFieldSiteAdminName hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteAdminName hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 25 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteAdminName hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteAdminPassword" scope="row" headers="hEntitySiteFieldName">Site admin password</th>
+                <td headers="hEntitySiteFieldSiteAdminPassword hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldSiteAdminPassword hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldSiteAdminPassword hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldSiteAdminPassword hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteAdminPassword hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 15 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteAdminPassword hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Repräsentiert ein Kennwort.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteAdminRealName" scope="row" headers="hEntitySiteFieldName">Site admin real name</th>
+                <td headers="hEntitySiteFieldSiteAdminRealName hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldSiteAdminRealName hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldSiteAdminRealName hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldSiteAdminRealName hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteAdminRealName hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 70 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteAdminRealName hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteAdminEmail" scope="row" headers="hEntitySiteFieldName">Site admin email</th>
+                <td headers="hEntitySiteFieldSiteAdminEmail hEntitySiteFieldType">E-Mail-Adresse</td>
+                <td headers="hEntitySiteFieldSiteAdminEmail hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldSiteAdminEmail hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldSiteAdminEmail hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteAdminEmail hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 40 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteAdminEmail hEntitySiteFieldRemarks">
+                    <ul>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteCompany" scope="row" headers="hEntitySiteFieldName">Site company</th>
+                <td headers="hEntitySiteFieldSiteCompany hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldSiteCompany hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldSiteCompany hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldSiteCompany hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteCompany hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 100 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteCompany hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldSiteDns" scope="row" headers="hEntitySiteFieldName">Site dns</th>
+                <td headers="hEntitySiteFieldSiteDns hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldSiteDns hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldSiteDns hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldSiteDns hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldSiteDns hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldSiteDns hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldDatabaseName" scope="row" headers="hEntitySiteFieldName">Database name</th>
+                <td headers="hEntitySiteFieldDatabaseName hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldDatabaseName hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldDatabaseName hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldDatabaseName hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldDatabaseName hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 50 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldDatabaseName hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldDatabaseUserName" scope="row" headers="hEntitySiteFieldName">Database user name</th>
+                <td headers="hEntitySiteFieldDatabaseUserName hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldDatabaseUserName hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldDatabaseUserName hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldDatabaseUserName hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldDatabaseUserName hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 50 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldDatabaseUserName hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldDatabasePassword" scope="row" headers="hEntitySiteFieldName">Database password</th>
+                <td headers="hEntitySiteFieldDatabasePassword hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldDatabasePassword hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldDatabasePassword hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldDatabasePassword hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldDatabasePassword hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 50 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldDatabasePassword hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Repräsentiert ein Kennwort.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldDatabaseHost" scope="row" headers="hEntitySiteFieldName">Database host</th>
+                <td headers="hEntitySiteFieldDatabaseHost hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldDatabaseHost hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldDatabaseHost hEntitySiteFieldDefault">localhost</td>
+                <td headers="hEntitySiteFieldDatabaseHost hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldDatabaseHost hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 50 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldDatabaseHost hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldDatabaseType" scope="row" headers="hEntitySiteFieldName">Database type</th>
+                <td headers="hEntitySiteFieldDatabaseType hEntitySiteFieldType">Zeichenkette</td>
+                <td headers="hEntitySiteFieldDatabaseType hEntitySiteFieldMandatory">true</td>
+                <td headers="hEntitySiteFieldDatabaseType hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldDatabaseType hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldDatabaseType hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 25 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldDatabaseType hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldLogo" scope="row" headers="hEntitySiteFieldName">Logo</th>
+                <td headers="hEntitySiteFieldLogo hEntitySiteFieldType">Upload</td>
+                <td headers="hEntitySiteFieldLogo hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldLogo hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldLogo hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldLogo hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                        <li>Die erlaubten Dateierweiterungen sind "gif, jpeg, jpg, png".</li>
+                        <li>Die erlaubten MIME-Typen sind "image/*".</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldLogo hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Die hochgeladenen Dateien werden im Unterordner "logo" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldFavIcon" scope="row" headers="hEntitySiteFieldName">Fav icon</th>
+                <td headers="hEntitySiteFieldFavIcon hEntitySiteFieldType">Upload</td>
+                <td headers="hEntitySiteFieldFavIcon hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldFavIcon hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldFavIcon hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldFavIcon hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                        <li>Die erlaubten Dateierweiterungen sind "png, ico".</li>
+                        <li>Die erlaubten MIME-Typen sind "image/*".</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldFavIcon hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Die hochgeladenen Dateien werden im Unterordner "favicon" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldAllowedLocales" scope="row" headers="hEntitySiteFieldName">Allowed locales</th>
+                <td headers="hEntitySiteFieldAllowedLocales hEntitySiteFieldType">Array</td>
+                <td headers="hEntitySiteFieldAllowedLocales hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldAllowedLocales hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldAllowedLocales hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldAllowedLocales hEntitySiteFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldAllowedLocales hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Verwendet ein normales Array.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldParametersCsvFile" scope="row" headers="hEntitySiteFieldName">Parameters csv file</th>
+                <td headers="hEntitySiteFieldParametersCsvFile hEntitySiteFieldType">Upload</td>
+                <td headers="hEntitySiteFieldParametersCsvFile hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldParametersCsvFile hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldParametersCsvFile hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldParametersCsvFile hEntitySiteFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                        <li>Die erlaubten Dateierweiterungen sind "csv".</li>
+                        <li>Die erlaubten MIME-Typen sind "text/csv".</li>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldParametersCsvFile hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Die hochgeladenen Dateien werden im Unterordner "parameterscsvfile" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldParametersArray" scope="row" headers="hEntitySiteFieldName">Parameters array</th>
+                <td headers="hEntitySiteFieldParametersArray hEntitySiteFieldType">Array</td>
+                <td headers="hEntitySiteFieldParametersArray hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldParametersArray hEntitySiteFieldDefault"></td>
+                <td headers="hEntitySiteFieldParametersArray hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldParametersArray hEntitySiteFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldParametersArray hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Verwendet ein normales Array.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntitySiteFieldActive" scope="row" headers="hEntitySiteFieldName">Active</th>
+                <td headers="hEntitySiteFieldActive hEntitySiteFieldType">Boolesches</td>
+                <td headers="hEntitySiteFieldActive hEntitySiteFieldMandatory">false</td>
+                <td headers="hEntitySiteFieldActive hEntitySiteFieldDefault">false</td>
+                <td headers="hEntitySiteFieldActive hEntitySiteFieldDisplayType">ALL</td>
+                <td headers="hEntitySiteFieldActive hEntitySiteFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hEntitySiteFieldActive hEntitySiteFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Kann per Mausklick umgeschaltet werden.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-arrows-h"></i> Relationen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cSiteRelationName" />
+            <col id="cSiteRelationType" />
+            <col id="cSiteRelationIncoming" />
+            <col id="cSiteRelationRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hSiteRelationName" scope="col">Name</th>
+                <th id="hSiteRelationType" scope="col">Typ</th>
+                <th id="hSiteRelationIncoming" scope="col">Eingehend</th>
+                <th id="hSiteRelationRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <span class="hidden">1</span>
+            <tr>
+                <th id="hSiteRelation1" scope="row" headers="hSiteRelationName">1 template hat n sites</th>
+                <td headers="hSiteRelation1 hSiteRelationType">1:n</td>
+                <td headers="hSiteRelation1 hSiteRelationIncoming" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <td headers="hSiteRelation1 hSiteRelationRemarks">
+                    <ul>
+                        <li>Diese Relation ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Sie verwendet den Abruftyp "Lazy".</li>
+                        <li>Aus Sicht der Quelle wird eine Kaskade auf Remove-Operationen angewendet.</li>
+                        <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
+                        <li>Diese Relation wird durch eine bidirektionale Assoziation realisiert.</li>
+                        <li>Die sites werden nach dem Feld "name" sortiert.</li>
+                        <li>Das Bearbeiten der Quellseite beinhaltet keine Funktionalität bezüglich der Zielelemente.</li>
+                        <li>Das Bearbeiten der Zielseite beinhaltet das Auswählen von Quellelementen, die durch eine mehrwertige Dropdownliste repräsentiert werden.</li>
+                    </ul>
+                </td>
+            </tr>
+            <span class="hidden">2</span>
+            <tr>
+                <th id="hSiteRelation2" scope="row" headers="hSiteRelationName">1 project hat n sites</th>
+                <td headers="hSiteRelation2 hSiteRelationType">1:n</td>
+                <td headers="hSiteRelation2 hSiteRelationIncoming" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <td headers="hSiteRelation2 hSiteRelationRemarks">
+                    <ul>
+                        <li>Diese Relation ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Sie verwendet den Abruftyp "Lazy".</li>
+                        <li>Aus Sicht der Quelle wird eine Kaskade auf Remove-Operationen angewendet.</li>
+                        <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
+                        <li>Diese Relation wird durch eine bidirektionale Assoziation realisiert.</li>
+                        <li>Das Bearbeiten der Quellseite beinhaltet keine Funktionalität bezüglich der Zielelemente.</li>
+                        <li>Das Bearbeiten der Zielseite beinhaltet das Auswählen von Quellelementen, die durch eine mehrwertige Dropdownliste repräsentiert werden.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-key"></i> Indexe</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cSiteIndexName" />
+            <col id="cSiteIndexType" />
+            <col id="cSiteIndexSize" />
+            <col id="cSiteIndexDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hSiteIndexName" scope="col">Name</th>
+                <th id="hSiteIndexType" scope="col">Typ</th>
+                <th id="hSiteIndexSize" scope="col">Größe</th>
+                <th id="hSiteIndexDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hSiteIndexSiteDnsIndex" scope="row" headers="hSiteIndexName">Site dns index</th>
+                <td headers="hSiteIndexSiteDnsIndex hSiteIndexType">NORMAL &ndash; normaler Index</td>
+                <td headers="hSiteIndexSiteDnsIndex hSiteIndexSize">1 Feld</td>
+                <td headers="hSiteIndexSiteDnsIndex hSiteIndexDescription"></td>
+            </tr>
+            <tr>
+                <th id="hSiteIndexWorkflowStateIndex" scope="row" headers="hSiteIndexName">Workflow state index</th>
+                <td headers="hSiteIndexWorkflowStateIndex hSiteIndexType">NORMAL &ndash; normaler Index</td>
+                <td headers="hSiteIndexWorkflowStateIndex hSiteIndexSize">1 Feld</td>
+                <td headers="hSiteIndexWorkflowStateIndex hSiteIndexDescription"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-paw"></i> Aktionen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cSiteActionName" />
+            <col id="cSiteActionDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hSiteActionName" scope="col">Name</th>
+                <th id="hSiteActionDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hSiteActionView" scope="row" headers="hSiteActionName">View</th>
+                <td headers="hSiteActionView hSiteActionDescription">View-Aktion im Site-Controller</td>
+            </tr>
+            <tr>
+                <th id="hSiteActionEdit" scope="row" headers="hSiteActionName">Edit</th>
+                <td headers="hSiteActionEdit hSiteActionDescription">Edit-Aktion im Site-Controller</td>
+            </tr>
+            <tr>
+                <th id="hSiteActionDelete" scope="row" headers="hSiteActionName">Delete</th>
+                <td headers="hSiteActionDelete hSiteActionDescription">Delete-Aktion im Site-Controller</td>
+            </tr>
+            <tr>
+                <th id="hSiteActionManageExtensions" scope="row" headers="hSiteActionName">Manage extensions</th>
+                <td headers="hSiteActionManageExtensions hSiteActionDescription">ManageExtensions-Aktion im Site-Controller</td>
+            </tr>
+            <tr>
+                <th id="hSiteActionManageThemes" scope="row" headers="hSiteActionName">Manage themes</th>
+                <td headers="hSiteActionManageThemes hSiteActionDescription">ManageThemes-Aktion im Site-Controller</td>
+            </tr>
+            <tr>
+                <th id="hSiteActionSetThemeAsDefault" scope="row" headers="hSiteActionName">Set theme as default</th>
+                <td headers="hSiteActionSetThemeAsDefault hSiteActionDescription">SetThemeAsDefault-Aktion im Site-Controller</td>
+            </tr>
+            <tr>
+                <th id="hSiteActionViewTools" scope="row" headers="hSiteActionName">View tools</th>
+                <td headers="hSiteActionViewTools hSiteActionDescription">ViewTools-Aktion im Site-Controller</td>
+            </tr>
+            <tr>
+                <th id="hSiteActionExecuteTool" scope="row" headers="hSiteActionName">Execute tool</th>
+                <td headers="hSiteActionExecuteTool hSiteActionDescription">ExecuteTool-Aktion im Site-Controller</td>
+            </tr>
+            <tr>
+                <th id="hSiteActionExportDatabaseAsTemplate" scope="row" headers="hSiteActionName">Export database as template</th>
+                <td headers="hSiteActionExportDatabaseAsTemplate hSiteActionDescription">ExportDatabaseAsTemplate-Aktion im Site-Controller</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-map-signs"></i> Workflow</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cSiteWorkflowName" />
+            <col id="cSiteWorkflowDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hSiteWorkflowName" scope="col">Name</th>
+                <th id="hSiteWorkflowDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hSiteWorkflowType" scope="row" headers="hSiteWorkflowName">Workflow-Typ</th>
+                <td headers="hSiteWorkflowType hSiteWorkflowDescription">NONE &ndash; keine Freigabe.</td>
+            </tr>
+            <tr>
+                <th id="hSiteWorkflowStates" scope="row" headers="hSiteWorkflowName">Zustände</th>
+                <td headers="hSiteWorkflowStates hSiteWorkflowDescription">
+                    <ul>
+                        <li><strong>Initial:</strong> Inhalt wurde soeben erstellt und noch nicht persistiert.</li>
+                        <li><strong>Freigegeben:</strong> Inhalt wurde freigegeben und ist online verfügbar.</li>
+                        <li><strong>Gelöscht:</strong> Inhalt wurde aus der Datenbank gelöscht.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hSiteWorkflowOwnerPermission" scope="row" headers="hSiteWorkflowName">Benutzer können ihre eigenen Daten verwalten und bearbeiten</th>
+                <td headers="hSiteWorkflowOwnerPermission hSiteWorkflowDescription" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hSiteWorkflowAccountDeletionCreator" scope="row" headers="hSiteWorkflowName">Wenn Ersteller gelöscht wird</th>
+                <td headers="hSiteWorkflowAccountDeletionCreator hSiteWorkflowDescription">wird als Nutzer "Admin" zugewiesen.</td>
+            </tr>
+            <tr>
+                <th id="hSiteWorkflowAccountDeletionLastEditor" scope="row" headers="hSiteWorkflowName">Wenn letzter Bearbeiter gelöscht wird</th>
+                <td headers="hSiteWorkflowAccountDeletionLastEditor hSiteWorkflowDescription">wird als Nutzer "Admin" zugewiesen.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-magic"></i> Verhalten</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cSiteBehaviourName1" />
+            <col id="cSiteBehaviourValue1" />
+            <col id="cSiteBehaviourName2" />
+            <col id="cSiteBehaviourValue2" />
+        </colgroup>
+        <thead>
+            <tr class="sr-only">
+                <th id="hSiteBehaviourName1" scope="col">Name</th>
+                <th id="hSiteBehaviourValue1" scope="col">Wert</th>
+                <th id="hSiteBehaviourName2" scope="col">Name</th>
+                <th id="hSiteBehaviourValue2" scope="col">Wert</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hSiteBehaviourAttributable" scope="row" headers="hSiteBehaviourName1">Attributierbar</th>
+                <td headers="hSiteBehaviourAttributable hSiteBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <th id="hSiteBehaviourLoggable" scope="row" headers="hSiteBehaviourName2">Versionierbar</th>
+                <td headers="hSiteBehaviourLoggable hSiteBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hSiteBehaviourCategorisable" scope="row" headers="hSiteBehaviourName1">Kategorisierbar</th>
+                <td headers="hSiteBehaviourCategorisable hSiteBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <th id="hSiteBehaviourCategorisableMulti" scope="row" headers="hSiteBehaviourName2">Kategorien Mehrfachauswahl</th>
+                <td headers="hSiteBehaviourCategorisableMulti hSiteBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hSiteBehaviourSluggable" scope="row" headers="hSiteBehaviourName1">Permalinks</th>
+                <td headers="hSiteBehaviourSluggable hSiteBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSiteBehaviourSluggable hSiteBehaviourValue2" class="text-center"></td>
+                <td headers="hSiteBehaviourSluggable hSiteBehaviourValue2" class="text-center"></td>
+            </tr>
+            <tr>
+                <th id="hSiteBehaviourTree" scope="row" headers="hSiteBehaviourName1">Baum</th>
+                <td headers="hSiteBehaviourAttributable hSiteBehaviourValue1" class="text-center">NONE</td>
+                <th id="hSiteBehaviourGeographical" scope="row" headers="hSiteBehaviourName2">Geografisch</th>
+                <td headers="hSiteBehaviourGeographical hSiteBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hSiteBehaviourStandardFields" scope="row" headers="hSiteBehaviourName1">Standardfelder</th>
+                <td headers="hSiteBehaviourStandardFields hSiteBehaviourValue1" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <th id="hSiteBehaviourHookSubscribers" scope="row" headers="hSiteBehaviourName2">Hook-Abonnenten</th>
+                <td headers="hSiteBehaviourHookSubscribers hSiteBehaviourValue2" class="text-center"><i class="fa fa-check"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hSiteBehaviourFormAwareHookProvider" scope="row" headers="hSiteBehaviourName1">Anbieter für Formular-Hooks</th>
+                <td headers="hSiteBehaviourFormAwareHookProvider hSiteBehaviourValue1" class="text-center">DISABLED &ndash; kein Hook-Anbieter verfügbar</td>
+                <th id="hSiteBehaviourUiHooksProvider" scope="row" headers="hSiteBehaviourName2">Anbieter für UI-Hooks</th>
+                <td headers="hSiteBehaviourUiHooksProvider hSiteBehaviourValue2" class="text-center">DISABLED &ndash; kein Hook-Anbieter verfügbar</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h3><i class="fa fa-vcard-o"></i> Template / Templates</h3>
+<p>A site template represents a blueprint for several sites. Each template may be assigned to all or specific projects.</p>
+<h4><i class="fa fa-cog"></i> Grundlegende Einstellungen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cTemplateSettingsName" />
+            <col id="cTemplateSettingsValue" />
+            <col id="cTemplateSettingsDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hTemplateSettingsName" scope="col">Name</th>
+                <th id="hTemplateSettingsValue" scope="col">Wert</th>
+                <th id="hTemplateSettingsDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hTemplateSettingsLeading" scope="row" headers="hTemplateSettingsName">Führend</th>
+                <td headers="hTemplateSettingsLeading hTemplateSettingsValue" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hTemplateSettingsLeading hTemplateSettingsDescription">Ob dies die primäre Entität der Anwendung darstellt</td>
+            </tr>
+            <tr>
+                <th id="hTemplateSettingsDisplayPattern" scope="row" headers="hTemplateSettingsName">Anzeigemuster</th>
+                <td headers="hTemplateSettingsDisplayPattern hTemplateSettingsValue">#name#</td>
+                <td headers="hTemplateSettingsDisplayPattern hTemplateSettingsDescription">Muster zur Anzeige von Instanzen dieser Entität</td>
+            </tr>
+            <tr>
+                <th id="hTemplateSettingsIdentifierStrategy" scope="row" headers="hTemplateSettingsName">ID-Strategie</th>
+                <td headers="hTemplateSettingsIdentifierStrategy hTemplateSettingsValue">AUTO &ndash; Automatische Auswahl.</td>
+                <td headers="hTemplateSettingsIdentifierStrategy hTemplateSettingsDescription">Ob und welche Strategie zur Generierung von IDs angewendet wird</td>
+            </tr>
+            <tr>
+                <th id="hTemplateSettingsChangeTrackingPolicy" scope="row" headers="hTemplateSettingsName">Methode zur Erkennung von Änderungen</th>
+                <td headers="hTemplateSettingsChangeTrackingPolicy hTemplateSettingsValue">DEFERRED_IMPLICIT &ndash; Änderungen werden durch Vergleich der Eigenschaften während des Commits ermittelt.</td>
+                <td headers="hTemplateSettingsChangeTrackingPolicy hTemplateSettingsDescription">Wie die Erkennung von Änderungen durchgeführt wird</td>
+            </tr>
+            <tr>
+                <th id="hTemplateSettingsLockType" scope="row" headers="hTemplateSettingsName">Sperrstrategie</th>
+                <td headers="hTemplateSettingsLockType hTemplateSettingsValue">PAGELOCK &ndash; Verwendet das PageLock-Modul.</td>
+                <td headers="hTemplateSettingsLockType hTemplateSettingsDescription">Ob und welche Strategie zum Sperren angewendet wird</td>
+            </tr>
+            <tr>
+                <th id="hTemplateSettingsReadOnly" scope="row" headers="hTemplateSettingsName">Nur Lesen</th>
+                <td headers="hTemplateSettingsReadOnly hTemplateSettingsValue" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hTemplateSettingsReadOnly hTemplateSettingsDescription">Ob diese Entität nur gelesen werden darf oder nicht. Falls ja, ist das Bearbeiten nicht möglich.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-bars"></i> Felder</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cEntityTemplateFieldName" />
+            <col id="cEntityTemplateFieldType" />
+            <col id="cEntityTemplateFieldMandatory" />
+            <col id="cEntityTemplateFieldDefault" />
+            <col id="cEntityTemplateFieldDisplayType" />
+            <col id="cEntityTemplateFieldConstraints" />
+            <col id="cEntityTemplateFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hEntityTemplateFieldName" scope="col">Name</th>
+                <th id="hEntityTemplateFieldType" scope="col">Typ</th>
+                <th id="hEntityTemplateFieldMandatory" scope="col">Pflicht</th>
+                <th id="hEntityTemplateFieldDefault" scope="col">Standardwert</th>
+                <th id="hEntityTemplateFieldDisplayType" scope="col">Anzeige</th>
+                <th id="hEntityTemplateFieldConstraints" scope="col">Beschränkungen</th>
+                <th id="hEntityTemplateFieldRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hEntityTemplateFieldId" scope="row" headers="hEntityTemplateFieldName">Id</th>
+                <td headers="hEntityTemplateFieldId hEntityTemplateFieldType">Ganzzahl</td>
+                <td headers="hEntityTemplateFieldId hEntityTemplateFieldMandatory">true</td>
+                <td headers="hEntityTemplateFieldId hEntityTemplateFieldDefault"></td>
+                <td headers="hEntityTemplateFieldId hEntityTemplateFieldDisplayType">ALL</td>
+                <td headers="hEntityTemplateFieldId hEntityTemplateFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 9.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityTemplateFieldId hEntityTemplateFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist null eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Fungiert als Primärschlüssel.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityTemplateFieldWorkflowState" scope="row" headers="hEntityTemplateFieldName">Workflow state</th>
+                <td headers="hEntityTemplateFieldWorkflowState hEntityTemplateFieldType">Liste</td>
+                <td headers="hEntityTemplateFieldWorkflowState hEntityTemplateFieldMandatory">true</td>
+                <td headers="hEntityTemplateFieldWorkflowState hEntityTemplateFieldDefault"></td>
+                <td headers="hEntityTemplateFieldWorkflowState hEntityTemplateFieldDisplayType">ALL</td>
+                <td headers="hEntityTemplateFieldWorkflowState hEntityTemplateFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 20 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityTemplateFieldWorkflowState hEntityTemplateFieldRemarks">
+                    <ul>
+                        <li>the current workflow state </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Die Liste wird durch eine einwertige Dropdownliste repräsentiert.</li>
+                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Deleted (deleted)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityTemplateFieldName" scope="row" headers="hEntityTemplateFieldName">Name</th>
+                <td headers="hEntityTemplateFieldName hEntityTemplateFieldType">Zeichenkette</td>
+                <td headers="hEntityTemplateFieldName hEntityTemplateFieldMandatory">true</td>
+                <td headers="hEntityTemplateFieldName hEntityTemplateFieldDefault"></td>
+                <td headers="hEntityTemplateFieldName hEntityTemplateFieldDisplayType">ALL</td>
+                <td headers="hEntityTemplateFieldName hEntityTemplateFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 150 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityTemplateFieldName hEntityTemplateFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityTemplateFieldDescription" scope="row" headers="hEntityTemplateFieldName">Description</th>
+                <td headers="hEntityTemplateFieldDescription hEntityTemplateFieldType">Zeichenkette</td>
+                <td headers="hEntityTemplateFieldDescription hEntityTemplateFieldMandatory">false</td>
+                <td headers="hEntityTemplateFieldDescription hEntityTemplateFieldDefault"></td>
+                <td headers="hEntityTemplateFieldDescription hEntityTemplateFieldDisplayType">ALL</td>
+                <td headers="hEntityTemplateFieldDescription hEntityTemplateFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 250 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityTemplateFieldDescription hEntityTemplateFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityTemplateFieldSqlFile" scope="row" headers="hEntityTemplateFieldName">Sql file</th>
+                <td headers="hEntityTemplateFieldSqlFile hEntityTemplateFieldType">Upload</td>
+                <td headers="hEntityTemplateFieldSqlFile hEntityTemplateFieldMandatory">true</td>
+                <td headers="hEntityTemplateFieldSqlFile hEntityTemplateFieldDefault"></td>
+                <td headers="hEntityTemplateFieldSqlFile hEntityTemplateFieldDisplayType">ALL</td>
+                <td headers="hEntityTemplateFieldSqlFile hEntityTemplateFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                        <li>Die erlaubten Dateierweiterungen sind "sql, txt".</li>
+                        <li>Die erlaubten MIME-Typen sind "text/*".</li>
+                    </ul>
+                </td>
+                <td headers="hEntityTemplateFieldSqlFile hEntityTemplateFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Die hochgeladenen Dateien werden im Unterordner "sqlfile" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityTemplateFieldParameters" scope="row" headers="hEntityTemplateFieldName">Parameters</th>
+                <td headers="hEntityTemplateFieldParameters hEntityTemplateFieldType">Array</td>
+                <td headers="hEntityTemplateFieldParameters hEntityTemplateFieldMandatory">false</td>
+                <td headers="hEntityTemplateFieldParameters hEntityTemplateFieldDefault"></td>
+                <td headers="hEntityTemplateFieldParameters hEntityTemplateFieldDisplayType">ALL</td>
+                <td headers="hEntityTemplateFieldParameters hEntityTemplateFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hEntityTemplateFieldParameters hEntityTemplateFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Verwendet ein normales Array.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityTemplateFieldFolders" scope="row" headers="hEntityTemplateFieldName">Folders</th>
+                <td headers="hEntityTemplateFieldFolders hEntityTemplateFieldType">Array</td>
+                <td headers="hEntityTemplateFieldFolders hEntityTemplateFieldMandatory">false</td>
+                <td headers="hEntityTemplateFieldFolders hEntityTemplateFieldDefault"></td>
+                <td headers="hEntityTemplateFieldFolders hEntityTemplateFieldDisplayType">ALL</td>
+                <td headers="hEntityTemplateFieldFolders hEntityTemplateFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hEntityTemplateFieldFolders hEntityTemplateFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Verwendet ein normales Array.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityTemplateFieldExcludedTables" scope="row" headers="hEntityTemplateFieldName">Excluded tables</th>
+                <td headers="hEntityTemplateFieldExcludedTables hEntityTemplateFieldType">Array</td>
+                <td headers="hEntityTemplateFieldExcludedTables hEntityTemplateFieldMandatory">false</td>
+                <td headers="hEntityTemplateFieldExcludedTables hEntityTemplateFieldDefault"></td>
+                <td headers="hEntityTemplateFieldExcludedTables hEntityTemplateFieldDisplayType">ALL</td>
+                <td headers="hEntityTemplateFieldExcludedTables hEntityTemplateFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hEntityTemplateFieldExcludedTables hEntityTemplateFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Verwendet ein normales Array.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-arrows-h"></i> Relationen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cTemplateRelationName" />
+            <col id="cTemplateRelationType" />
+            <col id="cTemplateRelationIncoming" />
+            <col id="cTemplateRelationRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hTemplateRelationName" scope="col">Name</th>
+                <th id="hTemplateRelationType" scope="col">Typ</th>
+                <th id="hTemplateRelationIncoming" scope="col">Eingehend</th>
+                <th id="hTemplateRelationRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <span class="hidden">1</span>
+            <tr>
+                <th id="hTemplateRelation1" scope="row" headers="hTemplateRelationName">1 template hat n sites</th>
+                <td headers="hTemplateRelation1 hTemplateRelationType">1:n</td>
+                <td headers="hTemplateRelation1 hTemplateRelationIncoming" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hTemplateRelation1 hTemplateRelationRemarks">
+                    <ul>
+                        <li>Diese Relation ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Sie verwendet den Abruftyp "Lazy".</li>
+                        <li>Aus Sicht der Quelle wird eine Kaskade auf Remove-Operationen angewendet.</li>
+                        <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
+                        <li>Diese Relation wird durch eine bidirektionale Assoziation realisiert.</li>
+                        <li>Die sites werden nach dem Feld "name" sortiert.</li>
+                        <li>Das Bearbeiten der Quellseite beinhaltet keine Funktionalität bezüglich der Zielelemente.</li>
+                        <li>Das Bearbeiten der Zielseite beinhaltet das Auswählen von Quellelementen, die durch eine mehrwertige Dropdownliste repräsentiert werden.</li>
+                    </ul>
+                </td>
+            </tr>
+            <span class="hidden">2</span>
+            <tr>
+                <th id="hTemplateRelation2" scope="row" headers="hTemplateRelationName">m projects haben n templates</th>
+                <td headers="hTemplateRelation2 hTemplateRelationType">m:n</td>
+                <td headers="hTemplateRelation2 hTemplateRelationIncoming" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <td headers="hTemplateRelation2 hTemplateRelationRemarks">
+                    <ul>
+                        <li>Diese Relation ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Sie verwendet den Abruftyp "Lazy".</li>
+                        <li>Aus Sicht der Quelle wird keine Kaskade angewendet.</li>
+                        <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
+                        <li>Diese Relation wird durch eine bidirektionale Assoziation realisiert.</li>
+                        <li>Die für die verbindende Tabelle erstellte Referenzklasse heißt "ProjectTemplate".</li>
+                        <li>Das Bearbeiten der Quellseite beinhaltet keine Funktionalität bezüglich der Zielelemente.</li>
+                        <li>Das Bearbeiten der Zielseite beinhaltet das Auswählen von Quellelementen, die durch eine mehrwertige Dropdownliste repräsentiert werden.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-key"></i> Indexe</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cTemplateIndexName" />
+            <col id="cTemplateIndexType" />
+            <col id="cTemplateIndexSize" />
+            <col id="cTemplateIndexDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hTemplateIndexName" scope="col">Name</th>
+                <th id="hTemplateIndexType" scope="col">Typ</th>
+                <th id="hTemplateIndexSize" scope="col">Größe</th>
+                <th id="hTemplateIndexDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hTemplateIndexWorkflowStateIndex" scope="row" headers="hTemplateIndexName">Workflow state index</th>
+                <td headers="hTemplateIndexWorkflowStateIndex hTemplateIndexType">NORMAL &ndash; normaler Index</td>
+                <td headers="hTemplateIndexWorkflowStateIndex hTemplateIndexSize">1 Feld</td>
+                <td headers="hTemplateIndexWorkflowStateIndex hTemplateIndexDescription"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-paw"></i> Aktionen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cTemplateActionName" />
+            <col id="cTemplateActionDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hTemplateActionName" scope="col">Name</th>
+                <th id="hTemplateActionDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hTemplateActionView" scope="row" headers="hTemplateActionName">View</th>
+                <td headers="hTemplateActionView hTemplateActionDescription">View-Aktion im Template-Controller</td>
+            </tr>
+            <tr>
+                <th id="hTemplateActionEdit" scope="row" headers="hTemplateActionName">Edit</th>
+                <td headers="hTemplateActionEdit hTemplateActionDescription">Edit-Aktion im Template-Controller</td>
+            </tr>
+            <tr>
+                <th id="hTemplateActionCreateParametersCsvTemplate" scope="row" headers="hTemplateActionName">Create parameters csv template</th>
+                <td headers="hTemplateActionCreateParametersCsvTemplate hTemplateActionDescription">CreateParametersCsvTemplate-Aktion im Template-Controller</td>
+            </tr>
+            <tr>
+                <th id="hTemplateActionReapply" scope="row" headers="hTemplateActionName">Reapply</th>
+                <td headers="hTemplateActionReapply hTemplateActionDescription">Reapply-Aktion im Template-Controller</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-map-signs"></i> Workflow</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cTemplateWorkflowName" />
+            <col id="cTemplateWorkflowDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hTemplateWorkflowName" scope="col">Name</th>
+                <th id="hTemplateWorkflowDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hTemplateWorkflowType" scope="row" headers="hTemplateWorkflowName">Workflow-Typ</th>
+                <td headers="hTemplateWorkflowType hTemplateWorkflowDescription">NONE &ndash; keine Freigabe.</td>
+            </tr>
+            <tr>
+                <th id="hTemplateWorkflowStates" scope="row" headers="hTemplateWorkflowName">Zustände</th>
+                <td headers="hTemplateWorkflowStates hTemplateWorkflowDescription">
+                    <ul>
+                        <li><strong>Initial:</strong> Inhalt wurde soeben erstellt und noch nicht persistiert.</li>
+                        <li><strong>Freigegeben:</strong> Inhalt wurde freigegeben und ist online verfügbar.</li>
+                        <li><strong>Gelöscht:</strong> Inhalt wurde aus der Datenbank gelöscht.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hTemplateWorkflowOwnerPermission" scope="row" headers="hTemplateWorkflowName">Benutzer können ihre eigenen Daten verwalten und bearbeiten</th>
+                <td headers="hTemplateWorkflowOwnerPermission hTemplateWorkflowDescription" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hTemplateWorkflowAccountDeletionCreator" scope="row" headers="hTemplateWorkflowName">Wenn Ersteller gelöscht wird</th>
+                <td headers="hTemplateWorkflowAccountDeletionCreator hTemplateWorkflowDescription">wird als Nutzer "Admin" zugewiesen.</td>
+            </tr>
+            <tr>
+                <th id="hTemplateWorkflowAccountDeletionLastEditor" scope="row" headers="hTemplateWorkflowName">Wenn letzter Bearbeiter gelöscht wird</th>
+                <td headers="hTemplateWorkflowAccountDeletionLastEditor hTemplateWorkflowDescription">wird als Nutzer "Admin" zugewiesen.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-magic"></i> Verhalten</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cTemplateBehaviourName1" />
+            <col id="cTemplateBehaviourValue1" />
+            <col id="cTemplateBehaviourName2" />
+            <col id="cTemplateBehaviourValue2" />
+        </colgroup>
+        <thead>
+            <tr class="sr-only">
+                <th id="hTemplateBehaviourName1" scope="col">Name</th>
+                <th id="hTemplateBehaviourValue1" scope="col">Wert</th>
+                <th id="hTemplateBehaviourName2" scope="col">Name</th>
+                <th id="hTemplateBehaviourValue2" scope="col">Wert</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hTemplateBehaviourAttributable" scope="row" headers="hTemplateBehaviourName1">Attributierbar</th>
+                <td headers="hTemplateBehaviourAttributable hTemplateBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <th id="hTemplateBehaviourLoggable" scope="row" headers="hTemplateBehaviourName2">Versionierbar</th>
+                <td headers="hTemplateBehaviourLoggable hTemplateBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hTemplateBehaviourCategorisable" scope="row" headers="hTemplateBehaviourName1">Kategorisierbar</th>
+                <td headers="hTemplateBehaviourCategorisable hTemplateBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <th id="hTemplateBehaviourCategorisableMulti" scope="row" headers="hTemplateBehaviourName2">Kategorien Mehrfachauswahl</th>
+                <td headers="hTemplateBehaviourCategorisableMulti hTemplateBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hTemplateBehaviourSluggable" scope="row" headers="hTemplateBehaviourName1">Permalinks</th>
+                <td headers="hTemplateBehaviourSluggable hTemplateBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hTemplateBehaviourSluggable hTemplateBehaviourValue2" class="text-center"></td>
+                <td headers="hTemplateBehaviourSluggable hTemplateBehaviourValue2" class="text-center"></td>
+            </tr>
+            <tr>
+                <th id="hTemplateBehaviourTree" scope="row" headers="hTemplateBehaviourName1">Baum</th>
+                <td headers="hTemplateBehaviourAttributable hTemplateBehaviourValue1" class="text-center">NONE</td>
+                <th id="hTemplateBehaviourGeographical" scope="row" headers="hTemplateBehaviourName2">Geografisch</th>
+                <td headers="hTemplateBehaviourGeographical hTemplateBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hTemplateBehaviourStandardFields" scope="row" headers="hTemplateBehaviourName1">Standardfelder</th>
+                <td headers="hTemplateBehaviourStandardFields hTemplateBehaviourValue1" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <th id="hTemplateBehaviourHookSubscribers" scope="row" headers="hTemplateBehaviourName2">Hook-Abonnenten</th>
+                <td headers="hTemplateBehaviourHookSubscribers hTemplateBehaviourValue2" class="text-center"><i class="fa fa-check"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hTemplateBehaviourFormAwareHookProvider" scope="row" headers="hTemplateBehaviourName1">Anbieter für Formular-Hooks</th>
+                <td headers="hTemplateBehaviourFormAwareHookProvider hTemplateBehaviourValue1" class="text-center">DISABLED &ndash; kein Hook-Anbieter verfügbar</td>
+                <th id="hTemplateBehaviourUiHooksProvider" scope="row" headers="hTemplateBehaviourName2">Anbieter für UI-Hooks</th>
+                <td headers="hTemplateBehaviourUiHooksProvider hTemplateBehaviourValue2" class="text-center">DISABLED &ndash; kein Hook-Anbieter verfügbar</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h3><i class="fa fa-vcard-o"></i> Project / Projects</h3>
+<p>Projects serve for grouping sites by clients or topics.</p>
+<h4><i class="fa fa-cog"></i> Grundlegende Einstellungen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cProjectSettingsName" />
+            <col id="cProjectSettingsValue" />
+            <col id="cProjectSettingsDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hProjectSettingsName" scope="col">Name</th>
+                <th id="hProjectSettingsValue" scope="col">Wert</th>
+                <th id="hProjectSettingsDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hProjectSettingsLeading" scope="row" headers="hProjectSettingsName">Führend</th>
+                <td headers="hProjectSettingsLeading hProjectSettingsValue" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hProjectSettingsLeading hProjectSettingsDescription">Ob dies die primäre Entität der Anwendung darstellt</td>
+            </tr>
+            <tr>
+                <th id="hProjectSettingsDisplayPattern" scope="row" headers="hProjectSettingsName">Anzeigemuster</th>
+                <td headers="hProjectSettingsDisplayPattern hProjectSettingsValue">#name#</td>
+                <td headers="hProjectSettingsDisplayPattern hProjectSettingsDescription">Muster zur Anzeige von Instanzen dieser Entität</td>
+            </tr>
+            <tr>
+                <th id="hProjectSettingsIdentifierStrategy" scope="row" headers="hProjectSettingsName">ID-Strategie</th>
+                <td headers="hProjectSettingsIdentifierStrategy hProjectSettingsValue">AUTO &ndash; Automatische Auswahl.</td>
+                <td headers="hProjectSettingsIdentifierStrategy hProjectSettingsDescription">Ob und welche Strategie zur Generierung von IDs angewendet wird</td>
+            </tr>
+            <tr>
+                <th id="hProjectSettingsChangeTrackingPolicy" scope="row" headers="hProjectSettingsName">Methode zur Erkennung von Änderungen</th>
+                <td headers="hProjectSettingsChangeTrackingPolicy hProjectSettingsValue">DEFERRED_IMPLICIT &ndash; Änderungen werden durch Vergleich der Eigenschaften während des Commits ermittelt.</td>
+                <td headers="hProjectSettingsChangeTrackingPolicy hProjectSettingsDescription">Wie die Erkennung von Änderungen durchgeführt wird</td>
+            </tr>
+            <tr>
+                <th id="hProjectSettingsLockType" scope="row" headers="hProjectSettingsName">Sperrstrategie</th>
+                <td headers="hProjectSettingsLockType hProjectSettingsValue">PAGELOCK &ndash; Verwendet das PageLock-Modul.</td>
+                <td headers="hProjectSettingsLockType hProjectSettingsDescription">Ob und welche Strategie zum Sperren angewendet wird</td>
+            </tr>
+            <tr>
+                <th id="hProjectSettingsReadOnly" scope="row" headers="hProjectSettingsName">Nur Lesen</th>
+                <td headers="hProjectSettingsReadOnly hProjectSettingsValue" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hProjectSettingsReadOnly hProjectSettingsDescription">Ob diese Entität nur gelesen werden darf oder nicht. Falls ja, ist das Bearbeiten nicht möglich.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-bars"></i> Felder</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cEntityProjectFieldName" />
+            <col id="cEntityProjectFieldType" />
+            <col id="cEntityProjectFieldMandatory" />
+            <col id="cEntityProjectFieldDefault" />
+            <col id="cEntityProjectFieldDisplayType" />
+            <col id="cEntityProjectFieldConstraints" />
+            <col id="cEntityProjectFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hEntityProjectFieldName" scope="col">Name</th>
+                <th id="hEntityProjectFieldType" scope="col">Typ</th>
+                <th id="hEntityProjectFieldMandatory" scope="col">Pflicht</th>
+                <th id="hEntityProjectFieldDefault" scope="col">Standardwert</th>
+                <th id="hEntityProjectFieldDisplayType" scope="col">Anzeige</th>
+                <th id="hEntityProjectFieldConstraints" scope="col">Beschränkungen</th>
+                <th id="hEntityProjectFieldRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hEntityProjectFieldId" scope="row" headers="hEntityProjectFieldName">Id</th>
+                <td headers="hEntityProjectFieldId hEntityProjectFieldType">Ganzzahl</td>
+                <td headers="hEntityProjectFieldId hEntityProjectFieldMandatory">true</td>
+                <td headers="hEntityProjectFieldId hEntityProjectFieldDefault"></td>
+                <td headers="hEntityProjectFieldId hEntityProjectFieldDisplayType">ALL</td>
+                <td headers="hEntityProjectFieldId hEntityProjectFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 9.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityProjectFieldId hEntityProjectFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist null eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Fungiert als Primärschlüssel.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityProjectFieldWorkflowState" scope="row" headers="hEntityProjectFieldName">Workflow state</th>
+                <td headers="hEntityProjectFieldWorkflowState hEntityProjectFieldType">Liste</td>
+                <td headers="hEntityProjectFieldWorkflowState hEntityProjectFieldMandatory">true</td>
+                <td headers="hEntityProjectFieldWorkflowState hEntityProjectFieldDefault"></td>
+                <td headers="hEntityProjectFieldWorkflowState hEntityProjectFieldDisplayType">ALL</td>
+                <td headers="hEntityProjectFieldWorkflowState hEntityProjectFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 20 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityProjectFieldWorkflowState hEntityProjectFieldRemarks">
+                    <ul>
+                        <li>the current workflow state </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Die Liste wird durch eine einwertige Dropdownliste repräsentiert.</li>
+                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Deleted (deleted)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityProjectFieldName" scope="row" headers="hEntityProjectFieldName">Name</th>
+                <td headers="hEntityProjectFieldName hEntityProjectFieldType">Zeichenkette</td>
+                <td headers="hEntityProjectFieldName hEntityProjectFieldMandatory">true</td>
+                <td headers="hEntityProjectFieldName hEntityProjectFieldDefault"></td>
+                <td headers="hEntityProjectFieldName hEntityProjectFieldDisplayType">ALL</td>
+                <td headers="hEntityProjectFieldName hEntityProjectFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 150 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityProjectFieldName hEntityProjectFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-arrows-h"></i> Relationen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cProjectRelationName" />
+            <col id="cProjectRelationType" />
+            <col id="cProjectRelationIncoming" />
+            <col id="cProjectRelationRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hProjectRelationName" scope="col">Name</th>
+                <th id="hProjectRelationType" scope="col">Typ</th>
+                <th id="hProjectRelationIncoming" scope="col">Eingehend</th>
+                <th id="hProjectRelationRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <span class="hidden">1</span>
+            <tr>
+                <th id="hProjectRelation1" scope="row" headers="hProjectRelationName">1 project hat n sites</th>
+                <td headers="hProjectRelation1 hProjectRelationType">1:n</td>
+                <td headers="hProjectRelation1 hProjectRelationIncoming" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hProjectRelation1 hProjectRelationRemarks">
+                    <ul>
+                        <li>Diese Relation ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Sie verwendet den Abruftyp "Lazy".</li>
+                        <li>Aus Sicht der Quelle wird eine Kaskade auf Remove-Operationen angewendet.</li>
+                        <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
+                        <li>Diese Relation wird durch eine bidirektionale Assoziation realisiert.</li>
+                        <li>Das Bearbeiten der Quellseite beinhaltet keine Funktionalität bezüglich der Zielelemente.</li>
+                        <li>Das Bearbeiten der Zielseite beinhaltet das Auswählen von Quellelementen, die durch eine mehrwertige Dropdownliste repräsentiert werden.</li>
+                    </ul>
+                </td>
+            </tr>
+            <span class="hidden">2</span>
+            <tr>
+                <th id="hProjectRelation2" scope="row" headers="hProjectRelationName">m projects haben n templates</th>
+                <td headers="hProjectRelation2 hProjectRelationType">m:n</td>
+                <td headers="hProjectRelation2 hProjectRelationIncoming" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hProjectRelation2 hProjectRelationRemarks">
+                    <ul>
+                        <li>Diese Relation ist nicht  eindeutig und erlaubt null Null-Werte.</li>
+                        <li>Sie verwendet den Abruftyp "Lazy".</li>
+                        <li>Aus Sicht der Quelle wird keine Kaskade angewendet.</li>
+                        <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
+                        <li>Diese Relation wird durch eine bidirektionale Assoziation realisiert.</li>
+                        <li>Die für die verbindende Tabelle erstellte Referenzklasse heißt "ProjectTemplate".</li>
+                        <li>Das Bearbeiten der Quellseite beinhaltet keine Funktionalität bezüglich der Zielelemente.</li>
+                        <li>Das Bearbeiten der Zielseite beinhaltet das Auswählen von Quellelementen, die durch eine mehrwertige Dropdownliste repräsentiert werden.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-key"></i> Indexe</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cProjectIndexName" />
+            <col id="cProjectIndexType" />
+            <col id="cProjectIndexSize" />
+            <col id="cProjectIndexDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hProjectIndexName" scope="col">Name</th>
+                <th id="hProjectIndexType" scope="col">Typ</th>
+                <th id="hProjectIndexSize" scope="col">Größe</th>
+                <th id="hProjectIndexDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hProjectIndexWorkflowStateIndex" scope="row" headers="hProjectIndexName">Workflow state index</th>
+                <td headers="hProjectIndexWorkflowStateIndex hProjectIndexType">NORMAL &ndash; normaler Index</td>
+                <td headers="hProjectIndexWorkflowStateIndex hProjectIndexSize">1 Feld</td>
+                <td headers="hProjectIndexWorkflowStateIndex hProjectIndexDescription"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-paw"></i> Aktionen</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cProjectActionName" />
+            <col id="cProjectActionDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hProjectActionName" scope="col">Name</th>
+                <th id="hProjectActionDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hProjectActionView" scope="row" headers="hProjectActionName">View</th>
+                <td headers="hProjectActionView hProjectActionDescription">View-Aktion im Project-Controller</td>
+            </tr>
+            <tr>
+                <th id="hProjectActionEdit" scope="row" headers="hProjectActionName">Edit</th>
+                <td headers="hProjectActionEdit hProjectActionDescription">Edit-Aktion im Project-Controller</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-map-signs"></i> Workflow</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cProjectWorkflowName" />
+            <col id="cProjectWorkflowDescription" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hProjectWorkflowName" scope="col">Name</th>
+                <th id="hProjectWorkflowDescription" scope="col">Beschreibung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hProjectWorkflowType" scope="row" headers="hProjectWorkflowName">Workflow-Typ</th>
+                <td headers="hProjectWorkflowType hProjectWorkflowDescription">NONE &ndash; keine Freigabe.</td>
+            </tr>
+            <tr>
+                <th id="hProjectWorkflowStates" scope="row" headers="hProjectWorkflowName">Zustände</th>
+                <td headers="hProjectWorkflowStates hProjectWorkflowDescription">
+                    <ul>
+                        <li><strong>Initial:</strong> Inhalt wurde soeben erstellt und noch nicht persistiert.</li>
+                        <li><strong>Freigegeben:</strong> Inhalt wurde freigegeben und ist online verfügbar.</li>
+                        <li><strong>Gelöscht:</strong> Inhalt wurde aus der Datenbank gelöscht.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hProjectWorkflowOwnerPermission" scope="row" headers="hProjectWorkflowName">Benutzer können ihre eigenen Daten verwalten und bearbeiten</th>
+                <td headers="hProjectWorkflowOwnerPermission hProjectWorkflowDescription" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hProjectWorkflowAccountDeletionCreator" scope="row" headers="hProjectWorkflowName">Wenn Ersteller gelöscht wird</th>
+                <td headers="hProjectWorkflowAccountDeletionCreator hProjectWorkflowDescription">wird als Nutzer "Admin" zugewiesen.</td>
+            </tr>
+            <tr>
+                <th id="hProjectWorkflowAccountDeletionLastEditor" scope="row" headers="hProjectWorkflowName">Wenn letzter Bearbeiter gelöscht wird</th>
+                <td headers="hProjectWorkflowAccountDeletionLastEditor hProjectWorkflowDescription">wird als Nutzer "Admin" zugewiesen.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4><i class="fa fa-magic"></i> Verhalten</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cProjectBehaviourName1" />
+            <col id="cProjectBehaviourValue1" />
+            <col id="cProjectBehaviourName2" />
+            <col id="cProjectBehaviourValue2" />
+        </colgroup>
+        <thead>
+            <tr class="sr-only">
+                <th id="hProjectBehaviourName1" scope="col">Name</th>
+                <th id="hProjectBehaviourValue1" scope="col">Wert</th>
+                <th id="hProjectBehaviourName2" scope="col">Name</th>
+                <th id="hProjectBehaviourValue2" scope="col">Wert</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hProjectBehaviourAttributable" scope="row" headers="hProjectBehaviourName1">Attributierbar</th>
+                <td headers="hProjectBehaviourAttributable hProjectBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <th id="hProjectBehaviourLoggable" scope="row" headers="hProjectBehaviourName2">Versionierbar</th>
+                <td headers="hProjectBehaviourLoggable hProjectBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hProjectBehaviourCategorisable" scope="row" headers="hProjectBehaviourName1">Kategorisierbar</th>
+                <td headers="hProjectBehaviourCategorisable hProjectBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <th id="hProjectBehaviourCategorisableMulti" scope="row" headers="hProjectBehaviourName2">Kategorien Mehrfachauswahl</th>
+                <td headers="hProjectBehaviourCategorisableMulti hProjectBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hProjectBehaviourSluggable" scope="row" headers="hProjectBehaviourName1">Permalinks</th>
+                <td headers="hProjectBehaviourSluggable hProjectBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hProjectBehaviourSluggable hProjectBehaviourValue2" class="text-center"></td>
+                <td headers="hProjectBehaviourSluggable hProjectBehaviourValue2" class="text-center"></td>
+            </tr>
+            <tr>
+                <th id="hProjectBehaviourTree" scope="row" headers="hProjectBehaviourName1">Baum</th>
+                <td headers="hProjectBehaviourAttributable hProjectBehaviourValue1" class="text-center">NONE</td>
+                <th id="hProjectBehaviourGeographical" scope="row" headers="hProjectBehaviourName2">Geografisch</th>
+                <td headers="hProjectBehaviourGeographical hProjectBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hProjectBehaviourStandardFields" scope="row" headers="hProjectBehaviourName1">Standardfelder</th>
+                <td headers="hProjectBehaviourStandardFields hProjectBehaviourValue1" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <th id="hProjectBehaviourHookSubscribers" scope="row" headers="hProjectBehaviourName2">Hook-Abonnenten</th>
+                <td headers="hProjectBehaviourHookSubscribers hProjectBehaviourValue2" class="text-center"><i class="fa fa-check"></i>
+                </td>
+            </tr>
+            <tr>
+                <th id="hProjectBehaviourFormAwareHookProvider" scope="row" headers="hProjectBehaviourName1">Anbieter für Formular-Hooks</th>
+                <td headers="hProjectBehaviourFormAwareHookProvider hProjectBehaviourValue1" class="text-center">DISABLED &ndash; kein Hook-Anbieter verfügbar</td>
+                <th id="hProjectBehaviourUiHooksProvider" scope="row" headers="hProjectBehaviourName2">Anbieter für UI-Hooks</th>
+                <td headers="hProjectBehaviourUiHooksProvider hProjectBehaviourValue2" class="text-center">DISABLED &ndash; kein Hook-Anbieter verfügbar</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h2><i class="fa fa-wrench"></i> Variablen zur Konfiguration</h2>
+<h3><i class="fa fa-server"></i> Security settings</h3>
+<p>Here you can define security-related settings.</p>
+<p>Sortierwert: 1</p>
+<p>Kombination: <i class="fa fa-times"></i>
+</p>
+<h4><i class="fa fa-bars"></i> Felder</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cVariablesSecuritySettingsFieldName" />
+            <col id="cVariablesSecuritySettingsFieldType" />
+            <col id="cVariablesSecuritySettingsFieldMandatory" />
+            <col id="cVariablesSecuritySettingsFieldDefault" />
+            <col id="cVariablesSecuritySettingsFieldDisplayType" />
+            <col id="cVariablesSecuritySettingsFieldConstraints" />
+            <col id="cVariablesSecuritySettingsFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hVariablesSecuritySettingsFieldName" scope="col">Name</th>
+                <th id="hVariablesSecuritySettingsFieldType" scope="col">Typ</th>
+                <th id="hVariablesSecuritySettingsFieldMandatory" scope="col">Pflicht</th>
+                <th id="hVariablesSecuritySettingsFieldDefault" scope="col">Standardwert</th>
+                <th id="hVariablesSecuritySettingsFieldDisplayType" scope="col">Anzeige</th>
+                <th id="hVariablesSecuritySettingsFieldConstraints" scope="col">Beschränkungen</th>
+                <th id="hVariablesSecuritySettingsFieldRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hVariablesSecuritySettingsFieldGlobalAdminName" scope="row" headers="hVariablesSecuritySettingsFieldName">Global admin name</th>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminName hVariablesSecuritySettingsFieldType">Zeichenkette</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminName hVariablesSecuritySettingsFieldMandatory">true</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminName hVariablesSecuritySettingsFieldDefault"></td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminName hVariablesSecuritySettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminName hVariablesSecuritySettingsFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminName hVariablesSecuritySettingsFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesSecuritySettingsFieldGlobalAdminPassword" scope="row" headers="hVariablesSecuritySettingsFieldName">Global admin password</th>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminPassword hVariablesSecuritySettingsFieldType">Zeichenkette</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminPassword hVariablesSecuritySettingsFieldMandatory">true</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminPassword hVariablesSecuritySettingsFieldDefault"></td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminPassword hVariablesSecuritySettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminPassword hVariablesSecuritySettingsFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminPassword hVariablesSecuritySettingsFieldRemarks">
+                    <ul>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Repräsentiert ein Kennwort.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesSecuritySettingsFieldGlobalAdminEmail" scope="row" headers="hVariablesSecuritySettingsFieldName">Global admin email</th>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminEmail hVariablesSecuritySettingsFieldType">E-Mail-Adresse</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminEmail hVariablesSecuritySettingsFieldMandatory">true</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminEmail hVariablesSecuritySettingsFieldDefault"></td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminEmail hVariablesSecuritySettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminEmail hVariablesSecuritySettingsFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesSecuritySettingsFieldGlobalAdminEmail hVariablesSecuritySettingsFieldRemarks">
+                    <ul>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h3><i class="fa fa-server"></i> List views</h3>
+<p>Here you can configure parameters for list views.</p>
+<p>Sortierwert: 2</p>
+<p>Kombination: <i class="fa fa-times"></i>
+</p>
+<h4><i class="fa fa-bars"></i> Felder</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cVariablesListViewsFieldName" />
+            <col id="cVariablesListViewsFieldType" />
+            <col id="cVariablesListViewsFieldMandatory" />
+            <col id="cVariablesListViewsFieldDefault" />
+            <col id="cVariablesListViewsFieldDisplayType" />
+            <col id="cVariablesListViewsFieldConstraints" />
+            <col id="cVariablesListViewsFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hVariablesListViewsFieldName" scope="col">Name</th>
+                <th id="hVariablesListViewsFieldType" scope="col">Typ</th>
+                <th id="hVariablesListViewsFieldMandatory" scope="col">Pflicht</th>
+                <th id="hVariablesListViewsFieldDefault" scope="col">Standardwert</th>
+                <th id="hVariablesListViewsFieldDisplayType" scope="col">Anzeige</th>
+                <th id="hVariablesListViewsFieldConstraints" scope="col">Beschränkungen</th>
+                <th id="hVariablesListViewsFieldRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hVariablesListViewsFieldSiteEntriesPerPage" scope="row" headers="hVariablesListViewsFieldName">Site entries per page</th>
+                <td headers="hVariablesListViewsFieldSiteEntriesPerPage hVariablesListViewsFieldType">Ganzzahl</td>
+                <td headers="hVariablesListViewsFieldSiteEntriesPerPage hVariablesListViewsFieldMandatory">true</td>
+                <td headers="hVariablesListViewsFieldSiteEntriesPerPage hVariablesListViewsFieldDefault">10</td>
+                <td headers="hVariablesListViewsFieldSiteEntriesPerPage hVariablesListViewsFieldDisplayType">ALL</td>
+                <td headers="hVariablesListViewsFieldSiteEntriesPerPage hVariablesListViewsFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesListViewsFieldSiteEntriesPerPage hVariablesListViewsFieldRemarks">
+                    <ul>
+                        <li>The amount of sites shown per page </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesListViewsFieldTemplateEntriesPerPage" scope="row" headers="hVariablesListViewsFieldName">Template entries per page</th>
+                <td headers="hVariablesListViewsFieldTemplateEntriesPerPage hVariablesListViewsFieldType">Ganzzahl</td>
+                <td headers="hVariablesListViewsFieldTemplateEntriesPerPage hVariablesListViewsFieldMandatory">true</td>
+                <td headers="hVariablesListViewsFieldTemplateEntriesPerPage hVariablesListViewsFieldDefault">10</td>
+                <td headers="hVariablesListViewsFieldTemplateEntriesPerPage hVariablesListViewsFieldDisplayType">ALL</td>
+                <td headers="hVariablesListViewsFieldTemplateEntriesPerPage hVariablesListViewsFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesListViewsFieldTemplateEntriesPerPage hVariablesListViewsFieldRemarks">
+                    <ul>
+                        <li>The amount of templates shown per page </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesListViewsFieldProjectEntriesPerPage" scope="row" headers="hVariablesListViewsFieldName">Project entries per page</th>
+                <td headers="hVariablesListViewsFieldProjectEntriesPerPage hVariablesListViewsFieldType">Ganzzahl</td>
+                <td headers="hVariablesListViewsFieldProjectEntriesPerPage hVariablesListViewsFieldMandatory">true</td>
+                <td headers="hVariablesListViewsFieldProjectEntriesPerPage hVariablesListViewsFieldDefault">10</td>
+                <td headers="hVariablesListViewsFieldProjectEntriesPerPage hVariablesListViewsFieldDisplayType">ALL</td>
+                <td headers="hVariablesListViewsFieldProjectEntriesPerPage hVariablesListViewsFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesListViewsFieldProjectEntriesPerPage hVariablesListViewsFieldRemarks">
+                    <ul>
+                        <li>The amount of projects shown per page </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h3><i class="fa fa-server"></i> Images</h3>
+<p>Here you can define several options for image handling.</p>
+<p>Sortierwert: 3</p>
+<p>Kombination: <i class="fa fa-times"></i>
+</p>
+<h4><i class="fa fa-bars"></i> Felder</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cVariablesImagesFieldName" />
+            <col id="cVariablesImagesFieldType" />
+            <col id="cVariablesImagesFieldMandatory" />
+            <col id="cVariablesImagesFieldDefault" />
+            <col id="cVariablesImagesFieldDisplayType" />
+            <col id="cVariablesImagesFieldConstraints" />
+            <col id="cVariablesImagesFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hVariablesImagesFieldName" scope="col">Name</th>
+                <th id="hVariablesImagesFieldType" scope="col">Typ</th>
+                <th id="hVariablesImagesFieldMandatory" scope="col">Pflicht</th>
+                <th id="hVariablesImagesFieldDefault" scope="col">Standardwert</th>
+                <th id="hVariablesImagesFieldDisplayType" scope="col">Anzeige</th>
+                <th id="hVariablesImagesFieldConstraints" scope="col">Beschränkungen</th>
+                <th id="hVariablesImagesFieldRemarks" scope="col">Anmerkungen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hVariablesImagesFieldEnableShrinkingForSiteLogo" scope="row" headers="hVariablesImagesFieldName">Enable shrinking for site logo</th>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteLogo hVariablesImagesFieldType">Boolesches</td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteLogo hVariablesImagesFieldMandatory">false</td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteLogo hVariablesImagesFieldDefault">false</td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteLogo hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteLogo hVariablesImagesFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteLogo hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldShrinkWidthSiteLogo" scope="row" headers="hVariablesImagesFieldName">Shrink width site logo</th>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteLogo hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteLogo hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteLogo hVariablesImagesFieldDefault">800</td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteLogo hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteLogo hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteLogo hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>The maximum image width in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldShrinkHeightSiteLogo" scope="row" headers="hVariablesImagesFieldName">Shrink height site logo</th>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteLogo hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteLogo hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteLogo hVariablesImagesFieldDefault">600</td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteLogo hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteLogo hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteLogo hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>The maximum image height in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailModeSiteLogo" scope="row" headers="hVariablesImagesFieldName">Thumbnail mode site logo</th>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteLogo hVariablesImagesFieldType">Liste</td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteLogo hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteLogo hVariablesImagesFieldDefault"></td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteLogo hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteLogo hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteLogo hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail mode (inset or outbound). </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Die Liste wird durch eine einwertige Dropdownliste repräsentiert.</li>
+                        <li>Verfügbare Einträge: <ul><li>Inset (inset)</li><li>Outbound (outbound)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailWidthSiteLogoView" scope="row" headers="hVariablesImagesFieldName">Thumbnail width site logo view</th>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoView hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoView hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoView hVariablesImagesFieldDefault">32</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoView hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoView hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoView hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail width on view pages in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailHeightSiteLogoView" scope="row" headers="hVariablesImagesFieldName">Thumbnail height site logo view</th>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoView hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoView hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoView hVariablesImagesFieldDefault">24</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoView hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoView hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoView hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail height on view pages in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailWidthSiteLogoEdit" scope="row" headers="hVariablesImagesFieldName">Thumbnail width site logo edit</th>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoEdit hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoEdit hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoEdit hVariablesImagesFieldDefault">240</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoEdit hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoEdit hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteLogoEdit hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail width on edit pages in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailHeightSiteLogoEdit" scope="row" headers="hVariablesImagesFieldName">Thumbnail height site logo edit</th>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoEdit hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoEdit hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoEdit hVariablesImagesFieldDefault">180</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoEdit hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoEdit hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteLogoEdit hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail height on edit pages in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldEnableShrinkingForSiteFavIcon" scope="row" headers="hVariablesImagesFieldName">Enable shrinking for site fav icon</th>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteFavIcon hVariablesImagesFieldType">Boolesches</td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteFavIcon hVariablesImagesFieldMandatory">false</td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteFavIcon hVariablesImagesFieldDefault">false</td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteFavIcon hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteFavIcon hVariablesImagesFieldConstraints">
+                    <ul>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldEnableShrinkingForSiteFavIcon hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldShrinkWidthSiteFavIcon" scope="row" headers="hVariablesImagesFieldName">Shrink width site fav icon</th>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteFavIcon hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteFavIcon hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteFavIcon hVariablesImagesFieldDefault">800</td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteFavIcon hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteFavIcon hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldShrinkWidthSiteFavIcon hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>The maximum image width in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldShrinkHeightSiteFavIcon" scope="row" headers="hVariablesImagesFieldName">Shrink height site fav icon</th>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteFavIcon hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteFavIcon hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteFavIcon hVariablesImagesFieldDefault">600</td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteFavIcon hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteFavIcon hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldShrinkHeightSiteFavIcon hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>The maximum image height in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailModeSiteFavIcon" scope="row" headers="hVariablesImagesFieldName">Thumbnail mode site fav icon</th>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteFavIcon hVariablesImagesFieldType">Liste</td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteFavIcon hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteFavIcon hVariablesImagesFieldDefault"></td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteFavIcon hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteFavIcon hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 255 Zeichen.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailModeSiteFavIcon hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail mode (inset or outbound). </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                        <li>Die Liste wird durch eine einwertige Dropdownliste repräsentiert.</li>
+                        <li>Verfügbare Einträge: <ul><li>Inset (inset)</li><li>Outbound (outbound)</li></ul></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailWidthSiteFavIconView" scope="row" headers="hVariablesImagesFieldName">Thumbnail width site fav icon view</th>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconView hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconView hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconView hVariablesImagesFieldDefault">32</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconView hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconView hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconView hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail width on view pages in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailHeightSiteFavIconView" scope="row" headers="hVariablesImagesFieldName">Thumbnail height site fav icon view</th>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconView hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconView hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconView hVariablesImagesFieldDefault">24</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconView hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconView hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconView hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail height on view pages in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailWidthSiteFavIconEdit" scope="row" headers="hVariablesImagesFieldName">Thumbnail width site fav icon edit</th>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconEdit hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconEdit hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconEdit hVariablesImagesFieldDefault">240</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconEdit hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconEdit hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailWidthSiteFavIconEdit hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail width on edit pages in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesImagesFieldThumbnailHeightSiteFavIconEdit" scope="row" headers="hVariablesImagesFieldName">Thumbnail height site fav icon edit</th>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconEdit hVariablesImagesFieldType">Ganzzahl</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconEdit hVariablesImagesFieldMandatory">true</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconEdit hVariablesImagesFieldDefault">180</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconEdit hVariablesImagesFieldDisplayType">ALL</td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconEdit hVariablesImagesFieldConstraints">
+                    <ul>
+                        <li>Hat eine Länge von 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesImagesFieldThumbnailHeightSiteFavIconEdit hVariablesImagesFieldRemarks">
+                    <ul>
+                        <li>Thumbnail height on edit pages in pixels. </li>
+                        <li>Dieses Feld ist nicht  eindeutig und erlaubt keine  Null-Werte.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h2><i class="fa fa-puzzle-piece"></i> Integrationseinstellungen</h2>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cSettingName1" />
+            <col id="cSettingValue1" />
+            <col id="cSettingName2" />
+            <col id="cSettingValue2" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hSettingName1" scope="col" style="width: 25%">Einstellung</th>
+                <th id="hSettingValue1" scope="col" class="text-center" style="width: 25%">Wert</th>
+                <th id="hSettingName2" scope="col" style="width: 25%">Einstellung</th>
+                <th id="hSettingValue2" scope="col" class="text-center" style="width: 25%">Wert</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td headers="hSettingName1">Systemmodul</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">Anzahl Beispielsätze</td>
+                <td headers="hSettingValue2" class="text-center">0</td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">Benutzerkonto</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">Suche</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">Block für Listenansichten</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">Block für Detailansichten</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">ContentType für Listenansichten</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">ContentType für Detailansichten</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">Support für Mailz</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">Newsletter Plugin</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">Block zur Moderation</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">Panel zur Moderation</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">Support für wartende Inhalte</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">MultiHook Needles</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">Externe Aufrufe und Finder</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">WYSIWYG-Plugins</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">Authentifizierungsmethode</td>
+                <td headers="hSettingValue1" class="text-center">NONE &ndash; keine Authentifizierungsmethode verfügbar.</td>
+                <td headers="hSettingName2">Support für Tagging</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">Anbieter für Filter-Hooks</td>
+                <td headers="hSettingValue1" class="text-center">DISABLED &ndash; kein Hook-Anbieter verfügbar</td>
+                <td headers="hSettingName2">Separate Admin-Templates</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">RSS-Templates</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">Atom-Templates</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">CSV-Templates</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <td headers="hSettingName2">XML-Templates</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-check"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">JSON-Templates</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-check"></i>
+                </td>
+                <td headers="hSettingName2">KML-Templates</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td headers="hSettingName1">ICS-Templates</td>
+                <td headers="hSettingValue1" class="text-center"><i class="fa fa-times"></i>
+                </td>
+                <td headers="hSettingName2">PDF-Unterstützung</td>
+                <td headers="hSettingValue2" class="text-center"><i class="fa fa-times"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </body>
+</html>
