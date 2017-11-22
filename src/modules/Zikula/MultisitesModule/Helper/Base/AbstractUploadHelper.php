@@ -14,6 +14,7 @@ namespace Zikula\MultisitesModule\Helper\Base;
 
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -192,13 +193,14 @@ abstract class AbstractUploadHelper
                 // check for maximum size
                 $maxWidth = isset($this->moduleVars['shrinkWidth' . $fieldSuffix]) ? $this->moduleVars['shrinkWidth' . $fieldSuffix] : 800;
                 $maxHeight = isset($this->moduleVars['shrinkHeight' . $fieldSuffix]) ? $this->moduleVars['shrinkHeight' . $fieldSuffix] : 600;
+                $thumbMode = isset($this->moduleVars['thumbnailMode' . $fieldSuffix]) ? $this->moduleVars['thumbnailMode' . $fieldSuffix] : ImageInterface::THUMBNAIL_INSET;
     
                 $imgInfo = getimagesize($destinationFilePath);
                 if ($imgInfo[0] > $maxWidth || $imgInfo[1] > $maxHeight) {
                     // resize to allowed maximum size
                     $imagine = new Imagine();
                     $image = $imagine->open($destinationFilePath);
-                    $image->resize(new Box($maxWidth, $maxHeight))
+                    $image->thumbnail(new Box($maxWidth, $maxHeight), $thumbMode)
                           ->save($destinationFilePath);
                 }
             }
@@ -421,7 +423,6 @@ abstract class AbstractUploadHelper
 
     /**
      * Deletes an existing upload file.
-     * For images the thumbnails are removed, too.
      *
      * @param object  $entity    Currently treated entity
      * @param string  $fieldName Name of upload field
@@ -559,7 +560,7 @@ abstract class AbstractUploadHelper
     }
 
     /**
-     * Creates upload folder including a subfolder for thumbnail and an .htaccess file within it.
+     * Creates an upload folder and a .htaccess file within it.
      *
      * @param string $objectType        Name of treated entity type
      * @param string $fieldName         Name of upload field
