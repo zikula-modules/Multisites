@@ -21,7 +21,7 @@
                 {% if routeArea == 'admin' %}
                     <col id="cSelect" />
                 {% endif %}
-                <col id="cItemActions" />
+                <col id="cItemActionsStart" />
                 <col id="cName" />
                 <col id="cDescription" />
                 <col id="cSiteAlias" />
@@ -52,7 +52,7 @@
                         <input type="checkbox" class="zikulamultisites-mass-toggle" />
                     </th>
                 {% endif %}
-                <th id="hItemActions" scope="col" class="unsorted z-w02">{{ __('Actions') }}</th>
+                <th id="hItemActionsStart" scope="col" class="unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hName" scope="col" class="text-left">
                     <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                 </th>
@@ -130,11 +130,11 @@
                         <input type="checkbox" name="items[]" value="{{ site.getKey() }}" class="zikulamultisites-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ site.getKey() }}" headers="hItemActions" class="actions nowrap z-w02">
+                <td id="itemActions{{ site.getKey() }}Start" headers="hItemActionsStart" class="actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], {entity: site, area: routeArea, context: 'view'}) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ site.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                        <a id="itemActions{{ site.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
                     </div>
                 </td>
                 <td headers="hName" class="text-left">

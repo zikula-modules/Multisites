@@ -77,22 +77,25 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this site', 'zikulamultisitesmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new site', 'zikulamultisitesmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $title = $this->__('Delete', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-trash-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Delete this site', 'zikulamultisitesmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
         }
         if ($entity instanceof TemplateEntity) {
@@ -106,14 +109,16 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this template', 'zikulamultisitesmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new template', 'zikulamultisitesmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             
             // more actions for adding new related items
@@ -125,8 +130,9 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_site_' . $routeArea . 'edit',
                     'routeParameters' => ['template' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
             
             $relatedComponent = 'ZikulaMultisitesModule:Project:';
@@ -136,8 +142,9 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_project_' . $routeArea . 'edit',
                     'routeParameters' => ['templates' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
         }
         if ($entity instanceof ProjectEntity) {
@@ -151,14 +158,16 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ])->setAttribute('icon', 'fa fa-pencil-square-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this project', 'zikulamultisitesmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-files-o');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new project', 'zikulamultisitesmodule'));
+                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             
             // more actions for adding new related items
@@ -170,8 +179,9 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_site_' . $routeArea . 'edit',
                     'routeParameters' => ['project' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
             
             $relatedComponent = 'ZikulaMultisitesModule:Template:';
@@ -181,8 +191,9 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_template_' . $routeArea . 'edit',
                     'routeParameters' => ['projects' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
+                ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
         }
 
