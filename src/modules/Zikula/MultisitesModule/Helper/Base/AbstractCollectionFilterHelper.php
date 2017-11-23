@@ -230,7 +230,8 @@ abstract class AbstractCollectionFilterHelper
                 } elseif ($v == 'yes' || $v == '1') {
                     $qb->andWhere('tbl.' . $k . ' = 1');
                 }
-            } else if (is_array($v)) {
+            }
+            if (is_array($v)) {
                 continue;
             }
     
@@ -278,7 +279,8 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('template', $qb, $v);
                 }
-            } else if (is_array($v)) {
+            }
+            if (is_array($v)) {
                 continue;
             }
     
@@ -326,7 +328,8 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('project', $qb, $v);
                 }
-            } else if (is_array($v)) {
+            }
+            if (is_array($v)) {
                 continue;
             }
     
