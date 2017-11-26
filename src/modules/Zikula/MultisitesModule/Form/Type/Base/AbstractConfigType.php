@@ -197,8 +197,7 @@ abstract class AbstractConfigType extends AbstractType
             ],
             'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
             'attr' => [
-        ,
-                    'class' => 'shrink-enabler',
+                'class' => 'shrink-enabler',
                 'title' => $this->__('The enable shrinking option')
             ],
             'required' => false,
@@ -214,8 +213,8 @@ abstract class AbstractConfigType extends AbstractType
             'empty_data' => '800',
             'attr' => [
                 'maxlength' => 4,
-                'class' => 'shrinkdimension-shrinkwidthsitelogo',
-                                    'title' => $this->__('Enter the shrink width')
+                'class' => '',
+                'title' => $this->__('Enter the shrink width')
             ],
             'required' => true,
             'scale' => 0,
@@ -232,8 +231,8 @@ abstract class AbstractConfigType extends AbstractType
             'empty_data' => '600',
             'attr' => [
                 'maxlength' => 4,
-                'class' => 'shrinkdimension-shrinkheightsitelogo',
-                                    'title' => $this->__('Enter the shrink height')
+                'class' => '',
+                'title' => $this->__('Enter the shrink height')
             ],
             'required' => true,
             'scale' => 0,
@@ -346,8 +345,7 @@ abstract class AbstractConfigType extends AbstractType
             ],
             'help' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.'),
             'attr' => [
-        ,
-                    'class' => 'shrink-enabler',
+                'class' => 'shrink-enabler',
                 'title' => $this->__('The enable shrinking option')
             ],
             'required' => false,
@@ -363,8 +361,8 @@ abstract class AbstractConfigType extends AbstractType
             'empty_data' => '800',
             'attr' => [
                 'maxlength' => 4,
-                'class' => 'shrinkdimension-shrinkwidthsitefavicon',
-                                    'title' => $this->__('Enter the shrink width')
+                'class' => '',
+                'title' => $this->__('Enter the shrink width')
             ],
             'required' => true,
             'scale' => 0,
@@ -381,8 +379,8 @@ abstract class AbstractConfigType extends AbstractType
             'empty_data' => '600',
             'attr' => [
                 'maxlength' => 4,
-                'class' => 'shrinkdimension-shrinkheightsitefavicon',
-                                    'title' => $this->__('Enter the shrink height')
+                'class' => '',
+                'title' => $this->__('Enter the shrink height')
             ],
             'required' => true,
             'scale' => 0,
