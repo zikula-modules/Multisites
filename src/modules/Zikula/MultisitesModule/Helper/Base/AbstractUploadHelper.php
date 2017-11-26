@@ -198,6 +198,7 @@ abstract class AbstractUploadHelper
                 $imgInfo = getimagesize($destinationFilePath);
                 if ($imgInfo[0] > $maxWidth || $imgInfo[1] > $maxHeight) {
                     // resize to allowed maximum size
+                    ini_set('memory_limit', '1G');
                     $imagine = new Imagine();
                     $image = $imagine->open($destinationFilePath);
                     $image->thumbnail(new Box($maxWidth, $maxHeight), $thumbMode)
