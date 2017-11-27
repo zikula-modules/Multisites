@@ -344,7 +344,7 @@ abstract class AbstractEditHandler
                 if (true === $this->hasPageLockSupport && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
                     // try to guarantee that only one person at a time can be editing this entity
                     $lockName = 'ZikulaMultisitesModule' . $this->objectTypeCapital . $entity->getKey();
-                    $this->lockingApi->addLock($lockName, $this->getRedirectUrl(null));
+                    $this->lockingApi->addLock($lockName, $this->getRedirectUrl());
                     // reload entity as the addLock call above has triggered the preUpdate event
                     $this->entityFactory->getObjectManager()->refresh($entity);
                 }
