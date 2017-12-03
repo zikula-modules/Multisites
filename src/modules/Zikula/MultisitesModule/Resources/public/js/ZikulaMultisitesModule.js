@@ -140,6 +140,9 @@ function zikulaMultisitesInitItemActions(context) {
  * Initialises image viewing behaviour.
  */
 function zikulaMultisitesInitImageViewer() {
+    if (typeof(magnificPopup) === 'undefined') {
+        return;
+    }
     jQuery('a.image-link').magnificPopup({
         type: 'image',
         closeOnContentClick: true,
