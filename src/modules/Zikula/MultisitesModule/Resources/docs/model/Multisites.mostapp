@@ -6,57 +6,54 @@ application "Multisites" {
     url "https://modulestudio.de"
     version "2.1.0"
     prefix "multisites"
-    generatorSettings {
-        settingsContainer "Settings"
-        generateAccountApi false
-        generateSearchApi false
-        generateMailzApi false
-        generateListBlock false
-        generateDetailBlock false
-        generateModerationBlock false
-        generateListContentType false
-        generateDetailContentType false
-        generateNewsletterPlugin false
-        generateModerationPanel false
-        generatePendingContentSupport false
-        generateExternalControllerAndFinder false
-        generateScribitePlugins false
-        generateTagSupport false
-        generateMultiHookNeedles false
-        generateRssTemplates false
-        generateAtomTemplates false
-        generateKmlTemplates false
-        generateIcsTemplates false
-        skipFiles "
-            CHANGELOG.md,
-            Container/LinkContainer.php,
-            Entity/Repository/ProjectRepository.php,
-            Form/Handler/Site/EditHandler.php,
-            Form/Type/ConfigType.php,
-            Form/Type/QuickNavigation/ProjectQuickNavType.php,
-            Form/Type/QuickNavigation/TemplateQuickNavType.php,
-            Form/Type/SiteType.php,
-            Helper/CollectionFilterHelper.php,
-            Helper/ControllerHelper.php,
-            Helper/ModelHelper.php,
-            Listener/EntityLifecycleListener.php,
-            Menu/ItemActionsMenu.php,
-            MultisitesModuleInstaller.php,
-            README.md
-        "
-        markFiles "
-            composer.json,
-            Controller/AdminController.php,
-            Controller/AjaxController.php,
-            Controller/ConfigController.php,
-            Controller/SiteController.php,
-            Controller/TemplateController.php,
-            Entity/TemplateEntity.php,
-            Resources/config/forms.yml,
-            Resources/config/helpers.yml,
-            Resources/config/services.yml
-        "
-    }
+    generateAccountApi false
+    generateSearchApi false
+    generateMailzApi false
+    generateListBlock false
+    generateDetailBlock false
+    generateModerationBlock false
+    generateListContentType false
+    generateDetailContentType false
+    generateNewsletterPlugin false
+    generateModerationPanel false
+    generatePendingContentSupport false
+    generateExternalControllerAndFinder false
+    generateScribitePlugins false
+    generateTagSupport false
+    generateMultiHookNeedles false
+    generateRssTemplates false
+    generateAtomTemplates false
+    generateKmlTemplates false
+    generateIcsTemplates false
+    skipFiles "
+        CHANGELOG.md,
+        Container/LinkContainer.php,
+        Entity/Repository/ProjectRepository.php,
+        Form/Handler/Site/EditHandler.php,
+        Form/Type/ConfigType.php,
+        Form/Type/QuickNavigation/ProjectQuickNavType.php,
+        Form/Type/QuickNavigation/TemplateQuickNavType.php,
+        Form/Type/SiteType.php,
+        Helper/CollectionFilterHelper.php,
+        Helper/ControllerHelper.php,
+        Helper/ModelHelper.php,
+        Listener/EntityLifecycleListener.php,
+        Menu/ItemActionsMenu.php,
+        MultisitesModuleInstaller.php,
+        README.md
+    "
+    markFiles "
+        composer.json,
+        Controller/AdminController.php,
+        Controller/AjaxController.php,
+        Controller/ConfigController.php,
+        Controller/SiteController.php,
+        Controller/TemplateController.php,
+        Entity/TemplateEntity.php,
+        Resources/config/forms.yml,
+        Resources/config/helpers.yml,
+        Resources/config/services.yml
+    "
     entities {
         entity "site" leading {
             documentation "Each site is assigned to a project and instance of a certain site template."
