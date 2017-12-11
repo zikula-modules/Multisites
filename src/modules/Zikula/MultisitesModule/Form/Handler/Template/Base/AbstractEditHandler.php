@@ -92,6 +92,16 @@ abstract class AbstractEditHandler extends EditHandler
      */
     protected function createForm()
     {
+        return $this->formFactory->create(TemplateType::class, $this->entityRef, $this->getFormOptions());
+    }
+    
+    /**
+     * Returns the form options.
+     *
+     * @return array
+     */
+    protected function getFormOptions()
+    {
         $options = [
             'entity' => $this->entityRef,
             'mode' => $this->templateParameters['mode'],
@@ -101,7 +111,7 @@ abstract class AbstractEditHandler extends EditHandler
             'inline_usage' => $this->templateParameters['inlineUsage']
         ];
     
-        return $this->formFactory->create(TemplateType::class, $this->entityRef, $options);
+        return $options;
     }
 
 
