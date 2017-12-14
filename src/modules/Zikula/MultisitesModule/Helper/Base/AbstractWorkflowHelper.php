@@ -187,7 +187,7 @@ abstract class AbstractWorkflowHelper
                 break;
         }
     
-        if ($title == '' && substr($actionId, 0, 6) == 'update') {
+        if ($title == '' && $actionId == 'update') {
             $title = $this->translator->__('Update');
         }
     
@@ -213,7 +213,7 @@ abstract class AbstractWorkflowHelper
                 break;
         }
     
-        if ($buttonClass == '' && substr($actionId, 0, 6) == 'update') {
+        if ($buttonClass == '' && $actionId == 'update') {
             $buttonClass = 'success';
     	}
     

@@ -105,9 +105,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
         $objectType = $entity->get_objectType();
         $permissionLevel = ACCESS_READ;
         $transitionName = $event->getTransition()->getName();
-        if (substr($transitionName, 0, 6) == 'update') {
-            $transitionName = 'update';
-        }
         
         $hasApproval = false;
     
