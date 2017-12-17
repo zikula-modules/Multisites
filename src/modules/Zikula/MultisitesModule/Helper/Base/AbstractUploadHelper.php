@@ -315,7 +315,7 @@ abstract class AbstractUploadHelper
         $image = $imagine
             ->setMetadataReader(new ExifMetadataReader())
             ->open($filePath);
-        $meta = array_merge($meta, $image->metadata());
+        $meta = array_merge($meta, $image->metadata()->toArray());
     
         return $meta;
     }
