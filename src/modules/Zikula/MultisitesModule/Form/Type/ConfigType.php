@@ -12,34 +12,12 @@
 
 namespace Zikula\MultisitesModule\Form\Type;
 
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Zikula\MultisitesModule\Form\Type\Base\AbstractConfigType;
-
-use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Configuration form type implementation class.
  */
 class ConfigType extends AbstractConfigType
 {
-    /**
-     * @inheritDoc
-     */
-    public function addSecuritySettingsFields(FormBuilderInterface $builder, array $options)
-    {
-        parent::addSecuritySettingsFields($builder, $options);
-
-        $builder
-            ->add('globalAdminPassword', PasswordType::class, [
-                'label' => $this->__('Global admin password') . ':',
-                'required' => false,
-                'data' => isset($this->moduleVars['globalAdminPassword']) ? $this->moduleVars['globalAdminPassword'] : '',
-                'empty_data' => '',
-                'attr' => [
-                    'title' => $this->__('Enter the global admin password.')
-                ],
-                'max_length' => 255
-            ])
-        ;
-    }
+    // feel free to extend the base form type class here
 }

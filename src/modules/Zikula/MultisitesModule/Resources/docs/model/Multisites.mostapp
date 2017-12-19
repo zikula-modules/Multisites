@@ -30,7 +30,6 @@ application "Multisites" {
         Container/LinkContainer.php,
         Entity/Repository/ProjectRepository.php,
         Form/Handler/Site/EditHandler.php,
-        Form/Type/ConfigType.php,
         Form/Type/QuickNavigation/ProjectQuickNavType.php,
         Form/Type/QuickNavigation/TemplateQuickNavType.php,
         Form/Type/SiteType.php,
