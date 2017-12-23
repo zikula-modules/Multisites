@@ -15,12 +15,12 @@ framework:
                 - approved
                 - deleted
             transitions:
-                transitionKey:
+                submit:
                     from: initial
                     to: approved
                 update:
                     from: approved
                     to: approved
-                transitionKey:
+                delete:
                     from: approved
                     to: deleted
