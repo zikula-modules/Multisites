@@ -374,6 +374,13 @@ abstract class AbstractCollectionFilterHelper
     
         $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
     
+        if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
+            // per default we show approved sites only
+            $onlineStates = ['approved'];
+            $qb->andWhere('tbl.workflowState IN (:onlineStates)')
+               ->setParameter('onlineStates', $onlineStates);
+        }
+    
         if ($showOnlyOwnEntries) {
             $qb = $this->addCreatorFilter($qb);
         }
@@ -402,6 +409,13 @@ abstract class AbstractCollectionFilterHelper
     
         $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
     
+        if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
+            // per default we show approved templates only
+            $onlineStates = ['approved'];
+            $qb->andWhere('tbl.workflowState IN (:onlineStates)')
+               ->setParameter('onlineStates', $onlineStates);
+        }
+    
         if ($showOnlyOwnEntries) {
             $qb = $this->addCreatorFilter($qb);
         }
@@ -429,6 +443,13 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+    
+        if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
+            // per default we show approved projects only
+            $onlineStates = ['approved'];
+            $qb->andWhere('tbl.workflowState IN (:onlineStates)')
+               ->setParameter('onlineStates', $onlineStates);
+        }
     
         if ($showOnlyOwnEntries) {
             $qb = $this->addCreatorFilter($qb);
