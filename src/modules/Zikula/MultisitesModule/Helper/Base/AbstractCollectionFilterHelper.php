@@ -223,6 +223,7 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('site', $qb, $v);
                 }
+                continue;
             } elseif (in_array($k, ['active'])) {
                 // boolean filter
                 if ($v == 'no') {
@@ -279,6 +280,7 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('template', $qb, $v);
                 }
+                continue;
             }
             if (is_array($v)) {
                 continue;
@@ -328,6 +330,7 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('project', $qb, $v);
                 }
+                continue;
             }
             if (is_array($v)) {
                 continue;
