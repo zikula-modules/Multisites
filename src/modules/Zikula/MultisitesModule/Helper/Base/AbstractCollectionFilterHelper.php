@@ -224,7 +224,8 @@ abstract class AbstractCollectionFilterHelper
                     $qb = $this->addSearchFilter('site', $qb, $v);
                 }
                 continue;
-            } elseif (in_array($k, ['active'])) {
+            }
+            if (in_array($k, ['active'])) {
                 // boolean filter
                 if ($v == 'no') {
                     $qb->andWhere('tbl.' . $k . ' = 0');
@@ -232,6 +233,7 @@ abstract class AbstractCollectionFilterHelper
                     $qb->andWhere('tbl.' . $k . ' = 1');
                 }
             }
+    
             if (is_array($v)) {
                 continue;
             }
@@ -282,6 +284,7 @@ abstract class AbstractCollectionFilterHelper
                 }
                 continue;
             }
+    
             if (is_array($v)) {
                 continue;
             }
@@ -332,6 +335,7 @@ abstract class AbstractCollectionFilterHelper
                 }
                 continue;
             }
+    
             if (is_array($v)) {
                 continue;
             }
