@@ -22,7 +22,7 @@ framework:
                 update:
                     from: approved
                     to: approved
-                trashapproved:
+                trash:
                     from: approved
                     to: trashed
                 delete:
