@@ -180,6 +180,10 @@ abstract class AbstractControllerHelper
             $request->attributes->set('_route_params', $routeParams);
         }
         $sortdir = $request->query->get('sortdir', 'ASC');
+        if (false !== strpos($sort, ' DESC')) {
+            $sort = str_replace(' DESC', '', $sort);
+            $sortdir = 'desc';
+        }
         $templateParameters['sort'] = $sort;
         $templateParameters['sortdir'] = strtolower($sortdir);
     
