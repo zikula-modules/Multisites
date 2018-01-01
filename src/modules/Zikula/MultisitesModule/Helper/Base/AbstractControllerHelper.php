@@ -216,7 +216,7 @@ abstract class AbstractControllerHelper
                     $sort = $fieldValue;
                 } elseif ($fieldName == 'sortdir' && !empty($fieldValue)) {
                     $sortdir = $fieldValue;
-                } elseif (false === stripos($fieldName, 'thumbRuntimeOptions')) {
+                } elseif (false === stripos($fieldName, 'thumbRuntimeOptions') && false === stripos($fieldName, 'featureActivationHelper')) {
                     // set filter as query argument, fetched inside repository
                     $request->query->set($fieldName, $fieldValue);
                 }
@@ -228,7 +228,9 @@ abstract class AbstractControllerHelper
     
         $urlParameters = $templateParameters;
         foreach ($urlParameters as $parameterName => $parameterValue) {
-            if (false === stripos($parameterName, 'thumbRuntimeOptions')) {
+            if (false === stripos($parameterName, 'thumbRuntimeOptions')
+                && false === stripos($parameterName, 'featureActivationHelper')
+            ) {
                 continue;
             }
             unset($urlParameters[$parameterName]);
