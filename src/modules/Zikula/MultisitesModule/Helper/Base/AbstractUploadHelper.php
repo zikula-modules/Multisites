@@ -214,8 +214,8 @@ abstract class AbstractUploadHelper
                     // resize to allowed maximum size
                     $imagine = new Imagine();
                     $image = $imagine->open($destinationFilePath);
-                    $image->thumbnail(new Box($maxWidth, $maxHeight), $thumbMode);
-                    $image->save($destinationFilePath);
+                    $thumb = $image->thumbnail(new Box($maxWidth, $maxHeight), $thumbMode);
+                    $thumb->save($destinationFilePath);
                 }
             }
     
