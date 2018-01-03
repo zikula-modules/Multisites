@@ -12,6 +12,7 @@
 
 namespace Zikula\MultisitesModule\Form\Type\QuickNavigation\Base;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -119,6 +120,10 @@ abstract class AbstractSiteQuickNavType extends AbstractType
             $this->request->query->remove('q');
         }
     
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
         $entityDisplayHelper = $this->entityDisplayHelper;
         $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
             return $entityDisplayHelper->getFormattedTitle($entity);
@@ -126,6 +131,7 @@ abstract class AbstractSiteQuickNavType extends AbstractType
         $builder->add('template', EntityType::class, [
             'class' => 'ZikulaMultisitesModule:TemplateEntity',
             'choice_label' => $choiceLabelClosure,
+            'query_builder' => $queryBuilder,
             'placeholder' => $this->__('All'),
             'required' => false,
             'label' => $this->__('Template'),
@@ -133,6 +139,10 @@ abstract class AbstractSiteQuickNavType extends AbstractType
                 'class' => 'input-sm'
             ]
         ]);
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
         $entityDisplayHelper = $this->entityDisplayHelper;
         $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
             return $entityDisplayHelper->getFormattedTitle($entity);
@@ -140,6 +150,7 @@ abstract class AbstractSiteQuickNavType extends AbstractType
         $builder->add('project', EntityType::class, [
             'class' => 'ZikulaMultisitesModule:ProjectEntity',
             'choice_label' => $choiceLabelClosure,
+            'query_builder' => $queryBuilder,
             'placeholder' => $this->__('All'),
             'required' => false,
             'label' => $this->__('Project'),
