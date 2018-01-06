@@ -72,7 +72,7 @@ abstract class AbstractTemplateController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'template';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -152,7 +152,7 @@ abstract class AbstractTemplateController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'template';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_EDIT;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -210,7 +210,7 @@ abstract class AbstractTemplateController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'template';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -257,7 +257,7 @@ abstract class AbstractTemplateController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'template';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
