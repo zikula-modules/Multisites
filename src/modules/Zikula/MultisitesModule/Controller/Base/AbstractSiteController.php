@@ -73,7 +73,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -172,7 +172,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_EDIT;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -236,7 +236,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_DELETE;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -357,7 +357,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -404,7 +404,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -451,7 +451,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -498,7 +498,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -545,7 +545,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -592,7 +592,7 @@ abstract class AbstractSiteController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'site';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }

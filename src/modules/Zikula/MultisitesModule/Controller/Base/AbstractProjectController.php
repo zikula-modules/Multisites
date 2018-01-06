@@ -72,7 +72,7 @@ abstract class AbstractProjectController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'project';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
@@ -150,7 +150,7 @@ abstract class AbstractProjectController extends AbstractController
     {
         // parameter specifying which type of objects we are treating
         $objectType = 'project';
-        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_ADMIN;
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_EDIT;
         if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
             throw new AccessDeniedException();
         }
