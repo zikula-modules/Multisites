@@ -146,6 +146,8 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
         if ($hasOldFile && true === $deleteFile) {
             // remove old upload file
             $entity = $this->uploadHelper->deleteUploadFile($entity, $fieldName);
+            // set old file to empty value as the file does not exist anymore
+            $oldFile = '';
         }
 
         if (null === $uploadedFile) {
