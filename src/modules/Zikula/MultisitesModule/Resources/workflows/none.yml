@@ -13,14 +13,18 @@ framework:
             places:
                 - initial
                 - approved
+                - trashed
                 - deleted
             transitions:
-                submit:
-                    from: initial
-                    to: approved
-                updateapproved:
-                    from: approved
-                    to: approved
-                delete:
-                    from: approved
-                    to: deleted
+                - name: submit
+                  from: initial
+                  to: approved
+                - name: update
+                  from: approved
+                  to: approved
+                - name: trash
+                  from: approved
+                  to: trashed
+                - name: delete
+                  from: [approved, trashed]
+                  to: deleted

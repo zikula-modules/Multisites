@@ -10,3 +10,6 @@ imports:
   - { resource: 'twig.yml' }
   - { resource: 'logger.yml' }
   - { resource: 'customServices.yml' }
+
+parameters:
+    liip_imagine.cache.signer.class: Zikula\MultisitesModule\Imagine\Cache\DummySigner

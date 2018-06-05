@@ -80,11 +80,11 @@
             </tr>
             <tr>
                 <th id="hPlatform" scope="row" headers="hBasicField">Plattform</th>
-                <td headers="hBasicValue hPlatform"><a href="https://zikula.de/de/" title="Internetseite von Zikula" target="_blank">Zikula</a> 2.0.3</td>
+                <td headers="hBasicValue hPlatform"><a href="https://zikula.de/de/" title="Internetseite von Zikula" target="_blank">Zikula</a> 2.0.7</td>
             </tr>
             <tr>
                 <th id="hGenerated" scope="row" headers="hBasicField">Generiert</th>
-                <td headers="hBasicValue hGenerated">durch <a href="https://modulestudio.de" title="Internetseite von ModuleStudio" target="_blank">ModuleStudio</a> 1.2.0</td>
+                <td headers="hBasicValue hGenerated">durch <a href="https://modulestudio.de" title="Internetseite von ModuleStudio" target="_blank">ModuleStudio</a> 1.3.2</td>
             </tr>
         </tbody>
     </table>
@@ -182,7 +182,7 @@
                 </td>
                 <td headers="hEntitySiteFieldId hEntitySiteFieldRemarks">
                     <ul>
-                        <li>Dieses Feld ist nulleindeutig und erlaubt keine Null-Werte.</li>
+                        <li>Dieses Feld ist eindeutig und erlaubt keine Null-Werte.</li>
                         <li>Fungiert als Primärschlüssel.</li>
                     </ul>
                 </td>
@@ -203,7 +203,7 @@
                         <li>the current workflow state </li>
                         <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
                         <li>Die Liste wird durch eine einwertige Dropdownliste repräsentiert.</li>
-                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Deleted (deleted)</li></ul></li>
+                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Trashed (trashed)</li><li>Deleted (deleted)</li></ul></li>
                     </ul>
                 </td>
             </tr>
@@ -495,7 +495,7 @@
                 </td>
                 <td headers="hEntitySiteFieldLogo hEntitySiteFieldRemarks">
                     <ul>
-                        <li>Dieses Feld ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Dieses Feld ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Die hochgeladenen Dateien werden im Unterordner "logo" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
                     </ul>
                 </td>
@@ -515,7 +515,7 @@
                 </td>
                 <td headers="hEntitySiteFieldFavIcon hEntitySiteFieldRemarks">
                     <ul>
-                        <li>Dieses Feld ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Dieses Feld ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Die hochgeladenen Dateien werden im Unterordner "favicon" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
                     </ul>
                 </td>
@@ -552,7 +552,7 @@
                 </td>
                 <td headers="hEntitySiteFieldParametersCsvFile hEntitySiteFieldRemarks">
                     <ul>
-                        <li>Dieses Feld ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Dieses Feld ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Die hochgeladenen Dateien werden im Unterordner "parameterscsvfile" gespeichert und behalten ihren originalen Dateinamen, der bei Bedarf um einen Zähler erweitert wird..</li>
                     </ul>
                 </td>
@@ -620,7 +620,7 @@
                 </td>
                 <td headers="hSiteRelation1 hSiteRelationRemarks">
                     <ul>
-                        <li>Diese Relation ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Diese Relation ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Sie verwendet den Abruftyp "Lazy".</li>
                         <li>Aus Sicht der Quelle wird eine Kaskade auf Remove-Operationen angewendet.</li>
                         <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
@@ -639,7 +639,7 @@
                 </td>
                 <td headers="hSiteRelation2 hSiteRelationRemarks">
                     <ul>
-                        <li>Diese Relation ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Diese Relation ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Sie verwendet den Abruftyp "Lazy".</li>
                         <li>Aus Sicht der Quelle wird eine Kaskade auf Remove-Operationen angewendet.</li>
                         <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
@@ -937,7 +937,7 @@
                 </td>
                 <td headers="hEntityTemplateFieldId hEntityTemplateFieldRemarks">
                     <ul>
-                        <li>Dieses Feld ist nulleindeutig und erlaubt keine Null-Werte.</li>
+                        <li>Dieses Feld ist eindeutig und erlaubt keine Null-Werte.</li>
                         <li>Fungiert als Primärschlüssel.</li>
                     </ul>
                 </td>
@@ -958,7 +958,7 @@
                         <li>the current workflow state </li>
                         <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
                         <li>Die Liste wird durch eine einwertige Dropdownliste repräsentiert.</li>
-                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Deleted (deleted)</li></ul></li>
+                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Trashed (trashed)</li><li>Deleted (deleted)</li></ul></li>
                     </ul>
                 </td>
             </tr>
@@ -1096,7 +1096,7 @@
                 </td>
                 <td headers="hTemplateRelation1 hTemplateRelationRemarks">
                     <ul>
-                        <li>Diese Relation ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Diese Relation ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Sie verwendet den Abruftyp "Lazy".</li>
                         <li>Aus Sicht der Quelle wird eine Kaskade auf Remove-Operationen angewendet.</li>
                         <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
@@ -1115,7 +1115,7 @@
                 </td>
                 <td headers="hTemplateRelation2 hTemplateRelationRemarks">
                     <ul>
-                        <li>Diese Relation ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Diese Relation ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Sie verwendet den Abruftyp "Lazy".</li>
                         <li>Aus Sicht der Quelle wird keine Kaskade angewendet.</li>
                         <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
@@ -1388,7 +1388,7 @@
                 </td>
                 <td headers="hEntityProjectFieldId hEntityProjectFieldRemarks">
                     <ul>
-                        <li>Dieses Feld ist nulleindeutig und erlaubt keine Null-Werte.</li>
+                        <li>Dieses Feld ist eindeutig und erlaubt keine Null-Werte.</li>
                         <li>Fungiert als Primärschlüssel.</li>
                     </ul>
                 </td>
@@ -1409,7 +1409,7 @@
                         <li>the current workflow state </li>
                         <li>Dieses Feld ist nicht eindeutig und erlaubt keine Null-Werte.</li>
                         <li>Die Liste wird durch eine einwertige Dropdownliste repräsentiert.</li>
-                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Deleted (deleted)</li></ul></li>
+                        <li>Verfügbare Einträge: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Trashed (trashed)</li><li>Deleted (deleted)</li></ul></li>
                     </ul>
                 </td>
             </tr>
@@ -1459,7 +1459,7 @@
                 </td>
                 <td headers="hProjectRelation1 hProjectRelationRemarks">
                     <ul>
-                        <li>Diese Relation ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Diese Relation ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Sie verwendet den Abruftyp "Lazy".</li>
                         <li>Aus Sicht der Quelle wird eine Kaskade auf Remove-Operationen angewendet.</li>
                         <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
@@ -1477,7 +1477,7 @@
                 </td>
                 <td headers="hProjectRelation2 hProjectRelationRemarks">
                     <ul>
-                        <li>Diese Relation ist nicht eindeutig und erlaubt nullNull-Werte.</li>
+                        <li>Diese Relation ist nicht eindeutig und erlaubt Null-Werte.</li>
                         <li>Sie verwendet den Abruftyp "Lazy".</li>
                         <li>Aus Sicht der Quelle wird keine Kaskade angewendet.</li>
                         <li>Aus Sicht des Ziels wird keine Kaskade angewendet.</li>
