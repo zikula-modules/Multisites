@@ -30,7 +30,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initSite(SiteEntity $entity)
     {
-
         return $entity;
     }
 
@@ -43,7 +42,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initTemplate(TemplateEntity $entity)
     {
-
         return $entity;
     }
 
@@ -56,7 +54,6 @@ abstract class AbstractEntityInitialiser
      */
     public function initProject(ProjectEntity $entity)
     {
-
         return $entity;
     }
 
