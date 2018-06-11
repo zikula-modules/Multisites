@@ -76,6 +76,7 @@ class ProjectController extends AbstractProjectController
     {
         return parent::viewAction($request, $sort, $sortdir, $pos, $num);
     }
+    
     /**
      * @inheritDoc
      *
@@ -120,7 +121,7 @@ class ProjectController extends AbstractProjectController
     {
         return parent::editAction($request);
     }
-
+    
     /**
      * Process status changes for multiple items.
      *
@@ -163,6 +164,6 @@ class ProjectController extends AbstractProjectController
     {
         return parent::handleSelectedEntriesAction($request);
     }
-
+    
     // feel free to add your own controller methods here
 }

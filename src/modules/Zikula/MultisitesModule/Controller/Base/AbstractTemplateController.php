@@ -113,6 +113,7 @@ abstract class AbstractTemplateController extends AbstractController
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
+    
     /**
      * This action provides a handling of edit requests in the admin area.
      *
@@ -175,6 +176,7 @@ abstract class AbstractTemplateController extends AbstractController
         // fetch and return the appropriate template
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
     }
+    
     /**
      * This is a custom action in the admin area.
      *
@@ -222,6 +224,7 @@ abstract class AbstractTemplateController extends AbstractController
         // return template
         return $this->render('@ZikulaMultisitesModule/Template/createParametersCsvTemplate.html.twig', $templateParameters);
     }
+    
     /**
      * This is a custom action in the admin area.
      *
@@ -269,7 +272,7 @@ abstract class AbstractTemplateController extends AbstractController
         // return template
         return $this->render('@ZikulaMultisitesModule/Template/reapply.html.twig', $templateParameters);
     }
-
+    
     /**
      * Process status changes for multiple items.
      *
@@ -386,4 +389,5 @@ abstract class AbstractTemplateController extends AbstractController
         
         return $this->redirectToRoute('zikulamultisitesmodule_template_' . ($isAdmin ? 'admin' : '') . 'view');
     }
+    
 }
