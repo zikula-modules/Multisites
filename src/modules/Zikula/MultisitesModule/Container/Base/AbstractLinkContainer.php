@@ -142,7 +142,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_config_config'),
-                'text' => $this->__('Configuration', 'zikulamultisitesmodule'),
+                'text' => $this->__('Settings', 'zikulamultisitesmodule'),
                 'title' => $this->__('Manage settings for this application', 'zikulamultisitesmodule'),
                 'icon' => 'wrench'
             ];
