@@ -142,7 +142,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 150,
                 'class' => '',
-                'title' => $this->__('Enter the name of the site')
+                'title' => $this->__('Enter the name of the site.')
             ],
             'required' => true,
         ]);
@@ -153,7 +153,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the description of the site')
+                'title' => $this->__('Enter the description of the site.')
             ],
             'required' => false,
         ]);
@@ -164,7 +164,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 80,
                 'class' => '',
-                'title' => $this->__('Enter the site alias of the site')
+                'title' => $this->__('Enter the site alias of the site.')
             ],
             'required' => true,
         ]);
@@ -175,7 +175,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 150,
                 'class' => '',
-                'title' => $this->__('Enter the site name of the site')
+                'title' => $this->__('Enter the site name of the site.')
             ],
             'required' => true,
         ]);
@@ -186,7 +186,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the site description of the site')
+                'title' => $this->__('Enter the site description of the site.')
             ],
             'required' => false,
         ]);
@@ -197,7 +197,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 25,
                 'class' => '',
-                'title' => $this->__('Enter the site admin name of the site')
+                'title' => $this->__('Enter the site admin name of the site.')
             ],
             'required' => true,
         ]);
@@ -208,7 +208,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 15,
                 'class' => '',
-                'title' => $this->__('Enter the site admin password of the site')
+                'title' => $this->__('Enter the site admin password of the site.')
             ],
             'required' => true,
         ]);
@@ -219,7 +219,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 70,
                 'class' => '',
-                'title' => $this->__('Enter the site admin real name of the site')
+                'title' => $this->__('Enter the site admin real name of the site.')
             ],
             'required' => false,
         ]);
@@ -230,7 +230,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 40,
                 'class' => '',
-                'title' => $this->__('Enter the site admin email of the site')
+                'title' => $this->__('Enter the site admin email of the site.')
             ],
             'required' => true,
         ]);
@@ -241,7 +241,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 100,
                 'class' => '',
-                'title' => $this->__('Enter the site company of the site')
+                'title' => $this->__('Enter the site company of the site.')
             ],
             'required' => false,
         ]);
@@ -252,7 +252,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the site dns of the site')
+                'title' => $this->__('Enter the site dns of the site.')
             ],
             'required' => true,
         ]);
@@ -263,7 +263,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 50,
                 'class' => '',
-                'title' => $this->__('Enter the database name of the site')
+                'title' => $this->__('Enter the database name of the site.')
             ],
             'required' => true,
         ]);
@@ -274,7 +274,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 50,
                 'class' => '',
-                'title' => $this->__('Enter the database user name of the site')
+                'title' => $this->__('Enter the database user name of the site.')
             ],
             'required' => true,
         ]);
@@ -285,7 +285,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 50,
                 'class' => '',
-                'title' => $this->__('Enter the database password of the site')
+                'title' => $this->__('Enter the database password of the site.')
             ],
             'required' => true,
         ]);
@@ -296,7 +296,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 50,
                 'class' => '',
-                'title' => $this->__('Enter the database host of the site')
+                'title' => $this->__('Enter the database host of the site.')
             ],
             'required' => true,
         ]);
@@ -307,7 +307,7 @@ abstract class AbstractSiteType extends AbstractType
             'attr' => [
                 'maxlength' => 25,
                 'class' => '',
-                'title' => $this->__('Enter the database type of the site')
+                'title' => $this->__('Enter the database type of the site.')
             ],
             'required' => true,
         ]);
@@ -316,7 +316,7 @@ abstract class AbstractSiteType extends AbstractType
             'label' => $this->__('Logo') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the logo of the site')
+                'title' => $this->__('Enter the logo of the site.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -328,7 +328,7 @@ abstract class AbstractSiteType extends AbstractType
             'label' => $this->__('Fav icon') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the fav icon of the site')
+                'title' => $this->__('Enter the fav icon of the site.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -342,7 +342,7 @@ abstract class AbstractSiteType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'class' => '',
-                'title' => $this->__('Enter the allowed locales of the site')
+                'title' => $this->__('Enter the allowed locales of the site.')
             ],
             'required' => false,
         ]);
@@ -351,7 +351,7 @@ abstract class AbstractSiteType extends AbstractType
             'label' => $this->__('Parameters csv file') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the parameters csv file of the site')
+                'title' => $this->__('Enter the parameters csv file of the site.')
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -365,7 +365,7 @@ abstract class AbstractSiteType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'class' => '',
-                'title' => $this->__('Enter the parameters array of the site')
+                'title' => $this->__('Enter the parameters array of the site.')
             ],
             'required' => false,
         ]);

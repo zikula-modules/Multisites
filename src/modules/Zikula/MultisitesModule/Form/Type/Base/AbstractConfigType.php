@@ -91,7 +91,7 @@ abstract class AbstractConfigType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the global admin name')
+                'title' => $this->__('Enter the global admin name.')
             ],
             'required' => true,
         ]);
@@ -102,7 +102,7 @@ abstract class AbstractConfigType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the global admin password')
+                'title' => $this->__('Enter the global admin password.')
             ],
             'required' => true,
         ]);
@@ -113,7 +113,7 @@ abstract class AbstractConfigType extends AbstractType
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('Enter the global admin email')
+                'title' => $this->__('Enter the global admin email.')
             ],
             'required' => true,
         ]);

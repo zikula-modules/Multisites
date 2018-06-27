@@ -139,7 +139,7 @@ abstract class AbstractTemplateType extends AbstractType
             'attr' => [
                 'maxlength' => 150,
                 'class' => '',
-                'title' => $this->__('Enter the name of the template')
+                'title' => $this->__('Enter the name of the template.')
             ],
             'required' => true,
         ]);
@@ -150,7 +150,7 @@ abstract class AbstractTemplateType extends AbstractType
             'attr' => [
                 'maxlength' => 250,
                 'class' => '',
-                'title' => $this->__('Enter the description of the template')
+                'title' => $this->__('Enter the description of the template.')
             ],
             'required' => false,
         ]);
@@ -159,7 +159,7 @@ abstract class AbstractTemplateType extends AbstractType
             'label' => $this->__('Sql file') . ':',
             'attr' => [
                 'class' => ' validate-upload',
-                'title' => $this->__('Enter the sql file of the template')
+                'title' => $this->__('Enter the sql file of the template.')
             ],
             'required' => true && $options['mode'] == 'create',
             'entity' => $options['entity'],
@@ -173,7 +173,7 @@ abstract class AbstractTemplateType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'class' => '',
-                'title' => $this->__('Enter the parameters of the template')
+                'title' => $this->__('Enter the parameters of the template.')
             ],
             'required' => false,
         ]);
@@ -184,7 +184,7 @@ abstract class AbstractTemplateType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'class' => '',
-                'title' => $this->__('Enter the folders of the template')
+                'title' => $this->__('Enter the folders of the template.')
             ],
             'required' => false,
         ]);
@@ -195,7 +195,7 @@ abstract class AbstractTemplateType extends AbstractType
             'empty_data' => '',
             'attr' => [
                 'class' => '',
-                'title' => $this->__('Enter the excluded tables of the template')
+                'title' => $this->__('Enter the excluded tables of the template.')
             ],
             'required' => false,
         ]);
