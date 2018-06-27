@@ -115,7 +115,7 @@ abstract class AbstractProjectType extends AbstractType
             'attr' => [
                 'maxlength' => 150,
                 'class' => '',
-                'title' => $this->__('Enter the name of the project')
+                'title' => $this->__('Enter the name of the project.')
             ],
             'required' => true,
         ]);
