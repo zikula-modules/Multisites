@@ -44,7 +44,7 @@ function multisitesAllowModule(moduleName, siteId)
  */
 function multisitesAllowTheme(themeName, siteId)
 {
-    jQuery('#theme_' + moduleName).html('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
+    jQuery('#theme_' + themeName).html('<img src="images/ajax/circle-ball-dark-antialiased.gif">');
 
     jQuery.ajax({
         type: 'POST',
