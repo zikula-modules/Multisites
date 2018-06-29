@@ -27,9 +27,9 @@ function zikulaMultisitesValidateUploadExtension(val, elem) {
 function zikulaMultisitesExecuteCustomValidationConstraints(objectType, currentEntityId) {
     jQuery('.validate-upload').each(function () {
         if (!zikulaMultisitesValidateUploadExtension(jQuery(this).val(), jQuery(this))) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('Please select a valid file extension.'));
+            jQuery(this).get(0).setCustomValidity(Translator.__('Please select a valid file extension.'));
         } else {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
+            jQuery(this).get(0).setCustomValidity('');
         }
     });
 }
