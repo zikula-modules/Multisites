@@ -34,7 +34,7 @@ function zikulaMultisitesTriggerFormValidation() {
     }
 }
 
-function zikulaMultisitesHandleFormSubmit (event) {
+function zikulaMultisitesHandleFormSubmit(event) {
     if (triggerValidation) {
         zikulaMultisitesTriggerFormValidation();
         if (!editForm.get(0).checkValidity()) {
