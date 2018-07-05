@@ -90,7 +90,7 @@ abstract class AbstractControllerHelper
         ImageHelper $imageHelper
     ) {
         $this->setTranslator($translator);
-        $this->request = $requestStack->getMasterRequest();
+        $this->request = $requestStack->getCurrentRequest();
         $this->formFactory = $formFactory;
         $this->variableApi = $variableApi;
         $this->entityFactory = $entityFactory;
