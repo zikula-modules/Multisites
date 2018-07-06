@@ -91,7 +91,7 @@ class AjaxController extends AbstractAjaxController
      */
     public function getProjectTemplatesAction(Request $request)
     {
-        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasPermission(ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
@@ -136,7 +136,7 @@ class AjaxController extends AbstractAjaxController
      */
     public function modifyModuleActivationAction(Request $request)
     {
-        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasPermission(ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
@@ -202,7 +202,7 @@ class AjaxController extends AbstractAjaxController
      */
     public function allowModuleAction(Request $request)
     {
-        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasPermission(ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
@@ -284,7 +284,7 @@ class AjaxController extends AbstractAjaxController
      */
     public function allowThemeAction(Request $request)
     {
-        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasPermission(ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 

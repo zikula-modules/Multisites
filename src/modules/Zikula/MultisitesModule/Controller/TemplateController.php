@@ -241,9 +241,8 @@ class TemplateController extends AbstractTemplateController
      */
     protected function createParametersCsvTemplateInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'template';
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasComponentPermission($objectType, ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
@@ -287,9 +286,8 @@ class TemplateController extends AbstractTemplateController
      */
     protected function reapplyInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'template';
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasComponentPermission($objectType, ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 

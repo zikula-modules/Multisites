@@ -733,11 +733,7 @@ class SiteController extends AbstractSiteController
      */
     protected function loadCurrentSite(Request $request)
     {
-        $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
-
-        // parameter specifying which type of objects we are treating
-        $objectType = 'site';
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasComponentPermission('site', ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 

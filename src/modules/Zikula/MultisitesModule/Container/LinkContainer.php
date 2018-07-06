@@ -31,7 +31,7 @@ class LinkContainer extends AbstractLinkContainer
 
         $links = parent::getLinks();
 
-        if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+        if ($this->permissionHelper->hasPermission(ACCESS_ADMIN)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_admin_manageUpdates'),
                 'text'  => $this->__('Updates', 'zikulamultisitesmodule'),

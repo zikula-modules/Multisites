@@ -12,9 +12,8 @@
 
 namespace Zikula\MultisitesModule\Entity\Repository;
 
-use Zikula\MultisitesModule\Entity\Repository\Base\AbstractProjectRepository;
-
 use Doctrine\ORM\QueryBuilder;
+use Zikula\MultisitesModule\Entity\Repository\Base\AbstractProjectRepository;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.

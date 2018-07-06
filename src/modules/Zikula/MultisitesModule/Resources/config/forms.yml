@@ -33,11 +33,11 @@ services:
             - "@request_stack"
             - "@router"
             - "@logger"
-            - "@zikula_permissions_module.api.permission"
             - "@zikula_users_module.current_user"
             - "@zikula_multisites_module.entity_factory"
             - "@zikula_multisites_module.controller_helper"
             - "@zikula_multisites_module.model_helper"
+            - "@zikula_multisites_module.permission_helper"
             - "@zikula_multisites_module.workflow_helper"
             - "@zikula_multisites_module.hook_helper"
         calls:

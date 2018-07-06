@@ -47,8 +47,7 @@ class AdminController extends AbstractController
         }
 
         // return error if no permissions are granted
-        $permLevel = ACCESS_ADMIN;
-        if (!$this->hasPermission($this->name . '::', '::', $permLevel)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasPermission(ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
@@ -120,7 +119,7 @@ class AdminController extends AbstractController
         }
 
         // return error if no permissions are granted
-        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasPermission(ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
         
@@ -156,7 +155,7 @@ class AdminController extends AbstractController
         }
 
         // return error if no permissions are granted
-        if (!$this->hasPermission('ZikulaMultisitesModule::', '::', ACCESS_ADMIN)) {
+        if (!$this->get('zikula_multisites_module.permission_helper')->hasPermission(ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
