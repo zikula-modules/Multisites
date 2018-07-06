@@ -244,7 +244,7 @@ abstract class AbstractSiteController extends AbstractController
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_DELETE;
         $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
-        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
+        if (!$permissionHelper->hasEntityPermission($site, $permLevel)) {
             throw new AccessDeniedException();
         }
         
