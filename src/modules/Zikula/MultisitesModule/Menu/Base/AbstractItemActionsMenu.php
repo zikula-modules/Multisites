@@ -61,18 +61,16 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
         $routeArea = $options['area'];
         $context = $options['context'];
 
-        $permissionApi = $this->container->get('zikula_permissions_module.api.permission');
+        $permissionHelper = $this->container->get('zikula_multisites_module.permission_helper');
         $currentUserApi = $this->container->get('zikula_users_module.current_user');
         $menu->setChildrenAttribute('class', 'list-inline item-actions');
 
         $currentUserId = $currentUserApi->isLoggedIn() ? $currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         if ($entity instanceof SiteEntity) {
-            $component = 'ZikulaMultisitesModule:Site:';
-            $instance = $entity->getKey() . '::';
             $routePrefix = 'zikulamultisitesmodule_site_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
@@ -88,7 +86,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new site', 'zikulamultisitesmodule'));
                 $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionHelper->mayDelete($entity)) {
                 $title = $this->__('Delete', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
@@ -99,12 +97,10 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             }
         }
         if ($entity instanceof TemplateEntity) {
-            $component = 'ZikulaMultisitesModule:Template:';
-            $instance = $entity->getKey() . '::';
             $routePrefix = 'zikulamultisitesmodule_template_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
@@ -123,9 +119,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             
             // more actions for adding new related items
             
-            $relatedComponent = 'ZikulaMultisitesModule:Site:';
-            $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionHelper->hasComponentPermission('site', ACCESS_EDIT)) {
                 $title = $this->__('Create sites', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_site_' . $routeArea . 'edit',
@@ -135,9 +129,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
             
-            $relatedComponent = 'ZikulaMultisitesModule:Project:';
-            $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionHelper->hasComponentPermission('project', ACCESS_EDIT)) {
                 $title = $this->__('Create projects', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_project_' . $routeArea . 'edit',
@@ -148,12 +140,10 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             }
         }
         if ($entity instanceof ProjectEntity) {
-            $component = 'ZikulaMultisitesModule:Project:';
-            $instance = $entity->getKey() . '::';
             $routePrefix = 'zikulamultisitesmodule_project_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
@@ -172,9 +162,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             
             // more actions for adding new related items
             
-            $relatedComponent = 'ZikulaMultisitesModule:Site:';
-            $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionHelper->hasComponentPermission('site', ACCESS_EDIT)) {
                 $title = $this->__('Create sites', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_site_' . $routeArea . 'edit',
@@ -184,9 +172,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
             
-            $relatedComponent = 'ZikulaMultisitesModule:Template:';
-            $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
+            if ($isOwner || $permissionHelper->hasComponentPermission('template', ACCESS_EDIT)) {
                 $title = $this->__('Create templates', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_template_' . $routeArea . 'edit',

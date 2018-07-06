@@ -22,7 +22,7 @@ abstract class AbstractDummySigner implements SignerInterface
     /**
      * @var string
      */
-    private $secret;
+    protected $secret;
 
     /**
      * @param string $secret

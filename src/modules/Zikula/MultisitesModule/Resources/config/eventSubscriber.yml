@@ -60,6 +60,7 @@ services:
     zikula_multisites_module.workflow_events_listener:
         class: Zikula\MultisitesModule\Listener\WorkflowEventsListener
         arguments:
-            - "@zikula_permissions_module.api.permission"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.permission_helper"
         tags: ['kernel.event_subscriber']
     

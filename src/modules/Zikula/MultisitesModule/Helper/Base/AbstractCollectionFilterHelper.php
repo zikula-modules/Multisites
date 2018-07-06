@@ -20,6 +20,7 @@ use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
+use Zikula\MultisitesModule\Helper\PermissionHelper;
 
 /**
  * Entity collection filter helper base class.
@@ -30,6 +31,11 @@ abstract class AbstractCollectionFilterHelper
      * @var Request
      */
     protected $request;
+
+    /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
 
     /**
      * @var CurrentUserApiInterface
@@ -45,15 +51,18 @@ abstract class AbstractCollectionFilterHelper
      * CollectionFilterHelper constructor.
      *
      * @param RequestStack $requestStack RequestStack service instance
+     * @param PermissionHelper $permissionHelper PermissionHelper service instance
      * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
-     * @param boolean        $showOnlyOwnEntries  Fallback value to determine whether only own entries should be selected or not
+     * @param boolean $showOnlyOwnEntries Fallback value to determine whether only own entries should be selected or not
      */
     public function __construct(
         RequestStack $requestStack,
+        PermissionHelper $permissionHelper,
         CurrentUserApiInterface $currentUserApi,
         $showOnlyOwnEntries
     ) {
         $this->request = $requestStack->getCurrentRequest();
+        $this->permissionHelper = $permissionHelper;
         $this->currentUserApi = $currentUserApi;
         $this->showOnlyOwnEntries = $showOnlyOwnEntries;
     }
