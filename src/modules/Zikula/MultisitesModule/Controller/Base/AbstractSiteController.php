@@ -71,12 +71,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function viewInternal(Request $request, $sort, $sortdir, $pos, $num, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
         ];
@@ -123,7 +125,7 @@ abstract class AbstractSiteController extends AbstractController
         // filter by permissions
         $filteredEntities = [];
         foreach ($templateParameters['items'] as $site) {
-            if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', $site->getKey() . '::', $permLevel)) {
+            if (!$permissionHelper->hasEntityPermission($site, $permLevel)) {
                 continue;
             }
             $filteredEntities[] = $site;
@@ -171,12 +173,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function editInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_EDIT;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
         ];
@@ -236,12 +240,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function deleteInternal(Request $request, SiteEntity $site, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_DELETE;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasEntityPermission($site, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         $logger = $this->get('logger');
         $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'site', 'id' => $site->getKey()];
         
@@ -358,12 +364,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function manageExtensionsInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
@@ -406,12 +414,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function manageThemesInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
@@ -454,12 +464,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function setThemeAsDefaultInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
@@ -502,12 +514,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function viewToolsInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
@@ -550,12 +564,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function executeToolInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
@@ -598,12 +614,14 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function exportDatabaseAsTemplateInternal(Request $request, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'site';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
-        if (!$this->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+        $permissionHelper = $this->get('zikula_multisites_module.permission_helper');
+        if (!$permissionHelper->hasComponentPermission($objectType, $permLevel)) {
             throw new AccessDeniedException();
         }
+        
         
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''

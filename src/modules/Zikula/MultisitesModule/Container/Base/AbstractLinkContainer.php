@@ -17,8 +17,8 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\LinkContainer\LinkContainerInterface;
-use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\MultisitesModule\Helper\ControllerHelper;
+use Zikula\MultisitesModule\Helper\PermissionHelper;
 
 /**
  * This is the link container service implementation class.
@@ -33,33 +33,33 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
     protected $router;
 
     /**
-     * @var PermissionApiInterface
-     */
-    protected $permissionApi;
-
-    /**
      * @var ControllerHelper
      */
     protected $controllerHelper;
 
     /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+
+    /**
      * LinkContainer constructor.
      *
-     * @param TranslatorInterface    $translator       Translator service instance
-     * @param Routerinterface        $router           Router service instance
-     * @param PermissionApiInterface $permissionApi    PermissionApi service instance
-     * @param ControllerHelper       $controllerHelper ControllerHelper service instance
+     * @param TranslatorInterface  $translator       Translator service instance
+     * @param Routerinterface      $router           Router service instance
+     * @param ControllerHelper     $controllerHelper ControllerHelper service instance
+     * @param PermissionHelper     $permissionHelper PermissionHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         RouterInterface $router,
-        PermissionApiInterface $permissionApi,
-        ControllerHelper $controllerHelper
+        ControllerHelper $controllerHelper,
+        PermissionHelper $permissionHelper
     ) {
         $this->setTranslator($translator);
         $this->router = $router;
-        $this->permissionApi = $permissionApi;
         $this->controllerHelper = $controllerHelper;
+        $this->permissionHelper = $permissionHelper;
     }
 
     /**
@@ -96,7 +96,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
 
         $routeArea = LinkContainerInterface::TYPE_ADMIN == $type ? 'admin' : '';
         if (LinkContainerInterface::TYPE_ADMIN == $type) {
-            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_READ)) {
+            if ($this->permissionHelper->hasPermission(ACCESS_READ)) {
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_site_view'),
                     'text' => $this->__('Frontend', 'zikulamultisitesmodule'),
@@ -105,7 +105,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 ];
             }
         } else {
-            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+            if ($this->permissionHelper->hasPermission(ACCESS_ADMIN)) {
                 $links[] = [
                     'url' => $this->router->generate('zikulamultisitesmodule_site_adminview'),
                     'text' => $this->__('Backend', 'zikulamultisitesmodule'),
@@ -116,7 +116,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         }
         
         if (in_array('site', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Site:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('site', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_site_' . $routeArea . 'view'),
                 'text' => $this->__('Sites', 'zikulamultisitesmodule'),
@@ -124,7 +124,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             ];
         }
         if (in_array('template', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Template:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('template', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_template_' . $routeArea . 'view'),
                 'text' => $this->__('Templates', 'zikulamultisitesmodule'),
@@ -132,14 +132,14 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             ];
         }
         if (in_array('project', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Project:', '::', $permLevel)) {
+            && $this->permissionHelper->hasComponentPermission('project', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_project_' . $routeArea . 'view'),
                 'text' => $this->__('Projects', 'zikulamultisitesmodule'),
                 'title' => $this->__('Projects list', 'zikulamultisitesmodule')
             ];
         }
-        if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+        if ($routeArea == 'admin' && $this->permissionHelper->hasPermission(ACCESS_ADMIN)) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_config_config'),
                 'text' => $this->__('Settings', 'zikulamultisitesmodule'),

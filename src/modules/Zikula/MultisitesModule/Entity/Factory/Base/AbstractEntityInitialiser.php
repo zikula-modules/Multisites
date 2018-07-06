@@ -15,12 +15,18 @@ namespace Zikula\MultisitesModule\Entity\Factory\Base;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
+use Zikula\MultisitesModule\Helper\PermissionHelper;
 
 /**
  * Entity initialiser class used to dynamically apply default values to newly created entities.
  */
 abstract class AbstractEntityInitialiser
 {
+    /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+
     /**
      * Initialises a given site instance.
      *
