@@ -13,11 +13,9 @@
 namespace Zikula\MultisitesModule\Controller;
 
 use Zikula\MultisitesModule\Controller\Base\AbstractAjaxController;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\ExtensionsModule\Constant as ExtensionsConstant;
 
@@ -65,8 +63,7 @@ class AjaxController extends AbstractAjaxController
     /**
      * Changes a given flag (boolean field) by switching between true and false.
      *
-     * @Route("/toggleFlag", options={"expose"=true})
-     * @Method("POST")
+     * @Route("/toggleFlag", methods = {"POST"}, options={"expose"=true})
      *
      * @param Request $request Current request instance
      *
@@ -82,8 +79,7 @@ class AjaxController extends AbstractAjaxController
     /**
      * Returns information about templates for a given project.
      *
-     * @Route("/getProjectTemplates", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/getProjectTemplates", methods = {"GET"}, options={"expose"=true})
      *
      * @param Request $request Current request instance
      *
@@ -127,8 +123,7 @@ class AjaxController extends AbstractAjaxController
     /**
      * Modifies the state of a module in a site database.
      *
-     * @Route("/modifyModuleActivation", options={"expose"=true})
-     * @Method("POST")
+     * @Route("/modifyModuleActivation", methods = {"POST"}, options={"expose"=true})
      *
      * @param Request $request Current request instance
      *
@@ -193,8 +188,7 @@ class AjaxController extends AbstractAjaxController
     /**
      * Creates, changes or deletes a module state in a site database depending on the module initial state.
      *
-     * @Route("/allowModule", options={"expose"=true})
-     * @Method("POST")
+     * @Route("/allowModule", methods = {"POST"}, options={"expose"=true})
      *
      * @param Request $request Current request instance
      *
@@ -275,8 +269,7 @@ class AjaxController extends AbstractAjaxController
     /**
      * Creates or deletes a theme state in a site database depending on the theme initial state.
      *
-     * @Route("/allowTheme", options={"expose"=true})
-     * @Method("POST")
+     * @Route("/allowTheme", methods = {"POST"}, options={"expose"=true})
      *
      * @param Request $request Current request instance
      *
