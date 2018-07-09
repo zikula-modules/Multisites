@@ -21,9 +21,9 @@
             {{ form_row(attribute(subFields, 'excludedTables')) }}
         </fieldset>
     {% elseif displayMode == 'choices' %}
-        {{ form_row(attribute(form, alias)) }}
+        {{ form_row(attribute(form, alias), {required: mandatory}) }}
     {% elseif displayMode == 'autocomplete' %}
-        {{ form_row(attribute(form, alias)) }}
+        {{ form_row(attribute(form, alias), {required: mandatory}) }}
         <div class="zikulamultisitesmodule-relation-leftside">
             {{ include(
                 '@ZikulaMultisitesModule/Template/includeSelectItemListOne.html.twig',
