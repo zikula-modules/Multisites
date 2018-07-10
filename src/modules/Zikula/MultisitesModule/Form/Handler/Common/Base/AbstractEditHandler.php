@@ -266,7 +266,7 @@ abstract class AbstractEditHandler
      *
      * @param TranslatorInterface $translator Translator service instance
      */
-    public function setTranslator(/*TranslatorInterface */$translator)
+    public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
