@@ -298,7 +298,7 @@ abstract class AbstractSiteRepository extends EntityRepository
     {
         $results = $this->selectByIdList(is_array($id) ? $id : [$id], $useJoins, $slimMode);
     
-        return count($results) > 0 ? $results[0] : null;
+        return null !== $results && count($results) > 0 ? $results[0] : null;
     }
     
     /**
