@@ -14,6 +14,7 @@ namespace Zikula\MultisitesModule\Controller\Base;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
 
@@ -34,6 +35,10 @@ abstract class AbstractAjaxController extends AbstractController
      */
     public function toggleFlagAction(Request $request)
     {
+        if (!$request->isXmlHttpRequest()) {
+            return $this->json($this->__('Only ajax access is allowed!'), Response::HTTP_BAD_REQUEST);
+        }
+        
         if (!$this->hasPermission('ZikulaMultisitesModule::Ajax', '::', ACCESS_EDIT)) {
             throw new AccessDeniedException();
         }
