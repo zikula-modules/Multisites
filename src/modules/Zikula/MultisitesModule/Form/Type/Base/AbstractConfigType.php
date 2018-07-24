@@ -178,6 +178,20 @@ abstract class AbstractConfigType extends AbstractType
             'required' => true,
             'scale' => 0
         ]);
+        
+        $builder->add('showOnlyOwnEntries', CheckboxType::class, [
+            'label' => $this->__('Show only own entries') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether only own entries should be shown on view pages by default or not')
+            ],
+            'help' => $this->__('Whether only own entries should be shown on view pages by default or not'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The show only own entries option')
+            ],
+            'required' => false,
+        ]);
     }
 
     /**

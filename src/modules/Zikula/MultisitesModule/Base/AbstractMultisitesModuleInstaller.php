@@ -69,6 +69,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         $this->setVar('siteEntriesPerPage', 10);
         $this->setVar('templateEntriesPerPage', 10);
         $this->setVar('projectEntriesPerPage', 10);
+        $this->setVar('showOnlyOwnEntries', false);
         $this->setVar('enableShrinkingForSiteLogo', false);
         $this->setVar('shrinkWidthSiteLogo', 800);
         $this->setVar('shrinkHeightSiteLogo', 600);

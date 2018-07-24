@@ -82,6 +82,15 @@ abstract class AbstractAppSettings
     protected $projectEntriesPerPage = 10;
     
     /**
+     * Whether only own entries should be shown on view pages by default or not
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $showOnlyOwnEntries
+     */
+    protected $showOnlyOwnEntries = false;
+    
+    /**
      * Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.
      *
      * @Assert\NotNull()
@@ -404,6 +413,30 @@ abstract class AbstractAppSettings
     {
         if (intval($this->projectEntriesPerPage) !== intval($projectEntriesPerPage)) {
             $this->projectEntriesPerPage = intval($projectEntriesPerPage);
+        }
+    }
+    
+    /**
+     * Returns the show only own entries.
+     *
+     * @return boolean
+     */
+    public function getShowOnlyOwnEntries()
+    {
+        return $this->showOnlyOwnEntries;
+    }
+    
+    /**
+     * Sets the show only own entries.
+     *
+     * @param boolean $showOnlyOwnEntries
+     *
+     * @return void
+     */
+    public function setShowOnlyOwnEntries($showOnlyOwnEntries)
+    {
+        if (boolval($this->showOnlyOwnEntries) !== boolval($showOnlyOwnEntries)) {
+            $this->showOnlyOwnEntries = boolval($showOnlyOwnEntries);
         }
     }
     
@@ -817,6 +850,9 @@ abstract class AbstractAppSettings
         if (isset($moduleVars['projectEntriesPerPage'])) {
             $this->setProjectEntriesPerPage($moduleVars['projectEntriesPerPage']);
         }
+        if (isset($moduleVars['showOnlyOwnEntries'])) {
+            $this->setShowOnlyOwnEntries($moduleVars['showOnlyOwnEntries']);
+        }
         if (isset($moduleVars['enableShrinkingForSiteLogo'])) {
             $this->setEnableShrinkingForSiteLogo($moduleVars['enableShrinkingForSiteLogo']);
         }
@@ -878,6 +914,7 @@ abstract class AbstractAppSettings
         $this->variableApi->set('ZikulaMultisitesModule', 'siteEntriesPerPage', $this->getSiteEntriesPerPage());
         $this->variableApi->set('ZikulaMultisitesModule', 'templateEntriesPerPage', $this->getTemplateEntriesPerPage());
         $this->variableApi->set('ZikulaMultisitesModule', 'projectEntriesPerPage', $this->getProjectEntriesPerPage());
+        $this->variableApi->set('ZikulaMultisitesModule', 'showOnlyOwnEntries', $this->getShowOnlyOwnEntries());
         $this->variableApi->set('ZikulaMultisitesModule', 'enableShrinkingForSiteLogo', $this->getEnableShrinkingForSiteLogo());
         $this->variableApi->set('ZikulaMultisitesModule', 'shrinkWidthSiteLogo', $this->getShrinkWidthSiteLogo());
         $this->variableApi->set('ZikulaMultisitesModule', 'shrinkHeightSiteLogo', $this->getShrinkHeightSiteLogo());
