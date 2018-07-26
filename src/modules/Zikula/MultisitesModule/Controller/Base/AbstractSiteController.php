@@ -738,11 +738,6 @@ abstract class AbstractSiteController extends AbstractController
             // Let any ui hooks know that we have updated or deleted an item
             $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
             $url = null;
-            if ($action != 'delete') {
-                $urlArgs = $entity->createUrlArgs();
-                $urlArgs['_locale'] = $request->getLocale();
-                $url = new RouteUrl('zikulamultisitesmodule_site_display', $urlArgs);
-            }
             $hookHelper->callProcessHooks($entity, $hookType, $url);
         }
         

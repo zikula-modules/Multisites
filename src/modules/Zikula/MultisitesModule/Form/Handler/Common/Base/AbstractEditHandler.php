@@ -561,8 +561,11 @@ abstract class AbstractEditHandler
         }
     
         if ($entity->supportsHookSubscribers()) {
+            $entitiesWithDisplayAction = [''];
+            $hasDisplayAction = in_array($this->objectType, $entitiesWithDisplayAction);
+    
             $routeUrl = null;
-            if ($action != 'delete') {
+            if ($hasDisplayAction && $action != 'delete') {
                 $urlArgs = $entity->createUrlArgs();
                 $urlArgs['_locale'] = $this->request->getLocale();
                 $routeUrl = new RouteUrl('zikulamultisitesmodule_' . $this->objectTypeLower . '_display', $urlArgs);
