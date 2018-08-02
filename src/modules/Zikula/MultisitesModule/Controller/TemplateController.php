@@ -28,7 +28,7 @@ use Zikula\ThemeModule\Engine\Annotation\Theme;
 class TemplateController extends AbstractTemplateController
 {
     /**
-     * This action provides an item list overview in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/templates/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
@@ -36,16 +36,6 @@ class TemplateController extends AbstractTemplateController
      *        methods = {"GET"}
      * )
      * @Theme("admin")
-     *
-     * @param Request  $request      Current request instance
-     * @param string  $sort         Sorting field
-     * @param string  $sortdir      Sorting direction
-     * @param int     $pos          Current pager position
-     * @param int     $num          Amount of entries to display
-     *
-     * @return mixed Output.
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
      */
     public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -53,30 +43,21 @@ class TemplateController extends AbstractTemplateController
     }
     
     /**
-     * This action provides an item list overview.
+     * @inheritDoc
      *
      * @Route("/templates/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 0, "_format" = "html"},
      *        methods = {"GET"}
      * )
-     *
-     * @param Request  $request      Current request instance
-     * @param string  $sort         Sorting field
-     * @param string  $sortdir      Sorting direction
-     * @param int     $pos          Current pager position
-     * @param int     $num          Amount of entries to display
-     *
-     * @return mixed Output.
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
      */
     public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
         return parent::viewAction($request, $sort, $sortdir, $pos, $num);
     }
+
     /**
-     * This action provides a handling of edit requests in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/template/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -84,14 +65,6 @@ class TemplateController extends AbstractTemplateController
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request  $request      Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
     {
@@ -99,39 +72,26 @@ class TemplateController extends AbstractTemplateController
     }
     
     /**
-     * This action provides a handling of edit requests.
+     * @inheritDoc
      *
      * @Route("/template/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request  $request      Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
     {
         return parent::editAction($request);
     }
+
     /**
-     * This is a custom action in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/templates/createParametersCsvTemplate",
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request  $request      Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminCreateParametersCsvTemplateAction(Request $request)
     {
@@ -139,17 +99,11 @@ class TemplateController extends AbstractTemplateController
     }
     
     /**
-     * This is a custom action.
+     * @inheritDoc
      *
      * @Route("/templates/createParametersCsvTemplate",
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request  $request      Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function createParametersCsvTemplateAction(Request $request)
     {
@@ -157,18 +111,12 @@ class TemplateController extends AbstractTemplateController
     }
 
     /**
-     * This is a custom action in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/templates/reapply",
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request  $request      Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminReapplyAction(Request $request)
     {
@@ -176,17 +124,11 @@ class TemplateController extends AbstractTemplateController
     }
     
     /**
-     * This is a custom action.
+     * @inheritDoc
      *
      * @Route("/templates/reapply",
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request  $request      Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
      */
     public function reapplyAction(Request $request)
     {
@@ -194,21 +136,11 @@ class TemplateController extends AbstractTemplateController
     }
 
     /**
-     * Process status changes for multiple items.
-     *
-     * This function processes the items selected in the admin view page.
-     * Multiple items may have their state changed or be deleted.
-     *
+     * @inheritDoc
      * @Route("/admin/templates/handleSelectedEntries",
      *        methods = {"POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return bool true on sucess, false on failure
-     *
-     * @throws RuntimeException Thrown if executing the workflow action fails
      */
     public function adminHandleSelectedEntriesAction(Request $request)
     {
@@ -216,20 +148,10 @@ class TemplateController extends AbstractTemplateController
     }
 
     /**
-     * Process status changes for multiple items.
-     *
-     * This function processes the items selected in the admin view page.
-     * Multiple items may have their state changed or be deleted.
-     *
+     * @inheritDoc
      * @Route("/templates/handleSelectedEntries",
      *        methods = {"POST"}
      * )
-     *
-     * @param Request $request Current request instance.
-     *
-     * @return bool true on sucess, false on failure.
-     *
-     * @throws RuntimeException Thrown if executing the workflow action fails
      */
     public function handleSelectedEntriesAction(Request $request)
     {

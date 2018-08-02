@@ -30,7 +30,7 @@ use Zikula\ThemeModule\Engine\Annotation\Theme;
 class SiteController extends AbstractSiteController
 {
     /**
-     * This action provides an item list overview in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/sites/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
@@ -38,16 +38,6 @@ class SiteController extends AbstractSiteController
      *        methods = {"GET"}
      * )
      * @Theme("admin")
-     *
-     * @param Request  $request      Current request instance
-     * @param string  $sort         Sorting field
-     * @param string  $sortdir      Sorting direction
-     * @param int     $pos          Current pager position
-     * @param int     $num          Amount of entries to display
-     *
-     * @return mixed Output.
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
      */
     public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -55,23 +45,13 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This action provides an item list overview.
+     * @inheritDoc
      *
      * @Route("/sites/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 0, "_format" = "html"},
      *        methods = {"GET"}
      * )
-     *
-     * @param Request  $request      Current request instance
-     * @param string  $sort         Sorting field
-     * @param string  $sortdir      Sorting direction
-     * @param int     $pos          Current pager position
-     * @param int     $num          Amount of entries to display
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -79,7 +59,7 @@ class SiteController extends AbstractSiteController
     }
 
     /**
-     * This action provides a handling of edit requests in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/site/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -87,14 +67,6 @@ class SiteController extends AbstractSiteController
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
     {
@@ -102,21 +74,13 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This action provides a handling of edit requests.
+     * @inheritDoc
      *
      * @Route("/site/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if item to be edited isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
     {
@@ -124,7 +88,7 @@ class SiteController extends AbstractSiteController
     }
 
     /**
-     * This action provides a handling of simple delete requests in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/site/delete/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -133,15 +97,6 @@ class SiteController extends AbstractSiteController
      * )
      * @ParamConverter("site", class="ZikulaMultisitesModule:SiteEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
-     *
-     * @param Request  $request      Current request instance
-     * @param SiteEntity $site      Treated site instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if item to be deleted isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminDeleteAction(Request $request, SiteEntity $site)
     {
@@ -149,7 +104,7 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This action provides a handling of simple delete requests.
+     * @inheritDoc
      *
      * @Route("/site/delete/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -157,15 +112,6 @@ class SiteController extends AbstractSiteController
      *        methods = {"GET", "POST"}
      * )
      * @ParamConverter("site", class="ZikulaMultisitesModule:SiteEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
-     *
-     * @param Request  $request      Current request instance
-     * @param SiteEntity $site      Treated site instance
-     *
-     * @return mixed Output.
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if item to be deleted isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function deleteAction(Request $request, SiteEntity $site)
     {
@@ -173,18 +119,12 @@ class SiteController extends AbstractSiteController
     }
 
     /**
-     * This is a custom action in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/sites/manageExtensions",
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminManageExtensionsAction(Request $request)
     {
@@ -192,35 +132,24 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This is a custom action.
+     * @inheritDoc
      *
      * @Route("/sites/manageExtensions",
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function manageExtensionsAction(Request $request)
     {
         return parent::manageExtensionsAction($request);
     }
+
     /**
-     * This is a custom action in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/sites/manageThemes",
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminManageThemesAction(Request $request)
     {
@@ -228,35 +157,24 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This is a custom action.
+     * @inheritDoc
      *
      * @Route("/sites/manageThemes",
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function manageThemesAction(Request $request)
     {
         return parent::manageThemesAction($request);
     }
+
     /**
-     * This is a custom action in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/sites/setThemeAsDefault",
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminSetThemeAsDefaultAction(Request $request)
     {
@@ -264,35 +182,24 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This is a custom action.
+     * @inheritDoc
      *
      * @Route("/sites/setThemeAsDefault",
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function setThemeAsDefaultAction(Request $request)
     {
         return parent::setThemeAsDefaultAction($request);
     }
+
     /**
-     * This is a custom action in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/sites/viewTools",
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminViewToolsAction(Request $request)
     {
@@ -300,35 +207,24 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This is a custom action.
+     * @inheritDoc
      *
      * @Route("/sites/viewTools",
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function viewToolsAction(Request $request)
     {
         return parent::viewToolsAction($request);
     }
+
     /**
-     * This is a custom action in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/sites/executeTool",
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminExecuteToolAction(Request $request)
     {
@@ -336,35 +232,24 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This is a custom action.
+     * @inheritDoc
      *
      * @Route("/sites/executeTool",
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function executeToolAction(Request $request)
     {
         return parent::executeToolAction($request);
     }
+
     /**
-     * This is a custom action in the admin area.
+     * @inheritDoc
      *
      * @Route("/admin/sites/exportDatabaseAsTemplate",
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminExportDatabaseAsTemplateAction(Request $request)
     {
@@ -372,17 +257,11 @@ class SiteController extends AbstractSiteController
     }
     
     /**
-     * This is a custom action.
+     * @inheritDoc
      *
      * @Route("/sites/exportDatabaseAsTemplate",
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function exportDatabaseAsTemplateAction(Request $request)
     {
@@ -390,25 +269,26 @@ class SiteController extends AbstractSiteController
     }
 
     /**
-     * Process status changes for multiple items.
-     *
-     * This function processes the items selected in the admin view page.
-     * Multiple items may have their state changed or be deleted.
-     *
+     * @inheritDoc
      * @Route("/admin/sites/handleSelectedEntries",
      *        methods = {"POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return bool true on sucess, false on failure
-     *
-     * @throws RuntimeException Thrown if executing the workflow action fails
      */
     public function adminHandleSelectedEntriesAction(Request $request)
     {
         return parent::adminHandleSelectedEntriesAction($request);
+    }
+
+    /**
+     * @inheritDoc
+     * @Route("/sites/handleSelectedEntries",
+     *        methods = {"POST"}
+     * )
+     */
+    public function handleSelectedEntriesAction(Request $request)
+    {
+        return parent::handleSelectedEntriesAction($request);
     }
 
     /**

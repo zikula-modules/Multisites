@@ -27,17 +27,10 @@ use Zikula\ExtensionsModule\Constant as ExtensionsConstant;
 class AjaxController extends AbstractAjaxController
 {
     /**
-     * This is the default action handling the main area called without defining arguments.
-     *
+     * @inheritDoc
      * @Route("/ajax",
      *        methods = {"GET"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return mixed Output.
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions.
      */
     public function indexAction(Request $request)
     {
@@ -46,14 +39,8 @@ class AjaxController extends AbstractAjaxController
 
     
     /**
-     * Searches for entities for auto completion usage.
-     *
+     * @inheritDoc
      * @Route("/getItemListAutoCompletion", options={"expose"=true})
-    
-     *
-     * @param Request $request Current request instance
-     *
-     * @return JsonResponse
      */
     public function getItemListAutoCompletionAction(Request $request)
     {
@@ -61,15 +48,8 @@ class AjaxController extends AbstractAjaxController
     }
     
     /**
-     * Changes a given flag (boolean field) by switching between true and false.
-     *
+     * @inheritDoc
      * @Route("/toggleFlag", methods = {"POST"}, options={"expose"=true})
-     *
-     * @param Request $request Current request instance
-     *
-     * @return JsonResponse
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function toggleFlagAction(Request $request)
     {
