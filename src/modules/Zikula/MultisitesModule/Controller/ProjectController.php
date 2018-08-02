@@ -37,16 +37,6 @@ class ProjectController extends AbstractProjectController
      *        methods = {"GET"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     * @param string $sort         Sorting field
-     * @param string $sortdir      Sorting direction
-     * @param int    $pos          Current pager position
-     * @param int    $num          Amount of entries to display
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -61,16 +51,6 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
-     *
-     * @param Request $request Current request instance
-     * @param string $sort         Sorting field
-     * @param string $sortdir      Sorting direction
-     * @param int    $pos          Current pager position
-     * @param int    $num          Amount of entries to display
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -86,14 +66,6 @@ class ProjectController extends AbstractProjectController
      *        methods = {"GET", "POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if project to be edited isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
     {
@@ -108,14 +80,6 @@ class ProjectController extends AbstractProjectController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if project to be edited isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
     {
@@ -123,21 +87,11 @@ class ProjectController extends AbstractProjectController
     }
     
     /**
-     * Process status changes for multiple items.
-     *
-     * This function processes the items selected in the admin view page.
-     * Multiple items may have their state changed or be deleted.
-     *
+     * @inheritDoc
      * @Route("/admin/projects/handleSelectedEntries",
      *        methods = {"POST"}
      * )
      * @Theme("admin")
-     *
-     * @param Request $request Current request instance
-     *
-     * @return RedirectResponse
-     *
-     * @throws RuntimeException Thrown if executing the workflow action fails
      */
     public function adminHandleSelectedEntriesAction(Request $request)
     {
@@ -145,20 +99,10 @@ class ProjectController extends AbstractProjectController
     }
     
     /**
-     * Process status changes for multiple items.
-     *
-     * This function processes the items selected in the admin view page.
-     * Multiple items may have their state changed or be deleted.
-     *
+     * @inheritDoc
      * @Route("/projects/handleSelectedEntries",
      *        methods = {"POST"}
      * )
-     *
-     * @param Request $request Current request instance
-     *
-     * @return RedirectResponse
-     *
-     * @throws RuntimeException Thrown if executing the workflow action fails
      */
     public function handleSelectedEntriesAction(Request $request)
     {

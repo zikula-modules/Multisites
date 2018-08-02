@@ -205,7 +205,7 @@ abstract class AbstractWorkflowHelper
                 $title = $this->translator->__('Trash');
             } elseif ($actionId == 'recover') {
                 $title = $this->translator->__('Recover');
-        	}
+            }
         }
     
         return $title;
