@@ -142,7 +142,21 @@ function zikulaMultisitesInitItemActions(context) {
  * Initialises image viewing behaviour.
  */
 function zikulaMultisitesInitImageViewer() {
-    if (typeof(magnificPopup) === 'undefined') {
+    var scripts;
+    var magnificPopupAvailable;
+
+    // check if magnific popup is available
+    scripts = jQuery('script');
+    magnificPopupAvailable = false;
+    jQuery.each(scripts, function (index, elem) {
+        if (elem.hasAttribute('src')) {
+            elem = jQuery(elem);
+            if (-1 !== elem.attr('src').indexOf('jquery.magnific-popup')) {
+                magnificPopupAvailable = true;
+            }
+        }
+    });
+    if (!magnificPopupAvailable) {
         return;
     }
     jQuery('a.image-link').magnificPopup({
