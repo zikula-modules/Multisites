@@ -208,7 +208,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     protected $logoMeta = [];
     
     /**
-     * @ORM\Column(name="logoFileName", length=255, nullable=true)
+     * @ORM\Column(name="logo", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
      *    mimeTypes = {"image/*"}
@@ -244,7 +244,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     protected $favIconMeta = [];
     
     /**
-     * @ORM\Column(name="favIconFileName", length=255, nullable=true)
+     * @ORM\Column(name="favIcon", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
      *    mimeTypes = {"image/*"}
@@ -286,7 +286,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     protected $parametersCsvFileMeta = [];
     
     /**
-     * @ORM\Column(name="parametersCsvFileFileName", length=255, nullable=true)
+     * @ORM\Column(name="parametersCsvFile", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
      *    mimeTypes = {"text/csv"}

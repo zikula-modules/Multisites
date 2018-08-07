@@ -96,7 +96,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     protected $sqlFileMeta = [];
     
     /**
-     * @ORM\Column(name="sqlFileFileName", length=255)
+     * @ORM\Column(name="sqlFile", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
