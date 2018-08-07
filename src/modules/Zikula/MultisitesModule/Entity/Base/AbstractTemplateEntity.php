@@ -354,6 +354,10 @@ abstract class AbstractTemplateEntity extends EntityAccess
      */
     public function getSqlFile()
     {
+        if (null !== $this->sqlFile) {
+            return $this->sqlFile;
+        }
+    
         $fileName = $this->sqlFileFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
             throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getSqlFile().');

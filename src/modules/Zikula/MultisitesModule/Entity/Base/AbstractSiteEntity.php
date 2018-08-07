@@ -872,6 +872,10 @@ abstract class AbstractSiteEntity extends EntityAccess
      */
     public function getLogo()
     {
+        if (null !== $this->logo) {
+            return $this->logo;
+        }
+    
         $fileName = $this->logoFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
             throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getLogo().');
@@ -995,6 +999,10 @@ abstract class AbstractSiteEntity extends EntityAccess
      */
     public function getFavIcon()
     {
+        if (null !== $this->favIcon) {
+            return $this->favIcon;
+        }
+    
         $fileName = $this->favIconFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
             throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getFavIcon().');
@@ -1142,6 +1150,10 @@ abstract class AbstractSiteEntity extends EntityAccess
      */
     public function getParametersCsvFile()
     {
+        if (null !== $this->parametersCsvFile) {
+            return $this->parametersCsvFile;
+        }
+    
         $fileName = $this->parametersCsvFileFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
             throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getParametersCsvFile().');
