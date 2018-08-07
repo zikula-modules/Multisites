@@ -503,20 +503,12 @@ abstract class AbstractUploadHelper
         if (is_array($entity[$fieldName]) && isset($entity[$fieldName][$fieldName])) {
             $entity[$fieldName] = $entity[$fieldName][$fieldName];
         }
-        if (is_object($entity[$fieldName])) {
-            $filePath = $entity[$fieldName]->getPathname();
-            if (file_exists($filePath) && !unlink($filePath)) {
-                return false;
-            }
-        } elseif (!empty($entity[$fieldName]) && file_exists($entity[$fieldName])) {
-            if (!unlink($entity[$fieldName])) {
-                return false;
-            }
+        $filePath = is_object($entity[$fieldName]) ? $entity[$fieldName]->getPathname() : $entity[$fieldName];
+        if (file_exists($filePath) && !unlink($filePath)) {
+            return false;
         }
     
         $entity[$fieldName] = null;
-        $entity[$fieldName . 'Meta'] = [];
-        $entity[$fieldName . 'Url'] = '';
     
         return $entity;
     }
@@ -532,27 +524,32 @@ abstract class AbstractUploadHelper
      *
      * @throws Exception If an invalid object type is used
      */
-    public function getFileBaseFolder($objectType, $fieldName, $ignoreCreate = false)
+    public function getFileBaseFolder($objectType, $fieldName = '', $ignoreCreate = false)
     {
         $basePath = $this->dataDirectory . '/ZikulaMultisitesModule/';
     
         switch ($objectType) {
             case 'site':
                 $basePath .= 'sites/';
-                switch ($fieldName) {
-                    case 'logo':
-                        $basePath .= 'logo/';
-                        break;
-                    case 'favIcon':
-                        $basePath .= 'favicon/';
-                        break;
-                    case 'parametersCsvFile':
-                        $basePath .= 'parameterscsvfile/';
-                        break;
+                if ('' != $fieldName) {
+                    switch ($fieldName) {
+                        case 'logo':
+                            $basePath .= 'logo/';
+                            break;
+                        case 'favIcon':
+                            $basePath .= 'favicon/';
+                            break;
+                        case 'parametersCsvFile':
+                            $basePath .= 'parameterscsvfile/';
+                            break;
+                    }
                 }
                 break;
             case 'template':
-                $basePath .= 'templates/sqlfile/';
+                $basePath .= 'templates/';
+                if ('' != $fieldName) {
+                    $basePath .= 'sqlfile/';
+                }
                 break;
             default:
                 throw new Exception($this->__('Error! Invalid object type received.'));
@@ -569,35 +566,6 @@ abstract class AbstractUploadHelper
         }
     
         return $result;
-    }
-
-    /**
-     * Prepares an upload field by transforming the file name into a File object.
-     *
-     * @param EntityAccess $entity    The entity object
-     * @param string       $fieldName Name of upload field
-     * @param string       $baseUrl   The base url to prepend
-     */
-    public function initialiseUploadField($entity, $fieldName, $baseUrl)
-    {
-        if (empty($fieldName)) {
-            return;
-        }
-        $fileName = $entity[$fieldName];
-        $filePath = $this->getFileBaseFolder($entity->get_objectType(), $fieldName) . $fileName;
-        if (!empty($fileName) && file_exists($filePath)) {
-            $entity[$fieldName] = new File($filePath);
-            $entity[$fieldName . 'Url'] = $baseUrl . '/' . $filePath;
-    
-            // determine meta data if it does not exist
-            if (!is_array($entity[$fieldName . 'Meta']) || !count($entity[$fieldName . 'Meta'])) {
-                $entity[$fieldName . 'Meta'] = $this->readMetaDataForFile($fileName, $filePath);
-            }
-        } else {
-            $entity[$fieldName] = null;
-            $entity[$fieldName . 'Url'] = '';
-            $entity[$fieldName . 'Meta'] = [];
-        }
     }
 
     /**

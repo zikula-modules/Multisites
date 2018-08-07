@@ -43,6 +43,16 @@ abstract class AbstractTemplateEntity extends EntityAccess
     protected $_objectType = 'template';
     
     /**
+     * @var string Path to upload base folder
+     */
+    protected $_uploadBasePath = '';
+    
+    /**
+     * @var string Base URL to upload files
+     */
+    protected $_uploadBaseUrl = '';
+    
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
@@ -86,15 +96,15 @@ abstract class AbstractTemplateEntity extends EntityAccess
     protected $sqlFileMeta = [];
     
     /**
-     * @ORM\Column(length=255)
+     * @ORM\Column(name="sqlFileFileName", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min="0", max="255")
      * @Assert\File(
      *    mimeTypes = {"text/*"}
      * )
-     * @var string $sqlFile
+     * @var string $sqlFileFileName
      */
-    protected $sqlFile = null;
+    protected $sqlFileFileName = null;
     
     /**
      * Full sql file path as url.
@@ -103,6 +113,13 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * @var string $sqlFileUrl
      */
     protected $sqlFileUrl = '';
+    
+    /**
+     * Sql file file object.
+     *
+     * @var File $sqlFile
+     */
+    protected $sqlFile = null;
     
     /**
      * @ORM\Column(type="array")
@@ -180,7 +197,56 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function set_objectType($_objectType)
     {
         if ($this->_objectType != $_objectType) {
-            $this->_objectType = $_objectType;
+            $this->_objectType = isset($_objectType) ? $_objectType : '';
+        }
+    }
+    
+    
+    /**
+     * Returns the _upload base path.
+     *
+     * @return string
+     */
+    public function get_uploadBasePath()
+    {
+        return $this->_uploadBasePath;
+    }
+    
+    /**
+     * Sets the _upload base path.
+     *
+     * @param string $_uploadBasePath
+     *
+     * @return void
+     */
+    public function set_uploadBasePath($_uploadBasePath)
+    {
+        if ($this->_uploadBasePath != $_uploadBasePath) {
+            $this->_uploadBasePath = isset($_uploadBasePath) ? $_uploadBasePath : '';
+        }
+    }
+    
+    /**
+     * Returns the _upload base url.
+     *
+     * @return string
+     */
+    public function get_uploadBaseUrl()
+    {
+        return $this->_uploadBaseUrl;
+    }
+    
+    /**
+     * Sets the _upload base url.
+     *
+     * @param string $_uploadBaseUrl
+     *
+     * @return void
+     */
+    public function set_uploadBaseUrl($_uploadBaseUrl)
+    {
+        if ($this->_uploadBaseUrl != $_uploadBaseUrl) {
+            $this->_uploadBaseUrl = isset($_uploadBaseUrl) ? $_uploadBaseUrl : '';
         }
     }
     
@@ -284,24 +350,75 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Returns the sql file.
      *
-     * @return string
+     * @return File
      */
     public function getSqlFile()
     {
+        if (!$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getSqlFile().');
+        }
+    
+        $fileName = $this->sqlFileFileName;
+        $filePath = $this->_uploadBasePath . 'sqlfile/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->sqlFile = new File($filePath);
+            $this->setSqlFileUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+    	    $this->setSqlFileFileName('');
+    	    $this->setSqlFileUrl('');
+    	    $this->setSqlFileMeta([]);
+        }
+    
         return $this->sqlFile;
     }
     
     /**
      * Sets the sql file.
      *
-     * @param string $sqlFile
+     * @param File $sqlFile
      *
      * @return void
      */
-    public function setSqlFile($sqlFile)
+    public function setSqlFile(File $sqlFile)
     {
-        if ($this->sqlFile !== $sqlFile) {
-            $this->sqlFile = isset($sqlFile) ? $sqlFile : '';
+        if (null === $this->sqlFile && null === $sqlFile) {
+            return;
+        }
+        if (null !== $this->sqlFile && null !== $sqlFile && $this->sqlFile->getRealPath() === $sqlFile->getRealPath()) {
+            return;
+        }
+        $this->sqlFile = isset($sqlFile) ? $sqlFile : '';
+    
+        if (null === $this->sqlFile) {
+    	    $this->setSqlFileFileName('');
+    	    $this->setSqlFileUrl('');
+    	    $this->setSqlFileMeta([]);
+    	} else {
+            $this->setSqlFileFileName($this->sqlFile->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the sql file file name.
+     *
+     * @return string
+     */
+    public function getSqlFileFileName()
+    {
+        return $this->sqlFileFileName;
+    }
+    
+    /**
+     * Sets the sql file file name.
+     *
+     * @param string $sqlFileFileName
+     *
+     * @return void
+     */
+    public function setSqlFileFileName($sqlFileFileName)
+    {
+        if ($this->sqlFileFileName !== $sqlFileFileName) {
+            $this->sqlFileFileName = isset($sqlFileFileName) ? $sqlFileFileName : '';
         }
     }
     
@@ -626,8 +743,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
         // reset upload fields
         $this->setSqlFile(null);
-        $this->setSqlFileMeta([]);
-        $this->setSqlFileUrl('');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);
