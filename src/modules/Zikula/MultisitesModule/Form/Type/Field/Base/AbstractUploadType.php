@@ -104,7 +104,6 @@ abstract class AbstractUploadType extends AbstractType
 
         if (!$options['required']) {
             $builder->add($fieldName . 'DeleteFile', CheckboxType::class, [
-                'mapped' => false,
                 'label' => $this->translator->__('Delete existing file'),
                 'required' => false,
                 'attr' => [
