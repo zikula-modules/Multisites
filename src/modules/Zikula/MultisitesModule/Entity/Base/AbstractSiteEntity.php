@@ -42,6 +42,16 @@ abstract class AbstractSiteEntity extends EntityAccess
     protected $_objectType = 'site';
     
     /**
+     * @var string Path to upload base folder
+     */
+    protected $_uploadBasePath = '';
+    
+    /**
+     * @var string Base URL to upload files
+     */
+    protected $_uploadBaseUrl = '';
+    
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
@@ -198,16 +208,11 @@ abstract class AbstractSiteEntity extends EntityAccess
     protected $logoMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="logo", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"image/*"}
-     * )
-     * @Assert\Image(
-     * )
-     * @var string $logo
+     * @var string $logoFileName
      */
-    protected $logo = null;
+    protected $logoFileName = null;
     
     /**
      * Full logo path as url.
@@ -216,6 +221,18 @@ abstract class AbstractSiteEntity extends EntityAccess
      * @var string $logoUrl
      */
     protected $logoUrl = '';
+    
+    /**
+     * Logo file object.
+     *
+     * @Assert\File(
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
+     * @var File $logo
+     */
+    protected $logo = null;
     
     /**
      * Fav icon meta data array.
@@ -227,14 +244,11 @@ abstract class AbstractSiteEntity extends EntityAccess
     protected $favIconMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="favIcon", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"image/*"}
-     * )
-     * @var string $favIcon
+     * @var string $favIconFileName
      */
-    protected $favIcon = null;
+    protected $favIconFileName = null;
     
     /**
      * Full fav icon path as url.
@@ -243,6 +257,16 @@ abstract class AbstractSiteEntity extends EntityAccess
      * @var string $favIconUrl
      */
     protected $favIconUrl = '';
+    
+    /**
+     * Fav icon file object.
+     *
+     * @Assert\File(
+     *    mimeTypes = {"image/*"}
+     * )
+     * @var File $favIcon
+     */
+    protected $favIcon = null;
     
     /**
      * @ORM\Column(type="array")
@@ -262,14 +286,11 @@ abstract class AbstractSiteEntity extends EntityAccess
     protected $parametersCsvFileMeta = [];
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(name="parametersCsvFile", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"text/csv"}
-     * )
-     * @var string $parametersCsvFile
+     * @var string $parametersCsvFileFileName
      */
-    protected $parametersCsvFile = null;
+    protected $parametersCsvFileFileName = null;
     
     /**
      * Full parameters csv file path as url.
@@ -278,6 +299,16 @@ abstract class AbstractSiteEntity extends EntityAccess
      * @var string $parametersCsvFileUrl
      */
     protected $parametersCsvFileUrl = '';
+    
+    /**
+     * Parameters csv file file object.
+     *
+     * @Assert\File(
+     *    mimeTypes = {"text/csv"}
+     * )
+     * @var File $parametersCsvFile
+     */
+    protected $parametersCsvFile = null;
     
     /**
      * @ORM\Column(type="array")
@@ -348,7 +379,56 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function set_objectType($_objectType)
     {
         if ($this->_objectType != $_objectType) {
-            $this->_objectType = $_objectType;
+            $this->_objectType = isset($_objectType) ? $_objectType : '';
+        }
+    }
+    
+    
+    /**
+     * Returns the _upload base path.
+     *
+     * @return string
+     */
+    public function get_uploadBasePath()
+    {
+        return $this->_uploadBasePath;
+    }
+    
+    /**
+     * Sets the _upload base path.
+     *
+     * @param string $_uploadBasePath
+     *
+     * @return void
+     */
+    public function set_uploadBasePath($_uploadBasePath)
+    {
+        if ($this->_uploadBasePath != $_uploadBasePath) {
+            $this->_uploadBasePath = isset($_uploadBasePath) ? $_uploadBasePath : '';
+        }
+    }
+    
+    /**
+     * Returns the _upload base url.
+     *
+     * @return string
+     */
+    public function get_uploadBaseUrl()
+    {
+        return $this->_uploadBaseUrl;
+    }
+    
+    /**
+     * Sets the _upload base url.
+     *
+     * @param string $_uploadBaseUrl
+     *
+     * @return void
+     */
+    public function set_uploadBaseUrl($_uploadBaseUrl)
+    {
+        if ($this->_uploadBaseUrl != $_uploadBaseUrl) {
+            $this->_uploadBaseUrl = isset($_uploadBaseUrl) ? $_uploadBaseUrl : '';
         }
     }
     
@@ -788,24 +868,79 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Returns the logo.
      *
-     * @return string
+     * @return File
      */
     public function getLogo()
     {
+        if (null !== $this->logo) {
+            return $this->logo;
+        }
+    
+        $fileName = $this->logoFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getLogo().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'logo/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->logo = new File($filePath);
+            $this->setLogoUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setLogoFileName('');
+            $this->setLogoUrl('');
+            $this->setLogoMeta([]);
+        }
+    
         return $this->logo;
     }
     
     /**
      * Sets the logo.
      *
-     * @param string $logo
+     * @param File $logo
      *
      * @return void
      */
     public function setLogo($logo)
     {
-        if ($this->logo !== $logo) {
-            $this->logo = $logo;
+        if (null === $this->logo && null === $logo) {
+            return;
+        }
+        if (null !== $this->logo && null !== $logo && $this->logo->getRealPath() === $logo->getRealPath()) {
+            return;
+        }
+        $this->logo = $logo;
+    
+        if (null === $this->logo) {
+            $this->setLogoFileName('');
+            $this->setLogoUrl('');
+            $this->setLogoMeta([]);
+        } else {
+            $this->setLogoFileName($this->logo->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the logo file name.
+     *
+     * @return string
+     */
+    public function getLogoFileName()
+    {
+        return $this->logoFileName;
+    }
+    
+    /**
+     * Sets the logo file name.
+     *
+     * @param string $logoFileName
+     *
+     * @return void
+     */
+    public function setLogoFileName($logoFileName)
+    {
+        if ($this->logoFileName !== $logoFileName) {
+            $this->logoFileName = $logoFileName;
         }
     }
     
@@ -860,24 +995,79 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Returns the fav icon.
      *
-     * @return string
+     * @return File
      */
     public function getFavIcon()
     {
+        if (null !== $this->favIcon) {
+            return $this->favIcon;
+        }
+    
+        $fileName = $this->favIconFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getFavIcon().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'favicon/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->favIcon = new File($filePath);
+            $this->setFavIconUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setFavIconFileName('');
+            $this->setFavIconUrl('');
+            $this->setFavIconMeta([]);
+        }
+    
         return $this->favIcon;
     }
     
     /**
      * Sets the fav icon.
      *
-     * @param string $favIcon
+     * @param File $favIcon
      *
      * @return void
      */
     public function setFavIcon($favIcon)
     {
-        if ($this->favIcon !== $favIcon) {
-            $this->favIcon = $favIcon;
+        if (null === $this->favIcon && null === $favIcon) {
+            return;
+        }
+        if (null !== $this->favIcon && null !== $favIcon && $this->favIcon->getRealPath() === $favIcon->getRealPath()) {
+            return;
+        }
+        $this->favIcon = $favIcon;
+    
+        if (null === $this->favIcon) {
+            $this->setFavIconFileName('');
+            $this->setFavIconUrl('');
+            $this->setFavIconMeta([]);
+        } else {
+            $this->setFavIconFileName($this->favIcon->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the fav icon file name.
+     *
+     * @return string
+     */
+    public function getFavIconFileName()
+    {
+        return $this->favIconFileName;
+    }
+    
+    /**
+     * Sets the fav icon file name.
+     *
+     * @param string $favIconFileName
+     *
+     * @return void
+     */
+    public function setFavIconFileName($favIconFileName)
+    {
+        if ($this->favIconFileName !== $favIconFileName) {
+            $this->favIconFileName = $favIconFileName;
         }
     }
     
@@ -956,24 +1146,79 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Returns the parameters csv file.
      *
-     * @return string
+     * @return File
      */
     public function getParametersCsvFile()
     {
+        if (null !== $this->parametersCsvFile) {
+            return $this->parametersCsvFile;
+        }
+    
+        $fileName = $this->parametersCsvFileFileName;
+        if (!empty($fileName) && !$this->_uploadBasePath) {
+            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getParametersCsvFile().');
+        }
+    
+        $filePath = $this->_uploadBasePath . 'parameterscsvfile/' . $fileName;
+        if (!empty($fileName) && file_exists($filePath)) {
+            $this->parametersCsvFile = new File($filePath);
+            $this->setParametersCsvFileUrl($this->_uploadBaseUrl . '/' . $filePath);
+        } else {
+            $this->setParametersCsvFileFileName('');
+            $this->setParametersCsvFileUrl('');
+            $this->setParametersCsvFileMeta([]);
+        }
+    
         return $this->parametersCsvFile;
     }
     
     /**
      * Sets the parameters csv file.
      *
-     * @param string $parametersCsvFile
+     * @param File $parametersCsvFile
      *
      * @return void
      */
     public function setParametersCsvFile($parametersCsvFile)
     {
-        if ($this->parametersCsvFile !== $parametersCsvFile) {
-            $this->parametersCsvFile = $parametersCsvFile;
+        if (null === $this->parametersCsvFile && null === $parametersCsvFile) {
+            return;
+        }
+        if (null !== $this->parametersCsvFile && null !== $parametersCsvFile && $this->parametersCsvFile->getRealPath() === $parametersCsvFile->getRealPath()) {
+            return;
+        }
+        $this->parametersCsvFile = $parametersCsvFile;
+    
+        if (null === $this->parametersCsvFile) {
+            $this->setParametersCsvFileFileName('');
+            $this->setParametersCsvFileUrl('');
+            $this->setParametersCsvFileMeta([]);
+        } else {
+            $this->setParametersCsvFileFileName($this->parametersCsvFile->getFilename());
+        }
+    }
+    
+    /**
+     * Returns the parameters csv file file name.
+     *
+     * @return string
+     */
+    public function getParametersCsvFileFileName()
+    {
+        return $this->parametersCsvFileFileName;
+    }
+    
+    /**
+     * Sets the parameters csv file file name.
+     *
+     * @param string $parametersCsvFileFileName
+     *
+     * @return void
+     */
+    public function setParametersCsvFileFileName($parametersCsvFileFileName)
+    {
+        if ($this->parametersCsvFileFileName !== $parametersCsvFileFileName) {
+            $this->parametersCsvFileFileName = $parametersCsvFileFileName;
         }
     }
     
@@ -1212,14 +1457,8 @@ abstract class AbstractSiteEntity extends EntityAccess
     
         // reset upload fields
         $this->setLogo(null);
-        $this->setLogoMeta([]);
-        $this->setLogoUrl('');
         $this->setFavIcon(null);
-        $this->setFavIconMeta([]);
-        $this->setFavIconUrl('');
         $this->setParametersCsvFile(null);
-        $this->setParametersCsvFileMeta([]);
-        $this->setParametersCsvFileUrl('');
     
         $this->setCreatedBy(null);
         $this->setCreatedDate(null);

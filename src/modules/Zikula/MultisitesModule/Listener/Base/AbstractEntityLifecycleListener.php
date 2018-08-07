@@ -22,7 +22,6 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\MultisitesModule\MultisitesEvents;
 use Zikula\MultisitesModule\Event\FilterSiteEvent;
@@ -124,13 +123,13 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $uploadFields = $this->getUploadFields($objectType);
         if (count($uploadFields) > 0) {
             $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
-            foreach ($uploadFields as $uploadField) {
-                if (empty($entity[$uploadField])) {
+            foreach ($uploadFields as $fieldName) {
+                if (empty($entity[$fieldName])) {
                     continue;
                 }
         
                 // remove upload file
-                $uploadHelper->deleteUploadFile($entity, $uploadField);
+                $uploadHelper->deleteUploadFile($entity, $fieldName);
             }
         }
         
@@ -158,20 +157,6 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $entity = $args->getObject();
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
-        }
-        
-        $uploadFields = $this->getUploadFields($entity->get_objectType());
-        foreach ($uploadFields as $uploadField) {
-            if (empty($entity[$uploadField])) {
-                continue;
-            }
-        
-            if ($entity[$uploadField] instanceof File) {
-                $entity[$uploadField] = $entity[$uploadField]->getFilename();
-            } elseif (false !== strpos($entity[$uploadField], '/')) {
-                $fileParts = explode('/', $entity[$uploadField]);
-                $entity[$uploadField] = end($fileParts);
-            }
         }
         
         // create the filter event and dispatch it
@@ -218,20 +203,6 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $entity = $args->getObject();
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
-        }
-        
-        $uploadFields = $this->getUploadFields($entity->get_objectType());
-        foreach ($uploadFields as $uploadField) {
-            if (empty($entity[$uploadField])) {
-                continue;
-            }
-        
-            if ($entity[$uploadField] instanceof File) {
-                $entity[$uploadField] = $entity[$uploadField]->getFilename();
-            } elseif (false !== strpos($entity[$uploadField], '/')) {
-                $fileParts = explode('/', $entity[$uploadField]);
-                $entity[$uploadField] = end($fileParts);
-            }
         }
         
         // create the filter event and dispatch it
@@ -288,8 +259,26 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
             $request = $this->container->get('request_stack')->getCurrentRequest();
             $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
+        
+            $entity->set_uploadBasePath($uploadHelper->getFileBaseFolder($entity->get_objectType()));
+            $entity->set_uploadBaseUrl($baseUrl);
+        
+            // determine meta data if it does not exist
             foreach ($uploadFields as $fieldName) {
-                $uploadHelper->initialiseUploadField($entity, $fieldName, $baseUrl);
+                if (empty($entity[$fieldName])) {
+                    continue;
+                }
+        
+                if (is_array($entity[$fieldName . 'Meta']) && count($entity[$fieldName . 'Meta'])) {
+                    continue;
+                }
+                $basePath = $uploadHelper->getFileBaseFolder($entity->get_objectType(), $fieldName);
+                $fileName = $entity[$fieldName . 'FileName'];
+                $filePath = $basePath . $fileName;
+                if (!file_exists($filePath)) {
+                    continue;
+                }
+                $entity[$fieldName . 'Meta'] = $uploadHelper->readMetaDataForFile($fileName, $filePath);
             }
         }
         

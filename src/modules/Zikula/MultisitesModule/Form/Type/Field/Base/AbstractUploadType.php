@@ -100,7 +100,7 @@ abstract class AbstractUploadType extends AbstractType
 
         $builder->add($fieldName, FileType::class, $fileOptions);
         $uploadFileTransformer = new UploadFileTransformer($this, $this->requestStack, $this->uploadHelper, $fieldName);
-        $builder->get($fieldName)->addModelTransformer($uploadFileTransformer);
+        $builder->addModelTransformer($uploadFileTransformer);
 
         if (!$options['required']) {
             $builder->add($fieldName . 'DeleteFile', CheckboxType::class, [
@@ -134,13 +134,7 @@ abstract class AbstractUploadType extends AbstractType
         if (null !== $file && is_array($file)) {
             $file = $file[$fieldName];
         }
-        if (null !== $file && is_string($file)) {
-            if (false === strpos($file, '/')) {
-                $file = $this->uploadHelper->getFileBaseFolder($this->entity->get_objectType(), $fieldName) . $file;
-            }
-            $file = file_exists($file) ? new File($file) : null;
-        }
-        $hasFile = null !== $file;
+        $hasFile = null !== $file && $file instanceof File;
         $fileMeta = $hasFile ? $accessor->getValue($parentData, $fieldNameGetter . 'Meta') : [];
         if (!isset($fileMeta['isImage'])) {
             $fileMeta['isImage'] = false;
