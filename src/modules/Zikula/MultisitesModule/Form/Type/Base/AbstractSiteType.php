@@ -23,8 +23,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -108,23 +106,6 @@ abstract class AbstractSiteType extends AbstractType
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addSubmitButtons($builder, $options);
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $entity = $event->getData();
-            foreach (['logo', 'favIcon', 'parametersCsvFile'] as $uploadFieldName) {
-                $entity[$uploadFieldName] = [
-                    $uploadFieldName => $entity[$uploadFieldName] instanceof File ? $entity[$uploadFieldName]->getPathname() : null
-                ];
-            }
-        });
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $entity = $event->getData();
-            foreach (['logo', 'favIcon', 'parametersCsvFile'] as $uploadFieldName) {
-                if (is_array($entity[$uploadFieldName])) {
-                    $entity[$uploadFieldName] = $entity[$uploadFieldName][$uploadFieldName];
-                }
-            }
-        });
     }
 
     /**

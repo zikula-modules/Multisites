@@ -99,9 +99,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * @ORM\Column(name="sqlFile", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"text/*"}
-     * )
      * @var string $sqlFileFileName
      */
     protected $sqlFileFileName = null;
@@ -117,6 +114,9 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Sql file file object.
      *
+     * @Assert\File(
+     *    mimeTypes = {"text/*"}
+     * )
      * @var File $sqlFile
      */
     protected $sqlFile = null;
@@ -368,9 +368,9 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->sqlFile = new File($filePath);
             $this->setSqlFileUrl($this->_uploadBaseUrl . '/' . $filePath);
         } else {
-    	    $this->setSqlFileFileName('');
-    	    $this->setSqlFileUrl('');
-    	    $this->setSqlFileMeta([]);
+            $this->setSqlFileFileName('');
+            $this->setSqlFileUrl('');
+            $this->setSqlFileMeta([]);
         }
     
         return $this->sqlFile;
@@ -394,10 +394,10 @@ abstract class AbstractTemplateEntity extends EntityAccess
         $this->sqlFile = isset($sqlFile) ? $sqlFile : '';
     
         if (null === $this->sqlFile) {
-    	    $this->setSqlFileFileName('');
-    	    $this->setSqlFileUrl('');
-    	    $this->setSqlFileMeta([]);
-    	} else {
+            $this->setSqlFileFileName('');
+            $this->setSqlFileUrl('');
+            $this->setSqlFileMeta([]);
+        } else {
             $this->setSqlFileFileName($this->sqlFile->getFilename());
         }
     }

@@ -210,11 +210,6 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * @ORM\Column(name="logo", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"image/*"}
-     * )
-     * @Assert\Image(
-     * )
      * @var string $logoFileName
      */
     protected $logoFileName = null;
@@ -230,6 +225,11 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Logo file object.
      *
+     * @Assert\File(
+     *    mimeTypes = {"image/*"}
+     * )
+     * @Assert\Image(
+     * )
      * @var File $logo
      */
     protected $logo = null;
@@ -246,9 +246,6 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * @ORM\Column(name="favIcon", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"image/*"}
-     * )
      * @var string $favIconFileName
      */
     protected $favIconFileName = null;
@@ -264,6 +261,9 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Fav icon file object.
      *
+     * @Assert\File(
+     *    mimeTypes = {"image/*"}
+     * )
      * @var File $favIcon
      */
     protected $favIcon = null;
@@ -288,9 +288,6 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * @ORM\Column(name="parametersCsvFile", length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
-     * @Assert\File(
-     *    mimeTypes = {"text/csv"}
-     * )
      * @var string $parametersCsvFileFileName
      */
     protected $parametersCsvFileFileName = null;
@@ -306,6 +303,9 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Parameters csv file file object.
      *
+     * @Assert\File(
+     *    mimeTypes = {"text/csv"}
+     * )
      * @var File $parametersCsvFile
      */
     protected $parametersCsvFile = null;
@@ -886,9 +886,9 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->logo = new File($filePath);
             $this->setLogoUrl($this->_uploadBaseUrl . '/' . $filePath);
         } else {
-    	    $this->setLogoFileName('');
-    	    $this->setLogoUrl('');
-    	    $this->setLogoMeta([]);
+            $this->setLogoFileName('');
+            $this->setLogoUrl('');
+            $this->setLogoMeta([]);
         }
     
         return $this->logo;
@@ -912,10 +912,10 @@ abstract class AbstractSiteEntity extends EntityAccess
         $this->logo = $logo;
     
         if (null === $this->logo) {
-    	    $this->setLogoFileName('');
-    	    $this->setLogoUrl('');
-    	    $this->setLogoMeta([]);
-    	} else {
+            $this->setLogoFileName('');
+            $this->setLogoUrl('');
+            $this->setLogoMeta([]);
+        } else {
             $this->setLogoFileName($this->logo->getFilename());
         }
     }
@@ -1013,9 +1013,9 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->favIcon = new File($filePath);
             $this->setFavIconUrl($this->_uploadBaseUrl . '/' . $filePath);
         } else {
-    	    $this->setFavIconFileName('');
-    	    $this->setFavIconUrl('');
-    	    $this->setFavIconMeta([]);
+            $this->setFavIconFileName('');
+            $this->setFavIconUrl('');
+            $this->setFavIconMeta([]);
         }
     
         return $this->favIcon;
@@ -1039,10 +1039,10 @@ abstract class AbstractSiteEntity extends EntityAccess
         $this->favIcon = $favIcon;
     
         if (null === $this->favIcon) {
-    	    $this->setFavIconFileName('');
-    	    $this->setFavIconUrl('');
-    	    $this->setFavIconMeta([]);
-    	} else {
+            $this->setFavIconFileName('');
+            $this->setFavIconUrl('');
+            $this->setFavIconMeta([]);
+        } else {
             $this->setFavIconFileName($this->favIcon->getFilename());
         }
     }
@@ -1164,9 +1164,9 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->parametersCsvFile = new File($filePath);
             $this->setParametersCsvFileUrl($this->_uploadBaseUrl . '/' . $filePath);
         } else {
-    	    $this->setParametersCsvFileFileName('');
-    	    $this->setParametersCsvFileUrl('');
-    	    $this->setParametersCsvFileMeta([]);
+            $this->setParametersCsvFileFileName('');
+            $this->setParametersCsvFileUrl('');
+            $this->setParametersCsvFileMeta([]);
         }
     
         return $this->parametersCsvFile;
@@ -1190,10 +1190,10 @@ abstract class AbstractSiteEntity extends EntityAccess
         $this->parametersCsvFile = $parametersCsvFile;
     
         if (null === $this->parametersCsvFile) {
-    	    $this->setParametersCsvFileFileName('');
-    	    $this->setParametersCsvFileUrl('');
-    	    $this->setParametersCsvFileMeta([]);
-    	} else {
+            $this->setParametersCsvFileFileName('');
+            $this->setParametersCsvFileUrl('');
+            $this->setParametersCsvFileMeta([]);
+        } else {
             $this->setParametersCsvFileFileName($this->parametersCsvFile->getFilename());
         }
     }
