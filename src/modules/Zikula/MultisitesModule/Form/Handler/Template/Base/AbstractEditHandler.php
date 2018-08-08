@@ -26,13 +26,7 @@ use RuntimeException;
 abstract class AbstractEditHandler extends EditHandler
 {
     /**
-     * Initialise form handler.
-     *
-     * This method takes care of all necessary initialisation of our data and form states.
-     *
-     * @param array $templateParameters List of preassigned template variables
-     *
-     * @return boolean False in case of initialisation errors, otherwise true
+     * @inheritDoc
      */
     public function processForm(array $templateParameters = [])
     {
@@ -66,7 +60,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Initialises relationship presets.
+     * @inheritDoc
      */
     protected function initRelationPresets()
     {
@@ -114,9 +108,7 @@ abstract class AbstractEditHandler extends EditHandler
 
 
     /**
-     * Get list of allowed redirect codes.
-     *
-     * @return string[] list of possible redirect codes
+     * @inheritDoc
      */
     protected function getRedirectCodes()
     {
@@ -166,13 +158,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
 
     /**
-     * Command event handler.
-     *
-     * This event handler is called when a command is issued by the user.
-     *
-     * @param array $args List of arguments
-     *
-     * @return mixed Redirect or false on errors
+     * @inheritDoc
      */
     public function handleCommand(array $args = [])
     {
@@ -196,12 +182,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Get success or error message for default operations.
-     *
-     * @param array   $args    List of arguments from handleCommand method
-     * @param boolean $success Becomes true if this is a success, false for default error
-     *
-     * @return String desired status or error message
+     * @inheritDoc
      */
     protected function getDefaultMessage(array $args = [], $success = false)
     {
@@ -230,12 +211,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
 
     /**
-     * This method executes a certain workflow action.
-     *
-     * @param array $args List of arguments from handleCommand method
-     *
-     * @return boolean Whether everything worked well or not
-     *
+     * @inheritDoc
      * @throws RuntimeException Thrown if concurrent editing is recognised or another error occurs
      */
     public function applyAction(array $args = [])
@@ -267,7 +243,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
 
     /**
-     * Get url to redirect to.
+     * Get URL to redirect to.
      *
      * @param array $args List of arguments
      *
