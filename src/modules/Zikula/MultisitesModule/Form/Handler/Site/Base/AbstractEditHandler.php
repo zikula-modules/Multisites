@@ -96,7 +96,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Creates the form type.
+     * @inheritDoc
      */
     protected function createForm()
     {
@@ -104,9 +104,7 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Returns the form options.
-     *
-     * @return array
+     * @inheritDoc
      */
     protected function getFormOptions()
     {

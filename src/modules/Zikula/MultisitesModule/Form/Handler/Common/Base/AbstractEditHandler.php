@@ -310,16 +310,14 @@ abstract class AbstractEditHandler
     
         // retrieve identifier of the object we wish to edit
         $routeParams = $this->request->get('_route_params', []);
-        if (empty($this->idValue)) {
-            if (array_key_exists($this->idField, $routeParams)) {
-                $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
-            }
-            if (0 === $this->idValue) {
-                $this->idValue = $this->request->query->getInt($this->idField, 0);
-            }
-            if (0 === $this->idValue && $this->idField != 'id') {
-                $this->idValue = $this->request->query->getInt('id', 0);
-            }
+        if (array_key_exists($this->idField, $routeParams)) {
+            $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
+        }
+        if (0 === $this->idValue) {
+            $this->idValue = $this->request->query->getInt($this->idField, 0);
+        }
+        if (0 === $this->idValue && $this->idField != 'id') {
+            $this->idValue = $this->request->query->getInt('id', 0);
         }
     
         $entity = null;
