@@ -497,7 +497,7 @@ abstract class AbstractEditHandler
     }
 
     /**
-     * Get list of allowed redirect codes.
+     * Returns a list of allowed redirect codes.
      *
      * @return string[] list of possible redirect codes
      */
@@ -512,6 +512,7 @@ abstract class AbstractEditHandler
 
     /**
      * Command event handler.
+     * This event handler is called when a command is issued by the user.
      *
      * @param array $args List of arguments
      *
@@ -671,7 +672,7 @@ abstract class AbstractEditHandler
     }
 
     /**
-     * This method executes a certain workflow action.
+     * Executes a certain workflow action.
      *
      * @param array $args List of arguments from handleCommand method
      *

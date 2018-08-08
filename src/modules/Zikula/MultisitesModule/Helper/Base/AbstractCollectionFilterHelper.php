@@ -525,11 +525,11 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchDatabaseHost'] = '%' . $fragment . '%';
             $filters[] = 'tbl.databaseType LIKE :searchDatabaseType';
             $parameters['searchDatabaseType'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.logo = :searchLogo';
+            $filters[] = 'tbl.logoFileName = :searchLogo';
             $parameters['searchLogo'] = $fragment;
-            $filters[] = 'tbl.favIcon = :searchFavIcon';
+            $filters[] = 'tbl.favIconFileName = :searchFavIcon';
             $parameters['searchFavIcon'] = $fragment;
-            $filters[] = 'tbl.parametersCsvFile = :searchParametersCsvFile';
+            $filters[] = 'tbl.parametersCsvFileFileName = :searchParametersCsvFile';
             $parameters['searchParametersCsvFile'] = $fragment;
         }
         if ($objectType == 'template') {
@@ -537,7 +537,7 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';
             $parameters['searchDescription'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.sqlFile = :searchSqlFile';
+            $filters[] = 'tbl.sqlFileFileName = :searchSqlFile';
             $parameters['searchSqlFile'] = $fragment;
         }
         if ($objectType == 'project') {

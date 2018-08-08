@@ -50,7 +50,7 @@ abstract class AbstractTemplateRepository extends EntityRepository
     /**
      * Retrieves an array with all fields which can be used for sorting instances.
      *
-     * @return string[] Sorting fields array
+     * @return string[] List of sorting field names
      */
     public function getAllowedSortingFields()
     {
@@ -609,6 +609,9 @@ abstract class AbstractTemplateRepository extends EntityRepository
         // add order by clause
         if (false === strpos($orderBy, '.')) {
             $orderBy = 'tbl.' . $orderBy;
+        }
+        foreach (['sqlFile'] as $uploadField) {
+            $orderBy = str_replace('tbl.' . $uploadField, 'tbl.' . $uploadField . 'FileName', $orderBy);
         }
         if (false !== strpos($orderBy, 'tbl.createdBy')) {
             $qb->addSelect('tblCreator')
