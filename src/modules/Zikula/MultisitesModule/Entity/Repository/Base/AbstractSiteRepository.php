@@ -627,7 +627,7 @@ abstract class AbstractSiteRepository extends EntityRepository
         if (false === strpos($orderBy, '.')) {
             $orderBy = 'tbl.' . $orderBy;
         }
-        for (['logo', 'favIcon', 'parametersCsvFile'] as $uploadField) {
+        foreach (['logo', 'favIcon', 'parametersCsvFile'] as $uploadField) {
             $orderBy = str_replace('tbl.' . $uploadField, 'tbl.' . $uploadField . 'FileName', $orderBy);
         }
         if (false !== strpos($orderBy, 'tbl.createdBy')) {

@@ -610,7 +610,7 @@ abstract class AbstractTemplateRepository extends EntityRepository
         if (false === strpos($orderBy, '.')) {
             $orderBy = 'tbl.' . $orderBy;
         }
-        for (['sqlFile'] as $uploadField) {
+        foreach (['sqlFile'] as $uploadField) {
             $orderBy = str_replace('tbl.' . $uploadField, 'tbl.' . $uploadField . 'FileName', $orderBy);
         }
         if (false !== strpos($orderBy, 'tbl.createdBy')) {
