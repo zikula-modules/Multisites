@@ -13,7 +13,6 @@
 namespace Zikula\MultisitesModule\Helper\Base;
 
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig_Environment;
@@ -39,9 +38,9 @@ abstract class AbstractViewHelper
     protected $twigLoader;
 
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
 
     /**
      * @var VariableApiInterface
@@ -87,7 +86,7 @@ abstract class AbstractViewHelper
     ) {
         $this->twig = $twig;
         $this->twigLoader = $twigLoader;
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->variableApi = $variableApi;
         $this->pageVars = $pageVars;
         $this->controllerHelper = $controllerHelper;
@@ -111,7 +110,7 @@ abstract class AbstractViewHelper
         $templateExtension = '.' . $this->determineExtension($type, $func);
     
         // check whether a special template is used
-        $tpl = $this->request->query->getAlnum('tpl', '');
+        $tpl = $this->requestStack->getCurrentRequest()->query->getAlnum('tpl', '');
         if (!empty($tpl)) {
             // check if custom template exists
             $customTemplate = $template . ucfirst($tpl);
@@ -143,7 +142,7 @@ abstract class AbstractViewHelper
         }
     
         // look whether we need output with or without the theme
-        $raw = $this->request->query->getBoolean('raw', false);
+        $raw = $this->requestStack->getCurrentRequest()->query->getBoolean('raw', false);
         if (!$raw && $templateExtension != 'html.twig') {
             $raw = true;
         }
@@ -198,7 +197,7 @@ abstract class AbstractViewHelper
         }
     
         $extensions = $this->availableExtensions($type, $func);
-        $format = $this->request->getRequestFormat();
+        $format = $this->requestStack->getCurrentRequest()->getRequestFormat();
         if ($format != 'html' && in_array($format, $extensions)) {
             $templateExtension = $format . '.twig';
         }
