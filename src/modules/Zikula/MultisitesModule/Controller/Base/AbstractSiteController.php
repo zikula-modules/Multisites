@@ -145,7 +145,6 @@ abstract class AbstractSiteController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if site to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function adminEditAction(Request $request)
@@ -161,7 +160,6 @@ abstract class AbstractSiteController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by form handler if site to be edited isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
     public function editAction(Request $request)
@@ -206,41 +204,46 @@ abstract class AbstractSiteController extends AbstractController
      * This action provides a handling of simple delete requests in the admin area.
      *
      * @param Request $request Current request instance
-     * @param SiteEntity $site Treated site instance
+     * @param integer $id Identifier of treated site instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if site to be deleted isn't found
+     * @throws NotFoundHttpException Thrown if site to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function adminDeleteAction(Request $request, SiteEntity $site)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return $this->deleteInternal($request, $site, true);
+        return $this->deleteInternal($request, $id, true);
     }
     
     /**
      * This action provides a handling of simple delete requests.
      *
      * @param Request $request Current request instance
-     * @param SiteEntity $site Treated site instance
+     * @param integer $id Identifier of treated site instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown by param converter if site to be deleted isn't found
+     * @throws NotFoundHttpException Thrown if site to be deleted isn't found
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function deleteAction(Request $request, SiteEntity $site)
+    public function deleteAction(Request $request, $id)
     {
-        return $this->deleteInternal($request, $site, false);
+        return $this->deleteInternal($request, $id, false);
     }
     
     /**
      * This method includes the common implementation code for adminDelete() and delete().
      */
-    protected function deleteInternal(Request $request, SiteEntity $site, $isAdmin = false)
+    protected function deleteInternal(Request $request, $id, $isAdmin = false)
     {
+        $site = $this->get('zikula_multisites_module.entity_factory')->getRepository('site')->selectById($id);
+        if (null === $site) {
+            throw new NotFoundHttpException($this->__('No such site found.'));
+        }
+        
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_DELETE;

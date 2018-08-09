@@ -333,10 +333,9 @@ abstract class AbstractEditHandler
                     // reload entity as the addLock call above has triggered the preUpdate event
                     $this->entityFactory->getObjectManager()->refresh($entity);
                 }
-            }
-    
-            if (!$this->permissionHelper->mayEdit($entity)) {
-                throw new AccessDeniedException();
+                if (!$this->permissionHelper->mayEdit($entity)) {
+                    throw new AccessDeniedException();
+                }
             }
         } else {
             $permissionLevel = ACCESS_EDIT;
