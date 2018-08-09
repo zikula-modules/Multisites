@@ -13,7 +13,6 @@
 namespace Zikula\MultisitesModule\Controller;
 
 use RuntimeException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -95,12 +94,11 @@ class SiteController extends AbstractSiteController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("site", class="ZikulaMultisitesModule:SiteEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      * @Theme("admin")
      */
-    public function adminDeleteAction(Request $request, SiteEntity $site)
+    public function adminDeleteAction(Request $request, $id)
     {
-        return parent::adminDeleteAction($request, $site);
+        return parent::adminDeleteAction($request, $id);
     }
     
     /**
@@ -111,11 +109,10 @@ class SiteController extends AbstractSiteController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
-     * @ParamConverter("site", class="ZikulaMultisitesModule:SiteEntity", options = {"repository_method" = "selectById", "mapping": {"id": "id"}, "map_method_signature" = true})
      */
-    public function deleteAction(Request $request, SiteEntity $site)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::deleteAction($request, $site);
+        return parent::deleteAction($request, $id);
     }
 
     /**
