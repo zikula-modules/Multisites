@@ -475,10 +475,10 @@ abstract class AbstractEditHandler
      */
     protected function initEntityForCreation()
     {
-        $templateId = $this->request->query->getInt('astemplate', '');
+        $templateId = $this->request->query->getInt('astemplate', 0);
         $entity = null;
     
-        if (!empty($templateId)) {
+        if ($templateId > 0) {
             // reuse existing entity
             $entityT = $this->entityFactory->getRepository($this->objectType)->selectById($templateId);
             if (null === $entityT) {
