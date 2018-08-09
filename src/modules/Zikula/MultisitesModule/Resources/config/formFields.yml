@@ -9,7 +9,6 @@ services:
         class: Zikula\MultisitesModule\Form\Type\Field\UploadType
         arguments:
             - "@translator.default"
-            - "@request_stack"
             - "@zikula_multisites_module.image_helper"
             - "@zikula_multisites_module.upload_helper"
         tags: ['form.type']

@@ -19,7 +19,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Zikula\Common\Translator\TranslatorInterface;
@@ -36,11 +35,6 @@ abstract class AbstractUploadType extends AbstractType
      * @var TranslatorInterface
      */
     protected $translator;
-
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack = '';
 
     /**
      * @var ImageHelper
@@ -66,14 +60,12 @@ abstract class AbstractUploadType extends AbstractType
      * UploadTypeExtension constructor.
      *
      * @param TranslatorInterface $translator   Translator service instance
-     * @param RequestStack        $requestStack RequestStack service instance
      * @param ImageHelper         $imageHelper  ImageHelper service instance
      * @param UploadHelper        $uploadHelper UploadHelper service instance
      */
-    public function __construct(TranslatorInterface $translator, RequestStack $requestStack, ImageHelper $imageHelper, UploadHelper $uploadHelper)
+    public function __construct(TranslatorInterface $translator, ImageHelper $imageHelper, UploadHelper $uploadHelper)
     {
         $this->translator = $translator;
-        $this->requestStack = $requestStack;
         $this->imageHelper = $imageHelper;
         $this->uploadHelper = $uploadHelper;
     }
@@ -99,7 +91,7 @@ abstract class AbstractUploadType extends AbstractType
         $fileOptions['attr']['class'] = 'validate-upload';
 
         $builder->add($fieldName, FileType::class, $fileOptions);
-        $uploadFileTransformer = new UploadFileTransformer($this, $this->requestStack, $this->uploadHelper, $fieldName);
+        $uploadFileTransformer = new UploadFileTransformer($this, $this->uploadHelper, $fieldName);
         $builder->addModelTransformer($uploadFileTransformer);
 
         if (!$options['required']) {
