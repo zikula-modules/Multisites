@@ -13,7 +13,6 @@
 namespace Zikula\MultisitesModule\Helper\Base;
 
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -33,9 +32,9 @@ abstract class AbstractControllerHelper
     use TranslatorTrait;
 
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
 
     /**
      * @var FormFactoryInterface
@@ -90,7 +89,7 @@ abstract class AbstractControllerHelper
         ImageHelper $imageHelper
     ) {
         $this->setTranslator($translator);
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->formFactory = $formFactory;
         $this->variableApi = $variableApi;
         $this->entityFactory = $entityFactory;
@@ -166,7 +165,7 @@ abstract class AbstractControllerHelper
             throw new \Exception($this->__('Error! Invalid object type received.'));
         }
     
-        $request = $this->request;
+        $request = $this->requestStack->getCurrentRequest();
         $repository = $this->entityFactory->getRepository($objectType);
     
         // parameter for used sorting field
@@ -278,7 +277,7 @@ abstract class AbstractControllerHelper
      */
     protected function determineDefaultViewSorting($objectType)
     {
-        $request = $this->request;
+        $request = $this->requestStack->getCurrentRequest();
         $repository = $this->entityFactory->getRepository($objectType);
     
         $sort = $request->query->get('sort', '');
@@ -354,7 +353,7 @@ abstract class AbstractControllerHelper
     
         if ($context == 'controllerAction') {
             if (!isset($args['action'])) {
-                $routeName = $this->request->get('_route');
+                $routeName = $this->requestStack->getCurrentRequest()->get('_route');
                 $routeNameParts = explode('_', $routeName);
                 $args['action'] = end($routeNameParts);
             }

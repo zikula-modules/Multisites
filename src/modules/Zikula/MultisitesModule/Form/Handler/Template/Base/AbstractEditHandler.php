@@ -43,7 +43,7 @@ abstract class AbstractEditHandler extends EditHandler
     
         if ($this->templateParameters['mode'] == 'create') {
             if (!$this->modelHelper->canBeCreated($this->objectType)) {
-                $this->request->getSession()->getFlashBag()->add('error', $this->__('Sorry, but you can not create the template yet as other items are required which must be created before!'));
+                $this->requestStack->getCurrentRequest()->getSession()->getFlashBag()->add('error', $this->__('Sorry, but you can not create the template yet as other items are required which must be created before!'));
                 $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType];
                 $this->logger->notice('{app}: User {user} tried to create a new {entity}, but failed as it other items are required which must be created before.', $logArgs);
     
@@ -69,7 +69,7 @@ abstract class AbstractEditHandler extends EditHandler
         
         // assign identifiers of predefined incoming relationships
         // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['projects'] = $this->request->get('projects', '');
+        $this->relationPresets['projects'] = $this->requestStack->getCurrentRequest()->get('projects', '');
         if (!empty($this->relationPresets['projects'])) {
             $relObj = $this->entityFactory->getRepository('project')->selectById($this->relationPresets['projects']);
             if (null !== $relObj) {
@@ -222,7 +222,7 @@ abstract class AbstractEditHandler extends EditHandler
         $action = $args['commandName'];
     
         $success = false;
-        $flashBag = $this->request->getSession()->getFlashBag();
+        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
         try {
             // execute the workflow action
             $success = $this->workflowHelper->executeAction($entity, $action);
@@ -255,8 +255,9 @@ abstract class AbstractEditHandler extends EditHandler
             return $this->repeatReturnUrl;
         }
     
-        if ($this->request->getSession()->has('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer')) {
-            $this->request->getSession()->remove('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
+        $session = $this->requestStack->getCurrentRequest()->getSession();
+        if ($session->has('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer')) {
+            $session->remove('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
         }
     
         // normal usage, compute return url from given redirect code

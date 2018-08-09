@@ -13,7 +13,6 @@
 namespace Zikula\MultisitesModule\Helper\Base;
 
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
@@ -28,9 +27,9 @@ use Zikula\MultisitesModule\Helper\PermissionHelper;
 abstract class AbstractCollectionFilterHelper
 {
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
 
     /**
      * @var PermissionHelper
@@ -61,7 +60,7 @@ abstract class AbstractCollectionFilterHelper
         CurrentUserApiInterface $currentUserApi,
         $showOnlyOwnEntries
     ) {
-        $this->request = $requestStack->getCurrentRequest();
+        $this->requestStack = $requestStack;
         $this->permissionHelper = $permissionHelper;
         $this->currentUserApi = $currentUserApi;
         $this->showOnlyOwnEntries = $showOnlyOwnEntries;
@@ -153,15 +152,16 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForSite($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['template'] = $this->request->query->get('template', 0);
-        $parameters['project'] = $this->request->query->get('project', 0);
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
-        $parameters['active'] = $this->request->query->get('active', '');
+        $parameters['template'] = $request->query->get('template', 0);
+        $parameters['project'] = $request->query->get('project', 0);
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
+        $parameters['active'] = $request->query->get('active', '');
     
         return $parameters;
     }
@@ -177,12 +177,13 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForTemplate($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
     
         return $parameters;
     }
@@ -198,12 +199,13 @@ abstract class AbstractCollectionFilterHelper
     protected function getViewQuickNavParametersForProject($context = '', array $args = [])
     {
         $parameters = [];
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $parameters;
         }
     
-        $parameters['workflowState'] = $this->request->query->get('workflowState', '');
-        $parameters['q'] = $this->request->query->get('q', '');
+        $parameters['workflowState'] = $request->query->get('workflowState', '');
+        $parameters['q'] = $request->query->get('q', '');
     
         return $parameters;
     }
@@ -217,10 +219,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForSite(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -276,10 +279,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForTemplate(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -327,10 +331,11 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function addCommonViewFiltersForProject(QueryBuilder $qb)
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         if (false !== strpos($routeName, 'edit')) {
             return $qb;
         }
@@ -379,16 +384,17 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForSite(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'zikulamultisitesmodule_site_admin');
         if ($isAdminArea) {
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
     
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved sites only
@@ -414,16 +420,17 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForTemplate(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'zikulamultisitesmodule_template_admin');
         if ($isAdminArea) {
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
     
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved templates only
@@ -449,16 +456,17 @@ abstract class AbstractCollectionFilterHelper
      */
     protected function applyDefaultFiltersForProject(QueryBuilder $qb, array $parameters = [])
     {
-        if (null === $this->request) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
             return $qb;
         }
-        $routeName = $this->request->get('_route');
+        $routeName = $request->get('_route');
         $isAdminArea = false !== strpos($routeName, 'zikulamultisitesmodule_project_admin');
         if ($isAdminArea) {
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool)$this->request->query->getInt('own', $this->showOnlyOwnEntries);
+        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
     
         if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
             // per default we show approved projects only
