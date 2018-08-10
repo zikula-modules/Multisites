@@ -2,7 +2,6 @@
 <project id="{{ project.getId() }}" createdon="{{ project.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ project.updatedDate|localizeddate('medium', 'short') }}">
     <id>{{ project.id }}</id>
     <name><![CDATA[{{ project.name }}]]></name>
-    <workflowState>{{ project.workflowState|zikulamultisitesmodule_objectState(false)|lower }}</workflowState>
     <sites>
     {% if project.sites|default %}
         {% for relatedItem in project.sites %}
