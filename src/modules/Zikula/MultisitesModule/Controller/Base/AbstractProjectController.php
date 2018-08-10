@@ -248,14 +248,16 @@ abstract class AbstractProjectController extends AbstractController
                 continue;
             }
         
-            // Let any ui hooks perform additional validation actions
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
-            $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
-            if (count($validationErrors) > 0) {
-                foreach ($validationErrors as $message) {
-                    $this->addFlash('error', $message);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks perform additional validation actions
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
+                $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
+                if (count($validationErrors) > 0) {
+                    foreach ($validationErrors as $message) {
+                        $this->addFlash('error', $message);
+                    }
+                    continue;
                 }
-                continue;
             }
         
             $success = false;
@@ -279,10 +281,12 @@ abstract class AbstractProjectController extends AbstractController
                 $logger->notice('{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'action' => $action, 'entity' => 'project', 'id' => $itemId]);
             }
         
-            // Let any ui hooks know that we have updated or deleted an item
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
-            $url = null;
-            $hookHelper->callProcessHooks($entity, $hookType, $url);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks know that we have updated or deleted an item
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+                $url = null;
+                $hookHelper->callProcessHooks($entity, $hookType, $url);
+            }
         }
         
         return $this->redirectToRoute('zikulamultisitesmodule_project_' . ($isAdmin ? 'admin' : '') . 'view');

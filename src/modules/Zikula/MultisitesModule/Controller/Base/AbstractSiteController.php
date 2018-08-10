@@ -285,18 +285,39 @@ abstract class AbstractSiteController extends AbstractController
         }
         
         $form = $this->createForm(DeletionType::class, $site);
-        $hookHelper = $this->get('zikula_multisites_module.hook_helper');
+        if ($site->supportsHookSubscribers()) {
+            $hookHelper = $this->get('zikula_multisites_module.hook_helper');
         
-        // Call form aware display hooks
-        $formHook = $hookHelper->callFormDisplayHooks($form, $site, FormAwareCategory::TYPE_DELETE);
+            // Call form aware display hooks
+            $formHook = $hookHelper->callFormDisplayHooks($form, $site, FormAwareCategory::TYPE_DELETE);
+        }
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('delete')->isClicked()) {
-                // Let any ui hooks perform additional validation actions
-                $validationErrors = $hookHelper->callValidationHooks($site, UiHooksCategory::TYPE_VALIDATE_DELETE);
-                if (count($validationErrors) > 0) {
-                    foreach ($validationErrors as $message) {
-                        $this->addFlash('error', $message);
+                if ($site->supportsHookSubscribers()) {
+                    // Let any ui hooks perform additional validation actions
+                    $validationErrors = $hookHelper->callValidationHooks($site, UiHooksCategory::TYPE_VALIDATE_DELETE);
+                    if (count($validationErrors) > 0) {
+                        foreach ($validationErrors as $message) {
+                            $this->addFlash('error', $message);
+                        }
+                    } else {
+                        // execute the workflow action
+                        $success = $workflowHelper->executeAction($site, $deleteActionId);
+                        if ($success) {
+                            $this->addFlash('status', $this->__('Done! Item deleted.'));
+                            $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
+                        }
+                        
+                        if ($site->supportsHookSubscribers()) {
+                            // Call form aware processing hooks
+                            $hookHelper->callFormProcessHooks($form, $site, FormAwareCategory::TYPE_PROCESS_DELETE);
+                        
+                            // Let any ui hooks know that we have deleted the site
+                            $hookHelper->callProcessHooks($site, UiHooksCategory::TYPE_PROCESS_DELETE);
+                        }
+                        
+                        return $this->redirectToRoute($redirectRoute);
                     }
                 } else {
                     // execute the workflow action
@@ -306,11 +327,13 @@ abstract class AbstractSiteController extends AbstractController
                         $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
                     }
                     
-                    // Call form aware processing hooks
-                    $hookHelper->callFormProcessHooks($form, $site, FormAwareCategory::TYPE_PROCESS_DELETE);
+                    if ($site->supportsHookSubscribers()) {
+                        // Call form aware processing hooks
+                        $hookHelper->callFormProcessHooks($form, $site, FormAwareCategory::TYPE_PROCESS_DELETE);
                     
-                    // Let any ui hooks know that we have deleted the site
-                    $hookHelper->callProcessHooks($site, UiHooksCategory::TYPE_PROCESS_DELETE);
+                        // Let any ui hooks know that we have deleted the site
+                        $hookHelper->callProcessHooks($site, UiHooksCategory::TYPE_PROCESS_DELETE);
+                    }
                     
                     return $this->redirectToRoute($redirectRoute);
                 }
@@ -324,9 +347,11 @@ abstract class AbstractSiteController extends AbstractController
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : '',
             'deleteForm' => $form->createView(),
-            $objectType => $site,
-            'formHookTemplates' => $formHook->getTemplates()
+            $objectType => $site
         ];
+        if ($site->supportsHookSubscribers()) {
+            $templateParameters['formHookTemplates'] = $formHook->getTemplates();
+        }
         
         $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
         $templateParameters = $controllerHelper->processDeleteActionParameters($objectType, $templateParameters, true);
@@ -707,14 +732,16 @@ abstract class AbstractSiteController extends AbstractController
                 continue;
             }
         
-            // Let any ui hooks perform additional validation actions
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
-            $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
-            if (count($validationErrors) > 0) {
-                foreach ($validationErrors as $message) {
-                    $this->addFlash('error', $message);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks perform additional validation actions
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
+                $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
+                if (count($validationErrors) > 0) {
+                    foreach ($validationErrors as $message) {
+                        $this->addFlash('error', $message);
+                    }
+                    continue;
                 }
-                continue;
             }
         
             $success = false;
@@ -738,10 +765,12 @@ abstract class AbstractSiteController extends AbstractController
                 $logger->notice('{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'action' => $action, 'entity' => 'site', 'id' => $itemId]);
             }
         
-            // Let any ui hooks know that we have updated or deleted an item
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
-            $url = null;
-            $hookHelper->callProcessHooks($entity, $hookType, $url);
+            if ($entity->supportsHookSubscribers()) {
+                // Let any ui hooks know that we have updated or deleted an item
+                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+                $url = null;
+                $hookHelper->callProcessHooks($entity, $hookType, $url);
+            }
         }
         
         return $this->redirectToRoute('zikulamultisitesmodule_site_' . ($isAdmin ? 'admin' : '') . 'view');
