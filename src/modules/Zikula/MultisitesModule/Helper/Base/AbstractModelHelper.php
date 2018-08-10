@@ -99,12 +99,24 @@ abstract class AbstractModelHelper
             return 'RAND()';
         }
     
+        $hasStandardFields = in_array($objectType, ['site', 'template', 'project']);
+    
         $sortParam = '';
         if ($sorting == 'newest') {
-            $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
+            if (true === $hasStandardFields) {
+                $sortParam = 'createdDate DESC';
+            } else {
+                $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
+            }
+        } elseif ($sorting == 'updated') {
+            if (true === $hasStandardFields) {
+                $sortParam = 'updatedDate DESC';
+            } else {
+                $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
+            }
         } elseif ($sorting == 'default') {
             $repository = $this->entityFactory->getRepository($objectType);
-            $sortParam = $repository->getDefaultSortingField() . ' ASC';
+            $sortParam = $repository->getDefaultSortingField();
         }
     
         return $sortParam;
