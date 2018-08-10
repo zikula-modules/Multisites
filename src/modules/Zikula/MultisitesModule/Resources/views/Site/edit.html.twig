@@ -50,7 +50,7 @@
             {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', {obj: site}) }}
         {% endif %}
         
-        {% if formHookTemplates|length > 0 %}
+        {% if supportsHookSubscribers and formHookTemplates|length > 0 %}
             <fieldset>
                 {% for hookTemplate in formHookTemplates %}
                     {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
@@ -83,12 +83,14 @@
             </div>
         </div>
         {{ form_end(form) }}
-        {% set hookId = mode != 'create' ? site.id : null %}
-        {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_edit', id=hookId, outputAsArray=true) %}
-        {% if hooks is iterable and hooks|length > 0 %}
-            {% for area, hook in hooks %}
-                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
-            {% endfor %}
+        {% if supportsHookSubscribers %}
+            {% set hookId = mode != 'create' ? site.id : null %}
+            {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_edit', id=hookId, outputAsArray=true) %}
+            {% if hooks is iterable and hooks|length > 0 %}
+                {% for area, hook in hooks %}
+                    <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+                {% endfor %}
+            {% endif %}
         {% endif %}
         
     </div>
