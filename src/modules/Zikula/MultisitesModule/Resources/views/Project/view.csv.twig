@@ -1,11 +1,11 @@
 {# purpose of this template: projects view csv view #}
-{% spaceless %}"{{ __('Name') }}";"{{ __('Workflow state') }}"
-;"{{ __('Sites') }}"
-;"{{ __('Templates') }}"{% endspaceless %}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Sites') }}"
+;"{{ __('Templates') }}"
+{% endspaceless %}
 {% for project in items %}
+
 {% spaceless %}
-    "{{ project.name }}";"{{ project.workflowState|zikulamultisitesmodule_objectState(false)|lower }}"
-    ;"
+    "{{ project.name }}";"
     {% if project.sites|default %}
         {% for relatedItem in project.sites %}
         {{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
