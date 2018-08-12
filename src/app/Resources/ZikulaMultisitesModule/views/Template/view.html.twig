@@ -75,7 +75,7 @@
                     </td>
                 {% endif %#}
                 <td id="itemActions{{ template.getKey() }}Start" headers="hItemActionsStart" class="actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('ZikulaMultisitesModule:ItemActionsMenu:menu', [], {entity: template, area: routeArea, context: 'view'}) %}
+                    {% set itemActions = knp_menu_get('zikulaMultisitesMenuItemActions', [], {entity: template, area: routeArea, context: 'view'}) %}
                     <div class="dropdown">
                         <a id="itemActions{{ template.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
