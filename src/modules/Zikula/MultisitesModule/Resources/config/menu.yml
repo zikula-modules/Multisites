@@ -8,7 +8,7 @@ services:
             - "@zikula_multisites_module.permission_helper"
         tags: ['zikula.link_container']
     zikula_multisites_module.menu_builder:
-        class: Zikula\ContentModule\Menu\MenuBuilder
+        class: Zikula\MultisitesModule\Menu\MenuBuilder
         arguments:
             - "@translator.default"
             - "@knp_menu.factory"
