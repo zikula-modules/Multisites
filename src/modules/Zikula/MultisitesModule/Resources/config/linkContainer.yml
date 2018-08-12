@@ -1,9 +1,0 @@
-services:
-    zikula_multisites_module.link_container:
-        class: Zikula\MultisitesModule\Container\LinkContainer
-        arguments:
-            - "@translator.default"
-            - "@router"
-            - "@zikula_multisites_module.controller_helper"
-            - "@zikula_multisites_module.permission_helper"
-        tags: ['zikula.link_container']

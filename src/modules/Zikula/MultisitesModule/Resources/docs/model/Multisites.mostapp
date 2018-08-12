@@ -37,7 +37,7 @@ application "Multisites" {
         Helper/ControllerHelper.php,
         Helper/ModelHelper.php,
         Listener/EntityLifecycleListener.php,
-        Menu/ItemActionsMenu.php,
+        Menu/MenuBuilder.php,
         MultisitesModuleInstaller.php,
         README.md
     "

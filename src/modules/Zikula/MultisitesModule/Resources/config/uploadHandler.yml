@@ -1,5 +1,0 @@
-services:
-    # Upload handler class
-    zikula_multisites_module.upload_handler:
-        class: Zikula\MultisitesModule\UploadHandler
-        arguments: ["@translator.default", "@zikula_users_module.current_user", "@zikula_extensions_module.api.variable"]
