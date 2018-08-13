@@ -12,11 +12,36 @@
 
 namespace Zikula\MultisitesModule\Base;
 
+use Zikula\MultisitesModule\Listener\EntityLifecycleListener;
+
 /**
  * Events definition base class.
  */
 abstract class AbstractMultisitesEvents
 {
+    /**
+     * The zikulamultisitesmodule.itemactionsmenu_pre_configure event is thrown before the item actions
+     * menu is built in the menu builder.
+     *
+     * The event listener receives an
+     * Zikula\MultisitesModule\Event\ConfigureItemActionsMenuEvent instance.
+     *
+     * @see Zikula\MultisitesModule\Menu\MenuBuilder::createItemActionsMenu()
+     * @var string
+     */
+    const MENU_ITEMACTIONS_PRE_CONFIGURE = 'zikulamultisitesmoduleitemactionsmenu_pre_configure';
+    
+    /**
+     * The zikulamultisitesmodule.itemactionsmenu_post_configure event is thrown after the item actions
+     * menu has been built in the menu builder.
+     *
+     * The event listener receives an
+     * Zikula\MultisitesModule\Event\ConfigureItemActionsMenuEvent instance.
+     *
+     * @see Zikula\MultisitesModule\Menu\MenuBuilder::createItemActionsMenu()
+     * @var string
+     */
+    const MENU_ITEMACTIONS_POST_CONFIGURE = 'zikulamultisitesmoduleitemactionsmenu_post_configure';
     /**
      * The zikulamultisitesmodule.site_post_load event is thrown when sites
      * are loaded from the database.
@@ -24,7 +49,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterSiteEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postLoad()
+     * @see EntityLifecycleListener::postLoad()
      * @var string
      */
     const SITE_POST_LOAD = 'zikulamultisitesmodule.site_post_load';
@@ -36,7 +61,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterSiteEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::prePersist()
+     * @see EntityLifecycleListener::prePersist()
      * @var string
      */
     const SITE_PRE_PERSIST = 'zikulamultisitesmodule.site_pre_persist';
@@ -48,7 +73,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterSiteEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postPersist()
+     * @see EntityLifecycleListener::postPersist()
      * @var string
      */
     const SITE_POST_PERSIST = 'zikulamultisitesmodule.site_post_persist';
@@ -60,7 +85,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterSiteEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::preRemove()
+     * @see EntityLifecycleListener::preRemove()
      * @var string
      */
     const SITE_PRE_REMOVE = 'zikulamultisitesmodule.site_pre_remove';
@@ -72,7 +97,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterSiteEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postRemove()
+     * @see EntityLifecycleListener::postRemove()
      * @var string
      */
     const SITE_POST_REMOVE = 'zikulamultisitesmodule.site_post_remove';
@@ -84,7 +109,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterSiteEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::preUpdate()
+     * @see EntityLifecycleListener::preUpdate()
      * @var string
      */
     const SITE_PRE_UPDATE = 'zikulamultisitesmodule.site_pre_update';
@@ -96,7 +121,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterSiteEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postUpdate()
+     * @see EntityLifecycleListener::postUpdate()
      * @var string
      */
     const SITE_POST_UPDATE = 'zikulamultisitesmodule.site_post_update';
@@ -108,7 +133,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterTemplateEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postLoad()
+     * @see EntityLifecycleListener::postLoad()
      * @var string
      */
     const TEMPLATE_POST_LOAD = 'zikulamultisitesmodule.template_post_load';
@@ -120,7 +145,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterTemplateEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::prePersist()
+     * @see EntityLifecycleListener::prePersist()
      * @var string
      */
     const TEMPLATE_PRE_PERSIST = 'zikulamultisitesmodule.template_pre_persist';
@@ -132,7 +157,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterTemplateEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postPersist()
+     * @see EntityLifecycleListener::postPersist()
      * @var string
      */
     const TEMPLATE_POST_PERSIST = 'zikulamultisitesmodule.template_post_persist';
@@ -144,7 +169,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterTemplateEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::preRemove()
+     * @see EntityLifecycleListener::preRemove()
      * @var string
      */
     const TEMPLATE_PRE_REMOVE = 'zikulamultisitesmodule.template_pre_remove';
@@ -156,7 +181,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterTemplateEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postRemove()
+     * @see EntityLifecycleListener::postRemove()
      * @var string
      */
     const TEMPLATE_POST_REMOVE = 'zikulamultisitesmodule.template_post_remove';
@@ -168,7 +193,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterTemplateEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::preUpdate()
+     * @see EntityLifecycleListener::preUpdate()
      * @var string
      */
     const TEMPLATE_PRE_UPDATE = 'zikulamultisitesmodule.template_pre_update';
@@ -180,7 +205,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterTemplateEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postUpdate()
+     * @see EntityLifecycleListener::postUpdate()
      * @var string
      */
     const TEMPLATE_POST_UPDATE = 'zikulamultisitesmodule.template_post_update';
@@ -192,7 +217,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterProjectEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postLoad()
+     * @see EntityLifecycleListener::postLoad()
      * @var string
      */
     const PROJECT_POST_LOAD = 'zikulamultisitesmodule.project_post_load';
@@ -204,7 +229,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterProjectEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::prePersist()
+     * @see EntityLifecycleListener::prePersist()
      * @var string
      */
     const PROJECT_PRE_PERSIST = 'zikulamultisitesmodule.project_pre_persist';
@@ -216,7 +241,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterProjectEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postPersist()
+     * @see EntityLifecycleListener::postPersist()
      * @var string
      */
     const PROJECT_POST_PERSIST = 'zikulamultisitesmodule.project_post_persist';
@@ -228,7 +253,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterProjectEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::preRemove()
+     * @see EntityLifecycleListener::preRemove()
      * @var string
      */
     const PROJECT_PRE_REMOVE = 'zikulamultisitesmodule.project_pre_remove';
@@ -240,7 +265,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterProjectEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postRemove()
+     * @see EntityLifecycleListener::postRemove()
      * @var string
      */
     const PROJECT_POST_REMOVE = 'zikulamultisitesmodule.project_post_remove';
@@ -252,7 +277,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterProjectEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::preUpdate()
+     * @see EntityLifecycleListener::preUpdate()
      * @var string
      */
     const PROJECT_PRE_UPDATE = 'zikulamultisitesmodule.project_pre_update';
@@ -264,7 +289,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\FilterProjectEvent instance.
      *
-     * @see Zikula\MultisitesModule\Listener\EntityLifecycleListener::postUpdate()
+     * @see EntityLifecycleListener::postUpdate()
      * @var string
      */
     const PROJECT_POST_UPDATE = 'zikulamultisitesmodule.project_post_update';
