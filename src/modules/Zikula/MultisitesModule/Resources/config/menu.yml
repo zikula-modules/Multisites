@@ -16,5 +16,7 @@ services:
             - "@request_stack"
             - "@zikula_multisites_module.permission_helper"
             - "@zikula_users_module.current_user"
+        calls:
+            - [setDbalDriver, ["%doctrine.dbal.driver%"]]
         tags:
             - { name: knp_menu.menu_builder, method: createItemActionsMenu, alias: zikulaMultisitesMenuItemActions }

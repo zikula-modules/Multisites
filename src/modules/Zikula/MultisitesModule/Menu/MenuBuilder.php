@@ -22,6 +22,11 @@ use Zikula\MultisitesModule\Menu\Base\AbstractMenuBuilder;
 class MenuBuilder extends AbstractMenuBuilder
 {
     /**
+     * @var string
+     */
+    protected $dbalDriver;
+
+    /**
      * @inheritDoc
      */
     public function createItemActionsMenu(array $options)
@@ -69,7 +74,7 @@ class MenuBuilder extends AbstractMenuBuilder
             $menu[$title]->setLinkAttribute('title', $this->__('Manage the themes for this site'));
 
             // check if system() is allowed
-            if (false !== strpos($this->container->getParameter('doctrine.dbal.driver'), 'mysql') && $this->isFunctionAllowed('system')) {
+            if (false !== strpos($this->dbalDriver, 'mysql') && $this->isFunctionAllowed('system')) {
                 $title = $this->__('Database SQL Export');
                 $menu->addChild($title, [
                     'route' => 'zikulamultisitesmodule_site_exportdatabaseastemplate',
@@ -115,5 +120,13 @@ class MenuBuilder extends AbstractMenuBuilder
         }
 
         return true;
+    }
+
+    /**
+     * @param string $dbalDriver
+     */
+    public function setDbalDriver($dbalDriver)
+    {
+        $this->dbalDriver = $dbalDriver;
     }
 }
