@@ -29,7 +29,7 @@ abstract class AbstractMultisitesEvents
      * @see Zikula\MultisitesModule\Menu\MenuBuilder::createItemActionsMenu()
      * @var string
      */
-    const MENU_ITEMACTIONS_PRE_CONFIGURE = 'zikulamultisitesmoduleitemactionsmenu_pre_configure';
+    const MENU_ITEMACTIONS_PRE_CONFIGURE = 'zikulamultisitesmodule.itemactionsmenu_pre_configure';
     
     /**
      * The zikulamultisitesmodule.itemactionsmenu_post_configure event is thrown after the item actions
@@ -41,7 +41,7 @@ abstract class AbstractMultisitesEvents
      * @see Zikula\MultisitesModule\Menu\MenuBuilder::createItemActionsMenu()
      * @var string
      */
-    const MENU_ITEMACTIONS_POST_CONFIGURE = 'zikulamultisitesmoduleitemactionsmenu_post_configure';
+    const MENU_ITEMACTIONS_POST_CONFIGURE = 'zikulamultisitesmodule.itemactionsmenu_post_configure';
     /**
      * The zikulamultisitesmodule.site_post_load event is thrown when sites
      * are loaded from the database.
