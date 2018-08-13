@@ -14,6 +14,7 @@ namespace Zikula\MultisitesModule\Menu\Base;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
@@ -21,6 +22,8 @@ use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
+use Zikula\MultisitesModule\MultisitesEvents;
+use Zikula\MultisitesModule\Event\ConfigureItemActionsMenuEvent;
 use Zikula\MultisitesModule\Helper\PermissionHelper;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 
@@ -35,6 +38,11 @@ class AbstractMenuBuilder
      * @var FactoryInterface
      */
     protected $factory;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * @var RequestStack
@@ -54,21 +62,24 @@ class AbstractMenuBuilder
     /**
      * MenuBuilder constructor.
      *
-     * @param TranslatorInterface     $translator          Translator service instance
-     * @param FactoryInterface        $factory             Factory service instance
-     * @param RequestStack            $requestStack        RequestStack service instance
-     * @param PermissionHelper        $permissionHelper    PermissionHelper service instance
-     * @param CurrentUserApiInterface $currentUserApi      CurrentUserApi service instance
+     * @param TranslatorInterface      $translator          Translator service instance
+     * @param FactoryInterface         $factory             Factory service instance
+     * @param EventDispatcherInterface $eventDispatcher     EventDispatcher service instance
+     * @param RequestStack             $requestStack        RequestStack service instance
+     * @param PermissionHelper         $permissionHelper    PermissionHelper service instance
+     * @param CurrentUserApiInterface  $currentUserApi      CurrentUserApi service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         FactoryInterface $factory,
+        EventDispatcherInterface $eventDispatcher,
         RequestStack $requestStack,
         PermissionHelper $permissionHelper,
         CurrentUserApiInterface $currentUserApi)
     {
         $this->setTranslator($translator);
         $this->factory = $factory;
+        $this->eventDispatcher = $eventDispatcher;
         $this->requestStack = $requestStack;
         $this->permissionHelper = $permissionHelper;
         $this->currentUserApi = $currentUserApi;
@@ -102,6 +113,8 @@ class AbstractMenuBuilder
         $routeArea = $options['area'];
         $context = $options['context'];
         $menu->setChildrenAttribute('class', 'list-inline item-actions');
+
+        $this->eventDispatcher->dispatch(MultisitesEvents::MENU_ITEMACTIONS_PRE_CONFIGURE, new ConfigureItemActionsMenuEvent($this->factory, $menu, $options));
 
         $currentUserId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         if ($entity instanceof SiteEntity) {
@@ -220,6 +233,8 @@ class AbstractMenuBuilder
                 $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
         }
+
+        $this->eventDispatcher->dispatch(MultisitesEvents::MENU_ITEMACTIONS_POST_CONFIGURE, new ConfigureItemActionsMenuEvent($this->factory, $menu, $options));
 
         return $menu;
     }
