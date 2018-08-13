@@ -115,7 +115,6 @@ abstract class AbstractEditHandler extends EditHandler
         return $options;
     }
 
-
     /**
      * @inheritDoc
      */
