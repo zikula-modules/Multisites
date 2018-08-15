@@ -131,14 +131,9 @@ abstract class AbstractEditHandler extends EditHandler
     protected function getDefaultReturnUrl(array $args = [])
     {
         $objectIsPersisted = $args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel');
-    
-        if (null !== $this->returnTo) {
-            $refererParts = explode('/', $this->returnTo);
-            $isDisplayOrEditPage = $refererParts[count($refererParts)-1] == $this->idValue;
-            if (!$isDisplayOrEditPage || $objectIsPersisted) {
-                // return to referer
-                return $this->returnTo;
-            }
+        if (null !== $this->returnTo && $objectIsPersisted) {
+            // return to referer
+            return $this->returnTo;
         }
     
         $routeArea = array_key_exists('routeArea', $this->templateParameters) ? $this->templateParameters['routeArea'] : '';
@@ -261,6 +256,7 @@ abstract class AbstractEditHandler extends EditHandler
     
         $session = $this->requestStack->getCurrentRequest()->getSession();
         if ($session->has('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer')) {
+            $this->returnTo = $session->get('zikulacontentmodule' . $this->objectTypeCapital . 'Referer');
             $session->remove('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
         }
     
@@ -272,6 +268,12 @@ abstract class AbstractEditHandler extends EditHandler
     
         $routeArea = substr($this->returnTo, 0, 5) == 'admin' ? 'admin' : '';
         $routePrefix = 'zikulamultisitesmodule_' . $this->objectTypeLower . '_' . $routeArea;
+    
+        if (in_array($this->objectType, [''])) {
+            // force refresh because slugs may have changed (e.g. by translatable)
+            $this->entityFactory->getObjectManager()->clear();
+            $this->entityRef = $this->initEntityForEditing();
+        }
     
         // parse given redirect code and return corresponding url
         switch ($this->returnTo) {
