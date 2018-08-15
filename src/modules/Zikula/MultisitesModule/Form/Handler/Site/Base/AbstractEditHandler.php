@@ -115,7 +115,6 @@ abstract class AbstractEditHandler extends EditHandler
         return $options;
     }
 
-
     /**
      * @inheritDoc
      */
@@ -163,14 +162,9 @@ abstract class AbstractEditHandler extends EditHandler
     protected function getDefaultReturnUrl(array $args = [])
     {
         $objectIsPersisted = $args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel');
-    
-        if (null !== $this->returnTo) {
-            $refererParts = explode('/', $this->returnTo);
-            $isDisplayOrEditPage = $refererParts[count($refererParts)-1] == $this->idValue;
-            if (!$isDisplayOrEditPage || $objectIsPersisted) {
-                // return to referer
-                return $this->returnTo;
-            }
+        if (null !== $this->returnTo && $objectIsPersisted) {
+            // return to referer
+            return $this->returnTo;
         }
     
         $routeArea = array_key_exists('routeArea', $this->templateParameters) ? $this->templateParameters['routeArea'] : '';
@@ -282,6 +276,7 @@ abstract class AbstractEditHandler extends EditHandler
     
         $session = $this->requestStack->getCurrentRequest()->getSession();
         if ($session->has('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer')) {
+            $this->returnTo = $session->get('zikulacontentmodule' . $this->objectTypeCapital . 'Referer');
             $session->remove('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
         }
     
