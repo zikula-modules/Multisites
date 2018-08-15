@@ -276,7 +276,7 @@ abstract class AbstractEditHandler extends EditHandler
     
         $session = $this->requestStack->getCurrentRequest()->getSession();
         if ($session->has('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer')) {
-            $this->returnTo = $session->get('zikulacontentmodule' . $this->objectTypeCapital . 'Referer');
+            $this->returnTo = $session->get('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
             $session->remove('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
         }
     
