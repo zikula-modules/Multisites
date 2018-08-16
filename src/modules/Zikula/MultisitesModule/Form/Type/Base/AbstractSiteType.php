@@ -320,7 +320,7 @@ abstract class AbstractSiteType extends AbstractType
         $builder->add('allowedLocales', ArrayType::class, [
             'label' => $this->__('Allowed locales') . ':',
             'help' => $this->__('Enter one entry per line.'),
-            'empty_data' => '',
+            'empty_data' => [],
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Enter the allowed locales of the site.')
@@ -343,7 +343,7 @@ abstract class AbstractSiteType extends AbstractType
         $builder->add('parametersArray', ArrayType::class, [
             'label' => $this->__('Parameters array') . ':',
             'help' => $this->__('Enter one entry per line.'),
-            'empty_data' => '',
+            'empty_data' => [],
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Enter the parameters array of the site.')

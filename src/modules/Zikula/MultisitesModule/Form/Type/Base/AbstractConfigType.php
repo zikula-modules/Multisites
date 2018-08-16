@@ -135,7 +135,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of sites shown per page')
             ],
             'help' => $this->__('The amount of sites shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -152,7 +152,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of templates shown per page')
             ],
             'help' => $this->__('The amount of templates shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -169,7 +169,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The amount of projects shown per page')
             ],
             'help' => $this->__('The amount of projects shown per page'),
-            'empty_data' => '10',
+            'empty_data' => 10,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -224,7 +224,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image width in pixels.')
             ],
             'help' => $this->__('The maximum image width in pixels.'),
-            'empty_data' => '800',
+            'empty_data' => 800,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -242,7 +242,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image height in pixels.')
             ],
             'help' => $this->__('The maximum image height in pixels.'),
-            'empty_data' => '600',
+            'empty_data' => 600,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -267,7 +267,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
             ],
             'help' => $this->__('Thumbnail mode (inset or outbound).'),
-            'empty_data' => '',
+            'empty_data' => 'inset',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the thumbnail mode.')
@@ -286,7 +286,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on view pages in pixels.'),
-            'empty_data' => '32',
+            'empty_data' => 32,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -304,7 +304,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on view pages in pixels.'),
-            'empty_data' => '24',
+            'empty_data' => 24,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -322,7 +322,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on edit pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -340,7 +340,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on edit pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -372,7 +372,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image width in pixels.')
             ],
             'help' => $this->__('The maximum image width in pixels.'),
-            'empty_data' => '800',
+            'empty_data' => 800,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -390,7 +390,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The maximum image height in pixels.')
             ],
             'help' => $this->__('The maximum image height in pixels.'),
-            'empty_data' => '600',
+            'empty_data' => 600,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -415,7 +415,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
             ],
             'help' => $this->__('Thumbnail mode (inset or outbound).'),
-            'empty_data' => '',
+            'empty_data' => 'inset',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the thumbnail mode.')
@@ -434,7 +434,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on view pages in pixels.'),
-            'empty_data' => '32',
+            'empty_data' => 32,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -452,7 +452,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on view pages in pixels.'),
-            'empty_data' => '24',
+            'empty_data' => 24,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -470,7 +470,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail width on edit pages in pixels.'),
-            'empty_data' => '240',
+            'empty_data' => 240,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
@@ -488,7 +488,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
             ],
             'help' => $this->__('Thumbnail height on edit pages in pixels.'),
-            'empty_data' => '180',
+            'empty_data' => 180,
             'attr' => [
                 'maxlength' => 4,
                 'class' => '',
