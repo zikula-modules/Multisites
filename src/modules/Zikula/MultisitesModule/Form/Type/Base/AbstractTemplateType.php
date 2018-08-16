@@ -151,7 +151,7 @@ abstract class AbstractTemplateType extends AbstractType
         $builder->add('parameters', ArrayType::class, [
             'label' => $this->__('Parameters') . ':',
             'help' => $this->__('Enter one entry per line.'),
-            'empty_data' => '',
+            'empty_data' => [],
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Enter the parameters of the template.')
@@ -162,7 +162,7 @@ abstract class AbstractTemplateType extends AbstractType
         $builder->add('folders', ArrayType::class, [
             'label' => $this->__('Folders') . ':',
             'help' => $this->__('Enter one entry per line.'),
-            'empty_data' => '',
+            'empty_data' => [],
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Enter the folders of the template.')
@@ -173,7 +173,7 @@ abstract class AbstractTemplateType extends AbstractType
         $builder->add('excludedTables', ArrayType::class, [
             'label' => $this->__('Excluded tables') . ':',
             'help' => $this->__('Enter one entry per line.'),
-            'empty_data' => '',
+            'empty_data' => [],
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Enter the excluded tables of the template.')
