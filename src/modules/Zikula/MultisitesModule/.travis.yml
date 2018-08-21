@@ -46,7 +46,7 @@ install:
     - unzip -q ../../../../ZikulaMultisitesModule
     - cd  ../../..
     - php bin/console bootstrap:bundles
-    - mysql -e "INSERT INTO zk_test.modules (id, name, type, displayname, url, description, directory, version, capabilities, state, securityschema, core_min, core_max) VALUES (NULL, 'ZikulaMultisitesModule', '3', 'Multisites', 'multisites', 'Zikula Multisites manager.', 'zikula/multisites-module', '2.1.0', 'N;', '3', 'N;', '1.4.4', '2.0.0');"
+    - mysql -e "INSERT INTO zk_test.modules (id, name, type, displayname, url, description, version, capabilities, state, securityschema, core_min, core_max) VALUES (NULL, 'ZikulaMultisitesModule', '3', 'Multisites', 'multisites', 'Zikula Multisites manager.', '2.1.0', 'N;', '3', 'N;', '2.0.10', '3.0.0');"
     - php bin/console cache:warmup
 
 script:
