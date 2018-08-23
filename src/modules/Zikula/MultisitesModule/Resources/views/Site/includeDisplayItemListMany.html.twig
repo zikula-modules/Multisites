@@ -1,5 +1,5 @@
 {# purpose of this template: inclusion template for display of related sites #}
-{% set hasAdminPermission = hasPermission('ZikulaMultisitesModule:Site:', '::', 'ACCESS_EDIT') %}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('site', 'ACCESS_EDIT') %}
 {% if items|default and items|length > 0 %}
 <ul class="list-group zikulamultisitesmodule-related-item-list site">
 {% for item in items %}

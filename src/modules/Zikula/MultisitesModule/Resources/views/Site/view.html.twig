@@ -286,7 +286,7 @@
 {% block page_nav_links %}
     <p>
         {% if canBeCreated %}
-            {% if hasPermission('ZikulaMultisitesModule:Site:', '::', 'ACCESS_EDIT') %}
+            {% if permissionHelper.hasComponentPermission('site:', 'ACCESS_EDIT') %}
                 {% set createTitle = __('Create site') %}
                 <a href="{{ path('zikulamultisitesmodule_site_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
             {% endif %}
