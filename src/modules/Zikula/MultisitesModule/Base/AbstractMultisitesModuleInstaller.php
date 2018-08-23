@@ -86,6 +86,12 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         $this->setVar('thumbnailHeightSiteFavIconView', 24);
         $this->setVar('thumbnailWidthSiteFavIconEdit', 240);
         $this->setVar('thumbnailHeightSiteFavIconEdit', 180);
+        $this->setVar('allowModerationSpecificCreatorForSite', false);
+        $this->setVar('allowModerationSpecificCreationDateForSite', false);
+        $this->setVar('allowModerationSpecificCreatorForTemplate', false);
+        $this->setVar('allowModerationSpecificCreationDateForTemplate', false);
+        $this->setVar('allowModerationSpecificCreatorForProject', false);
+        $this->setVar('allowModerationSpecificCreationDateForProject', false);
     
         // initialisation successful
         return true;

@@ -72,6 +72,7 @@ abstract class AbstractConfigType extends AbstractType
         $this->addSecuritySettingsFields($builder, $options);
         $this->addListViewsFields($builder, $options);
         $this->addImagesFields($builder, $options);
+        $this->addModerationFields($builder, $options);
 
         $this->addSubmitButtons($builder, $options);
     }
@@ -497,6 +498,100 @@ abstract class AbstractConfigType extends AbstractType
             'required' => true,
             'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
+        ]);
+    }
+
+    /**
+     * Adds fields for moderation fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
+    {
+        
+        $builder->add('allowModerationSpecificCreatorForSite', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creator for site') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creator for site option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreationDateForSite', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creation date for site') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creation date for site option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreatorForTemplate', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creator for template') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creator for template option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreationDateForTemplate', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creation date for template') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creation date for template option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreatorForProject', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creator for project') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creator for project option')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('allowModerationSpecificCreationDateForProject', CheckboxType::class, [
+            'label' => $this->__('Allow moderation specific creation date for project') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
+            ],
+            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('The allow moderation specific creation date for project option')
+            ],
+            'required' => false,
         ]);
     }
 
