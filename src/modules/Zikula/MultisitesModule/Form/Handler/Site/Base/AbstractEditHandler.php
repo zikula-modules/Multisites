@@ -108,8 +108,8 @@ abstract class AbstractEditHandler extends EditHandler
             'mode' => $this->templateParameters['mode'],
             'actions' => $this->templateParameters['actions'],
             'has_moderate_permission' => $this->permissionHelper->hasEntityPermission($this->entityRef, ACCESS_ADMIN),
-            'allow_moderation_specific_creator' => $this->variableApi->get('ZikulaMultisitesModule', 'allowModerationSpecificCreatorFor' . $this->objectTypeCapital),
-            'allow_moderation_specific_creation_date' => $this->variableApi->get('ZikulaMultisitesModule', 'allowModerationSpecificCreationDateFor' . $this->objectTypeCapital),
+            'allow_moderation_specific_creator' => $this->variableApi->get('ZikulaMultisitesModule', 'allowModerationSpecificCreatorFor' . $this->objectTypeCapital, false),
+            'allow_moderation_specific_creation_date' => $this->variableApi->get('ZikulaMultisitesModule', 'allowModerationSpecificCreationDateFor' . $this->objectTypeCapital, false),
             'filter_by_ownership' => !$this->permissionHelper->hasEntityPermission($this->entityRef, ACCESS_ADD),
             'inline_usage' => $this->templateParameters['inlineUsage']
         ];
