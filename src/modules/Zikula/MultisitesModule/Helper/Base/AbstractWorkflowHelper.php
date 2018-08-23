@@ -30,37 +30,37 @@ abstract class AbstractWorkflowHelper
      * @var TranslatorInterface
      */
     protected $translator;
-
+    
     /**
      * @var Registry
      */
     protected $workflowRegistry;
-
+    
     /**
      * @var LoggerInterface
      */
     protected $logger;
-
+    
     /**
      * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
-
+    
     /**
      * @var EntityFactory
      */
     protected $entityFactory;
-
+    
     /**
      * @var ListEntriesHelper
      */
     protected $listEntriesHelper;
-
+    
     /**
      * @var PermissionHelper
      */
     protected $permissionHelper;
-
+    
     /**
      * WorkflowHelper constructor.
      *
@@ -91,7 +91,7 @@ abstract class AbstractWorkflowHelper
         $this->listEntriesHelper = $listEntriesHelper;
         $this->permissionHelper = $permissionHelper;
     }
-
+    
     /**
       * This method returns a list of possible object states.
       *
@@ -305,5 +305,4 @@ abstract class AbstractWorkflowHelper
     
         return (false !== $result);
     }
-    
 }

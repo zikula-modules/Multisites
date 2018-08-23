@@ -26,24 +26,24 @@ abstract class AbstractImageHelper
      * @var TranslatorInterface
      */
     protected $translator;
-
+    
     /**
      * @var SessionInterface
      */
     protected $session;
-
+    
     /**
      * @var VariableApiInterface
      */
     protected $variableApi;
-
+    
     /**
      * Name of the application.
      *
      * @var string
      */
     protected $name;
-
+    
     /**
      * ImageHelper constructor.
      *
@@ -61,7 +61,7 @@ abstract class AbstractImageHelper
         $this->variableApi = $variableApi;
         $this->name = 'ZikulaMultisitesModule';
     }
-
+    
     /**
      * This method returns an Imagine runtime options array for the given arguments.
      *
@@ -97,7 +97,7 @@ abstract class AbstractImageHelper
     
         return $this->getCustomRuntimeOptions($objectType, $fieldName, $contextName, $context, $args);
     }
-
+    
     /**
      * This method returns an Imagine runtime options array for the given arguments.
      *
@@ -135,7 +135,7 @@ abstract class AbstractImageHelper
     
         return $options;
     }
-
+    
     /**
      * Check if cache directory exists and create it if needed.
      */
