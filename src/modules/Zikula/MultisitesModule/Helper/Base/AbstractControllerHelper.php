@@ -23,6 +23,7 @@ use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
 use Zikula\MultisitesModule\Helper\CollectionFilterHelper;
 use Zikula\MultisitesModule\Helper\ImageHelper;
 use Zikula\MultisitesModule\Helper\ModelHelper;
+use Zikula\MultisitesModule\Helper\PermissionHelper;
 
 /**
  * Helper base class for controller layer methods.
@@ -57,6 +58,11 @@ abstract class AbstractControllerHelper
     protected $collectionFilterHelper;
 
     /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+
+    /**
      * @var ModelHelper
      */
     protected $modelHelper;
@@ -69,14 +75,15 @@ abstract class AbstractControllerHelper
     /**
      * ControllerHelper constructor.
      *
-     * @param TranslatorInterface $translator      Translator service instance
-     * @param RequestStack        $requestStack    RequestStack service instance
-     * @param FormFactoryInterface $formFactory    FormFactory service instance
+     * @param TranslatorInterface $translator       Translator service instance
+     * @param RequestStack        $requestStack     RequestStack service instance
+     * @param FormFactoryInterface $formFactory     FormFactory service instance
      * @param VariableApiInterface $variableApi     VariableApi service instance
-     * @param EntityFactory       $entityFactory   EntityFactory service instance
+     * @param EntityFactory       $entityFactory    EntityFactory service instance
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
-     * @param ModelHelper         $modelHelper     ModelHelper service instance
-     * @param ImageHelper         $imageHelper     ImageHelper service instance
+     * @param PermissionHelper    $permissionHelper PermissionHelper service instance
+     * @param ModelHelper         $modelHelper      ModelHelper service instance
+     * @param ImageHelper         $imageHelper      ImageHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -85,6 +92,7 @@ abstract class AbstractControllerHelper
         VariableApiInterface $variableApi,
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
+        PermissionHelper $permissionHelper,
         ModelHelper $modelHelper,
         ImageHelper $imageHelper
     ) {
@@ -94,6 +102,7 @@ abstract class AbstractControllerHelper
         $this->variableApi = $variableApi;
         $this->entityFactory = $entityFactory;
         $this->collectionFilterHelper = $collectionFilterHelper;
+        $this->permissionHelper = $permissionHelper;
         $this->modelHelper = $modelHelper;
         $this->imageHelper = $imageHelper;
     }
@@ -379,6 +388,7 @@ abstract class AbstractControllerHelper
                 $parameters['relationThumbRuntimeOptions'] = $this->imageHelper->getCustomRuntimeOptions('', '', 'ZikulaMultisitesModule_relateditem', $context, $args);
             }
         }
+        $parameters['permissionHelper'] = $this->permissionHelper;
     
         return $parameters;
     }

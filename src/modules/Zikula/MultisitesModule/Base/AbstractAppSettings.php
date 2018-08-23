@@ -258,6 +258,60 @@ abstract class AbstractAppSettings
      */
     protected $thumbnailHeightSiteFavIconEdit = 180;
     
+    /**
+     * Whether to allow moderators choosing a user which will be set as creator.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreatorForSite
+     */
+    protected $allowModerationSpecificCreatorForSite = false;
+    
+    /**
+     * Whether to allow moderators choosing a custom creation date.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreationDateForSite
+     */
+    protected $allowModerationSpecificCreationDateForSite = false;
+    
+    /**
+     * Whether to allow moderators choosing a user which will be set as creator.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreatorForTemplate
+     */
+    protected $allowModerationSpecificCreatorForTemplate = false;
+    
+    /**
+     * Whether to allow moderators choosing a custom creation date.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreationDateForTemplate
+     */
+    protected $allowModerationSpecificCreationDateForTemplate = false;
+    
+    /**
+     * Whether to allow moderators choosing a user which will be set as creator.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreatorForProject
+     */
+    protected $allowModerationSpecificCreatorForProject = false;
+    
+    /**
+     * Whether to allow moderators choosing a custom creation date.
+     *
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
+     * @var boolean $allowModerationSpecificCreationDateForProject
+     */
+    protected $allowModerationSpecificCreationDateForProject = false;
+    
     
     /**
      * AppSettings constructor.
@@ -824,6 +878,150 @@ abstract class AbstractAppSettings
         }
     }
     
+    /**
+     * Returns the allow moderation specific creator for site.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreatorForSite()
+    {
+        return $this->allowModerationSpecificCreatorForSite;
+    }
+    
+    /**
+     * Sets the allow moderation specific creator for site.
+     *
+     * @param boolean $allowModerationSpecificCreatorForSite
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreatorForSite($allowModerationSpecificCreatorForSite)
+    {
+        if (boolval($this->allowModerationSpecificCreatorForSite) !== boolval($allowModerationSpecificCreatorForSite)) {
+            $this->allowModerationSpecificCreatorForSite = boolval($allowModerationSpecificCreatorForSite);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creation date for site.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreationDateForSite()
+    {
+        return $this->allowModerationSpecificCreationDateForSite;
+    }
+    
+    /**
+     * Sets the allow moderation specific creation date for site.
+     *
+     * @param boolean $allowModerationSpecificCreationDateForSite
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreationDateForSite($allowModerationSpecificCreationDateForSite)
+    {
+        if (boolval($this->allowModerationSpecificCreationDateForSite) !== boolval($allowModerationSpecificCreationDateForSite)) {
+            $this->allowModerationSpecificCreationDateForSite = boolval($allowModerationSpecificCreationDateForSite);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creator for template.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreatorForTemplate()
+    {
+        return $this->allowModerationSpecificCreatorForTemplate;
+    }
+    
+    /**
+     * Sets the allow moderation specific creator for template.
+     *
+     * @param boolean $allowModerationSpecificCreatorForTemplate
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreatorForTemplate($allowModerationSpecificCreatorForTemplate)
+    {
+        if (boolval($this->allowModerationSpecificCreatorForTemplate) !== boolval($allowModerationSpecificCreatorForTemplate)) {
+            $this->allowModerationSpecificCreatorForTemplate = boolval($allowModerationSpecificCreatorForTemplate);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creation date for template.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreationDateForTemplate()
+    {
+        return $this->allowModerationSpecificCreationDateForTemplate;
+    }
+    
+    /**
+     * Sets the allow moderation specific creation date for template.
+     *
+     * @param boolean $allowModerationSpecificCreationDateForTemplate
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreationDateForTemplate($allowModerationSpecificCreationDateForTemplate)
+    {
+        if (boolval($this->allowModerationSpecificCreationDateForTemplate) !== boolval($allowModerationSpecificCreationDateForTemplate)) {
+            $this->allowModerationSpecificCreationDateForTemplate = boolval($allowModerationSpecificCreationDateForTemplate);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creator for project.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreatorForProject()
+    {
+        return $this->allowModerationSpecificCreatorForProject;
+    }
+    
+    /**
+     * Sets the allow moderation specific creator for project.
+     *
+     * @param boolean $allowModerationSpecificCreatorForProject
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreatorForProject($allowModerationSpecificCreatorForProject)
+    {
+        if (boolval($this->allowModerationSpecificCreatorForProject) !== boolval($allowModerationSpecificCreatorForProject)) {
+            $this->allowModerationSpecificCreatorForProject = boolval($allowModerationSpecificCreatorForProject);
+        }
+    }
+    
+    /**
+     * Returns the allow moderation specific creation date for project.
+     *
+     * @return boolean
+     */
+    public function getAllowModerationSpecificCreationDateForProject()
+    {
+        return $this->allowModerationSpecificCreationDateForProject;
+    }
+    
+    /**
+     * Sets the allow moderation specific creation date for project.
+     *
+     * @param boolean $allowModerationSpecificCreationDateForProject
+     *
+     * @return void
+     */
+    public function setAllowModerationSpecificCreationDateForProject($allowModerationSpecificCreationDateForProject)
+    {
+        if (boolval($this->allowModerationSpecificCreationDateForProject) !== boolval($allowModerationSpecificCreationDateForProject)) {
+            $this->allowModerationSpecificCreationDateForProject = boolval($allowModerationSpecificCreationDateForProject);
+        }
+    }
+    
     
     /**
      * Loads module variables from the database.
@@ -901,6 +1099,24 @@ abstract class AbstractAppSettings
         if (isset($moduleVars['thumbnailHeightSiteFavIconEdit'])) {
             $this->setThumbnailHeightSiteFavIconEdit($moduleVars['thumbnailHeightSiteFavIconEdit']);
         }
+        if (isset($moduleVars['allowModerationSpecificCreatorForSite'])) {
+            $this->setAllowModerationSpecificCreatorForSite($moduleVars['allowModerationSpecificCreatorForSite']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreationDateForSite'])) {
+            $this->setAllowModerationSpecificCreationDateForSite($moduleVars['allowModerationSpecificCreationDateForSite']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreatorForTemplate'])) {
+            $this->setAllowModerationSpecificCreatorForTemplate($moduleVars['allowModerationSpecificCreatorForTemplate']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreationDateForTemplate'])) {
+            $this->setAllowModerationSpecificCreationDateForTemplate($moduleVars['allowModerationSpecificCreationDateForTemplate']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreatorForProject'])) {
+            $this->setAllowModerationSpecificCreatorForProject($moduleVars['allowModerationSpecificCreatorForProject']);
+        }
+        if (isset($moduleVars['allowModerationSpecificCreationDateForProject'])) {
+            $this->setAllowModerationSpecificCreationDateForProject($moduleVars['allowModerationSpecificCreationDateForProject']);
+        }
     }
     
     /**
@@ -931,5 +1147,11 @@ abstract class AbstractAppSettings
         $this->variableApi->set('ZikulaMultisitesModule', 'thumbnailHeightSiteFavIconView', $this->getThumbnailHeightSiteFavIconView());
         $this->variableApi->set('ZikulaMultisitesModule', 'thumbnailWidthSiteFavIconEdit', $this->getThumbnailWidthSiteFavIconEdit());
         $this->variableApi->set('ZikulaMultisitesModule', 'thumbnailHeightSiteFavIconEdit', $this->getThumbnailHeightSiteFavIconEdit());
+        $this->variableApi->set('ZikulaMultisitesModule', 'allowModerationSpecificCreatorForSite', $this->getAllowModerationSpecificCreatorForSite());
+        $this->variableApi->set('ZikulaMultisitesModule', 'allowModerationSpecificCreationDateForSite', $this->getAllowModerationSpecificCreationDateForSite());
+        $this->variableApi->set('ZikulaMultisitesModule', 'allowModerationSpecificCreatorForTemplate', $this->getAllowModerationSpecificCreatorForTemplate());
+        $this->variableApi->set('ZikulaMultisitesModule', 'allowModerationSpecificCreationDateForTemplate', $this->getAllowModerationSpecificCreationDateForTemplate());
+        $this->variableApi->set('ZikulaMultisitesModule', 'allowModerationSpecificCreatorForProject', $this->getAllowModerationSpecificCreatorForProject());
+        $this->variableApi->set('ZikulaMultisitesModule', 'allowModerationSpecificCreationDateForProject', $this->getAllowModerationSpecificCreationDateForProject());
     }
 }
