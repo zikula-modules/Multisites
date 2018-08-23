@@ -1,8 +1,10 @@
 'use strict';
 
 function multisitesToggleShrinkSettings(fieldName) {
-    var idSuffix = fieldName.replace('zikulamultisitesmodule_appsettings_', '');
-    jQuery('#shrinkDetails' + idSuffix).toggleClass('hidden', !jQuery('#zikulamultisitesmodule_appsettings_enableShrinkingFor' + idSuffix).prop('checked'));
+    var idSuffix;
+
+    idSuffix = fieldName.replace('zikulamultisitesmodule_config_', '');
+    jQuery('#shrinkDetails' + idSuffix).toggleClass('hidden', !jQuery('#zikulamultisitesmodule_config_enableShrinkingFor' + idSuffix).prop('checked'));
 }
 
 jQuery(document).ready(function () {
