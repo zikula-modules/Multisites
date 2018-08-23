@@ -27,27 +27,27 @@ use Zikula\UsersModule\Entity\UserEntity;
 abstract class AbstractPermissionHelper implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
+    
     /**
      * @var RequestStack
      */
     protected $requestStack;
-
+    
     /**
      * @var PermissionApiInterface
      */
     protected $permissionApi;
-
+    
     /**
      * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
-
+    
     /**
      * @var UserRepositoryInterface
      */
     protected $userRepository;
-
+    
     /**
      * PermissionHelper constructor.
      *
@@ -70,7 +70,7 @@ abstract class AbstractPermissionHelper implements ContainerAwareInterface
         $this->currentUserApi = $currentUserApi;
         $this->userRepository = $userRepository;
     }
-
+    
     /**
      * Checks if the given entity instance may be read.
      *

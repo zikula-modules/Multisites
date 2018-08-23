@@ -32,7 +32,7 @@ abstract class AbstractHookHelper
      * @var HookDispatcherInterface
      */
     protected $hookDispatcher;
-
+    
     /**
      * HookHelper constructor.
      *
@@ -42,7 +42,7 @@ abstract class AbstractHookHelper
     {
         $this->hookDispatcher = $hookDispatcher;
     }
-
+    
     /**
      * Calls validation hooks.
      *
@@ -60,7 +60,7 @@ abstract class AbstractHookHelper
     
         return $validators->getErrors();
     }
-
+    
     /**
      * Calls process hooks.
      *
@@ -75,7 +75,7 @@ abstract class AbstractHookHelper
         $hook = new ProcessHook($entity->getKey(), $routeUrl);
         $this->dispatchHooks($hookAreaPrefix . '.' . $hookType, $hook);
     }
-
+    
     /**
      * Calls form aware display hooks.
      *
@@ -95,7 +95,7 @@ abstract class AbstractHookHelper
     
         return $hook;
     }
-
+    
     /**
      * Calls form aware processing hooks.
      *
@@ -112,7 +112,7 @@ abstract class AbstractHookHelper
     
         $this->dispatchHooks($hookAreaPrefix . '.' . $hookType, $formResponse);
     }
-
+    
     /**
      * Dispatch hooks.
      *

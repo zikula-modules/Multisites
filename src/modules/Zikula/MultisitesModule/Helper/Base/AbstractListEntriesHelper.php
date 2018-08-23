@@ -21,7 +21,7 @@ use Zikula\Common\Translator\TranslatorTrait;
 abstract class AbstractListEntriesHelper
 {
     use TranslatorTrait;
-
+    
     /**
      * ListEntriesHelper constructor.
      *
@@ -31,7 +31,7 @@ abstract class AbstractListEntriesHelper
     {
         $this->setTranslator($translator);
     }
-
+    
     /**
      * Sets the translator.
      *
@@ -41,7 +41,7 @@ abstract class AbstractListEntriesHelper
     {
         $this->translator = $translator;
     }
-
+    
     /**
      * Return the name or names for a given list item.
      *
@@ -89,7 +89,7 @@ abstract class AbstractListEntriesHelper
         return $result;
     }
     
-
+    
     /**
      * Extract concatenated multi selection.
      *
@@ -113,7 +113,7 @@ abstract class AbstractListEntriesHelper
         return $listValues;
     }
     
-
+    
     /**
      * Determine whether a certain dropdown field has a multi selection or not.
      *
@@ -166,7 +166,7 @@ abstract class AbstractListEntriesHelper
         return $result;
     }
     
-
+    
     /**
      * Get entries for a certain dropdown field.
      *
@@ -218,7 +218,7 @@ abstract class AbstractListEntriesHelper
     
         return $entries;
     }
-
+    
     
     /**
      * Get 'workflow state' list entries.

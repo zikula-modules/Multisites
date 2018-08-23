@@ -33,52 +33,52 @@ use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 abstract class AbstractUploadHelper
 {
     use TranslatorTrait;
-
+    
     /**
      * @var Filesystem
      */
     protected $filesystem;
-
+    
     /**
      * @var SessionInterface
      */
     protected $session;
-
+    
     /**
      * @var LoggerInterface
      */
     protected $logger;
-
+    
     /**
      * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
-
+    
     /**
      * @var array
      */
     protected $moduleVars;
-
+    
     /**
      * @var String
      */
     protected $dataDirectory;
-
+    
     /**
      * @var array List of object types with upload fields
      */
     protected $allowedObjectTypes;
-
+    
     /**
      * @var array List of file types to be considered as images
      */
     protected $imageFileTypes;
-
+    
     /**
      * @var array List of dangerous file types to be rejected
      */
     protected $forbiddenFileTypes;
-
+    
     /**
      * UploadHelper constructor.
      *
@@ -106,12 +106,12 @@ abstract class AbstractUploadHelper
         $this->currentUserApi = $currentUserApi;
         $this->moduleVars = $moduleVars;
         $this->dataDirectory = $dataDirectory;
-
+    
         $this->allowedObjectTypes = ['site', 'template'];
         $this->imageFileTypes = ['gif', 'jpeg', 'jpg', 'png'];
         $this->forbiddenFileTypes = ['cgi', 'pl', 'asp', 'phtml', 'php', 'php3', 'php4', 'php5', 'exe', 'com', 'bat', 'jsp', 'cfm', 'shtml'];
     }
-
+    
     /**
      * Sets the translator.
      *
@@ -121,7 +121,7 @@ abstract class AbstractUploadHelper
     {
         $this->translator = $translator;
     }
-
+    
     /**
      * Process a file upload.
      *
@@ -226,7 +226,7 @@ abstract class AbstractUploadHelper
     
         return $result;
     }
-
+    
     /**
      * Check if an upload file meets all validation criteria.
      *
@@ -268,7 +268,7 @@ abstract class AbstractUploadHelper
     
         return true;
     }
-
+    
     /**
      * Read meta data from a certain file.
      *
@@ -360,7 +360,7 @@ abstract class AbstractUploadHelper
     
         return $exifData;
     }
-
+    
     /**
      * Determines the allowed file extensions for a given object type.
      *
@@ -405,7 +405,7 @@ abstract class AbstractUploadHelper
     
         return true;
     }
-
+    
     /**
      * Determines the final filename for a given input filename.
      *
@@ -479,7 +479,7 @@ abstract class AbstractUploadHelper
         // return the final file name
         return $fileName;
     }
-
+    
     /**
      * Deletes an existing upload file.
      *
@@ -512,7 +512,7 @@ abstract class AbstractUploadHelper
     
         return $entity;
     }
-
+    
     /**
      * Retrieve the base path for given object type and upload field combination.
      *
@@ -567,7 +567,7 @@ abstract class AbstractUploadHelper
     
         return $result;
     }
-
+    
     /**
      * Creates all required upload folders for this application.
      *
@@ -585,7 +585,7 @@ abstract class AbstractUploadHelper
     
         return $result;
     }
-
+    
     /**
      * Creates an upload folder and a .htaccess file within it.
      *
