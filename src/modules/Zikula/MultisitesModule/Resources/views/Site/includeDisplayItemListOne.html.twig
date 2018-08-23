@@ -1,5 +1,5 @@
 {# purpose of this template: inclusion template for display of related sites #}
-{% set hasAdminPermission = permissionHelper.hasComponentPermission('site', 'ACCESS_EDIT') %}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('site', constant('ACCESS_EDIT')) %}
 <h4>
     {{ item|zikulamultisitesmodule_formattedTitle }}
 </h4>
