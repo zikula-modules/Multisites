@@ -16,7 +16,6 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -32,10 +31,10 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
 use Zikula\MultisitesModule\Form\Type\Field\ArrayType;
 use Zikula\MultisitesModule\Form\Type\Field\UploadType;
-use Zikula\UsersModule\Form\Type\UserLiveSearchType;
 use Zikula\MultisitesModule\Helper\CollectionFilterHelper;
 use Zikula\MultisitesModule\Helper\EntityDisplayHelper;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
+use Zikula\MultisitesModule\Traits\ModerationFormFieldsTrait;
 
 /**
  * Site editing form type base class.
@@ -43,6 +42,7 @@ use Zikula\MultisitesModule\Helper\ListEntriesHelper;
 abstract class AbstractSiteType extends AbstractType
 {
     use TranslatorTrait;
+    use ModerationFormFieldsTrait;
 
     /**
      * @var EntityFactory
@@ -411,52 +411,6 @@ abstract class AbstractSiteType extends AbstractType
                 'title' => $this->__('Choose the project.')
             ]
         ]);
-    }
-
-    /**
-     * Adds special fields for moderators.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addModerationFields(FormBuilderInterface $builder, array $options = [])
-    {
-        if (!$options['has_moderate_permission']) {
-            return;
-        }
-        if ($options['inline_usage']) {
-            return;
-        }
-    
-        if ($options['allow_moderation_specific_creator']) {
-            $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
-                'mapped' => false,
-                'label' => $this->__('Creator') . ':',
-                'attr' => [
-                    'maxlength' => 11,
-                    'title' => $this->__('Here you can choose a user which will be set as creator.')
-                ],
-                'empty_data' => 0,
-                'required' => false,
-                'help' => $this->__('Here you can choose a user which will be set as creator.')
-            ]);
-        }
-        if ($options['allow_moderation_specific_creation_date']) {
-            $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
-                'mapped' => false,
-                'label' => $this->__('Creation date') . ':',
-                'attr' => [
-                    'class' => '',
-                    'title' => $this->__('Here you can choose a custom creation date.')
-                ],
-                'empty_data' => '',
-                'required' => false,
-                'with_seconds' => true,
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
-                'help' => $this->__('Here you can choose a custom creation date.')
-            ]);
-        }
     }
 
     /**
