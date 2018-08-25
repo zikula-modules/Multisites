@@ -13,7 +13,7 @@
         {{ form_start(deleteForm) }}
         {{ form_errors(deleteForm) }}
 
-        {% if site.supportsHookSubscribers and formHookTemplates|length > 0 %}
+        {% if site.supportsHookSubscribers() and formHookTemplates|length > 0 %}
             <fieldset>
                 {% for hookTemplate in formHookTemplates %}
                     {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
