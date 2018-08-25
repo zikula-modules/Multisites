@@ -13,7 +13,7 @@
         {{ form_start(deleteForm) }}
         {{ form_errors(deleteForm) }}
 
-        {% if site.supportsHookSubscribers and formHookTemplates|length > 0 %}
+        {% if site.supportsHookSubscribers() and formHookTemplates|length > 0 %}
             <fieldset>
                 {% for hookTemplate in formHookTemplates %}
                     {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
@@ -35,7 +35,7 @@
     </div>
 {% endblock %}
 {% block display_hooks %}
-    {% if site.supportsHookSubscribers %}
+    {% if site.supportsHookSubscribers() %}
         {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.sites.form_delete', id=site.getKey(), outputAsArray=true) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for area, hook in hooks %}
