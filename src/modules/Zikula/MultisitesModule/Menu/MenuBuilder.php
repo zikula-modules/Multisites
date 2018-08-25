@@ -17,7 +17,7 @@ use Zikula\MultisitesModule\Entity\TemplateEntity;
 use Zikula\MultisitesModule\Menu\Base\AbstractMenuBuilder;
 
 /**
- * This is the menu builder implementation class.
+ * Menu builder implementation class.
  */
 class MenuBuilder extends AbstractMenuBuilder
 {
