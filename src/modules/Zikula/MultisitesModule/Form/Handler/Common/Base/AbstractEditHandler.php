@@ -27,6 +27,7 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\RouteUrl;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\PageLockModule\Api\ApiInterface\LockingApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
@@ -154,6 +155,11 @@ abstract class AbstractEditHandler
     protected $logger;
 
     /**
+     * @var VariableApiInterface
+     */
+    protected $variableApi;
+
+    /**
      * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
@@ -218,6 +224,7 @@ abstract class AbstractEditHandler
      * @param RequestStack              $requestStack     RequestStack service instance
      * @param RouterInterface           $router           Router service instance
      * @param LoggerInterface           $logger           Logger service instance
+     * @param VariableApiInterface      $variableApi      VariableApi service instance
      * @param CurrentUserApiInterface   $currentUserApi   CurrentUserApi service instance
      * @param EntityFactory             $entityFactory    EntityFactory service instance
      * @param ControllerHelper          $controllerHelper ControllerHelper service instance
@@ -233,6 +240,7 @@ abstract class AbstractEditHandler
         RequestStack $requestStack,
         RouterInterface $router,
         LoggerInterface $logger,
+        VariableApiInterface $variableApi,
         CurrentUserApiInterface $currentUserApi,
         EntityFactory $entityFactory,
         ControllerHelper $controllerHelper,
@@ -247,6 +255,7 @@ abstract class AbstractEditHandler
         $this->requestStack = $requestStack;
         $this->router = $router;
         $this->logger = $logger;
+        $this->variableApi = $variableApi;
         $this->currentUserApi = $currentUserApi;
         $this->entityFactory = $entityFactory;
         $this->controllerHelper = $controllerHelper;
