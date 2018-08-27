@@ -535,7 +535,7 @@ abstract class AbstractEditHandler
         // get treated entity reference from persisted member var
         $entity = $this->entityRef;
     
-        if ($entity->supportsHookSubscribers() && $action != 'cancel') {
+        if ($entity->supportsHookSubscribers()) {
             // Let any ui hooks perform additional validation actions
             $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
             $validationErrors = $this->hookHelper->callValidationHooks($entity, $hookType);
