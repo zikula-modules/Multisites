@@ -238,7 +238,7 @@ abstract class AbstractWorkflowHelper
     
         if ($buttonClass == '' && $actionId == 'update') {
             $buttonClass = 'success';
-    	}
+        }
     
         if (empty($buttonClass)) {
             $buttonClass = 'default';
@@ -272,7 +272,7 @@ abstract class AbstractWorkflowHelper
         try {
             $workflow->apply($entity, $actionId);
     
-            if ($actionId == 'delete') {
+            if ('delete' == $actionId) {
                 $entityManager->remove($entity);
             } else {
                 $entityManager->persist($entity);

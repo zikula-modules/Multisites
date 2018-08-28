@@ -41,7 +41,7 @@ abstract class AbstractEditHandler extends EditHandler
             return $result;
         }
     
-        if ($this->templateParameters['mode'] == 'create') {
+        if ('create' == $this->templateParameters['mode']) {
             if (!$this->modelHelper->canBeCreated($this->objectType)) {
                 $this->requestStack->getCurrentRequest()->getSession()->getFlashBag()->add('error', $this->__('Sorry, but you can not create the site yet as other items are required which must be created before!'));
                 $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType];
@@ -194,7 +194,7 @@ abstract class AbstractEditHandler extends EditHandler
                 $args['commandName'] = $action['id'];
             }
         }
-        if ($this->templateParameters['mode'] == 'create' && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
+        if ('create' == $this->templateParameters['mode'] && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
             $args['commandName'] = 'submit';
             $this->repeatCreateAction = true;
         }
@@ -214,7 +214,7 @@ abstract class AbstractEditHandler extends EditHandler
         $message = '';
         switch ($args['commandName']) {
             case 'submit':
-                if ($this->templateParameters['mode'] == 'create') {
+                if ('create' == $this->templateParameters['mode']) {
                     $message = $this->__('Done! Site created.');
                 } else {
                     $message = $this->__('Done! Site updated.');
@@ -255,7 +255,7 @@ abstract class AbstractEditHandler extends EditHandler
     
         $this->addDefaultMessage($args, $success);
     
-        if ($success && $this->templateParameters['mode'] == 'create') {
+        if ($success && 'create' == $this->templateParameters['mode']) {
             // store new identifier
             $this->idValue = $entity->getKey();
         }
