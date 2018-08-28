@@ -15,6 +15,7 @@ namespace Zikula\MultisitesModule\Listener\Base;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
@@ -74,6 +75,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         return [
             Events::preFlush,
             Events::onFlush,
+            Events::postFlush,
             Events::preRemove,
             Events::postRemove,
             Events::prePersist,
@@ -87,6 +89,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
     /**
      * The preFlush event is called at EntityManager#flush() before anything else.
      *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preflush
+     *
      * @param PreFlushEventArgs $args Event arguments
      */
     public function preFlush(PreFlushEventArgs $args)
@@ -97,6 +101,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
      * The onFlush event is called inside EntityManager#flush() after the changes to all the
      * managed entities and their associations have been computed.
      *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#onflush
+     *
      * @param OnFlushEventArgs $args Event arguments
      */
     public function onFlush(OnFlushEventArgs $args)
@@ -104,8 +110,21 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
     }
 
     /**
+     * The postFlush event is called at the end of EntityManager#flush().
+     *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#postflush
+     *
+     * @param PostFlushEventArgs $args Event arguments
+     */
+    public function postFlush(PostFlushEventArgs $args)
+    {
+    }
+
+    /**
      * The preRemove event occurs for a given entity before the respective EntityManager
      * remove operation for that entity is executed. It is not called for a DQL DELETE statement.
+     *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preremove
      *
      * @param LifecycleEventArgs $args Event arguments
      */
@@ -131,6 +150,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
      * Note that the postRemove event or any events triggered after an entity removal can receive
      * an uninitializable proxy in case you have configured an entity to cascade remove relations.
      * In this case, you should load yourself the proxy in the associated pre event.
+     *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#postupdate-postremove-postpersist
      *
      * @param LifecycleEventArgs $args Event arguments
      */
@@ -173,6 +194,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
      * Doctrine will not recognize changes made to relations in a prePersist event.
      * This includes modifications to collections such as additions, removals or replacement.
      *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#prepersist
+     *
      * @param LifecycleEventArgs $args Event arguments
      */
     public function prePersist(LifecycleEventArgs $args)
@@ -194,6 +217,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
      * The postPersist event occurs for an entity after the entity has been made persistent.
      * It will be invoked after the database insert operations. Generated primary key values
      * are available in the postPersist event.
+     *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#postupdate-postremove-postpersist
      *
      * @param LifecycleEventArgs $args Event arguments
      */
@@ -217,7 +242,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
      * The preUpdate event occurs before the database update operations to entity data.
      * It is not called for a DQL UPDATE statement nor when the computed changeset is empty.
      *
-     * @see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#preupdate
      *
      * @param PreUpdateEventArgs $args Event arguments
      */
@@ -239,6 +264,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
     /**
      * The postUpdate event occurs after the database update operations to entity data.
      * It is not called for a DQL UPDATE statement.
+     *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#postupdate-postremove-postpersist
      *
      * @param LifecycleEventArgs $args Event arguments
      */
@@ -266,6 +293,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
      * immediately after objects are being hydrated, and therefore associations are not guaranteed
      * to be initialized. It is not safe to combine usage of Doctrine\ORM\AbstractQuery#iterate()
      * and postLoad event handlers.
+     *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#postload
      *
      * @param LifecycleEventArgs $args Event arguments
      */
