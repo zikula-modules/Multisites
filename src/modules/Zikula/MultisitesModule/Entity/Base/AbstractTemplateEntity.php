@@ -201,7 +201,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
         }
     }
     
-    
     /**
      * Returns the _upload base path.
      *

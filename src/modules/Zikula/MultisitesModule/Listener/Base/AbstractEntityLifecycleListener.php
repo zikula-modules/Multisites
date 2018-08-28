@@ -14,6 +14,8 @@ namespace Zikula\MultisitesModule\Listener\Base;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Psr\Log\LoggerInterface;
@@ -70,6 +72,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
     public function getSubscribedEvents()
     {
         return [
+            Events::preFlush,
+            Events::onFlush,
             Events::preRemove,
             Events::postRemove,
             Events::prePersist,
@@ -78,6 +82,25 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             Events::postUpdate,
             Events::postLoad
         ];
+    }
+
+    /**
+     * The preFlush event is called at EntityManager#flush() before anything else.
+     *
+     * @param PreFlushEventArgs $args Event arguments
+     */
+    public function preFlush(PreFlushEventArgs $args)
+    {
+    }
+
+    /**
+     * The onFlush event is called inside EntityManager#flush() after the changes to all the
+     * managed entities and their associations have been computed.
+     *
+     * @param OnFlushEventArgs $args Event arguments
+     */
+    public function onFlush(OnFlushEventArgs $args)
+    {
     }
 
     /**

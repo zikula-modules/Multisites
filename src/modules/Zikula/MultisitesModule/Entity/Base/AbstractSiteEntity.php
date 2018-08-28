@@ -383,7 +383,6 @@ abstract class AbstractSiteEntity extends EntityAccess
         }
     }
     
-    
     /**
      * Returns the _upload base path.
      *
