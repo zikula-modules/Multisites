@@ -896,7 +896,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Sets the logo.
      *
-     * @param File $logo
+     * @param File|null $logo
      *
      * @return void
      */
@@ -1023,7 +1023,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Sets the fav icon.
      *
-     * @param File $favIcon
+     * @param File|null $favIcon
      *
      * @return void
      */
@@ -1174,7 +1174,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Sets the parameters csv file.
      *
-     * @param File $parametersCsvFile
+     * @param File|null $parametersCsvFile
      *
      * @return void
      */

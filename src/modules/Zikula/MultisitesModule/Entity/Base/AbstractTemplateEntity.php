@@ -378,11 +378,11 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Sets the sql file.
      *
-     * @param File $sqlFile
+     * @param File|null $sqlFile
      *
      * @return void
      */
-    public function setSqlFile(File $sqlFile)
+    public function setSqlFile($sqlFile)
     {
         if (null === $this->sqlFile && null === $sqlFile) {
             return;
