@@ -43,7 +43,7 @@ div.zikulamultisitesmodule-relation-rightside {
 }
 
 .ui-autocomplete-loading {
-    background: white url("../../../../../../images/ajax/indicator_arrows.gif") right center no-repeat;
+    background: white url("../../../../../../web/bundles/core/images/ajax/indicator_arrows.gif") right center no-repeat;
 }
 
 .ui-autocomplete .suggestion {
@@ -59,10 +59,16 @@ div.zikulamultisitesmodule-relation-rightside {
 }
 
 div.zikulamultisitesmodule-autocomplete .ui-autocomplete .suggestion {
-    background-image: url("../../../../../../images/icons/extrasmall/tab_right.png");
+    content: "\f0da";
+    font-family: 'FontAwesome';
+    font-style: normal;
+    color: #000;
+    margin-right: 15px;
+    position: absolute;
+    left: 0;
 }
 div.zikulamultisitesmodule-autocomplete-with-image .ui-autocomplete .suggestion {
-    background-image: url("../../../../../../images/icons/extrasmall/agt_Multimedia.png");
+    content: "\f03e";
 }
 .ui-autocomplete .suggestion img {
     max-width: 20px;
