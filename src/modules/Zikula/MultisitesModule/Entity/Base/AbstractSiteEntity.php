@@ -910,7 +910,7 @@ abstract class AbstractSiteEntity extends EntityAccess
         }
         $this->logo = $logo;
     
-        if (null === $this->logo) {
+        if (null === $this->logo || '' == $this->logo) {
             $this->setLogoFileName('');
             $this->setLogoUrl('');
             $this->setLogoMeta([]);
@@ -1037,7 +1037,7 @@ abstract class AbstractSiteEntity extends EntityAccess
         }
         $this->favIcon = $favIcon;
     
-        if (null === $this->favIcon) {
+        if (null === $this->favIcon || '' == $this->favIcon) {
             $this->setFavIconFileName('');
             $this->setFavIconUrl('');
             $this->setFavIconMeta([]);
@@ -1188,7 +1188,7 @@ abstract class AbstractSiteEntity extends EntityAccess
         }
         $this->parametersCsvFile = $parametersCsvFile;
     
-        if (null === $this->parametersCsvFile) {
+        if (null === $this->parametersCsvFile || '' == $this->parametersCsvFile) {
             $this->setParametersCsvFileFileName('');
             $this->setParametersCsvFileUrl('');
             $this->setParametersCsvFileMeta([]);
