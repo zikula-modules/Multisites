@@ -137,9 +137,9 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
             return;
         }
     
-        if ($transitionName == 'delete') {
+        if ('delete' == $transitionName) {
             // check if deleting the entity would break related child entities
-            if ($objectType == 'project') {
+            if ('project' == $objectType) {
                 $isBlocked = false;
                 if (count($entity->getTemplates()) > 0) {
                     $isBlocked = true;
@@ -349,6 +349,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
     
         $entityClassParts = explode('\\', get_class($entity));
     
-        return ($entityClassParts[0] == 'Zikula' && $entityClassParts[1] == 'MultisitesModule');
+        return ('Zikula' == $entityClassParts[0] && 'MultisitesModule' == $entityClassParts[1]);
     }
 }

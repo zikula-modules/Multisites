@@ -392,7 +392,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
         }
         $this->sqlFile = isset($sqlFile) ? $sqlFile : '';
     
-        if (null === $this->sqlFile) {
+        if (null === $this->sqlFile || '' == $this->sqlFile) {
             $this->setSqlFileFileName('');
             $this->setSqlFileUrl('');
             $this->setSqlFileMeta([]);
