@@ -75,7 +75,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new site instance.
      *
-     * @return Zikula\MultisitesModule\Entity\siteEntity The newly created entity instance
+     * @return \Zikula\MultisitesModule\Entity\SiteEntity The newly created entity instance
      */
     public function createSite()
     {
@@ -91,7 +91,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new template instance.
      *
-     * @return Zikula\MultisitesModule\Entity\templateEntity The newly created entity instance
+     * @return \Zikula\MultisitesModule\Entity\TemplateEntity The newly created entity instance
      */
     public function createTemplate()
     {
@@ -107,7 +107,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new project instance.
      *
-     * @return Zikula\MultisitesModule\Entity\projectEntity The newly created entity instance
+     * @return \Zikula\MultisitesModule\Entity\ProjectEntity The newly created entity instance
      */
     public function createProject()
     {
