@@ -66,11 +66,10 @@ abstract class AbstractEditHandler extends EditHandler
     protected function initRelationPresets()
     {
         $entity = $this->entityRef;
-    
         
         // assign identifiers of predefined incoming relationships
         // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['template'] = $this->requestStack->getCurrentRequest()->get('template', '');
+        $this->relationPresets['template'] = $this->requestStack->getCurrentRequest()->query->get('template', '');
         if (!empty($this->relationPresets['template'])) {
             $relObj = $this->entityFactory->getRepository('template')->selectById($this->relationPresets['template']);
             if (null !== $relObj) {
@@ -78,7 +77,7 @@ abstract class AbstractEditHandler extends EditHandler
             }
         }
         // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['project'] = $this->requestStack->getCurrentRequest()->get('project', '');
+        $this->relationPresets['project'] = $this->requestStack->getCurrentRequest()->query->get('project', '');
         if (!empty($this->relationPresets['project'])) {
             $relObj = $this->entityFactory->getRepository('project')->selectById($this->relationPresets['project']);
             if (null !== $relObj) {
