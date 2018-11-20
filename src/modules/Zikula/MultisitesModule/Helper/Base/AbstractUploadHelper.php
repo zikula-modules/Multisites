@@ -362,15 +362,14 @@ abstract class AbstractUploadHelper
     }
     
     /**
-     * Determines the allowed file extensions for a given object type.
+     * Determines the allowed file extensions for a given object type and field.
      *
      * @param string $objectType Currently treated entity type
      * @param string $fieldName  Name of upload field
-     * @param string $extension  Input file extension
      *
      * @return string[] List of allowed file extensions
      */
-    protected function isAllowedFileExtension($objectType, $fieldName, $extension)
+    public function getAllowedFileExtensions($objectType, $fieldName)
     {
         // determine the allowed extensions
         $allowedExtensions = [];
@@ -392,6 +391,23 @@ abstract class AbstractUploadHelper
                 $allowedExtensions = ['sql', 'txt'];
                     break;
         }
+    
+        return $allowedExtensions;
+    }
+    
+    /**
+     * Determines whether a certain file extension is allowed for a given object type and field.
+     *
+     * @param string $objectType Currently treated entity type
+     * @param string $fieldName  Name of upload field
+     * @param string $extension  Input file extension
+     *
+     * @return boolean True if given extension is allowed, false otherwise
+     */
+    protected function isAllowedFileExtension($objectType, $fieldName, $extension)
+    {
+        // determine the allowed extensions
+        $allowedExtensions = $this->getAllowedFileExtensions($objectType, $fieldName);
     
         if (count($allowedExtensions) > 0) {
             if (!in_array($extension, $allowedExtensions)) {

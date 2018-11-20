@@ -31,6 +31,7 @@ use Zikula\MultisitesModule\Form\Type\Field\UploadType;
 use Zikula\MultisitesModule\Helper\CollectionFilterHelper;
 use Zikula\MultisitesModule\Helper\EntityDisplayHelper;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
+use Zikula\MultisitesModule\Helper\UploadHelper;
 use Zikula\MultisitesModule\Traits\ModerationFormFieldsTrait;
 
 /**
@@ -62,6 +63,11 @@ abstract class AbstractTemplateType extends AbstractType
     protected $listHelper;
 
     /**
+     * @var UploadHelper
+     */
+    protected $uploadHelper;
+
+    /**
      * TemplateType constructor.
      *
      * @param TranslatorInterface $translator    Translator service instance
@@ -69,19 +75,22 @@ abstract class AbstractTemplateType extends AbstractType
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param ListEntriesHelper $listHelper ListEntriesHelper service instance
+     * @param UploadHelper $uploadHelper UploadHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
         EntityDisplayHelper $entityDisplayHelper,
-        ListEntriesHelper $listHelper
+        ListEntriesHelper $listHelper,
+        UploadHelper $uploadHelper
     ) {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
         $this->collectionFilterHelper = $collectionFilterHelper;
         $this->entityDisplayHelper = $entityDisplayHelper;
         $this->listHelper = $listHelper;
+        $this->uploadHelper = $uploadHelper;
     }
 
     /**
@@ -144,7 +153,7 @@ abstract class AbstractTemplateType extends AbstractType
             ],
             'required' => true && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'sql, txt',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('template', 'sqlFile')),
             'allowed_size' => ''
         ]);
         
