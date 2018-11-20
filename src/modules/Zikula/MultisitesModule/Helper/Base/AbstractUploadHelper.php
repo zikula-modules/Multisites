@@ -294,7 +294,7 @@ abstract class AbstractUploadHelper
             return $meta;
         }
     
-        if ($meta['extension'] == 'swf') {
+        if ('swf' == $meta['extension']) {
             $meta['isImage'] = false;
         }
     
@@ -314,7 +314,7 @@ abstract class AbstractUploadHelper
             $meta['format'] = 'square';
         }
     
-        if (!$includeExif || $meta['extension'] != 'jpg') {
+        if (!$includeExif || 'jpg' != $meta['extension']) {
             return $meta;
         }
     
