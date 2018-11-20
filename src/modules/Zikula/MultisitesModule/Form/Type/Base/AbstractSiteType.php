@@ -34,6 +34,7 @@ use Zikula\MultisitesModule\Form\Type\Field\UploadType;
 use Zikula\MultisitesModule\Helper\CollectionFilterHelper;
 use Zikula\MultisitesModule\Helper\EntityDisplayHelper;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
+use Zikula\MultisitesModule\Helper\UploadHelper;
 use Zikula\MultisitesModule\Traits\ModerationFormFieldsTrait;
 
 /**
@@ -65,6 +66,11 @@ abstract class AbstractSiteType extends AbstractType
     protected $listHelper;
 
     /**
+     * @var UploadHelper
+     */
+    protected $uploadHelper;
+
+    /**
      * SiteType constructor.
      *
      * @param TranslatorInterface $translator    Translator service instance
@@ -72,19 +78,22 @@ abstract class AbstractSiteType extends AbstractType
      * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param ListEntriesHelper $listHelper ListEntriesHelper service instance
+     * @param UploadHelper $uploadHelper UploadHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
         CollectionFilterHelper $collectionFilterHelper,
         EntityDisplayHelper $entityDisplayHelper,
-        ListEntriesHelper $listHelper
+        ListEntriesHelper $listHelper,
+        UploadHelper $uploadHelper
     ) {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
         $this->collectionFilterHelper = $collectionFilterHelper;
         $this->entityDisplayHelper = $entityDisplayHelper;
         $this->listHelper = $listHelper;
+        $this->uploadHelper = $uploadHelper;
     }
 
     /**
@@ -301,7 +310,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'logo')),
             'allowed_size' => ''
         ]);
         
@@ -313,7 +322,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'png, ico',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'favIcon')),
             'allowed_size' => ''
         ]);
         
@@ -336,7 +345,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'csv',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'parametersCsvFile')),
             'allowed_size' => ''
         ]);
         
