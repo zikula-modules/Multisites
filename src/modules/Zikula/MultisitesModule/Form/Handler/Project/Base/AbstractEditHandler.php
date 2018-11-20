@@ -66,11 +66,10 @@ abstract class AbstractEditHandler extends EditHandler
     protected function initRelationPresets()
     {
         $entity = $this->entityRef;
-    
         
         // assign identifiers of predefined outgoing many to many relationships
         // non-editable relation, we store the id and assign it in handleCommand
-        $this->relationPresets['templates'] = $this->requestStack->getCurrentRequest()->get('templates', '');
+        $this->relationPresets['templates'] = $this->requestStack->getCurrentRequest()->query->get('templates', '');
     
         // save entity reference for later reuse
         $this->entityRef = $entity;
@@ -229,7 +228,7 @@ abstract class AbstractEditHandler extends EditHandler
             $this->idValue = $entity->getKey();
         }
         
-        if ($args['commandName'] == 'create') {
+        if ('create' == $this->templateParameters['mode']) {
             // save predefined outgoing relationship to child entity
             if (!empty($this->relationPresets['templates'])) {
                 $relObj = $this->entityFactory->getRepository('template')->selectById($this->relationPresets['templates']);
