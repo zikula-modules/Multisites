@@ -9,7 +9,7 @@ function zikulaMultisitesValidateNoSpace(val) {
 
 function zikulaMultisitesValidateUploadExtension(val, elem) {
     var fileExtension, allowedExtensions;
-    if (val === '') {
+    if ('' == val) {
         return true;
     }
 
