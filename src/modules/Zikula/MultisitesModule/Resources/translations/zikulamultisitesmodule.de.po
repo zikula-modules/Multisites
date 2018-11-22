@@ -2073,7 +2073,7 @@ msgstr "Pixel"
 #~ "tatsächlich geändert haben."
 
 #~ msgid "Create database"
-#~ msgstr "Datenank erstellen"
+#~ msgstr "Datenbank erstellen"
 
 #~ msgid "Check this if the database does not exist yet."
 #~ msgstr "Kreuze diese Option an, falls die Datenbank noch nicht existiert."
@@ -2146,7 +2146,7 @@ msgstr "Pixel"
 #~ msgstr "Löschoptionen"
 
 #~ msgid "Delete database"
-#~ msgstr "Datenank löschen"
+#~ msgstr "Datenbank löschen"
 
 #~ msgid "Version"
 #~ msgstr "Version"
