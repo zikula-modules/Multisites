@@ -389,7 +389,7 @@ abstract class AbstractEditHandler
             return false;
         }
     
-        if ($entity->supportsHookSubscribers()) {
+        if (method_exists($entity, 'supportsHookSubscribers') && $entity->supportsHookSubscribers()) {
             // Call form aware display hooks
             $formHook = $this->hookHelper->callFormDisplayHooks($this->form, $entity, FormAwareCategory::TYPE_EDIT);
             $this->templateParameters['formHookTemplates'] = $formHook->getTemplates();
@@ -542,7 +542,7 @@ abstract class AbstractEditHandler
         // get treated entity reference from persisted member var
         $entity = $this->entityRef;
     
-        if ($entity->supportsHookSubscribers()) {
+        if (method_exists($entity, 'supportsHookSubscribers') && $entity->supportsHookSubscribers()) {
             // Let any ui hooks perform additional validation actions
             $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
             $validationErrors = $this->hookHelper->callValidationHooks($entity, $hookType);
@@ -562,7 +562,7 @@ abstract class AbstractEditHandler
             return false;
         }
     
-        if ($entity->supportsHookSubscribers()) {
+        if (method_exists($entity, 'supportsHookSubscribers') && $entity->supportsHookSubscribers()) {
             $entitiesWithDisplayAction = [''];
             $hasDisplayAction = in_array($this->objectType, $entitiesWithDisplayAction);
     
