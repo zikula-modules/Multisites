@@ -3,49 +3,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ app.request.locale }}" lang="{{ app.request.locale }}">
 <head>
     <title>{{ block('pageTitle')|default(block('title')) }}</title>
-    <link rel="stylesheet" href="{{ asset('bootstrap-font-awesome.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('jquery-ui/themes/base/jquery-ui.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/core/css/core.css') }}" />
-    <link rel="stylesheet" href="{{ zasset('@ZikulaMultisitesModule:css/style.css') }}" />
-    <link rel="stylesheet" href="{{ zasset('@ZikulaMultisitesModule:css/custom.css') }}" />
-    <link rel="stylesheet" href="{{ asset('magnific-popup/magnific-popup.css') }}" />
 </head>
 <body>
     <h2>{{ block('title') }}</h2>
     {% block content %}{% endblock %}
-    <script>
+    {% block footer %}
+        <p class="text-center">
+            Powered by <a href="https://modulestudio.de" title="Get the MOST out of Zikula!">ModuleStudio 1.4.0</a>
+        </p>
+        {{ pageAddAsset('stylesheet', zasset('@ZikulaMultisitesModule:css/custom.css'), 120) }}
+        {{ pageAddAsset('stylesheet', asset('jquery-ui/themes/base/jquery-ui.min.css')) }}
+        {{ pageAddAsset('javascript', asset('jquery-ui/jquery-ui.min.js')) }}
+        {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js'), 90) }}
+        {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css'), 90) }}
+        {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.js')) }}
+        <script>
+            /* <![CDATA[ */
+                if (typeof(Zikula) == 'undefined') {var Zikula = {};}
+                Zikula.Config = {'entrypoint': '{{ getSystemVar('entrypoint', 'index.php') }}', 'baseURL': '{{ app.request.schemeAndHttpHost ~ '/' }}', 'baseURI': '{{ app.request.basePath }}'};
+            /* ]]> */
+        </script>
+        {% if 'edit' in app.request.get('_route') or 'config' in app.request.get('_route') %}
+            {{ polyfill(['forms', 'forms-ext']) }}
+        {% endif %}
+        <script>
         /* <![CDATA[ */
-            if (typeof(Zikula) == 'undefined') {var Zikula = {};}
-            Zikula.Config = {'entrypoint': '{{ getSystemVar('entrypoint', 'index.php') }}', 'baseURL': '{{ app.request.schemeAndHttpHost ~ '/' }}', 'baseURI': '{{ app.request.basePath }}'};
+            ( function($) {
+                $(document).ready(function() {
+                    $('.dropdown-toggle').addClass('hidden');
+                });
+            })(jQuery);
         /* ]]> */
-    </script>
-    <script src="{{ asset('jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ asset('js/fos_js_routes.js') }}"></script>
-    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
-    <script src="{{ asset('bundles/core/js/Zikula.Translator.js') }}"></script>
-    <script src="{{ asset('magnific-popup/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.js') }}"></script>
-    {% if 'edit' in app.request.get('_route') %}
-        {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
-        {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
-    {% endif %}
-    {% if 'edit' in app.request.get('_route') or 'config' in app.request.get('_route') %}
-        {{ polyfill(['forms', 'forms-ext']) }}
-    {% endif %}
-    <script>
-    /* <![CDATA[ */
-        ( function($) {
-            $(document).ready(function() {
-                $('.dropdown-toggle').addClass('hidden');
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
-    {% block footer %}{% endblock %}
+        </script>
+    {% endblock %}
 </body>
 </html>
