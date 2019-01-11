@@ -161,7 +161,8 @@ abstract class AbstractUploadType extends AbstractType
                 ],
                 'allowed_extensions' => '',
                 'allowed_size' => '',
-                'error_bubbling' => false
+                'error_bubbling' => false,
+                'allow_file_upload' => true
             ])
             ->setAllowedTypes('allowed_extensions', 'string')
             ->setAllowedTypes('allowed_size', 'string')
