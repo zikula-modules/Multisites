@@ -186,7 +186,7 @@ abstract class AbstractControllerHelper
         $templateParameters['own'] = (bool)$request->query->getInt('own', $this->variableApi->get('ZikulaMultisitesModule', 'showOnlyOwnEntries', false)) ? 1 : 0;
     
         $resultsPerPage = 0;
-        if ($templateParameters['all'] != 1) {
+        if (1 != $templateParameters['all']) {
             // the number of items displayed on a page for pagination
             $resultsPerPage = $request->query->getInt('num', 0);
             if (in_array($resultsPerPage, [0, 10])) {
@@ -207,9 +207,9 @@ abstract class AbstractControllerHelper
                 }
                 if (in_array($fieldName, ['all', 'own', 'num'])) {
                     $templateParameters[$fieldName] = $fieldValue;
-                } elseif ($fieldName == 'sort' && !empty($fieldValue)) {
+                } elseif ('sort' == $fieldName && !empty($fieldValue)) {
                     $sort = $fieldValue;
-                } elseif ($fieldName == 'sortdir' && !empty($fieldValue)) {
+                } elseif ('sortdir' == $fieldName && !empty($fieldValue)) {
                     $sortdir = $fieldValue;
                 } elseif (false === stripos($fieldName, 'thumbRuntimeOptions') && false === stripos($fieldName, 'featureActivationHelper') && false === stripos($fieldName, 'permissionHelper')) {
                     // set filter as query argument, fetched inside repository
