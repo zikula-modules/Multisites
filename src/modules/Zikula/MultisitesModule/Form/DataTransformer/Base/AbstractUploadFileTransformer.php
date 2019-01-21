@@ -15,7 +15,6 @@ namespace Zikula\MultisitesModule\Form\DataTransformer\Base;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Zikula\MultisitesModule\Form\Type\Field\UploadType;
 use Zikula\MultisitesModule\Helper\UploadHelper;
 
 /**
@@ -26,9 +25,9 @@ use Zikula\MultisitesModule\Helper\UploadHelper;
 abstract class AbstractUploadFileTransformer implements DataTransformerInterface
 {
     /**
-     * @var UploadType
+     * @var object
      */
-    protected $formType = '';
+    protected $entity = null;
 
     /**
      * @var UploadHelper
@@ -43,13 +42,13 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
     /**
      * UploadFileTransformer constructor.
      *
-     * @param UploadType   $formType     The form type containing this transformer
+     * @param object       $entity       The containing entity
      * @param UploadHelper $uploadHelper UploadHelper service instance
      * @param string       $fieldName    The form field name
      */
-    public function __construct(UploadType $formType, UploadHelper $uploadHelper, $fieldName = '')
+    public function __construct($entity, UploadHelper $uploadHelper, $fieldName = '')
     {
-        $this->formType = $formType;
+        $this->entity = $entity;
         $this->uploadHelper = $uploadHelper;
         $this->fieldName = $fieldName;
     }
@@ -89,7 +88,7 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
             $deleteFile = isset($data[$this->fieldName . 'DeleteFile']) ? $data[$this->fieldName . 'DeleteFile'] : false;
         }
 
-        $entity = $this->formType->getEntity();
+        $entity = $this->entity;
         $objectType = $entity->get_objectType();
         $fieldName = $this->fieldName;
 
@@ -121,7 +120,7 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
         $result = null;
         $metaData = [];
         if ($uploadResult['fileName'] != '') {
-            $result = $this->uploadHelper->getFileBaseFolder($this->formType->getEntity()->get_objectType(), $fieldName) . $uploadResult['fileName'];
+            $result = $this->uploadHelper->getFileBaseFolder($entity->get_objectType(), $fieldName) . $uploadResult['fileName'];
             $result = null !== $result ? new File($result) : $result;
             $metaData = $uploadResult['metaData'];
         }

@@ -91,7 +91,7 @@ abstract class AbstractUploadType extends AbstractType
         $fileOptions['attr']['class'] = 'validate-upload';
 
         $builder->add($fieldName, FileType::class, $fileOptions);
-        $uploadFileTransformer = new UploadFileTransformer($this, $this->uploadHelper, $fieldName);
+        $uploadFileTransformer = new UploadFileTransformer($this->entity, $this->uploadHelper, $fieldName);
         $builder->addModelTransformer($uploadFileTransformer);
 
         if (!$options['required']) {
@@ -161,7 +161,8 @@ abstract class AbstractUploadType extends AbstractType
                 ],
                 'allowed_extensions' => '',
                 'allowed_size' => '',
-                'error_bubbling' => false
+                'error_bubbling' => false,
+                'allow_file_upload' => true
             ])
             ->setAllowedTypes('allowed_extensions', 'string')
             ->setAllowedTypes('allowed_size', 'string')
