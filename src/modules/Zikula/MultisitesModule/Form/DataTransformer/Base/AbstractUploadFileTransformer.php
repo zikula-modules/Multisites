@@ -63,8 +63,8 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
     public function transform($file)
     {
         return [
-        	$this->fieldName => $file,
-        	$this->fieldName . 'DeleteFile' => false
+            $this->fieldName => $file,
+            $this->fieldName . 'DeleteFile' => false
         ];
     }
 
