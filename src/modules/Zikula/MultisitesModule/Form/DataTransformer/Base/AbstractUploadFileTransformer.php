@@ -63,8 +63,8 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
     public function transform($file)
     {
         return [
-        	$this->fieldName => $file,
-        	$this->fieldName . 'DeleteFile' => false
+            $this->fieldName => $file,
+            $this->fieldName . 'DeleteFile' => false
         ];
     }
 
@@ -120,7 +120,7 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
         $result = null;
         $metaData = [];
         if ($uploadResult['fileName'] != '') {
-            $result = $this->uploadHelper->getFileBaseFolder($entity->get_objectType(), $fieldName) . $uploadResult['fileName'];
+            $result = $this->uploadHelper->getFileBaseFolder($objectType, $fieldName) . $uploadResult['fileName'];
             $result = null !== $result ? new File($result) : $result;
             $metaData = $uploadResult['metaData'];
         }
