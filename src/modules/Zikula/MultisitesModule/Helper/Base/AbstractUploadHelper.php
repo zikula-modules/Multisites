@@ -152,6 +152,10 @@ abstract class AbstractUploadHelper
         $fileName = $file->getClientOriginalName();
         $fileNameParts = explode('.', $fileName);
         $extension = null !== $file->guessExtension() ? $file->guessExtension() : $file->guessClientExtension();
+        if (in_array($extension, ['bin', 'mpga'])) {
+            // fallback to given extension for mp3
+            $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
+        }
         if (null === $extension) {
             $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
         }
