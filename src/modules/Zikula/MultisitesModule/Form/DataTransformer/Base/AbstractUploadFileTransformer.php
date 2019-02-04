@@ -120,7 +120,7 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
         $result = null;
         $metaData = [];
         if ($uploadResult['fileName'] != '') {
-            $result = $this->uploadHelper->getFileBaseFolder($entity->get_objectType(), $fieldName) . $uploadResult['fileName'];
+            $result = $this->uploadHelper->getFileBaseFolder($objectType, $fieldName) . $uploadResult['fileName'];
             $result = null !== $result ? new File($result) : $result;
             $metaData = $uploadResult['metaData'];
         }
