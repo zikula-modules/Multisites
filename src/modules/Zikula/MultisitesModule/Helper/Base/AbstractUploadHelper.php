@@ -151,15 +151,7 @@ abstract class AbstractUploadHelper
         // build the file name
         $fileName = $file->getClientOriginalName();
         $fileNameParts = explode('.', $fileName);
-        $extension = null !== $file->guessExtension() ? $file->guessExtension() : $file->guessClientExtension();
-        if (in_array($extension, ['bin', 'mpga'])) {
-            // fallback to given extension for mp3
-            $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
-        }
-        if (null === $extension) {
-            $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
-        }
-        $extension = str_replace('jpeg', 'jpg', $extension);
+        $extension = $this->determineFileExtension($file);
         $fileNameParts[count($fileNameParts) - 1] = $extension;
         $fileName = implode('.', $fileNameParts);
     
@@ -254,17 +246,7 @@ abstract class AbstractUploadHelper
     
         // extract file extension
         $fileName = $file->getClientOriginalName();
-        $extension = null !== $file->guessExtension() ? $file->guessExtension() : $file->guessClientExtension();
-        if (in_array($extension, ['bin', 'mpga'])) {
-            // fallback to given extension for mp3
-            $fileNameParts = explode('.', $fileName);
-            $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
-        }
-        if (null === $extension) {
-            $fileNameParts = explode('.', $fileName);
-            $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
-        }
-        $extension = str_replace('jpeg', 'jpg', $extension);
+        $extension = $this->determineFileExtension($file);
     
         // validate extension
         $isValidExtension = $this->isAllowedFileExtension($objectType, $fieldName, $extension);
@@ -429,6 +411,30 @@ abstract class AbstractUploadHelper
         }
     
         return true;
+    }
+    
+    /**
+     * Determines the extension for a given file.
+     *
+     * @param UploadedFile $file Reference to data of uploaded file
+     *
+     * @return string the file extension
+     */
+    protected function determineFileExtension($file)
+    {
+        $fileName = $file->getClientOriginalName();
+        $fileNameParts = explode('.', $fileName);
+        $extension = null !== $file->guessExtension() ? $file->guessExtension() : $file->guessClientExtension();
+        if (in_array($extension, ['bin', 'mpga'])) {
+            // fallback to given extension for mp3
+            $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
+        }
+        if (null === $extension) {
+            $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
+        }
+        $extension = str_replace('jpeg', 'jpg', $extension);
+    
+        return $extension;
     }
     
     /**
