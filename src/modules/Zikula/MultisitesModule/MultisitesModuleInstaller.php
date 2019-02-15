@@ -39,24 +39,12 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
                 }
             case '2.0.0':
                 // drop site extensions table
-                $conn = $this->getConnection();
+                $conn = $this->entityManager->getConnection();
                 $conn->executeQuery('DROP TABLE IF EXISTS `multisites_siteextension`');
                 // remove obsolete modvar
                 $this->delVar('tempAccessFileContent');
             case '2.1.0':
                 // current version
-/*            case '2.2.0':
-                // do something
-                // ...
-                // update the database schema
-                try {
-                    $this->schemaTool->update($this->listEntityClasses());
-                } catch (\Exception $e) {
-                    $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $e->getMessage());
-                    $logger->error('{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $e->getMessage()]);
-
-                    return false;
-                }*/
         }
 
         // update successful
@@ -71,7 +59,7 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
      */
     protected function upgradeToV2()
     {
-        $conn = $this->getConnection();
+        $conn = $this->entityManager->getConnection();
 
         // first the access table can be removed, too, as it was actually never used
         $conn->executeQuery('DROP TABLE IF EXISTS `multisitesaccess`');
@@ -137,7 +125,7 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         $sitesById = [];
 
         // transfer data from old template table
-        $conn = $this->getConnection();
+        $conn = $this->entityManager->getConnection();
 
         $uploadHelper = $this->container->get('zikula_multisites_module.upload_helper');
         $basePath = $uploadHelper->getFileBaseFolder('template', 'sqlFile');
@@ -333,17 +321,5 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         $this->addFlash('error', $this->__f('Could not update the %file% file automatically. Please compare it with %template% and update it manually.', ['%file%' => $configFile, '%template%' => $configFileTemplate]));
 
         return true;
-    }
-
-    /**
-     * Returns connection to the database.
-     *
-     * @return Connection the current connection
-     */
-    private function getConnection()
-    {
-        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-
-        return $entityManager->getConnection();
     }
 }
