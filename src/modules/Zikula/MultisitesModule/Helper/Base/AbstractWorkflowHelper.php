@@ -268,16 +268,19 @@ abstract class AbstractWorkflowHelper
         $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname')];
     
         $result = false;
+        if (!$workflow->can($entity, $actionId)) {
+            return $result;
+        }
     
         try {
-            $workflow->apply($entity, $actionId);
-    
             if ('delete' == $actionId) {
                 $entityManager->remove($entity);
             } else {
                 $entityManager->persist($entity);
             }
             $entityManager->flush();
+    
+            $workflow->apply($entity, $actionId);
     
             $result = true;
             if ('delete' == $actionId) {
