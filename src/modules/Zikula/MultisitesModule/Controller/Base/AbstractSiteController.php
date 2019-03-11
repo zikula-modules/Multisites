@@ -293,7 +293,8 @@ abstract class AbstractSiteController extends AbstractController
             $formHook = $hookHelper->callFormDisplayHooks($form, $site, FormAwareCategory::TYPE_DELETE);
         }
         
-        if ($form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('delete')->isClicked()) {
                 if ($site->supportsHookSubscribers()) {
                     // Let any ui hooks perform additional validation actions
