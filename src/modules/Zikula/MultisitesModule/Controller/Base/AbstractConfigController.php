@@ -40,7 +40,8 @@ abstract class AbstractConfigController extends AbstractController
         
         $form = $this->createForm(ConfigType::class, $this->get('zikula_multisites_module.app_settings'));
         
-        if ($form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('save')->isClicked()) {
                 $appSettings = $form->getData();
                 $appSettings->save();

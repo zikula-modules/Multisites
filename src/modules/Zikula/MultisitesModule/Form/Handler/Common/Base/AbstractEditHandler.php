@@ -396,7 +396,8 @@ abstract class AbstractEditHandler
         }
     
         // handle form request and check validity constraints of edited entity
-        if ($this->form->handleRequest($request) && $this->form->isSubmitted()) {
+        $this->form->handleRequest($request);
+        if ($this->form->isSubmitted()) {
             if ($this->form->has('cancel') && $this->form->get('cancel')->isClicked()) {
                 if (true === $this->hasPageLockSupport && $this->templateParameters['mode'] == 'edit' && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
                     $lockName = 'ZikulaMultisitesModule' . $this->objectTypeCapital . $entity->getKey();

@@ -199,7 +199,8 @@ abstract class AbstractControllerHelper
         $templateParameters = $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     
         $quickNavForm = $this->formFactory->create('Zikula\MultisitesModule\Form\Type\QuickNavigation\\' . ucfirst($objectType) . 'QuickNavType', $templateParameters);
-        if ($quickNavForm->handleRequest($request) && $quickNavForm->isSubmitted()) {
+        $quickNavForm->handleRequest($request);
+        if ($quickNavForm->isSubmitted()) {
             $quickNavData = $quickNavForm->getData();
             foreach ($quickNavData as $fieldName => $fieldValue) {
                 if ($fieldName == 'routeArea') {
