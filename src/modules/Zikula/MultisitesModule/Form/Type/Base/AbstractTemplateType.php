@@ -70,12 +70,12 @@ abstract class AbstractTemplateType extends AbstractType
     /**
      * TemplateType constructor.
      *
-     * @param TranslatorInterface $translator    Translator service instance
-     * @param EntityFactory $entityFactory EntityFactory service instance
-     * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
-     * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
-     * @param ListEntriesHelper $listHelper ListEntriesHelper service instance
-     * @param UploadHelper $uploadHelper UploadHelper service instance
+     * @param TranslatorInterface $translator
+     * @param EntityFactory $entityFactory
+     * @param CollectionFilterHelper $collectionFilterHelper
+     * @param EntityDisplayHelper $entityDisplayHelper
+     * @param ListEntriesHelper $listHelper
+     * @param UploadHelper $uploadHelper
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -96,7 +96,7 @@ abstract class AbstractTemplateType extends AbstractType
     /**
      * Sets the translator.
      *
-     * @param TranslatorInterface $translator Translator service instance
+     * @param TranslatorInterface $translator
      */
     public function setTranslator(TranslatorInterface $translator)
     {

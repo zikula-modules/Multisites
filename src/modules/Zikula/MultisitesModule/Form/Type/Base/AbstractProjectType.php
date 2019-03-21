@@ -60,11 +60,11 @@ abstract class AbstractProjectType extends AbstractType
     /**
      * ProjectType constructor.
      *
-     * @param TranslatorInterface $translator    Translator service instance
-     * @param EntityFactory $entityFactory EntityFactory service instance
-     * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
-     * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
-     * @param ListEntriesHelper $listHelper ListEntriesHelper service instance
+     * @param TranslatorInterface $translator
+     * @param EntityFactory $entityFactory
+     * @param CollectionFilterHelper $collectionFilterHelper
+     * @param EntityDisplayHelper $entityDisplayHelper
+     * @param ListEntriesHelper $listHelper
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -83,7 +83,7 @@ abstract class AbstractProjectType extends AbstractType
     /**
      * Sets the translator.
      *
-     * @param TranslatorInterface $translator Translator service instance
+     * @param TranslatorInterface $translator
      */
     public function setTranslator(TranslatorInterface $translator)
     {

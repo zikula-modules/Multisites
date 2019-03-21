@@ -59,12 +59,15 @@ abstract class AbstractUploadType extends AbstractType
     /**
      * UploadTypeExtension constructor.
      *
-     * @param TranslatorInterface $translator   Translator service instance
-     * @param ImageHelper         $imageHelper  ImageHelper service instance
-     * @param UploadHelper        $uploadHelper UploadHelper service instance
+     * @param TranslatorInterface $translator
+     * @param ImageHelper $imageHelper
+     * @param UploadHelper $uploadHelper
      */
-    public function __construct(TranslatorInterface $translator, ImageHelper $imageHelper, UploadHelper $uploadHelper)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        ImageHelper $imageHelper,
+        UploadHelper $uploadHelper
+    ) {
         $this->translator = $translator;
         $this->imageHelper = $imageHelper;
         $this->uploadHelper = $uploadHelper;

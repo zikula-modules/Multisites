@@ -37,8 +37,8 @@ abstract class AbstractTemplateQuickNavType extends AbstractType
     /**
      * TemplateQuickNavType constructor.
      *
-     * @param TranslatorInterface $translator   Translator service instance
-     * @param ListEntriesHelper   $listHelper   ListEntriesHelper service instance
+     * @param TranslatorInterface $translator
+     * @param ListEntriesHelper $listHelper
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -51,7 +51,7 @@ abstract class AbstractTemplateQuickNavType extends AbstractType
     /**
      * Sets the translator.
      *
-     * @param TranslatorInterface $translator Translator service instance
+     * @param TranslatorInterface $translator
      */
     public function setTranslator(TranslatorInterface $translator)
     {

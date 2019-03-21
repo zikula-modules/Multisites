@@ -14,12 +14,24 @@ namespace Zikula\MultisitesModule\Base;
 
 use RuntimeException;
 use Zikula\Core\AbstractExtensionInstaller;
+use Zikula\MultisitesModule\Entity\SiteEntity;
+use Zikula\MultisitesModule\Entity\TemplateEntity;
+use Zikula\MultisitesModule\Entity\ProjectEntity;
 
 /**
  * Installer base class.
  */
 abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstaller
 {
+    /**
+     * @var array
+     */
+    protected $entities = [
+        SiteEntity::class,
+        TemplateEntity::class,
+        ProjectEntity::class,
+    ];
+
     /**
      * Install the ZikulaMultisitesModule application.
      *
@@ -53,7 +65,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         }
         // create all tables from according entity definitions
         try {
-            $this->schemaTool->create($this->listEntityClasses());
+            $this->schemaTool->create($this->entities);
         } catch (\Exception $exception) {
             $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
             $logger->error('{app}: Could not create the database tables during installation. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
@@ -119,7 +131,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                 // ...
                 // update the database schema
                 try {
-                    $this->schemaTool->update($this->listEntityClasses());
+                    $this->schemaTool->update($this->entities);
                 } catch (\Exception $exception) {
                     $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
                     $logger->error('{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
@@ -145,7 +157,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         $logger = $this->container->get('logger');
     
         try {
-            $this->schemaTool->drop($this->listEntityClasses());
+            $this->schemaTool->drop($this->entities);
         } catch (\Exception $exception) {
             $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
             $logger->error('{app}: Could not remove the database tables during uninstallation. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
@@ -162,20 +174,5 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
     
         // uninstallation successful
         return true;
-    }
-    
-    /**
-     * Build array with all entity classes for ZikulaMultisitesModule.
-     *
-     * @return string[] List of class names
-     */
-    protected function listEntityClasses()
-    {
-        $classNames = [];
-        $classNames[] = 'Zikula\MultisitesModule\Entity\SiteEntity';
-        $classNames[] = 'Zikula\MultisitesModule\Entity\TemplateEntity';
-        $classNames[] = 'Zikula\MultisitesModule\Entity\ProjectEntity';
-    
-        return $classNames;
     }
 }

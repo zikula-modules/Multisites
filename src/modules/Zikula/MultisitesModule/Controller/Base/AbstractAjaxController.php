@@ -27,14 +27,16 @@ abstract class AbstractAjaxController extends AbstractController
     /**
      * Changes a given flag (boolean field) by switching between true and false.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      *
      * @return JsonResponse
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function toggleFlagAction(Request $request)
-    {
+    public function toggleFlagAction(
+        Request $request
+    )
+     {
         if (!$request->isXmlHttpRequest()) {
             return $this->json($this->__('Only ajax access is allowed!'), Response::HTTP_BAD_REQUEST);
         }
@@ -66,7 +68,7 @@ abstract class AbstractAjaxController extends AbstractController
         $entity[$field] = !$entity[$field];
         
         // save entity back to database
-        $entityFactory->getObjectManager()->flush($entity);
+        $entityFactory->getEntityManager()->flush($entity);
         
         $logger = $this->get('logger');
         $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'field' => $field, 'entity' => $objectType, 'id' => $id];
