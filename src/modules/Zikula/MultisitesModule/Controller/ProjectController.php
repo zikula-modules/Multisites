@@ -38,9 +38,14 @@ class ProjectController extends AbstractProjectController
      * )
      * @Theme("admin")
      */
-    public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
-    {
-        return parent::adminViewAction($request, $sort, $sortdir, $pos, $num);
+    public function adminViewAction(
+        Request $request,
+        $sort,
+        $sortdir,
+        $pos,
+        $num
+    ) {
+        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, true);
     }
     
     /**
@@ -52,9 +57,14 @@ class ProjectController extends AbstractProjectController
      *        methods = {"GET"}
      * )
      */
-    public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
-    {
-        return parent::viewAction($request, $sort, $sortdir, $pos, $num);
+    public function viewAction(
+        Request $request,
+        $sort,
+        $sortdir,
+        $pos,
+        $num
+    ) {
+        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, false);
     }
     
     /**
@@ -67,9 +77,10 @@ class ProjectController extends AbstractProjectController
      * )
      * @Theme("admin")
      */
-    public function adminEditAction(Request $request)
-    {
-        return parent::adminEditAction($request);
+    public function adminEditAction(
+        Request $request
+    ) {
+        return $this->editInternal($request, true);
     }
     
     /**
@@ -81,9 +92,10 @@ class ProjectController extends AbstractProjectController
      *        methods = {"GET", "POST"}
      * )
      */
-    public function editAction(Request $request)
-    {
-        return parent::editAction($request);
+    public function editAction(
+        Request $request
+    ) {
+        return $this->editInternal($request, false);
     }
     
     /**
@@ -93,9 +105,10 @@ class ProjectController extends AbstractProjectController
      * )
      * @Theme("admin")
      */
-    public function adminHandleSelectedEntriesAction(Request $request)
-    {
-        return parent::adminHandleSelectedEntriesAction($request);
+    public function adminHandleSelectedEntriesAction(
+        Request $request
+    ) {
+        return $this->handleSelectedEntriesActionInternal($request, true);
     }
     
     /**
@@ -104,9 +117,10 @@ class ProjectController extends AbstractProjectController
      *        methods = {"POST"}
      * )
      */
-    public function handleSelectedEntriesAction(Request $request)
-    {
-        return parent::handleSelectedEntriesAction($request);
+    public function handleSelectedEntriesAction(
+        Request $request
+    ) {
+        return $this->handleSelectedEntriesActionInternal($request, false);
     }
     
     // feel free to add your own controller methods here

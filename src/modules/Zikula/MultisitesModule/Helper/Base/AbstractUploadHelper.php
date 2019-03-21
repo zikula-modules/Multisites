@@ -22,9 +22,10 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 
 /**
@@ -40,9 +41,9 @@ abstract class AbstractUploadHelper
     protected $filesystem;
     
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    protected $session;
+    protected $requestStack;
     
     /**
      * @var LoggerInterface
@@ -82,29 +83,29 @@ abstract class AbstractUploadHelper
     /**
      * UploadHelper constructor.
      *
-     * @param TranslatorInterface     $translator     Translator service instance
-     * @param Filesystem              $filesystem     Filesystem service instance
-     * @param SessionInterface        $session        Session service instance
-     * @param LoggerInterface         $logger         Logger service instance
+     * @param TranslatorInterface $translator
+     * @param Filesystem $filesystem
+     * @param RequestStack $requestStack
+     * @param LoggerInterface $logger
      * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
-     * @param object                  $moduleVars     Existing module vars
-     * @param String                  $dataDirectory  The data directory name
+     * @param VariableApiInterface $variableApi
+     * @param string $dataDirectory The data directory name
      */
     public function __construct(
         TranslatorInterface $translator,
         Filesystem $filesystem,
-        SessionInterface $session,
+        RequestStack $requestStack,
         LoggerInterface $logger,
         CurrentUserApiInterface $currentUserApi,
-        $moduleVars,
+        VariableApiInterface $variableApi,
         $dataDirectory
     ) {
         $this->setTranslator($translator);
         $this->filesystem = $filesystem;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->logger = $logger;
         $this->currentUserApi = $currentUserApi;
-        $this->moduleVars = $moduleVars;
+        $this->moduleVars = $variableApi->getAll('ZikulaMultisitesModule');
         $this->dataDirectory = $dataDirectory;
     
         $this->allowedObjectTypes = ['site', 'template'];
@@ -115,7 +116,7 @@ abstract class AbstractUploadHelper
     /**
      * Sets the translator.
      *
-     * @param TranslatorInterface $translator Translator service instance
+     * @param TranslatorInterface $translator
      */
     public function setTranslator(TranslatorInterface $translator)
     {
@@ -155,7 +156,7 @@ abstract class AbstractUploadHelper
         $fileNameParts[count($fileNameParts) - 1] = $extension;
         $fileName = implode('.', $fileNameParts);
     
-        $flashBag = $this->session->getFlashBag();
+        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
     
         // retrieve the final file name
         try {
@@ -234,7 +235,7 @@ abstract class AbstractUploadHelper
      */
     protected function validateFileUpload($objectType, $file, $fieldName)
     {
-        $flashBag = $this->session->getFlashBag();
+        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
     
         // check if a file has been uploaded properly without errors
         if ($file->getError() != UPLOAD_ERR_OK) {
@@ -630,7 +631,7 @@ abstract class AbstractUploadHelper
     {
         $uploadPath = $this->getFileBaseFolder($objectType, $fieldName, true);
     
-        $flashBag = $this->session->getFlashBag();
+        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
     
         // Check if directory exist and try to create it if needed
         if (!$this->filesystem->exists($uploadPath)) {

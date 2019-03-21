@@ -32,47 +32,28 @@ use Zikula\MultisitesModule\Entity\SiteEntity;
  */
 abstract class AbstractSiteController extends AbstractController
 {
-    /**
-     * This action provides an item list overview in the admin area.
-     *
-     * @param Request $request Current request instance
-     * @param string $sort         Sorting field
-     * @param string $sortdir      Sorting direction
-     * @param int    $pos          Current pager position
-     * @param int    $num          Amount of entries to display
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     */
-    public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
-    {
-        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, true);
-    }
     
     /**
      * This action provides an item list overview.
      *
-     * @param Request $request Current request instance
-     * @param string $sort         Sorting field
-     * @param string $sortdir      Sorting direction
-     * @param int    $pos          Current pager position
-     * @param int    $num          Amount of entries to display
+     * @param Request $request
+     * @param string $sort Sorting field
+     * @param string $sortdir Sorting direction
+     * @param int $pos Current pager position
+     * @param int $num Amount of entries to display
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
-    {
-        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminView() and view().
-     */
-    protected function viewInternal(Request $request, $sort, $sortdir, $pos, $num, $isAdmin = false)
-    {
+    protected function viewInternal(
+        Request $request,
+        $sort,
+        $sortdir,
+        $pos,
+        $num,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
@@ -138,41 +119,21 @@ abstract class AbstractSiteController extends AbstractController
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
     
-    /**
-     * This action provides a handling of edit requests in the admin area.
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
-     */
-    public function adminEditAction(Request $request)
-    {
-        return $this->editInternal($request, true);
-    }
     
     /**
      * This action provides a handling of edit requests.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
+     * @throws RuntimeException Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function editAction(Request $request)
-    {
-        return $this->editInternal($request, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminEdit() and edit().
-     */
-    protected function editInternal(Request $request, $isAdmin = false)
-    {
+    protected function editInternal(
+        Request $request,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_EDIT;
@@ -201,45 +162,24 @@ abstract class AbstractSiteController extends AbstractController
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
     }
     
-    /**
-     * This action provides a handling of simple delete requests in the admin area.
-     *
-     * @param Request $request Current request instance
-     * @param integer $id Identifier of treated site instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     * @throws NotFoundHttpException Thrown if site to be deleted isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
-     */
-    public function adminDeleteAction(Request $request, $id)
-    {
-        return $this->deleteInternal($request, $id, true);
-    }
     
     /**
      * This action provides a handling of simple delete requests.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      * @param integer $id Identifier of treated site instance
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws NotFoundHttpException Thrown if site to be deleted isn't found
-     * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
+     * @throws RuntimeException Thrown if another critical error occurs (e.g. workflow actions not available)
      */
-    public function deleteAction(Request $request, $id)
-    {
-        return $this->deleteInternal($request, $id, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminDelete() and delete().
-     */
-    protected function deleteInternal(Request $request, $id, $isAdmin = false)
-    {
+    protected function deleteInternal(
+        Request $request,
+        $id,
+        $isAdmin = false
+    ) {
         $site = $this->get('zikula_multisites_module.entity_factory')->getRepository('site')->selectById($id);
         if (null === $site) {
             throw new NotFoundHttpException($this->__('No such site found.'));
@@ -362,39 +302,20 @@ abstract class AbstractSiteController extends AbstractController
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'delete', $templateParameters);
     }
     
-    /**
-     * This is a custom action in the admin area.
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     */
-    public function adminManageExtensionsAction(Request $request)
-    {
-        return $this->manageExtensionsInternal($request, true);
-    }
     
     /**
      * This is a custom action.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function manageExtensionsAction(Request $request)
-    {
-        return $this->manageExtensionsInternal($request, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminManageExtensions() and manageExtensions().
-     */
-    protected function manageExtensionsInternal(Request $request, $isAdmin = false)
-    {
+    protected function manageExtensionsInternal(
+        Request $request,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
@@ -412,39 +333,20 @@ abstract class AbstractSiteController extends AbstractController
         return $this->render('@ZikulaMultisitesModule/Site/manageExtensions.html.twig', $templateParameters);
     }
     
-    /**
-     * This is a custom action in the admin area.
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     */
-    public function adminManageThemesAction(Request $request)
-    {
-        return $this->manageThemesInternal($request, true);
-    }
     
     /**
      * This is a custom action.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function manageThemesAction(Request $request)
-    {
-        return $this->manageThemesInternal($request, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminManageThemes() and manageThemes().
-     */
-    protected function manageThemesInternal(Request $request, $isAdmin = false)
-    {
+    protected function manageThemesInternal(
+        Request $request,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
@@ -462,39 +364,20 @@ abstract class AbstractSiteController extends AbstractController
         return $this->render('@ZikulaMultisitesModule/Site/manageThemes.html.twig', $templateParameters);
     }
     
-    /**
-     * This is a custom action in the admin area.
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     */
-    public function adminSetThemeAsDefaultAction(Request $request)
-    {
-        return $this->setThemeAsDefaultInternal($request, true);
-    }
     
     /**
      * This is a custom action.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function setThemeAsDefaultAction(Request $request)
-    {
-        return $this->setThemeAsDefaultInternal($request, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminSetThemeAsDefault() and setThemeAsDefault().
-     */
-    protected function setThemeAsDefaultInternal(Request $request, $isAdmin = false)
-    {
+    protected function setThemeAsDefaultInternal(
+        Request $request,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
@@ -512,39 +395,20 @@ abstract class AbstractSiteController extends AbstractController
         return $this->render('@ZikulaMultisitesModule/Site/setThemeAsDefault.html.twig', $templateParameters);
     }
     
-    /**
-     * This is a custom action in the admin area.
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     */
-    public function adminViewToolsAction(Request $request)
-    {
-        return $this->viewToolsInternal($request, true);
-    }
     
     /**
      * This is a custom action.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function viewToolsAction(Request $request)
-    {
-        return $this->viewToolsInternal($request, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminViewTools() and viewTools().
-     */
-    protected function viewToolsInternal(Request $request, $isAdmin = false)
-    {
+    protected function viewToolsInternal(
+        Request $request,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
@@ -562,39 +426,20 @@ abstract class AbstractSiteController extends AbstractController
         return $this->render('@ZikulaMultisitesModule/Site/viewTools.html.twig', $templateParameters);
     }
     
-    /**
-     * This is a custom action in the admin area.
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     */
-    public function adminExecuteToolAction(Request $request)
-    {
-        return $this->executeToolInternal($request, true);
-    }
     
     /**
      * This is a custom action.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function executeToolAction(Request $request)
-    {
-        return $this->executeToolInternal($request, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminExecuteTool() and executeTool().
-     */
-    protected function executeToolInternal(Request $request, $isAdmin = false)
-    {
+    protected function executeToolInternal(
+        Request $request,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
@@ -612,39 +457,20 @@ abstract class AbstractSiteController extends AbstractController
         return $this->render('@ZikulaMultisitesModule/Site/executeTool.html.twig', $templateParameters);
     }
     
-    /**
-     * This is a custom action in the admin area.
-     *
-     * @param Request $request Current request instance
-     *
-     * @return Response Output
-     *
-     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
-     */
-    public function adminExportDatabaseAsTemplateAction(Request $request)
-    {
-        return $this->exportDatabaseAsTemplateInternal($request, true);
-    }
     
     /**
      * This is a custom action.
      *
-     * @param Request $request Current request instance
+     * @param Request $request
      *
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function exportDatabaseAsTemplateAction(Request $request)
-    {
-        return $this->exportDatabaseAsTemplateInternal($request, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminExportDatabaseAsTemplate() and exportDatabaseAsTemplate().
-     */
-    protected function exportDatabaseAsTemplateInternal(Request $request, $isAdmin = false)
-    {
+    protected function exportDatabaseAsTemplateInternal(
+        Request $request,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_OVERVIEW;
@@ -662,22 +488,6 @@ abstract class AbstractSiteController extends AbstractController
         return $this->render('@ZikulaMultisitesModule/Site/exportDatabaseAsTemplate.html.twig', $templateParameters);
     }
     
-    /**
-     * Process status changes for multiple items.
-     *
-     * This function processes the items selected in the admin view page.
-     * Multiple items may have their state changed or be deleted.
-     *
-     * @param Request $request Current request instance
-     *
-     * @return RedirectResponse
-     *
-     * @throws RuntimeException Thrown if executing the workflow action fails
-     */
-    public function adminHandleSelectedEntriesAction(Request $request)
-    {
-        return $this->handleSelectedEntriesActionInternal($request, true);
-    }
     
     /**
      * Process status changes for multiple items.
@@ -685,25 +495,17 @@ abstract class AbstractSiteController extends AbstractController
      * This function processes the items selected in the admin view page.
      * Multiple items may have their state changed or be deleted.
      *
-     * @param Request $request Current request instance
-     *
-     * @return RedirectResponse
-     *
-     * @throws RuntimeException Thrown if executing the workflow action fails
-     */
-    public function handleSelectedEntriesAction(Request $request)
-    {
-        return $this->handleSelectedEntriesActionInternal($request, false);
-    }
-    
-    /**
-     * This method includes the common implementation code for adminHandleSelectedEntriesAction() and handleSelectedEntriesAction().
-     *
-     * @param Request $request Current request instance
+     * @param Request $request
      * @param boolean $isAdmin Whether the admin area is used or not
+     *
+     * @return RedirectResponse
+     *
+     * @throws RuntimeException Thrown if executing the workflow action fails
      */
-    protected function handleSelectedEntriesActionInternal(Request $request, $isAdmin = false)
-    {
+    protected function handleSelectedEntriesActionInternal(
+        Request $request,
+        $isAdmin = false
+    ) {
         $objectType = 'site';
         
         // Get parameters

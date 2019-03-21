@@ -51,9 +51,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
     /**
      * EntityLifecycleListener constructor.
      *
-     * @param ContainerInterface       $container
-     * @param EventDispatcherInterface $eventDispatcher EventDispatcher service instance
-     * @param LoggerInterface          $logger          Logger service instance
+     * @param ContainerInterface $container
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param LoggerInterface $logger
      */
     public function __construct(
         ContainerInterface $container,

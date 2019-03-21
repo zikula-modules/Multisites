@@ -236,7 +236,7 @@ abstract class AbstractEditHandler extends EditHandler
                     $relObj->addProjects($entity);
                 }
             }
-            $this->entityFactory->getObjectManager()->flush();
+            $this->entityFactory->getEntityManager()->flush();
         }
     
         return $success;

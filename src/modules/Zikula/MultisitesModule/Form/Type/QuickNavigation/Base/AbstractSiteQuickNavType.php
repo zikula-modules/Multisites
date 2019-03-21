@@ -51,10 +51,10 @@ abstract class AbstractSiteQuickNavType extends AbstractType
     /**
      * SiteQuickNavType constructor.
      *
-     * @param TranslatorInterface $translator   Translator service instance
-    * @param RequestStack        $requestStack RequestStack service instance
-    * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
-     * @param ListEntriesHelper   $listHelper   ListEntriesHelper service instance
+     * @param TranslatorInterface $translator
+    * @param RequestStack $requestStack
+    * @param EntityDisplayHelper $entityDisplayHelper
+     * @param ListEntriesHelper $listHelper
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -71,7 +71,7 @@ abstract class AbstractSiteQuickNavType extends AbstractType
     /**
      * Sets the translator.
      *
-     * @param TranslatorInterface $translator Translator service instance
+     * @param TranslatorInterface $translator
      */
     public function setTranslator(TranslatorInterface $translator)
     {
