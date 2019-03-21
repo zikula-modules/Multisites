@@ -28,27 +28,6 @@ class AjaxController extends AbstractAjaxController
 {
     /**
      * @inheritDoc
-     * @Route("/ajax",
-     *        methods = {"GET"}
-     * )
-     */
-    public function indexAction(Request $request)
-    {
-        return parent::indexAction($request);
-    }
-
-    
-    /**
-     * @inheritDoc
-     * @Route("/getItemListAutoCompletion", options={"expose"=true})
-     */
-    public function getItemListAutoCompletionAction(Request $request)
-    {
-        return parent::getItemListAutoCompletionAction($request);
-    }
-    
-    /**
-     * @inheritDoc
      * @Route("/toggleFlag", methods = {"POST"}, options={"expose"=true})
      */
     public function toggleFlagAction(Request $request)

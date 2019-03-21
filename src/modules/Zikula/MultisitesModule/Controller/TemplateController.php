@@ -37,9 +37,14 @@ class TemplateController extends AbstractTemplateController
      * )
      * @Theme("admin")
      */
-    public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
-    {
-        return parent::adminViewAction($request, $sort, $sortdir, $pos, $num);
+    public function adminViewAction(
+        Request $request,
+        $sort,
+        $sortdir,
+        $pos,
+        $num
+    ) {
+        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, true);
     }
     
     /**
@@ -51,9 +56,14 @@ class TemplateController extends AbstractTemplateController
      *        methods = {"GET"}
      * )
      */
-    public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
-    {
-        return parent::viewAction($request, $sort, $sortdir, $pos, $num);
+    public function viewAction(
+        Request $request,
+        $sort,
+        $sortdir,
+        $pos,
+        $num
+    ) {
+        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, false);
     }
 
     /**
@@ -66,9 +76,10 @@ class TemplateController extends AbstractTemplateController
      * )
      * @Theme("admin")
      */
-    public function adminEditAction(Request $request)
-    {
-        return parent::adminEditAction($request);
+    public function adminEditAction(
+        Request $request
+    ) {
+        return $this->editInternal($request, true);
     }
     
     /**
@@ -80,9 +91,10 @@ class TemplateController extends AbstractTemplateController
      *        methods = {"GET", "POST"}
      * )
      */
-    public function editAction(Request $request)
-    {
-        return parent::editAction($request);
+    public function editAction(
+        Request $request
+    ) {
+        return $this->editInternal($request, false);
     }
 
     /**
@@ -95,7 +107,7 @@ class TemplateController extends AbstractTemplateController
      */
     public function adminCreateParametersCsvTemplateAction(Request $request)
     {
-        return parent::adminCreateParametersCsvTemplateAction($request);
+        return $this->createParametersCsvTemplateInternal($request, true);
     }
     
     /**
@@ -107,7 +119,7 @@ class TemplateController extends AbstractTemplateController
      */
     public function createParametersCsvTemplateAction(Request $request)
     {
-        return parent::createParametersCsvTemplateAction($request);
+        return $this->createParametersCsvTemplateInternal($request, false);
     }
 
     /**
@@ -120,7 +132,7 @@ class TemplateController extends AbstractTemplateController
      */
     public function adminReapplyAction(Request $request)
     {
-        return parent::adminReapplyAction($request);
+        return $this->reapplyInternal($request, true);
     }
     
     /**
@@ -132,7 +144,7 @@ class TemplateController extends AbstractTemplateController
      */
     public function reapplyAction(Request $request)
     {
-        return parent::reapplyAction($request);
+        return $this->reapplyInternal($request, false);
     }
 
     /**
@@ -142,9 +154,10 @@ class TemplateController extends AbstractTemplateController
      * )
      * @Theme("admin")
      */
-    public function adminHandleSelectedEntriesAction(Request $request)
-    {
-        return parent::adminHandleSelectedEntriesAction($request);
+    public function adminHandleSelectedEntriesAction(
+        Request $request
+    ) {
+        return $this->handleSelectedEntriesActionInternal($request, true);
     }
 
     /**
@@ -153,9 +166,10 @@ class TemplateController extends AbstractTemplateController
      *        methods = {"POST"}
      * )
      */
-    public function handleSelectedEntriesAction(Request $request)
-    {
-        return parent::handleSelectedEntriesAction($request);
+    public function handleSelectedEntriesAction(
+        Request $request
+    ) {
+        return $this->handleSelectedEntriesActionInternal($request, false);
     }
 
     /**

@@ -38,9 +38,14 @@ class SiteController extends AbstractSiteController
      * )
      * @Theme("admin")
      */
-    public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
-    {
-        return parent::adminViewAction($request, $sort, $sortdir, $pos, $num);
+    public function adminViewAction(
+        Request $request,
+        $sort,
+        $sortdir,
+        $pos,
+        $num
+    ) {
+        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, true);
     }
     
     /**
@@ -52,9 +57,14 @@ class SiteController extends AbstractSiteController
      *        methods = {"GET"}
      * )
      */
-    public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
-    {
-        return parent::viewAction($request, $sort, $sortdir, $pos, $num);
+    public function viewAction(
+        Request $request,
+        $sort,
+        $sortdir,
+        $pos,
+        $num
+    ) {
+        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, false);
     }
 
     /**
@@ -67,9 +77,10 @@ class SiteController extends AbstractSiteController
      * )
      * @Theme("admin")
      */
-    public function adminEditAction(Request $request)
-    {
-        return parent::adminEditAction($request);
+    public function adminEditAction(
+        Request $request
+    ) {
+        return $this->editInternal($request, true);
     }
     
     /**
@@ -81,9 +92,10 @@ class SiteController extends AbstractSiteController
      *        methods = {"GET", "POST"}
      * )
      */
-    public function editAction(Request $request)
-    {
-        return parent::editAction($request);
+    public function editAction(
+        Request $request
+    ) {
+        return $this->editInternal($request, false);
     }
 
     /**
@@ -98,7 +110,7 @@ class SiteController extends AbstractSiteController
      */
     public function adminDeleteAction(Request $request, $id)
     {
-        return parent::adminDeleteAction($request, $id);
+        return $this->deleteInternal($request, $id, true);
     }
     
     /**
@@ -112,7 +124,7 @@ class SiteController extends AbstractSiteController
      */
     public function deleteAction(Request $request, $id)
     {
-        return parent::deleteAction($request, $id);
+        return $this->deleteInternal($request, $id, false);
     }
 
     /**
@@ -125,7 +137,7 @@ class SiteController extends AbstractSiteController
      */
     public function adminManageExtensionsAction(Request $request)
     {
-        return parent::adminManageExtensionsAction($request);
+        return $this->manageExtensionsInternal($request, true);
     }
     
     /**
@@ -137,7 +149,7 @@ class SiteController extends AbstractSiteController
      */
     public function manageExtensionsAction(Request $request)
     {
-        return parent::manageExtensionsAction($request);
+        return $this->manageExtensionsInternal($request, false);
     }
 
     /**
@@ -150,7 +162,7 @@ class SiteController extends AbstractSiteController
      */
     public function adminManageThemesAction(Request $request)
     {
-        return parent::adminManageThemesAction($request);
+        return $this->manageThemesInternal($request, true);
     }
     
     /**
@@ -162,7 +174,7 @@ class SiteController extends AbstractSiteController
      */
     public function manageThemesAction(Request $request)
     {
-        return parent::manageThemesAction($request);
+        return $this->manageThemesInternal($request, false);
     }
 
     /**
@@ -175,7 +187,7 @@ class SiteController extends AbstractSiteController
      */
     public function adminSetThemeAsDefaultAction(Request $request)
     {
-        return parent::adminSetThemeAsDefaultAction($request);
+        return $this->setThemeAsDefaultInternal($request, true);
     }
     
     /**
@@ -187,7 +199,7 @@ class SiteController extends AbstractSiteController
      */
     public function setThemeAsDefaultAction(Request $request)
     {
-        return parent::setThemeAsDefaultAction($request);
+        return $this->setThemeAsDefaultInternal($request, false);
     }
 
     /**
@@ -200,7 +212,7 @@ class SiteController extends AbstractSiteController
      */
     public function adminViewToolsAction(Request $request)
     {
-        return parent::adminViewToolsAction($request);
+        return $this->viewToolsInternal($request, true);
     }
     
     /**
@@ -212,7 +224,7 @@ class SiteController extends AbstractSiteController
      */
     public function viewToolsAction(Request $request)
     {
-        return parent::viewToolsAction($request);
+        return $this->viewToolsInternal($request, false);
     }
 
     /**
@@ -225,7 +237,7 @@ class SiteController extends AbstractSiteController
      */
     public function adminExecuteToolAction(Request $request)
     {
-        return parent::adminExecuteToolAction($request);
+        return $this->executeToolInternal($request, true);
     }
     
     /**
@@ -237,7 +249,7 @@ class SiteController extends AbstractSiteController
      */
     public function executeToolAction(Request $request)
     {
-        return parent::executeToolAction($request);
+        return $this->executeToolInternal($request, false);
     }
 
     /**
@@ -250,7 +262,7 @@ class SiteController extends AbstractSiteController
      */
     public function adminExportDatabaseAsTemplateAction(Request $request)
     {
-        return parent::adminExportDatabaseAsTemplateAction($request);
+        return $this->exportDatabaseAsTemplateInternal($request, true);
     }
     
     /**
@@ -262,7 +274,7 @@ class SiteController extends AbstractSiteController
      */
     public function exportDatabaseAsTemplateAction(Request $request)
     {
-        return parent::exportDatabaseAsTemplateAction($request);
+        return $this->exportDatabaseAsTemplateInternal($request, false);
     }
 
     /**
@@ -272,9 +284,10 @@ class SiteController extends AbstractSiteController
      * )
      * @Theme("admin")
      */
-    public function adminHandleSelectedEntriesAction(Request $request)
-    {
-        return parent::adminHandleSelectedEntriesAction($request);
+    public function adminHandleSelectedEntriesAction(
+        Request $request
+    ) {
+        return $this->handleSelectedEntriesActionInternal($request, true);
     }
 
     /**
@@ -283,9 +296,10 @@ class SiteController extends AbstractSiteController
      *        methods = {"POST"}
      * )
      */
-    public function handleSelectedEntriesAction(Request $request)
-    {
-        return parent::handleSelectedEntriesAction($request);
+    public function handleSelectedEntriesAction(
+        Request $request
+    ) {
+        return $this->handleSelectedEntriesActionInternal($request, false);
     }
 
     /**
