@@ -50,7 +50,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
             $uploadHelper = new \Zikula\MultisitesModule\Helper\UploadHelper(
                 $container->get('translator.default'),
                 $container->get('filesystem'),
-                $container->get('session'),
+                $container->get('request_stack'),
                 $container->get('logger'),
                 $container->get('zikula_users_module.current_user'),
                 $container->get('zikula_extensions_module.api.variable'),
