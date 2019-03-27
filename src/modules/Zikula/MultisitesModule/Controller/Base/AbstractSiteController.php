@@ -511,6 +511,9 @@ abstract class AbstractSiteController extends AbstractController
         // Get parameters
         $action = $request->request->get('action', null);
         $items = $request->request->get('items', null);
+        if (!is_array($items) || !count($items)) {
+            return $this->redirectToRoute('zikulamultisitesmodule_site_' . ($isAdmin ? 'admin' : '') . 'view');
+        }
         
         $action = strtolower($action);
         
