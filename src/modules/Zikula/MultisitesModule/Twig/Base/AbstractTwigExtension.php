@@ -158,7 +158,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
      *
      * @return string File size in a readable form
      */
-    private function getReadableFileSize(($size, $nodesc = false, $onlydesc = false)
+    private function getReadableFileSize($size, $nodesc = false, $onlydesc = false)
     {
         $sizeDesc = $this->__('Bytes');
         if ($size >= 1024) {
