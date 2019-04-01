@@ -131,7 +131,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
      *
      * @return string File size in a readable form
      */
-    public function getFileSize(($size = 0, $filepath = '', $nodesc = false, $onlydesc = false)
+    public function getFileSize($size = 0, $filepath = '', $nodesc = false, $onlydesc = false)
     {
         if (!is_numeric($size)) {
             $size = (int) $size;
