@@ -44,13 +44,6 @@ abstract class AbstractImageHelper
      */
     protected $name;
     
-    /**
-     * ImageHelper constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param RequestStack $requestStack
-     * @param VariableApiInterface $variableApi
-     */
     public function __construct(
         TranslatorInterface $translator,
         RequestStack $requestStack,
@@ -66,9 +59,9 @@ abstract class AbstractImageHelper
      * This method returns an Imagine runtime options array for the given arguments.
      *
      * @param string $objectType Currently treated entity type
-     * @param string $fieldName  Name of upload field
-     * @param string $context    Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array  $args       Additional arguments
+     * @param string $fieldName Name of upload field
+     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
+     * @param array $args Additional arguments
      *
      * @return array The selected runtime options
      */
@@ -81,7 +74,7 @@ abstract class AbstractImageHelper
         }
     
         $contextName = '';
-        if ($context == 'controllerAction') {
+        if ('controllerAction' === $context) {
             if (!isset($args['controller'])) {
                 $args['controller'] = 'user';
             }
@@ -101,11 +94,11 @@ abstract class AbstractImageHelper
     /**
      * This method returns an Imagine runtime options array for the given arguments.
      *
-     * @param string $objectType  Currently treated entity type
-     * @param string $fieldName   Name of upload field
+     * @param string $objectType Currently treated entity type
+     * @param string $fieldName Name of upload field
      * @param string $contextName Name of desired context
-     * @param string $context     Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array  $args        Additional arguments
+     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
+     * @param array $args Additional arguments
      *
      * @return array The selected runtime options
      */
@@ -113,19 +106,19 @@ abstract class AbstractImageHelper
     {
         $options = [
             'thumbnail' => [
-                'size'      => [100, 100], // thumbnail width and height in pixels
-                'mode'      => $this->variableApi->get('ZikulaMultisitesModule', 'thumbnailMode' . ucfirst($objectType) . ucfirst($fieldName), ImageInterface::THUMBNAIL_INSET),
-                'extension' => null        // file extension for thumbnails (jpg, png, gif; null for original file type)
+                'size' => [100, 100], // thumbnail width and height in pixels
+                'mode' => $this->variableApi->get('ZikulaMultisitesModule', 'thumbnailMode' . ucfirst($objectType) . ucfirst($fieldName), ImageInterface::THUMBNAIL_INSET),
+                'extension' => null // file extension for thumbnails (jpg, png, gif; null for original file type)
             ]
         ];
     
-        if ($contextName == $this->name . '_relateditem') {
+        if ($this->name . '_relateditem' === $contextName) {
             $options['thumbnail']['size'] = [100, 75];
-        } elseif ($context == 'controllerAction') {
+        } elseif ('controllerAction' === $context) {
             if (in_array($args['action'], ['view', 'display', 'edit'])) {
                 $fieldSuffix = ucfirst($objectType) . ucfirst($fieldName) . ucfirst($args['action']);
-                $defaultWidth = $args['action'] == 'view' ? 32 : 240;
-                $defaultHeight = $args['action'] == 'view' ? 24 : 180;
+                $defaultWidth = 'view' === $args['action'] ? 32 : 240;
+                $defaultHeight = 'view' === $args['action'] ? 24 : 180;
                 $options['thumbnail']['size'] = [
                     $this->variableApi->get('ZikulaMultisitesModule', 'thumbnailWidth' . $fieldSuffix, $defaultWidth),
                     $this->variableApi->get('ZikulaMultisitesModule', 'thumbnailHeight' . $fieldSuffix, $defaultHeight)

@@ -14,7 +14,7 @@ namespace Zikula\MultisitesModule\Form\Handler\Common\Base;
 
 use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -71,14 +71,14 @@ abstract class AbstractEditHandler
      *
      * @var EntityAccess
      */
-    protected $entityRef = null;
+    protected $entityRef;
 
     /**
      * Name of primary identifier field.
      *
      * @var string
      */
-    protected $idField = null;
+    protected $idField;
 
     /**
      * Identifier of treated entity.
@@ -92,7 +92,7 @@ abstract class AbstractEditHandler
      *
      * @var string
      */
-    protected $returnTo = null;
+    protected $returnTo;
 
     /**
      * Whether a create action is going to be repeated or not.
@@ -106,7 +106,7 @@ abstract class AbstractEditHandler
      *
      * @var string
      */
-    protected $repeatReturnUrl = null;
+    protected $repeatReturnUrl;
     
     /**
      * List of identifiers for predefined relationships.
@@ -199,12 +199,12 @@ abstract class AbstractEditHandler
      *
      * @var LockingApiInterface
      */
-    protected $lockingApi = null;
+    protected $lockingApi;
 
     /**
      * The handled form type.
      *
-     * @var AbstractType
+     * @var Form
      */
     protected $form;
 
@@ -215,24 +215,6 @@ abstract class AbstractEditHandler
      */
     protected $templateParameters = [];
 
-    /**
-     * EditHandler constructor.
-     *
-     * @param ZikulaHttpKernelInterface $kernel
-     * @param TranslatorInterface $translator
-     * @param FormFactoryInterface $formFactory
-     * @param RequestStack $requestStack
-     * @param RouterInterface $router
-     * @param LoggerInterface $logger
-     * @param VariableApiInterface $variableApi
-     * @param CurrentUserApiInterface $currentUserApi
-     * @param EntityFactory $entityFactory
-     * @param ControllerHelper $controllerHelper
-     * @param ModelHelper $modelHelper
-     * @param PermissionHelper $permissionHelper
-     * @param WorkflowHelper $workflowHelper
-     * @param HookHelper $hookHelper
-     */
     public function __construct(
         ZikulaHttpKernelInterface $kernel,
         TranslatorInterface $translator,
@@ -265,11 +247,6 @@ abstract class AbstractEditHandler
         $this->hookHelper = $hookHelper;
     }
 
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
@@ -282,25 +259,26 @@ abstract class AbstractEditHandler
      *
      * @param array $templateParameters List of preassigned template variables
      *
-     * @return boolean False in case of initialisation errors, otherwise true
+     * @return bool|RedirectResponse Redirect or false on errors
      *
+     * @throws AccessDeniedException Thrown if user has not the required permissions
      * @throws RuntimeException Thrown if the workflow actions can not be determined
      */
     public function processForm(array $templateParameters = [])
     {
         $request = $this->requestStack->getCurrentRequest();
         $this->templateParameters = $templateParameters;
-        $this->templateParameters['inlineUsage'] = $request->query->getBoolean('raw', false);
+        $this->templateParameters['inlineUsage'] = $request->query->getBoolean('raw');
     
         $this->idPrefix = $request->query->get('idp', '');
     
         // initialise redirect goal
-        $this->returnTo = $request->query->get('returnTo', null);
+        $this->returnTo = $request->query->get('returnTo');
         // default to referer
         $refererSessionVar = 'zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer';
         if (null === $this->returnTo && $request->headers->has('referer')) {
             $currentReferer = $request->headers->get('referer');
-            if ($currentReferer != urldecode($request->getUri())) {
+            if ($currentReferer !== urldecode($request->getUri())) {
                 $this->returnTo = $currentReferer;
                 $request->getSession()->set($refererSessionVar, $this->returnTo);
             }
@@ -319,19 +297,19 @@ abstract class AbstractEditHandler
             $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
         }
         if (0 === $this->idValue) {
-            $this->idValue = $request->query->getInt($this->idField, 0);
+            $this->idValue = $request->query->getInt($this->idField);
         }
-        if (0 === $this->idValue && $this->idField != 'id') {
-            $this->idValue = $request->query->getInt('id', 0);
+        if (0 === $this->idValue && 'id' !== $this->idField) {
+            $this->idValue = $request->query->getInt('id');
         }
     
         $entity = null;
         $this->templateParameters['mode'] = !empty($this->idValue) ? 'edit' : 'create';
     
-        if ($this->templateParameters['mode'] == 'edit') {
+        if ('edit' === $this->templateParameters['mode']) {
             $entity = $this->initEntityForEditing();
             if (null !== $entity) {
-                if (true === $this->hasPageLockSupport && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
+                if (true === $this->hasPageLockSupport && null !== $this->lockingApi && $this->kernel->isBundle('ZikulaPageLockModule')) {
                     // try to guarantee that only one person at a time can be editing this entity
                     $lockName = 'ZikulaMultisitesModule' . $this->objectTypeCapital . $entity->getKey();
                     $this->lockingApi->addLock($lockName, $this->getRedirectUrl(['commandName' => '']));
@@ -350,7 +328,7 @@ abstract class AbstractEditHandler
     
             // set default values from request parameters
             foreach ($request->query->all() as $key => $value) {
-                if (strlen($key) < 5 || substr($key, 0, 4) != 'set_') {
+                if (5 > strlen($key) || 0 !== strpos($key, 'set_')) {
                     continue;
                 }
                 $fieldName = str_replace('set_', '', $key);
@@ -379,7 +357,7 @@ abstract class AbstractEditHandler
             $request->getSession()->getFlashBag()->add('error', $this->__('Error! Could not determine workflow actions.'));
             $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType, 'id' => $entity->getKey()];
             $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed to determine available workflow actions.', $logArgs);
-            throw new \RuntimeException($this->__('Error! Could not determine workflow actions.'));
+            throw new RuntimeException($this->__('Error! Could not determine workflow actions.'));
         }
     
         $this->templateParameters['actions'] = $actions;
@@ -399,8 +377,8 @@ abstract class AbstractEditHandler
         $this->form->handleRequest($request);
         if ($this->form->isSubmitted()) {
             if ($this->form->has('cancel') && $this->form->get('cancel')->isClicked()) {
-                if (true === $this->hasPageLockSupport && $this->templateParameters['mode'] == 'edit' && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
-                    $lockName = 'ZikulaMultisitesModule' . $this->objectTypeCapital . $entity->getKey();
+                if (true === $this->hasPageLockSupport && null !== $this->lockingApi && 'edit' === $this->templateParameters['mode'] && $this->kernel->isBundle('ZikulaPageLockModule')) {
+                    $lockName = 'ZikulaMultisitesModule' . $this->objectTypeCapital . $this->entityRef->getKey();
                     $this->lockingApi->releaseLock($lockName);
                 }
     
@@ -480,7 +458,7 @@ abstract class AbstractEditHandler
     protected function initEntityForCreation()
     {
         $request = $this->requestStack->getCurrentRequest();
-        $templateId = $request->query->getInt('astemplate', 0);
+        $templateId = $request->query->getInt('astemplate');
         $entity = null;
     
         if ($templateId > 0) {
@@ -520,7 +498,7 @@ abstract class AbstractEditHandler
      *
      * @param array $args List of arguments
      *
-     * @return mixed Redirect or false on errors
+     * @return bool|RedirectResponse Redirect or false on errors
      */
     public function handleCommand(array $args = [])
     {
@@ -530,13 +508,13 @@ abstract class AbstractEditHandler
                 $args['commandName'] = $action['id'];
             }
         }
-        if ('create' == $this->templateParameters['mode'] && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
+        if ('create' === $this->templateParameters['mode'] && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
             $args['commandName'] = 'submit';
             $this->repeatCreateAction = true;
         }
     
         $action = $args['commandName'];
-        $isRegularAction = $action != 'delete';
+        $isRegularAction = 'delete' !== $action;
     
         $this->fetchInputData();
     
@@ -545,9 +523,9 @@ abstract class AbstractEditHandler
     
         if (method_exists($entity, 'supportsHookSubscribers') && $entity->supportsHookSubscribers()) {
             // Let any ui hooks perform additional validation actions
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
+            $hookType = 'delete' === $action ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
             $validationErrors = $this->hookHelper->callValidationHooks($entity, $hookType);
-            if (count($validationErrors) > 0) {
+            if (0 < count($validationErrors)) {
                 $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
                 foreach ($validationErrors as $message) {
                     $flashBag->add('error', $message);
@@ -565,26 +543,26 @@ abstract class AbstractEditHandler
     
         if (method_exists($entity, 'supportsHookSubscribers') && $entity->supportsHookSubscribers()) {
             $entitiesWithDisplayAction = [''];
-            $hasDisplayAction = in_array($this->objectType, $entitiesWithDisplayAction);
+            $hasDisplayAction = in_array($this->objectType, $entitiesWithDisplayAction, true);
     
             $routeUrl = null;
-            if ($hasDisplayAction && $action != 'delete') {
+            if ($hasDisplayAction && 'delete' !== $action) {
                 $urlArgs = $entity->createUrlArgs();
                 $urlArgs['_locale'] = $this->requestStack->getCurrentRequest()->getLocale();
                 $routeUrl = new RouteUrl('zikulamultisitesmodule_' . $this->objectTypeLower . '_display', $urlArgs);
             }
     
             // Call form aware processing hooks
-            $hookType = $action == 'delete' ? FormAwareCategory::TYPE_PROCESS_DELETE : FormAwareCategory::TYPE_PROCESS_EDIT;
+            $hookType = 'delete' === $action ? FormAwareCategory::TYPE_PROCESS_DELETE : FormAwareCategory::TYPE_PROCESS_EDIT;
             $this->hookHelper->callFormProcessHooks($this->form, $entity, $hookType, $routeUrl);
     
             // Let any ui hooks know that we have created, updated or deleted an item
-            $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+            $hookType = 'delete' === $action ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
             $this->hookHelper->callProcessHooks($entity, $hookType, $routeUrl);
         }
     
-        if (true === $this->hasPageLockSupport && $this->templateParameters['mode'] == 'edit' && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
-            $lockName = 'ZikulaMultisitesModule' . $this->objectTypeCapital . $entity->getKey();
+        if (true === $this->hasPageLockSupport && null !== $this->lockingApi && 'edit' === $this->templateParameters['mode'] && $this->kernel->isBundle('ZikulaPageLockModule')) {
+            $lockName = 'ZikulaMultisitesModule' . $this->objectTypeCapital . $this->entityRef->getKey();
             $this->lockingApi->releaseLock($lockName);
         }
     
@@ -594,10 +572,10 @@ abstract class AbstractEditHandler
     /**
      * Get success or error message for default operations.
      *
-     * @param array   $args    List of arguments from handleCommand method
-     * @param boolean $success Becomes true if this is a success, false for default error
+     * @param array $args List of arguments from handleCommand method
+     * @param bool $success Becomes true if this is a success, false for default error
      *
-     * @return String desired status or error message
+     * @return string desired status or error message
      */
     protected function getDefaultMessage(array $args = [], $success = false)
     {
@@ -632,8 +610,8 @@ abstract class AbstractEditHandler
     /**
      * Add success or error message to session.
      *
-     * @param array   $args    List of arguments from handleCommand method
-     * @param boolean $success Becomes true if this is a success, false for default error
+     * @param array $args List of arguments from handleCommand method
+     * @param bool $success Becomes true if this is a success, false for default error
      *
      * @throws RuntimeException Thrown if executing the workflow action fails
      */
@@ -656,6 +634,8 @@ abstract class AbstractEditHandler
 
     /**
      * Input data processing called by handleCommand method.
+     *
+     * @return array
      */
     public function fetchInputData()
     {
@@ -666,7 +646,7 @@ abstract class AbstractEditHandler
             if (isset($this->form['moderationSpecificCreator']) && null !== $this->form['moderationSpecificCreator']->getData()) {
                 $this->entityRef->setCreatedBy($this->form['moderationSpecificCreator']->getData());
             }
-            if (isset($this->form['moderationSpecificCreationDate']) && $this->form['moderationSpecificCreationDate']->getData() != '') {
+            if (isset($this->form['moderationSpecificCreationDate']) && '' !== $this->form['moderationSpecificCreationDate']->getData()) {
                 $this->entityRef->setCreatedDate($this->form['moderationSpecificCreationDate']->getData());
             }
         }
@@ -680,7 +660,7 @@ abstract class AbstractEditHandler
      *
      * @param array $args List of arguments from handleCommand method
      *
-     * @return boolean Whether everything worked well or not
+     * @return bool Whether everything worked well or not
      */
     public function applyAction(array $args = [])
     {

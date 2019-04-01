@@ -15,6 +15,7 @@ namespace Zikula\MultisitesModule\Twig\Base;
 use Twig_Extension;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\MultisitesModule\Helper\EntityDisplayHelper;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
@@ -47,15 +48,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
      */
     protected $listHelper;
     
-    /**
-     * TwigExtension constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param VariableApiInterface $variableApi
-     * @param EntityDisplayHelper $entityDisplayHelper
-     * @param WorkflowHelper $workflowHelper
-     * @param ListEntriesHelper $listHelper
-     */
     public function __construct(
         TranslatorInterface $translator,
         VariableApiInterface $variableApi,
@@ -70,11 +62,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
         $this->listHelper = $listHelper;
     }
     
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
@@ -114,7 +101,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
      *    {{ item.workflowState|zikulamultisitesmodule_objectState }}        {# with visual feedback #}
      *    {{ item.workflowState|zikulamultisitesmodule_objectState(false) }} {# no ui feedback #}
      *
-     * @param string  $state      Name of given workflow state
+     * @param string $state Name of given workflow state
      * @param boolean $uiFeedback Whether the output should include some visual feedback about the state
      *
      * @return string Enriched and translated workflow state ready for display
@@ -137,14 +124,14 @@ abstract class AbstractTwigExtension extends Twig_Extension
      * Example:
      *     {{ 12345|zikulamultisitesmodule_fileSize }}
      *
-     * @param integer $size     File size in bytes
+     * @param int $size File size in bytes
      * @param string  $filepath The input file path including file name (if file size is not known)
-     * @param boolean $nodesc   If set to true the description will not be appended
+     * @param boolean $nodesc If set to true the description will not be appended
      * @param boolean $onlydesc If set to true only the description will be returned
      *
      * @return string File size in a readable form
      */
-    public function getFileSize($size = 0, $filepath = '', $nodesc = false, $onlydesc = false)
+    public function getFileSize(($size = 0, $filepath = '', $nodesc = false, $onlydesc = false)
     {
         if (!is_numeric($size)) {
             $size = (int) $size;
@@ -165,13 +152,13 @@ abstract class AbstractTwigExtension extends Twig_Extension
     /**
      * Display a given file size in a readable format
      *
-     * @param string  $size     File size in bytes
-     * @param boolean $nodesc   If set to true the description will not be appended
+     * @param int $size File size in bytes
+     * @param boolean $nodesc If set to true the description will not be appended
      * @param boolean $onlydesc If set to true only the description will be returned
      *
      * @return string File size in a readable form
      */
-    private function getReadableFileSize($size, $nodesc = false, $onlydesc = false)
+    private function getReadableFileSize(($size, $nodesc = false, $onlydesc = false)
     {
         $sizeDesc = $this->__('Bytes');
         if ($size >= 1024) {
@@ -191,7 +178,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
         // format number
         $dec_point = ',';
         $thousands_separator = '.';
-        if ($size - intval($size) >= 0.005) {
+        if ($size - (int)$size >= 0.005) {
             $size = number_format($size, 2, $dec_point, $thousands_separator);
         } else {
             $size = number_format($size, 0, '', $thousands_separator);
@@ -213,16 +200,16 @@ abstract class AbstractTwigExtension extends Twig_Extension
      * Example:
      *     {{ entity.listField|zikulamultisitesmodule_listEntry('entityName', 'fieldName') }}
      *
-     * @param string $value      The dropdown value to process
+     * @param string $value The dropdown value to process
      * @param string $objectType The treated object type
-     * @param string $fieldName  The list field's name
-     * @param string $delimiter  String used as separator for multiple selections
+     * @param string $fieldName The list field's name
+     * @param string $delimiter String used as separator for multiple selections
      *
      * @return string List item name
      */
     public function getListEntry($value, $objectType = '', $fieldName = '', $delimiter = ', ')
     {
-        if ((empty($value) && $value != '0') || empty($objectType) || empty($fieldName)) {
+        if ((empty($value) && '0' !== $value) || empty($objectType) || empty($fieldName)) {
             return $value;
         }
     
@@ -232,63 +219,15 @@ abstract class AbstractTwigExtension extends Twig_Extension
     }
     
     
-    /**
-     * The zikulamultisitesmodule_objectTypeSelector function provides items for a dropdown selector.
-     *
-     * @return string The output of the plugin
-     */
-    public function getObjectTypeSelector()
-    {
-        $result = [];
-    
-        $result[] = [
-            'text' => $this->__('Sites'),
-            'value' => 'site'
-        ];
-        $result[] = [
-            'text' => $this->__('Templates'),
-            'value' => 'template'
-        ];
-        $result[] = [
-            'text' => $this->__('Projects'),
-            'value' => 'project'
-        ];
-    
-        return $result;
-    }
     
     
-    /**
-     * The zikulamultisitesmodule_templateSelector function provides items for a dropdown selector.
-     *
-     * @return string The output of the plugin
-     */
-    public function getTemplateSelector()
-    {
-        $result = [];
-    
-        $result[] = [
-            'text' => $this->__('Only item titles'),
-            'value' => 'itemlist_display.html.twig'
-        ];
-        $result[] = [
-            'text' => $this->__('With description'),
-            'value' => 'itemlist_display_description.html.twig'
-        ];
-        $result[] = [
-            'text' => $this->__('Custom template'),
-            'value' => 'custom'
-        ];
-    
-        return $result;
-    }
     
     /**
      * The zikulamultisitesmodule_formattedTitle filter outputs a formatted title for a given entity.
      * Example:
      *     {{ myPost|zikulamultisitesmodule_formattedTitle }}
      *
-     * @param object $entity The given entity instance
+     * @param EntityAccess $entity The given entity instance
      *
      * @return string The formatted title
      */

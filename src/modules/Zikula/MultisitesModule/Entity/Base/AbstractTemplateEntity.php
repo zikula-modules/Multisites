@@ -15,6 +15,7 @@ namespace Zikula\MultisitesModule\Entity\Base;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
@@ -56,7 +57,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
-     * @var integer $id
+     * @var int $id
      */
     protected $id = 0;
     
@@ -196,7 +197,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      */
     public function set_objectType($_objectType)
     {
-        if ($this->_objectType != $_objectType) {
+        if ($this->_objectType !== $_objectType) {
             $this->_objectType = isset($_objectType) ? $_objectType : '';
         }
     }
@@ -220,7 +221,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      */
     public function set_uploadBasePath($_uploadBasePath)
     {
-        if ($this->_uploadBasePath != $_uploadBasePath) {
+        if ($this->_uploadBasePath !== $_uploadBasePath) {
             $this->_uploadBasePath = isset($_uploadBasePath) ? $_uploadBasePath : '';
         }
     }
@@ -244,7 +245,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      */
     public function set_uploadBaseUrl($_uploadBaseUrl)
     {
-        if ($this->_uploadBaseUrl != $_uploadBaseUrl) {
+        if ($this->_uploadBaseUrl !== $_uploadBaseUrl) {
             $this->_uploadBaseUrl = isset($_uploadBaseUrl) ? $_uploadBaseUrl : '';
         }
     }
@@ -253,7 +254,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Returns the id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -263,14 +264,14 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return void
      */
     public function setId($id)
     {
-        if (intval($this->id) !== intval($id)) {
-            $this->id = intval($id);
+        if ((int)$this->id !== (int)$id) {
+            $this->id = (int)$id;
         }
     }
     
@@ -359,7 +360,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
         $fileName = $this->sqlFileFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
-            throw new \RuntimeException('Invalid upload base path in ' . get_class($this) . '#getSqlFile().');
+            throw new RuntimeException('Invalid upload base path in ' . get_class($this) . '#getSqlFile().');
         }
     
         $filePath = $this->_uploadBasePath . 'sqlfile/' . $fileName;
@@ -378,11 +379,9 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Sets the sql file.
      *
-     * @param File|null $sqlFile
-     *
      * @return void
      */
-    public function setSqlFile($sqlFile)
+    public function setSqlFile(File $sqlFile = null)
     {
         if (null === $this->sqlFile && null === $sqlFile) {
             return;
@@ -392,7 +391,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
         }
         $this->sqlFile = isset($sqlFile) ? $sqlFile : '';
     
-        if (null === $this->sqlFile || '' == $this->sqlFile) {
+        if (null === $this->sqlFile || '' === $this->sqlFile) {
             $this->setSqlFileFileName('');
             $this->setSqlFileUrl('');
             $this->setSqlFileMeta([]);
@@ -418,7 +417,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      *
      * @return void
      */
-    public function setSqlFileFileName($sqlFileFileName)
+    public function setSqlFileFileName($sqlFileFileName = null)
     {
         if ($this->sqlFileFileName !== $sqlFileFileName) {
             $this->sqlFileFileName = isset($sqlFileFileName) ? $sqlFileFileName : '';
@@ -442,7 +441,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      *
      * @return void
      */
-    public function setSqlFileUrl($sqlFileUrl)
+    public function setSqlFileUrl($sqlFileUrl = null)
     {
         if ($this->sqlFileUrl !== $sqlFileUrl) {
             $this->sqlFileUrl = isset($sqlFileUrl) ? $sqlFileUrl : '';
@@ -466,7 +465,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      *
      * @return void
      */
-    public function setSqlFileMeta($sqlFileMeta = [])
+    public function setSqlFileMeta(array $sqlFileMeta = [])
     {
         if ($this->sqlFileMeta !== $sqlFileMeta) {
             $this->sqlFileMeta = isset($sqlFileMeta) ? $sqlFileMeta : '';
@@ -563,7 +562,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      *
      * @return void
      */
-    public function setProjects($projects)
+    public function setProjects($projects = null)
     {
         foreach ($this->projects as $projectSingle) {
             $this->removeProjects($projectSingle);
@@ -616,7 +615,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      *
      * @return void
      */
-    public function setSites($sites)
+    public function setSites($sites = null)
     {
         foreach ($this->sites as $siteSingle) {
             $this->removeSites($siteSingle);
@@ -669,7 +668,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Returns the primary key.
      *
-     * @return integer The identifier
+     * @return int The identifier
      */
     public function getKey()
     {
@@ -679,7 +678,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Determines whether this entity supports hook subscribers or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function supportsHookSubscribers()
     {

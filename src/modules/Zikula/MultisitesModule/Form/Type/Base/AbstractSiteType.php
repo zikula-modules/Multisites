@@ -17,7 +17,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -31,6 +30,7 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
 use Zikula\MultisitesModule\Form\Type\Field\ArrayType;
 use Zikula\MultisitesModule\Form\Type\Field\UploadType;
+use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Helper\CollectionFilterHelper;
 use Zikula\MultisitesModule\Helper\EntityDisplayHelper;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
@@ -70,16 +70,6 @@ abstract class AbstractSiteType extends AbstractType
      */
     protected $uploadHelper;
 
-    /**
-     * SiteType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param EntityFactory $entityFactory
-     * @param CollectionFilterHelper $collectionFilterHelper
-     * @param EntityDisplayHelper $entityDisplayHelper
-     * @param ListEntriesHelper $listHelper
-     * @param UploadHelper $uploadHelper
-     */
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
@@ -96,19 +86,11 @@ abstract class AbstractSiteType extends AbstractType
         $this->uploadHelper = $uploadHelper;
     }
 
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
@@ -119,9 +101,6 @@ abstract class AbstractSiteType extends AbstractType
 
     /**
      * Adds basic entity fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addEntityFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -372,9 +351,6 @@ abstract class AbstractSiteType extends AbstractType
 
     /**
      * Adds fields for incoming relationships.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -424,21 +400,18 @@ abstract class AbstractSiteType extends AbstractType
 
     /**
      * Adds submit buttons.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addSubmitButtons(FormBuilderInterface $builder, array $options = [])
     {
         foreach ($options['actions'] as $action) {
             $builder->add($action['id'], SubmitType::class, [
                 'label' => $action['title'],
-                'icon' => ($action['id'] == 'delete' ? 'fa-trash-o' : ''),
+                'icon' => 'delete' === $action['id'] ? 'fa-trash-o' : '',
                 'attr' => [
                     'class' => $action['buttonClass']
                 ]
             ]);
-            if ($options['mode'] == 'create' && $action['id'] == 'submit' && !$options['inline_usage']) {
+            if ('create' === $options['mode'] && 'submit' === $action['id'] && !$options['inline_usage']) {
                 // add additional button to submit item and return to create form
                 $builder->add('submitrepeat', SubmitType::class, [
                     'label' => $this->__('Submit and repeat'),
@@ -467,23 +440,17 @@ abstract class AbstractSiteType extends AbstractType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_site';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults([
                 // define class for underlying data (required for embedding forms)
-                'data_class' => 'Zikula\MultisitesModule\Entity\SiteEntity',
+                'data_class' => SiteEntity::class,
                 'empty_data' => function (FormInterface $form) {
                     return $this->entityFactory->createSite();
                 },

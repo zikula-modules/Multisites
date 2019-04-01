@@ -12,7 +12,7 @@
 
 namespace Zikula\MultisitesModule\Base;
 
-use RuntimeException;
+use Exception;
 use Zikula\Core\AbstractExtensionInstaller;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
@@ -24,7 +24,7 @@ use Zikula\MultisitesModule\Entity\ProjectEntity;
 abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstaller
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected $entities = [
         SiteEntity::class,
@@ -32,13 +32,6 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         ProjectEntity::class,
     ];
 
-    /**
-     * Install the ZikulaMultisitesModule application.
-     *
-     * @return boolean True on success, or false
-     *
-     * @throws RuntimeException Thrown if database tables can not be created or another error occurs
-     */
     public function install()
     {
         $logger = $this->container->get('logger');
@@ -57,7 +50,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                 $container->getParameter('datadir')
             );
             $uploadHelper->checkAndCreateAllUploadFolders();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->addFlash('error', $exception->getMessage());
             $logger->error('{app}: User {user} could not create upload folders during installation. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'errorMessage' => $exception->getMessage()]);
         
@@ -66,7 +59,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         // create all tables from according entity definitions
         try {
             $this->schemaTool->create($this->entities);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
             $logger->error('{app}: Could not create the database tables during installation. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
     
@@ -108,17 +101,6 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         return true;
     }
     
-    /**
-     * Upgrade the ZikulaMultisitesModule application from an older version.
-     *
-     * If the upgrade fails at some point, it returns the last upgraded version.
-     *
-     * @param integer $oldVersion Version to upgrade from
-     *
-     * @return boolean True on success, false otherwise
-     *
-     * @throws RuntimeException Thrown if database tables can not be updated
-     */
     public function upgrade($oldVersion)
     {
     /*
@@ -132,7 +114,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                 // update the database schema
                 try {
                     $this->schemaTool->update($this->entities);
-                } catch (\Exception $exception) {
+                } catch (Exception $exception) {
                     $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
                     $logger->error('{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
     
@@ -145,20 +127,13 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
         return true;
     }
     
-    /**
-     * Uninstall ZikulaMultisitesModule.
-     *
-     * @return boolean True on success, false otherwise
-     *
-     * @throws RuntimeException Thrown if database tables or stored workflows can not be removed
-     */
     public function uninstall()
     {
         $logger = $this->container->get('logger');
     
         try {
             $this->schemaTool->drop($this->entities);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
             $logger->error('{app}: Could not remove the database tables during uninstallation. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
     

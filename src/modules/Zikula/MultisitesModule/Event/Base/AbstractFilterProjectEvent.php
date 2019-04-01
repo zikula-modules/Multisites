@@ -30,12 +30,6 @@ class AbstractFilterProjectEvent extends Event
      */
     protected $entityChangeSet = [];
 
-    /**
-     * FilterProjectEvent constructor.
-     *
-     * @param ProjectEntity $project Processed entity
-     * @param array $entityChangeSet Change set for preUpdate events
-     */
     public function __construct(ProjectEntity $project, array $entityChangeSet = [])
     {
         $this->project = $project;
@@ -43,8 +37,6 @@ class AbstractFilterProjectEvent extends Event
     }
 
     /**
-     * Returns the entity.
-     *
      * @return ProjectEntity
      */
     public function getProject()
@@ -53,8 +45,6 @@ class AbstractFilterProjectEvent extends Event
     }
 
     /**
-     * Returns the change set.
-     *
      * @return array Entity change set
      */
     public function getEntityChangeSet()

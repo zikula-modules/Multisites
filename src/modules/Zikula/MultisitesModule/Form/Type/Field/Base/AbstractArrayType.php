@@ -22,26 +22,17 @@ use Zikula\MultisitesModule\Form\DataTransformer\ArrayFieldTransformer;
  */
 abstract class AbstractArrayType extends AbstractType
 {
-    /**
-     * @inheritDoc
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new ArrayFieldTransformer();
         $builder->addModelTransformer($transformer);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getParent()
     {
         return TextareaType::class;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_field_array';

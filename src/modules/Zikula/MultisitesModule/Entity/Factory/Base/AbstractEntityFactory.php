@@ -16,6 +16,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 use Zikula\MultisitesModule\Entity\Factory\EntityInitialiser;
+use Zikula\MultisitesModule\Entity\SiteEntity;
+use Zikula\MultisitesModule\Entity\TemplateEntity;
+use Zikula\MultisitesModule\Entity\ProjectEntity;
 use Zikula\MultisitesModule\Helper\CollectionFilterHelper;
 
 /**
@@ -29,7 +32,7 @@ abstract class AbstractEntityFactory
     protected $entityManager;
 
     /**
-     * @var EntityInitialiser The entity initialiser for dynamic application of default values
+     * @var EntityInitialiser
      */
     protected $entityInitialiser;
 
@@ -38,13 +41,6 @@ abstract class AbstractEntityFactory
      */
     protected $collectionFilterHelper;
 
-    /**
-     * EntityFactory constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param EntityInitialiser $entityInitialiser
-     * @param CollectionFilterHelper $collectionFilterHelper
-     */
     public function __construct(
         EntityManagerInterface $entityManager,
         EntityInitialiser $entityInitialiser,
@@ -66,6 +62,7 @@ abstract class AbstractEntityFactory
     {
         $entityClass = 'Zikula\\MultisitesModule\\Entity\\' . ucfirst($objectType) . 'Entity';
 
+        /** @var EntityRepository $repository */
         $repository = $this->getEntityManager()->getRepository($entityClass);
         $repository->setCollectionFilterHelper($this->collectionFilterHelper);
 
@@ -75,13 +72,11 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new site instance.
      *
-     * @return \Zikula\MultisitesModule\Entity\SiteEntity The newly created entity instance
+     * @return SiteEntity The newly created entity instance
      */
     public function createSite()
     {
-        $entityClass = 'Zikula\\MultisitesModule\\Entity\\SiteEntity';
-
-        $entity = new $entityClass();
+        $entity = new SiteEntity();
 
         $this->entityInitialiser->initSite($entity);
 
@@ -91,13 +86,11 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new template instance.
      *
-     * @return \Zikula\MultisitesModule\Entity\TemplateEntity The newly created entity instance
+     * @return TemplateEntity The newly created entity instance
      */
     public function createTemplate()
     {
-        $entityClass = 'Zikula\\MultisitesModule\\Entity\\TemplateEntity';
-
-        $entity = new $entityClass();
+        $entity = new TemplateEntity();
 
         $this->entityInitialiser->initTemplate($entity);
 
@@ -107,13 +100,11 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new project instance.
      *
-     * @return \Zikula\MultisitesModule\Entity\ProjectEntity The newly created entity instance
+     * @return ProjectEntity The newly created entity instance
      */
     public function createProject()
     {
-        $entityClass = 'Zikula\\MultisitesModule\\Entity\\ProjectEntity';
-
-        $entity = new $entityClass();
+        $entity = new ProjectEntity();
 
         $this->entityInitialiser->initProject($entity);
 
@@ -156,14 +147,13 @@ abstract class AbstractEntityFactory
      *
      * @return void
      */
-    public function setEntityManager($entityManager)
+    public function setEntityManager(EntityManagerInterface $entityManager = null)
     {
-        if ($this->entityManager != $entityManager) {
+        if ($this->entityManager !== $entityManager) {
             $this->entityManager = $entityManager;
         }
     }
     
-
     /**
      * Returns the entity initialiser.
      *
@@ -181,9 +171,9 @@ abstract class AbstractEntityFactory
      *
      * @return void
      */
-    public function setEntityInitialiser($entityInitialiser)
+    public function setEntityInitialiser(EntityInitialiser $entityInitialiser = null)
     {
-        if ($this->entityInitialiser != $entityInitialiser) {
+        if ($this->entityInitialiser !== $entityInitialiser) {
             $this->entityInitialiser = $entityInitialiser;
         }
     }

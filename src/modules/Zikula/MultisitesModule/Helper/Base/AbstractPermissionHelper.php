@@ -13,6 +13,8 @@
 namespace Zikula\MultisitesModule\Helper\Base;
 
 use Symfony\Component\HttpFoundation\RequestStack;
+use Zikula\Core\Doctrine\EntityAccess;
+use Zikula\GroupsModule\Entity\GroupEntity;
 use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
@@ -43,14 +45,6 @@ abstract class AbstractPermissionHelper
      */
     protected $userRepository;
     
-    /**
-     * PermissionHelper constructor.
-     *
-     * @param RequestStack $requestStack
-     * @param PermissionApiInterface $permissionApi
-     * @param CurrentUserApiInterface $currentUserApi
-     * @param UserRepositoryInterface $userRepository
-     */
     public function __construct(
         RequestStack $requestStack,
         PermissionApiInterface $permissionApi,
@@ -66,12 +60,12 @@ abstract class AbstractPermissionHelper
     /**
      * Checks if the given entity instance may be read.
      *
-     * @param object $entity
-     * @param integer $userId
+     * @param EntityAccess $entity
+     * @param int $userId
      *
-     * @return boolean
+     * @return bool
      */
-    public function mayRead($entity, $userId = null)
+    public function mayRead(EntityAccess $entity, $userId = null)
     {
         return $this->hasEntityPermission($entity, ACCESS_READ, $userId);
     }
@@ -79,12 +73,12 @@ abstract class AbstractPermissionHelper
     /**
      * Checks if the given entity instance may be edited.
      *
-     * @param object $entity
-     * @param integer $userId
+     * @param EntityAccess $entity
+     * @param int $userId
      *
-     * @return boolean
+     * @return bool
      */
-    public function mayEdit($entity, $userId = null)
+    public function mayEdit(EntityAccess $entity, $userId = null)
     {
         return $this->hasEntityPermission($entity, ACCESS_EDIT, $userId);
     }
@@ -92,12 +86,12 @@ abstract class AbstractPermissionHelper
     /**
      * Checks if the given entity instance may be deleted.
      *
-     * @param object $entity
-     * @param integer $userId
+     * @param EntityAccess $entity
+     * @param int $userId
      *
-     * @return boolean
+     * @return bool
      */
-    public function mayDelete($entity, $userId = null)
+    public function mayDelete(EntityAccess $entity, $userId = null)
     {
         return $this->hasEntityPermission($entity, ACCESS_DELETE, $userId);
     }
@@ -105,13 +99,13 @@ abstract class AbstractPermissionHelper
     /**
      * Checks if a certain permission level is granted for the given entity instance.
      *
-     * @param object $entity
-     * @param integer $permissionLevel
-     * @param integer $userId
+     * @param EntityAccess $entity
+     * @param int $permissionLevel
+     * @param int $userId
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasEntityPermission($entity, $permissionLevel, $userId = null)
+    public function hasEntityPermission(EntityAccess $entity, $permissionLevel, $userId = null)
     {
         $objectType = $entity->get_objectType();
         $instance = $entity->getKey() . '::';
@@ -123,10 +117,10 @@ abstract class AbstractPermissionHelper
      * Checks if a certain permission level is granted for the given object type.
      *
      * @param string $objectType
-     * @param integer $permissionLevel
-     * @param integer $userId
+     * @param int $permissionLevel
+     * @param int $userId
      *
-     * @return boolean
+     * @return bool
      */
     public function hasComponentPermission($objectType, $permissionLevel, $userId = null)
     {
@@ -137,9 +131,9 @@ abstract class AbstractPermissionHelper
      * Checks if the quick navigation form for the given object type may be used or not.
      *
      * @param string $objectType
-     * @param integer $userId
+     * @param int $userId
      *
-     * @return boolean
+     * @return bool
      */
     public function mayUseQuickNav($objectType, $userId = null)
     {
@@ -149,10 +143,10 @@ abstract class AbstractPermissionHelper
     /**
      * Checks if a certain permission level is granted for the application in general.
      *
-     * @param integer $permissionLevel
-     * @param integer $userId
+     * @param int $permissionLevel
+     * @param int $userId
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPermission($permissionLevel, $userId = null)
     {
@@ -162,7 +156,7 @@ abstract class AbstractPermissionHelper
     /**
      * Returns the list of user group ids of the current user.
      *
-     * @return array List of group ids
+     * @return int[] List of group ids
      */
     public function getUserGroupIds()
     {
@@ -173,10 +167,10 @@ abstract class AbstractPermissionHelper
     
         $groupIds = [];
         $groups = $this->currentUserApi->get('groups');
+        /** @var GroupEntity $group */
         foreach ($groups as $group) {
             $groupIds[] = $group->getGid();
         }
-    
     
         return $groupIds;
     }
@@ -184,11 +178,11 @@ abstract class AbstractPermissionHelper
     /**
      * Returns the the current user's id.
      *
-     * @return integer
+     * @return int
      */
     public function getUserId()
     {
-        return $this->currentUserApi->get('uid');
+        return (int)$this->currentUserApi->get('uid');
     }
     
     /**

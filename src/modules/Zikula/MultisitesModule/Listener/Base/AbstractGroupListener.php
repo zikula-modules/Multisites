@@ -21,9 +21,6 @@ use Zikula\GroupsModule\GroupEvents;
  */
 abstract class AbstractGroupListener implements EventSubscriberInterface
 {
-    /**
-     * Makes our handlers known to the event system.
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -48,7 +45,6 @@ abstract class AbstractGroupListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function create(GenericEvent $event)
     {
@@ -65,7 +61,6 @@ abstract class AbstractGroupListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function update(GenericEvent $event)
     {
@@ -82,7 +77,6 @@ abstract class AbstractGroupListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function delete(GenericEvent $event)
     {
@@ -100,7 +94,6 @@ abstract class AbstractGroupListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function addUser(GenericEvent $event)
     {
@@ -117,7 +110,6 @@ abstract class AbstractGroupListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function removeUser(GenericEvent $event)
     {
@@ -135,7 +127,6 @@ abstract class AbstractGroupListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function applicationProcessed(GenericEvent $event)
     {
@@ -152,7 +143,6 @@ abstract class AbstractGroupListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function newApplication(GenericEvent $event)
     {

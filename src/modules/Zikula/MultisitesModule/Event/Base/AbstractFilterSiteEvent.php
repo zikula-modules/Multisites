@@ -30,12 +30,6 @@ class AbstractFilterSiteEvent extends Event
      */
     protected $entityChangeSet = [];
 
-    /**
-     * FilterSiteEvent constructor.
-     *
-     * @param SiteEntity $site Processed entity
-     * @param array $entityChangeSet Change set for preUpdate events
-     */
     public function __construct(SiteEntity $site, array $entityChangeSet = [])
     {
         $this->site = $site;
@@ -43,8 +37,6 @@ class AbstractFilterSiteEvent extends Event
     }
 
     /**
-     * Returns the entity.
-     *
      * @return SiteEntity
      */
     public function getSite()
@@ -53,8 +45,6 @@ class AbstractFilterSiteEvent extends Event
     }
 
     /**
-     * Returns the change set.
-     *
      * @return array Entity change set
      */
     public function getEntityChangeSet()

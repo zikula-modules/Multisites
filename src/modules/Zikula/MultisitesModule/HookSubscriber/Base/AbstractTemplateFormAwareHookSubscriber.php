@@ -26,43 +26,26 @@ abstract class AbstractTemplateFormAwareHookSubscriber implements HookSubscriber
      */
     protected $translator;
 
-    /**
-     * TemplateFormAwareHookSubscriber constructor.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getOwner()
     {
         return 'ZikulaMultisitesModule';
     }
     
-    /**
-     * @inheritDoc
-     */
     public function getCategory()
     {
         return FormAwareCategory::NAME;
     }
     
-    /**
-     * @inheritDoc
-     */
     public function getTitle()
     {
         return $this->translator->__('Template form aware subscriber');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getEvents()
     {
         return [

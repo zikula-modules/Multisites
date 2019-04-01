@@ -30,38 +30,24 @@ abstract class AbstractListEntryValidator extends ConstraintValidator
      */
     protected $listEntriesHelper;
 
-    /**
-     * ListEntryValidator constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param ListEntriesHelper $listEntriesHelper
-     */
     public function __construct(TranslatorInterface $translator, ListEntriesHelper $listEntriesHelper)
     {
         $this->setTranslator($translator);
         $this->listEntriesHelper = $listEntriesHelper;
     }
 
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function validate($value, Constraint $constraint)
     {
         if (null === $value) {
             return;
         }
 
-        if ('workflowState' == $constraint->propertyName && in_array($value, ['initial', 'deleted'])) {
+        if ('workflowState' === $constraint->propertyName && in_array($value, ['initial', 'deleted'], true)) {
             return;
     	}
 
@@ -73,7 +59,7 @@ abstract class AbstractListEntryValidator extends ConstraintValidator
 
         if (!$constraint->multiple) {
             // single-valued list
-            if ('' != $value && !in_array($value, $allowedValues)) {
+            if ('' !== $value && !in_array($value, $allowedValues, true)) {
                 $this->context->buildViolation(
                     $this->__f('The value "%value%" is not allowed for the "%property%" property.', [
                         '%value%' => $value,
@@ -88,10 +74,10 @@ abstract class AbstractListEntryValidator extends ConstraintValidator
         // multi-values list
         $selected = explode('###', $value);
         foreach ($selected as $singleValue) {
-            if ('' == $singleValue) {
+            if ('' === $singleValue) {
                 continue;
             }
-            if (!in_array($singleValue, $allowedValues)) {
+            if (!in_array($singleValue, $allowedValues, true)) {
                 $this->context->buildViolation(
                     $this->__f('The value "%value%" is not allowed for the "%property%" property.', [
                         '%value%' => $singleValue,

@@ -24,11 +24,6 @@ abstract class AbstractModelHelper
      */
     protected $entityFactory;
     
-    /**
-     * ModelHelper constructor.
-     *
-     * @param EntityFactory $entityFactory
-     */
     public function __construct(EntityFactory $entityFactory)
     {
         $this->entityFactory = $entityFactory;
@@ -47,9 +42,9 @@ abstract class AbstractModelHelper
      *
      * @param string $objectType Name of treated entity type
      *
-     * @return boolean Whether a new instance can be created or not
+     * @return bool Whether a new instance can be created or not
      */
-    public function canBeCreated($objectType)
+    public function canBeCreated($objectType = '')
     {
         $result = false;
     
@@ -73,48 +68,48 @@ abstract class AbstractModelHelper
      *
      * @param string $objectType Name of treated entity type
      *
-     * @return boolean Whether at least one instance exists or not
+     * @return bool Whether at least one instance exists or not
      */
-    protected function hasExistingInstances($objectType)
+    protected function hasExistingInstances($objectType = '')
     {
         $repository = $this->entityFactory->getRepository($objectType);
         if (null === $repository) {
             return false;
         }
     
-        return $repository->selectCount() > 0;
+        return 0 < $repository->selectCount();
     }
     
     /**
      * Returns a desired sorting criteria for passing it to a repository method.
      *
      * @param string $objectType Name of treated entity type
-     * @param string $sorting    The type of sorting (newest, random, default)
+     * @param string $sorting The type of sorting (newest, random, default)
      *
      * @return string The order by clause
      */
     public function resolveSortParameter($objectType = '', $sorting = 'default')
     {
-        if ($sorting == 'random') {
+        if ('random' === $sorting) {
             return 'RAND()';
         }
     
         $hasStandardFields = in_array($objectType, ['site', 'template', 'project']);
     
         $sortParam = '';
-        if ($sorting == 'newest') {
+        if ('newest' === $sorting) {
             if (true === $hasStandardFields) {
                 $sortParam = 'createdDate DESC';
             } else {
                 $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
             }
-        } elseif ($sorting == 'updated') {
+        } elseif ('updated' === $sorting) {
             if (true === $hasStandardFields) {
                 $sortParam = 'updatedDate DESC';
             } else {
                 $sortParam = $this->entityFactory->getIdField($objectType) . ' DESC';
             }
-        } elseif ($sorting == 'default') {
+        } elseif ('default' === $sorting) {
             $repository = $this->entityFactory->getRepository($objectType);
             $sortParam = $repository->getDefaultSortingField();
         }

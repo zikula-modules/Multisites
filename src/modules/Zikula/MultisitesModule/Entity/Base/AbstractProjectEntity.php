@@ -45,7 +45,7 @@ abstract class AbstractProjectEntity extends EntityAccess
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
-     * @var integer $id
+     * @var int $id
      */
     protected $id = 0;
     
@@ -118,7 +118,7 @@ abstract class AbstractProjectEntity extends EntityAccess
      */
     public function set_objectType($_objectType)
     {
-        if ($this->_objectType != $_objectType) {
+        if ($this->_objectType !== $_objectType) {
             $this->_objectType = isset($_objectType) ? $_objectType : '';
         }
     }
@@ -127,7 +127,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     /**
      * Returns the id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -137,14 +137,14 @@ abstract class AbstractProjectEntity extends EntityAccess
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return void
      */
     public function setId($id)
     {
-        if (intval($this->id) !== intval($id)) {
-            $this->id = intval($id);
+        if ((int)$this->id !== (int)$id) {
+            $this->id = (int)$id;
         }
     }
     
@@ -214,7 +214,7 @@ abstract class AbstractProjectEntity extends EntityAccess
      *
      * @return void
      */
-    public function setSites($sites)
+    public function setSites($sites = null)
     {
         foreach ($this->sites as $siteSingle) {
             $this->removeSites($siteSingle);
@@ -267,7 +267,7 @@ abstract class AbstractProjectEntity extends EntityAccess
      *
      * @return void
      */
-    public function setTemplates($templates)
+    public function setTemplates($templates = null)
     {
         foreach ($this->templates as $templateSingle) {
             $this->removeTemplates($templateSingle);
@@ -318,7 +318,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     /**
      * Returns the primary key.
      *
-     * @return integer The identifier
+     * @return int The identifier
      */
     public function getKey()
     {
@@ -328,7 +328,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     /**
      * Determines whether this entity supports hook subscribers or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function supportsHookSubscribers()
     {

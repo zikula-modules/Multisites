@@ -13,13 +13,10 @@
 namespace Zikula\MultisitesModule\Controller;
 
 use Zikula\MultisitesModule\Controller\Base\AbstractProjectController;
-
-use RuntimeException;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 
@@ -29,7 +26,6 @@ use Zikula\MultisitesModule\Entity\ProjectEntity;
 class ProjectController extends AbstractProjectController
 {
     /**
-     * @inheritDoc
      *
      * @Route("/admin/projects/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
@@ -49,7 +45,6 @@ class ProjectController extends AbstractProjectController
     }
     
     /**
-     * @inheritDoc
      *
      * @Route("/projects/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
@@ -68,7 +63,6 @@ class ProjectController extends AbstractProjectController
     }
     
     /**
-     * @inheritDoc
      *
      * @Route("/admin/project/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -84,7 +78,6 @@ class ProjectController extends AbstractProjectController
     }
     
     /**
-     * @inheritDoc
      *
      * @Route("/project/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -99,6 +92,8 @@ class ProjectController extends AbstractProjectController
     }
     
     /**
+     * Process status changes for multiple items.
+     *
      * @inheritDoc
      * @Route("/admin/projects/handleSelectedEntries",
      *        methods = {"POST"}
@@ -112,6 +107,8 @@ class ProjectController extends AbstractProjectController
     }
     
     /**
+     * Process status changes for multiple items.
+     *
      * @inheritDoc
      * @Route("/projects/handleSelectedEntries",
      *        methods = {"POST"}

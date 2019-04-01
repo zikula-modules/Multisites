@@ -14,7 +14,6 @@ namespace Zikula\MultisitesModule\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,6 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
+use Zikula\MultisitesModule\Entity\ProjectEntity;
 use Zikula\MultisitesModule\Helper\CollectionFilterHelper;
 use Zikula\MultisitesModule\Helper\EntityDisplayHelper;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
@@ -57,15 +57,6 @@ abstract class AbstractProjectType extends AbstractType
      */
     protected $listHelper;
 
-    /**
-     * ProjectType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param EntityFactory $entityFactory
-     * @param CollectionFilterHelper $collectionFilterHelper
-     * @param EntityDisplayHelper $entityDisplayHelper
-     * @param ListEntriesHelper $listHelper
-     */
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
@@ -80,19 +71,11 @@ abstract class AbstractProjectType extends AbstractType
         $this->listHelper = $listHelper;
     }
 
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
@@ -102,9 +85,6 @@ abstract class AbstractProjectType extends AbstractType
 
     /**
      * Adds basic entity fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addEntityFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -123,21 +103,18 @@ abstract class AbstractProjectType extends AbstractType
 
     /**
      * Adds submit buttons.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addSubmitButtons(FormBuilderInterface $builder, array $options = [])
     {
         foreach ($options['actions'] as $action) {
             $builder->add($action['id'], SubmitType::class, [
                 'label' => $action['title'],
-                'icon' => ($action['id'] == 'delete' ? 'fa-trash-o' : ''),
+                'icon' => 'delete' === $action['id'] ? 'fa-trash-o' : '',
                 'attr' => [
                     'class' => $action['buttonClass']
                 ]
             ]);
-            if ($options['mode'] == 'create' && $action['id'] == 'submit' && !$options['inline_usage']) {
+            if ('create' === $options['mode'] && 'submit' === $action['id'] && !$options['inline_usage']) {
                 // add additional button to submit item and return to create form
                 $builder->add('submitrepeat', SubmitType::class, [
                     'label' => $this->__('Submit and repeat'),
@@ -166,23 +143,17 @@ abstract class AbstractProjectType extends AbstractType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_project';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults([
                 // define class for underlying data (required for embedding forms)
-                'data_class' => 'Zikula\MultisitesModule\Entity\ProjectEntity',
+                'data_class' => ProjectEntity::class,
                 'empty_data' => function (FormInterface $form) {
                     return $this->entityFactory->createProject();
                 },

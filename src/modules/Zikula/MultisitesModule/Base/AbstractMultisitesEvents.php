@@ -13,6 +13,7 @@
 namespace Zikula\MultisitesModule\Base;
 
 use Zikula\MultisitesModule\Listener\EntityLifecycleListener;
+use Zikula\MultisitesModule\Menu\MenuBuilder;
 
 /**
  * Events definition base class.
@@ -26,7 +27,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\ConfigureItemActionsMenuEvent instance.
      *
-     * @see Zikula\MultisitesModule\Menu\MenuBuilder::createItemActionsMenu()
+     * @see MenuBuilder::createItemActionsMenu()
      * @var string
      */
     const MENU_ITEMACTIONS_PRE_CONFIGURE = 'zikulamultisitesmodule.itemactionsmenu_pre_configure';
@@ -38,7 +39,7 @@ abstract class AbstractMultisitesEvents
      * The event listener receives an
      * Zikula\MultisitesModule\Event\ConfigureItemActionsMenuEvent instance.
      *
-     * @see Zikula\MultisitesModule\Menu\MenuBuilder::createItemActionsMenu()
+     * @see MenuBuilder::createItemActionsMenu()
      * @var string
      */
     const MENU_ITEMACTIONS_POST_CONFIGURE = 'zikulamultisitesmodule.itemactionsmenu_post_configure';

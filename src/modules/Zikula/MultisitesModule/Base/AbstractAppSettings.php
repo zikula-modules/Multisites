@@ -55,7 +55,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $siteEntriesPerPage
+     * @var int $siteEntriesPerPage
      */
     protected $siteEntriesPerPage = 10;
     
@@ -66,7 +66,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $templateEntriesPerPage
+     * @var int $templateEntriesPerPage
      */
     protected $templateEntriesPerPage = 10;
     
@@ -77,7 +77,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $projectEntriesPerPage
+     * @var int $projectEntriesPerPage
      */
     protected $projectEntriesPerPage = 10;
     
@@ -86,7 +86,7 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $showOnlyOwnEntries
+     * @var bool $showOnlyOwnEntries
      */
     protected $showOnlyOwnEntries = false;
     
@@ -95,7 +95,7 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $enableShrinkingForSiteLogo
+     * @var bool $enableShrinkingForSiteLogo
      */
     protected $enableShrinkingForSiteLogo = false;
     
@@ -106,7 +106,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $shrinkWidthSiteLogo
+     * @var int $shrinkWidthSiteLogo
      */
     protected $shrinkWidthSiteLogo = 800;
     
@@ -117,7 +117,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $shrinkHeightSiteLogo
+     * @var int $shrinkHeightSiteLogo
      */
     protected $shrinkHeightSiteLogo = 600;
     
@@ -137,7 +137,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $thumbnailWidthSiteLogoView
+     * @var int $thumbnailWidthSiteLogoView
      */
     protected $thumbnailWidthSiteLogoView = 32;
     
@@ -148,7 +148,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $thumbnailHeightSiteLogoView
+     * @var int $thumbnailHeightSiteLogoView
      */
     protected $thumbnailHeightSiteLogoView = 24;
     
@@ -159,7 +159,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $thumbnailWidthSiteLogoEdit
+     * @var int $thumbnailWidthSiteLogoEdit
      */
     protected $thumbnailWidthSiteLogoEdit = 240;
     
@@ -170,7 +170,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $thumbnailHeightSiteLogoEdit
+     * @var int $thumbnailHeightSiteLogoEdit
      */
     protected $thumbnailHeightSiteLogoEdit = 180;
     
@@ -179,7 +179,7 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $enableShrinkingForSiteFavIcon
+     * @var bool $enableShrinkingForSiteFavIcon
      */
     protected $enableShrinkingForSiteFavIcon = false;
     
@@ -190,7 +190,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $shrinkWidthSiteFavIcon
+     * @var int $shrinkWidthSiteFavIcon
      */
     protected $shrinkWidthSiteFavIcon = 800;
     
@@ -201,7 +201,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $shrinkHeightSiteFavIcon
+     * @var int $shrinkHeightSiteFavIcon
      */
     protected $shrinkHeightSiteFavIcon = 600;
     
@@ -221,7 +221,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $thumbnailWidthSiteFavIconView
+     * @var int $thumbnailWidthSiteFavIconView
      */
     protected $thumbnailWidthSiteFavIconView = 32;
     
@@ -232,7 +232,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $thumbnailHeightSiteFavIconView
+     * @var int $thumbnailHeightSiteFavIconView
      */
     protected $thumbnailHeightSiteFavIconView = 24;
     
@@ -243,7 +243,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $thumbnailWidthSiteFavIconEdit
+     * @var int $thumbnailWidthSiteFavIconEdit
      */
     protected $thumbnailWidthSiteFavIconEdit = 240;
     
@@ -254,7 +254,7 @@ abstract class AbstractAppSettings
      * @Assert\NotBlank()
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var integer $thumbnailHeightSiteFavIconEdit
+     * @var int $thumbnailHeightSiteFavIconEdit
      */
     protected $thumbnailHeightSiteFavIconEdit = 180;
     
@@ -263,7 +263,7 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $allowModerationSpecificCreatorForSite
+     * @var bool $allowModerationSpecificCreatorForSite
      */
     protected $allowModerationSpecificCreatorForSite = false;
     
@@ -272,7 +272,7 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $allowModerationSpecificCreationDateForSite
+     * @var bool $allowModerationSpecificCreationDateForSite
      */
     protected $allowModerationSpecificCreationDateForSite = false;
     
@@ -281,7 +281,7 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $allowModerationSpecificCreatorForTemplate
+     * @var bool $allowModerationSpecificCreatorForTemplate
      */
     protected $allowModerationSpecificCreatorForTemplate = false;
     
@@ -290,7 +290,7 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $allowModerationSpecificCreationDateForTemplate
+     * @var bool $allowModerationSpecificCreationDateForTemplate
      */
     protected $allowModerationSpecificCreationDateForTemplate = false;
     
@@ -299,7 +299,7 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $allowModerationSpecificCreatorForProject
+     * @var bool $allowModerationSpecificCreatorForProject
      */
     protected $allowModerationSpecificCreatorForProject = false;
     
@@ -308,16 +308,11 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
-     * @var boolean $allowModerationSpecificCreationDateForProject
+     * @var bool $allowModerationSpecificCreationDateForProject
      */
     protected $allowModerationSpecificCreationDateForProject = false;
     
     
-    /**
-     * AppSettings constructor.
-     *
-     * @param VariableApiInterface $variableApi
-     */
     public function __construct(
         VariableApiInterface $variableApi
     ) {
@@ -401,7 +396,7 @@ abstract class AbstractAppSettings
     /**
      * Returns the site entries per page.
      *
-     * @return integer
+     * @return int
      */
     public function getSiteEntriesPerPage()
     {
@@ -411,21 +406,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the site entries per page.
      *
-     * @param integer $siteEntriesPerPage
+     * @param int $siteEntriesPerPage
      *
      * @return void
      */
     public function setSiteEntriesPerPage($siteEntriesPerPage)
     {
-        if (intval($this->siteEntriesPerPage) !== intval($siteEntriesPerPage)) {
-            $this->siteEntriesPerPage = intval($siteEntriesPerPage);
+        if ((int)$this->siteEntriesPerPage !== (int)$siteEntriesPerPage) {
+            $this->siteEntriesPerPage = (int)$siteEntriesPerPage;
         }
     }
     
     /**
      * Returns the template entries per page.
      *
-     * @return integer
+     * @return int
      */
     public function getTemplateEntriesPerPage()
     {
@@ -435,21 +430,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the template entries per page.
      *
-     * @param integer $templateEntriesPerPage
+     * @param int $templateEntriesPerPage
      *
      * @return void
      */
     public function setTemplateEntriesPerPage($templateEntriesPerPage)
     {
-        if (intval($this->templateEntriesPerPage) !== intval($templateEntriesPerPage)) {
-            $this->templateEntriesPerPage = intval($templateEntriesPerPage);
+        if ((int)$this->templateEntriesPerPage !== (int)$templateEntriesPerPage) {
+            $this->templateEntriesPerPage = (int)$templateEntriesPerPage;
         }
     }
     
     /**
      * Returns the project entries per page.
      *
-     * @return integer
+     * @return int
      */
     public function getProjectEntriesPerPage()
     {
@@ -459,21 +454,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the project entries per page.
      *
-     * @param integer $projectEntriesPerPage
+     * @param int $projectEntriesPerPage
      *
      * @return void
      */
     public function setProjectEntriesPerPage($projectEntriesPerPage)
     {
-        if (intval($this->projectEntriesPerPage) !== intval($projectEntriesPerPage)) {
-            $this->projectEntriesPerPage = intval($projectEntriesPerPage);
+        if ((int)$this->projectEntriesPerPage !== (int)$projectEntriesPerPage) {
+            $this->projectEntriesPerPage = (int)$projectEntriesPerPage;
         }
     }
     
     /**
      * Returns the show only own entries.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShowOnlyOwnEntries()
     {
@@ -483,21 +478,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the show only own entries.
      *
-     * @param boolean $showOnlyOwnEntries
+     * @param bool $showOnlyOwnEntries
      *
      * @return void
      */
     public function setShowOnlyOwnEntries($showOnlyOwnEntries)
     {
-        if (boolval($this->showOnlyOwnEntries) !== boolval($showOnlyOwnEntries)) {
-            $this->showOnlyOwnEntries = boolval($showOnlyOwnEntries);
+        if ((bool)$this->showOnlyOwnEntries !== (bool)$showOnlyOwnEntries) {
+            $this->showOnlyOwnEntries = (bool)$showOnlyOwnEntries;
         }
     }
     
     /**
      * Returns the enable shrinking for site logo.
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnableShrinkingForSiteLogo()
     {
@@ -507,21 +502,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the enable shrinking for site logo.
      *
-     * @param boolean $enableShrinkingForSiteLogo
+     * @param bool $enableShrinkingForSiteLogo
      *
      * @return void
      */
     public function setEnableShrinkingForSiteLogo($enableShrinkingForSiteLogo)
     {
-        if (boolval($this->enableShrinkingForSiteLogo) !== boolval($enableShrinkingForSiteLogo)) {
-            $this->enableShrinkingForSiteLogo = boolval($enableShrinkingForSiteLogo);
+        if ((bool)$this->enableShrinkingForSiteLogo !== (bool)$enableShrinkingForSiteLogo) {
+            $this->enableShrinkingForSiteLogo = (bool)$enableShrinkingForSiteLogo;
         }
     }
     
     /**
      * Returns the shrink width site logo.
      *
-     * @return integer
+     * @return int
      */
     public function getShrinkWidthSiteLogo()
     {
@@ -531,21 +526,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the shrink width site logo.
      *
-     * @param integer $shrinkWidthSiteLogo
+     * @param int $shrinkWidthSiteLogo
      *
      * @return void
      */
     public function setShrinkWidthSiteLogo($shrinkWidthSiteLogo)
     {
-        if (intval($this->shrinkWidthSiteLogo) !== intval($shrinkWidthSiteLogo)) {
-            $this->shrinkWidthSiteLogo = intval($shrinkWidthSiteLogo);
+        if ((int)$this->shrinkWidthSiteLogo !== (int)$shrinkWidthSiteLogo) {
+            $this->shrinkWidthSiteLogo = (int)$shrinkWidthSiteLogo;
         }
     }
     
     /**
      * Returns the shrink height site logo.
      *
-     * @return integer
+     * @return int
      */
     public function getShrinkHeightSiteLogo()
     {
@@ -555,14 +550,14 @@ abstract class AbstractAppSettings
     /**
      * Sets the shrink height site logo.
      *
-     * @param integer $shrinkHeightSiteLogo
+     * @param int $shrinkHeightSiteLogo
      *
      * @return void
      */
     public function setShrinkHeightSiteLogo($shrinkHeightSiteLogo)
     {
-        if (intval($this->shrinkHeightSiteLogo) !== intval($shrinkHeightSiteLogo)) {
-            $this->shrinkHeightSiteLogo = intval($shrinkHeightSiteLogo);
+        if ((int)$this->shrinkHeightSiteLogo !== (int)$shrinkHeightSiteLogo) {
+            $this->shrinkHeightSiteLogo = (int)$shrinkHeightSiteLogo;
         }
     }
     
@@ -593,7 +588,7 @@ abstract class AbstractAppSettings
     /**
      * Returns the thumbnail width site logo view.
      *
-     * @return integer
+     * @return int
      */
     public function getThumbnailWidthSiteLogoView()
     {
@@ -603,21 +598,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the thumbnail width site logo view.
      *
-     * @param integer $thumbnailWidthSiteLogoView
+     * @param int $thumbnailWidthSiteLogoView
      *
      * @return void
      */
     public function setThumbnailWidthSiteLogoView($thumbnailWidthSiteLogoView)
     {
-        if (intval($this->thumbnailWidthSiteLogoView) !== intval($thumbnailWidthSiteLogoView)) {
-            $this->thumbnailWidthSiteLogoView = intval($thumbnailWidthSiteLogoView);
+        if ((int)$this->thumbnailWidthSiteLogoView !== (int)$thumbnailWidthSiteLogoView) {
+            $this->thumbnailWidthSiteLogoView = (int)$thumbnailWidthSiteLogoView;
         }
     }
     
     /**
      * Returns the thumbnail height site logo view.
      *
-     * @return integer
+     * @return int
      */
     public function getThumbnailHeightSiteLogoView()
     {
@@ -627,21 +622,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the thumbnail height site logo view.
      *
-     * @param integer $thumbnailHeightSiteLogoView
+     * @param int $thumbnailHeightSiteLogoView
      *
      * @return void
      */
     public function setThumbnailHeightSiteLogoView($thumbnailHeightSiteLogoView)
     {
-        if (intval($this->thumbnailHeightSiteLogoView) !== intval($thumbnailHeightSiteLogoView)) {
-            $this->thumbnailHeightSiteLogoView = intval($thumbnailHeightSiteLogoView);
+        if ((int)$this->thumbnailHeightSiteLogoView !== (int)$thumbnailHeightSiteLogoView) {
+            $this->thumbnailHeightSiteLogoView = (int)$thumbnailHeightSiteLogoView;
         }
     }
     
     /**
      * Returns the thumbnail width site logo edit.
      *
-     * @return integer
+     * @return int
      */
     public function getThumbnailWidthSiteLogoEdit()
     {
@@ -651,21 +646,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the thumbnail width site logo edit.
      *
-     * @param integer $thumbnailWidthSiteLogoEdit
+     * @param int $thumbnailWidthSiteLogoEdit
      *
      * @return void
      */
     public function setThumbnailWidthSiteLogoEdit($thumbnailWidthSiteLogoEdit)
     {
-        if (intval($this->thumbnailWidthSiteLogoEdit) !== intval($thumbnailWidthSiteLogoEdit)) {
-            $this->thumbnailWidthSiteLogoEdit = intval($thumbnailWidthSiteLogoEdit);
+        if ((int)$this->thumbnailWidthSiteLogoEdit !== (int)$thumbnailWidthSiteLogoEdit) {
+            $this->thumbnailWidthSiteLogoEdit = (int)$thumbnailWidthSiteLogoEdit;
         }
     }
     
     /**
      * Returns the thumbnail height site logo edit.
      *
-     * @return integer
+     * @return int
      */
     public function getThumbnailHeightSiteLogoEdit()
     {
@@ -675,21 +670,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the thumbnail height site logo edit.
      *
-     * @param integer $thumbnailHeightSiteLogoEdit
+     * @param int $thumbnailHeightSiteLogoEdit
      *
      * @return void
      */
     public function setThumbnailHeightSiteLogoEdit($thumbnailHeightSiteLogoEdit)
     {
-        if (intval($this->thumbnailHeightSiteLogoEdit) !== intval($thumbnailHeightSiteLogoEdit)) {
-            $this->thumbnailHeightSiteLogoEdit = intval($thumbnailHeightSiteLogoEdit);
+        if ((int)$this->thumbnailHeightSiteLogoEdit !== (int)$thumbnailHeightSiteLogoEdit) {
+            $this->thumbnailHeightSiteLogoEdit = (int)$thumbnailHeightSiteLogoEdit;
         }
     }
     
     /**
      * Returns the enable shrinking for site fav icon.
      *
-     * @return boolean
+     * @return bool
      */
     public function getEnableShrinkingForSiteFavIcon()
     {
@@ -699,21 +694,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the enable shrinking for site fav icon.
      *
-     * @param boolean $enableShrinkingForSiteFavIcon
+     * @param bool $enableShrinkingForSiteFavIcon
      *
      * @return void
      */
     public function setEnableShrinkingForSiteFavIcon($enableShrinkingForSiteFavIcon)
     {
-        if (boolval($this->enableShrinkingForSiteFavIcon) !== boolval($enableShrinkingForSiteFavIcon)) {
-            $this->enableShrinkingForSiteFavIcon = boolval($enableShrinkingForSiteFavIcon);
+        if ((bool)$this->enableShrinkingForSiteFavIcon !== (bool)$enableShrinkingForSiteFavIcon) {
+            $this->enableShrinkingForSiteFavIcon = (bool)$enableShrinkingForSiteFavIcon;
         }
     }
     
     /**
      * Returns the shrink width site fav icon.
      *
-     * @return integer
+     * @return int
      */
     public function getShrinkWidthSiteFavIcon()
     {
@@ -723,21 +718,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the shrink width site fav icon.
      *
-     * @param integer $shrinkWidthSiteFavIcon
+     * @param int $shrinkWidthSiteFavIcon
      *
      * @return void
      */
     public function setShrinkWidthSiteFavIcon($shrinkWidthSiteFavIcon)
     {
-        if (intval($this->shrinkWidthSiteFavIcon) !== intval($shrinkWidthSiteFavIcon)) {
-            $this->shrinkWidthSiteFavIcon = intval($shrinkWidthSiteFavIcon);
+        if ((int)$this->shrinkWidthSiteFavIcon !== (int)$shrinkWidthSiteFavIcon) {
+            $this->shrinkWidthSiteFavIcon = (int)$shrinkWidthSiteFavIcon;
         }
     }
     
     /**
      * Returns the shrink height site fav icon.
      *
-     * @return integer
+     * @return int
      */
     public function getShrinkHeightSiteFavIcon()
     {
@@ -747,14 +742,14 @@ abstract class AbstractAppSettings
     /**
      * Sets the shrink height site fav icon.
      *
-     * @param integer $shrinkHeightSiteFavIcon
+     * @param int $shrinkHeightSiteFavIcon
      *
      * @return void
      */
     public function setShrinkHeightSiteFavIcon($shrinkHeightSiteFavIcon)
     {
-        if (intval($this->shrinkHeightSiteFavIcon) !== intval($shrinkHeightSiteFavIcon)) {
-            $this->shrinkHeightSiteFavIcon = intval($shrinkHeightSiteFavIcon);
+        if ((int)$this->shrinkHeightSiteFavIcon !== (int)$shrinkHeightSiteFavIcon) {
+            $this->shrinkHeightSiteFavIcon = (int)$shrinkHeightSiteFavIcon;
         }
     }
     
@@ -785,7 +780,7 @@ abstract class AbstractAppSettings
     /**
      * Returns the thumbnail width site fav icon view.
      *
-     * @return integer
+     * @return int
      */
     public function getThumbnailWidthSiteFavIconView()
     {
@@ -795,21 +790,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the thumbnail width site fav icon view.
      *
-     * @param integer $thumbnailWidthSiteFavIconView
+     * @param int $thumbnailWidthSiteFavIconView
      *
      * @return void
      */
     public function setThumbnailWidthSiteFavIconView($thumbnailWidthSiteFavIconView)
     {
-        if (intval($this->thumbnailWidthSiteFavIconView) !== intval($thumbnailWidthSiteFavIconView)) {
-            $this->thumbnailWidthSiteFavIconView = intval($thumbnailWidthSiteFavIconView);
+        if ((int)$this->thumbnailWidthSiteFavIconView !== (int)$thumbnailWidthSiteFavIconView) {
+            $this->thumbnailWidthSiteFavIconView = (int)$thumbnailWidthSiteFavIconView;
         }
     }
     
     /**
      * Returns the thumbnail height site fav icon view.
      *
-     * @return integer
+     * @return int
      */
     public function getThumbnailHeightSiteFavIconView()
     {
@@ -819,21 +814,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the thumbnail height site fav icon view.
      *
-     * @param integer $thumbnailHeightSiteFavIconView
+     * @param int $thumbnailHeightSiteFavIconView
      *
      * @return void
      */
     public function setThumbnailHeightSiteFavIconView($thumbnailHeightSiteFavIconView)
     {
-        if (intval($this->thumbnailHeightSiteFavIconView) !== intval($thumbnailHeightSiteFavIconView)) {
-            $this->thumbnailHeightSiteFavIconView = intval($thumbnailHeightSiteFavIconView);
+        if ((int)$this->thumbnailHeightSiteFavIconView !== (int)$thumbnailHeightSiteFavIconView) {
+            $this->thumbnailHeightSiteFavIconView = (int)$thumbnailHeightSiteFavIconView;
         }
     }
     
     /**
      * Returns the thumbnail width site fav icon edit.
      *
-     * @return integer
+     * @return int
      */
     public function getThumbnailWidthSiteFavIconEdit()
     {
@@ -843,21 +838,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the thumbnail width site fav icon edit.
      *
-     * @param integer $thumbnailWidthSiteFavIconEdit
+     * @param int $thumbnailWidthSiteFavIconEdit
      *
      * @return void
      */
     public function setThumbnailWidthSiteFavIconEdit($thumbnailWidthSiteFavIconEdit)
     {
-        if (intval($this->thumbnailWidthSiteFavIconEdit) !== intval($thumbnailWidthSiteFavIconEdit)) {
-            $this->thumbnailWidthSiteFavIconEdit = intval($thumbnailWidthSiteFavIconEdit);
+        if ((int)$this->thumbnailWidthSiteFavIconEdit !== (int)$thumbnailWidthSiteFavIconEdit) {
+            $this->thumbnailWidthSiteFavIconEdit = (int)$thumbnailWidthSiteFavIconEdit;
         }
     }
     
     /**
      * Returns the thumbnail height site fav icon edit.
      *
-     * @return integer
+     * @return int
      */
     public function getThumbnailHeightSiteFavIconEdit()
     {
@@ -867,21 +862,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the thumbnail height site fav icon edit.
      *
-     * @param integer $thumbnailHeightSiteFavIconEdit
+     * @param int $thumbnailHeightSiteFavIconEdit
      *
      * @return void
      */
     public function setThumbnailHeightSiteFavIconEdit($thumbnailHeightSiteFavIconEdit)
     {
-        if (intval($this->thumbnailHeightSiteFavIconEdit) !== intval($thumbnailHeightSiteFavIconEdit)) {
-            $this->thumbnailHeightSiteFavIconEdit = intval($thumbnailHeightSiteFavIconEdit);
+        if ((int)$this->thumbnailHeightSiteFavIconEdit !== (int)$thumbnailHeightSiteFavIconEdit) {
+            $this->thumbnailHeightSiteFavIconEdit = (int)$thumbnailHeightSiteFavIconEdit;
         }
     }
     
     /**
      * Returns the allow moderation specific creator for site.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAllowModerationSpecificCreatorForSite()
     {
@@ -891,21 +886,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the allow moderation specific creator for site.
      *
-     * @param boolean $allowModerationSpecificCreatorForSite
+     * @param bool $allowModerationSpecificCreatorForSite
      *
      * @return void
      */
     public function setAllowModerationSpecificCreatorForSite($allowModerationSpecificCreatorForSite)
     {
-        if (boolval($this->allowModerationSpecificCreatorForSite) !== boolval($allowModerationSpecificCreatorForSite)) {
-            $this->allowModerationSpecificCreatorForSite = boolval($allowModerationSpecificCreatorForSite);
+        if ((bool)$this->allowModerationSpecificCreatorForSite !== (bool)$allowModerationSpecificCreatorForSite) {
+            $this->allowModerationSpecificCreatorForSite = (bool)$allowModerationSpecificCreatorForSite;
         }
     }
     
     /**
      * Returns the allow moderation specific creation date for site.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAllowModerationSpecificCreationDateForSite()
     {
@@ -915,21 +910,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the allow moderation specific creation date for site.
      *
-     * @param boolean $allowModerationSpecificCreationDateForSite
+     * @param bool $allowModerationSpecificCreationDateForSite
      *
      * @return void
      */
     public function setAllowModerationSpecificCreationDateForSite($allowModerationSpecificCreationDateForSite)
     {
-        if (boolval($this->allowModerationSpecificCreationDateForSite) !== boolval($allowModerationSpecificCreationDateForSite)) {
-            $this->allowModerationSpecificCreationDateForSite = boolval($allowModerationSpecificCreationDateForSite);
+        if ((bool)$this->allowModerationSpecificCreationDateForSite !== (bool)$allowModerationSpecificCreationDateForSite) {
+            $this->allowModerationSpecificCreationDateForSite = (bool)$allowModerationSpecificCreationDateForSite;
         }
     }
     
     /**
      * Returns the allow moderation specific creator for template.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAllowModerationSpecificCreatorForTemplate()
     {
@@ -939,21 +934,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the allow moderation specific creator for template.
      *
-     * @param boolean $allowModerationSpecificCreatorForTemplate
+     * @param bool $allowModerationSpecificCreatorForTemplate
      *
      * @return void
      */
     public function setAllowModerationSpecificCreatorForTemplate($allowModerationSpecificCreatorForTemplate)
     {
-        if (boolval($this->allowModerationSpecificCreatorForTemplate) !== boolval($allowModerationSpecificCreatorForTemplate)) {
-            $this->allowModerationSpecificCreatorForTemplate = boolval($allowModerationSpecificCreatorForTemplate);
+        if ((bool)$this->allowModerationSpecificCreatorForTemplate !== (bool)$allowModerationSpecificCreatorForTemplate) {
+            $this->allowModerationSpecificCreatorForTemplate = (bool)$allowModerationSpecificCreatorForTemplate;
         }
     }
     
     /**
      * Returns the allow moderation specific creation date for template.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAllowModerationSpecificCreationDateForTemplate()
     {
@@ -963,21 +958,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the allow moderation specific creation date for template.
      *
-     * @param boolean $allowModerationSpecificCreationDateForTemplate
+     * @param bool $allowModerationSpecificCreationDateForTemplate
      *
      * @return void
      */
     public function setAllowModerationSpecificCreationDateForTemplate($allowModerationSpecificCreationDateForTemplate)
     {
-        if (boolval($this->allowModerationSpecificCreationDateForTemplate) !== boolval($allowModerationSpecificCreationDateForTemplate)) {
-            $this->allowModerationSpecificCreationDateForTemplate = boolval($allowModerationSpecificCreationDateForTemplate);
+        if ((bool)$this->allowModerationSpecificCreationDateForTemplate !== (bool)$allowModerationSpecificCreationDateForTemplate) {
+            $this->allowModerationSpecificCreationDateForTemplate = (bool)$allowModerationSpecificCreationDateForTemplate;
         }
     }
     
     /**
      * Returns the allow moderation specific creator for project.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAllowModerationSpecificCreatorForProject()
     {
@@ -987,21 +982,21 @@ abstract class AbstractAppSettings
     /**
      * Sets the allow moderation specific creator for project.
      *
-     * @param boolean $allowModerationSpecificCreatorForProject
+     * @param bool $allowModerationSpecificCreatorForProject
      *
      * @return void
      */
     public function setAllowModerationSpecificCreatorForProject($allowModerationSpecificCreatorForProject)
     {
-        if (boolval($this->allowModerationSpecificCreatorForProject) !== boolval($allowModerationSpecificCreatorForProject)) {
-            $this->allowModerationSpecificCreatorForProject = boolval($allowModerationSpecificCreatorForProject);
+        if ((bool)$this->allowModerationSpecificCreatorForProject !== (bool)$allowModerationSpecificCreatorForProject) {
+            $this->allowModerationSpecificCreatorForProject = (bool)$allowModerationSpecificCreatorForProject;
         }
     }
     
     /**
      * Returns the allow moderation specific creation date for project.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAllowModerationSpecificCreationDateForProject()
     {
@@ -1011,14 +1006,14 @@ abstract class AbstractAppSettings
     /**
      * Sets the allow moderation specific creation date for project.
      *
-     * @param boolean $allowModerationSpecificCreationDateForProject
+     * @param bool $allowModerationSpecificCreationDateForProject
      *
      * @return void
      */
     public function setAllowModerationSpecificCreationDateForProject($allowModerationSpecificCreationDateForProject)
     {
-        if (boolval($this->allowModerationSpecificCreationDateForProject) !== boolval($allowModerationSpecificCreationDateForProject)) {
-            $this->allowModerationSpecificCreationDateForProject = boolval($allowModerationSpecificCreationDateForProject);
+        if ((bool)$this->allowModerationSpecificCreationDateForProject !== (bool)$allowModerationSpecificCreationDateForProject) {
+            $this->allowModerationSpecificCreationDateForProject = (bool)$allowModerationSpecificCreationDateForProject;
         }
     }
     

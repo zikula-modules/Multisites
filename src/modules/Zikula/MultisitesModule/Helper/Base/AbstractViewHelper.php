@@ -62,19 +62,6 @@ abstract class AbstractViewHelper
      */
     protected $permissionHelper;
     
-    /**
-     * ViewHelper constructor.
-     *
-     * @param Twig_Environment $twig
-     * @param FilesystemLoader $twigLoader
-     * @param RequestStack $requestStack
-     * @param VariableApiInterface $variableApi
-     * @param AssetFilter $assetFilter
-     * @param ControllerHelper $controllerHelper
-     * @param PermissionHelper $permissionHelper
-     *
-     * @return void
-     */
     public function __construct(
         Twig_Environment $twig,
         FilesystemLoader $twigLoader,
@@ -110,7 +97,8 @@ abstract class AbstractViewHelper
         $templateExtension = '.' . $this->determineExtension($type, $func);
     
         // check whether a special template is used
-        $tpl = $this->requestStack->getCurrentRequest()->query->getAlnum('tpl', '');
+        $request = $this->requestStack->getCurrentRequest();
+        $tpl = null !== $request ? $request->query->getAlnum('tpl') : '';
         if (!empty($tpl)) {
             // check if custom template exists
             $customTemplate = $template . ucfirst($tpl);
@@ -127,23 +115,28 @@ abstract class AbstractViewHelper
     /**
      * Helper method for managing view templates.
      *
-     * @param string $type               Current controller (name of currently treated entity)
-     * @param string $func               Current function (index, view, ...)
-     * @param array  $templateParameters Template data
-     * @param string $template           Optional assignment of precalculated template file
+     * @param string $type Current controller (name of currently treated entity)
+     * @param string $func Current function (index, view, ...)
+     * @param array $templateParameters Template data
+     * @param string $template Optional assignment of precalculated template file
      *
-     * @return mixed Output
+     * @return Response
      */
-    public function processTemplate($type, $func, array $templateParameters = [], $template = '')
-    {
+    public function processTemplate(
+        $type,
+        $func,
+        array $templateParameters = [],
+        $template = ''
+    ) {
         $templateExtension = $this->determineExtension($type, $func);
         if (empty($template)) {
             $template = $this->getViewTemplate($type, $func);
         }
     
         // look whether we need output with or without the theme
-        $raw = $this->requestStack->getCurrentRequest()->query->getBoolean('raw', false);
-        if (!$raw && $templateExtension != 'html.twig') {
+        $request = $this->requestStack->getCurrentRequest();
+        $raw = null !== $request ? $request->query->getBoolean('raw') : false;
+        if (!$raw && 'html.twig' !== $templateExtension) {
             $raw = true;
         }
     
@@ -151,7 +144,7 @@ abstract class AbstractViewHelper
         $response = null;
         if (true === $raw) {
             // standalone output
-            if ($templateExtension == 'csv.twig') {
+            if ('csv.twig' === $templateExtension) {
                 // convert to UTF-16 for improved excel compatibility
                 // see http://stackoverflow.com/questions/4348802/how-can-i-output-a-utf-8-csv-in-php-that-excel-will-read-properly
                 $output = chr(255) . chr(254) . mb_convert_encoding($output, 'UTF-16LE', 'UTF-8');
@@ -210,8 +203,13 @@ abstract class AbstractViewHelper
         }
     
         $extensions = $this->availableExtensions($type, $func);
-        $format = $this->requestStack->getCurrentRequest()->getRequestFormat();
-        if ($format != 'html' && in_array($format, $extensions)) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (null === $request) {
+            return $templateExtension;
+        }
+    
+        $format = $request->getRequestFormat();
+        if ('html' !== $format && in_array($format, $extensions, true)) {
             $templateExtension = $format . '.twig';
         }
     
@@ -230,13 +228,13 @@ abstract class AbstractViewHelper
     {
         $extensions = [];
         $hasAdminAccess = $this->permissionHelper->hasComponentPermission($type, ACCESS_ADMIN);
-        if ($func == 'view') {
+        if ('view' === $func) {
             if ($hasAdminAccess) {
                 $extensions = ['csv', 'xml', 'json'];
             } else {
                 $extensions = [];
             }
-        } elseif ($func == 'display') {
+        } elseif ('display' === $func) {
             if ($hasAdminAccess) {
                 $extensions = [];
             } else {

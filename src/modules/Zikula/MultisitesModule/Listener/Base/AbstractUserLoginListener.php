@@ -21,9 +21,6 @@ use Zikula\UsersModule\AccessEvents;
  */
 abstract class AbstractUserLoginListener implements EventSubscriberInterface
 {
-    /**
-     * Makes our handlers known to the event system.
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -56,7 +53,6 @@ abstract class AbstractUserLoginListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function started(GenericEvent $event)
     {
@@ -91,7 +87,6 @@ abstract class AbstractUserLoginListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function veto(GenericEvent $event)
     {
@@ -123,7 +118,6 @@ abstract class AbstractUserLoginListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function succeeded(GenericEvent $event)
     {
@@ -155,7 +149,6 @@ abstract class AbstractUserLoginListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param GenericEvent $event The event instance
      */
     public function failed(GenericEvent $event)
     {
