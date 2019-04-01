@@ -219,7 +219,7 @@ abstract class AbstractUploadHelper
      *
      * @return bool true if file is valid else false
      */
-    protected function validateFileUpload(, UploadedFile $file, )
+    protected function validateFileUpload($objectType, UploadedFile $file, $fieldName)
     {
         $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
     
