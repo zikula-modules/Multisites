@@ -94,7 +94,7 @@ function zikulaMultisitesInitEditForm(mode, entityId) {
     });
     editForm.submit(zikulaMultisitesHandleFormSubmit);
 
-    if (mode != 'create') {
+    if ('create' !== mode) {
         zikulaMultisitesTriggerFormValidation();
     }
 }

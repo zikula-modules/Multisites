@@ -30,12 +30,6 @@ class AbstractFilterTemplateEvent extends Event
      */
     protected $entityChangeSet = [];
 
-    /**
-     * FilterTemplateEvent constructor.
-     *
-     * @param TemplateEntity $template Processed entity
-     * @param array $entityChangeSet Change set for preUpdate events
-     */
     public function __construct(TemplateEntity $template, array $entityChangeSet = [])
     {
         $this->template = $template;
@@ -43,8 +37,6 @@ class AbstractFilterTemplateEvent extends Event
     }
 
     /**
-     * Returns the entity.
-     *
      * @return TemplateEntity
      */
     public function getTemplate()
@@ -53,8 +45,6 @@ class AbstractFilterTemplateEvent extends Event
     }
 
     /**
-     * Returns the change set.
-     *
      * @return array Entity change set
      */
     public function getEntityChangeSet()

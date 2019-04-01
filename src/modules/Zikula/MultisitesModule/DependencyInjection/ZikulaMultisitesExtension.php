@@ -15,7 +15,7 @@ namespace Zikula\MultisitesModule\DependencyInjection;
 use Zikula\MultisitesModule\DependencyInjection\Base\AbstractZikulaMultisitesExtension;
 
 /**
- * Implementation class for service definition loader using the DependencyInjection extension.
+ * DependencyInjection extension implementation class.
  */
 class ZikulaMultisitesExtension extends AbstractZikulaMultisitesExtension
 {

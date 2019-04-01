@@ -27,6 +27,12 @@ abstract class AbstractEntityInitialiser
      */
     protected $permissionHelper;
 
+    public function __construct(
+        PermissionHelper $permissionHelper
+    ) {
+        $this->permissionHelper = $permissionHelper;
+    }
+
     /**
      * Initialises a given site instance.
      *

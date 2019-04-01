@@ -49,9 +49,6 @@ abstract class AbstractListEntry extends Constraint
      */
     public $max;
 
-    /**
-     * @inheritDoc
-     */
     public function validatedBy()
     {
         return 'zikula_multisites_module.validator.list_entry.validator';

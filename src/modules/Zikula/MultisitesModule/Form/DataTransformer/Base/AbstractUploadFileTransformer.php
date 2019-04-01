@@ -15,6 +15,7 @@ namespace Zikula\MultisitesModule\Form\DataTransformer\Base;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\MultisitesModule\Helper\UploadHelper;
 
 /**
@@ -25,7 +26,7 @@ use Zikula\MultisitesModule\Helper\UploadHelper;
 abstract class AbstractUploadFileTransformer implements DataTransformerInterface
 {
     /**
-     * @var object
+     * @var EntityAccess
      */
     protected $entity = null;
 
@@ -39,15 +40,11 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
      */
     protected $fieldName = '';
 
-    /**
-     * UploadFileTransformer constructor.
-     *
-     * @param object $entity
-     * @param UploadHelper $uploadHelper
-     * @param string $fieldName The form field name
-     */
-    public function __construct($entity, UploadHelper $uploadHelper, $fieldName = '')
-    {
+    public function __construct(
+        EntityAccess $entity,
+        UploadHelper $uploadHelper,
+        $fieldName = ''
+    ) {
         $this->entity = $entity;
         $this->uploadHelper = $uploadHelper;
         $this->fieldName = $fieldName;
@@ -119,7 +116,7 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
 
         $result = null;
         $metaData = [];
-        if ($uploadResult['fileName'] != '') {
+        if ('' !== $uploadResult['fileName']) {
             $result = $this->uploadHelper->getFileBaseFolder($objectType, $fieldName) . $uploadResult['fileName'];
             $result = null !== $result ? new File($result) : $result;
             $metaData = $uploadResult['metaData'];

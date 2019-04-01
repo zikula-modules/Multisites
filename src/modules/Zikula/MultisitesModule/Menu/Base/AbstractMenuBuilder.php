@@ -59,16 +59,6 @@ class AbstractMenuBuilder
      */
     protected $currentUserApi;
 
-    /**
-     * MenuBuilder constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param FactoryInterface $factory
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param RequestStack $requestStack
-     * @param PermissionHelper $permissionHelper
-     * @param CurrentUserApiInterface $currentUserApi
-     */
     public function __construct(
         TranslatorInterface $translator,
         FactoryInterface $factory,
@@ -85,11 +75,6 @@ class AbstractMenuBuilder
         $this->currentUserApi = $currentUserApi;
     }
 
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
@@ -105,7 +90,7 @@ class AbstractMenuBuilder
     public function createItemActionsMenu(array $options = [])
     {
         $menu = $this->factory->createItem('itemActions');
-        if (!isset($options['entity']) || !isset($options['area']) || !isset($options['context'])) {
+        if (!isset($options['entity'], $options['area'], $options['context'])) {
             return $menu;
         }
 
@@ -119,7 +104,7 @@ class AbstractMenuBuilder
         $currentUserId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         if ($entity instanceof SiteEntity) {
             $routePrefix = 'zikulamultisitesmodule_site_';
-            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
+            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId === $entity->getCreatedBy()->getUid();
         
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
@@ -149,7 +134,7 @@ class AbstractMenuBuilder
         }
         if ($entity instanceof TemplateEntity) {
             $routePrefix = 'zikulamultisitesmodule_template_';
-            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
+            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId === $entity->getCreatedBy()->getUid();
         
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
@@ -192,7 +177,7 @@ class AbstractMenuBuilder
         }
         if ($entity instanceof ProjectEntity) {
             $routePrefix = 'zikulamultisitesmodule_project_';
-            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
+            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId === $entity->getCreatedBy()->getUid();
         
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');

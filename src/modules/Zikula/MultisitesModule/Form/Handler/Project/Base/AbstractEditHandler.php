@@ -15,9 +15,10 @@ namespace Zikula\MultisitesModule\Form\Handler\Project\Base;
 use Zikula\MultisitesModule\Form\Handler\Common\EditHandler;
 use Zikula\MultisitesModule\Form\Type\ProjectType;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Exception;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Zikula\MultisitesModule\Entity\ProjectEntity;
 
 /**
  * This handler class handles the page events of editing forms.
@@ -25,9 +26,6 @@ use RuntimeException;
  */
 abstract class AbstractEditHandler extends EditHandler
 {
-    /**
-     * @inheritDoc
-     */
     public function processForm(array $templateParameters = [])
     {
         $this->objectType = 'project';
@@ -41,14 +39,12 @@ abstract class AbstractEditHandler extends EditHandler
             return $result;
         }
     
-        if ('create' == $this->templateParameters['mode']) {
-            if (!$this->modelHelper->canBeCreated($this->objectType)) {
-                $this->requestStack->getCurrentRequest()->getSession()->getFlashBag()->add('error', $this->__('Sorry, but you can not create the project yet as other items are required which must be created before!'));
-                $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType];
-                $this->logger->notice('{app}: User {user} tried to create a new {entity}, but failed as it other items are required which must be created before.', $logArgs);
+        if ('create' === $this->templateParameters['mode'] && !$this->modelHelper->canBeCreated($this->objectType)) {
+            $this->requestStack->getCurrentRequest()->getSession()->getFlashBag()->add('error', $this->__('Sorry, but you can not create the project yet as other items are required which must be created before!'));
+            $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType];
+            $this->logger->notice('{app}: User {user} tried to create a new {entity}, but failed as it other items are required which must be created before.', $logArgs);
     
-                return new RedirectResponse($this->getRedirectUrl(['commandName' => '']), 302);
-            }
+            return new RedirectResponse($this->getRedirectUrl(['commandName' => '']), 302);
         }
     
         $entityData = $this->entityRef->toArray();
@@ -60,9 +56,6 @@ abstract class AbstractEditHandler extends EditHandler
         return $result;
     }
     
-    /**
-     * @inheritDoc
-     */
     protected function initRelationPresets()
     {
         $entity = $this->entityRef;
@@ -75,25 +68,19 @@ abstract class AbstractEditHandler extends EditHandler
         $this->entityRef = $entity;
     }
     
-    /**
-     * @inheritDoc
-     */
     protected function createForm()
     {
         return $this->formFactory->create(ProjectType::class, $this->entityRef, $this->getFormOptions());
     }
     
-    /**
-     * @inheritDoc
-     */
     protected function getFormOptions()
     {
         $options = [
             'mode' => $this->templateParameters['mode'],
             'actions' => $this->templateParameters['actions'],
             'has_moderate_permission' => $this->permissionHelper->hasEntityPermission($this->entityRef, ACCESS_ADMIN),
-            'allow_moderation_specific_creator' => $this->variableApi->get('ZikulaMultisitesModule', 'allowModerationSpecificCreatorFor' . $this->objectTypeCapital, false),
-            'allow_moderation_specific_creation_date' => $this->variableApi->get('ZikulaMultisitesModule', 'allowModerationSpecificCreationDateFor' . $this->objectTypeCapital, false),
+            'allow_moderation_specific_creator' => (bool)$this->variableApi->get('ZikulaMultisitesModule', 'allowModerationSpecificCreatorFor' . $this->objectTypeCapital),
+            'allow_moderation_specific_creation_date' => (bool)$this->variableApi->get('ZikulaMultisitesModule', 'allowModerationSpecificCreationDateFor' . $this->objectTypeCapital),
             'filter_by_ownership' => !$this->permissionHelper->hasEntityPermission($this->entityRef, ACCESS_ADD),
             'inline_usage' => $this->templateParameters['inlineUsage']
         ];
@@ -101,9 +88,6 @@ abstract class AbstractEditHandler extends EditHandler
         return $options;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getRedirectCodes()
     {
         $codes = parent::getRedirectCodes();
@@ -131,7 +115,7 @@ abstract class AbstractEditHandler extends EditHandler
      */
     protected function getDefaultReturnUrl(array $args = [])
     {
-        $objectIsPersisted = $args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel');
+        $objectIsPersisted = 'delete' !== $args['commandName'] && !('create' === $this->templateParameters['mode'] && 'cancel' === $args['commandName']);
         if (null !== $this->returnTo && $objectIsPersisted) {
             // return to referer
             return $this->returnTo;
@@ -146,9 +130,6 @@ abstract class AbstractEditHandler extends EditHandler
         return $url;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function handleCommand(array $args = [])
     {
         $result = parent::handleCommand($args);
@@ -162,7 +143,7 @@ abstract class AbstractEditHandler extends EditHandler
                 $args['commandName'] = $action['id'];
             }
         }
-        if ('create' == $this->templateParameters['mode'] && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
+        if ('create' === $this->templateParameters['mode'] && $this->form->has('submitrepeat') && $this->form->get('submitrepeat')->isClicked()) {
             $args['commandName'] = 'submit';
             $this->repeatCreateAction = true;
         }
@@ -170,19 +151,15 @@ abstract class AbstractEditHandler extends EditHandler
         return new RedirectResponse($this->getRedirectUrl($args), 302);
     }
     
-    /**
-     * @inheritDoc
-     */
     protected function getDefaultMessage(array $args = [], $success = false)
     {
         if (false === $success) {
             return parent::getDefaultMessage($args, $success);
         }
     
-        $message = '';
         switch ($args['commandName']) {
             case 'submit':
-                if ('create' == $this->templateParameters['mode']) {
+                if ('create' === $this->templateParameters['mode']) {
                     $message = $this->__('Done! Project created.');
                 } else {
                     $message = $this->__('Done! Project updated.');
@@ -206,6 +183,7 @@ abstract class AbstractEditHandler extends EditHandler
     public function applyAction(array $args = [])
     {
         // get treated entity reference from persisted member var
+        /** @var ProjectEntity $entity */
         $entity = $this->entityRef;
     
         $action = $args['commandName'];
@@ -215,7 +193,7 @@ abstract class AbstractEditHandler extends EditHandler
         try {
             // execute the workflow action
             $success = $this->workflowHelper->executeAction($entity, $action);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $flashBag->add('error', $this->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . ' ' . $exception->getMessage());
             $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => 'project', 'id' => $entity->getKey(), 'errorMessage' => $exception->getMessage()];
             $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed. Error details: {errorMessage}.', $logArgs);
@@ -223,7 +201,7 @@ abstract class AbstractEditHandler extends EditHandler
     
         $this->addDefaultMessage($args, $success);
     
-        if ($success && 'create' == $this->templateParameters['mode']) {
+        if ($success && 'create' === $this->templateParameters['mode']) {
             // store new identifier
             $this->idValue = $entity->getKey();
         }
@@ -262,12 +240,12 @@ abstract class AbstractEditHandler extends EditHandler
         }
     
         // normal usage, compute return url from given redirect code
-        if (!in_array($this->returnTo, $this->getRedirectCodes())) {
+        if (!in_array($this->returnTo, $this->getRedirectCodes(), true)) {
             // invalid return code, so return the default url
             return $this->getDefaultReturnUrl($args);
         }
     
-        $routeArea = substr($this->returnTo, 0, 5) == 'admin' ? 'admin' : '';
+        $routeArea = 0 === strpos($this->returnTo, 'admin') ? 'admin' : '';
         $routePrefix = 'zikulamultisitesmodule_' . $this->objectTypeLower . '_' . $routeArea;
     
         // parse given redirect code and return corresponding url

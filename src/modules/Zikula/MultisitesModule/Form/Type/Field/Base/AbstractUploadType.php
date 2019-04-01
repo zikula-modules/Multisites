@@ -56,13 +56,6 @@ abstract class AbstractUploadType extends AbstractType
      */
     protected $entity = null;
 
-    /**
-     * UploadTypeExtension constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param ImageHelper $imageHelper
-     * @param UploadHelper $uploadHelper
-     */
     public function __construct(
         TranslatorInterface $translator,
         ImageHelper $imageHelper,
@@ -73,9 +66,6 @@ abstract class AbstractUploadType extends AbstractType
         $this->uploadHelper = $uploadHelper;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $options['compound'] = false;
@@ -108,9 +98,6 @@ abstract class AbstractUploadType extends AbstractType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $fieldName = $form->getConfig()->getName();
@@ -150,9 +137,6 @@ abstract class AbstractUploadType extends AbstractType
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -192,9 +176,6 @@ abstract class AbstractUploadType extends AbstractType
         return $this->entity;
     }
     
-    /**
-     * @inheritDoc
-     */
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_field_upload';

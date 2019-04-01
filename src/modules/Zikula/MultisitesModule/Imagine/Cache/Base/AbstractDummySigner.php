@@ -32,9 +32,6 @@ abstract class AbstractDummySigner implements SignerInterface
         $this->secret = $secret;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function sign($path, array $runtimeConfig = null)
     {
         if ($runtimeConfig) {
@@ -46,9 +43,6 @@ abstract class AbstractDummySigner implements SignerInterface
         return substr(preg_replace('/[^a-zA-Z0-9-_]/', '', base64_encode(hash_hmac('sha256', ltrim($path, '/').(null === $runtimeConfig ?: serialize($runtimeConfig)), $this->secret, true))), 0, 8);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function check($hash, $path, array $runtimeConfig = null)
     {
         return true;//$hash === $this->sign($path, $runtimeConfig);

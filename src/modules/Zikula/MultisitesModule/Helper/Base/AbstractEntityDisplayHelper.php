@@ -13,6 +13,7 @@
 namespace Zikula\MultisitesModule\Helper\Base;
 
 use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
@@ -33,12 +34,6 @@ abstract class AbstractEntityDisplayHelper
      */
     protected $listEntriesHelper;
     
-    /**
-     * EntityDisplayHelper constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param ListEntriesHelper $listEntriesHelper
-     */
     public function __construct(
         TranslatorInterface $translator,
         ListEntriesHelper $listEntriesHelper
@@ -50,11 +45,11 @@ abstract class AbstractEntityDisplayHelper
     /**
      * Returns the formatted title for a given entity.
      *
-     * @param object $entity The given entity instance
+     * @param EntityAccess $entity The given entity instance
      *
      * @return string The formatted title
      */
-    public function getFormattedTitle($entity)
+    public function getFormattedTitle(EntityAccess $entity)
     {
         if ($entity instanceof SiteEntity) {
             return $this->formatSite($entity);
@@ -118,15 +113,15 @@ abstract class AbstractEntityDisplayHelper
      *
      * @return string Name of field to be used as title
      */
-    public function getTitleFieldName($objectType)
+    public function getTitleFieldName($objectType = '')
     {
-        if ($objectType == 'site') {
+        if ('site' === $objectType) {
             return 'name';
         }
-        if ($objectType == 'template') {
+        if ('template' === $objectType) {
             return 'name';
         }
-        if ($objectType == 'project') {
+        if ('project' === $objectType) {
             return 'name';
         }
     
@@ -140,15 +135,15 @@ abstract class AbstractEntityDisplayHelper
      *
      * @return string Name of field to be used as description
      */
-    public function getDescriptionFieldName($objectType)
+    public function getDescriptionFieldName($objectType = '')
     {
-        if ($objectType == 'site') {
+        if ('site' === $objectType) {
             return 'description';
         }
-        if ($objectType == 'template') {
+        if ('template' === $objectType) {
             return 'description';
         }
-        if ($objectType == 'project') {
+        if ('project' === $objectType) {
             return 'name';
         }
     
@@ -162,9 +157,9 @@ abstract class AbstractEntityDisplayHelper
      *
      * @return string Name of field to be used for preview images
      */
-    public function getPreviewFieldName($objectType)
+    public function getPreviewFieldName($objectType = '')
     {
-        if ($objectType == 'site') {
+        if ('site' === $objectType) {
             return 'logo';
         }
     
@@ -179,15 +174,15 @@ abstract class AbstractEntityDisplayHelper
      *
      * @return string Name of field to be used as date
      */
-    public function getStartDateFieldName($objectType)
+    public function getStartDateFieldName($objectType = '')
     {
-        if ($objectType == 'site') {
+        if ('site' === $objectType) {
             return 'createdDate';
         }
-        if ($objectType == 'template') {
+        if ('template' === $objectType) {
             return 'createdDate';
         }
-        if ($objectType == 'project') {
+        if ('project' === $objectType) {
             return 'createdDate';
         }
     

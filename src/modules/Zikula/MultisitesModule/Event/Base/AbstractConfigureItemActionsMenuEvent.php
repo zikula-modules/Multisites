@@ -36,13 +36,6 @@ class AbstractConfigureItemActionsMenuEvent extends Event
      */
     protected $options;
 
-    /**
-     * ConfigureItemActionsMenuEvent constructor.
-     *
-     * @param FactoryInterface $factory
-     * @param ItemInterface $menu
-     * @param array $options
-     */
     public function __construct(
         FactoryInterface $factory,
         ItemInterface $menu,
@@ -54,8 +47,6 @@ class AbstractConfigureItemActionsMenuEvent extends Event
     }
 
     /**
-     * Returns the factory.
-     *
      * @return FactoryInterface
      */
     public function getFactory()
@@ -64,8 +55,6 @@ class AbstractConfigureItemActionsMenuEvent extends Event
     }
 
     /**
-     * Returns the menu.
-     *
      * @return ItemInterface
      */
     public function getMenu()
@@ -74,8 +63,6 @@ class AbstractConfigureItemActionsMenuEvent extends Event
     }
 
     /**
-     * Returns the options.
-     *
      * @return array
      */
     public function getOptions()

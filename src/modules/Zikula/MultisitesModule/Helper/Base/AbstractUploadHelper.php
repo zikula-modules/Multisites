@@ -12,6 +12,7 @@
 
 namespace Zikula\MultisitesModule\Helper\Base;
 
+use Exception;
 use Imagine\Filter\Basic\Autorotate;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -25,6 +26,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 
@@ -80,17 +82,6 @@ abstract class AbstractUploadHelper
      */
     protected $forbiddenFileTypes;
     
-    /**
-     * UploadHelper constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param Filesystem $filesystem
-     * @param RequestStack $requestStack
-     * @param LoggerInterface $logger
-     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
-     * @param VariableApiInterface $variableApi
-     * @param string $dataDirectory The data directory name
-     */
     public function __construct(
         TranslatorInterface $translator,
         Filesystem $filesystem,
@@ -113,11 +104,6 @@ abstract class AbstractUploadHelper
         $this->forbiddenFileTypes = ['cgi', 'pl', 'asp', 'phtml', 'php', 'php3', 'php4', 'php5', 'exe', 'com', 'bat', 'jsp', 'cfm', 'shtml'];
     }
     
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
@@ -126,13 +112,13 @@ abstract class AbstractUploadHelper
     /**
      * Process a file upload.
      *
-     * @param string       $objectType Currently treated entity type
-     * @param UploadedFile $file       The uploaded file
-     * @param string       $fieldName  Name of upload field
+     * @param string $objectType Currently treated entity type
+     * @param UploadedFile $file The uploaded file
+     * @param string $fieldName  Name of upload field
      *
      * @return array Resulting file name and collected meta data
      */
-    public function performFileUpload($objectType, $file, $fieldName)
+    public function performFileUpload($objectType, UploadedFile $file, $fieldName)
     {
         $result = [
             'fileName' => '',
@@ -140,7 +126,7 @@ abstract class AbstractUploadHelper
         ];
     
         // check whether uploads are allowed for the given object type
-        if (!in_array($objectType, $this->allowedObjectTypes)) {
+        if (!in_array($objectType, $this->allowedObjectTypes, true)) {
             return $result;
         }
     
@@ -161,7 +147,7 @@ abstract class AbstractUploadHelper
         // retrieve the final file name
         try {
             $basePath = $this->getFileBaseFolder($objectType, $fieldName);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $flashBag->add('error', $exception->getMessage());
             $this->logger->error('{app}: User {user} could not detect upload destination path for entity {entity} and field {field}. ' . $exception->getMessage(), ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $objectType, 'field' => $fieldName]);
     
@@ -173,7 +159,7 @@ abstract class AbstractUploadHelper
         $targetFile = $file->move($basePath, $fileName);
     
         // validate image file
-        $isImage = in_array($extension, $this->imageFileTypes);
+        $isImage = in_array($extension, $this->imageFileTypes, true);
         if ($isImage) {
             $imgInfo = getimagesize($destinationFilePath);
             if (!is_array($imgInfo) || !$imgInfo[0] || !$imgInfo[1]) {
@@ -188,7 +174,7 @@ abstract class AbstractUploadHelper
         $result['fileName'] = $fileName;
         $result['metaData'] = $this->readMetaDataForFile($fileName, $destinationFilePath);
     
-        $isImage = in_array($extension, $this->imageFileTypes);
+        $isImage = in_array($extension, $this->imageFileTypes, true);
         if ($isImage) {
             // fix wrong orientation and shrink too large image if needed
             @ini_set('memory_limit', '1G');
@@ -227,18 +213,18 @@ abstract class AbstractUploadHelper
     /**
      * Check if an upload file meets all validation criteria.
      *
-     * @param string       $objectType Currently treated entity type
-     * @param UploadedFile $file       Reference to data of uploaded file
-     * @param string       $fieldName  Name of upload field
+     * @param string $objectType Currently treated entity type
+     * @param UploadedFile $file Reference to data of uploaded file
+     * @param string $fieldName  Name of upload field
      *
-     * @return boolean true if file is valid else false
+     * @return bool true if file is valid else false
      */
-    protected function validateFileUpload($objectType, $file, $fieldName)
+    protected function validateFileUpload(, UploadedFile $file, )
     {
         $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
     
         // check if a file has been uploaded properly without errors
-        if ($file->getError() != UPLOAD_ERR_OK) {
+        if (UPLOAD_ERR_OK !== $file->getError()) {
             $flashBag->add('error', $file->getErrorMessage());
             $this->logger->error('{app}: User {user} tried to upload a file with errors: ' . $file->getErrorMessage(), ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname')]);
     
@@ -264,9 +250,9 @@ abstract class AbstractUploadHelper
     /**
      * Read meta data from a certain file.
      *
-     * @param string  $fileName    Name of file to be processed
-     * @param string  $filePath    Path to file to be processed
-     * @param boolean $includeExif Whether to read out EXIF data or not
+     * @param string $fileName Name of file to be processed
+     * @param string $filePath Path to file to be processed
+     * @param bool $includeExif Whether to read out EXIF data or not
      *
      * @return array Collected meta data
      */
@@ -280,13 +266,13 @@ abstract class AbstractUploadHelper
         $extensionarr = explode('.', $fileName);
         $meta['extension'] = strtolower($extensionarr[count($extensionarr) - 1]);
         $meta['size'] = filesize($filePath);
-        $meta['isImage'] = in_array($meta['extension'], $this->imageFileTypes) ? true : false;
+        $meta['isImage'] = in_array($meta['extension'], $this->imageFileTypes, true);
     
         if (!$meta['isImage']) {
             return $meta;
         }
     
-        if ('swf' == $meta['extension']) {
+        if ('swf' === $meta['extension']) {
             $meta['isImage'] = false;
         }
     
@@ -306,7 +292,7 @@ abstract class AbstractUploadHelper
             $meta['format'] = 'square';
         }
     
-        if (!$includeExif || 'jpg' != $meta['extension']) {
+        if (!$includeExif || 'jpg' !== $meta['extension']) {
             return $meta;
         }
     
@@ -320,7 +306,7 @@ abstract class AbstractUploadHelper
     /**
      * Read EXIF data from a certain file.
      *
-     * @param string  $filePath Path to file to be processed
+     * @param string $filePath Path to file to be processed
      *
      * @return array Collected meta data
      */
@@ -329,7 +315,8 @@ abstract class AbstractUploadHelper
         $imagine = new Imagine();
         $image = $imagine
             ->setMetadataReader(new ExifMetadataReader())
-            ->open($filePath);
+            ->open($filePath)
+        ;
     
         $exifData = $image->metadata()->toArray();
     
@@ -391,27 +378,23 @@ abstract class AbstractUploadHelper
      * Determines whether a certain file extension is allowed for a given object type and field.
      *
      * @param string $objectType Currently treated entity type
-     * @param string $fieldName  Name of upload field
-     * @param string $extension  Input file extension
+     * @param string $fieldName Name of upload field
+     * @param string $extension Input file extension
      *
-     * @return boolean True if given extension is allowed, false otherwise
+     * @return bool True if given extension is allowed, false otherwise
      */
     protected function isAllowedFileExtension($objectType, $fieldName, $extension)
     {
         // determine the allowed extensions
         $allowedExtensions = $this->getAllowedFileExtensions($objectType, $fieldName);
     
-        if (count($allowedExtensions) > 0 && $allowedExtensions[0] != '*') {
-            if (!in_array($extension, $allowedExtensions)) {
+        if (count($allowedExtensions) > 0 && '*' !== $allowedExtensions[0]) {
+            if (!in_array($extension, $allowedExtensions, true)) {
                 return false;
             }
         }
     
-        if (in_array($extension, $this->forbiddenFileTypes)) {
-            return false;
-        }
-    
-        return true;
+        return !in_array($extension, $this->forbiddenFileTypes, true);
     }
     
     /**
@@ -421,7 +404,7 @@ abstract class AbstractUploadHelper
      *
      * @return string the file extension
      */
-    protected function determineFileExtension($file)
+    protected function determineFileExtension(UploadedFile $file)
     {
         $fileName = $file->getClientOriginalName();
         $fileNameParts = explode('.', $fileName);
@@ -433,21 +416,19 @@ abstract class AbstractUploadHelper
         if (null === $extension) {
             $extension = strtolower($fileNameParts[count($fileNameParts) - 1]);
         }
-        $extension = str_replace('jpeg', 'jpg', $extension);
     
-        return $extension;
+        return str_replace('jpeg', 'jpg', $extension);
     }
     
     /**
      * Determines the final filename for a given input filename.
-     *
      * It considers different strategies for computing the result.
      *
      * @param string $objectType Currently treated entity type
-     * @param string $fieldName  Name of upload field
-     * @param string $basePath   Base path for file storage
-     * @param string $fileName   Input file name
-     * @param string $extension  Input file extension
+     * @param string $fieldName Name of upload field
+     * @param string $basePath Base path for file storage
+     * @param string $fileName Input file name
+     * @param string $extension Input file extension
      *
      * @return string the resulting file name
      */
@@ -473,7 +454,7 @@ abstract class AbstractUploadHelper
                     break;
         }
     
-        if ($namingScheme == 0 || $namingScheme == 3) {
+        if (0 === $namingScheme || 3 === $namingScheme) {
             // clean the given file name
             $fileNameCharCount = strlen($fileName);
             for ($y = 0; $y < $fileNameCharCount; $y++) {
@@ -486,9 +467,9 @@ abstract class AbstractUploadHelper
     
         $iterIndex = -1;
         do {
-            if ($namingScheme == 0 || $namingScheme == 3) {
+            if (0 === $namingScheme || 3 === $namingScheme) {
                 // original (0) or user defined (3) file name with counter
-                if ($iterIndex > 0) {
+                if (0 < $iterIndex) {
                     // strip off extension
                     $fileName = str_replace('.' . $extension, '', $backupFileName);
                     // append incremented number
@@ -498,10 +479,10 @@ abstract class AbstractUploadHelper
                 } else {
                     $iterIndex++;
                 }
-            } elseif ($namingScheme == 1) {
+            } elseif (1 === $namingScheme) {
                 // md5 name
                 $fileName = md5(uniqid(mt_rand(), true)) . '.' . $extension;
-            } elseif ($namingScheme == 2) {
+            } elseif (2 === $namingScheme) {
                 // prefix with random number
                 $fileName = $fieldName . mt_rand(1, 999999) . '.' . $extension;
             }
@@ -515,15 +496,15 @@ abstract class AbstractUploadHelper
     /**
      * Deletes an existing upload file.
      *
-     * @param object  $entity    Currently treated entity
-     * @param string  $fieldName Name of upload field
+     * @param EntityAccess $entity Currently treated entity
+     * @param string $fieldName Name of upload field
      *
      * @return mixed Updated entity on success, else false
      */
-    public function deleteUploadFile($entity, $fieldName)
+    public function deleteUploadFile(EntityAccess $entity, $fieldName)
     {
         $objectType = $entity->get_objectType();
-        if (!in_array($objectType, $this->allowedObjectTypes)) {
+        if (!in_array($objectType, $this->allowedObjectTypes, true)) {
             return false;
         }
     
@@ -548,11 +529,11 @@ abstract class AbstractUploadHelper
     /**
      * Retrieve the base path for given object type and upload field combination.
      *
-     * @param string  $objectType   Name of treated entity type
-     * @param string  $fieldName    Name of upload field
-     * @param boolean $ignoreCreate Whether to ignore the creation of upload folders on demand or not
+     * @param string $objectType Name of treated entity type
+     * @param string $fieldName Name of upload field
+     * @param bool $ignoreCreate Whether to ignore the creation of upload folders on demand or not
      *
-     * @return mixed Output
+     * @return string
      *
      * @throws Exception If an invalid object type is used
      */
@@ -563,7 +544,7 @@ abstract class AbstractUploadHelper
         switch ($objectType) {
             case 'site':
                 $basePath .= 'sites/';
-                if ('' != $fieldName) {
+                if ('' !== $fieldName) {
                     switch ($fieldName) {
                         case 'logo':
                             $basePath .= 'logo/';
@@ -579,7 +560,7 @@ abstract class AbstractUploadHelper
                 break;
             case 'template':
                 $basePath .= 'templates/';
-                if ('' != $fieldName) {
+                if ('' !== $fieldName) {
                     $basePath .= 'sqlfile/';
                 }
                 break;
@@ -588,7 +569,7 @@ abstract class AbstractUploadHelper
         }
     
         $result = $basePath;
-        if (substr($result, -1, 1) != '/') {
+        if ('/' !== substr($result, -1, 1)) {
             // reappend the removed slash
             $result .= '/';
         }
@@ -603,7 +584,7 @@ abstract class AbstractUploadHelper
     /**
      * Creates all required upload folders for this application.
      *
-     * @return Boolean Whether everything went okay or not
+     * @return bool Whether everything went okay or not
      */
     public function checkAndCreateAllUploadFolders()
     {
@@ -621,11 +602,11 @@ abstract class AbstractUploadHelper
     /**
      * Creates an upload folder and a .htaccess file within it.
      *
-     * @param string $objectType        Name of treated entity type
-     * @param string $fieldName         Name of upload field
+     * @param string $objectType Name of treated entity type
+     * @param string $fieldName Name of upload field
      * @param string $allowedExtensions String with list of allowed file extensions (separated by ", ")
      *
-     * @return Boolean Whether everything went okay or not
+     * @return bool Whether everything went okay or not
      */
     protected function checkAndCreateUploadFolder($objectType, $fieldName, $allowedExtensions = '')
     {

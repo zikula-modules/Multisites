@@ -26,43 +26,26 @@ abstract class AbstractSiteUiHooksSubscriber implements HookSubscriberInterface
      */
     protected $translator;
 
-    /**
-     * SiteUiHooksSubscriber constructor.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getOwner()
     {
         return 'ZikulaMultisitesModule';
     }
     
-    /**
-     * @inheritDoc
-     */
     public function getCategory()
     {
         return UiHooksCategory::NAME;
     }
     
-    /**
-     * @inheritDoc
-     */
     public function getTitle()
     {
         return $this->translator->__('Site ui hooks subscriber');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getEvents()
     {
         return [

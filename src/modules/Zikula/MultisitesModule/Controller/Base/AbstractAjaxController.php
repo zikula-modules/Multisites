@@ -46,12 +46,12 @@ abstract class AbstractAjaxController extends AbstractController
         }
         
         $objectType = $request->request->getAlnum('ot', 'site');
-        $field = $request->request->getAlnum('field', '');
-        $id = $request->request->getInt('id', 0);
+        $field = $request->request->getAlnum('field');
+        $id = $request->request->getInt('id');
         
-        if ($id == 0
-            || ($objectType != 'site')
-        || ($objectType == 'site' && !in_array($field, ['active']))
+        if (0 === $id
+            || ('site' !== $objectType)
+        || ('site' === $objectType && !in_array($field, ['active'], true))
         ) {
             return $this->json($this->__('Error: invalid input.'), JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -68,7 +68,7 @@ abstract class AbstractAjaxController extends AbstractController
         $entity[$field] = !$entity[$field];
         
         // save entity back to database
-        $entityFactory->getEntityManager()->flush($entity);
+        $entityFactory->getEntityManager()->flush();
         
         $logger = $this->get('logger');
         $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'field' => $field, 'entity' => $objectType, 'id' => $id];

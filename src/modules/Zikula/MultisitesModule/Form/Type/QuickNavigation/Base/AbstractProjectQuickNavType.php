@@ -34,12 +34,6 @@ abstract class AbstractProjectQuickNavType extends AbstractType
      */
     protected $listHelper;
 
-    /**
-     * ProjectQuickNavType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param ListEntriesHelper $listHelper
-     */
     public function __construct(
         TranslatorInterface $translator,
         ListEntriesHelper $listHelper
@@ -48,19 +42,11 @@ abstract class AbstractProjectQuickNavType extends AbstractType
         $this->listHelper = $listHelper;
     }
 
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -84,9 +70,6 @@ abstract class AbstractProjectQuickNavType extends AbstractType
 
     /**
      * Adds list fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addListFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -113,9 +96,6 @@ abstract class AbstractProjectQuickNavType extends AbstractType
 
     /**
      * Adds a search field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addSearchField(FormBuilderInterface $builder, array $options = [])
     {
@@ -132,9 +112,6 @@ abstract class AbstractProjectQuickNavType extends AbstractType
 
     /**
      * Adds sorting fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addSortingFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -172,9 +149,6 @@ abstract class AbstractProjectQuickNavType extends AbstractType
 
     /**
      * Adds a page size field.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addAmountField(FormBuilderInterface $builder, array $options = [])
     {
@@ -185,22 +159,19 @@ abstract class AbstractProjectQuickNavType extends AbstractType
                 'class' => 'input-sm text-right'
             ],
             'choices' => [
-                $this->__('5') => 5,
-                $this->__('10') => 10,
-                $this->__('15') => 15,
-                $this->__('20') => 20,
-                $this->__('30') => 30,
-                $this->__('50') => 50,
-                $this->__('100') => 100
+                5 => 5,
+                10 => 10,
+                15 => 15,
+                20 => 20,
+                30 => 30,
+                50 => 50,
+                100 => 100
             ],
             'required' => false,
             'expanded' => false
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_projectquicknav';

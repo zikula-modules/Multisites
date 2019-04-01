@@ -21,18 +21,15 @@ use Zikula\Core\Event\ModuleStateEvent;
  */
 abstract class AbstractInstallerListener implements EventSubscriberInterface
 {
-    /**
-     * Makes our handlers known to the event system.
-     */
     public static function getSubscribedEvents()
     {
         return [
-            CoreEvents::MODULE_INSTALL             => ['moduleInstalled', 5],
-            CoreEvents::MODULE_POSTINSTALL         => ['modulePostInstalled', 5],
-            CoreEvents::MODULE_UPGRADE             => ['moduleUpgraded', 5],
-            CoreEvents::MODULE_ENABLE              => ['moduleEnabled', 5],
-            CoreEvents::MODULE_DISABLE             => ['moduleDisabled', 5],
-            CoreEvents::MODULE_REMOVE              => ['moduleRemoved', 5]
+            CoreEvents::MODULE_INSTALL     => ['moduleInstalled', 5],
+            CoreEvents::MODULE_POSTINSTALL => ['modulePostInstalled', 5],
+            CoreEvents::MODULE_UPGRADE     => ['moduleUpgraded', 5],
+            CoreEvents::MODULE_ENABLE      => ['moduleEnabled', 5],
+            CoreEvents::MODULE_DISABLE     => ['moduleDisabled', 5],
+            CoreEvents::MODULE_REMOVE      => ['moduleRemoved', 5]
         ];
     }
     
@@ -48,7 +45,6 @@ abstract class AbstractInstallerListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param ModuleStateEvent $event The event instance
      */
     public function moduleInstalled(ModuleStateEvent $event)
     {
@@ -66,7 +62,6 @@ abstract class AbstractInstallerListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param ModuleStateEvent $event The event instance
      */
     public function modulePostInstalled(ModuleStateEvent $event)
     {
@@ -84,7 +79,6 @@ abstract class AbstractInstallerListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param ModuleStateEvent $event The event instance
      */
     public function moduleUpgraded(ModuleStateEvent $event)
     {
@@ -102,7 +96,6 @@ abstract class AbstractInstallerListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param ModuleStateEvent $event The event instance
      */
     public function moduleEnabled(ModuleStateEvent $event)
     {
@@ -120,7 +113,6 @@ abstract class AbstractInstallerListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param ModuleStateEvent $event The event instance
      */
     public function moduleDisabled(ModuleStateEvent $event)
     {
@@ -138,7 +130,6 @@ abstract class AbstractInstallerListener implements EventSubscriberInterface
      * The event name:
      *     `echo 'Event: ' . $event->getName();`
      *
-     * @param ModuleStateEvent $event The event instance
      */
     public function moduleRemoved(ModuleStateEvent $event)
     {

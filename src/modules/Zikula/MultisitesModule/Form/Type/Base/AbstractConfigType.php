@@ -40,12 +40,6 @@ abstract class AbstractConfigType extends AbstractType
      */
     protected $listHelper;
 
-    /**
-     * ConfigType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param ListEntriesHelper $listHelper
-     */
     public function __construct(
         TranslatorInterface $translator,
         ListEntriesHelper $listHelper
@@ -54,19 +48,11 @@ abstract class AbstractConfigType extends AbstractType
         $this->listHelper = $listHelper;
     }
 
-    /**
-     * Sets the translator.
-     *
-     * @param TranslatorInterface $translator
-     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addSecuritySettingsFields($builder, $options);
@@ -79,9 +65,6 @@ abstract class AbstractConfigType extends AbstractType
 
     /**
      * Adds fields for security settings fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addSecuritySettingsFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -122,9 +105,6 @@ abstract class AbstractConfigType extends AbstractType
 
     /**
      * Adds fields for list views fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addListViewsFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -197,9 +177,6 @@ abstract class AbstractConfigType extends AbstractType
 
     /**
      * Adds fields for images fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addImagesFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -503,9 +480,6 @@ abstract class AbstractConfigType extends AbstractType
 
     /**
      * Adds fields for moderation fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addModerationFields(FormBuilderInterface $builder, array $options = [])
     {
@@ -597,9 +571,6 @@ abstract class AbstractConfigType extends AbstractType
 
     /**
      * Adds submit buttons.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
      */
     public function addSubmitButtons(FormBuilderInterface $builder, array $options = [])
     {
@@ -628,17 +599,11 @@ abstract class AbstractConfigType extends AbstractType
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_config';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

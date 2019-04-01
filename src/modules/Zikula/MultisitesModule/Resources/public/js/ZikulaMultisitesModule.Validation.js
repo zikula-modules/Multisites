@@ -2,9 +2,10 @@
 
 function zikulaMultisitesValidateNoSpace(val) {
     var valStr;
-    valStr = new String(val);
 
-    return (valStr.indexOf(' ') === -1);
+    valStr = '' + val;
+
+    return -1 === valStr.indexOf(' ');
 }
 
 function zikulaMultisitesValidateUploadExtension(val, elem) {

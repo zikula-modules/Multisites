@@ -12,16 +12,17 @@
 
 namespace Zikula\MultisitesModule\Controller\Base;
 
+use Exception;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Component\SortableColumns\Column;
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\Controller\AbstractController;
-use Zikula\Core\RouteUrl;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 
 /**
@@ -42,6 +43,7 @@ abstract class AbstractProjectController extends AbstractController
      * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
+     * @throws Exception
      */
     protected function viewInternal(
         Request $request,
@@ -69,7 +71,9 @@ abstract class AbstractProjectController extends AbstractController
         $request->query->set('sortdir', $sortdir);
         $request->query->set('pos', $pos);
         
-        $sortableColumns = new SortableColumns($this->get('router'), 'zikulamultisitesmodule_project_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
+        /** @var RouterInterface $router */
+        $router = $this->get('router');
+        $sortableColumns = new SortableColumns($router, 'zikulamultisitesmodule_project_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
         
         $sortableColumns->addColumns([
             new Column('name'),
@@ -105,6 +109,7 @@ abstract class AbstractProjectController extends AbstractController
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws RuntimeException Thrown if another critical error occurs (e.g. workflow actions not available)
+     * @throws Exception
      */
     protected function editInternal(
         Request $request,
@@ -159,8 +164,8 @@ abstract class AbstractProjectController extends AbstractController
         $objectType = 'project';
         
         // Get parameters
-        $action = $request->request->get('action', null);
-        $items = $request->request->get('items', null);
+        $action = $request->request->get('action');
+        $items = $request->request->get('items');
         if (!is_array($items) || !count($items)) {
             return $this->redirectToRoute('zikulamultisitesmodule_project_' . ($isAdmin ? 'admin' : '') . 'view');
         }
@@ -184,14 +189,14 @@ abstract class AbstractProjectController extends AbstractController
             // check if $action can be applied to this entity (may depend on it's current workflow state)
             $allowedActions = $workflowHelper->getActionsForObject($entity);
             $actionIds = array_keys($allowedActions);
-            if (!in_array($action, $actionIds)) {
+            if (!in_array($action, $actionIds, true)) {
                 // action not allowed, skip this object
                 continue;
             }
         
             if ($entity->supportsHookSubscribers()) {
                 // Let any ui hooks perform additional validation actions
-                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
+                $hookType = 'delete' === $action ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
                 $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
                 if (count($validationErrors) > 0) {
                     foreach ($validationErrors as $message) {
@@ -205,7 +210,7 @@ abstract class AbstractProjectController extends AbstractController
             try {
                 // execute the workflow action
                 $success = $workflowHelper->executeAction($entity, $action);
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $this->addFlash('error', $this->__f('Sorry, but an error occured during the %action% action.', ['%action%' => $action]) . '  ' . $exception->getMessage());
                 $logger->error('{app}: User {user} tried to execute the {action} workflow action for the {entity} with id {id}, but failed. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'action' => $action, 'entity' => 'project', 'id' => $itemId, 'errorMessage' => $exception->getMessage()]);
             }
@@ -214,7 +219,7 @@ abstract class AbstractProjectController extends AbstractController
                 continue;
             }
         
-            if ($action == 'delete') {
+            if ('delete' === $action) {
                 $this->addFlash('status', $this->__('Done! Item deleted.'));
                 $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'entity' => 'project', 'id' => $itemId]);
             } else {
@@ -224,7 +229,7 @@ abstract class AbstractProjectController extends AbstractController
         
             if ($entity->supportsHookSubscribers()) {
                 // Let any ui hooks know that we have updated or deleted an item
-                $hookType = $action == 'delete' ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+                $hookType = 'delete' === $action ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
                 $url = null;
                 $hookHelper->callProcessHooks($entity, $hookType, $url);
             }
