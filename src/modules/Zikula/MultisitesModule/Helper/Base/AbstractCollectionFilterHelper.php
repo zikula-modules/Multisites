@@ -67,7 +67,7 @@ abstract class AbstractCollectionFilterHelper
      */
     public function getViewQuickNavParameters($objectType = '', $context = '', array $args = [])
     {
-        if (!in_array($context, ['controllerAction', 'api', 'actionHandler', 'block', 'contentType'])) {
+        if (!in_array($context, ['controllerAction', 'api', 'actionHandler', 'block', 'contentType'], true)) {
             $context = 'controllerAction';
         }
     
@@ -220,6 +220,9 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters = $this->getViewQuickNavParametersForSite();
         foreach ($parameters as $k => $v) {
+            if (null === $v) {
+                continue;
+            }
             if (in_array($k, ['q', 'searchterm'], true)) {
                 // quick search
                 if (!empty($v)) {
@@ -279,6 +282,9 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters = $this->getViewQuickNavParametersForTemplate();
         foreach ($parameters as $k => $v) {
+            if (null === $v) {
+                continue;
+            }
             if (in_array($k, ['q', 'searchterm'], true)) {
                 // quick search
                 if (!empty($v)) {
@@ -329,6 +335,9 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters = $this->getViewQuickNavParametersForProject();
         foreach ($parameters as $k => $v) {
+            if (null === $v) {
+                continue;
+            }
             if (in_array($k, ['q', 'searchterm'], true)) {
                 // quick search
                 if (!empty($v)) {
