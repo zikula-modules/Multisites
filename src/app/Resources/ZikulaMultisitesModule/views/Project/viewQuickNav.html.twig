@@ -48,25 +48,8 @@
                 </div>
             {% endif %}
             {{ form_widget(quickNavForm.updateview) }}
+            <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea|default ~ 'view') }}" title="{{ __('Back to default view') }}" class="btn btn-default btn-sm">{{ __('Reset') }}</a>
         </fieldset>
     </div>
     {{ form_end(quickNavForm) }}
-    {% if searchFilter is defined and searchFilter != true %}
-        {% set customScript %}
-            <script type="text/javascript">
-            /* <![CDATA[ */
-                ( function($) {
-                    $(document).ready(function() {
-                        if ($('#template').length > 0) {
-                            $('#template').change(function () {
-                                jQuery('#zikulaMultisitesModuleProjectQuickNavForm').submit();
-                            });
-                        }
-                    });
-                })(jQuery);
-            /* ]]> */
-            </script>
-        {% endset %}
-        {{ pageAddAsset('footer', customScript) }}
-    {% endif %}
 {% endif %}

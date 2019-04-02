@@ -38,13 +38,6 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
      */
     private $multisitesParameters;
 
-    /**
-     * DynamicConfigurationListener constructor.
-     *
-     * @param ContainerInterface $container
-     * @param Filesystem         $filesystem
-     * @param array              $multisitesParameters
-     */
     public function __construct(
         ContainerInterface $container,
         Filesystem $filesystem,
@@ -55,9 +48,6 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
         $this->multisitesParameters = $multisitesParameters;
     }
 
-    /**
-     * Makes our handlers known to the event system.
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -65,11 +55,6 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
         ];
     }
 
-    /**
-     * Changes several system settings based on the current site.
-     *
-     * @param GetResponseEvent $event The event instance
-     */
     public function onRequest(GetResponseEvent $event)
     {
         if (php_sapi_name() == 'cli') {
@@ -136,8 +121,6 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
     /**
      * Check if the current request is done on the main site or not.
      *
-     * @param Request $request Current request instance
-     *
      * @return boolean True if the main site is requested, false otherwise.
      */
     private function isMainSite(Request $request)
@@ -151,8 +134,6 @@ class DynamicConfigurationListener implements EventSubscriberInterface, Containe
 
     /**
      * Returns the site identifier for the given request.
-     *
-     * @param Request $request Current request instance
      *
      * @return string
      */

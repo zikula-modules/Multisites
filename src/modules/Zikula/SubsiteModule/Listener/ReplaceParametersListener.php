@@ -45,9 +45,6 @@ class ReplaceParametersListener implements EventSubscriberInterface
         $this->isAdminArea = false;
     }
 
-    /**
-     * Makes our handlers known to the event system.
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -59,8 +56,6 @@ class ReplaceParametersListener implements EventSubscriberInterface
     /**
      * Reads controller annotations to determine whether the current page is rendered
      * inside the admin panel or not.
-     *
-     * @param FilterControllerEvent $event
      */
     public function determineAdminArea(FilterControllerEvent $event)
     {
@@ -85,8 +80,6 @@ class ReplaceParametersListener implements EventSubscriberInterface
      *
      * Occurs immediately after twig theme engine renders a template.
      * The event subject is TwigPostRenderEvent.
-     *
-     * @param TwigPostRenderEvent $event The event instance
      */
     public function postRender(TwigPostRenderEvent $event)
     {
