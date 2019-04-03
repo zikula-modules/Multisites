@@ -400,6 +400,12 @@ abstract class AbstractSiteRepository extends EntityRepository
 
     /**
      * Returns query builder instance for retrieving a list of objects with a given where clause and pagination parameters.
+     *
+     * @param QueryBuilder $qb Query builder to be enhanced
+     * @param int $currentPage Where to start selection
+     * @param int $resultsPerPage Amount of items to select
+     *
+     * @return Query Created query instance
      */
     public function getSelectWherePaginatedQuery(QueryBuilder $qb, $currentPage = 1, $resultsPerPage = 25)
     {
