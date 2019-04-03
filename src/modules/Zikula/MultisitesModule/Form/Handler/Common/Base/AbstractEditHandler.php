@@ -635,7 +635,7 @@ abstract class AbstractEditHandler
     /**
      * Input data processing called by handleCommand method.
      *
-     * @return array
+     * @return mixed
      */
     public function fetchInputData()
     {
