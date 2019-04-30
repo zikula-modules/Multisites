@@ -289,6 +289,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
+            'allow_deletion' => true,
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'logo')),
             'allowed_size' => ''
         ]);
@@ -301,6 +302,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
+            'allow_deletion' => true,
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'favIcon')),
             'allowed_size' => ''
         ]);
@@ -324,6 +326,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
+            'allow_deletion' => true,
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'parametersCsvFile')),
             'allowed_size' => ''
         ]);

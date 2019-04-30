@@ -132,6 +132,7 @@ abstract class AbstractTemplateType extends AbstractType
             ],
             'required' => true && $options['mode'] == 'create',
             'entity' => $options['entity'],
+            'allow_deletion' => false,
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('template', 'sqlFile')),
             'allowed_size' => ''
         ]);
