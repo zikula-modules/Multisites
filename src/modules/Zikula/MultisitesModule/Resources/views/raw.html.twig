@@ -26,15 +26,18 @@
         {% if 'edit' in app.request.get('_route') or 'config' in app.request.get('_route') %}
             {{ polyfill(['forms', 'forms-ext']) }}
         {% endif %}
-        <script>
-        /* <![CDATA[ */
-            ( function($) {
-                $(document).ready(function() {
-                    $('.dropdown-toggle').addClass('hidden');
-                });
-            })(jQuery);
-        /* ]]> */
-        </script>
+        {% set customScript %}
+            <script>
+            /* <![CDATA[ */
+                ( function($) {
+                    $(document).ready(function() {
+                        $('.dropdown-toggle').addClass('hidden');
+                    });
+                })(jQuery);
+            /* ]]> */
+            </script>
+        {% endset %}
+        {{ pageAddAsset('footer', customScript) }}
     {% endblock %}
 </body>
 </html>
