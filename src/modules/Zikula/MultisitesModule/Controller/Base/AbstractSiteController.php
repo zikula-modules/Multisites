@@ -110,14 +110,7 @@ abstract class AbstractSiteController extends AbstractController
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
         
         // filter by permissions
-        $filteredEntities = [];
-        foreach ($templateParameters['items'] as $site) {
-            if (!$permissionHelper->hasEntityPermission($site, $permLevel)) {
-                continue;
-            }
-            $filteredEntities[] = $site;
-        }
-        $templateParameters['items'] = $filteredEntities;
+        $templateParameters['items'] = $permissionHelper->filterCollection($objectType, $templateParameters['items'], $permLevel);
         
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
