@@ -86,14 +86,7 @@ abstract class AbstractProjectController extends AbstractController
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
         
         // filter by permissions
-        $filteredEntities = [];
-        foreach ($templateParameters['items'] as $project) {
-            if (!$permissionHelper->hasEntityPermission($project, $permLevel)) {
-                continue;
-            }
-            $filteredEntities[] = $project;
-        }
-        $templateParameters['items'] = $filteredEntities;
+        $templateParameters['items'] = $permissionHelper->filterCollection($objectType, $templateParameters['items'], $permLevel);
         
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);

@@ -12,6 +12,7 @@
 
 namespace Zikula\MultisitesModule\Helper\Base;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\GroupsModule\Entity\GroupEntity;
@@ -111,6 +112,26 @@ abstract class AbstractPermissionHelper
         $instance = $entity->getKey() . '::';
     
         return $this->permissionApi->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', $instance, $permissionLevel, $userId);
+    }
+    
+    /**
+     * Filters a given collection of entities based on different permission checks.
+     *
+     * @param array|ArrayCollection $entities The given list of entities
+     *
+     * @return array The filtered list of entities
+     */
+    public function filterCollection($objectType, $entities, $permissionLevel, $userId = null)
+    {
+        $filteredEntities = [];
+        foreach ($entities as $multisites) {
+            if (!$this->hasEntityPermission($multisites, $permissionLevel, $userId)) {
+                continue;
+            }
+            $filteredEntities[] = $multisites;
+        }
+    
+        return $filteredEntities;
     }
     
     /**
