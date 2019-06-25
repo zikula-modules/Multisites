@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\MultisitesModule\Helper\EntityDisplayHelper;
@@ -291,5 +292,12 @@ abstract class AbstractSiteQuickNavType extends AbstractType
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_sitequicknav';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'csrf_protection' => false
+        ]);
     }
 }
