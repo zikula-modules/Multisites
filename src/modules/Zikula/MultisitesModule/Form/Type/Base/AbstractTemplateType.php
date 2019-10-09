@@ -127,6 +127,7 @@ abstract class AbstractTemplateType extends AbstractType
         $builder->add('sqlFile', UploadType::class, [
             'label' => $this->__('Sql file') . ':',
             'attr' => [
+                'accept' => '.' . implode(',.', $this->uploadHelper->getAllowedFileExtensions('template', 'sqlFile')),
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the sql file of the template.')
             ],
