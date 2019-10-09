@@ -284,6 +284,7 @@ abstract class AbstractSiteType extends AbstractType
         $builder->add('logo', UploadType::class, [
             'label' => $this->__('Logo') . ':',
             'attr' => [
+                'accept' => '.' . implode(',.', $this->uploadHelper->getAllowedFileExtensions('site', 'logo')),
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the logo of the site.')
             ],
@@ -297,6 +298,7 @@ abstract class AbstractSiteType extends AbstractType
         $builder->add('favIcon', UploadType::class, [
             'label' => $this->__('Fav icon') . ':',
             'attr' => [
+                'accept' => '.' . implode(',.', $this->uploadHelper->getAllowedFileExtensions('site', 'favIcon')),
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the fav icon of the site.')
             ],
@@ -321,6 +323,7 @@ abstract class AbstractSiteType extends AbstractType
         $builder->add('parametersCsvFile', UploadType::class, [
             'label' => $this->__('Parameters csv file') . ':',
             'attr' => [
+                'accept' => '.' . implode(',.', $this->uploadHelper->getAllowedFileExtensions('site', 'parametersCsvFile')),
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the parameters csv file of the site.')
             ],
