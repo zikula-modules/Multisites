@@ -341,7 +341,7 @@ abstract class AbstractAppSettings
     public function setGlobalAdminName($globalAdminName)
     {
         if ($this->globalAdminName !== $globalAdminName) {
-            $this->globalAdminName = isset($globalAdminName) ? $globalAdminName : '';
+            $this->globalAdminName = isset($globalAdminName) ? $globalAdminName : ;
         }
     }
     
@@ -365,7 +365,7 @@ abstract class AbstractAppSettings
     public function setGlobalAdminPassword($globalAdminPassword)
     {
         if ($this->globalAdminPassword !== $globalAdminPassword) {
-            $this->globalAdminPassword = isset($globalAdminPassword) ? $globalAdminPassword : '';
+            $this->globalAdminPassword = isset($globalAdminPassword) ? $globalAdminPassword : ;
         }
     }
     
@@ -389,7 +389,7 @@ abstract class AbstractAppSettings
     public function setGlobalAdminEmail($globalAdminEmail)
     {
         if ($this->globalAdminEmail !== $globalAdminEmail) {
-            $this->globalAdminEmail = isset($globalAdminEmail) ? $globalAdminEmail : '';
+            $this->globalAdminEmail = isset($globalAdminEmail) ? $globalAdminEmail : ;
         }
     }
     
@@ -581,7 +581,7 @@ abstract class AbstractAppSettings
     public function setThumbnailModeSiteLogo($thumbnailModeSiteLogo)
     {
         if ($this->thumbnailModeSiteLogo !== $thumbnailModeSiteLogo) {
-            $this->thumbnailModeSiteLogo = isset($thumbnailModeSiteLogo) ? $thumbnailModeSiteLogo : '';
+            $this->thumbnailModeSiteLogo = isset($thumbnailModeSiteLogo) ? $thumbnailModeSiteLogo : ;
         }
     }
     
@@ -773,7 +773,7 @@ abstract class AbstractAppSettings
     public function setThumbnailModeSiteFavIcon($thumbnailModeSiteFavIcon)
     {
         if ($this->thumbnailModeSiteFavIcon !== $thumbnailModeSiteFavIcon) {
-            $this->thumbnailModeSiteFavIcon = isset($thumbnailModeSiteFavIcon) ? $thumbnailModeSiteFavIcon : '';
+            $this->thumbnailModeSiteFavIcon = isset($thumbnailModeSiteFavIcon) ? $thumbnailModeSiteFavIcon : ;
         }
     }
     

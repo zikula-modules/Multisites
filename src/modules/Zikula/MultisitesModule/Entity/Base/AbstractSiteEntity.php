@@ -477,7 +477,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setWorkflowState($workflowState)
     {
         if ($this->workflowState !== $workflowState) {
-            $this->workflowState = isset($workflowState) ? $workflowState : '';
+            $this->workflowState = isset($workflowState) ? $workflowState : ;
         }
     }
     
@@ -501,7 +501,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setName($name)
     {
         if ($this->name !== $name) {
-            $this->name = isset($name) ? $name : '';
+            $this->name = isset($name) ? $name : ;
         }
     }
     
@@ -525,7 +525,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setDescription($description)
     {
         if ($this->description !== $description) {
-            $this->description = isset($description) ? $description : '';
+            $this->description = isset($description) ? $description : ;
         }
     }
     
@@ -549,7 +549,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteAlias($siteAlias)
     {
         if ($this->siteAlias !== $siteAlias) {
-            $this->siteAlias = isset($siteAlias) ? $siteAlias : '';
+            $this->siteAlias = isset($siteAlias) ? $siteAlias : ;
         }
     }
     
@@ -573,7 +573,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteName($siteName)
     {
         if ($this->siteName !== $siteName) {
-            $this->siteName = isset($siteName) ? $siteName : '';
+            $this->siteName = isset($siteName) ? $siteName : ;
         }
     }
     
@@ -597,7 +597,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteDescription($siteDescription)
     {
         if ($this->siteDescription !== $siteDescription) {
-            $this->siteDescription = isset($siteDescription) ? $siteDescription : '';
+            $this->siteDescription = isset($siteDescription) ? $siteDescription : ;
         }
     }
     
@@ -621,7 +621,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteAdminName($siteAdminName)
     {
         if ($this->siteAdminName !== $siteAdminName) {
-            $this->siteAdminName = isset($siteAdminName) ? $siteAdminName : '';
+            $this->siteAdminName = isset($siteAdminName) ? $siteAdminName : ;
         }
     }
     
@@ -645,7 +645,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteAdminPassword($siteAdminPassword)
     {
         if ($this->siteAdminPassword !== $siteAdminPassword) {
-            $this->siteAdminPassword = isset($siteAdminPassword) ? $siteAdminPassword : '';
+            $this->siteAdminPassword = isset($siteAdminPassword) ? $siteAdminPassword : ;
         }
     }
     
@@ -669,7 +669,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteAdminRealName($siteAdminRealName)
     {
         if ($this->siteAdminRealName !== $siteAdminRealName) {
-            $this->siteAdminRealName = isset($siteAdminRealName) ? $siteAdminRealName : '';
+            $this->siteAdminRealName = isset($siteAdminRealName) ? $siteAdminRealName : ;
         }
     }
     
@@ -693,7 +693,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteAdminEmail($siteAdminEmail)
     {
         if ($this->siteAdminEmail !== $siteAdminEmail) {
-            $this->siteAdminEmail = isset($siteAdminEmail) ? $siteAdminEmail : '';
+            $this->siteAdminEmail = isset($siteAdminEmail) ? $siteAdminEmail : ;
         }
     }
     
@@ -717,7 +717,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteCompany($siteCompany)
     {
         if ($this->siteCompany !== $siteCompany) {
-            $this->siteCompany = isset($siteCompany) ? $siteCompany : '';
+            $this->siteCompany = isset($siteCompany) ? $siteCompany : ;
         }
     }
     
@@ -741,7 +741,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setSiteDns($siteDns)
     {
         if ($this->siteDns !== $siteDns) {
-            $this->siteDns = isset($siteDns) ? $siteDns : '';
+            $this->siteDns = isset($siteDns) ? $siteDns : ;
         }
     }
     
@@ -765,7 +765,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setDatabaseName($databaseName)
     {
         if ($this->databaseName !== $databaseName) {
-            $this->databaseName = isset($databaseName) ? $databaseName : '';
+            $this->databaseName = isset($databaseName) ? $databaseName : ;
         }
     }
     
@@ -789,7 +789,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setDatabaseUserName($databaseUserName)
     {
         if ($this->databaseUserName !== $databaseUserName) {
-            $this->databaseUserName = isset($databaseUserName) ? $databaseUserName : '';
+            $this->databaseUserName = isset($databaseUserName) ? $databaseUserName : ;
         }
     }
     
@@ -813,7 +813,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setDatabasePassword($databasePassword)
     {
         if ($this->databasePassword !== $databasePassword) {
-            $this->databasePassword = isset($databasePassword) ? $databasePassword : '';
+            $this->databasePassword = isset($databasePassword) ? $databasePassword : ;
         }
     }
     
@@ -837,7 +837,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setDatabaseHost($databaseHost)
     {
         if ($this->databaseHost !== $databaseHost) {
-            $this->databaseHost = isset($databaseHost) ? $databaseHost : '';
+            $this->databaseHost = isset($databaseHost) ? $databaseHost : ;
         }
     }
     
@@ -861,7 +861,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setDatabaseType($databaseType)
     {
         if ($this->databaseType !== $databaseType) {
-            $this->databaseType = isset($databaseType) ? $databaseType : '';
+            $this->databaseType = isset($databaseType) ? $databaseType : ;
         }
     }
     
@@ -1135,7 +1135,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setAllowedLocales($allowedLocales)
     {
         if ($this->allowedLocales !== $allowedLocales) {
-            $this->allowedLocales = isset($allowedLocales) ? $allowedLocales : '';
+            $this->allowedLocales = isset($allowedLocales) ? $allowedLocales : org.zikula.modulestudio.generator.cartridges.zclassic.smallstuff.FileHelper$$Lambda$187/0x000000084025a040@66c83fc8;
         }
     }
     
@@ -1284,7 +1284,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setParametersArray($parametersArray)
     {
         if ($this->parametersArray !== $parametersArray) {
-            $this->parametersArray = isset($parametersArray) ? $parametersArray : '';
+            $this->parametersArray = isset($parametersArray) ? $parametersArray : org.zikula.modulestudio.generator.cartridges.zclassic.smallstuff.FileHelper$$Lambda$187/0x000000084025a040@66c83fc8;
         }
     }
     

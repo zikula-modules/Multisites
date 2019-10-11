@@ -295,7 +295,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setWorkflowState($workflowState)
     {
         if ($this->workflowState !== $workflowState) {
-            $this->workflowState = isset($workflowState) ? $workflowState : '';
+            $this->workflowState = isset($workflowState) ? $workflowState : ;
         }
     }
     
@@ -319,7 +319,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setName($name)
     {
         if ($this->name !== $name) {
-            $this->name = isset($name) ? $name : '';
+            $this->name = isset($name) ? $name : ;
         }
     }
     
@@ -343,7 +343,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setDescription($description)
     {
         if ($this->description !== $description) {
-            $this->description = isset($description) ? $description : '';
+            $this->description = isset($description) ? $description : ;
         }
     }
     
@@ -420,7 +420,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setSqlFileFileName($sqlFileFileName = null)
     {
         if ($this->sqlFileFileName !== $sqlFileFileName) {
-            $this->sqlFileFileName = isset($sqlFileFileName) ? $sqlFileFileName : '';
+            $this->sqlFileFileName = isset($sqlFileFileName) ? $sqlFileFileName : ;
         }
     }
     
@@ -444,7 +444,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setSqlFileUrl($sqlFileUrl = null)
     {
         if ($this->sqlFileUrl !== $sqlFileUrl) {
-            $this->sqlFileUrl = isset($sqlFileUrl) ? $sqlFileUrl : '';
+            $this->sqlFileUrl = isset($sqlFileUrl) ? $sqlFileUrl : ;
         }
     }
     
@@ -468,7 +468,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setSqlFileMeta(array $sqlFileMeta = [])
     {
         if ($this->sqlFileMeta !== $sqlFileMeta) {
-            $this->sqlFileMeta = isset($sqlFileMeta) ? $sqlFileMeta : '';
+            $this->sqlFileMeta = isset($sqlFileMeta) ? $sqlFileMeta : ;
         }
     }
     
@@ -492,7 +492,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setParameters($parameters)
     {
         if ($this->parameters !== $parameters) {
-            $this->parameters = isset($parameters) ? $parameters : '';
+            $this->parameters = isset($parameters) ? $parameters : org.zikula.modulestudio.generator.cartridges.zclassic.smallstuff.FileHelper$$Lambda$187/0x000000084025a040@66c83fc8;
         }
     }
     
@@ -516,7 +516,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setFolders($folders)
     {
         if ($this->folders !== $folders) {
-            $this->folders = isset($folders) ? $folders : '';
+            $this->folders = isset($folders) ? $folders : org.zikula.modulestudio.generator.cartridges.zclassic.smallstuff.FileHelper$$Lambda$187/0x000000084025a040@66c83fc8;
         }
     }
     
@@ -540,7 +540,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setExcludedTables($excludedTables)
     {
         if ($this->excludedTables !== $excludedTables) {
-            $this->excludedTables = isset($excludedTables) ? $excludedTables : '';
+            $this->excludedTables = isset($excludedTables) ? $excludedTables : org.zikula.modulestudio.generator.cartridges.zclassic.smallstuff.FileHelper$$Lambda$187/0x000000084025a040@66c83fc8;
         }
     }
     
