@@ -1135,7 +1135,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setAllowedLocales($allowedLocales)
     {
         if ($this->allowedLocales !== $allowedLocales) {
-            $this->allowedLocales = isset($allowedLocales) ? $allowedLocales : org.zikula.modulestudio.generator.cartridges.zclassic.smallstuff.FileHelper$$Lambda$187/0x000000084025a040@66c83fc8;
+            $this->allowedLocales = isset($allowedLocales) ? $allowedLocales : [];
         }
     }
     
@@ -1284,7 +1284,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setParametersArray($parametersArray)
     {
         if ($this->parametersArray !== $parametersArray) {
-            $this->parametersArray = isset($parametersArray) ? $parametersArray : org.zikula.modulestudio.generator.cartridges.zclassic.smallstuff.FileHelper$$Lambda$187/0x000000084025a040@66c83fc8;
+            $this->parametersArray = isset($parametersArray) ? $parametersArray : [];
         }
     }
     
