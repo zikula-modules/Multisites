@@ -1135,7 +1135,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setAllowedLocales($allowedLocales)
     {
         if ($this->allowedLocales !== $allowedLocales) {
-            $this->allowedLocales = isset($allowedLocales) ? $allowedLocales : '';
+            $this->allowedLocales = isset($allowedLocales) ? $allowedLocales : [];
         }
     }
     
@@ -1284,7 +1284,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     public function setParametersArray($parametersArray)
     {
         if ($this->parametersArray !== $parametersArray) {
-            $this->parametersArray = isset($parametersArray) ? $parametersArray : '';
+            $this->parametersArray = isset($parametersArray) ? $parametersArray : [];
         }
     }
     

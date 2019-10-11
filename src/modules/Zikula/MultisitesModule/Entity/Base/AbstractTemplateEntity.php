@@ -492,7 +492,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setParameters($parameters)
     {
         if ($this->parameters !== $parameters) {
-            $this->parameters = isset($parameters) ? $parameters : '';
+            $this->parameters = isset($parameters) ? $parameters : [];
         }
     }
     
@@ -516,7 +516,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setFolders($folders)
     {
         if ($this->folders !== $folders) {
-            $this->folders = isset($folders) ? $folders : '';
+            $this->folders = isset($folders) ? $folders : [];
         }
     }
     
@@ -540,7 +540,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setExcludedTables($excludedTables)
     {
         if ($this->excludedTables !== $excludedTables) {
-            $this->excludedTables = isset($excludedTables) ? $excludedTables : '';
+            $this->excludedTables = isset($excludedTables) ? $excludedTables : [];
         }
     }
     
