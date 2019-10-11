@@ -295,7 +295,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setWorkflowState($workflowState)
     {
         if ($this->workflowState !== $workflowState) {
-            $this->workflowState = isset($workflowState) ? $workflowState : ;
+            $this->workflowState = isset($workflowState) ? $workflowState : '';
         }
     }
     
@@ -319,7 +319,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setName($name)
     {
         if ($this->name !== $name) {
-            $this->name = isset($name) ? $name : ;
+            $this->name = isset($name) ? $name : '';
         }
     }
     
@@ -343,7 +343,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setDescription($description)
     {
         if ($this->description !== $description) {
-            $this->description = isset($description) ? $description : ;
+            $this->description = isset($description) ? $description : '';
         }
     }
     
@@ -420,7 +420,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setSqlFileFileName($sqlFileFileName = null)
     {
         if ($this->sqlFileFileName !== $sqlFileFileName) {
-            $this->sqlFileFileName = isset($sqlFileFileName) ? $sqlFileFileName : ;
+            $this->sqlFileFileName = isset($sqlFileFileName) ? $sqlFileFileName : '';
         }
     }
     
@@ -444,7 +444,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setSqlFileUrl($sqlFileUrl = null)
     {
         if ($this->sqlFileUrl !== $sqlFileUrl) {
-            $this->sqlFileUrl = isset($sqlFileUrl) ? $sqlFileUrl : ;
+            $this->sqlFileUrl = isset($sqlFileUrl) ? $sqlFileUrl : '';
         }
     }
     
@@ -468,7 +468,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     public function setSqlFileMeta(array $sqlFileMeta = [])
     {
         if ($this->sqlFileMeta !== $sqlFileMeta) {
-            $this->sqlFileMeta = isset($sqlFileMeta) ? $sqlFileMeta : ;
+            $this->sqlFileMeta = isset($sqlFileMeta) ? $sqlFileMeta : '';
         }
     }
     

@@ -168,7 +168,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     public function setWorkflowState($workflowState)
     {
         if ($this->workflowState !== $workflowState) {
-            $this->workflowState = isset($workflowState) ? $workflowState : ;
+            $this->workflowState = isset($workflowState) ? $workflowState : '';
         }
     }
     
@@ -192,7 +192,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     public function setName($name)
     {
         if ($this->name !== $name) {
-            $this->name = isset($name) ? $name : ;
+            $this->name = isset($name) ? $name : '';
         }
     }
     
