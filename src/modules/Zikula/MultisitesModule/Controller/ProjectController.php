@@ -94,7 +94,6 @@ class ProjectController extends AbstractProjectController
     /**
      * Process status changes for multiple items.
      *
-     * @inheritDoc
      * @Route("/admin/projects/handleSelectedEntries",
      *        methods = {"POST"}
      * )
@@ -109,7 +108,6 @@ class ProjectController extends AbstractProjectController
     /**
      * Process status changes for multiple items.
      *
-     * @inheritDoc
      * @Route("/projects/handleSelectedEntries",
      *        methods = {"POST"}
      * )
