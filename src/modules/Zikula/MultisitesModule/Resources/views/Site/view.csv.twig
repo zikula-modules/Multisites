@@ -1,17 +1,7 @@
 {# purpose of this template: sites view csv view #}
 "{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Site alias') }}";"{{ __('Site name') }}";"{{ __('Site description') }}";"{{ __('Site admin name') }}";"{{ __('Site admin password') }}";"{{ __('Site admin real name') }}";"{{ __('Site admin email') }}";"{{ __('Site company') }}";"{{ __('Site dns') }}";"{{ __('Database name') }}";"{{ __('Database user name') }}";"{{ __('Database password') }}";"{{ __('Database host') }}";"{{ __('Database type') }}";"{{ __('Logo') }}";"{{ __('Fav icon') }}";"{{ __('Allowed locales') }}";"{{ __('Parameters csv file') }}";"{{ __('Parameters array') }}";"{{ __('Active') }}";"{{ __('Template') }}";"{{ __('Project') }}"
 {% for site in items %}
-"{{ site.name }}";"{{ site.description }}";"{{ site.siteAlias }}";"{{ site.siteName }}";"{{ site.siteDescription }}";"{{ site.siteAdminName }}";"";"{{ site.siteAdminRealName }}";"{{ site.siteAdminEmail }}";"{{ site.siteCompany }}";"{{ site.siteDns }}";"{{ site.databaseName }}";"{{ site.databaseUserName }}";"";"{{ site.databaseHost }}";"{{ site.databaseType }}";"{{ site.logo }}";"{{ site.favIcon }}";"{% if site.allowedLocales is iterable and site.allowedLocales|length > 0 %}
-    {% set firstItem = true %}
-    {% for entry in if entry is not iterable %}
-        {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
-    {% endfor %}
-{% endif %}
-";"{{ site.parametersCsvFile }}";"{% if site.parametersArray is iterable and site.parametersArray|length > 0 %}
-    {% set firstItem = true %}
-    {% for entry in if entry is not iterable %}
-        {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
-    {% endfor %}
-{% endif %}
+"{{ site.name }}";"{{ site.description }}";"{{ site.siteAlias }}";"{{ site.siteName }}";"{{ site.siteDescription }}";"{{ site.siteAdminName }}";"";"{{ site.siteAdminRealName }}";"{{ site.siteAdminEmail }}";"{{ site.siteCompany }}";"{{ site.siteDns }}";"{{ site.databaseName }}";"{{ site.databaseUserName }}";"";"{{ site.databaseHost }}";"{{ site.databaseType }}";"{{ site.logo }}";"{{ site.favIcon }}";"{% if site.allowedLocales is iterable and site.allowedLocales|length > 0 %}{% set firstItem = true %}{% for entry in if entry is not iterable %}{% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}{% endfor %}{% endif %}
+";"{{ site.parametersCsvFile }}";"{% if site.parametersArray is iterable and site.parametersArray|length > 0 %}{% set firstItem = true %}{% for entry in if entry is not iterable %}{% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}{% endfor %}{% endif %}
 ";"{% if not site.active %}0{% else %}1{% endif %}";"{% if site.template|default %}{{ site.template|zikulamultisitesmodule_formattedTitle }}{% endif %}";"{% if site.project|default %}{{ site.project|zikulamultisitesmodule_formattedTitle }}{% endif %}"
 {% endfor %}
