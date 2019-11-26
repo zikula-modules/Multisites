@@ -1,44 +1,10 @@
 {# purpose of this template: templates view csv view #}
-{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Sql file') }}";"{{ __('Parameters') }}";"{{ __('Folders') }}";"{{ __('Excluded tables') }}";"{{ __('Projects') }}"
+"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Sql file') }}";"{{ __('Parameters') }}";"{{ __('Folders') }}";"{{ __('Excluded tables') }}";"{{ __('Projects') }}"
 ;"{{ __('Sites') }}"
-{% endspaceless %}
 {% for template in items %}
-
-{% spaceless %}
-    "{{ template.name }}";"{{ template.description }}";"{{ template.sqlFile }}";"{% if template.parameters is iterable and template.parameters|length > 0 %}
-        <ul>
-        {% for entry in template.parameters if entry is not iterable %}
-            <li>{{ entry }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    ";"{% if template.folders is iterable and template.folders|length > 0 %}
-        <ul>
-        {% for entry in template.folders if entry is not iterable %}
-            <li>{{ entry }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    ";"{% if template.excludedTables is iterable and template.excludedTables|length > 0 %}
-        <ul>
-        {% for entry in template.excludedTables if entry is not iterable %}
-            <li>{{ entry }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    ";"
-    {% if template.projects|default %}
-        {% for relatedItem in template.projects %}
-        {{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
-        {% endfor %}
-    {% endif %}
-    "
-    ;"
-    {% if template.sites|default %}
-        {% for relatedItem in template.sites %}
-        {{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}
-        {% endfor %}
-    {% endif %}
-    "
-{% endspaceless %}
+"{{ template.name }}";"{{ template.description }}";"{{ template.sqlFile }}";"{% if template.parameters is iterable and template.parameters|length > 0 %}{% set firstItem = true %}{% for entry in if entry is not iterable %}{% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}{% endfor %}{% endif %}
+";"{% if template.folders is iterable and template.folders|length > 0 %}{% set firstItem = true %}{% for entry in if entry is not iterable %}{% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}{% endfor %}{% endif %}
+";"{% if template.excludedTables is iterable and template.excludedTables|length > 0 %}{% set firstItem = true %}{% for entry in if entry is not iterable %}{% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}{% endfor %}{% endif %}
+";"{% if template.projects|default %}{% for relatedItem in template.projects %}{{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}"
+;"{% if template.sites|default %}{% for relatedItem in template.sites %}{{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}"
 {% endfor %}
