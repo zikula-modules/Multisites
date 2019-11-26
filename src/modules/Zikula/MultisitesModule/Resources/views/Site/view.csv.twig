@@ -5,18 +5,16 @@
 
 {% spaceless %}
     "{{ site.name }}";"{{ site.description }}";"{{ site.siteAlias }}";"{{ site.siteName }}";"{{ site.siteDescription }}";"{{ site.siteAdminName }}";"";"{{ site.siteAdminRealName }}";"{{ site.siteAdminEmail }}";"{{ site.siteCompany }}";"{{ site.siteDns }}";"{{ site.databaseName }}";"{{ site.databaseUserName }}";"";"{{ site.databaseHost }}";"{{ site.databaseType }}";"{{ site.logo }}";"{{ site.favIcon }}";"{% if site.allowedLocales is iterable and site.allowedLocales|length > 0 %}
-        <ul>
-        {% for entry in site.allowedLocales if entry is not iterable %}
-            <li>{{ entry }}</li>
+        {% set firstItem = true %}
+        {% for entry in if entry is not iterable %}
+            {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
         {% endfor %}
-        </ul>
     {% endif %}
     ";"{{ site.parametersCsvFile }}";"{% if site.parametersArray is iterable and site.parametersArray|length > 0 %}
-        <ul>
-        {% for entry in site.parametersArray if entry is not iterable %}
-            <li>{{ entry }}</li>
+        {% set firstItem = true %}
+        {% for entry in if entry is not iterable %}
+            {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
         {% endfor %}
-        </ul>
     {% endif %}
     ";"{% if not site.active %}0{% else %}1{% endif %}";"{% if site.template|default %}{{ site.template|zikulamultisitesmodule_formattedTitle }}{% endif %}";"{% if site.project|default %}{{ site.project|zikulamultisitesmodule_formattedTitle }}{% endif %}"
 {% endspaceless %}
