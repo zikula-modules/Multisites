@@ -18,7 +18,8 @@ jobs:
     - name: Checkout sources from master branch
       uses: actions/checkout@v1
       with:
-        ref: master
+        #ref: master
+        ref: '2.0.0-prototype'
 
     # see https://github.com/Guite/generator-action/
     - name: Call standalone generator
