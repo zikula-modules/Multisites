@@ -2,8 +2,8 @@
 
 The Multisites module.
 
-![](https://github.com/zikula-modules/Multisites/workflows/Test%20module/badge.svg)
 ![](https://github.com/zikula-modules/Multisites/workflows/Generate%20module/badge.svg)
+![](https://github.com/zikula-modules/Multisites/workflows/Test%20module/badge.svg)
 
 ## Documentation
 
