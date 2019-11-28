@@ -46,6 +46,8 @@ jobs:
         body: ${{ env.PULL_REQUEST_BODY }}
         branch: generator-update
         branch-suffix: none
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PULL_REQUEST_BASE: '2.0.0-prototype'
 
     - name: Check outputs
