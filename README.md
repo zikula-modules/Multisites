@@ -2,7 +2,7 @@
 
 The Multisites module.
 
-![Build Status](http://guite.info:8080/buildStatus/icon?job=Applications_Multisites/master)
+**Please check the [2.0.0-prototype branch](https://github.com/zikula-modules/Multisites/tree/2.0.0-prototype) for the new version!**
 
 ## Documentation
 
