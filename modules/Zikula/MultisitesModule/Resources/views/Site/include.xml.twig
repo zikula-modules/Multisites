@@ -21,7 +21,7 @@
     <favIcon{% if site.favIcon is not empty and site.favIconMeta|default %} extension="{{ site.favIconMeta.extension }}" size="{{ site.favIconMeta.size }}" isImage="{% if site.favIconMeta.isImage %}true{% else %}false{% endif %}"{% if site.favIconMeta.isImage %} width="{{ site.favIconMeta.width }}" height="{{ site.favIconMeta.height }}" format="{{ site.favIconMeta.format }}"{% endif %}{% endif %}>{{ site.favIcon }}</favIcon>
     <allowedLocales>{% if site.allowedLocales is iterable and site.allowedLocales|length > 0 %}
         {% set firstItem = true %}
-        {% for entry in if entry is not iterable %}
+        {% for entry in site.allowedLocales if entry is not iterable %}
             {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
         {% endfor %}
     {% endif %}
@@ -29,7 +29,7 @@
     <parametersCsvFile{% if site.parametersCsvFile is not empty and site.parametersCsvFileMeta|default %} extension="{{ site.parametersCsvFileMeta.extension }}" size="{{ site.parametersCsvFileMeta.size }}" isImage="{% if site.parametersCsvFileMeta.isImage %}true{% else %}false{% endif %}"{% if site.parametersCsvFileMeta.isImage %} width="{{ site.parametersCsvFileMeta.width }}" height="{{ site.parametersCsvFileMeta.height }}" format="{{ site.parametersCsvFileMeta.format }}"{% endif %}{% endif %}>{{ site.parametersCsvFile }}</parametersCsvFile>
     <parametersArray>{% if site.parametersArray is iterable and site.parametersArray|length > 0 %}
         {% set firstItem = true %}
-        {% for entry in if entry is not iterable %}
+        {% for entry in site.parametersArray if entry is not iterable %}
             {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
         {% endfor %}
     {% endif %}
