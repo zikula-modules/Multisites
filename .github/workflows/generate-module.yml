@@ -15,12 +15,10 @@ jobs:
     # This job runs on Linux
     runs-on: ubuntu-latest
     steps:
-    #- name: Checkout sources from master branch
-    - name: Checkout sources from 2.0.0-prototype branch
+    - name: Checkout sources from master branch
       uses: actions/checkout@v1
       with:
-        #ref: master
-        ref: '2.0.0-prototype'
+        ref: master
 
     # see https://github.com/Guite/generator-action/
     - name: Call standalone generator
@@ -46,9 +44,6 @@ jobs:
         body: ${{ env.PULL_REQUEST_BODY }}
         branch: generator-update
         branch-suffix: none
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PULL_REQUEST_BASE: '2.0.0-prototype'
 
     - name: Check outputs
       run: |
