@@ -2,7 +2,8 @@
 
 The Multisites module.
 
-![Build Status](http://guite.info:8080/buildStatus/icon?job=Applications_Multisites/2.0.0-prototype)
+![](https://github.com/zikula-modules/Multisites/workflows/Test%20module/badge.svg)
+![](https://github.com/zikula-modules/Multisites/workflows/Generate%20module/badge.svg)
 
 ## Documentation
 
