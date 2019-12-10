@@ -15,6 +15,9 @@ jobs:
       run: |
         cd modules/Zikula/MultisitesModule/
         composer update
+        cd ../../
+        cd modules/Zikula/SubsiteModule/
+        composer update
 
     # see https://github.com/peter-evans/create-pull-request
     - name: Commit changes and create/update pull request
