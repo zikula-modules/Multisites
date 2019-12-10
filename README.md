@@ -2,7 +2,7 @@
 
 The Multisites module.
 
-**Please check the [2.0.0-prototype branch](https://github.com/zikula-modules/Multisites/tree/2.0.0-prototype) for the new version!**
+**Please check the [master branch](https://github.com/zikula-modules/Multisites/tree/master) for the new version!**
 
 ## Documentation
 
