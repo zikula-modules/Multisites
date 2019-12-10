@@ -1,0 +1,5 @@
+{# purpose of this template: projects view csv view #}
+"{{ __('Name') }}";"{{ __('Sites') }}";"{{ __('Templates') }}"
+{% for project in items %}
+"{{ project.name }}";"{% if project.sites|default %}{% for relatedItem in project.sites %}{{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}";"{% if project.templates|default %}{% for relatedItem in project.templates %}{{ relatedItem|zikulamultisitesmodule_formattedTitle }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}"
+{% endfor %}

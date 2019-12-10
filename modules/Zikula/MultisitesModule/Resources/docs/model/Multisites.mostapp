@@ -1,0 +1,266 @@
+application "Multisites" {
+    documentation "Zikula Multisites manager."
+    vendor "Zikula"
+    author "Albert Pérez Monfort"
+    email "aperezm@xtec.cat"
+    url "https://modulestudio.de"
+    version "2.1.0"
+    prefix "multisites"
+    generateAccountApi false
+    generateSearchApi false
+    generateMailzApi false
+    generateListBlock false
+    generateDetailBlock false
+    generateModerationBlock false
+    generateListContentType false
+    generateDetailContentType false
+    generateNewsletterPlugin false
+    generateModerationPanel false
+    generatePendingContentSupport false
+    generateExternalControllerAndFinder false
+    generateScribitePlugins false
+    generateTagSupport false
+    generateMultiHookNeedles false
+    generateRssTemplates false
+    generateAtomTemplates false
+    generateKmlTemplates false
+    generateIcsTemplates false
+    skipFiles "
+        CHANGELOG.md,
+        Container/LinkContainer.php,
+        Entity/Repository/ProjectRepository.php,
+        Form/Handler/Site/EditHandler.php,
+        Form/Type/QuickNavigation/ProjectQuickNavType.php,
+        Form/Type/QuickNavigation/TemplateQuickNavType.php,
+        Form/Type/SiteType.php,
+        Helper/CollectionFilterHelper.php,
+        Helper/ControllerHelper.php,
+        Helper/ModelHelper.php,
+        Listener/EntityLifecycleListener.php,
+        Menu/MenuBuilder.php,
+        MultisitesModuleInstaller.php,
+        README.md
+    "
+    markFiles "
+        composer.json,
+        Controller/AdminController.php,
+        Controller/AjaxController.php,
+        Controller/ConfigController.php,
+        Controller/SiteController.php,
+        Controller/TemplateController.php,
+        Entity/TemplateEntity.php,
+        Resources/config/forms.yml,
+        Resources/config/helpers.yml,
+        Resources/config/menu.yml,
+        Resources/config/services.yml
+    "
+    entities {
+        entity "site" leading {
+            documentation "Each site is assigned to a project and instance of a certain site template."
+            nameMultiple "sites"
+            displayPattern "#name#"
+            fields {
+                string "name" {
+                    defaultValue ""
+                    length 150
+                },
+                string "description" {
+                    defaultValue ""
+                    mandatory false
+                },
+                string "siteAlias" {
+                    defaultValue ""
+                    length 80
+                },
+                string "siteName" {
+                    defaultValue ""
+                    length 150
+                },
+                string "siteDescription" {
+                    defaultValue ""
+                    mandatory false
+                },
+                string "siteAdminName" {
+                    defaultValue "admin"
+                    length 25
+                },
+                string "siteAdminPassword" {
+                    defaultValue ""
+                    length 15
+                    role PASSWORD
+                },
+                string "siteAdminRealName" {
+                    defaultValue ""
+                    mandatory false
+                    length 70
+                },
+                email "siteAdminEmail" {
+                    defaultValue ""
+                    length 40
+                },
+                string "siteCompany" {
+                    defaultValue ""
+                    mandatory false
+                    length 100
+                },
+                string "siteDns" {
+                    defaultValue ""
+                },
+                string "databaseName" {
+                    defaultValue ""
+                    length 50
+                },
+                string "databaseUserName" {
+                    defaultValue ""
+                    length 50
+                },
+                string "databasePassword" {
+                    defaultValue ""
+                    length 50
+                    role PASSWORD
+                },
+                string "databaseHost" {
+                    defaultValue "localhost"
+                    length 50
+                },
+                string "databaseType" {
+                    defaultValue ""
+                    length 25
+                },
+                upload "logo" {
+                    mandatory false
+                },
+                upload "favIcon" {
+                    mandatory false
+                    allowedExtensions "png, ico"
+                },
+                array "allowedLocales" {
+                    defaultValue ""
+                    mandatory false
+                },
+                upload "parametersCsvFile" {
+                    mandatory false
+                    allowedExtensions "csv"
+                    mimeTypes "text/csv"
+                },
+                array "parametersArray" {
+                    defaultValue ""
+                    mandatory false
+                },
+                boolean "active" ajaxTogglability {
+                    defaultValue "false"
+                    mandatory false
+                }
+            }
+            indexes {
+                index "siteDnsIndex" {
+                    items {
+                        indexItem "siteDns"
+                    }
+                }
+            }
+            actions {
+                viewAction "View",
+                editAction "Edit",
+                deleteAction "Delete",
+                customAction "ManageExtensions",
+                customAction "ManageThemes",
+                customAction "SetThemeAsDefault",
+                customAction "ViewTools",
+                customAction "ExecuteTool",
+                customAction "ExportDatabaseAsTemplate"
+            }
+        },
+        entity "template" {
+            documentation "A site template represents a blueprint for several sites. Each template may be assigned to all or specific projects."
+            nameMultiple "templates"
+            displayPattern "#name#"
+            fields {
+                string "name" {
+                    defaultValue ""
+                    length 150
+                },
+                string "description" {
+                    defaultValue ""
+                    mandatory false
+                    length 250
+                },
+                upload "sqlFile" {
+                    allowedExtensions "sql, txt"
+                    mimeTypes "text/*"
+                },
+                array "parameters" {
+                    defaultValue ""
+                    mandatory false
+                },
+                array "folders" {
+                    defaultValue ""
+                    mandatory false
+                },
+                array "excludedTables" {
+                    defaultValue ""
+                    mandatory false
+                }
+            }
+            actions {
+                viewAction "View",
+                editAction "Edit",
+                customAction "CreateParametersCsvTemplate",
+                customAction "Reapply"
+            }
+        },
+        entity "project" {
+            documentation "Projects serve for grouping sites by clients or topics."
+            nameMultiple "projects"
+            displayPattern "#name#"
+            fields {
+                string "name" {
+                    defaultValue ""
+                    length 150
+                }
+            }
+            actions {
+                viewAction "View",
+                editAction "Edit"
+            }
+        }
+    }
+    relations {
+        one2many bidirectional {
+            source "template"
+            sourceAlias "template"
+            target "site"
+            targetAlias "sites"
+            cascade REMOVE
+            orderBy "name"
+        },
+        one2many bidirectional {
+            source "project"
+            sourceAlias "project"
+            target "site"
+            targetAlias "sites"
+            cascade REMOVE
+        },
+        many2many bidirectional {
+            source "project"
+            sourceAlias "projects"
+            target "template"
+            targetAlias "templates"
+            sourceEditing NONE
+            targetEditing CHOOSE
+            refClass "ProjectTemplate"
+        }
+    }
+    variables {
+        varContainer "SecuritySettings" {
+            documentation "Here you can define security-related settings."
+            fields {
+                string "globalAdminName",
+                string "globalAdminPassword" {
+                    role PASSWORD
+                },
+                email "globalAdminEmail"
+            }
+        }
+    }
+}

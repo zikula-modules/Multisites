@@ -1,0 +1,7 @@
+{# purpose of this template: projects view json view #}
+[
+{% for project in items %}
+    {% if not loop.first %},{% endif %}
+    {{ project.toArray()|json_encode()|raw }}
+{% endfor %}
+]

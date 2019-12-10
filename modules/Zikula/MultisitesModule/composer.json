@@ -1,0 +1,51 @@
+{
+    "name": "zikula/multisites-module",
+    "version": "2.1.0",
+    "description": "Zikula Multisites manager.",
+    "type": "zikula-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Albert Perez Monfort",
+            "email": "aperezm@xtec.cat",
+            "homepage": "https://modulestudio.de",
+            "role": "owner"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Zikula\\MultisitesModule\\": "" }
+    },
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "require-dev": {
+    },
+    "extra": {
+        "zikula": {
+            "core-compatibility": ">=2.0.11 <3.0.0",
+            "class": "Zikula\\MultisitesModule\\ZikulaMultisitesModule",
+            "displayname": "Multisites",
+            "url": "multisites",
+            "capabilities": {
+                "user": {"route": "zikulamultisitesmodule_site_view"},
+                "admin": {"route": "zikulamultisitesmodule_admin_index"}
+            },
+            "securityschema": {
+                "ZikulaMultisitesModule::": "::",
+                "ZikulaMultisitesModule:Site:": "Site ID::",
+                "ZikulaMultisitesModule:Template:Site": "Template ID:Site ID:",
+                "ZikulaMultisitesModule:Project:Site": "Project ID:Site ID:",
+                "ZikulaMultisitesModule:Template:": "Template ID::",
+                "ZikulaMultisitesModule:Project:Template": "Project ID:Template ID:",
+                "ZikulaMultisitesModule:Project:": "Project ID::",
+                "ZikulaMultisitesModule::Ajax": "::"
+            }
+        }
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

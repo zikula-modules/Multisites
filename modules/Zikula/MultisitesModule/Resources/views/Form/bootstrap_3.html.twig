@@ -1,0 +1,33 @@
+{# purpose of this template: apply some general form extensions #}
+{% extends 'ZikulaFormExtensionBundle:Form:bootstrap_3_zikula_admin_layout.html.twig' %}
+
+{% block zikulamultisitesmodule_field_upload_label %}{% endblock %}
+{% block zikulamultisitesmodule_field_upload_row %}
+    {% spaceless %}
+    {{ form_row(attribute(form, field_name)) }}
+    <div class="col-sm-9 col-sm-offset-3" style="margin-top: -20px; padding-left: 8px">
+        {% if not required %}
+            <em class="help-block small"><a id="{{ id }}_{{ field_name }}ResetVal" href="javascript:void(0);" class="hidden">{{ __('Reset to empty value') }}</a></em>
+        {% endif %}
+        <em class="help-block small">{{ __('Allowed file extensions') }}: <span id="{{ id }}_{{ field_name }}FileExtensions">{{ allowed_extensions|default('') }}</span></em>
+        {% if allowed_size|default %}
+            <em class="help-block small">{{ __('Allowed file size') }}: {{ allowed_size }}</em>
+        {% endif %}
+        {% if file_path|default %}
+            <span class="help-block">
+                {{ __('Current file') }}:
+                <a href="{{ file_url }}" title="{{ __('Open file') }}"{% if file_meta.isImage %} class="image-link"{% endif %}>
+                {% if file_meta.isImage %}
+                    <img src="{{ file_path|imagine_filter('zkroot', thumb_runtime_options) }}" alt="{{ edited_entity|zikulamultisitesmodule_formattedTitle|e('html_attr') }}" width="{{ thumb_runtime_options.thumbnail.size[0] }}" height="{{ thumb_runtime_options.thumbnail.size[1] }}" class="img-thumbnail" />
+                {% else %}
+                    {{ __('Download') }} ({{ file_meta.size|zikulamultisitesmodule_fileSize(file_path, false, false) }})
+                {% endif %}
+                </a>
+            </span>
+            {% if allow_deletion and not required and form[field_name ~ 'DeleteFile'] is defined %}
+                {{ form_row(attribute(form, field_name ~ 'DeleteFile')) }}
+            {% endif %}
+        {% endif %}
+    </div>
+    {% endspaceless %}
+{% endblock %}

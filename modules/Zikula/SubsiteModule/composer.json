@@ -1,0 +1,32 @@
+{
+    "name": "zikula/subsite-module",
+    "version": "1.0.0",
+    "description": "Zikula subsite module.",
+    "type": "zikula-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Axel Guckelsberger",
+            "email": "info@guite.de",
+            "homepage": "https://modulestudio.de",
+            "role": "owner"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Zikula\\SubsiteModule\\": "" }
+    },
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "extra": {
+        "zikula": {
+            "core-compatibility": ">=2.0.11 <3.0",
+            "class": "Zikula\\SubsiteModule\\ZikulaSubsiteModule",
+            "displayname": "Multisites Subsite Client",
+            "url": "subsite",
+            "securityschema": {
+                "ZikulaSubsiteModule::": "::"
+            }
+        }
+    }
+}

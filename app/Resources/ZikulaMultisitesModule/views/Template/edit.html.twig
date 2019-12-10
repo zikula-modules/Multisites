@@ -1,0 +1,123 @@
+{# purpose of this template: build the form to edit an instance of template #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'ZikulaMultisitesModule::' ~ baseTemplate ~ '.html.twig' %}
+
+{% block header %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
+{% endblock %}
+{% block title mode == 'create' ? __('Create template') : __('Edit template') %}
+{% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
+{% block content %}
+    <div class="zikulamultisitesmodule-template zikulamultisitesmodule-edit">
+        {% form_theme form with [
+            '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form, {attr: {id: 'templateEditForm', class: 'zikulamultisites-edit-form'}}) }}
+        {{ form_errors(form) }}
+        <fieldset>
+            <legend>{{ __('Content') }}</legend>
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+        </fieldset>
+        <fieldset>
+            <legend>{{ __('Template data') }}</legend>
+            {{ form_row(form.sqlFile) }}
+        </fieldset>
+
+        {{ include(
+            '@ZikulaMultisitesModule/Project/includeSelectMany.html.twig',
+            {group: 'template', heading: __('Projects'), alias: 'projects', mandatory: false, idPrefix: 'multisitesTemplate_Projects', linkingItem: template, displayMode: 'choices'}
+        ) }}
+
+        <fieldset>
+            <legend>{{ __('Advanced options') }}</legend>
+
+            {{ form_row(form.folders, {help: __('Enter the folders to be created for new sites separated by line breaks. If you need a folder within another one you can write expressions like "folder/folder".')}) }}
+
+            {{ form_row(form.excludedTables, {help: __('Enter the names of database tables which should be skipped during template reapplications separated by line breaks. With this you can for example avoid overriding your local user table. Note you can use * as a placeholder, like content_* for all Content tables for only * for all tables; ensure to use this if you want to use a template for different sites without any parameters, otherwise you will end up with overriding your data later on when the template is reapplied.')}) }}
+
+            {{ form_row(form.parameters, {help: [__('Enter parameter names separated by line breaks. Each parameter represents a variable information which is being replaced by concrete values when creating a new site or reapplying the template on existing sites. The parameter names can be used as placeholders anywhere in the template data accordingly.'), __('Placeholder syntax: ###PARAMETERNAME###')]}) }}
+        </fieldset>
+
+        {% if mode != 'create' %}
+            {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', {obj: template}) }}
+        {% endif %}
+
+        {% if supportsHookSubscribers and formHookTemplates|length > 0 %}
+            <fieldset>
+                {% for hookTemplate in formHookTemplates %}
+                    {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
+                {% endfor %}
+            </fieldset>
+        {% endif %}
+        
+        {% if form.moderationSpecificCreator is defined or form.moderationSpecificCreationDate is defined %}
+            <fieldset id="moderationFieldsSection">
+                <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
+                <div id="moderationFieldsContent">
+                    {% if form.moderationSpecificCreator is defined %}
+                        {{ form_row(form.moderationSpecificCreator) }}
+                    {% endif %}
+                    {% if form.moderationSpecificCreationDate is defined %}
+                        {{ form_row(form.moderationSpecificCreationDate) }}
+                    {% endif %}
+                </div>
+            </fieldset>
+        {% endif %}
+
+        {# include possible submit actions #}
+        <div class="form-group form-buttons">
+            <div class="col-sm-offset-3 col-sm-9">
+                {% for action in actions %}
+                    {{ form_widget(attribute(form, action.id)) }}
+                    {% if mode == 'create' and action.id == 'submit' %}
+                        {{ form_widget(attribute(form, 'submitrepeat')) }}
+                    {% endif %}
+                {% endfor %}
+                {{ form_widget(form.reset) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {% if supportsHookSubscribers %}
+            {% set hookId = mode != 'create' ? template.id : null %}
+            {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.templates.form_edit', id=hookId, outputAsArray=true) %}
+            {% if hooks is iterable and hooks|length > 0 %}
+                {% for area, hook in hooks %}
+                    <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+        
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {% set formInitScript %}
+        <script type="text/javascript">
+        /* <![CDATA[ */
+            var zikulaMultisitesInlineEditHandlers = [];
+            var zikulaMultisitesEditHandler = null;
+
+            ( function($) {
+                $(document).ready(function() {
+                    // initialise auto completion for user fields
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('zikulamultisitesmodule_template_moderationSpecificCreator');
+                    {% endif %}
+                    zikulaMultisitesInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ template.id }}{% endif %}');
+                    zikulaMultisitesInitUploadField('zikulamultisitesmodule_template_sqlFile_sqlFile');
+
+                    $('#parameters').keyup(function() {
+                        $(this).val($(this).val().toUpperCase();
+                    });
+                });
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', formInitScript) }}
+{% endblock %}

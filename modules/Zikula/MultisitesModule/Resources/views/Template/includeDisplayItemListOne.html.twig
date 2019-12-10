@@ -1,0 +1,5 @@
+{# purpose of this template: inclusion template for display of related templates #}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('template', constant('ACCESS_EDIT')) %}
+<h4>
+    {{ item|zikulamultisitesmodule_formattedTitle }}
+</h4>

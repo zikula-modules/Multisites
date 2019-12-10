@@ -1,0 +1,12 @@
+{# purpose of this template: inclusion template for display of related projects #}
+<ul id="{{ idPrefix }}ReferenceList">
+{% if items is defined and items is iterable %}
+{% for item in items %}
+{% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.getKey() %}
+<li id="{{ idPrefixItem }}">
+    {{ item|zikulamultisitesmodule_formattedTitle }}
+     <a id="{{ idPrefixItem }}Remove" href="javascript:zikulaMultisitesRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');"><i class="fa fa-trash-o"></i></a>
+</li>
+{% endfor %}
+{% endif %}
+</ul>

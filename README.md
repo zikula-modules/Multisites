@@ -2,7 +2,11 @@
 
 The Multisites module.
 
-**Please check the [2.0.0-prototype branch](https://github.com/zikula-modules/Multisites/tree/2.0.0-prototype) for the new version!**
+**Please check the [1.x branch](https://github.com/zikula-modules/Multisites/tree/1.x) for the version for Zikula 1.x!**
+
+[![](https://github.com/zikula-modules/Multisites/workflows/Generate%20module/badge.svg)](https://github.com/zikula-modules/Multisites/actions?query=workflow%3A"Generate+module")
+[![](https://github.com/zikula-modules/Multisites/workflows/Test%20module/badge.svg)](https://github.com/zikula-modules/Multisites/actions?query=workflow%3A"Test+module")
+
 
 ## Documentation
 
@@ -11,10 +15,9 @@ The Multisites module.
   3. [Installation](#installation)
   4. [Upgrading](#upgrading)
   5. [Configuration](#configuration)
-  6. [FileUtil change](#fileutilchange)
-  7. [Structure and management](#structure)
-  8. [Creating and adapting sites](#siteoperations)
-  9. [Questions, bugs and contributing](#contributing)
+  6. [Structure and management](#structure)
+  7. [Creating and adapting sites](#siteoperations)
+  8. [Questions, bugs and contributing](#contributing)
 
 
 <a name="introduction" />
@@ -34,7 +37,7 @@ multiple sites.
 
 ## Requirements
 
-This module is intended for being used with Zikula 1.4.5+.
+This module is intended for being used with Zikula 2.0.11+.
 
 
 <a name="installation" />
@@ -43,25 +46,24 @@ This module is intended for being used with Zikula 1.4.5+.
 
 The Multisites module is installed like this:
 
-1. Copy ZikulaMultisitesModule into your `modules` directory. Afterwards you should have a folder named `modules/Zikula/MultisitesModule/Resources`.
-2. Copy the content of _Resources/config-folder/_ into the _/config_ folder of your Zikula site.
-3. Copy the content of _Resources/app-resources/_ into the _/app/Resources_ folder of your Zikula site.
-4. Initialize and activate ZikulaMultisitesModule in the extensions administration.
-5. Move or copy the directory `Resources/userdata/ZikulaMultisitesModule/` to `/userdata/ZikulaMultisitesModule/`.
+1. Copy the content of `modules/` into the `modules/` directory of your Zikula installation. Afterwards you should have two folder named `modules/Zikula/MultisitesModule/` and `modules/Zikula/SubsiteModule/`.
+2. Copy the content of _app/Resources/_ into the _/app/Resources_ folder of your Zikula site.
+3. Initialize and activate ZikulaMultisitesModule in the extensions administration.
+4. Move or copy the directory `Resources/userdata/ZikulaMultisitesModule/` to `/web/uploads/ZikulaMultisitesModule/`.
    Note this step is optional as the install process can create these folders, too.
-6. Make the directory `/userdata/ZikulaMultisitesModule/` writable including all sub folders.
+5. Make the directory `/web/uploads/ZikulaMultisitesModule/` writable including all sub folders.
+
+Note the Multisites module should only be installed and activated at the main page. This repository also contains a second module, `ZikulaSubsiteModule`, which is required to be enabled for all sites except the main page.
 
 
 <a name="upgrading" />
 
 ## Upgrading
 
-The upgrade process from 2.0.0 to 2.1.0 has *NOT* been implemented yet.
+The upgrade process from 1.0.x to 2.0.0 and from 2.0.0 to 2.1.0 has been implemented.
+It has not been tested throughly yet though (please report your experience).
 
-The upgrade process from 1.0.x to 2.0.0 has been implemented.
-It has not been tested throughly yet though.
-
-Please report your experience.
+Also when updating to 2.1.0 you need to manually update `app/config/dynamic/generated.yml` and adjust the Multisites properties following the values in your old `/config/mutisites_config.php`. The old configuration files are not used anymore, because the whole `/config` directory is gone in Zikula 2.x.
 
 
 <a name="configuration" />
@@ -70,63 +72,6 @@ Please report your experience.
 
 When entering the Multisites administration area you will be redirected to a configuration wizard
 automatically.
-
-
-<a name="fileutilchange" />
-
-## FileUtil change
-
-At the moment you are required to edit the _/lib/legacy/util/FileUtil.php_ file and change the _getDataDirectory()_ method as follows:
-
-```
-    /**
-     * Get system data directory path.
-     *
-     * @return string The path to the data directory.
-     */
-    public static function getDataDirectory()
-    {
-        global $ZConfig;
-
-        $path = DataUtil::formatForOS(System::getVar('datadir'));
-
-        // return if this is a normal Zikula installation
-        if (!isset($ZConfig['Multisites']) || !isset($ZConfig['Multisites']['multisites.enabled']) || $ZConfig['Multisites']['multisites.enabled'] != 1) {
-            // strip prepending slash
-            $path = substr($path, 1, (strlen($path)-1));
-
-            return $path;
-        }
-
-        // this is a Multisites installation
-        $msConfig = $ZConfig['Multisites'];
-
-        $scriptRealPath = substr($_SERVER['SCRIPT_FILENAME'], 0, strrpos($_SERVER['SCRIPT_FILENAME'], '/'));
-        $dataFolderSegment = $msConfig['multisites.site_files_folder'];
-
-        $absoluteDataPath = $msConfig['multisites.files_real_path'] . $dataFolderSegment;
-        $relativeDataPath = str_replace($scriptRealPath, '', $absoluteDataPath);
-
-        // check whether this is the main site
-        $sitedns = $_SERVER['HTTP_HOST'];
-        if ($sitedns == $msConfig['multisites.mainsiteurl']) {
-            $path = $relativeDataPath;
-        } else {
-            // amend path to point to the site folder
-            $path = $relativeDataPath;
-            $pos = strrpos($path, $dataFolderSegment);
-            if ($pos !== false) {
-                $path = substr_replace($path, '', $pos, strlen($dataFolderSegment));
-            }
-            $path .= '/' . $msConfig['multisites.sitealias'] . $dataFolderSegment;
-        }
-
-        // strip prepending slash
-        $path = substr($path, 1, (strlen($path)-1));
-
-        return $path;
-    }
-```
 
 
 <a name="structure" />
@@ -240,7 +185,7 @@ At the moment you are required to edit the _/lib/legacy/util/FileUtil.php_ file 
 
   Use in code files:
 ```php
-    $city = ModUtil::getVar('Multisites', 'parameterValueCity', 'default value');
+    $city = $variableApi->get('ZikulaSubsiteModule', 'parameterValueCity', 'default value');
     if ($city == 'Berlin') {
         echo '<h2>Hello Berlin</h2>';
     }
@@ -248,10 +193,10 @@ At the moment you are required to edit the _/lib/legacy/util/FileUtil.php_ file 
 
   Use in templates:
 ```
-    {modgetvar module='Multisites' name='parameterValueCity' default='default value' assign='city'}
-    {if $city eq 'Munich'}
+    {% set city = getModVar('ZikulaSubsiteModule', 'parameterValueCity', 'default value') %}
+    {% if city == 'Munich' %}
         <h2>Hello Munich</h2>
-    {/if}
+    {% endif %}
 ```
 
 

@@ -1,0 +1,14 @@
+services:
+    # Form field types
+    
+    zikula_multisites_module.form.type.field.array:
+        class: Zikula\MultisitesModule\Form\Type\Field\ArrayType
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.type.field.upload:
+        class: Zikula\MultisitesModule\Form\Type\Field\UploadType
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.image_helper"
+            - "@zikula_multisites_module.upload_helper"
+        tags: ['form.type']

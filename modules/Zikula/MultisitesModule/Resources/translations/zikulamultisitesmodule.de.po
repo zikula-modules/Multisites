@@ -1,0 +1,2715 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Multisites v2.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Axel Guckelsberger <info@guite.de>\n"
+"Language-Team: Axel Guckelsberger <info@guite.de>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.0.1\n"
+
+msgid "%name%"
+msgstr "%name%"
+
+msgid "10"
+msgstr "10"
+
+msgid "100"
+msgstr "100"
+
+msgid "15"
+msgstr "15"
+
+msgid "20"
+msgstr "20"
+
+msgid "30"
+msgstr "30"
+
+msgid "5"
+msgstr "5"
+
+msgid "50"
+msgstr "50"
+
+msgid "A global administrator has been created."
+msgstr "Erledigt! Ein globaler Administrator wurde erstellt."
+
+msgid ""
+"A site template represents a blueprint for several sites. Each template may "
+"be assigned to all or specific projects."
+msgstr ""
+"Eine Seitenvorlage repräsentiert eine Blaupause für mehrere Seiten. Jede "
+"Vorlage kann allen oder lediglich bestimmten Projekten zugeordnet werden."
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "All except approved"
+msgstr "Alle außer freigegeben"
+
+msgid "Allowed extensions"
+msgstr "Erlaubte Erweiterungen"
+
+msgid "Allowed file extensions"
+msgstr "Erlaubte Dateiendungen"
+
+msgid "Allowed file size"
+msgstr "Erlaubte Dateigröße"
+
+msgid "Allowed layouts"
+msgstr "Erlaubte Layouts"
+
+msgid "Allowed locales"
+msgstr "Erlaubte Sprachen"
+
+msgid ""
+"An error occured during creation of the .htaccess file in directory \"%path%"
+"\"."
+msgstr ""
+"Beim Erstellen der .htaccess-Datei im Ordner \"%path%\" ist ein Fehler "
+"aufgetreten."
+
+msgid "Approved"
+msgstr "Freigegeben"
+
+msgid "Ascending"
+msgstr "Aufsteigend"
+
+msgid "Back to paginated view"
+msgstr "Zurück zur Seitenansicht"
+
+msgid "Backend"
+msgstr "Backend"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Choose action"
+msgstr "Aktion wählen"
+
+msgid "Choose the database type of the site"
+msgstr "Wähle den Typ der Datenbank aus"
+
+msgid "Choose the project"
+msgstr "Das Projekt auswählen"
+
+msgid "Choose the projects"
+msgstr "Die Projekte auswählen"
+
+msgid "Choose the template"
+msgstr "Die Vorlage auswählen"
+
+msgid "Choose the thumbnail mode."
+msgstr "Den Thumbnailmodus auswählen"
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Confirmation prompt"
+msgstr "Bestätigungsabfrage"
+
+msgid "Connection error: %message"
+msgstr "Verbindungsfehler: %message"
+
+msgid "Content"
+msgstr "Inhalt"
+
+msgid "Content has been approved and is available online."
+msgstr "Der Inhalt wurde freigegeben und ist online verfügbar."
+
+msgid "Could not delete the %s folder. Please remove it manually."
+msgstr "Der Ordner %s konnte nicht gelöscht werden. Bitte manuell entfernen."
+
+msgid ""
+"Could not update the %file% file automatically. Please compare it with "
+"%template% and update it manually."
+msgstr ""
+"Die Datei %file% konnte nicht automatisch aktualisiert werden. Bitte mit "
+"%template% vergleichen und manuell anpassen."
+
+msgid "Create a CSV file for the defined parameters"
+msgstr "Eine CSV-Datei für die definierten Parameter erstellen"
+
+msgid "Create another item after save"
+msgstr "Nach dem Speichern noch einen Eintrag erstellen"
+
+msgid "Create parameters csv template"
+msgstr "Parameter CSV-Vorlage erstellen"
+
+msgid "Create project"
+msgstr "Projekt erstellen"
+
+msgid "Create site"
+msgstr "Seite erstellen"
+
+msgid "Create site extension"
+msgstr "Seiten-Erweiterung erstellen"
+
+msgid "Create template"
+msgstr "Vorlage erstellen"
+
+msgid "Created by %user"
+msgstr "Erstellt von %user"
+
+msgid "Created by %user on %date"
+msgstr "Erstellt von %user am %date"
+
+msgid "Created on %date"
+msgstr "Erstellt am %date"
+
+msgid "Creation"
+msgstr "Erstellung"
+
+msgid "Creation and update"
+msgstr "Erstellung und Änderung"
+
+msgid "Creation date"
+msgstr "Erstellungsdatum"
+
+msgid "Creator"
+msgstr "Ersteller"
+
+msgid "Current file"
+msgstr "Aktuelle Datei"
+
+msgid "Custom template"
+msgstr "Eigene Vorlage"
+
+msgid "DB Query error."
+msgstr "Fehler! Datenbankabfrage fehlgeschlagen."
+
+msgid "Database SQL Export"
+msgstr "Datenbank SQL-Export"
+
+msgid "Database host"
+msgstr "Datenbank Host"
+
+msgid "Database name"
+msgstr "Datenbank Name"
+
+msgid "Database password"
+msgstr "Datenbank Kennwort"
+
+msgid "Database type"
+msgstr "Datenbank Typ"
+
+msgid "Database user name"
+msgstr "Datenbank Benutzer"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Delete content permanently."
+msgstr "Den Inhalt permanent löschen."
+
+msgid "Delete existing file"
+msgstr "Existierende Datei löschen"
+
+msgid "Delete site"
+msgstr "Seite löschen"
+
+msgid "Delete this file ?"
+msgstr "Diese Datei löschen ?"
+
+msgid "Delete this site"
+msgstr "Diese Seite wirklich löschen?"
+
+msgid "Deleted"
+msgstr "Gelöscht"
+
+msgid "Descending"
+msgstr "Absteigend"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Do you really want to delete this site: \"%name%\" ?"
+msgstr "Soll diese Seite wirklich gelöscht werden: \"%name%\" ?"
+
+msgid "Doctrine Exception"
+msgstr "Doctrine Ausnahme"
+
+msgid "Done! Cleared all cache and compile directories for site %s."
+msgstr ""
+"Erledigt! Alle Cache und Compile Verzeichnisse für die Seite %s geleert."
+
+msgid "Done! Item created."
+msgstr "Erledigt! Eintrag angelegt."
+
+msgid "Done! Item deleted."
+msgstr "Erledigt! Eintrag gelöscht."
+
+msgid "Done! Item updated."
+msgstr "Erledigt! Eintrag geändert."
+
+msgid "Done! Module configuration updated."
+msgstr "Erledigt! Modulkonfiguration geändert."
+
+msgid "Done! Project created."
+msgstr "Erledigt! Projekt erstellt."
+
+msgid "Done! Project deleted."
+msgstr "Erledigt! Projekt gelöscht."
+
+msgid "Done! Project updated."
+msgstr "Erledigt! Projekt geändert."
+
+msgid "Done! Site created."
+msgstr "Erledigt! Seite erstellt."
+
+msgid "Done! Site deleted."
+msgstr "Erledigt! Seite gelöscht."
+
+msgid "Done! Site updated."
+msgstr "Erledigt! Seite geändert."
+
+msgid "Done! Template created."
+msgstr "Erledigt! Vorlage erstellt."
+
+msgid "Done! Template deleted."
+msgstr "Erledigt! Vorlage gelöscht."
+
+msgid "Done! Template updated."
+msgstr "Erledigt! Vorlage geändert."
+
+msgid "Download"
+msgstr "Download"
+
+msgid ""
+"Each site is assigned to a project and instance of a certain site template."
+msgstr ""
+"Jede Seite ist einem Projekt zugeordnet und Ausprägung einer bestimmten "
+"Seitenvorlage."
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Edit project"
+msgstr "Projekt bearbeiten"
+
+msgid "Edit projects workflow"
+msgstr "Workflow für Projekte bearbeiten"
+
+msgid "Edit site"
+msgstr "Seite bearbeiten"
+
+msgid "Edit sites workflow"
+msgstr "Workflow für Seiten bearbeiten"
+
+msgid "Edit template"
+msgstr "Vorlage bearbeiten"
+
+msgid "Edit templates workflow"
+msgstr "Workflow für Vorlagen bearbeiten"
+
+msgid "Edit this project"
+msgstr "Dieses Projekt bearbeiten"
+
+msgid "Edit this site"
+msgstr "Diese Seite bearbeiten"
+
+msgid "Edit this template"
+msgstr "Diese Vorlage bearbeiten"
+
+msgid "Edit workflow for projects"
+msgstr "Workflow für Projekte bearbeiten"
+
+msgid "Edit workflow for sites"
+msgstr "Workflow für Seiten bearbeiten"
+
+msgid "Edit workflow for templates"
+msgstr "Workflow für Vorlagen bearbeiten"
+
+msgid "Enable shrinking"
+msgstr "Verkleinerung von zu großen Bildern aktivieren"
+
+msgid "Enter one entry per line."
+msgstr "Einen Eintrag je Zeile eingeben."
+
+msgid "Enter the allowed locales of the site"
+msgstr "Gebe die erlaubten Sprachen für die Seite ein"
+
+msgid "Enter the database host of the site"
+msgstr "Gebe den Hostnamen für die Datenbank ein"
+
+msgid "Enter the database name of the site"
+msgstr "Gebe den Namen der Datenbank für diese Seite ein"
+
+msgid "Enter the database password of the site"
+msgstr "Gebe das Kennwort für die Datenbank ein"
+
+msgid "Enter the database type of the site"
+msgstr "Wähle den Typ der Datenbank aus"
+
+msgid "Enter the database user name of the site"
+msgstr "Gebe den Benutzernamen für die Datenbank ein"
+
+msgid "Enter the description of the site"
+msgstr "Gebe die interne Beschreibung der Seite ein"
+
+msgid "Enter the description of the template"
+msgstr "Beschreibe die Vorlage ausführlich"
+
+msgid "Enter the excluded tables of the template"
+msgstr "Die ausgeschlossenen Tabellen der Vorlage eingeben"
+
+msgid "Enter the fav icon of the site"
+msgstr "Das FavIcon der Seite eingeben"
+
+msgid "Enter the folders of the template"
+msgstr "Die Ordner der Vorlage eingeben"
+
+msgid "Enter the global admin email."
+msgstr "Bitte die E-Mail-Adresse des globalen Administrators eingeben."
+
+msgid "Enter the global admin name."
+msgstr "Bitte den (Nutzer-)Namen des globalen Administrators eingeben."
+
+msgid "Enter the global admin password."
+msgstr "Bitte das Kennwort des globalen Administrators eingeben."
+
+msgid "Enter the logo of the site"
+msgstr "Das Logo der Seite eingeben"
+
+msgid "Enter the name of the project"
+msgstr "Gebe den Namen des Projektes ein"
+
+msgid "Enter the name of the site"
+msgstr "Gebe den internen Namen der Seite ein"
+
+msgid "Enter the name of the template"
+msgstr "Gebe den Namen der Vorlage ein"
+
+msgid "Enter the parameters array of the site"
+msgstr "Die Parameterliste der Seite eingeben"
+
+msgid "Enter the parameters csv file of the site"
+msgstr "Die CSV-Datei mit Parametern der Seite eingeben"
+
+msgid "Enter the parameters of the template"
+msgstr "Die Parameter der Vorlage eingeben"
+
+msgid "Enter the project entries per page."
+msgstr "Die Projekt-Einträge je Seite eingeben."
+
+msgid "Enter the shrink height."
+msgstr "Die reduzierte Höhe eingeben"
+
+msgid "Enter the shrink width."
+msgstr "Die reduzierte Breite eingeben"
+
+msgid "Enter the site admin email of the site"
+msgstr "Gebe die E-Mail-Adresse des Seiten-Administrators ein"
+
+msgid "Enter the site admin name of the site"
+msgstr "Gebe den (Nutzer-)Namen des Seiten-Administrators ein"
+
+msgid "Enter the site admin password of the site"
+msgstr "Gebe das Kennwort des Seiten-Administrators ein."
+
+msgid "Enter the site admin real name of the site"
+msgstr "Gebe den realen Namen des Seiten-Administrators ein"
+
+msgid "Enter the site alias of the site"
+msgstr "Gebe ein Alias für diese Seite ein"
+
+msgid "Enter the site company of the site"
+msgstr "Gebe das Unternehmen der Seite ein"
+
+msgid "Enter the site description of the site"
+msgstr "Gebe die Beschreibung der Seite ein"
+
+msgid "Enter the site dns of the site"
+msgstr "Gebe die Domain bzw. den Ordnernamen für diese Seite ein"
+
+msgid "Enter the site entries per page."
+msgstr "Die Seiten-Einträge je Seite eingeben."
+
+msgid "Enter the site name of the site"
+msgstr "Gebe den Namen der Seite ein"
+
+msgid "Enter the sql file of the template"
+msgstr "Die SQL-Datei der Vorlage eingeben."
+
+msgid "Enter the template entries per page."
+msgstr "Die Vorlagen-Eitnräge je Seite eingeben."
+
+msgid "Enter the thumbnail height edit."
+msgstr "Die Vorschaubildhöhe für die Bearbeitung eingeben"
+
+msgid "Enter the thumbnail height view."
+msgstr "Die Vorschaubildhöhe für die Listen eingeben"
+
+msgid "Enter the thumbnail width edit."
+msgstr "Die Vorschaubildbreite für die Bearbeitung eingeben"
+
+msgid "Enter the thumbnail width view."
+msgstr "Die Vorschaubildbreite für die Listen eingeben"
+
+msgid "Enter values for the template parameters"
+msgstr "Gebe Werte für die Vorlagen-Parameter ein"
+
+msgid "Error changing module state."
+msgstr "Fehler! Änderung des Modulzustands fehlgeschlagen."
+
+msgid "Error creating module."
+msgstr "Fehler! Erstellen des Moduls fehlgeschlagen."
+
+msgid "Error creating theme."
+msgstr "Fehler! Erstellen des Themes fehlgeschlagen."
+
+msgid "Error deleting directory <strong>%directory</strong>."
+msgstr "Fehler beim Löschen des Verzeichnisses <strong>%directory</strong>."
+
+msgid "Error deleting file <strong>%file</strong>."
+msgstr "Fehler beim Löschen der Datei <strong>%file</strong>."
+
+msgid "Error deleting module."
+msgstr "Fehler! Löschen des Moduls fehlgeschlagen."
+
+msgid "Error deleting theme."
+msgstr "Fehler! Löschen des Themes fehlgeschlagen."
+
+msgid "Error during deleting the database."
+msgstr "Fehler beim Löschen der Datenbank."
+
+msgid "Error during deleting the site files directory."
+msgstr "Fehler beim Löschen des Seiten-Dateiverzeichnisses."
+
+msgid "Error during executing query in database %s."
+msgstr "Fehler beim Ausführen der Abfrage in Datenbank %s."
+
+msgid "Error importing the database in line"
+msgstr "Fehler! Importieren der Datenbank in Zeile"
+
+msgid "Error! Connecting to the database %s failed."
+msgstr "Fehler! Das Verbinden zur Datenbank %s ist fehlgeschlagen."
+
+msgid "Error! Connecting to the database failed."
+msgstr "Fehler! Verbinden zur Datenbank fehlgeschlagen."
+
+msgid "Error! Could not determine workflow actions."
+msgstr "Fehler! Die Workflow-Aktionen konnten nicht ermittelt werden."
+
+msgid "Error! Could not do what you wanted. Please check your input."
+msgstr ""
+"Fehler! Die gewünschte Aktion konnte nicht ausgeführt werden. Bitte die "
+"Eingaben überprüfen."
+
+msgid "Error! Could not find MySQL program directory."
+msgstr "Fehler! Das MySQL-Programmverzeichnis konnte nicht gefunden werden."
+
+msgid "Error! Creating parameter \"%s\" failed."
+msgstr "Fehler! Erstellen des Parameters \"%s\" fehlgeschlagen."
+
+msgid "Error! Creation attempt failed."
+msgstr "Fehler! Erstellung fehlgeschlagen."
+
+msgid "Error! Creation of database failed."
+msgstr "Fehler! Erstellung der Datenbank fehlgeschlagen."
+
+msgid "Error! Creation of database tables failed."
+msgstr "Fehler! Erstellung der Datenbank-Tabellen fehlgeschlagen."
+
+msgid "Error! Deleting old parameters failed."
+msgstr "Fehler! Löschen der alten Parameter fehlgeschlagen."
+
+msgid "Error! Deleting the permission sequences having a value below 0 failed."
+msgstr ""
+"Fehler! Das Löschen der Sequenzen mit Wert kleiner 0 ist fehlgeschlagen."
+
+msgid "Error! Deletion attempt failed."
+msgstr "Fehler! Löschversuch fehlgeschlagen."
+
+msgid "Error! Deletion of old database tables failed."
+msgstr "Fehler! Löschen der alten Datenbank-Tabellen fehlgeschlagen."
+
+msgid ""
+"Error! Importing the database failed. Perhaps there is a problem with the "
+"template file."
+msgstr ""
+"Fehler! Importieren der Datenbank fehlgeschlagen. Vielleicht gibt es ein "
+"Problem mit der Vorlagendatei."
+
+msgid "Error! Invalid identifier received."
+msgstr "Fehler! Ungültigen Identifier erhalten."
+
+msgid "Error! Invalid module state transition."
+msgstr "Fehler! Ungültiger Statuswechsel des Moduls."
+
+msgid "Error! Invalid object type received."
+msgstr "Fehler! Ungültigen Objekttyp erhalten."
+
+msgid "Error! It is not allowed to delete this site."
+msgstr "Fehler! Es ist nicht erlaubt, diese Seite zu löschen."
+
+msgid "Error! No site with id %s could be found."
+msgstr "Fehler! Es konnte keine Seite mit der ID %s gefunden werden."
+
+msgid "Error! No valid theme name received."
+msgstr "Fehler! Keinen gültigen Theme-Namen erhalten."
+
+msgid ""
+"Error! Please either provide a csv file containing the required parameter "
+"values or enter them manually."
+msgstr ""
+"Fehler! Bitte entweder eine CSV-Datei mit den benötigten Parameterwerten "
+"bereitstellen oder diese manuell eingeben."
+
+msgid "Error! Please enter some sql commands or provide a sql file."
+msgstr ""
+"Fehler! Bitte entweder einige SQL-Kommandos oder eine SQL-Datei "
+"bereitstellen."
+
+msgid "Error! Please select at least one database host."
+msgstr "Fehler! Bitte mindestens einen Datenbank-Server auswählen."
+
+msgid "Error! Please select at least one database type."
+msgstr "Fehler! Bitte mindestens einen Datenbank-Typ auswählen."
+
+msgid "Error! Renaming of excluded database tables failed."
+msgstr ""
+"Fehler! Umbenennen der ausgeschlossenen Datenbank-Tabellen fehlgeschlagen."
+
+msgid "Error! The \"mysqldump\" program is not installed."
+msgstr "Fehler! Das Programm \"mysqldump\" ist nicht installiert."
+
+msgid ""
+"Error! The <strong>%directory</strong> directory does not exist and could "
+"not be created automatically. Please create it and make it writeable."
+msgstr ""
+"Fehler! Das Verzeichnis <strong>%directory</strong> existiert nicht und "
+"konnte nicht automatisch erstellt werden. Bitte lege es an und stelle es auf "
+"beschreibbar."
+
+msgid ""
+"Error! The <strong>%directory</strong> directory is not writeable. Please "
+"correct that."
+msgstr ""
+"Fehler! Das Verzeichnis <strong>%directory</strong> ist nicht beschreibbar. "
+"Bitte korrigiere das."
+
+msgid ""
+"Error! The database dump failed. Please ensure that the database user %1$s "
+"has the \"LOCK_TABLES\" permission and the web service may write into the "
+"%2$s folder."
+msgstr ""
+"Fehler! Der Datenbank-Dump ist fehlgeschlagen. Bitte sicherstellen, dass der "
+"Datenbanknutzer %1$s die \"LOCK_TABLES\" Berechtigung besitzt und der "
+"Webservice in den Ordner %2$s schreiben darf."
+
+msgid "Error! The site alias may contain only lowercase letters."
+msgstr "Fehler! Der Seiten-Alias darf nur Kleinbuchstaben enthalten."
+
+msgid "Error! The template sql file could not be found."
+msgstr "Fehler! Die SQL-Datei der Vorlage konnte nicht gefunden werden."
+
+msgid ""
+"Error! This file type is not allowed. Please choose another file format."
+msgstr ""
+"Fehler! Dieses Dateiformat ist nicht erlaubt. Bitte ein anderes Dateiformat "
+"wählen."
+
+msgid "Error! This file type seems not to be a valid image."
+msgstr "Fehler! Dieser Dateityp scheint kein gültiges Bild zu sein."
+
+msgid "Error! This template does not have any sites assigned yet."
+msgstr "Fehler! Diese Vorlage hat noch keine zugeordneten Seiten."
+
+msgid "Error! Update attempt failed."
+msgstr "Fehler! Änderung fehlgeschlagen."
+
+msgid "Error! Updating the database configuration file failed."
+msgstr "Fehler! Ändern der Datenbank-Konfigurationsdatei fehlgeschlagen."
+
+msgid "Error! Updating the site configuration failed."
+msgstr "Fehler! Aktualisierung der Seiten-Konfiguration fehlgeschlagen."
+
+msgid "Error! Updating the site parameters failed."
+msgstr "Fehler! Ändern der Seitenparameter fehlgeschlagen."
+
+msgid "Error! You need to select a template for new sites."
+msgstr "Fehler! Bitte eine Vorlage für die neue Seite auswählen."
+
+msgid "Error: invalid input."
+msgstr "Fehler! Ungültige Eingabe."
+
+msgid ""
+"Error: it seems everything is configured correctly, but Multisites is not "
+"running. Please check your configuration file!"
+msgstr ""
+"Fehler: es scheint, als ob alles korrekt konfiguriert ist, aber Multisites "
+"läuft nicht. Bitte überprüfe Deine Konfigurationsdatei!"
+
+msgid "Excluded tables"
+msgstr "Ausgeschlossene Tabellen"
+
+msgid "Execute mass queries in site databases"
+msgstr "Massenabfragen in den Seitendatenbanken ausführen"
+
+msgid "Execute tool"
+msgstr "Werkzeug ausführen"
+
+msgid "Export database as template"
+msgstr "Die Datenbank als Vorlage exportieren"
+
+msgid "Export the database as SQL file"
+msgstr "Die Datenbank als SQL-Datei exportieren"
+
+msgid "Fav icon"
+msgstr "FavIcon"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Folders"
+msgstr "Ordner"
+
+msgid "Frontend"
+msgstr "Frontend"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "Global admin email"
+msgstr "Globaler Admin E-Mail"
+
+msgid "Global admin name"
+msgstr "Globaler Admin Name"
+
+msgid "Global admin password"
+msgstr "Globaler Admin Kennwort"
+
+msgid "Here you can choose a custom creation date"
+msgstr "Hier kann ein abweichendes Erstellungsdatum ausgewählt werden"
+
+msgid "Here you can choose a user which will be set as creator"
+msgstr ""
+"Hier kann ein Benutzer ausgewählt werden, der als Ersteller gesetzt wird"
+
+msgid "Here you can configure parameters for list views."
+msgstr "Hier können Parameter für Listenansichten eingestellt werden."
+
+msgid "Here you can define security-related settings."
+msgstr "Hier können sicherheitsbezogene Einstellungen verändert werden."
+
+msgid "Here you can inspect and amend the existing workflows."
+msgstr ""
+"Hier können die bestehenden Workflows inpiziert und verändert verändert "
+"werden."
+
+msgid "Image settings for sites fav icon"
+msgstr "Bildeinstellungen für FavIcons von Seiten"
+
+msgid "Image settings for sites logo"
+msgstr "Bildeinstellungen für Logos von Seiten"
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "Imported"
+msgstr "Importiert"
+
+msgid "Initial"
+msgstr "Initial"
+
+msgid "Inset"
+msgstr "Inset"
+
+msgid "Invalid user identifier received."
+msgstr "Fehler! Ungültigen Benutzer Identifier erhalten."
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Last update"
+msgstr "Letzte Änderung"
+
+msgid "List views"
+msgstr "Listenansichten"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "Manage extensions"
+msgstr "Seiten-Erweiterungen"
+
+msgid "Manage module updates"
+msgstr "Modulaktualisierungen verwalten"
+
+msgid "Manage settings for this application"
+msgstr "Einstellungen für diese Anwendung verwalten"
+
+msgid "Manage the modules for this site"
+msgstr "Die Module für diese Seite verwalten"
+
+msgid "Manage the themes for this site"
+msgstr "Die Themes für diese Seite verwalten"
+
+msgid "Manage themes"
+msgstr "Seiten-Layouts"
+
+msgid "Moderation"
+msgstr "Moderation"
+
+msgid "My projects"
+msgstr "Meine Projekte"
+
+msgid "My sites"
+msgstr "Meine Seiten"
+
+msgid "My templates"
+msgstr "Meine Vorlagen"
+
+msgid "MySQL"
+msgstr "MySQL"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "No module name received."
+msgstr "Fehler! Kein Modulname erhalten."
+
+msgid "No new state received."
+msgstr "Fehler! Keinen neuen Zustand erhalten."
+
+msgid "No projects found."
+msgstr "Keine Projekte gefunden."
+
+msgid "No sites found."
+msgstr "Keine Seiten gefunden."
+
+msgid "No such item found."
+msgstr "Keinen solchen Eintrag gefunden."
+
+msgid "No such item."
+msgstr "Keinen solchen Eintrag gefunden."
+
+msgid "No templates found."
+msgstr "Keine Vorlagen gefunden."
+
+msgid "No theme name received."
+msgstr "Fehler! Keinen Theme-Namen erhalten."
+
+msgid "No tool selected"
+msgstr "Kein Werkzeug ausgewählt"
+
+msgid "Not set."
+msgstr "Nicht angegeben."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Only digits are allowed."
+msgstr "Es sind nur Zahlen erlaubt."
+
+msgid "Only item titles"
+msgstr "Nur Titel der Einträge"
+
+msgid "Open file"
+msgstr "Datei öffnen"
+
+msgid "Operation cancelled."
+msgstr "Operation abgebrochen."
+
+msgid "Outbound"
+msgstr "Outbound"
+
+msgid "Page size"
+msgstr "Seitengröße"
+
+msgid "Parameters"
+msgstr "Parameter"
+
+msgid "Parameters CSV"
+msgstr "Parameter CSV"
+
+msgid "Parameters array"
+msgstr "Parameter Array"
+
+msgid "Parameters csv file"
+msgstr "Parameter CSV-Datei"
+
+msgid "Please choose an option"
+msgstr "Bitte eine Option auswählen"
+
+msgid "Please configure the global administrator settings."
+msgstr "Bitte konfiguriere die Einstellungen zum globalen Administrator."
+
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Project entries per page"
+msgstr "Projekt-Einträge je Seite"
+
+msgid "Project filter hooks subscriber"
+msgstr "Projekt Filter-Hooks Subscriber"
+
+msgid "Project form aware subscriber"
+msgstr "Projekt Form-Aware Subscriber"
+
+msgid "Project ui hooks subscriber"
+msgstr "Projekt UI-Hooks Subscriber"
+
+msgid "Projects"
+msgstr "Projekte"
+
+msgid "Projects list"
+msgstr "Projektliste"
+
+msgid "Projects serve for grouping sites by clients or topics."
+msgstr "Projekte dienen der Gruppierung von Seiten nach Kunden oder Themen."
+
+msgid "Queries"
+msgstr "Abfragen"
+
+msgid "Query successfully executed in database %s."
+msgstr "Abfrage erfolgreich in Datenbank %s ausgeführt."
+
+msgid "Quick navigation"
+msgstr "Schnellnavigation"
+
+msgid "Reapply"
+msgstr "Neu anwenden"
+
+msgid "Reapply template"
+msgstr "Vorlage neu anwenden"
+
+msgid "Reapply template to all assigned sites"
+msgstr "Vorlage auf alle zugeordneten Seiten neu anwenden"
+
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+msgid "Reset to empty value"
+msgstr "Auf leeren Wert zurücksetzen"
+
+msgid "Return control"
+msgstr "Rücksprungskontrolle"
+
+msgid "Reuse"
+msgstr "Wiederverwenden"
+
+msgid "Reuse for new project"
+msgstr "Für neues Projekt wiederverwenden"
+
+msgid "Reuse for new site"
+msgstr "Für neue Seite wiederverwenden"
+
+msgid "Reuse for new template"
+msgstr "Für neue Vorlage wiederverwenden"
+
+msgid "Search"
+msgstr "Suche"
+
+msgid "Security settings"
+msgstr "Sicherheitseinstellungen"
+
+msgid "Send an email"
+msgstr "Eine E-Mail senden"
+
+msgid "Send private message to %userName%"
+msgstr "Private Nachricht an %userName% senden"
+
+msgid "Set theme as default"
+msgstr "Als Standardtheme festlegen"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Show all entries"
+msgstr "Alle Einträge anzeigen"
+
+msgid "Shows all items except these which are approved"
+msgstr "Zeige alle Einträge außer den freigegebenen"
+
+msgid "Shrink height"
+msgstr "Maximale Höhe"
+
+msgid "Shrink width"
+msgstr "Maximale Breite"
+
+msgid "Site admin email"
+msgstr "Admin E-Mail"
+
+msgid "Site admin name"
+msgstr "Admin Name"
+
+msgid "Site admin password"
+msgstr "Admin Kennwort"
+
+msgid "Site admin real name"
+msgstr "Admin realer Name"
+
+msgid "Site alias"
+msgstr "Seiten-Alias"
+
+msgid "Site company"
+msgstr "Seiten-Firma"
+
+msgid "Site description"
+msgstr "Seiten-Beschreibung"
+
+msgid "Site dns"
+msgstr "Seiten-DNS"
+
+msgid "Site entries per page"
+msgstr "Seiten-Einträge je Seite"
+
+msgid "Site filter hooks subscriber"
+msgstr "Seiten Filter-Hooks Subscriber"
+
+msgid "Site form aware subscriber"
+msgstr "Seite Form-Aware Subscriber"
+
+msgid "Site name"
+msgstr "Seiten-Name"
+
+msgid "Site tools"
+msgstr "Seiten-Werkzeuge"
+
+msgid "Site ui hooks subscriber"
+msgstr "Seiten UI-Hooks Subscriber"
+
+msgid "Sites"
+msgstr "Seiten"
+
+msgid "Sites fav icon"
+msgstr "FavIcon der Seite"
+
+msgid "Sites list"
+msgstr "Seitenliste"
+
+msgid "Sites logo"
+msgstr "Logo der Seite"
+
+msgid "Sorry, but an error occured during the %action% action."
+msgstr ""
+"Entschuldigung, aber während der Aktion %action% ist ein Fehler aufgetreten."
+
+msgid ""
+"Sorry, but an error occured during the %action% action. Please apply the "
+"changes again!"
+msgstr ""
+"Entschuldigung, aber während der Aktion %action% ist ein Fehler aufgetreten. "
+"Bitte die Änderungen noch einmal anwenden!"
+
+msgid ""
+"Sorry, but you can not create the project yet as other items are required "
+"which must be created before!"
+msgstr ""
+"Du kannst das Projekt noch nicht erstellen, da andere Einträge benötigt "
+"werden, die zuvor erstellt werden müssen!"
+
+msgid ""
+"Sorry, but you can not create the site yet as other items are required which "
+"must be created before!"
+msgstr ""
+"Du kannst die Seite noch nicht erstellen, da andere Einträge benötigt "
+"werden, die zuvor erstellt werden müssen!"
+
+msgid ""
+"Sorry, but you can not create the template yet as other items are required "
+"which must be created before!"
+msgstr ""
+"Du kannst die Vorlage noch nicht erstellen, da andere Einträge benötigt "
+"werden, die zuvor erstellt werden müssen!"
+
+msgid "Sort by"
+msgstr "Sortieren nach"
+
+msgid "Sort by %s"
+msgstr "Sortieren nach %s"
+
+msgid "Sort direction"
+msgstr "Sortierrichtung"
+
+msgid "Sql file"
+msgstr "SQL-Datei"
+
+msgid "State"
+msgstr "Zustand"
+
+msgid "Submit"
+msgstr "Abschicken"
+
+msgid "Switch to administration area."
+msgstr "Zum Verwaltungsbereich wechseln"
+
+msgid "Switch to user area."
+msgstr "Zum Benutzerbereich wechseln"
+
+msgid "Template"
+msgstr "Vorlage"
+
+msgid "Template entries per page"
+msgstr "Vorlagen-Einträge je Seite"
+
+msgid "Template filter hooks subscriber"
+msgstr "Vorlage Filter-Hooks Subscriber"
+
+msgid "Template form aware subscriber"
+msgstr "Vorlage Form-Aware Subscriber"
+
+msgid "Template ui hooks subscriber"
+msgstr "Vorlage UI-Hooks Subscriber"
+
+msgid "Templates"
+msgstr "Vorlagen"
+
+msgid "Templates list"
+msgstr "Liste der Vorlagen"
+
+msgid "The administration control has been recovered."
+msgstr "Erledigt! Die Administrationskontrolle wurde wiederhergestellt."
+
+msgid "The amount of projects shown per page"
+msgstr "Die Anzahl der angezeigten Projekte je Seite"
+
+msgid "The amount of sites shown per page"
+msgstr "Die Anzahl der angezeigten Seiten je Seite"
+
+msgid "The amount of templates shown per page"
+msgstr "Die Anzahl von je Seite angezeigten Vorlagen"
+
+msgid ""
+"The cache directory \"%directory%\" does not exist. Please create it and "
+"make it writable for the webserver."
+msgstr ""
+"Das Cache-Verzeichnis \"%directory%\" existiert nicht. Bitte erstellen und "
+"für den Webserver beschreibbar machen."
+
+msgid "The enable shrinking option."
+msgstr "Reduzierung großer Bilder aktivieren"
+
+msgid "The maximum image height in pixels."
+msgstr "Die maximale Bildhöhe in Pixeln."
+
+msgid "The maximum image width in pixels."
+msgstr "Die maximale Bildbreite in Pixeln."
+
+msgid "The setting has been successfully changed."
+msgstr "Die Einstellung wurde erfolgreich geändert."
+
+msgid ""
+"The site \"%site%\" does have a table prefix set which is not supported "
+"anymore. You need to rename tables in the \"%database%\" database "
+"accordingly."
+msgstr ""
+"Die Seite \"%site%\" hat einen Tabellenpräfix gesetzt, was nicht mehr "
+"unterstützt wird. Die Tabellen in der Datenbank \"%database%\" müssen "
+"entsprechend umbenannt werden."
+
+msgid ""
+"The template has been reapplied to %s site.|The template has been reapplied "
+"to %s sites."
+msgstr ""
+"Die Vorlage wurde auf %s Seite erneut angewendet.|Die Vorlage wurde auf %s "
+"Seiten erneut angewendet."
+
+msgid "The upload directories at \"%path%\" can be removed manually."
+msgstr "Die Upload-Verzeichnisse in \"%path%\" können manuell entfernt werden."
+
+msgid ""
+"The upload directory \"%path%\" does not exist and could not be created. Try "
+"to create it yourself and make sure that this folder is accessible via the "
+"web and writable by the webserver."
+msgstr ""
+"Das Upload-Verzeichnis \"%path%\" existiert nicht und konnte nicht erstellt "
+"werden. Bitte selbst anlegen und sicherstellen, dass dieser Ordner über das "
+"Web erreichbar und durch den Webserver beschreibbar ist."
+
+msgid "The value \"%value%\" is not allowed for the \"%property%\" property."
+msgstr ""
+"Der Wert \"%value%\" ist für die Eigenschaft \"%property%\" nicht erlaubt."
+
+msgid "This setting is disabled. Click here to enable it."
+msgstr "Diese Einstellung ist deaktiviert. Klicke hier um sie zu aktivieren."
+
+msgid "This setting is enabled. Click here to disable it."
+msgstr "Diese Einstellung ist aktiviert. Klicke hier um sie zu deaktivieren."
+
+msgid "This site exists already. The site DNS must be unique."
+msgstr "Diese Seite existiert bereits. Die Seiten-DNS muss eindeutig sein."
+
+msgid "This site exists already. The site alias must be unique."
+msgstr "Diese Seite existiert bereits. Das Seiten-Alias muss eindeutig sein."
+
+msgid "Thumbnail height edit"
+msgstr "Vorschaubildhöhe Bearbeitung"
+
+msgid "Thumbnail height on edit pages in pixels."
+msgstr "Thumbnail-Höhe auf Bearbeitungsseiten in Pixeln."
+
+msgid "Thumbnail height on view pages in pixels."
+msgstr "Thumbnail-Höhe auf Listenseiten in Pixeln."
+
+msgid "Thumbnail height view"
+msgstr "Vorschaubildhöhe Liste"
+
+msgid "Thumbnail mode"
+msgstr "Thumbnailmodus"
+
+msgid "Thumbnail mode (inset or outbound)."
+msgstr "Thumbnail-Modus (inset oder outbound)."
+
+msgid "Thumbnail width edit"
+msgstr "Vorschaubildbreite Bearbeitung"
+
+msgid "Thumbnail width on edit pages in pixels."
+msgstr "Thumbnail-Breite auf Bearbeitungsseiten in Pixeln."
+
+msgid "Thumbnail width on view pages in pixels."
+msgstr "Thumbnail-Breite auf Listenseiten in Pixeln."
+
+msgid "Thumbnail width view"
+msgstr "Vorschaubildbreite Liste"
+
+msgid "Update"
+msgstr "Ändern"
+
+msgid "Update configuration"
+msgstr "Konfiguration ändern"
+
+msgid "Update date"
+msgstr "Änderungsdatum"
+
+msgid "Updated by %user"
+msgstr "Geändert von %user"
+
+msgid "Updated by %user on %date"
+msgstr "Geändert von %user am %date"
+
+msgid "Updated on %date"
+msgstr "Geändert am %date"
+
+msgid "Updater"
+msgstr "Änderer"
+
+msgid "Updates"
+msgstr "Updates"
+
+msgid "Value"
+msgstr "Wert"
+
+msgid "View tools"
+msgstr "Seiten-Werkzeuge"
+
+msgid ""
+"Warning! The upload directory at \"%path%\" exists but is not writable by "
+"the webserver."
+msgstr ""
+"Warnung! Das Upload-Verzeichnis \"%path%\" existiert, aber ist nicht durch "
+"den Webserver beschreibbar."
+
+msgid ""
+"Whether to enable shrinking huge images to maximum dimensions. Stores "
+"downscaled version of the original image."
+msgstr ""
+"Ob große Bilder auf maximale Größen geschrumpft werden sollen. Speichert die "
+"herunterskalierte Version des Originalbildes."
+
+msgid "With description"
+msgstr "Mit Beschreibung"
+
+msgid "With selected projects"
+msgstr "Die ausgewählten Projekte"
+
+msgid "With selected sites"
+msgstr "Die ausgewählten Seiten"
+
+msgid "With selected templates"
+msgstr "Die ausgewählten Vorlagen"
+
+msgid "Workflow state"
+msgstr "Workflow-Zustand"
+
+msgid "Workflows"
+msgstr "Workflows"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid ""
+"You have not defined the global administrator name or password. Check the "
+"module configuration."
+msgstr ""
+"Name oder Password des globalen Administrators wurden nicht definiert. Bitte "
+"die Modulkonfiguration überprüfen."
+
+msgid "active ?"
+msgstr "aktiv ?"
+
+msgid "or enter them manually"
+msgstr "oder gebe sie manuell ein"
+
+msgid "pixels"
+msgstr "Pixel"
+
+#~ msgid "%name% v%extensionVersion%"
+#~ msgstr "%name% v%extensionVersion%"
+
+#~ msgid ""
+#~ "A site consists of several extensions, which may be modules, themes or "
+#~ "plugins."
+#~ msgstr ""
+#~ "Eine Seite besteht aus mehreren Erweiterungen, welche Module, Themes oder "
+#~ "Plugins sein können."
+
+#~ msgid "Doctrine Exception: "
+#~ msgstr "Doctrine Exception: "
+
+#~ msgid "Edit site extensions workflow"
+#~ msgstr "Workflow für Seitenerweiterungen bearbeiten"
+
+#~ msgid "Edit workflow for site extensions"
+#~ msgstr "Workflow für Seitenerweiterungen bearbeiten"
+
+#~ msgid "Enter the site extension entries per page."
+#~ msgstr "Die Seitenerweiterungen-Einträge je Seite eingeben."
+
+#~ msgid "Enter the temp access file content."
+#~ msgstr ""
+#~ "Bitte gebe den Inhalt der .htaccess-Datei des temporären Ordners ein."
+
+#~ msgid "Error creating the directory:"
+#~ msgstr "Fehler beim Erstellen des Verzeichnisses:"
+
+#~ msgid "Error deleting file:"
+#~ msgstr "Fehler beim Löschen der Datei:"
+
+#~ msgid "Error! Adding global administrator to admin group failed."
+#~ msgstr ""
+#~ "Fehler! Hinzufügen des globalen Administrators zur Admin-Gruppe "
+#~ "fehlgeschlagen."
+
+#~ msgid "Error! Could not load default theme."
+#~ msgstr "Fehler! Das Standard-Theme konnte nicht geladen werden."
+
+#~ msgid "Error! Could not save the new default theme."
+#~ msgstr "Fehler! Das neue Standard-Theme konnte nicht gespeichert werden."
+
+#~ msgid "Error! Creating global administrator failed."
+#~ msgstr "Fehler! Erstellung des globalen Administrators fehlgeschlagen."
+
+#~ msgid "Error! Creating the new permission sequence failed."
+#~ msgstr ""
+#~ "Fehler! Das Erstellen der neuen Berechtigungssequenz ist fehlgeschlagen."
+
+#~ msgid "Error! Creating the site administrator failed."
+#~ msgstr "Fehler! Erstellung des Seiten-Administrators fehlgeschlagen."
+
+#~ msgid "Error! Getting global administrator group failed."
+#~ msgstr ""
+#~ "Fehler! Abrufen der Gruppe des globalen Administrators fehlgeschlagen."
+
+#~ msgid "Error! Getting global administrator values failed."
+#~ msgstr ""
+#~ "Fehler! Abrufen der Werte des globalen Administrators fehlgeschlagen."
+
+#~ msgid "Error! Setting configurating value failed."
+#~ msgstr "Fehler! Setzen eines Konfigurationswertes fehlgeschlagen."
+
+#~ msgid "Error! Sorry! Deletion attempt failed."
+#~ msgstr "Fehler! Löschversuch fehlgeschlagen."
+
+#~ msgid "Error! Storing the site modules in the Multisites database failed."
+#~ msgstr ""
+#~ "Fehler! Speichern der Seitenmodule in der Multisites-Datenbank "
+#~ "fehlgeschlagen."
+
+#~ msgid "Error! Updating global administrator password failed."
+#~ msgstr ""
+#~ "Fehler! Änderung des Passwortes des globalen Administrators "
+#~ "fehlgeschlagen."
+
+#~ msgid "Error: Could not write into the config/%s file."
+#~ msgstr "Fehler! Konnte nicht in die Datei config/%s schreiben."
+
+#~ msgid "Error: File config/%s could not be found."
+#~ msgstr "Fehler! Die Datei config/%s konnte nicht gefunden werden."
+
+#~ msgid "Extension type"
+#~ msgstr "Typ der Erweiterung"
+
+#~ msgid "Extension version"
+#~ msgstr "Version der Erweiterung"
+
+#~ msgid "Extensions"
+#~ msgstr "Erweiterungen"
+
+#~ msgid "General"
+#~ msgstr "Allgemein"
+
+#~ msgid "Here you can define general settings."
+#~ msgstr "Hier können die grundlegenden Einstellungen verändert werden."
+
+#~ msgid "Hooks"
+#~ msgstr "Hooks"
+
+#~ msgid "Module"
+#~ msgstr "Modul"
+
+#~ msgid "Module plugin"
+#~ msgstr "Modul-Plugin"
+
+#~ msgid "My site extensions"
+#~ msgstr "Meine Seitenerweiterungen"
+
+#~ msgid "MySQL Improved"
+#~ msgstr "MySQL Improved"
+
+#~ msgid "No site extensions found."
+#~ msgstr "Keine Erweiterungen gefunden."
+
+#~ msgid "Site"
+#~ msgstr "Seite"
+
+#~ msgid "Site extension entries per page"
+#~ msgstr "Seitenerweiterungen-Einträge je Seite"
+
+#~ msgid "Site extension filter hooks subscriber"
+#~ msgstr "Seitenerweiterung Filter-Hooks Subscriber"
+
+#~ msgid "Site extension ui hooks subscriber"
+#~ msgstr "Seitenerweiterung UI-Hooks Subscriber"
+
+#~ msgid "Site extensions"
+#~ msgstr "Seiten-Erweiterungen"
+
+#~ msgid "Site extensions list"
+#~ msgstr "Liste der Seitenerweiterungen"
+
+#~ msgid "System plugin"
+#~ msgstr "System-Plugin"
+
+#~ msgid "Temp access file content"
+#~ msgstr "Inhalt der .htaccess-Datei des temporären Ordners"
+
+#~ msgid "The amount of site extensions shown per page"
+#~ msgstr "Die Anzahl der angezeigten Seitenerweiterungen je Seite"
+
+#~ msgid "The directory for storing the sites files does not exist."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis zur Speicherung der Seitendateien existiert nicht."
+
+#~ msgid ""
+#~ "The directory for storing the sites files is not defined. Check your "
+#~ "configuration values."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
+#~ "definiert. Bitte die Konfigurationseinstellungen überprüfen."
+
+#~ msgid "The directory for storing the sites files is not writeable."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis zur Speicherung der Seitendateien ist nicht "
+#~ "beschreibbar."
+
+#~ msgid ""
+#~ "The directory where the sites files have to be created does not exist. "
+#~ "Please, create it."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+#~ "sollen, existiert nicht. Bitte anlegen."
+
+#~ msgid ""
+#~ "The directory where the sites files have to be created is not defined. "
+#~ "Please, define it."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+#~ "sollen, ist nicht definiert. Bitte definieren."
+
+#~ msgid ""
+#~ "The directory where the sites files have to be created is not writeable. "
+#~ "Please, set it as writeable."
+#~ msgstr ""
+#~ "Fehler! Das Verzeichnis, in dem die Dateien für die Seite angelegt werden "
+#~ "sollen, ist nicht beschreibbar. Bitte auf beschreibbar setzen."
+
+#~ msgid "Theme"
+#~ msgstr "Theme"
+
+#~ msgid "With selected site extensions"
+#~ msgstr "Die ausgewählten Erweiterungen"
+
+#~ msgid ""
+#~ "An error was encountered while creating the tables for the %s extension."
+#~ msgstr ""
+#~ "Beim Erstellen der Tabellen für die Erweiterung %s ist ein Fehler "
+#~ "aufgetreten."
+
+#~ msgid ""
+#~ "Please enable the development mode by editing the /config/config.php file "
+#~ "in order to reveal the error details."
+#~ msgstr ""
+#~ "Bitte aktiviere den Entwicklungsmodus durch Bearbeiten der Datei /config/"
+#~ "config.php um die Fehlerdetails zu enthüllen."
+
+#~ msgid "Zikula Multisites module"
+#~ msgstr "Zikula Multisites Modul"
+
+#~ msgid "Multisites manager"
+#~ msgstr "Multisites Manager"
+
+#~ msgid ""
+#~ "An error was encountered while removing stored object workflows for the "
+#~ "%s extension."
+#~ msgstr ""
+#~ "Beim Entfernen der gespeicherten Workflows für die Erweiterung %s ist ein "
+#~ "Fehler aufgetreten."
+
+#~ msgid "An error was encountered while dropping tables for the %s extension."
+#~ msgstr ""
+#~ "Beim Entfernen der Tabellen für die Erweiterung %s ist ein Fehler "
+#~ "aufgetreten."
+
+#~ msgid "Multisites"
+#~ msgstr "Multisites"
+
+#~ msgid "Multisites module generated by ModuleStudio 0.7.0."
+#~ msgstr "Das Multisites-Modul, generiert von ModuleStudio 0.7.0."
+
+#~ msgid "multisites"
+#~ msgstr "multisites"
+
+#~ msgid "multisites Sites Display Hooks"
+#~ msgstr "Multisites Seiten Display-Hooks"
+
+#~ msgid "multisites Sites Filter Hooks"
+#~ msgstr "Multisites Seiten Filter-Hooks"
+
+#~ msgid "multisites Templates Display Hooks"
+#~ msgstr "Multisites Vorlagen Display-Hooks"
+
+#~ msgid "multisites Templates Filter Hooks"
+#~ msgstr "Multisites Vorlagen Filter-Hooks"
+
+#~ msgid "multisites Site extensions Display Hooks"
+#~ msgstr "Multisites Seiten-AddOns Display-Hooks"
+
+#~ msgid "multisites Projects Display Hooks"
+#~ msgstr "Multisites Projekte Display-Hooks"
+
+#~ msgid "multisites Projects Filter Hooks"
+#~ msgstr "Multisites Projekte Filter-Hooks"
+
+#~ msgid "Error! Could not move your file to the destination folder."
+#~ msgstr "Fehler! Die Datei konnte nicht in den Zielordner verschoben werden."
+
+#~ msgid "Error! No file found."
+#~ msgstr "Fehler! Keine Datei gefunden."
+
+#~ msgid ""
+#~ "Error! Your file is too big. Please keep it smaller than %s kilobytes."
+#~ msgstr ""
+#~ "Fehler! Die Datei ist zu groß. Bitte eine Größe von weniger als %s KB "
+#~ "wählen."
+
+#~ msgid ""
+#~ "Error! Your file is too big. Please keep it smaller than %s megabytes."
+#~ msgstr ""
+#~ "Fehler! Die Datei ist zu groß. Bitte eine Größe von weniger als %s MB "
+#~ "wählen."
+
+#~ msgid "Unknown error"
+#~ msgstr "Unbekannter Fehler."
+
+#~ msgid "File too big"
+#~ msgstr "Die Datei ist zu groß."
+
+#~ msgid "File uploaded partially"
+#~ msgstr "Die Datei wurde nur teilweise hochgeladen."
+
+#~ msgid "No file uploaded"
+#~ msgstr "Keine Datei hochgeladen."
+
+#~ msgid "No tmp folder"
+#~ msgstr "Kein temporärer Ordner."
+
+#~ msgid "Error with upload: "
+#~ msgstr "Fehler! Upload fehlgeschlagen:"
+
+#~ msgid "site"
+#~ msgstr "Seite"
+
+#~ msgid "Add %s"
+#~ msgstr "%s hinzufügen"
+
+#~ msgid "Select %s"
+#~ msgstr "%s wählen"
+
+#~ msgid "Find %s"
+#~ msgstr "%s finden"
+
+#~ msgid "Search %s"
+#~ msgstr "%s suchen"
+
+#~ msgid "Create new %s"
+#~ msgstr "%s neu erstellen"
+
+#~ msgid "Create"
+#~ msgstr "Erstellen"
+
+#~ msgid "No results found!"
+#~ msgstr "Keine Ergebnisse gefunden."
+
+#~ msgid "This function requires JavaScript activated!"
+#~ msgstr "Diese Funktion erfordert aktiviertes JavaScript!"
+
+#~ msgid "Error! in %1$s: the %2$s parameter must be specified."
+#~ msgstr "Fehler! in %1$s: der Parameter %2$s muss angegeben werden."
+
+#~ msgid "Select an existing file..."
+#~ msgstr "Eine existierende Datei auswählen..."
+
+#~ msgid "Error! Please either provide a sql file or select an existing one."
+#~ msgstr ""
+#~ "Fehler! Bitte entweder eine SQL-Datei bereitstellen oder eine bestehende "
+#~ "auswählen."
+
+#~ msgid "Error! Failed to set configuration variables."
+#~ msgstr "Fehler! Aktualisierung der Einstellungen fehlgeschlagen."
+
+#~ msgid ""
+#~ "The user name you entered for the site administrator contains "
+#~ "unacceptable characters. A valid user name consists of lowercase letters, "
+#~ "numbers, underscores, periods, and/or dashes."
+#~ msgstr ""
+#~ "Der eingegebene Benutzername für den Seiten-Administrator enthält "
+#~ "ungültige Zeichen. Ein gültiger Benutzername besteht aus Kleinbuchstaben, "
+#~ "Ziffern, Unterstrichen, Punkten und/oder Bindestrichen."
+
+#~ msgid "View projects"
+#~ msgstr "Projektliste"
+
+#~ msgid "View site templates"
+#~ msgstr "Liste der Seitenvorlagen"
+
+#~ msgid "Invalid identifier received."
+#~ msgstr "Fehler! Ungültigen Identifier erhalten."
+
+#~ msgid "Error! Could not include %s"
+#~ msgstr "Fehler beim Einbinden von %s"
+
+#~ msgid "Warning! Could not write the .htaccess file at \"%s\"."
+#~ msgstr "Warnung! Konnte die .htaccess-Datei in \"%s\" nicht schreiben."
+
+#~ msgid "Error! Opening the template sql file failed."
+#~ msgstr "Fehler! Öffnen der SQL-Datei der Vorlage fehlgeschlagen."
+
+#~ msgid "Error! Field value must not be empty (%s)."
+#~ msgstr "Fehler! Der Wert des Feldes darf nicht leer sein (%s)."
+
+#~ msgid "Error! Length of field value must not be higher than %2$s (%1$s)."
+#~ msgstr "Fehler! Die Länge des Feldes darf %2$s nicht überschreiten (%1$s)."
+
+#~ msgid "Error! Field value must be a valid email address (%s)."
+#~ msgstr "Fehler! Das Feld muss eine gültige E-Mail Adresse beinhalten (%s)."
+
+#~ msgid "Error! Field value must be a valid boolean (%s)."
+#~ msgstr "Fehler! Das Feld muss einen gültigen Boolean beinhalten (%s)."
+
+#~ msgid "Error! Could not remove stored workflow. Deletion has been aborted."
+#~ msgstr ""
+#~ "Fehler! Der gespeicherte Workflow konnte nicht entfernt werden. Die "
+#~ "Löschung wurde abgebrochen."
+
+#~ msgid "Error! Could not load the associated workflow."
+#~ msgstr "Fehler! Der assoziierte Workflow konnte nicht geladen werden."
+
+#~ msgid "None workflow (no approval)"
+#~ msgstr "Kein Workflow (keine Freigabe)"
+
+#~ msgid ""
+#~ "This is like a non-existing workflow. Everything is online immediately "
+#~ "after creation."
+#~ msgstr ""
+#~ "Dies ist wie ein nicht existierender Workflow. Alles ist sofort nach der "
+#~ "Erstellung online."
+
+#~ msgid ""
+#~ "Pseudo-state for content which is just created and not persisted yet."
+#~ msgstr ""
+#~ "Pseudo-Zustand für Inhalt, der gerade erstellt wird und noch nicht "
+#~ "persistiert wurde."
+
+#~ msgid "Pseudo-state for content which has been deleted from the database."
+#~ msgstr "Pseudo-Zustand für Inhalt, der aus der Datenbank gelöscht wurde."
+
+#~ msgid "Submit content."
+#~ msgstr "Inhalt absenden."
+
+#~ msgid "Update content."
+#~ msgstr "Inhalt ändern."
+
+#~ msgid "This is a required field."
+#~ msgstr "Dies ist eine Pflichtangabe."
+
+#~ msgid "Please enter a valid number in this field."
+#~ msgstr "Bitte eine Zahl eingeben."
+
+#~ msgid ""
+#~ "Please use numbers only in this field. please avoid spaces or other "
+#~ "characters such as dots or commas."
+#~ msgstr ""
+#~ "Bitte in diesem Feld nur Zahlen verwenden, keine Leerzeichen oder andere "
+#~ "Zeichen wie Punkte oder Kommas."
+
+#~ msgid "Please use letters only (a-z) in this field."
+#~ msgstr "Bitte in diesem Feld nur Buchstaben (a-z) verwenden."
+
+#~ msgid ""
+#~ "Please use only letters (a-z) or numbers (0-9) only in this field. No "
+#~ "spaces or other characters are allowed."
+#~ msgstr ""
+#~ "Bitte in diesem Feld nur Buchstaben (a-z) oder Zahlen (0-9) verwenden. "
+#~ "Andere Zeichen wie Leerzeichen sind nicht erlaubt."
+
+#~ msgid "Please enter a valid date."
+#~ msgstr "Bitte ein Datum eingeben."
+
+#~ msgid ""
+#~ "Please enter a valid email address. For example yourname@example.com ."
+#~ msgstr "Bitte eine E-Mail Adresse eingeben. Zum Beispiel fred@domain.com ."
+
+#~ msgid "Please enter a valid URL."
+#~ msgstr "Bitte eine URL angeben."
+
+#~ msgid ""
+#~ "Please use this date format: dd/mm/yyyy. For example 17/03/2010 for the "
+#~ "17th of March, 2010."
+#~ msgstr ""
+#~ "Bitte dieses Datumsformat verwenden: dd/mm/yyyy. Zum Beispiel 17/03/2010 "
+#~ "(= 17. März 2010)."
+
+#~ msgid "Please enter a valid $ amount. For example $100.00 ."
+#~ msgstr "Bitte einen $-Betrag eingeben. Zum Beispiel $100.00 ."
+
+#~ msgid "Please make a selection."
+#~ msgstr "Bitte eine Auswahl treffen."
+
+#~ msgid "This value must not contain spaces."
+#~ msgstr "Dieser Wert darf keine Leerzeichen enthalten."
+
+#~ msgid "Please select an allowed file type."
+#~ msgstr "Bitte einen erlaubten Dateityp auswählen."
+
+#~ msgid "Please select a value in the past."
+#~ msgstr "Bitte einen Wert aus der Vergangenheit auswählen."
+
+#~ msgid "Please select a value in the future."
+#~ msgstr "Bitte einen Wert aus der Zukunft auswählen."
+
+#~ msgid ""
+#~ "This value is already assigned, but must be unique. Please change it."
+#~ msgstr ""
+#~ "Dieser Wert wird bereits verwendet, muss jedoch eindeutig sein. Bitte "
+#~ "einen anderen Wert auswählen."
+
+#~ msgid "%1$s: missing parameter '%2$s'"
+#~ msgstr "%1$s: Fehlender Parameter '%2$s'"
+
+#~ msgid "Template data"
+#~ msgstr "Vorlagen-Daten"
+
+#~ msgid "or select an existing file"
+#~ msgstr "oder wähle eine bestehende Datei"
+
+#~ msgid "Advanced options"
+#~ msgstr "Erweiterte Optionen"
+
+#~ msgid "Enter additional folders of the template"
+#~ msgstr "Gebe zusätzliche Ordner der Vorlage ein"
+
+#~ msgid ""
+#~ "Enter the folders to be created for new sites separated by line breaks. "
+#~ "If you need a folder within another one you can write expressions like "
+#~ "\"folder/folder\"."
+#~ msgstr ""
+#~ "Gebe Ordner an, die für neue Seiten erstellt werden sollen, getrennt "
+#~ "durch Zeilenumbrüche. Auch Unterordner sind möglich durch Ausdrücke wie "
+#~ "\"ordner/unterordner\"."
+
+#~ msgid "Enter table names to be excluded from reapplications"
+#~ msgstr ""
+#~ "Gebe Tabellennamen ein, die von erneuten Anwendungen ausgeschlossen "
+#~ "werden sollen"
+
+#~ msgid ""
+#~ "Enter the names of database tables which should be skipped during "
+#~ "template reapplications separated by line breaks. With this you can for "
+#~ "example avoid overriding your local user table."
+#~ msgstr ""
+#~ "Gebe die Namen der Datenbanktabellen ein (getrennt durch Zeilenumbrüche), "
+#~ "die während erneuten Anwendungen der Vorlage übersprungen werden sollen. "
+#~ "Damit kann man beispielsweise das Überschreiben der lokalen "
+#~ "Benutzertabelle vermeiden."
+
+#~ msgid "Enter required parameter names for this template"
+#~ msgstr "Gebe die benötigten Parameternamen für diese Vorlage ein"
+
+#~ msgid ""
+#~ "Enter parameter names separated by line breaks. Each parameter represents "
+#~ "a variable information which is being replaced by concrete values when "
+#~ "creating a new site or reapplying the template on existing sites. The "
+#~ "parameter names can be used as placeholders anywhere in the template data "
+#~ "accordingly."
+#~ msgstr ""
+#~ "Gebe Parameternamen getrennt durch Zeilenumbrüche ein. Jeder Parameter "
+#~ "repräsentiert eine variable Information, die beim Erstellen einer neuen "
+#~ "Seite oder dem erneuten Anwenden der Vorlage auf bestehende Seiten durch "
+#~ "konkrete Werte ersetzt wird. Die Namen der Parameter können entsprechend "
+#~ "als Platzhalter irgendwo in den Daten der Vorlage verwendet werden."
+
+#~ msgid "Placeholder syntax: ###PARAMETERNAME###"
+#~ msgstr "Platzhalter-Syntax: ###PARAMETERNAME###"
+
+#~ msgid ""
+#~ "Really delete this template? This includes deletion of assigned "
+#~ "parameters and sites, too!"
+#~ msgstr ""
+#~ "Diese Vorlage wirklich löschen? Dies beinhaltet auch die Löschung "
+#~ "zugewiesener Parameter und Seiten!"
+
+#~ msgid "Do you really want to reapply this template ?"
+#~ msgstr "Soll diese Vorlage wirklich neu angewendet werden?"
+
+#~ msgid ""
+#~ "Caution: this reapplies the template data again to all assigned sites. "
+#~ "All database tables except excluded ones will be dropped and recreated."
+#~ msgstr ""
+#~ "Achtung: dies wendet die Daten der Vorlage auf alle zugeordneten Seiten "
+#~ "neu an. Alle Datenbanktabellen außer den ausgeschlossenen werden gelöscht "
+#~ "und neu angelegt."
+
+#~ msgid "None"
+#~ msgstr "Keine"
+
+#~ msgid "View sites assigned to this template"
+#~ msgstr "Dieser Vorlage zugeordnete Seiten anschauen"
+
+#~ msgid "Choose template"
+#~ msgstr "Vorlage wählen"
+
+#~ msgid ""
+#~ "If you decouple a site from the template it is not affected by future "
+#~ "reapplications of this template anymore, but is configured and maintained "
+#~ "independently. If you reassign a decoupled site to a template again this "
+#~ "template is reapplied for that site."
+#~ msgstr ""
+#~ "Wird eine Seite von der Vorlage entkoppelt, ist diese nicht mehr von "
+#~ "zukünftigen Neuanwendungen dieser Vorlage betroffen, sondern wird "
+#~ "unabhängig konfiguriert und gewartet. Wird eine entkoppelte Seite wieder "
+#~ "einer Vorlage zugewiesen, wird diese Vorlage für die Seite neu angewendet."
+
+#~ msgid "Id"
+#~ msgstr "ID"
+
+#~ msgid "Temporal folder .htaccess file content"
+#~ msgstr "Inhalt der .htaccess-Datei des temporären Ordners"
+
+#~ msgid "Configuration wizard"
+#~ msgstr "Konfigurationsassistent"
+
+#~ msgid "Step 1 - Checking the correct location of the configuration files"
+#~ msgstr ""
+#~ "Schritt 1 - Überprüfung des korrekten Ortes der Konfigurationsdateien"
+
+#~ msgid ""
+#~ "Please copy the files <strong>%1$s</strong> and <strong>%2$s</strong> "
+#~ "into the Zikula <strong>config</strong> directory and give them writeable "
+#~ "permissions."
+#~ msgstr ""
+#~ "Bitte kopiere die Dateien <strong>%1$s</strong> und <strong>%2$s</strong> "
+#~ "in das <strong>config</strong>-Verzeichnis von Zikula und stelle ihre "
+#~ "Rechte auf beschreibbar."
+
+#~ msgid ""
+#~ "If you have any problem you can recover the system to the previous state "
+#~ "at any time by deleting both files again."
+#~ msgstr ""
+#~ "Bei Problemen kannst Du das System jederzeit durch Löschen beider Dateien "
+#~ "in den vorherigen Zustand zurückversetzen."
+
+#~ msgid ""
+#~ "The file <strong>%s</strong> has not been found and could not be copied "
+#~ "automatically."
+#~ msgstr ""
+#~ "Die Datei <strong>%s</strong> wurde nicht gefunden und konnte nicht "
+#~ "automatisch kopiert werden."
+
+#~ msgid "The file <strong>%s</strong> is located in the correct place."
+#~ msgstr "Die Datei <strong>%s</strong> ist am richtigen Platz."
+
+#~ msgid "The file <strong>%s</strong> is not writeable, but it should be."
+#~ msgstr ""
+#~ "Fehler! Die Datei <strong>%s</strong> ist nicht beschreibbar, was aber "
+#~ "der Fall sein sollte."
+
+#~ msgid "Check again"
+#~ msgstr "Nochmal prüfen"
+
+#~ msgid "Step 2 - Checking whether the sites files directory exists"
+#~ msgstr ""
+#~ "Schritt 2 - Überprüfung der Existenz des Verzeichnisses für die "
+#~ "Seitendateien"
+
+#~ msgid "Script Real Path"
+#~ msgstr "Realer Skript-Pfad"
+
+#~ msgid "Physical location of the directory in the server"
+#~ msgstr "Physischer Ort des Verzeichnisses auf dem Server"
+
+#~ msgid ""
+#~ "This directory will be used to save the temporary and userdata files for "
+#~ "the different sites."
+#~ msgstr ""
+#~ "Dieses Verzeichnis wird zum Speichern der temporären Dateien und "
+#~ "Nutzerdateien für die unterschiedlichen Seiten verwendet."
+
+#~ msgid "Save"
+#~ msgstr "Speichern"
+
+#~ msgid ""
+#~ "Step 3 - Writing correct parameters into the <strong>%s.php</strong> file"
+#~ msgstr ""
+#~ "Schritt 3 - Schreiben der korrekten Parameter in die Datei <strong>%s</"
+#~ "strong>"
+
+#~ msgid ""
+#~ "If you experience any problem you can delete the <strong>%1$s</strong> "
+#~ "and <strong>%2$s</strong> files to recover the system to the previous "
+#~ "state."
+#~ msgstr ""
+#~ "Bei Problemen kannst Du die Dateien <strong>%1$s</strong> und <strong>"
+#~ "%2$s</strong> löschen, um das System in den vorherigen Zustand zurück zu "
+#~ "versetzen."
+
+#~ msgid "Main domain"
+#~ msgstr "Haupt-Domain"
+
+#~ msgid "Sites temporal directory"
+#~ msgstr "Temporäres Verzeichnis der Seite"
+
+#~ msgid "Sites data directory"
+#~ msgstr "Verzeichnis der Seiten-Daten"
+
+#~ msgid "Step 4 - Check if the %s file is not writeable anymore"
+#~ msgstr ""
+#~ "Schritt 4 - Sicherstellen, dass die Datei %s nicht mehr beschreibbar ist"
+
+#~ msgid ""
+#~ "The <strong>%s</strong> file is writeable, but it should not be. Please "
+#~ "set this file as not writeable."
+#~ msgstr ""
+#~ "Die Datei <strong>%s</strong> ist beschreibbar, sollte sie aber nicht "
+#~ "sein. Bitte diese Datei auf nur-lesen stellen."
+
+#~ msgid "Multiply queries"
+#~ msgstr "Abfragen vervielfachen"
+
+#~ msgid ""
+#~ "This is an expert function! Use it only if you know about the effects."
+#~ msgstr ""
+#~ "Dies ist eine Expertenfunktion! Verwenden Sie sie nur, wenn Sie sich über "
+#~ "die Auswirkungen im Klaren sind."
+
+#~ msgid "Input data"
+#~ msgstr "Eingabedaten"
+
+#~ msgid ""
+#~ "Use <strong>`###DBNAME###`</strong> as a placeholder for the database "
+#~ "name."
+#~ msgstr ""
+#~ "Benutzen Sie <strong>`###DBNAME###`</strong> als Platzhalter für den "
+#~ "Datenbanknamen."
+
+#~ msgid "Sql query"
+#~ msgstr "SQL-Abfrage"
+
+#~ msgid "or sql file"
+#~ msgstr "oder SQL-Datei"
+
+#~ msgid "Options"
+#~ msgstr "Optionen"
+
+#~ msgid "Database hosts"
+#~ msgstr "Datenbank-Server"
+
+#~ msgid "Database types"
+#~ msgstr "Datenbank-Typen"
+
+#~ msgid "Show output sql"
+#~ msgstr "Ausgabe-SQL anzeigen"
+
+#~ msgid "Execute sql directly"
+#~ msgstr "SQL direkt ausführen"
+
+#~ msgid "Output data"
+#~ msgstr "Ausgabedaten"
+
+#~ msgid "Output"
+#~ msgstr "Ausgabe"
+
+#~ msgid "Start"
+#~ msgstr "Starten"
+
+#~ msgid "This functionality is not implemented yet."
+#~ msgstr "Diese Funktionalität wurde noch nicht implementiert."
+
+#~ msgid "It is going to be added in Multisites version 2.1.0."
+#~ msgstr "Sie wird in Multisites Version 2.1.0 hinzugefügt."
+
+#~ msgid "Please see this issue for more details:"
+#~ msgstr "Für weitere Details bitte dieses Ticket anschauen:"
+
+#~ msgid "View issue at GitHub"
+#~ msgstr "Ticket auf GitHub anschauen"
+
+#~ msgid ""
+#~ "Really delete this project? This includes deletion of assigned templates "
+#~ "and sites, too!"
+#~ msgstr ""
+#~ "Dieses Projekt wirklich löschen? Dies beinhaltet auch die Löschung "
+#~ "zugewiesener Vorlagen und Seiten!"
+
+#~ msgid "View sites assigned to this project"
+#~ msgstr "Diesem Projekt zugeordnete Seiten anschauen"
+
+#~ msgid ""
+#~ "Caution: updating a site causes reapplying the template data again to it. "
+#~ "All database tables except excluded ones will be dropped and recreated."
+#~ msgstr ""
+#~ "Achtung: das Ändern einer Seite verursacht eine Neuanwendung der Daten "
+#~ "der Vorlage auf diese Seite. Alle Datenbanktabellen außer den "
+#~ "ausgeschlossenen werden gelöscht und neu angelegt."
+
+#~ msgid "Basic data"
+#~ msgstr "Grundlegende Daten"
+
+#~ msgid "Name (internal)"
+#~ msgstr "Interner Name"
+
+#~ msgid "Description (internal)"
+#~ msgstr "Beschreibung (intern)"
+
+#~ msgid ""
+#~ "The alias must be a lower case, unique string containing only letters."
+#~ msgstr ""
+#~ "Das Alias muss ein klein geschriebener, eindeutiger String sein, der nur "
+#~ "Buchstaben enthält."
+
+#~ msgid "Original site name"
+#~ msgstr "Originaler Seiten-Name"
+
+#~ msgid "Site host or folder"
+#~ msgstr "Seiten-Host oder -Ordner"
+
+#~ msgid ""
+#~ "This is the domain or folder name under which this site should be "
+#~ "reachable."
+#~ msgstr ""
+#~ "Dies ist der Domain- oder Verzeichnisname, unter dem die Seite erreichbar "
+#~ "sein soll."
+
+#~ msgid "Management information"
+#~ msgstr "Verwaltungsinformationen"
+
+#~ msgid ""
+#~ "User names can contain letters, numbers, underscores, periods, or dashes."
+#~ msgstr ""
+#~ "Benutzernamen können Buchstaben, Zahlen, Unterstriche, Punkte oder "
+#~ "Striche enthalten."
+
+#~ msgid "Original site admin name"
+#~ msgstr "Originaler Site Admin Name"
+
+#~ msgid "Original site admin password"
+#~ msgstr "Ursprüngliches Kennwort des Seiten-Administrators"
+
+#~ msgid "Original site admin email"
+#~ msgstr "Ursprüngliche E-Mail-Adresse des Seiten-Administrators"
+
+#~ msgid "Database data"
+#~ msgstr "Datenbank-Daten"
+
+#~ msgid ""
+#~ "Caution: the database is emptied, so choose one which is not used by any "
+#~ "other applications. All tables which are defined as excluded in the "
+#~ "template are kept though."
+#~ msgstr ""
+#~ "Achtung: die Datenbank wird geleert, also wählen Sie eine, welche nicht "
+#~ "von anderen Anwendungen benutzt wird. Alle Tabellen, die in der Vorlage "
+#~ "als ausgeschlossen definiert wurden, werden allerdings aufgehoben."
+
+#~ msgid "Change these values only if database credentials actually changed."
+#~ msgstr ""
+#~ "Verändere diese Werte nur, falls sich die Datenbank-Zugangsdaten "
+#~ "tatsächlich geändert haben."
+
+#~ msgid "Create database"
+#~ msgstr "Datenbank erstellen"
+
+#~ msgid "Check this if the database does not exist yet."
+#~ msgstr "Kreuze diese Option an, falls die Datenbank noch nicht existiert."
+
+#~ msgid ""
+#~ "Expert option! Only possible if the database user has sufficient "
+#~ "permissions."
+#~ msgstr ""
+#~ "Expertenoption! Nur möglich, falls der Datenbanknutzer ausreichende "
+#~ "Berechtigungen besitzt."
+
+#~ msgid "Note: the database user must exist already for this to work."
+#~ msgstr ""
+#~ "Hinweis: der Datenbanknutzer muss bereits existieren, damit dies "
+#~ "funktioniert."
+
+#~ msgid "Individualisation"
+#~ msgstr "Individualisierung"
+
+#~ msgid "Delete logo ?"
+#~ msgstr "Logo löschen ?"
+
+#~ msgid ""
+#~ "Expert option! Per default all locales available in the system will be "
+#~ "made available for the site."
+#~ msgstr ""
+#~ "Expertenoption! Per Standard sind alle im System verfügbaren Sprachen "
+#~ "auch für die Seite verfügbar."
+
+#~ msgid "This feature has not been implemented yet (issue #17)."
+#~ msgstr "Dieses Feature wurde noch nicht implementiert (Issue #17)."
+
+#~ msgid "Note: you should use semicolon as delimiter and UTF-8 as encoding."
+#~ msgstr ""
+#~ "Hinweis: als Trennzeichen sollte Semikolon und als Zeichensatz sollte "
+#~ "UTF-8 verwendet werden."
+
+#~ msgid "Derive placeholders from template"
+#~ msgstr "Platzhalter von der Vorlage ableiten"
+
+#~ msgid ""
+#~ "Enter values for all parameters specified by the selected template "
+#~ "separated by line breaks."
+#~ msgstr ""
+#~ "Gebe Werte für alle durch die ausgewählte Vorlage spezifizierten "
+#~ "Parameter ein, getrennt durch Zeilenumbrüche."
+
+#~ msgid "None (decouple site from template)"
+#~ msgstr "Keine (Seite von Vorlage entkoppeln)"
+
+#~ msgid "Toggle theme state"
+#~ msgstr "Theme-Status verändern"
+
+#~ msgid "Allowed"
+#~ msgstr "Erlaubt"
+
+#~ msgid "Not allowed"
+#~ msgstr "Nicht erlaubt"
+
+#~ msgid "Add theme"
+#~ msgstr "Theme hinzufügen"
+
+#~ msgid "Default theme"
+#~ msgstr "Standardtheme"
+
+#~ msgid "Basic site data"
+#~ msgstr "Grundlegende Seitendaten"
+
+#~ msgid "Delete options"
+#~ msgstr "Löschoptionen"
+
+#~ msgid "Delete database"
+#~ msgstr "Datenbank löschen"
+
+#~ msgid "Version"
+#~ msgstr "Version"
+
+#~ msgid "Back to site list"
+#~ msgstr "Zurück zur Seitenliste"
+
+#~ msgid "Toggle module state"
+#~ msgstr "Modul-Status verändern"
+
+#~ msgid "Add module"
+#~ msgstr "Modul hinzufügen"
+
+#~ msgid "Active, click to deactivate"
+#~ msgstr "Aktiv, klicken zum Deaktivieren"
+
+#~ msgid "Inactive, click to activate"
+#~ msgstr "Inaktiv, klicken zum Aktivieren"
+
+#~ msgid "Not allowed, click to deactivate"
+#~ msgstr "Nicht erlaubt, klicken zum Deaktivieren"
+
+#~ msgid "All letters"
+#~ msgstr "Alle Buchstaben"
+
+#~ msgid "Alias"
+#~ msgstr "Alias"
+
+#~ msgid "Admin details"
+#~ msgstr "Admin-Details"
+
+#~ msgid "Features"
+#~ msgstr "Features"
+
+#~ msgid "User"
+#~ msgstr "Benutzer"
+
+#~ msgid "Real name"
+#~ msgstr "Realer Name"
+
+#~ msgid "Email"
+#~ msgstr "E-Mail"
+
+#~ msgid "Company"
+#~ msgstr "Firma"
+
+#~ msgid "None (decoupled)"
+#~ msgstr "Keine (entkoppelt)"
+
+#~ msgid "Site database"
+#~ msgstr "Seiten-Datenbank"
+
+#~ msgid "Clear all cache and compile directories"
+#~ msgstr "Alle Cache- und Kompilierungsverzeichnisse leeren"
+
+#~ msgid "Available tools"
+#~ msgstr "Verfügbare Werkzeuge"
+
+#~ msgid "Create global administrator"
+#~ msgstr "Globalen Administrator erstellen"
+
+#~ msgid ""
+#~ "This ensures that the global administrator exists. Note that if the site "
+#~ "admin and the global admin have the same user name, the global admin will "
+#~ "override the original site admin."
+#~ msgstr ""
+#~ "Dies stellt sicher, dass der globale Administrator existiert. Zu beachten "
+#~ "ist, dass, falls der Seiten-Admin und der globale Admin den gleichen "
+#~ "Nutzernamen haben, der globale Admin den ursprünglichen Seiten-Admin "
+#~ "überschreibt."
+
+#~ msgid "Recover administrators site control"
+#~ msgstr "Seitenkontrolle des Administrators wiederherstellen"
+
+#~ msgid ""
+#~ "This removes the first permission rule and inserts the default one "
+#~ "instead, ensuring that the original site administrator belongs to the "
+#~ "admin group again."
+#~ msgstr ""
+#~ "Dies entfernt die erste Berechtigungsregel und fügt die Standardregel "
+#~ "statt dessen ein, was sicherstellt, dass der ursprüngliche Seiten-"
+#~ "Administrator wieder zur Admin-Gruppe gehört."
+
+#~ msgid "Really delete this template?"
+#~ msgstr "Diese Vorlage wirklich löschen?"
+
+#~ msgid "Really delete this project?"
+#~ msgstr "Dieses Projekt wirklich löschen?"
+
+#~ msgid "Choose projects"
+#~ msgstr "Projekte wählen"
+
+#~ msgid "Choose project"
+#~ msgstr "Projekt wählen"
+
+#~ msgid "Really delete this site?"
+#~ msgstr "Diese Seite wirklich löschen?"
+
+#~ msgid "Models folder"
+#~ msgstr "Modell-Ordner"
+
+#~ msgid "Enter the models folder."
+#~ msgstr "Bitte gebe den Ordner für die Modelle ein."
+
+#~ msgid "multisites Parameters Display Hooks"
+#~ msgstr "Multisites Parameter Display-Hooks"
+
+#~ msgid "multisites Parameters Filter Hooks"
+#~ msgstr "Multisites Parameter Filter-Hooks"
+
+#~ msgid "parameter"
+#~ msgstr "Parameter"
+
+#~ msgid ""
+#~ "Sorry, but you can not create the parameter yet as other items are "
+#~ "required which must be created before!"
+#~ msgstr ""
+#~ "Du kannst den Parameter noch nicht erstellen, da andere Einträge benötigt "
+#~ "werden, die zuvor erstellt werden müssen!"
+
+#~ msgid "Done! Parameter created."
+#~ msgstr "Erledigt! Parameter erstellt."
+
+#~ msgid "Done! Parameter updated."
+#~ msgstr "Erledigt! Parameter geändert."
+
+#~ msgid "Done! Parameter deleted."
+#~ msgstr "Erledigt! Parameter gelöscht."
+
+#~ msgid "Error! Field value must be a valid datetime (%s)."
+#~ msgstr "Fehler! Das Feld muss einen gültige Zeitstempel beinhalten (%s)."
+
+#~ msgid "Create parameter"
+#~ msgstr "Parameter erstellen"
+
+#~ msgid "Edit parameter"
+#~ msgstr "Parameter bearbeiten"
+
+#~ msgid "Really delete this parameter?"
+#~ msgstr "Diesen Parameter wirklich löschen?"
+
+#~ msgid "Activation date"
+#~ msgstr "Aktivierungsdatum"
+
+#~ msgid "Enter the activation date of the site"
+#~ msgstr "Gebe das Aktivierungsdatum der Seite ein"
+
+#~ msgid "Error! connecting to the database failed."
+#~ msgstr "Fehler Verbinden zur Datenbank fehlgeschlagen."
+
+#~ msgid "Model not found"
+#~ msgstr "Fehler! Modell konnte nicht gefunden werden."
+
+#~ msgid "Error! Model could not be found."
+#~ msgstr "Fehler! Das Modell konnte nicht gefunden werden."
+
+#~ msgid ""
+#~ "Error! Getting number of sites where the module <strong>%s</strong> need "
+#~ "to be upgraded."
+#~ msgstr ""
+#~ "Fehler! Abrufen der Anzahl von Seiten, bei denen das Modul <strong>%s</"
+#~ "strong> aktualisiert werden muss, ist fehlgeschlagen."
+
+#~ msgid ""
+#~ "Error! Getting sites where the module <strong>%s</strong> need to be "
+#~ "upgraded."
+#~ msgstr ""
+#~ "Fehler! Abrufen der Seiten, bei denen das Modul <strong>%s</strong> "
+#~ "aktualisiert werden muss, ist fehlgeschlagen."
+
+#~ msgid "New Instance"
+#~ msgstr "Neue Instanz"
+
+#~ msgid "Actualise Modules"
+#~ msgstr "Module aktualisieren"
+
+#~ msgid "There is not any model defined"
+#~ msgstr "Es wurde kein Modell definiert."
+
+#~ msgid "Error! Please provide an instance name. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe einen Namen für die Instanz an. Dies ist eine "
+#~ "Pflichtangabe."
+
+#~ msgid "Error! Please provide an admin's site name. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe einen Seitennamen für die Administration der Seite an. "
+#~ "Dies ist eine Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide an admin's site password. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe ein Passwort für die Administration der Seite an. Dies "
+#~ "ist eine Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide an admin's site email. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe einen E-Mail-Adresse für die Administration der Seite "
+#~ "an. Dies ist eine Pflichtangabe."
+
+#~ msgid "Error! Please provide the site domain. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe die Domain der Seite an. Dies ist eine Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide the site database host. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe den Host für die Datenbank der Seite an. Dies ist eine "
+#~ "Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide the site database name. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe den Namen für die Datenbank der Seite an. Dies ist "
+#~ "eine Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide the site database user name. It is a mandatory "
+#~ "field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe den Benutzernamen für die Datenbank der Seite an. Dies "
+#~ "ist eine Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide the site database user password. It is a mandatory "
+#~ "field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe das Benutzerpasswort für die Datenbank der Seite an. "
+#~ "Dies ist eine Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide the site database prefix. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe das Prefix für die Datenbank der Seite an. Dies ist "
+#~ "eine Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide the model on the site will be based. It is a "
+#~ "mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe das Modell an, auf dem die Seite basieren soll. Dies "
+#~ "ist eine Pflichtangabe."
+
+#~ msgid "Error! Creating site directories failed"
+#~ msgstr "Fehler! Erstellung der Seiten-Verzeichnisse fehlgeschlagen."
+
+#~ msgid "Error! Creation of the instance failed."
+#~ msgstr "Fehler! Erstellung der Instanz fehlgeschlagen."
+
+#~ msgid "The instance deletion has failed"
+#~ msgstr "Fehler! Löschung der Instanz fehlgeschlagen."
+
+#~ msgid "Done! The site information has been updated."
+#~ msgstr "Erledigt! Die Seiten-Informationen wurden geändert."
+
+#~ msgid "Error! Please provide a model name. It is a mandatory field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe einen Namen für das Modell an. Dies ist eine "
+#~ "Pflichtangabe."
+
+#~ msgid ""
+#~ "Error! Please provide the model database tables prefix. It is a mandatory "
+#~ "field."
+#~ msgstr ""
+#~ "Fehler! Bitte gebe die Prefix für die Datenbanktabellen des Modells an. "
+#~ "Dies ist eine Pflichtangabe."
+
+#~ msgid "Error! Updating the model failed."
+#~ msgstr "Fehler! Änderung des Modells fehlgeschlagen."
+
+#~ msgid "The module configuration has been modified"
+#~ msgstr "Erledigt! Die Modulkonfiguration wurde geändert."
+
+#~ msgid "The models folder does not exists"
+#~ msgstr "Fehler! Das Verzeichnis für die Modelle existiert nicht."
+
+#~ msgid "The models folder is not writeable"
+#~ msgstr "Fehler! Das Verzeichnis für die Modelle ist nicht beschreibbar."
+
+#~ msgid "Error! Please provide a model name. It is a mandatory field.<br />"
+#~ msgstr ""
+#~ "Fehler! Bitte gebe einen Namen für das Modell an. Dies ist eine "
+#~ "Pflichtangabe.<br />"
+
+#~ msgid ""
+#~ "Error! Please provide the model database tables prefix. It is a mandatory "
+#~ "field.<br />"
+#~ msgstr ""
+#~ "Fehler! Bitte gebe die Prefix für die Datenbanktabellen des Modells an. "
+#~ "Dies ist eine Pflichtangabe.<br />"
+
+#~ msgid "Error! Please provide the model file. It is a mandatory field.<br />"
+#~ msgstr ""
+#~ "Fehler! Bitte gebe die Modelldatei an. Dies ist eine Pflichtangabe.<br />"
+
+#~ msgid ""
+#~ "The model file extension is not allowed. The only allowed extensions are "
+#~ "txt and sql"
+#~ msgstr ""
+#~ "Fehler! Die Endung der Modelldatei ist nicht erlaubt. Die erlaubten "
+#~ "Erweiterungen sind sql und txt."
+
+#~ msgid " Error updating file"
+#~ msgstr "Fehler! Änderung der Datei fehlgeschlagen."
+
+#~ msgid "Error creating model"
+#~ msgstr "Fehler! Erstellung des Modells fehlgeschlagen."
+
+#~ msgid "A new model has been created"
+#~ msgstr "Erledigt! Ein neues Modell wurde erstellt."
+
+#~ msgid "Error deleting the model"
+#~ msgstr "Fehler! Löschen des Modells fehlgeschlagen."
+
+#~ msgid "Model deleted"
+#~ msgstr "Erledigt! Das Modell wurde gelöscht."
+
+#~ msgid ""
+#~ "Error! No sites could be found that needs an upgrade of module <strong>"
+#~ "%s</strong>."
+#~ msgstr ""
+#~ "Fehler! Es wurden keine Seiten gefunden, die eine Aktualisierung des "
+#~ "Moduls <strong>%s</strong> benötigen."
+
+#~ msgid "Error: the multiple_config.php not writted"
+#~ msgstr ""
+#~ "Fehler! Die Datei multisites_config.php konnte nicht geschrieben werden."
+
+#~ msgid "Error: the file multisites_config.php has not been written"
+#~ msgstr ""
+#~ "Fehler! Die Datei multisites_config.php konnte nicht geschrieben werden."
+
+#~ msgid "No instanceId value received."
+#~ msgstr "Fehler! Kein Wert für instanceId erhalten."
+
+#~ msgid "Model name"
+#~ msgstr "Modell-Name"
+
+#~ msgid "Model database table prefix"
+#~ msgstr "Datenbank-Tabellenprefix des Modells"
+
+#~ msgid ""
+#~ "Write the folders that have to be created into the sites files system "
+#~ "separated by \",\". If you need folder into other folders you can write "
+#~ "expressions like \"folder/folder\"."
+#~ msgstr ""
+#~ "Verzeichnisse, die im Dateisystem der Seite erstellt werden sollen, "
+#~ "getrennt durch \",\". Auch Unterordner sind möglich durch Ausdrücke wie "
+#~ "\"ordner/unterordner\"."
+
+#~ msgid "Mandatory fields"
+#~ msgstr "Pflichtfelder"
+
+#~ msgid "Multiple Zikula"
+#~ msgstr "Mehrere Zikula"
+
+#~ msgid "Instance name"
+#~ msgstr "Instanz-Name"
+
+#~ msgid "Admin real name"
+#~ msgstr "Admin Realer Name"
+
+#~ msgid "Based on model"
+#~ msgstr "Basiert auf Modell"
+
+#~ msgid "Model database tables prefix"
+#~ msgstr "Datenbank-Tabellenpräfix des Modells"
+
+#~ msgid "Upload model file"
+#~ msgstr "Eine Modelldatei hochladen"
+
+#~ msgid "The possible extensions are sql and txt."
+#~ msgstr "Die möglichen Erweiterungen sind sql und txt."
+
+#~ msgid "Select a file..."
+#~ msgstr "Wähle eine Datei..."
+
+#~ msgid "Add"
+#~ msgstr "Hinzufügen"
+
+#~ msgid "Site allowed themes"
+#~ msgstr "Erlaubte Seiten Themes"
+
+#~ msgid "Create a new instance"
+#~ msgstr "Eine neue Instanz erstellen"
+
+#~ msgid "Confirm model deletion"
+#~ msgstr "Modell-Löschung bestätigen"
+
+#~ msgid "List of models"
+#~ msgstr "Liste der Modelle"
+
+#~ msgid "Model file name"
+#~ msgstr "Modell-Dateiname"
+
+#~ msgid "DB tables prefix"
+#~ msgstr "Prefix der DB-Tabellen"
+
+#~ msgid "No models available. You must define models before create instances."
+#~ msgstr ""
+#~ "Keine Modelle verfügbar. Bevor Instanzen erstellt werden können, müssen "
+#~ "zuerst Modelle definiert werden."
+
+#~ msgid "Modules folder"
+#~ msgstr "Modul-Ordner"
+
+#~ msgid "Upgrade sites"
+#~ msgstr "Seiten aktualisieren"
+
+#~ msgid "All the sites and modules are upgraded to the current versions"
+#~ msgstr "Alle Seiten und Module sind auf dem neuesten Stand."
+
+#~ msgid "Not modules selected"
+#~ msgstr "Keine Module ausgewählt"
+
+#~ msgid ""
+#~ "Confirm the instance deletion. It means delete its database and files."
+#~ msgstr ""
+#~ "Bitte die Löschung der Instanz bestätigen. Dabei werden die Datenbank und "
+#~ "die Dateien der Instanz gelöscht."
+
+#~ msgid ""
+#~ "Create a new instance is not possible because the file <b>config/"
+#~ "multisites_dbconfig.php</b> does not exists or it is not writeable."
+#~ msgstr ""
+#~ "Fehler! Die Erstellung einer neuen Instanz ist nicht möglich, da die "
+#~ "Datei <strong>config/multisites_dbconfig.php</strong> nicht existiert "
+#~ "oder nicht beschreibbar ist."
+
+#~ msgid "List of instances"
+#~ msgstr "Liste von Instanzen"
+
+#~ msgid "Site allowed elements"
+#~ msgstr "Erlaubte Seiten-Elemente"
+
+#~ msgid "Site themes"
+#~ msgstr "Seiten-Themes"
+
+#~ msgid "No sites defined"
+#~ msgstr "Keine Seiten definiert."
+
+#~ msgid "Model files folder"
+#~ msgstr "Ordner für Modelldateien"
+
+#~ msgid "Modify"
+#~ msgstr "Ändern"
+
+#~ msgid "Multiple Zikula installations"
+#~ msgstr "Mehrere Zikula-Installationen"
+
+#~ msgid "Multisites system installation. Version RC1"
+#~ msgstr "Installation des Multisites-Systems."
+
+#~ msgid "The installation of Multisites requires 5 steps"
+#~ msgstr "Die Installation von Multisites läuft in einfachen 5 Schritten ab."
+
+#~ msgid ""
+#~ "Copy the files <strong>multisites_config.php</strong> and "
+#~ "<strong>multisites_dbconfig.php</strong> in the folder config and set "
+#~ "them to writeable (chmod770 or chmod660)."
+#~ msgstr ""
+#~ "Kopiere die Dateien <strong>multisites_config.php</strong> und "
+#~ "<strong>multisites_dbconfig.php</strong> in den Ordner config und setze "
+#~ "sie auf beschreibbar (chmod770 oder chmod660)."
+
+#~ msgid ""
+#~ "Create a writeable directory in your server and note down its physical "
+#~ "path."
+#~ msgstr ""
+#~ "Erstelle ein beschreibbares Verzeichnis auf dem Server und notiere dessen "
+#~ "physischen Pfad."
+
+#~ msgid ""
+#~ "Set the file <strong>multisites_config.php</strong> as read only (chmod "
+#~ "644 or 444)."
+#~ msgstr ""
+#~ "Setze die Datei <strong>multisites_config.php</strong> auf reinen "
+#~ "Lesezugriff (chmod 644 oder 444)."
+
+#~ msgid "Proceed with the module installation."
+#~ msgstr "Mit der Installation fortfahren."
+
+#~ msgid "Go on with the installation"
+#~ msgstr "Mit der Installation fortfahren."
+
+#~ msgid ""
+#~ "The file <strong>config/multisites_config.php</strong> has not been found "
+#~ "in the directory <strong>config</strong>."
+#~ msgstr ""
+#~ "Fehler! Die Datei <strong>config/multisites_config.php</strong> konnte "
+#~ "nicht im Verzeichnis <strong>config</strong> gefunden werden."
+
+#~ msgid ""
+#~ "The file <strong>config/multisites_dbconfig.php</strong> has not been "
+#~ "found in the directory <strong>config</strong>."
+#~ msgstr ""
+#~ "Fehler! Die Datei <strong>config/multisites_dbconfig.php</strong> konnte "
+#~ "nicht im Verzeichnis <strong>config</strong> gefunden werden."
+
+#~ msgid ""
+#~ "The file <strong>config/multisites_dbconfig.php</strong> is located in "
+#~ "the correct place."
+#~ msgstr ""
+#~ "Die Datei <strong>config/multisites_dbconfig.php</strong> ist am "
+#~ "richtigen Platz."
+
+#~ msgid ""
+#~ "The file <strong>config/multisites_dbconfig.php</strong> is not "
+#~ "writeable, but it should be."
+#~ msgstr ""
+#~ "Fehler! Die Datei <strong>config/multisites_dbconfig.php</strong> ist "
+#~ "nicht beschreibbar, was aber der Fall sein sollte."
+
+#~ msgid ""
+#~ "The file <strong>config/multisites_dbconfig.php</strong> is writeable."
+#~ msgstr ""
+#~ "Die Datei <strong>config/multisites_dbconfig.php</strong> ist "
+#~ "beschreibbar."
+
+#~ msgid "Go on with the step 2"
+#~ msgstr "Weiter mit Schritt 2"
+
+#~ msgid "Accept"
+#~ msgstr "Akzeptieren"
+
+#~ msgid ""
+#~ "The file <strong>config/multisites_config.php</strong> is not writeable."
+#~ msgstr ""
+#~ "Die Datei <strong>config/multisites_config.php</strong> ist nicht "
+#~ "beschreibbar."
+
+#~ msgid "Proceed with the module installation"
+#~ msgstr "Weiter mit der Modul-Installation"
+
+#~ msgid "The database creation has failed"
+#~ msgstr "Fehler! Die Erstellung der Datenbank ist fehlgeschlagen."
+
+#~ msgid "The tables creation has failed"
+#~ msgstr "Fehler! Die Erstellung der Tabellen ist fehlgeschlagen."
+
+#~ msgid "Creation instance error"
+#~ msgstr "Fehler! Erstellung der Instanz fehlgeschlagen."
+
+#~ msgid "Error editing instance"
+#~ msgstr "Fehler! Änderung der Instanz fehlgeschlagen."
+
+#~ msgid "Error editing model"
+#~ msgstr "Fehler! Änderung des Modells fehlgeschlagen."
+
+#~ msgid "Sorry! No authorization to access this module."
+#~ msgstr "Fehler! Kein Zugriff auf diesen Bereich."
+
+#~ msgid "View"
+#~ msgstr "Anzeigen"
+
+#~ msgid "Config"
+#~ msgstr "Konfiguration"
+
+#~ msgid ""
+#~ "Write the folders that have to be created into the sites files system "
+#~ "separated by "
+#~ msgstr ""
+#~ "Verzeichnisse, die im Dateisystem der Seite erstellt werden sollen, "
+#~ "getrennt durch \",\". Auch Unterordner sind möglich durch Ausdrücke wie "
+#~ "\"ordner/unterordner\"."

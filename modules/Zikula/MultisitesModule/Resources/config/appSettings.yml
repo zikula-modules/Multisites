@@ -1,0 +1,5 @@
+services:
+    zikula_multisites_module.app_settings:
+        class: Zikula\MultisitesModule\AppSettings
+        arguments:
+            - "@zikula_extensions_module.api.variable"

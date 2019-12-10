@@ -1,0 +1,46 @@
+{# purpose of this template: show output of manage extensions action in site area #}
+{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{% block title __('Allowed extensions') %}
+{% block admin_page_icon 'cubes' %}
+{% block content %}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.SiteExtensions.js')) }}
+    <div class="zikulamultisitesmodule-manageextensions">
+        <p>{{ __('Name') }}: {{ site.name }}<br />
+        {{ __('Site name') }}: {{ site.siteName }}<br />
+        {{ __('Site dns') }}: {{ site.siteDns }}<br />
+        {{ __('Database name') }}: {{ site.databaseName }}</p>
+
+        <table class="table table-striped table-bordered table-hover table-condensed" summary="{{ __('Manage the modules for this site') }}">
+            <colgroup>
+                <col id="cName" />
+                <col id="cVersion" />
+                <col id="cDescription" />
+                <col id="cActions" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th id="hName" scope="row" class="text-left">{{ __('Name') }}</th>
+                    <th id="hVersion" scope="row" class="text-left">{{ __('Version') }}</th>
+                    <th id="hDescription" scope="row" class="text-left">{{ __('Description') }}</th>
+                    <th id="hActions" scope="row" class="text-right">{{ __('Actions') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for module in modules %}
+                    <tr>
+                        <th id="hRow{{ module.id }}" scope="row">{{ module.name }}</th>
+                        <td headers="hRow{{ module.id }} hVersion">{{ module.version }}</td>
+                        <td headers="hRow{{ module.id }} hDescription">{{ module.description }}</td>
+                        <td headers="hRow{{ module.id }} hActions" class="actions nowrap z-w02">
+                            <div id="module_{{ module.name }}">
+                                {{ module.icons }}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><a href="javascript:history.back()" title="{{ __('Back to site list') }}"><i class="fa fa-arrow-left"></i> {{ __('Back to site list') }}</a></p>
+    </div>
+{% endblock %}

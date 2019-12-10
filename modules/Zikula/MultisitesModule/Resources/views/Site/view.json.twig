@@ -1,0 +1,7 @@
+{# purpose of this template: sites view json view #}
+[
+{% for site in items %}
+    {% if not loop.first %},{% endif %}
+    {{ site.toArray()|json_encode()|raw }}
+{% endfor %}
+]

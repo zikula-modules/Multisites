@@ -1,0 +1,66 @@
+services:
+    # Event subscribers and listeners
+    zikula_multisites_module.entity_lifecycle_listener:
+        class: Zikula\MultisitesModule\Listener\EntityLifecycleListener
+        arguments:
+            - "@service_container"
+            - "@event_dispatcher"
+            - "@logger"
+        tags: ['doctrine.event_subscriber']
+    
+    zikula_multisites_module.kernel_listener:
+        class: Zikula\MultisitesModule\Listener\KernelListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.installer_listener:
+        class: Zikula\MultisitesModule\Listener\InstallerListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.moduledispatch_listener:
+        class: Zikula\MultisitesModule\Listener\ModuleDispatchListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.mailer_listener:
+        class: Zikula\MultisitesModule\Listener\MailerListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.theme_listener:
+        class: Zikula\MultisitesModule\Listener\ThemeListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.userlogin_listener:
+        class: Zikula\MultisitesModule\Listener\UserLoginListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.userlogout_listener:
+        class: Zikula\MultisitesModule\Listener\UserLogoutListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.user_listener:
+        class: Zikula\MultisitesModule\Listener\UserListener
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_users_module.current_user"
+            - "@logger"
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.userregistration_listener:
+        class: Zikula\MultisitesModule\Listener\UserRegistrationListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.users_listener:
+        class: Zikula\MultisitesModule\Listener\UsersListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.group_listener:
+        class: Zikula\MultisitesModule\Listener\GroupListener
+        tags: ['kernel.event_subscriber']
+    
+    zikula_multisites_module.workflow_events_listener:
+        class: Zikula\MultisitesModule\Listener\WorkflowEventsListener
+        arguments:
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.permission_helper"
+        tags: ['kernel.event_subscriber']
+    

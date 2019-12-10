@@ -1,0 +1,34 @@
+{# purpose of this template: inclusion template for managing related project #}
+{% if displayMode is not defined or displayMode is empty %}
+    {% set displayMode = 'choices' %}
+{% endif %}
+{% if tabs|default(false) == true %}
+    <div role="tabpanel" class="tab-pane fade" id="tabProject" aria-labelledby="projectTab">
+        <h3>{{ heading|default ? heading : __('Project') }}</h3>
+{% else %}
+    <fieldset class="project">
+{% endif %}
+    <legend>{{ heading|default ? heading : __('Project') }}</legend>
+    {% if displayMode == 'embedded' %}
+        {% set subFields = attribute(form, alias) %}
+        <fieldset>
+            <legend>{{ __('Content') }}</legend>
+            {{ form_row(attribute(subFields, 'name')) }}
+        </fieldset>
+    {% elseif displayMode == 'choices' %}
+        {{ form_row(attribute(form, alias), {required: mandatory}) }}
+    {% elseif displayMode == 'autocomplete' %}
+        {{ form_row(attribute(form, alias), {required: mandatory}) }}
+        <div class="zikulamultisitesmodule-relation-leftside">
+            {{ include(
+                '@ZikulaMultisitesModule/Project/includeSelectItemListOne.html.twig',
+                attribute(linkingItem, alias) is defined ? {item: attribute(linkingItem, alias)} : {}
+            ) }}
+        </div>
+        <br style="clear: both" />
+    {% endif %}
+{% if tabs|default(false) == true %}
+    </div>
+{% else %}
+    </fieldset>
+{% endif %}

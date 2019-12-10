@@ -1,0 +1,10 @@
+{# purpose of this template: inclusion template for display of related sites #}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('site', constant('ACCESS_EDIT')) %}
+<h4>
+    {{ item|zikulamultisitesmodule_formattedTitle }}
+</h4>
+{% if item.logo is not empty and item.logoMeta.isImage %}
+    <p>
+        <img src="{{ item.logo.getPathname()|imagine_filter('zkroot', relationThumbRuntimeOptions) }}" alt="{{ item|zikulamultisitesmodule_formattedTitle|e('html_attr') }}" width="{{ relationThumbRuntimeOptions.thumbnail.size[0] }}" height="{{ relationThumbRuntimeOptions.thumbnail.size[1] }}" class="img-rounded" />
+    </p>
+{% endif %}

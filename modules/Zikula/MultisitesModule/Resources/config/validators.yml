@@ -1,0 +1,9 @@
+services:
+    # Custom validators
+    zikula_multisites_module.validator.list_entry.validator:
+        class: Zikula\MultisitesModule\Validator\Constraints\ListEntryValidator
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.listentries_helper"
+        tags:
+            - { name: validator.constraint_validator, alias: zikula_multisites_module.validator.list_entry.validator }

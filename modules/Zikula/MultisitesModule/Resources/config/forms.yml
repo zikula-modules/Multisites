@@ -1,0 +1,99 @@
+services:
+    # Form types
+    
+    zikula_multisites_module.form.type.sitequicknav:
+        class: Zikula\MultisitesModule\Form\Type\QuickNavigation\SiteQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@zikula_multisites_module.entity_display_helper"
+            - "@zikula_multisites_module.listentries_helper"
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.type.templatequicknav:
+        class: Zikula\MultisitesModule\Form\Type\QuickNavigation\TemplateQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.listentries_helper"
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.type.projectquicknav:
+        class: Zikula\MultisitesModule\Form\Type\QuickNavigation\ProjectQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.listentries_helper"
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.handler.common:
+        abstract: true
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_users_module.current_user"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.controller_helper"
+            - "@zikula_multisites_module.model_helper"
+            - "@zikula_multisites_module.permission_helper"
+            - "@zikula_multisites_module.workflow_helper"
+            - "@zikula_multisites_module.hook_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+
+    zikula_multisites_module.form.handler.site:
+        class: Zikula\MultisitesModule\Form\Handler\Site\EditHandler
+        parent: zikula_multisites_module.form.handler.common
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+            - [setSystemHelper, ["@zikula_multisites_module.system_helper"]]
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.type.site:
+        class: Zikula\MultisitesModule\Form\Type\SiteType
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.collection_filter_helper"
+            - "@zikula_multisites_module.entity_display_helper"
+            - "@zikula_multisites_module.listentries_helper"
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.handler.template:
+        class: Zikula\MultisitesModule\Form\Handler\Template\EditHandler
+        parent: zikula_multisites_module.form.handler.common
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.type.template:
+        class: Zikula\MultisitesModule\Form\Type\TemplateType
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.collection_filter_helper"
+            - "@zikula_multisites_module.entity_display_helper"
+            - "@zikula_multisites_module.listentries_helper"
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.handler.project:
+        class: Zikula\MultisitesModule\Form\Handler\Project\EditHandler
+        parent: zikula_multisites_module.form.handler.common
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.type.project:
+        class: Zikula\MultisitesModule\Form\Type\ProjectType
+        arguments:
+            - "@translator.default"
+            - "@zikula_multisites_module.entity_factory"
+            - "@zikula_multisites_module.collection_filter_helper"
+            - "@zikula_multisites_module.entity_display_helper"
+            - "@zikula_multisites_module.listentries_helper"
+        tags: ['form.type']
+    
+    zikula_multisites_module.form.type.config:
+        class: Zikula\MultisitesModule\Form\Type\ConfigType
+        arguments:
+            - "@translator.default"
+            - "@=service('zikula_extensions_module.api.variable').getAll('ZikulaMultisitesModule')"
+        tags: ['form.type']

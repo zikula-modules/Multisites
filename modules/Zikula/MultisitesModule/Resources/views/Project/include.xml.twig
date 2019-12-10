@@ -1,0 +1,19 @@
+{# purpose of this template: projects xml inclusion template #}
+<project id="{{ project.getId() }}" createdon="{{ project.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ project.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ project.id }}</id>
+    <name><![CDATA[{{ project.name }}]]></name>
+    <sites>
+    {% if project.sites|default %}
+        {% for relatedItem in project.sites %}
+        <site>{{ relatedItem|zikulamultisitesmodule_formattedTitle }}</site>
+        {% endfor %}
+    {% endif %}
+    </sites>
+    <templates>
+    {% if project.templates|default %}
+        {% for relatedItem in project.templates %}
+        <template>{{ relatedItem|zikulamultisitesmodule_formattedTitle }}</template>
+        {% endfor %}
+    {% endif %}
+    </templates>
+</project>

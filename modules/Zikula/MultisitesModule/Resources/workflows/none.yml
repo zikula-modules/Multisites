@@ -1,0 +1,33 @@
+framework:
+    workflows:
+        zikulamultisitesmodule_none:
+            type: state_machine
+            marking_store:
+                type: single_state
+                arguments:
+                    - workflowState
+            supports:
+                - Zikula\MultisitesModule\Entity\SiteEntity
+                - Zikula\MultisitesModule\Entity\TemplateEntity
+                - Zikula\MultisitesModule\Entity\ProjectEntity
+            places:
+                - initial
+                - approved
+                - trashed
+                - deleted
+            transitions:
+                - name: submit
+                  from: initial
+                  to: approved
+                - name: update
+                  from: approved
+                  to: approved
+                - name: recover
+                  from: trashed
+                  to: approved
+                - name: trash
+                  from: approved
+                  to: trashed
+                - name: delete
+                  from: [approved, trashed]
+                  to: deleted

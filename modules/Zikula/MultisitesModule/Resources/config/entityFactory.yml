@@ -1,0 +1,14 @@
+services:
+    # Entity factory
+    zikula_multisites_module.entity_factory:
+        class: Zikula\MultisitesModule\Entity\Factory\EntityFactory
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+            - "@zikula_multisites_module.entity_initialiser"
+            - "@zikula_multisites_module.collection_filter_helper"
+    
+    # Entity initialiser
+    zikula_multisites_module.entity_initialiser:
+        class: Zikula\MultisitesModule\Entity\Factory\EntityInitialiser
+        arguments:
+            - "@zikula_multisites_module.permission_helper"

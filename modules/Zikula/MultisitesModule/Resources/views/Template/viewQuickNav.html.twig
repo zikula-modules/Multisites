@@ -1,0 +1,48 @@
+{# purpose of this template: templates view filter form #}
+{% if permissionHelper.mayUseQuickNav('template') %}
+    {% form_theme quickNavForm with [
+        'bootstrap_3_layout.html.twig'
+    ] %}
+    {{ form_start(quickNavForm, {attr: {id: 'zikulaMultisitesModuleTemplateQuickNavForm', class: 'zikulamultisitesmodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_errors(quickNavForm) }}
+    <a href="#collapseTemplateQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapseTemplateQuickNav">
+        <i class="fa fa-filter" aria-hidden="true"></i> {{ __('Filter') }}
+    </a>
+    <div id="collapseTemplateQuickNav" class="collapse">
+        <fieldset>
+            <h3>{{ __('Quick navigation') }}</h3>
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.workflowState) }}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                </div>
+            {% endif %}
+            {% if searchFilter is defined and searchFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.q) }}
+            {% if searchFilter is defined and searchFilter != true %}
+                </div>
+            {% endif %}
+            {% if sorting is defined and sorting != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sort) }}
+                {{ form_row(quickNavForm.sortdir) }}
+            {% if sorting is defined and sorting != true %}
+                </div>
+            {% endif %}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.num) }}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                </div>
+            {% endif %}
+            {{ form_widget(quickNavForm.updateview) }}
+            <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea|default ~ 'view') }}" title="{{ __('Back to default view') }}" class="btn btn-default btn-sm">{{ __('Reset') }}</a>
+        </fieldset>
+    </div>
+    {{ form_end(quickNavForm) }}
+{% endif %}

@@ -1,0 +1,105 @@
+{# purpose of this template: build the form to edit an instance of template #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends 'ZikulaMultisitesModule::' ~ baseTemplate ~ '.html.twig' %}
+
+{% block title mode == 'create' ? __('Create template') : __('Edit template') %}
+{% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
+{% block content %}
+    <div class="zikulamultisitesmodule-template zikulamultisitesmodule-edit">
+        {% form_theme form with [
+            '@ZikulaMultisitesModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form, {attr: {id: 'templateEditForm', class: 'zikulamultisites-edit-form'}}) }}
+        {{ form_errors(form) }}
+        <fieldset>
+            <legend>{{ __('Content') }}</legend>
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.sqlFile) }}
+            {{ form_row(form.parameters) }}
+            {{ form_row(form.folders) }}
+            {{ form_row(form.excludedTables) }}
+        </fieldset>
+        
+        {{ include(
+            '@ZikulaMultisitesModule/Project/includeSelectMany.html.twig',
+            {group: 'template', heading: __('Projects'), alias: 'projects', mandatory: false, idPrefix: 'multisitesTemplate_Projects', linkingItem: template, displayMode: 'choices'}
+        ) }}
+        {% if mode != 'create' %}
+            {{ include('@ZikulaMultisitesModule/Helper/includeStandardFieldsEdit.html.twig', {obj: template}) }}
+        {% endif %}
+        
+        {% if supportsHookSubscribers and formHookTemplates|length > 0 %}
+            <fieldset>
+                {% for hookTemplate in formHookTemplates %}
+                    {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
+                {% endfor %}
+            </fieldset>
+        {% endif %}
+        
+        {% if form.moderationSpecificCreator is defined or form.moderationSpecificCreationDate is defined %}
+            <fieldset id="moderationFieldsSection">
+                <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
+                <div id="moderationFieldsContent">
+                    {% if form.moderationSpecificCreator is defined %}
+                        {{ form_row(form.moderationSpecificCreator) }}
+                    {% endif %}
+                    {% if form.moderationSpecificCreationDate is defined %}
+                        {{ form_row(form.moderationSpecificCreationDate) }}
+                    {% endif %}
+                </div>
+            </fieldset>
+        {% endif %}
+        
+        
+        {# include possible submit actions #}
+        <div class="form-group form-buttons">
+            <div class="col-sm-offset-3 col-sm-9">
+                {% for action in actions %}
+                    {{ form_widget(attribute(form, action.id)) }}
+                    {% if mode == 'create' and action.id == 'submit' and form.submitrepeat is defined %}
+                        {{ form_widget(attribute(form, 'submitrepeat')) }}
+                    {% endif %}
+                {% endfor %}
+                {{ form_widget(form.reset) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {% if supportsHookSubscribers %}
+            {% set hookId = mode != 'create' ? template.id : null %}
+            {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.templates.form_edit', id=hookId, outputAsArray=true) %}
+            {% if hooks is iterable and hooks|length > 0 %}
+                {% for area, hook in hooks %}
+                    <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+        
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
+    {% set formInitScript %}
+        <script>
+        /* <![CDATA[ */
+            var zikulaMultisitesInlineEditHandlers = [];
+            var zikulaMultisitesEditHandler = null;
+            
+            ( function($) {
+                $(document).ready(function() {
+                    zikulaMultisitesInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ template.id }}{% endif %}');
+                    zikulaMultisitesInitUploadField('zikulamultisitesmodule_template_sqlFile_sqlFile');
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('zikulamultisitesmodule_template_moderationSpecificCreator');
+                    {% endif %}
+                });
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', formInitScript) }}
+{% endblock %}

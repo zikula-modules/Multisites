@@ -1,0 +1,39 @@
+{# purpose of this template: show output of reapply action in template area #}
+{% extends routeArea == 'admin' ? 'ZikulaMultisitesModule::adminBase.html.twig' : 'ZikulaMultisitesModule::base.html.twig' %}
+{% block title __('Reapply') %}
+{% block admin_page_icon 'refresh' %}
+{% block content %}
+    <form action="{{ path('zikulamultisitesmodule_template_reapply', {id: template.id}) }}" method="post" class="form" role="form">
+        <div>
+            <input type="hidden" name="token" value="{{ token }}" />
+            <input type="hidden" id="confirmation" name="confirmation" value="1" />
+
+            <fieldset>
+                <legend>{{ __('Template') }}</legend>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">{{ __('Name') }}</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static"><strong>{{ template.name }}</strong></p>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>{{ __('Confirmation prompt') }}</legend>
+
+                <p class="alert alert-warning">{{ __('Do you really want to reapply this template ?') }}</p>
+
+                <p class="alert alert-error bold">{{ __('Caution: this reapplies the template data again to all assigned sites. All database tables except excluded ones will be dropped and recreated.') }}</p>
+
+                <div class="form-group form-buttons">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        {% set reapplyTitle = __('Reapply') %}
+                        <button title="{{ reapplyTitle }}" name="submit" type="submit" class="btn btn-success"><i class="fa fa-save"></i> {{ reapplyTitle }}</button>
+                        <a href="{{ path('zikulamultisitesmodule_template_adminview') }}"><i class="fa fa-times"></i> {{ __('Cancel') }}</a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+{% endblock %}

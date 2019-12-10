@@ -1,0 +1,9 @@
+{# purpose of this template: projects view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<projects>
+{% for project in items %}
+    {{ include('@ZikulaMultisitesModule/Project/include.xml.twig') }}
+{% else %}
+    <noProject />
+{% endfor %}
+</projects>

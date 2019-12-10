@@ -1,0 +1,33 @@
+{# purpose of this template: module configuration wizard #}
+{% extends 'ZikulaMultisitesModule::adminBase.html.twig' %}
+{% block title __('Configuration wizard') %}
+{% block admin_page_icon 'wrench' %}
+{% block content %}
+    <div class="zikulamultisitesmodule-wizard">
+        <h3>{{ __('Determine system parameters') }}</h3>
+        <form method="post" action="{{ path('zikulamultisitesmodule_config_config') }}" class="form" role="form">
+            <fieldset>
+                <div class="form-group">
+                    <label for="mainSiteUrl" class="control-label col-sm-3">{{ __('Main domain') }}:</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="mainSiteUrl" name="mainSiteUrl" size="50" maxlength="50" value="{{ mainSiteUrl|e('html_attr') }}" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="siteMode" class="control-label col-sm-3">{{ __('Site mode') }}:</label>
+                    <div class="col-sm-9">
+                        <select id="siteMode" name="siteMode" class="form-control">
+                            <option value="domain"{{ siteMode != 'folder' ? ' selected="selected"' : '' }}>{{ __('Based on domains') }}</option>
+                            <option value="folder"{{ siteMode == 'folder' ? ' selected="selected"' : '' }}>{{ __('Based on sub folders') }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group form-buttons">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="submit" value="{{ __('Save') }}" class="btn btn-success" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{# purpose of this template: templates xml inclusion template #}
+<template id="{{ template.getId() }}" createdon="{{ template.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ template.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ template.id }}</id>
+    <name><![CDATA[{{ template.name }}]]></name>
+    <description><![CDATA[{{ template.description }}]]></description>
+    <sqlFile{% if template.sqlFile is not empty and template.sqlFileMeta|default %} extension="{{ template.sqlFileMeta.extension }}" size="{{ template.sqlFileMeta.size }}" isImage="{% if template.sqlFileMeta.isImage %}true{% else %}false{% endif %}"{% if template.sqlFileMeta.isImage %} width="{{ template.sqlFileMeta.width }}" height="{{ template.sqlFileMeta.height }}" format="{{ template.sqlFileMeta.format }}"{% endif %}{% endif %}>{{ template.sqlFile }}</sqlFile>
+    <parameters>{% if template.parameters is iterable and template.parameters|length > 0 %}
+        {% set firstItem = true %}
+        {% for entry in template.parameters if entry is not iterable %}
+            {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
+        {% endfor %}
+    {% endif %}
+    </parameters>
+    <folders>{% if template.folders is iterable and template.folders|length > 0 %}
+        {% set firstItem = true %}
+        {% for entry in template.folders if entry is not iterable %}
+            {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
+        {% endfor %}
+    {% endif %}
+    </folders>
+    <excludedTables>{% if template.excludedTables is iterable and template.excludedTables|length > 0 %}
+        {% set firstItem = true %}
+        {% for entry in template.excludedTables if entry is not iterable %}
+            {% if true == firstItem %}{% set firstItem = false %}{% else %}, {% endif %}{{ entry }}
+        {% endfor %}
+    {% endif %}
+    </excludedTables>
+    <projects>
+    {% if template.projects|default %}
+        {% for relatedItem in template.projects %}
+        <project>{{ relatedItem|zikulamultisitesmodule_formattedTitle }}</project>
+        {% endfor %}
+    {% endif %}
+    </projects>
+    <sites>
+    {% if template.sites|default %}
+        {% for relatedItem in template.sites %}
+        <site>{{ relatedItem|zikulamultisitesmodule_formattedTitle }}</site>
+        {% endfor %}
+    {% endif %}
+    </sites>
+</template>

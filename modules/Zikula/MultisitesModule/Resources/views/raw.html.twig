@@ -1,0 +1,43 @@
+{# purpose of this template: Display pages without the theme #}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ app.request.locale }}" lang="{{ app.request.locale }}">
+<head>
+    <title>{{ block('pageTitle')|default(block('title')) }}</title>
+</head>
+<body>
+    <h2>{{ block('title') }}</h2>
+    {% block content %}{% endblock %}
+    {% block footer %}
+        <p class="text-center">
+            Powered by <a href="https://modulestudio.de" title="Get the MOST out of Zikula!">ModuleStudio 1.4.0</a>
+        </p>
+        {{ pageAddAsset('stylesheet', zasset('@ZikulaMultisitesModule:css/custom.css'), 120) }}
+        {{ pageAddAsset('stylesheet', asset('jquery-ui/themes/base/jquery-ui.min.css')) }}
+        {{ pageAddAsset('javascript', asset('jquery-ui/jquery-ui.min.js')) }}
+        {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js'), 90) }}
+        {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css'), 90) }}
+        {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.js')) }}
+        <script>
+            /* <![CDATA[ */
+                if (typeof(Zikula) == 'undefined') {var Zikula = {};}
+                Zikula.Config = {'entrypoint': '{{ getSystemVar('entrypoint', 'index.php') }}', 'baseURL': '{{ app.request.schemeAndHttpHost ~ '/' }}', 'baseURI': '{{ app.request.basePath }}'};
+            /* ]]> */
+        </script>
+        {% if 'edit' in app.request.get('_route') or 'config' in app.request.get('_route') %}
+            {{ polyfill(['forms', 'forms-ext']) }}
+        {% endif %}
+        {% set customScript %}
+            <script>
+            /* <![CDATA[ */
+                ( function($) {
+                    $(document).ready(function() {
+                        $('.dropdown-toggle').addClass('hidden');
+                    });
+                })(jQuery);
+            /* ]]> */
+            </script>
+        {% endset %}
+        {{ pageAddAsset('footer', customScript) }}
+    {% endblock %}
+</body>
+</html>

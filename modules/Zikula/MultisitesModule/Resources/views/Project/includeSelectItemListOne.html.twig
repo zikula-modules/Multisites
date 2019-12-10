@@ -1,0 +1,10 @@
+{# purpose of this template: inclusion template for display of related project #}
+<ul id="{{ idPrefix }}ReferenceList">
+{% if item is defined and item.getKey()|default %}
+{% set idPrefixItem = idPrefix ~ 'Reference_' ~ item.getKey() %}
+<li id="{{ idPrefixItem }}">
+    {{ item|zikulamultisitesmodule_formattedTitle }}
+     <a id="{{ idPrefixItem }}Remove" href="javascript:zikulaMultisitesRemoveRelatedItem('{{ idPrefix }}', '{{ item.getKey() }}');"><i class="fa fa-trash-o"></i></a>
+</li>
+{% endif %}
+</ul>
