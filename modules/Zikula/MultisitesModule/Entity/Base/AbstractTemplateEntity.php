@@ -151,14 +151,20 @@ abstract class AbstractTemplateEntity extends EntityAccess
     /**
      * Bidirectional - Many templates [templates] are linked by many projects [projects] (INVERSE SIDE).
      *
-     * @ORM\ManyToMany(targetEntity="Zikula\MultisitesModule\Entity\ProjectEntity", mappedBy="templates")
+     * @ORM\ManyToMany(
+     *     targetEntity="Zikula\MultisitesModule\Entity\ProjectEntity",
+     *     mappedBy="templates"
+     * )
      * @var \Zikula\MultisitesModule\Entity\ProjectEntity[] $projects
      */
     protected $projects = null;
     /**
      * Bidirectional - One template [template] has many sites [sites] (INVERSE SIDE).
      *
-     * @ORM\OneToMany(targetEntity="Zikula\MultisitesModule\Entity\SiteEntity", mappedBy="template", cascade={"remove"})
+     * @ORM\OneToMany(
+     *     targetEntity="Zikula\MultisitesModule\Entity\SiteEntity",
+     *     mappedBy="template", cascade={"remove"})
+     * )
      * @ORM\JoinTable(name="zikula_multisites_templatesites")
      * @ORM\OrderBy({"name" = "ASC"})
      * @var \Zikula\MultisitesModule\Entity\SiteEntity[] $sites

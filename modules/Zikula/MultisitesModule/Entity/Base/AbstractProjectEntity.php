@@ -72,7 +72,10 @@ abstract class AbstractProjectEntity extends EntityAccess
     /**
      * Bidirectional - One project [project] has many sites [sites] (INVERSE SIDE).
      *
-     * @ORM\OneToMany(targetEntity="Zikula\MultisitesModule\Entity\SiteEntity", mappedBy="project", cascade={"remove"})
+     * @ORM\OneToMany(
+     *     targetEntity="Zikula\MultisitesModule\Entity\SiteEntity",
+     *     mappedBy="project", cascade={"remove"})
+     * )
      * @ORM\JoinTable(name="zikula_multisites_projectsites")
      * @var \Zikula\MultisitesModule\Entity\SiteEntity[] $sites
      */
@@ -81,7 +84,10 @@ abstract class AbstractProjectEntity extends EntityAccess
     /**
      * Bidirectional - Many projects [projects] have many templates [templates] (OWNING SIDE).
      *
-     * @ORM\ManyToMany(targetEntity="Zikula\MultisitesModule\Entity\TemplateEntity", inversedBy="projects")
+     * @ORM\ManyToMany(
+     *     targetEntity="Zikula\MultisitesModule\Entity\TemplateEntity",
+     *     inversedBy="projects"
+     * )
      * @ORM\JoinTable(name="zikula_multisites_project_template")
      * @var \Zikula\MultisitesModule\Entity\TemplateEntity[] $templates
      */

@@ -122,7 +122,8 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
-                $menu[$title]->setLinkAttribute('title',
+                $menu[$title]->setLinkAttribute(
+                    'title',
                     $this->__('Edit this site', 'zikulamultisitesmodule')
                 );
                 $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
@@ -131,7 +132,8 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ]);
-                $menu[$title]->setLinkAttribute('title',
+                $menu[$title]->setLinkAttribute(
+                    'title',
                     $this->__('Reuse for new site', 'zikulamultisitesmodule')
                 );
                 $menu[$title]->setAttribute('icon', 'fa fa-files-o');
@@ -142,7 +144,8 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
-                $menu[$title]->setLinkAttribute('title',
+                $menu[$title]->setLinkAttribute(
+                    'title',
                     $this->__('Delete this site', 'zikulamultisitesmodule')
                 );
                 $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
@@ -161,7 +164,8 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
-                $menu[$title]->setLinkAttribute('title',
+                $menu[$title]->setLinkAttribute(
+                    'title',
                     $this->__('Edit this template', 'zikulamultisitesmodule')
                 );
                 $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
@@ -170,7 +174,8 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ]);
-                $menu[$title]->setLinkAttribute('title',
+                $menu[$title]->setLinkAttribute(
+                    'title',
                     $this->__('Reuse for new template', 'zikulamultisitesmodule')
                 );
                 $menu[$title]->setAttribute('icon', 'fa fa-files-o');
@@ -211,7 +216,8 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
-                $menu[$title]->setLinkAttribute('title',
+                $menu[$title]->setLinkAttribute(
+                    'title',
                     $this->__('Edit this project', 'zikulamultisitesmodule')
                 );
                 $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
@@ -220,7 +226,8 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ]);
-                $menu[$title]->setLinkAttribute('title',
+                $menu[$title]->setLinkAttribute(
+                    'title',
                     $this->__('Reuse for new project', 'zikulamultisitesmodule')
                 );
                 $menu[$title]->setAttribute('icon', 'fa fa-files-o');

@@ -332,7 +332,10 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Bidirectional - Many sites [sites] are linked by one template [template] (OWNING SIDE).
      *
-     * @ORM\ManyToOne(targetEntity="Zikula\MultisitesModule\Entity\TemplateEntity", inversedBy="sites")
+     * @ORM\ManyToOne(
+     *     targetEntity="Zikula\MultisitesModule\Entity\TemplateEntity",
+     *     inversedBy="sites"
+     * )
      * @ORM\JoinTable(name="zikula_multisites_template")
      * @Assert\Type(type="Zikula\MultisitesModule\Entity\TemplateEntity")
      * @var \Zikula\MultisitesModule\Entity\TemplateEntity $template
@@ -342,7 +345,10 @@ abstract class AbstractSiteEntity extends EntityAccess
     /**
      * Bidirectional - Many sites [sites] are linked by one project [project] (OWNING SIDE).
      *
-     * @ORM\ManyToOne(targetEntity="Zikula\MultisitesModule\Entity\ProjectEntity", inversedBy="sites")
+     * @ORM\ManyToOne(
+     *     targetEntity="Zikula\MultisitesModule\Entity\ProjectEntity",
+     *     inversedBy="sites"
+     * )
      * @ORM\JoinTable(name="zikula_multisites_project")
      * @Assert\Type(type="Zikula\MultisitesModule\Entity\ProjectEntity")
      * @var \Zikula\MultisitesModule\Entity\ProjectEntity $project

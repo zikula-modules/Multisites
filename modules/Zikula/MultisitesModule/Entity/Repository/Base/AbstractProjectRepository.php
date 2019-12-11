@@ -15,7 +15,6 @@ namespace Zikula\MultisitesModule\Entity\Repository\Base;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
-
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -147,7 +146,12 @@ abstract class AbstractProjectRepository extends EntityRepository
         $query = $qb->getQuery();
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'projects', 'userid' => $userId];
+        $logArgs = [
+            'app' => 'ZikulaMultisitesModule',
+            'user' => $currentUserApi->get('uname'),
+            'entities' => 'projects',
+            'userid' => $userId
+        ];
         $logger->debug('{app}: User {user} updated {entities} created by user id {userid}.', $logArgs);
     }
     
@@ -185,7 +189,12 @@ abstract class AbstractProjectRepository extends EntityRepository
         $query = $qb->getQuery();
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'projects', 'userid' => $userId];
+        $logArgs = [
+            'app' => 'ZikulaMultisitesModule',
+            'user' => $currentUserApi->get('uname'),
+            'entities' => 'projects',
+            'userid' => $userId
+        ];
         $logger->debug('{app}: User {user} updated {entities} edited by user id {userid}.', $logArgs);
     }
     
@@ -218,7 +227,12 @@ abstract class AbstractProjectRepository extends EntityRepository
         $query = $qb->getQuery();
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'projects', 'userid' => $userId];
+        $logArgs = [
+            'app' => 'ZikulaMultisitesModule',
+            'user' => $currentUserApi->get('uname'),
+            'entities' => 'projects',
+            'userid' => $userId
+        ];
         $logger->debug('{app}: User {user} deleted {entities} created by user id {userid}.', $logArgs);
     }
     
@@ -251,7 +265,12 @@ abstract class AbstractProjectRepository extends EntityRepository
         $query = $qb->getQuery();
         $query->execute();
     
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'projects', 'userid' => $userId];
+        $logArgs = [
+            'app' => 'ZikulaMultisitesModule',
+            'user' => $currentUserApi->get('uname'),
+            'entities' => 'projects',
+            'userid' => $userId
+        ];
         $logger->debug('{app}: User {user} deleted {entities} edited by user id {userid}.', $logArgs);
     }
 
@@ -287,12 +306,16 @@ abstract class AbstractProjectRepository extends EntityRepository
      *
      * @param mixed $id The id (or array of ids) to use to retrieve the object (optional) (default=0)
      * @param bool $useJoins Whether to include joining related objects (optional) (default=true)
-     * @param bool $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     * @param bool $slimMode If activated only some basic fields are selected without using any joins
+     *                       (optional) (default=false)
      *
      * @return array|ProjectEntity Retrieved data array or projectEntity instance
      */
-    public function selectById($id = 0, $useJoins = true, $slimMode = false)
-    {
+    public function selectById(
+        $id = 0,
+        $useJoins = true,
+        $slimMode = false
+    ) {
         $results = $this->selectByIdList(is_array($id) ? $id : [$id], $useJoins, $slimMode);
     
         return null !== $results && 0 < count($results) ? $results[0] : null;
@@ -303,12 +326,16 @@ abstract class AbstractProjectRepository extends EntityRepository
      *
      * @param array $idList The array of ids to use to retrieve the objects (optional) (default=0)
      * @param bool $useJoins Whether to include joining related objects (optional) (default=true)
-     * @param bool $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     * @param bool $slimMode If activated only some basic fields are selected without using any joins
+     *                       (optional) (default=false)
      *
      * @return array Retrieved ProjectEntity instances
      */
-    public function selectByIdList(array $idList = [0], $useJoins = true, $slimMode = false)
-    {
+    public function selectByIdList(
+        array $idList = [0],
+        $useJoins = true,
+        $slimMode = false
+    ) {
         $qb = $this->genericBaseQuery('', '', $useJoins, $slimMode);
         $qb = $this->addIdListFilter($idList, $qb);
     
@@ -347,12 +374,17 @@ abstract class AbstractProjectRepository extends EntityRepository
      * @param string $where The where clause to use when retrieving the collection (optional) (default='')
      * @param string $orderBy The order-by clause to use when retrieving the collection (optional) (default='')
      * @param bool $useJoins Whether to include joining related objects (optional) (default=true)
-     * @param bool $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     * @param bool $slimMode If activated only some basic fields are selected without using any joins
+     *                       (optional) (default=false)
      *
      * @return QueryBuilder Query builder for the given arguments
      */
-    public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
-    {
+    public function getListQueryBuilder(
+        $where = '',
+        $orderBy = '',
+        $useJoins = true,
+        $slimMode = false
+    ) {
         $qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
         if (!$slimMode && null !== $this->collectionFilterHelper) {
             $qb = $this->collectionFilterHelper->addCommonViewFilters('project', $qb);
@@ -367,12 +399,17 @@ abstract class AbstractProjectRepository extends EntityRepository
      * @param string $where The where clause to use when retrieving the collection (optional) (default='')
      * @param string $orderBy The order-by clause to use when retrieving the collection (optional) (default='')
      * @param bool $useJoins Whether to include joining related objects (optional) (default=true)
-     * @param bool $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     * @param bool $slimMode If activated only some basic fields are selected without using any joins
+     *                       (optional) (default=false)
      *
      * @return array List of retrieved projectEntity instances
      */
-    public function selectWhere($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
-    {
+    public function selectWhere(
+        $where = '',
+        $orderBy = '',
+        $useJoins = true,
+        $slimMode = false
+    ) {
         $qb = $this->getListQueryBuilder($where, $orderBy, $useJoins, $slimMode);
     
         $query = $this->getQueryFromBuilder($qb);
@@ -381,7 +418,8 @@ abstract class AbstractProjectRepository extends EntityRepository
     }
 
     /**
-     * Returns query builder instance for retrieving a list of objects with a given where clause and pagination parameters.
+     * Returns query builder instance for retrieving a list of objects with a given
+     * where clause and pagination parameters.
      *
      * @param QueryBuilder $qb Query builder to be enhanced
      * @param int $currentPage Where to start selection
@@ -389,8 +427,11 @@ abstract class AbstractProjectRepository extends EntityRepository
      *
      * @return Query Created query instance
      */
-    public function getSelectWherePaginatedQuery(QueryBuilder $qb, $currentPage = 1, $resultsPerPage = 25)
-    {
+    public function getSelectWherePaginatedQuery(
+        QueryBuilder $qb,
+        $currentPage = 1,
+        $resultsPerPage = 25
+    ) {
         if (1 > $currentPage) {
             $currentPage = 1;
         }
@@ -414,12 +455,19 @@ abstract class AbstractProjectRepository extends EntityRepository
      * @param int $currentPage Where to start selection
      * @param int $resultsPerPage Amount of items to select
      * @param bool $useJoins Whether to include joining related objects (optional) (default=true)
-     * @param bool $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     * @param bool $slimMode If activated only some basic fields are selected without using any joins
+     *                       (optional) (default=false)
      *
      * @return array Retrieved collection and the amount of total records affected
      */
-    public function selectWherePaginated($where = '', $orderBy = '', $currentPage = 1, $resultsPerPage = 25, $useJoins = true, $slimMode = false)
-    {
+    public function selectWherePaginated(
+        $where = '',
+        $orderBy = '',
+        $currentPage = 1,
+        $resultsPerPage = 25,
+        $useJoins = true,
+        $slimMode = false
+    ) {
         $qb = $this->getListQueryBuilder($where, $orderBy, $useJoins, $slimMode);
         $query = $this->getSelectWherePaginatedQuery($qb, $currentPage, $resultsPerPage);
     
@@ -438,8 +486,14 @@ abstract class AbstractProjectRepository extends EntityRepository
      *
      * @return array Retrieved collection and (for paginated queries) the amount of total records affected
      */
-    public function selectSearch($fragment = '', array $exclude = [], $orderBy = '', $currentPage = 1, $resultsPerPage = 25, $useJoins = true)
-    {
+    public function selectSearch(
+        $fragment = '',
+        array $exclude = [],
+        $orderBy = '',
+        $currentPage = 1,
+        $resultsPerPage = 25,
+        $useJoins = true
+    ) {
         $qb = $this->getListQueryBuilder('', $orderBy, $useJoins);
         if (0 < count($exclude)) {
             $qb = $this->addExclusion($qb, $exclude);
@@ -563,12 +617,17 @@ abstract class AbstractProjectRepository extends EntityRepository
      * @param string $where The where clause to use when retrieving the collection (optional) (default='')
      * @param string $orderBy The order-by clause to use when retrieving the collection (optional) (default='')
      * @param bool $useJoins Whether to include joining related objects (optional) (default=true)
-     * @param bool $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     * @param bool $slimMode If activated only some basic fields are selected without using any joins
+     *                       (optional) (default=false)
      *
      * @return QueryBuilder Query builder instance to be further processed
      */
-    public function genericBaseQuery($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
-    {
+    public function genericBaseQuery(
+        $where = '',
+        $orderBy = '',
+        $useJoins = true,
+        $slimMode = false
+    ) {
         // normally we select the whole table
         $selection = 'tbl';
     

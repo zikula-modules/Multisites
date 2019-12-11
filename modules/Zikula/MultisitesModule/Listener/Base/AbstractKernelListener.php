@@ -287,7 +287,11 @@ abstract class AbstractKernelListener implements EventSubscriberInterface
      *     `$exception = $event->getException();
      *     if ($exception instanceof MySpecialException || $exception instanceof MySpecialExceptionInterface) {
      *         $response = new Response();
-     *         $message = sprintf('multisites App Error says: %s with code: %s', $exception->getMessage(), $exception->getCode());
+     *         $message = sprintf(
+     *             'multisites App Error says: %s with code: %s',
+     *             $exception->getMessage(),
+     *             $exception->getCode()
+     *         );
      *         $response->setContent($message);`
      *
      *         HttpExceptionInterface is a special type of exception that holds the status code and header details

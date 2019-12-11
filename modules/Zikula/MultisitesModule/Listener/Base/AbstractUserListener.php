@@ -124,32 +124,89 @@ abstract class AbstractUserListener implements EventSubscriberInterface
         
         $repo = $this->entityFactory->getRepository('site');
         // set creator to admin (UsersConstant::USER_ID_ADMIN) for all sites created by this user
-        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
+        $repo->updateCreator(
+            $userId,
+            UsersConstant::USER_ID_ADMIN,
+            $this->translator,
+            $this->logger,
+            $this->currentUserApi
+        );
         
         // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all sites updated by this user
-        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
+        $repo->updateLastEditor(
+            $userId,
+            UsersConstant::USER_ID_ADMIN,
+            $this->translator,
+            $this->logger,
+            $this->currentUserApi
+        );
         
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'sites'];
-        $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
+        $logArgs = [
+            'app' => 'ZikulaMultisitesModule',
+            'user' => $this->currentUserApi->get('uname'),
+            'entities' => 'sites'
+        ];
+        $this->logger->notice(
+            '{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.',
+            $logArgs
+        );
         
         $repo = $this->entityFactory->getRepository('template');
         // set creator to admin (UsersConstant::USER_ID_ADMIN) for all templates created by this user
-        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
+        $repo->updateCreator(
+            $userId,
+            UsersConstant::USER_ID_ADMIN,
+            $this->translator,
+            $this->logger,
+            $this->currentUserApi
+        );
         
         // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all templates updated by this user
-        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
+        $repo->updateLastEditor(
+            $userId,
+            UsersConstant::USER_ID_ADMIN,
+            $this->translator,
+            $this->logger,
+            $this->currentUserApi
+        );
         
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'templates'];
-        $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
+        $logArgs = [
+            'app' => 'ZikulaMultisitesModule',
+            'user' => $this->currentUserApi->get('uname'),
+            'entities' => 'templates'
+        ];
+        $this->logger->notice(
+            '{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.',
+            $logArgs
+        );
         
         $repo = $this->entityFactory->getRepository('project');
         // set creator to admin (UsersConstant::USER_ID_ADMIN) for all projects created by this user
-        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
+        $repo->updateCreator(
+            $userId,
+            UsersConstant::USER_ID_ADMIN,
+            $this->translator,
+            $this->logger,
+            $this->currentUserApi
+        );
         
         // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all projects updated by this user
-        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
+        $repo->updateLastEditor(
+            $userId,
+            UsersConstant::USER_ID_ADMIN,
+            $this->translator,
+            $this->logger,
+            $this->currentUserApi
+        );
         
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'projects'];
-        $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
+        $logArgs = [
+            'app' => 'ZikulaMultisitesModule',
+            'user' => $this->currentUserApi->get('uname'),
+            'entities' => 'projects'
+        ];
+        $this->logger->notice(
+            '{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.',
+            $logArgs
+        );
     }
 }
