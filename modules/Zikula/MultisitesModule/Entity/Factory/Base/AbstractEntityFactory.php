@@ -45,8 +45,8 @@ abstract class AbstractEntityFactory
     public function __construct(
         EntityManagerInterface $entityManager,
         EntityInitialiser $entityInitialiser,
-        CollectionFilterHelper $collectionFilterHelper)
-    {
+        CollectionFilterHelper $collectionFilterHelper
+    ) {
         $this->entityManager = $entityManager;
         $this->entityInitialiser = $entityInitialiser;
         $this->collectionFilterHelper = $collectionFilterHelper;

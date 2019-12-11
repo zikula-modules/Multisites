@@ -74,7 +74,8 @@ abstract class AbstractTemplateController extends AbstractController
         
         /** @var RouterInterface $router */
         $router = $this->get('router');
-        $sortableColumns = new SortableColumns($router, 'zikulamultisitesmodule_template_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
+        $routeName = 'zikulamultisitesmodule_template_' . ($isAdmin ? 'admin' : '') . 'view';
+        $sortableColumns = new SortableColumns($router, $routeName, 'sort', 'sortdir');
         
         $sortableColumns->addColumns([
             new Column('name'),
@@ -86,10 +87,19 @@ abstract class AbstractTemplateController extends AbstractController
             new Column('updatedDate'),
         ]);
         
-        $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
+        $templateParameters = $controllerHelper->processViewActionParameters(
+            $objectType,
+            $sortableColumns,
+            $templateParameters,
+            true
+        );
         
         // filter by permissions
-        $templateParameters['items'] = $permissionHelper->filterCollection($objectType, $templateParameters['items'], $permLevel);
+        $templateParameters['items'] = $permissionHelper->filterCollection(
+            $objectType,
+            $templateParameters['items'],
+            $permLevel
+        );
         
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
@@ -254,7 +264,10 @@ abstract class AbstractTemplateController extends AbstractController
         
             if ($entity->supportsHookSubscribers()) {
                 // Let any ui hooks perform additional validation actions
-                $hookType = 'delete' === $action ? UiHooksCategory::TYPE_VALIDATE_DELETE : UiHooksCategory::TYPE_VALIDATE_EDIT;
+                $hookType = 'delete' === $action
+                    ? UiHooksCategory::TYPE_VALIDATE_DELETE
+                    : UiHooksCategory::TYPE_VALIDATE_EDIT
+                ;
                 $validationErrors = $hookHelper->callValidationHooks($entity, $hookType);
                 if (count($validationErrors) > 0) {
                     foreach ($validationErrors as $message) {
@@ -269,8 +282,24 @@ abstract class AbstractTemplateController extends AbstractController
                 // execute the workflow action
                 $success = $workflowHelper->executeAction($entity, $action);
             } catch (Exception $exception) {
-                $this->addFlash('error', $this->__f('Sorry, but an error occured during the %action% action.', ['%action%' => $action]) . '  ' . $exception->getMessage());
-                $logger->error('{app}: User {user} tried to execute the {action} workflow action for the {entity} with id {id}, but failed. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'action' => $action, 'entity' => 'template', 'id' => $itemId, 'errorMessage' => $exception->getMessage()]);
+                $this->addFlash(
+                    'error',
+                    $this->__f(
+                        'Sorry, but an error occured during the %action% action.',
+                        ['%action%' => $action]
+                    ) . '  ' . $exception->getMessage()
+                );
+                $logger->error(
+                    '{app}: User {user} tried to execute the {action} workflow action for the {entity} with id {id}, but failed. Error details: {errorMessage}.',
+                    [
+                        'app' => 'ZikulaMultisitesModule',
+                        'user' => $userName,
+                        'action' => $action,
+                        'entity' => 'template',
+                        'id' => $itemId,
+                        'errorMessage' => $exception->getMessage()
+                    ]
+                );
             }
         
             if (!$success) {
@@ -279,15 +308,35 @@ abstract class AbstractTemplateController extends AbstractController
         
             if ('delete' === $action) {
                 $this->addFlash('status', $this->__('Done! Item deleted.'));
-                $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'entity' => 'template', 'id' => $itemId]);
+                $logger->notice(
+                    '{app}: User {user} deleted the {entity} with id {id}.',
+                    [
+                        'app' => 'ZikulaMultisitesModule',
+                        'user' => $userName,
+                        'entity' => 'template',
+                        'id' => $itemId
+                    ]
+                );
             } else {
                 $this->addFlash('status', $this->__('Done! Item updated.'));
-                $logger->notice('{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'action' => $action, 'entity' => 'template', 'id' => $itemId]);
+                $logger->notice(
+                    '{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.',
+                    [
+                        'app' => 'ZikulaMultisitesModule',
+                        'user' => $userName,
+                        'action' => $action,
+                        'entity' => 'template',
+                        'id' => $itemId
+                    ]
+                );
             }
         
             if ($entity->supportsHookSubscribers()) {
                 // Let any ui hooks know that we have updated or deleted an item
-                $hookType = 'delete' === $action ? UiHooksCategory::TYPE_PROCESS_DELETE : UiHooksCategory::TYPE_PROCESS_EDIT;
+                $hookType = 'delete' === $action
+                    ? UiHooksCategory::TYPE_PROCESS_DELETE
+                    : UiHooksCategory::TYPE_PROCESS_EDIT
+                ;
                 $url = null;
                 $hookHelper->callProcessHooks($entity, $hookType, $url);
             }

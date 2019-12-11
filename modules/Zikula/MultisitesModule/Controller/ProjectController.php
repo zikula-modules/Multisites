@@ -42,7 +42,14 @@ class ProjectController extends AbstractProjectController
         $pos,
         $num
     ) {
-        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, true);
+        return $this->viewInternal(
+            $request,
+            $sort,
+            $sortdir,
+            $pos,
+            $num,
+            true
+        );
     }
     
     /**
@@ -60,7 +67,14 @@ class ProjectController extends AbstractProjectController
         $pos,
         $num
     ) {
-        return $this->viewInternal($request, $sort, $sortdir, $pos, $num, false);
+        return $this->viewInternal(
+            $request,
+            $sort,
+            $sortdir,
+            $pos,
+            $num,
+            false
+        );
     }
     
     /**
@@ -75,7 +89,10 @@ class ProjectController extends AbstractProjectController
     public function adminEditAction(
         Request $request
     ) {
-        return $this->editInternal($request, true);
+        return $this->editInternal(
+            $request,
+            true
+        );
     }
     
     /**
@@ -89,7 +106,10 @@ class ProjectController extends AbstractProjectController
     public function editAction(
         Request $request
     ) {
-        return $this->editInternal($request, false);
+        return $this->editInternal(
+            $request,
+            false
+        );
     }
     
     /**

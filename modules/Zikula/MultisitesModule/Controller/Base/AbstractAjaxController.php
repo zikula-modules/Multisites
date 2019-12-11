@@ -36,8 +36,7 @@ abstract class AbstractAjaxController extends AbstractController
      */
     public function toggleFlagAction(
         Request $request
-    )
-     {
+    ) {
         if (!$request->isXmlHttpRequest()) {
             return $this->json($this->__('Only ajax access is allowed!'), Response::HTTP_BAD_REQUEST);
         }
