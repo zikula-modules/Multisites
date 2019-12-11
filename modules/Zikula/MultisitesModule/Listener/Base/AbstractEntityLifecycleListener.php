@@ -119,8 +119,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         // create the filter event and dispatch it
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
-        $this->eventDispatcher->dispatch(constant('\\Zikula\\MultisitesModule\\MultisitesEvents::' . strtoupper($entity->get_objectType()) . '_PRE_REMOVE'), $event);
+        $this->eventDispatcher->dispatch(constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_PRE_REMOVE'), $event);
     }
 
     /**
@@ -161,8 +162,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $this->logger->debug('{app}: User {user} removed the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
-        $this->eventDispatcher->dispatch(constant('\\Zikula\\MultisitesModule\\MultisitesEvents::' . strtoupper($objectType) . '_POST_REMOVE'), $event);
+        $this->eventDispatcher->dispatch(constant($eventClass . '::' . strtoupper($objectType) . '_POST_REMOVE'), $event);
     }
 
     /**
@@ -184,8 +186,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         // create the filter event and dispatch it
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
-        $this->eventDispatcher->dispatch(constant('\\Zikula\\MultisitesModule\\MultisitesEvents::' . strtoupper($entity->get_objectType()) . '_PRE_PERSIST'), $event);
+        $this->eventDispatcher->dispatch(constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_PRE_PERSIST'), $event);
     }
 
     /**
@@ -208,8 +211,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $this->logger->debug('{app}: User {user} created the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
-        $this->eventDispatcher->dispatch(constant('\\Zikula\\MultisitesModule\\MultisitesEvents::' . strtoupper($entity->get_objectType()) . '_POST_PERSIST'), $event);
+        $this->eventDispatcher->dispatch(constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_POST_PERSIST'), $event);
     }
 
     /**
@@ -227,8 +231,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         // create the filter event and dispatch it
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
-        $this->eventDispatcher->dispatch(constant('\\Zikula\\MultisitesModule\\MultisitesEvents::' . strtoupper($entity->get_objectType()) . '_PRE_UPDATE'), $event);
+        $this->eventDispatcher->dispatch(constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_PRE_UPDATE'), $event);
     }
 
     /**
@@ -250,8 +255,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $this->logger->debug('{app}: User {user} updated the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
-        $this->eventDispatcher->dispatch(constant('\\Zikula\\MultisitesModule\\MultisitesEvents::' . strtoupper($entity->get_objectType()) . '_POST_UPDATE'), $event);
+        $this->eventDispatcher->dispatch(constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_POST_UPDATE'), $event);
     }
 
     /**
@@ -303,8 +309,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         // create the filter event and dispatch it
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
-        $this->eventDispatcher->dispatch(constant('\\Zikula\\MultisitesModule\\MultisitesEvents::' . strtoupper($entity->get_objectType()) . '_POST_LOAD'), $event);
+        $this->eventDispatcher->dispatch(constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_POST_LOAD'), $event);
     }
 
     /**

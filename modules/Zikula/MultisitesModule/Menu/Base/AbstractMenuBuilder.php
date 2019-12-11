@@ -100,12 +100,21 @@ class AbstractMenuBuilder
         $context = $options['context'];
         $menu->setChildrenAttribute('class', 'list-inline item-actions');
 
-        $this->eventDispatcher->dispatch(MultisitesEvents::MENU_ITEMACTIONS_PRE_CONFIGURE, new ConfigureItemActionsMenuEvent($this->factory, $menu, $options));
+        $this->eventDispatcher->dispatch(
+            MultisitesEvents::MENU_ITEMACTIONS_PRE_CONFIGURE,
+            new ConfigureItemActionsMenuEvent($this->factory, $menu, $options)
+        );
 
-        $currentUserId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
+        $currentUserId = $this->currentUserApi->isLoggedIn()
+            ? $this->currentUserApi->get('uid')
+            : UsersConstant::USER_ID_ANONYMOUS
+        ;
         if ($entity instanceof SiteEntity) {
             $routePrefix = 'zikulamultisitesmodule_site_';
-            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId === $entity->getCreatedBy()->getUid();
+            $isOwner = 0 < $currentUserId
+                && null !== $entity->getCreatedBy()
+                && $currentUserId === $entity->getCreatedBy()->getUid()
+            ;
         
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
@@ -113,14 +122,18 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
-                $menu[$title]->setLinkAttribute('title', $this->__('Edit this site', 'zikulamultisitesmodule'));
+                $menu[$title]->setLinkAttribute('title',
+                    $this->__('Edit this site', 'zikulamultisitesmodule')
+                );
                 $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ]);
-                $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new site', 'zikulamultisitesmodule'));
+                $menu[$title]->setLinkAttribute('title',
+                    $this->__('Reuse for new site', 'zikulamultisitesmodule')
+                );
                 $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($this->permissionHelper->mayDelete($entity)) {
@@ -129,13 +142,18 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
-                $menu[$title]->setLinkAttribute('title', $this->__('Delete this site', 'zikulamultisitesmodule'));
+                $menu[$title]->setLinkAttribute('title',
+                    $this->__('Delete this site', 'zikulamultisitesmodule')
+                );
                 $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
         }
         if ($entity instanceof TemplateEntity) {
             $routePrefix = 'zikulamultisitesmodule_template_';
-            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId === $entity->getCreatedBy()->getUid();
+            $isOwner = 0 < $currentUserId
+                && null !== $entity->getCreatedBy()
+                && $currentUserId === $entity->getCreatedBy()->getUid()
+            ;
         
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
@@ -143,14 +161,18 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
-                $menu[$title]->setLinkAttribute('title', $this->__('Edit this template', 'zikulamultisitesmodule'));
+                $menu[$title]->setLinkAttribute('title',
+                    $this->__('Edit this template', 'zikulamultisitesmodule')
+                );
                 $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ]);
-                $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new template', 'zikulamultisitesmodule'));
+                $menu[$title]->setLinkAttribute('title',
+                    $this->__('Reuse for new template', 'zikulamultisitesmodule')
+                );
                 $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             
@@ -178,7 +200,10 @@ class AbstractMenuBuilder
         }
         if ($entity instanceof ProjectEntity) {
             $routePrefix = 'zikulamultisitesmodule_project_';
-            $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId === $entity->getCreatedBy()->getUid();
+            $isOwner = 0 < $currentUserId
+                && null !== $entity->getCreatedBy()
+                && $currentUserId === $entity->getCreatedBy()->getUid()
+            ;
         
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
@@ -186,14 +211,18 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
-                $menu[$title]->setLinkAttribute('title', $this->__('Edit this project', 'zikulamultisitesmodule'));
+                $menu[$title]->setLinkAttribute('title',
+                    $this->__('Edit this project', 'zikulamultisitesmodule')
+                );
                 $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ]);
-                $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new project', 'zikulamultisitesmodule'));
+                $menu[$title]->setLinkAttribute('title',
+                    $this->__('Reuse for new project', 'zikulamultisitesmodule')
+                );
                 $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             
@@ -220,7 +249,10 @@ class AbstractMenuBuilder
             }
         }
 
-        $this->eventDispatcher->dispatch(MultisitesEvents::MENU_ITEMACTIONS_POST_CONFIGURE, new ConfigureItemActionsMenuEvent($this->factory, $menu, $options));
+        $this->eventDispatcher->dispatch(
+            MultisitesEvents::MENU_ITEMACTIONS_POST_CONFIGURE,
+            new ConfigureItemActionsMenuEvent($this->factory, $menu, $options)
+        );
 
         return $menu;
     }

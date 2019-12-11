@@ -112,7 +112,12 @@ abstract class AbstractPermissionHelper
         $objectType = $entity->get_objectType();
         $instance = $entity->getKey() . '::';
     
-        return $this->permissionApi->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', $instance, $permissionLevel, $userId);
+        return $this->permissionApi->hasPermission(
+            'ZikulaMultisitesModule:' . ucfirst($objectType) . ':',
+            $instance,
+            $permissionLevel,
+            $userId
+        );
     }
     
     /**
@@ -146,7 +151,12 @@ abstract class AbstractPermissionHelper
      */
     public function hasComponentPermission($objectType, $permissionLevel, $userId = null)
     {
-        return $this->permissionApi->hasPermission('ZikulaMultisitesModule:' . ucfirst($objectType) . ':', '::', $permissionLevel, $userId);
+        return $this->permissionApi->hasPermission(
+            'ZikulaMultisitesModule:' . ucfirst($objectType) . ':',
+            '::',
+            $permissionLevel,
+            $userId
+        );
     }
     
     /**
@@ -172,7 +182,12 @@ abstract class AbstractPermissionHelper
      */
     public function hasPermission($permissionLevel, $userId = null)
     {
-        return $this->permissionApi->hasPermission('ZikulaMultisitesModule::', '::', $permissionLevel, $userId);
+        return $this->permissionApi->hasPermission(
+            'ZikulaMultisitesModule::',
+            '::',
+            $permissionLevel,
+            $userId
+        );
     }
     
     /**

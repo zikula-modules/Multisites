@@ -568,7 +568,10 @@ abstract class AbstractCollectionFilterHelper
     public function addCreatorFilter(QueryBuilder $qb, $userId = null)
     {
         if (null === $userId) {
-            $userId = $this->currentUserApi->isLoggedIn() ? (int)$this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
+            $userId = $this->currentUserApi->isLoggedIn()
+                ? (int)$this->currentUserApi->get('uid')
+                : UsersConstant::USER_ID_ANONYMOUS
+            ;
         }
     
         $qb->andWhere('tbl.createdBy = :userId')

@@ -101,8 +101,12 @@ abstract class AbstractHookHelper
      * @param string $hookType Name of hook type to be called
      * @param UrlInterface $routeUrl The route url object
      */
-    public function callFormProcessHooks(FormInterface $form, EntityAccess $entity, $hookType, UrlInterface $routeUrl = null)
-    {
+    public function callFormProcessHooks(
+        FormInterface $form,
+        EntityAccess $entity,
+        $hookType,
+        UrlInterface $routeUrl = null
+    ) {
         $formResponse = new FormAwareResponse($form, $entity, $routeUrl);
         $hookAreaPrefix = $entity->getHookAreaPrefix();
         $hookAreaPrefix = str_replace('.ui_hooks.', '.form_aware_hook.', $hookAreaPrefix);

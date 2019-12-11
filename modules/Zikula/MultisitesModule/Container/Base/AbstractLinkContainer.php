@@ -102,24 +102,30 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             }
         }
         
-        if (in_array('site', $allowedObjectTypes, true)
-            && $this->permissionHelper->hasComponentPermission('site', $permLevel)) {
+        if (
+            in_array('site', $allowedObjectTypes, true)
+            && $this->permissionHelper->hasComponentPermission('site', $permLevel)
+        ) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_site_' . $routeArea . 'view'),
                 'text' => $this->__('Sites', 'zikulamultisitesmodule'),
                 'title' => $this->__('Sites list', 'zikulamultisitesmodule')
             ];
         }
-        if (in_array('template', $allowedObjectTypes, true)
-            && $this->permissionHelper->hasComponentPermission('template', $permLevel)) {
+        if (
+            in_array('template', $allowedObjectTypes, true)
+            && $this->permissionHelper->hasComponentPermission('template', $permLevel)
+        ) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_template_' . $routeArea . 'view'),
                 'text' => $this->__('Templates', 'zikulamultisitesmodule'),
                 'title' => $this->__('Templates list', 'zikulamultisitesmodule')
             ];
         }
-        if (in_array('project', $allowedObjectTypes, true)
-            && $this->permissionHelper->hasComponentPermission('project', $permLevel)) {
+        if (
+            in_array('project', $allowedObjectTypes, true)
+            && $this->permissionHelper->hasComponentPermission('project', $permLevel)
+        ) {
             $links[] = [
                 'url' => $this->router->generate('zikulamultisitesmodule_project_' . $routeArea . 'view'),
                 'text' => $this->__('Projects', 'zikulamultisitesmodule'),

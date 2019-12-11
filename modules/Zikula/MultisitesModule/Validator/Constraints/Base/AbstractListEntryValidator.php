@@ -50,7 +50,7 @@ abstract class AbstractListEntryValidator extends ConstraintValidator
 
         if ('workflowState' === $constraint->propertyName && in_array($value, ['initial', 'deleted'], true)) {
             return;
-    	}
+        }
 
         $listEntries = $this->listEntriesHelper->getEntries($constraint->entityName, $constraint->propertyName);
         $allowedValues = [];
@@ -92,16 +92,26 @@ abstract class AbstractListEntryValidator extends ConstraintValidator
 
         if (null !== $constraint->min && $count < $constraint->min) {
             $this->context->buildViolation(
-                $this->translator->transChoice('You must select at least "%limit%" choice.|You must select at least "%limit%" choices.', $count, [
-                    '%limit%' => $constraint->min
-                ], 'zikulamultisitesmodule')
+                $this->translator->transChoice(
+                    'You must select at least "%limit%" choice.|You must select at least "%limit%" choices.',
+                    $count,
+                    [
+                        '%limit%' => $constraint->min
+                    ],
+                    'zikulamultisitesmodule'
+                )
             )->addViolation();
         }
         if (null !== $constraint->max && $count > $constraint->max) {
             $this->context->buildViolation(
-                $this->translator->transChoice('You must select at most "%limit%" choice.|You must select at most "%limit%" choices.', $count, [
-                    '%limit%' => $constraint->max
-                ], 'zikulamultisitesmodule')
+                $this->translator->transChoice(
+                    'You must select at most "%limit%" choice.|You must select at most "%limit%" choices.',
+                    $count,
+                    [
+                        '%limit%' => $constraint->max
+                    ],
+                    'zikulamultisitesmodule'
+                )
             )->addViolation();
         }
     }
