@@ -77,7 +77,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
         $links = [];
 
         if (LinkContainerInterface::TYPE_ACCOUNT === $type) {
-
             return $links;
         }
 

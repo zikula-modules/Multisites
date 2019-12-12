@@ -201,7 +201,9 @@ abstract class AbstractControllerHelper
             $contextArgs
         );
     
-        $quickNavFormType = 'Zikula\MultisitesModule\Form\Type\QuickNavigation\\' . ucfirst($objectType) . 'QuickNavType';
+        $quickNavFormType = 'Zikula\MultisitesModule\Form\Type\QuickNavigation\\'
+            . ucfirst($objectType) . 'QuickNavType'
+        ;
         $quickNavForm = $this->formFactory->create($quickNavFormType, $templateParameters);
         $quickNavForm->handleRequest($request);
         if ($quickNavForm->isSubmitted()) {
