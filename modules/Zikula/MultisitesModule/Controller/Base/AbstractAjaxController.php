@@ -52,7 +52,7 @@ abstract class AbstractAjaxController extends AbstractController
         if (
             0 === $id
             || ('site' !== $objectType)
-        || ('site' === $objectType && !in_array($field, ['active'], true))
+            || ('site' === $objectType && !in_array($field, ['active'], true))
         ) {
             return $this->json($this->__('Error: invalid input.'), JsonResponse::HTTP_BAD_REQUEST);
         }

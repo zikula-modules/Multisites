@@ -1461,6 +1461,5 @@ abstract class AbstractSiteEntity extends EntityAccess
         $this->setCreatedDate(null);
         $this->setUpdatedBy(null);
         $this->setUpdatedDate(null);
-    
     }
 }

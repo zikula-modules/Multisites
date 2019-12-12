@@ -753,6 +753,5 @@ abstract class AbstractTemplateEntity extends EntityAccess
         $this->setCreatedDate(null);
         $this->setUpdatedBy(null);
         $this->setUpdatedDate(null);
-    
     }
 }
