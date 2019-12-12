@@ -391,7 +391,12 @@ abstract class AbstractTemplateEntity extends EntityAccess
         if (null === $this->sqlFile && null === $sqlFile) {
             return;
         }
-        if (null !== $this->sqlFile && null !== $sqlFile && $this->sqlFile instanceof File && $this->sqlFile->getRealPath() === $sqlFile->getRealPath()) {
+        if (
+            null !== $this->sqlFile
+            && null !== $sqlFile
+            && $this->sqlFile instanceof File
+            && $this->sqlFile->getRealPath() === $sqlFile->getRealPath()
+        ) {
             return;
         }
         $this->sqlFile = isset($sqlFile) ? $sqlFile : '';
