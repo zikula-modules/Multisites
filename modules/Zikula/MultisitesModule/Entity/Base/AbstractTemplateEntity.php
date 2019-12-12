@@ -658,7 +658,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
     }
     
     
-    
     /**
      * Creates url arguments array for easy creation of display urls.
      *
