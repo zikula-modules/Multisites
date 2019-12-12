@@ -53,7 +53,10 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
             $uploadHelper->checkAndCreateAllUploadFolders();
         } catch (Exception $exception) {
             $this->addFlash('error', $exception->getMessage());
-            $logger->error('{app}: User {user} could not create upload folders during installation. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'errorMessage' => $exception->getMessage()]);
+            $logger->error(
+                '{app}: User {user} could not create upload folders during installation. Error details: {errorMessage}.',
+                ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'errorMessage' => $exception->getMessage()]
+            );
         
             return false;
         }
