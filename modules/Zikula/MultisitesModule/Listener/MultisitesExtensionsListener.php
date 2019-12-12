@@ -114,7 +114,10 @@ class MultisitesExtensionsListener implements EventSubscriberInterface
 
     public function updateState(GenericEvent $event)
     {
-        if ($this->multisitesParameters['enabled'] && ExtensionsConstant::STATE_UNINITIALISED === $event->getArgument('state')) {
+        if (
+            $this->multisitesParameters['enabled']
+            && ExtensionsConstant::STATE_UNINITIALISED === $event->getArgument('state')
+        ) {
             if (!$this->permissionApi->hasPermission('ZikulaExtensionsModule::', '::', ACCESS_ADMIN)) {
                 throw new \RuntimeException($this->translator->__('Error! Invalid module state transition.'));
             }

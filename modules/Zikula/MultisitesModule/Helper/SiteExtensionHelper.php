@@ -288,7 +288,13 @@ class SiteExtensionHelper
 
         $connect = $this->systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
-            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+            $flashBag->add(
+                'error',
+                $this->__f(
+                    'Error! Connecting to the database %s failed.',
+                    ['%s' => $site->getDatabaseName()]
+                )
+            );
 
             return false;
         }
@@ -642,7 +648,11 @@ class SiteExtensionHelper
             return false;
         }
 
-        $connect->update('module_vars', ['value' => serialize($themeName)], ['modname' => 'ZConfig', 'name' => 'Default_Theme']);
+        $connect->update(
+            'module_vars',
+            ['value' => serialize($themeName)],
+            ['modname' => 'ZConfig', 'name' => 'Default_Theme']
+        );
 
         return true;
     }

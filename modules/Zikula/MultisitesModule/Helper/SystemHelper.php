@@ -275,7 +275,7 @@ class SystemHelper
                 $stmt = $connect->executeQuery($sql, [':dbName' => $dbName]);
                 $result = $stmt->execute();
                 if (!$result) {
-                    $flashBag->add('error', $this->__('DB Query error.') . ':<br />' . $sql  . "\n");;
+                    $flashBag->add('error', $this->__('DB Query error.') . ':<br />' . $sql  . "\n");
 
                     return false;
                 }
@@ -697,7 +697,13 @@ class SystemHelper
         // check if database connection works
         $connect = $this->connectToExternalDatabase(new DatabaseInfo($site));
         if (!$connect) {
-            $flashBag->add('error', $this->__f('Error! Connecting to the database %s failed.', ['%s' => $site->getDatabaseName()]));
+            $flashBag->add(
+                'error',
+                $this->__f(
+                    'Error! Connecting to the database %s failed.',
+                    ['%s' => $site->getDatabaseName()]
+                )
+            );
 
             return false;
         }

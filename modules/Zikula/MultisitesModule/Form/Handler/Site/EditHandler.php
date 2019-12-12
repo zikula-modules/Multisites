@@ -76,7 +76,13 @@ class EditHandler extends AbstractEditHandler
 
         if (null !== $entity['template'] && count($entity['template']['parameters']) > 0) {
             // check if parameters have been provided
-            if (!$entity['parametersCsvFile'] && (null === $entity['parametersArray'] || !count($entity['parametersArray']))) {
+            if (
+                !$entity['parametersCsvFile']
+                && (
+                    null === $entity['parametersArray']
+                    || !count($entity['parametersArray'])
+                )
+            ) {
                 $flashBag->add(
                     'error',
                     $this->__('Error! Please either provide a csv file containing the required parameter values or enter them manually.')
@@ -86,7 +92,7 @@ class EditHandler extends AbstractEditHandler
             }
         }
 
-        if ($this->templateParameters['mode'] == 'create') {
+        if ('create' === $this->templateParameters['mode']) {
             if (null === $entity['template']) {
                 $flashBag->add('error', $this->__('Error! You need to select a template for new sites.'));
 
@@ -109,7 +115,7 @@ class EditHandler extends AbstractEditHandler
             }
         }
 
-        if ($this->templateParameters['mode'] != 'create') {
+        if ('create' !== $this->templateParameters['mode']) {
             // check if site has been decoupled from it's template
             $formData = $this->form->getData();
             $templateIdArray = isset($formData['template']) && is_array($formData['template'])

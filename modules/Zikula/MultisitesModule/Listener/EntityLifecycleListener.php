@@ -43,7 +43,11 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
             if (true === $deleteDatabase) {
                 // delete the database
                 if (!$systemHelper->deleteDatabase(new DatabaseInfo($entity))) {
-                    $flashBag->add('error', $this->container->get('translator.default')->__('Error during deleting the database.'));
+                    $flashBag->add(
+                        'error',
+                        $this->container->get('translator.default')
+                            ->__('Error during deleting the database.')
+                    );
 
                     return false;
                 }
@@ -54,7 +58,8 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
                 if (!$systemHelper->deleteDir($dataDirectory)) {
                     $flashBag->add(
                         'error',
-                        $this->container->get('translator.default')->__('Error during deleting the site files directory.')
+                        $this->container->get('translator.default')
+                            ->__('Error during deleting the site files directory.')
                     );
 
                     return false;
@@ -80,7 +85,8 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
                 $flashBag = $this->container->get('session')->getFlashBag();
                 $flashBag->add(
                     'error',
-                    $this->container->get('translator.default')->__('Error! Updating the database configuration file failed.')
+                    $this->container->get('translator.default')
+                        ->__('Error! Updating the database configuration file failed.')
                 );
 
                 return false;
@@ -105,7 +111,8 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
             if (!$systemHelper->updateSubsitesConfigFile()) {
                 $flashBag->add(
                     'error',
-                    $this->container->get('translator.default')->__('Error! Updating the database configuration file failed.')
+                    $this->container->get('translator.default')
+                        ->__('Error! Updating the database configuration file failed.')
                 );
 
                 return false;
@@ -130,7 +137,8 @@ class EntityLifecycleListener extends AbstractEntityLifecycleListener
                 $flashBag = $this->container->get('session')->getFlashBag();
                 $flashBag->add(
                     'error',
-                    $this->container->get('translator.default')->__('Error! Updating the database configuration file failed.')
+                    $this->container->get('translator.default')
+                        ->__('Error! Updating the database configuration file failed.')
                 );
 
                 return false;

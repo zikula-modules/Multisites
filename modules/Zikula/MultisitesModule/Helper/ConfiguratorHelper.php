@@ -148,9 +148,8 @@ class ConfiguratorHelper
 
             $this->session->getFlashBag()->add(
                 'error',
-                $this->__(
-                    'Error: it seems everything is configured correctly, but Multisites is not running. Please check your configuration file!'
-                )
+                $this->__('Error: it seems everything is configured correctly, but Multisites is not running.')
+                    . ' ' . $this->__('Please check your configuration file!')
             );
 
             return false;

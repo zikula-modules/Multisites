@@ -191,7 +191,13 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
             if ($row['sitedbprefix'] != '') {
                 $connect = $systemHelper->connectToExternalDatabase(new DatabaseInfo($site));
                 if (!$connect) {
-                    $this->addFlash('error', $this->__f('The site "%site%" does have a table prefix set which is not supported anymore. You need to rename tables in the "%database%" database accordingly.', ['%site%' => $site->getName(), '%database%' => $site->getDatabaseName()]));
+                    $this->addFlash(
+                        'error',
+                        $this->__f(
+                            'The site "%site%" does have a table prefix set which is not supported anymore. You need to rename tables in the "%database%" database accordingly.',
+                            ['%site%' => $site->getName(), '%database%' => $site->getDatabaseName()]
+                        )
+                    );
                 } else {
                     // remove legacy prefix in all tables
                     $tableNames = [];
@@ -213,7 +219,10 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
                             continue;
                         }
 
-                        $sql = 'ALTER TABLE `' . $tableName . '` RENAME TO `' . str_replace($prefix, '', $tableName) . '`';
+                        $sql = '
+                            ALTER TABLE `' . $tableName . '`
+                            RENAME TO `' . str_replace($prefix, '', $tableName) . '`
+                        ';
                         $stmt = $connect->prepare($sql);
                         $stmt->execute();
                     }
@@ -284,9 +293,10 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
         // move existing template files into new folder
         $finder = new Finder();
         $finder->files()->in($modelPath);
+        $skipFiles = ['.', '..', '.git', '.svn', 'CVS', 'index.html', 'index.htm', '.htaccess'];
         $filesArray = [];
         foreach ($finder as $file) {
-            if (in_array($file->getFilename(), ['.', '..', '.git', '.svn', 'CVS', 'index.html', 'index.htm', '.htaccess'])) {
+            if (in_array($file->getFilename(), $skipFiles)) {
                 continue;
             }
             $filesArray[] = $file;
@@ -304,7 +314,13 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
             $systemHelper = $this->container->get('zikula_multisites_module.system_helper');
             if (!$systemHelper->deleteDir($modelPath)) {
                 // raise a message, but continue the process
-                $this->addFlash('error', $this->__f('Could not delete the %s folder. Please remove it manually.', ['%s' => $modelPath]));
+                $this->addFlash(
+                    'error',
+                    $this->__f(
+                        'Could not delete the %s folder. Please remove it manually.',
+                        ['%s' => $modelPath]
+                    )
+                );
             }
         }
 
@@ -319,9 +335,18 @@ class MultisitesModuleInstaller extends AbstractMultisitesModuleInstaller
     protected function migratePrimaryConfigFileToV2()
     {
         $configFile = 'config/multisites_config.php';
-        $configFileTemplate = 'https://github.com/zikula-modules/Multisites/blob/9d2e66e72a17757b36c26c6889c700d88868b345/src/modules/Multisites/Resources/config/multisites_config.php';
+        $configFileTemplate = 'https://github.com/zikula-modules/Multisites/'
+            . 'blob/9d2e66e72a17757b36c26c6889c700d88868b345/'
+            . 'src/modules/Multisites/Resources/config/multisites_config.php'
+        ;
 
-        $this->addFlash('error', $this->__f('Could not update the %file% file automatically. Please compare it with %template% and update it manually.', ['%file%' => $configFile, '%template%' => $configFileTemplate]));
+        $this->addFlash(
+            'error',
+            $this->__f(
+                'Could not update the %file% file automatically. Please compare it with %template% and update it manually.',
+                ['%file%' => $configFile, '%template%' => $configFileTemplate]
+            )
+        );
 
         return true;
     }
