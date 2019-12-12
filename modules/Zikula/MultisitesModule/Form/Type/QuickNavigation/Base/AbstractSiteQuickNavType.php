@@ -103,7 +103,7 @@ abstract class AbstractSiteQuickNavType extends AbstractType
             $request->query->remove('q');
         }
     
-        $queryBuilder = function(EntityRepository $er) {
+        $queryBuilder = function (EntityRepository $er) {
             // select without joins
             return $er->getListQueryBuilder('', '', false);
         };
@@ -122,7 +122,7 @@ abstract class AbstractSiteQuickNavType extends AbstractType
                 'class' => 'input-sm'
             ]
         ]);
-        $queryBuilder = function(EntityRepository $er) {
+        $queryBuilder = function (EntityRepository $er) {
             // select without joins
             return $er->getListQueryBuilder('', '', false);
         };

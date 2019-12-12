@@ -700,9 +700,9 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     /**
      * Returns an array of all related objects that need to be persisted after clone.
-     * 
+     *
      * @param array $objects Objects that are added to this array
-     * 
+     *
      * @return array List of entity objects
      */
     public function getRelatedObjectsToPersist(&$objects = [])

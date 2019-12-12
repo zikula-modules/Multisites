@@ -104,7 +104,8 @@ abstract class AbstractControllerHelper
     /**
      * Returns an array of all allowed object types in ZikulaMultisitesModule.
      *
-     * @param string $context Usage context (allowed values: controllerAction, api, helper, actionHandler, block, contentType, mailz)
+     * @param string $context Usage context (allowed values: controllerAction, api, helper, actionHandler,
+     *                        block, contentType, mailz)
      * @param array $args Additional arguments
      *
      * @return string[] List of allowed object types
@@ -127,7 +128,8 @@ abstract class AbstractControllerHelper
     /**
      * Returns the default object type in ZikulaMultisitesModule.
      *
-     * @param string $context Usage context (allowed values: controllerAction, api, helper, actionHandler, block, contentType, mailz)
+     * @param string $context Usage context (allowed values: controllerAction, api, helper, actionHandler,
+     *                        block, contentType, mailz)
      * @param array $args Additional arguments
      *
      * @return string The name of the default object type
@@ -371,7 +373,8 @@ abstract class AbstractControllerHelper
      *
      * @param string $objectType Name of treated entity type
      * @param array $parameters Given parameters to enrich
-     * @param string $context Usage context (allowed values: controllerAction, api, helper, actionHandler, block, contentType, mailz)
+     * @param string $context Usage context (allowed values: controllerAction, api, helper, actionHandler,
+     *                        block, contentType, mailz)
      * @param array $args Additional arguments
      *
      * @return array List of template variables to be assigned
@@ -403,19 +406,45 @@ abstract class AbstractControllerHelper
             // initialise Imagine runtime options
             if ('site' === $objectType) {
                 $thumbRuntimeOptions = [];
-                $thumbRuntimeOptions[$objectType . 'Logo'] = $this->imageHelper->getRuntimeOptions($objectType, 'logo', $context, $args);
-                $thumbRuntimeOptions[$objectType . 'FavIcon'] = $this->imageHelper->getRuntimeOptions($objectType, 'favIcon', $context, $args);
-                $thumbRuntimeOptions[$objectType . 'ParametersCsvFile'] = $this->imageHelper->getRuntimeOptions($objectType, 'parametersCsvFile', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'Logo'] = $this->imageHelper->getRuntimeOptions(
+                    $objectType,
+                    'logo',
+                    $context,
+                    $args
+                );
+                $thumbRuntimeOptions[$objectType . 'FavIcon'] = $this->imageHelper->getRuntimeOptions(
+                    $objectType,
+                    'favIcon',
+                    $context,
+                    $args
+                );
+                $thumbRuntimeOptions[$objectType . 'ParametersCsvFile'] = $this->imageHelper->getRuntimeOptions(
+                    $objectType,
+                    'parametersCsvFile',
+                    $context,
+                    $args
+                );
                 $parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
             }
             if ('template' === $objectType) {
                 $thumbRuntimeOptions = [];
-                $thumbRuntimeOptions[$objectType . 'SqlFile'] = $this->imageHelper->getRuntimeOptions($objectType, 'sqlFile', $context, $args);
+                $thumbRuntimeOptions[$objectType . 'SqlFile'] = $this->imageHelper->getRuntimeOptions(
+                    $objectType,
+                    'sqlFile',
+                    $context,
+                    $args
+                );
                 $parameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
             }
             if (in_array($args['action'], ['display', 'edit', 'view'], true)) {
                 // use separate preset for images in related items
-                $parameters['relationThumbRuntimeOptions'] = $this->imageHelper->getCustomRuntimeOptions('', '', 'ZikulaMultisitesModule_relateditem', $context, $args);
+                $parameters['relationThumbRuntimeOptions'] = $this->imageHelper->getCustomRuntimeOptions(
+                    '',
+                    '',
+                    'ZikulaMultisitesModule_relateditem',
+                    $context,
+                    $args
+                );
             }
         }
         $parameters['permissionHelper'] = $this->permissionHelper;

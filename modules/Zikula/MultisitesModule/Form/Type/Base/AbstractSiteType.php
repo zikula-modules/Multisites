@@ -361,7 +361,7 @@ abstract class AbstractSiteType extends AbstractType
      */
     public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options = [])
     {
-        $queryBuilder = function(EntityRepository $er) {
+        $queryBuilder = function (EntityRepository $er) {
             // select without joins
             return $er->getListQueryBuilder('', '', false);
         };
@@ -382,7 +382,7 @@ abstract class AbstractSiteType extends AbstractType
                 'title' => $this->__('Choose the template.')
             ]
         ]);
-        $queryBuilder = function(EntityRepository $er) {
+        $queryBuilder = function (EntityRepository $er) {
             // select without joins
             return $er->getListQueryBuilder('', '', false);
         };

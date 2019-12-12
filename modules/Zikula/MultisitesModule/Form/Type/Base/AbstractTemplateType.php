@@ -178,7 +178,7 @@ abstract class AbstractTemplateType extends AbstractType
      */
     public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options = [])
     {
-        $queryBuilder = function(EntityRepository $er) {
+        $queryBuilder = function (EntityRepository $er) {
             // select without joins
             return $er->getListQueryBuilder('', '', false);
         };

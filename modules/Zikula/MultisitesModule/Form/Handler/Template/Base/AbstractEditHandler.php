@@ -75,7 +75,8 @@ abstract class AbstractEditHandler extends EditHandler
         // editable relation, we store the id and assign it now to show it in UI
         $this->relationPresets['projects'] = $this->requestStack->getCurrentRequest()->query->get('projects', '');
         if (!empty($this->relationPresets['projects'])) {
-            $relObj = $this->entityFactory->getRepository('project')->selectById($this->relationPresets['projects']);
+            $repository = $this->entityFactory->getRepository('project');
+            $relObj = $repository->selectById($this->relationPresets['projects']);
             if (null !== $relObj) {
                 $entity->addProjects($relObj);
             }

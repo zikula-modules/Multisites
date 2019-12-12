@@ -103,12 +103,21 @@ abstract class AbstractImageHelper
      *
      * @return array The selected runtime options
      */
-    public function getCustomRuntimeOptions($objectType = '', $fieldName = '', $contextName = '', $context = '', array $args = [])
-    {
+    public function getCustomRuntimeOptions(
+        $objectType = '',
+        $fieldName = '',
+        $contextName = '',
+        $context = '',
+        array $args = []
+    ) {
         $options = [
             'thumbnail' => [
                 'size' => [100, 100], // thumbnail width and height in pixels
-                'mode' => $this->variableApi->get('ZikulaMultisitesModule', 'thumbnailMode' . ucfirst($objectType) . ucfirst($fieldName), ImageInterface::THUMBNAIL_INSET),
+                'mode' => $this->variableApi->get(
+                    'ZikulaMultisitesModule',
+                    'thumbnailMode' . ucfirst($objectType) . ucfirst($fieldName),
+                    ImageInterface::THUMBNAIL_INSET
+                ),
                 'extension' => null // file extension for thumbnails (jpg, png, gif; null for original file type)
             ]
         ];
@@ -141,6 +150,12 @@ abstract class AbstractImageHelper
         }
     
         $session = $this->requestStack->getCurrentRequest()->getSession();
-        $session->getFlashBag()->add('warning', $this->translator->__f('The cache directory "%directory%" does not exist. Please create it and make it writable for the webserver.', ['%directory%' => $cachePath]));
+        $session->getFlashBag()->add(
+            'warning',
+            $this->translator->__f(
+                'The cache directory "%directory%" does not exist. Please create it and make it writable for the webserver.',
+                ['%directory%' => $cachePath]
+            )
+        );
     }
 }

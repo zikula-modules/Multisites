@@ -252,7 +252,8 @@ abstract class AbstractEditHandler extends EditHandler
         if ('create' == $this->templateParameters['mode']) {
             // save predefined outgoing relationship to child entity
             if (!empty($this->relationPresets['templates'])) {
-                $relObj = $this->entityFactory->getRepository('template')->selectById($this->relationPresets['templates']);
+                $repository = $this->entityFactory->getRepository('template');
+                $relObj = $repository->selectById($this->relationPresets['templates']);
                 if (null !== $relObj) {
                     $relObj->addProjects($entity);
                 }
