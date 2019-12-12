@@ -439,7 +439,6 @@ abstract class AbstractSiteEntity extends EntityAccess
         }
     }
     
-    
     /**
      * Returns the id.
      *
@@ -1319,7 +1318,6 @@ abstract class AbstractSiteEntity extends EntityAccess
         }
     }
     
-    
     /**
      * Returns the template.
      *
@@ -1363,7 +1361,6 @@ abstract class AbstractSiteEntity extends EntityAccess
     {
         $this->project = $project;
     }
-    
     
     /**
      * Creates url arguments array for easy creation of display urls.

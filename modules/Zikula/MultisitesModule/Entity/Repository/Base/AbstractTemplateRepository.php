@@ -64,7 +64,6 @@ abstract class AbstractTemplateRepository extends EntityRepository
             'updatedDate',
         ];
     }
-
     
     /**
      * Returns the default sorting field.
@@ -113,7 +112,7 @@ abstract class AbstractTemplateRepository extends EntityRepository
             $this->collectionFilterHelper = $collectionFilterHelper;
         }
     }
-
+    
     /**
      * Updates the creator of all objects created by a certain user.
      *

@@ -257,7 +257,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
         }
     }
     
-    
     /**
      * Returns the id.
      *
@@ -551,7 +550,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
         }
     }
     
-    
     /**
      * Returns the projects.
      *
@@ -578,6 +576,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->addProjects($projectSingle);
         }
     }
+    
     /**
      * Adds an instance of \Zikula\MultisitesModule\Entity\ProjectEntity to the list of projects.
      *
@@ -603,7 +602,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
         $this->projects->removeElement($project);
         $project->removeTemplates($this);
     }
-    
     
     /**
      * Returns the sites.
@@ -631,6 +629,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->addSites($siteSingle);
         }
     }
+    
     /**
      * Adds an instance of \Zikula\MultisitesModule\Entity\SiteEntity to the list of sites.
      *
@@ -656,7 +655,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
         $this->sites->removeElement($site);
         $site->setTemplate(null);
     }
-    
     
     /**
      * Creates url arguments array for easy creation of display urls.

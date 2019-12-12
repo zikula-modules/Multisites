@@ -44,6 +44,7 @@ abstract class AbstractMultisitesEvents
      * @var string
      */
     const MENU_ITEMACTIONS_POST_CONFIGURE = 'zikulamultisitesmodule.itemactionsmenu_post_configure';
+    
     /**
      * The zikulamultisitesmodule.site_post_load event is thrown when sites
      * are loaded from the database.
