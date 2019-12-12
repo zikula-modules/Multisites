@@ -48,7 +48,10 @@ abstract class AbstractConfigController extends AbstractController
         
                 $this->addFlash('status', $this->__('Done! Module configuration updated.'));
                 $userName = $this->get('zikula_users_module.current_user')->get('uname');
-                $this->get('logger')->notice('{app}: User {user} updated the configuration.', ['app' => 'ZikulaMultisitesModule', 'user' => $userName]);
+                $this->get('logger')->notice(
+                    '{app}: User {user} updated the configuration.',
+                    ['app' => 'ZikulaMultisitesModule', 'user' => $userName]
+                );
             } elseif ($form->get('cancel')->isClicked()) {
                 $this->addFlash('status', $this->__('Operation cancelled.'));
             }

@@ -353,7 +353,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->description = isset($description) ? $description : '';
         }
     }
-    
     /**
      * Returns the sql file.
      *
@@ -406,6 +405,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->setSqlFileFileName($this->sqlFile->getFilename());
         }
     }
+    
     
     /**
      * Returns the sql file file name.
@@ -578,7 +578,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->addProjects($projectSingle);
         }
     }
-    
     /**
      * Adds an instance of \Zikula\MultisitesModule\Entity\ProjectEntity to the list of projects.
      *
@@ -604,6 +603,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
         $this->projects->removeElement($project);
         $project->removeTemplates($this);
     }
+    
     
     /**
      * Returns the sites.
@@ -631,7 +631,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->addSites($siteSingle);
         }
     }
-    
     /**
      * Adds an instance of \Zikula\MultisitesModule\Entity\SiteEntity to the list of sites.
      *

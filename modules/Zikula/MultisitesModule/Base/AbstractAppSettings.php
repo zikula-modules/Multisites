@@ -322,6 +322,7 @@ abstract class AbstractAppSettings
         $this->load();
     }
     
+    
     /**
      * Returns the global admin name.
      *
@@ -1017,7 +1018,6 @@ abstract class AbstractAppSettings
             $this->allowModerationSpecificCreationDateForProject = (bool)$allowModerationSpecificCreationDateForProject;
         }
     }
-    
     
     /**
      * Loads module variables from the database.

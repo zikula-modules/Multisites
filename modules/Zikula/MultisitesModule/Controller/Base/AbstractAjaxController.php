@@ -49,7 +49,8 @@ abstract class AbstractAjaxController extends AbstractController
         $field = $request->request->getAlnum('field');
         $id = $request->request->getInt('id');
         
-        if (0 === $id
+        if (
+            0 === $id
             || ('site' !== $objectType)
         || ('site' === $objectType && !in_array($field, ['active'], true))
         ) {
@@ -71,7 +72,13 @@ abstract class AbstractAjaxController extends AbstractController
         $entityFactory->getEntityManager()->flush();
         
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'ZikulaMultisitesModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'field' => $field, 'entity' => $objectType, 'id' => $id];
+        $logArgs = [
+            'app' => 'ZikulaMultisitesModule',
+            'user' => $this->get('zikula_users_module.current_user')->get('uname'),
+            'field' => $field,
+            'entity' => $objectType,
+            'id' => $id
+        ];
         $logger->notice('{app}: User {user} toggled the {field} flag the {entity} with id {id}.', $logArgs);
         
         // return response

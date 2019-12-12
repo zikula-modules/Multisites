@@ -176,7 +176,11 @@ abstract class AbstractControllerHelper
         $templateParameters['sortdir'] = strtolower($sortdir);
     
         $templateParameters['all'] = 'csv' === $request->getRequestFormat() ? 1 : $request->query->getInt('all');
-        $showOnlyOwnEntriesSetting = (bool)$request->query->getInt('own', $this->variableApi->get('ZikulaMultisitesModule', 'showOnlyOwnEntries')) ? 1 : 0;
+        $showOnlyOwnEntriesSetting = (bool)$request->query->getInt(
+            'own',
+            $this->variableApi->get('ZikulaMultisitesModule', 'showOnlyOwnEntries')
+        );
+        $showOnlyOwnEntriesSetting = $showOnlyOwnEntriesSetting ? 1 : 0;
         $templateParameters['own'] = $showOnlyOwnEntriesSetting;
     
         $resultsPerPage = 0;
@@ -370,8 +374,12 @@ abstract class AbstractControllerHelper
      *
      * @return array List of template variables to be assigned
      */
-    public function addTemplateParameters($objectType = '', array $parameters = [], $context = '', array $args = [])
-    {
+    public function addTemplateParameters(
+        $objectType = '',
+        array $parameters = [],
+        $context = '',
+        array $args = []
+    ) {
         $allowedContexts = ['controllerAction', 'api', 'helper', 'actionHandler', 'block', 'contentType', 'mailz'];
         if (!in_array($context, $allowedContexts, true)) {
             $context = 'controllerAction';

@@ -82,6 +82,7 @@ abstract class AbstractSiteRepository extends EntityRepository
         ];
     }
 
+    
     /**
      * Returns the default sorting field.
      *
@@ -129,7 +130,6 @@ abstract class AbstractSiteRepository extends EntityRepository
             $this->collectionFilterHelper = $collectionFilterHelper;
         }
     }
-    
 
     /**
      * Updates the creator of all objects created by a certain user.

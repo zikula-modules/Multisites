@@ -230,7 +230,6 @@ abstract class AbstractProjectEntity extends EntityAccess
             $this->addSites($siteSingle);
         }
     }
-    
     /**
      * Adds an instance of \Zikula\MultisitesModule\Entity\SiteEntity to the list of sites.
      *
@@ -256,6 +255,7 @@ abstract class AbstractProjectEntity extends EntityAccess
         $this->sites->removeElement($site);
         $site->setProject(null);
     }
+    
     
     /**
      * Returns the templates.
@@ -283,7 +283,6 @@ abstract class AbstractProjectEntity extends EntityAccess
             $this->addTemplates($templateSingle);
         }
     }
-    
     /**
      * Adds an instance of \Zikula\MultisitesModule\Entity\TemplateEntity to the list of templates.
      *

@@ -871,7 +871,6 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->databaseType = isset($databaseType) ? $databaseType : '';
         }
     }
-    
     /**
      * Returns the logo.
      *
@@ -924,6 +923,7 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->setLogoFileName($this->logo->getFilename());
         }
     }
+    
     
     /**
      * Returns the logo file name.
@@ -996,7 +996,6 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->logoMeta = $logoMeta;
         }
     }
-    
     /**
      * Returns the fav icon.
      *
@@ -1049,6 +1048,7 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->setFavIconFileName($this->favIcon->getFilename());
         }
     }
+    
     
     /**
      * Returns the fav icon file name.
@@ -1145,7 +1145,6 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->allowedLocales = isset($allowedLocales) ? $allowedLocales : [];
         }
     }
-    
     /**
      * Returns the parameters csv file.
      *
@@ -1198,6 +1197,7 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->setParametersCsvFileFileName($this->parametersCsvFile->getFilename());
         }
     }
+    
     
     /**
      * Returns the parameters csv file file name.
@@ -1363,7 +1363,6 @@ abstract class AbstractSiteEntity extends EntityAccess
     {
         $this->project = $project;
     }
-    
     
     
     /**

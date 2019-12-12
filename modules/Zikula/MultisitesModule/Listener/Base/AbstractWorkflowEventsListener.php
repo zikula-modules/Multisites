@@ -133,7 +133,7 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
             // check if deleting the entity would break related child entities
             if ('project' === $objectType) {
                 $isBlocked = false;
-                if (count($entity->getTemplates()) > 0) {
+                if (0 < count($entity->getTemplates())) {
                     $isBlocked = true;
                 }
                 $event->setBlocked($isBlocked);

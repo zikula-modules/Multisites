@@ -62,7 +62,10 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
             $this->schemaTool->create($this->entities);
         } catch (Exception $exception) {
             $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
-            $logger->error('{app}: Could not create the database tables during installation. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
+            $logger->error(
+                '{app}: Could not create the database tables during installation. Error details: {errorMessage}.',
+                ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]
+            );
     
             return false;
         }
@@ -117,7 +120,10 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                     $this->schemaTool->update($this->entities);
                 } catch (Exception $exception) {
                     $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
-                    $logger->error('{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
+                    $logger->error(
+                        '{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.',
+                        ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]
+                    );
     
                     return false;
                 }
@@ -136,7 +142,10 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
             $this->schemaTool->drop($this->entities);
         } catch (Exception $exception) {
             $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
-            $logger->error('{app}: Could not remove the database tables during uninstallation. Error details: {errorMessage}.', ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]);
+            $logger->error(
+                '{app}: Could not remove the database tables during uninstallation. Error details: {errorMessage}.',
+                ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]
+            );
     
             return false;
         }
@@ -146,7 +155,13 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
     
         // remind user about upload folders not being deleted
         $uploadPath = $this->container->getParameter('datadir') . '/ZikulaMultisitesModule/';
-        $this->addFlash('status', $this->__f('The upload directories at "%path%" can be removed manually.', ['%path%' => $uploadPath]));
+        $this->addFlash(
+            'status',
+            $this->__f(
+                'The upload directories at "%path%" can be removed manually.',
+                ['%path%' => $uploadPath]
+            )
+        );
     
         // uninstallation successful
         return true;

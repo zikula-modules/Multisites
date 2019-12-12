@@ -50,7 +50,8 @@ abstract class AbstractEditHandler extends EditHandler
                 'entity' => $this->objectType
             ];
             $this->logger->notice(
-                '{app}: User {user} tried to create a new {entity}, but failed as it other items are required which must be created before.',
+                '{app}: User {user} tried to create a new {entity}, but failed'
+                    . ' as other items are required which must be created before.',
                 $logArgs
             );
     
