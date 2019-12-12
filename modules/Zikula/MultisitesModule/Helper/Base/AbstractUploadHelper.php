@@ -274,9 +274,14 @@ abstract class AbstractUploadHelper
                 'error',
                 $this->__('Error! This file type is not allowed. Please choose another file format.')
             );
+            $logArgs = [
+                'app' => 'ZikulaMultisitesModule',
+                'user' => $this->currentUserApi->get('uname'),
+                'extension' => $extension
+            ];
             $this->logger->error(
                 '{app}: User {user} tried to upload a file with a forbidden extension ("{extension}").',
-                ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname'), 'extension' => $extension]
+                $logArgs
             );
     
             return false;

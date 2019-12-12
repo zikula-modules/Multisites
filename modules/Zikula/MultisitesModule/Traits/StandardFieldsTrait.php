@@ -56,7 +56,6 @@ trait StandardFieldsTrait
      */
     protected $updatedDate;
     
-    
     /**
      * Returns the created by.
      *

@@ -322,7 +322,6 @@ abstract class AbstractAppSettings
         $this->load();
     }
     
-    
     /**
      * Returns the global admin name.
      *

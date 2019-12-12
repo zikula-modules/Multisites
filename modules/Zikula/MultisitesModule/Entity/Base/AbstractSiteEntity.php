@@ -909,7 +909,12 @@ abstract class AbstractSiteEntity extends EntityAccess
         if (null === $this->logo && null === $logo) {
             return;
         }
-        if (null !== $this->logo && null !== $logo && $this->logo instanceof File && $this->logo->getRealPath() === $logo->getRealPath()) {
+        if (
+            null !== $this->logo
+            && null !== $logo
+            && $this->logo instanceof File
+            && $this->logo->getRealPath() === $logo->getRealPath()
+        ) {
             return;
         }
         $this->logo = $logo;
@@ -1034,7 +1039,12 @@ abstract class AbstractSiteEntity extends EntityAccess
         if (null === $this->favIcon && null === $favIcon) {
             return;
         }
-        if (null !== $this->favIcon && null !== $favIcon && $this->favIcon instanceof File && $this->favIcon->getRealPath() === $favIcon->getRealPath()) {
+        if (
+            null !== $this->favIcon
+            && null !== $favIcon
+            && $this->favIcon instanceof File
+            && $this->favIcon->getRealPath() === $favIcon->getRealPath()
+        ) {
             return;
         }
         $this->favIcon = $favIcon;
@@ -1183,7 +1193,12 @@ abstract class AbstractSiteEntity extends EntityAccess
         if (null === $this->parametersCsvFile && null === $parametersCsvFile) {
             return;
         }
-        if (null !== $this->parametersCsvFile && null !== $parametersCsvFile && $this->parametersCsvFile instanceof File && $this->parametersCsvFile->getRealPath() === $parametersCsvFile->getRealPath()) {
+        if (
+            null !== $this->parametersCsvFile
+            && null !== $parametersCsvFile
+            && $this->parametersCsvFile instanceof File
+            && $this->parametersCsvFile->getRealPath() === $parametersCsvFile->getRealPath()
+        ) {
             return;
         }
         $this->parametersCsvFile = $parametersCsvFile;

@@ -128,6 +128,7 @@ abstract class AbstractMultisitesEvents
      * @var string
      */
     const SITE_POST_UPDATE = 'zikulamultisitesmodule.site_post_update';
+    
     /**
      * The zikulamultisitesmodule.template_post_load event is thrown when templates
      * are loaded from the database.
@@ -211,6 +212,7 @@ abstract class AbstractMultisitesEvents
      * @var string
      */
     const TEMPLATE_POST_UPDATE = 'zikulamultisitesmodule.template_post_update';
+    
     /**
      * The zikulamultisitesmodule.project_post_load event is thrown when projects
      * are loaded from the database.

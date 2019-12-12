@@ -339,8 +339,10 @@ abstract class AbstractControllerHelper
      *
      * @return array Enriched template parameters used for creating the response
      */
-    public function processEditActionParameters($objectType, array $templateParameters = [])
-    {
+    public function processEditActionParameters(
+        $objectType,
+        array $templateParameters = []
+    ) {
         $contextArgs = ['controller' => $objectType, 'action' => 'edit'];
         if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs), true)) {
             throw new Exception($this->__('Error! Invalid object type received.'));
@@ -358,8 +360,11 @@ abstract class AbstractControllerHelper
      *
      * @return array Enriched template parameters used for creating the response
      */
-    public function processDeleteActionParameters($objectType, array $templateParameters = [], $hasHookSubscriber = false)
-    {
+    public function processDeleteActionParameters(
+        $objectType,
+        array $templateParameters = [],
+        $hasHookSubscriber = false
+    ) {
         $contextArgs = ['controller' => $objectType, 'action' => 'delete'];
         if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs), true)) {
             throw new Exception($this->__('Error! Invalid object type received.'));
