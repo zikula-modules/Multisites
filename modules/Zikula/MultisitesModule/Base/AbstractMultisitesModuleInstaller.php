@@ -36,6 +36,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
     public function install()
     {
         $logger = $this->container->get('logger');
+    
         $userName = $this->container->get('zikula_users_module.current_user')->get('uname');
     
         // Check if upload directories exist and if needed create them
@@ -45,7 +46,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                 $container->get('translator.default'),
                 $container->get('filesystem'),
                 $container->get('request_stack'),
-                $container->get('logger'),
+                $logger,
                 $container->get('zikula_users_module.current_user'),
                 $container->get('zikula_extensions_module.api.variable'),
                 $container->getParameter('datadir')
@@ -113,7 +114,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
     /*
         $logger = $this->container->get('logger');
     
-        // Upgrade dependent on old version number
+        // upgrade dependent on old version number
         switch ($oldVersion) {
             case '1.0.0':
                 // do something
