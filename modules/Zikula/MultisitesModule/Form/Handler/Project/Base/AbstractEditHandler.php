@@ -225,7 +225,7 @@ abstract class AbstractEditHandler extends EditHandler
         } catch (Exception $exception) {
             $request = $this->requestStack->getCurrentRequest();
             if ($request->hasSession() && ($session = $request->getSession())) {
-                $flashBag->add(
+                $session->getFlashBag()->add(
                     'error',
                     $this->__f(
                         'Sorry, but an error occured during the %action% action. Please apply the changes again!',
