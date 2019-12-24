@@ -124,7 +124,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the site entries per page.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => true,
-            'scale' => 0
         ]);
         
         $builder->add('templateEntriesPerPage', IntegerType::class, [
@@ -141,7 +140,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the template entries per page.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => true,
-            'scale' => 0
         ]);
         
         $builder->add('projectEntriesPerPage', IntegerType::class, [
@@ -158,7 +156,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the project entries per page.') . ' ' . $this->__('Only digits are allowed.')
             ],
             'required' => true,
-            'scale' => 0
         ]);
         
         $builder->add('showOnlyOwnEntries', CheckboxType::class, [
@@ -210,7 +207,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the shrink width')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -228,7 +224,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the shrink height')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -272,7 +267,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the thumbnail width view')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -290,7 +284,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the thumbnail height view')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -308,7 +301,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the thumbnail width edit')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -326,7 +318,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the thumbnail height edit')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -358,7 +349,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the shrink width')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -376,7 +366,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the shrink height')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -420,7 +409,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the thumbnail width view')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -438,7 +426,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the thumbnail height view')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -456,7 +443,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the thumbnail width edit')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
         
@@ -474,7 +460,6 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('Enter the thumbnail height edit')
             ],
             'required' => true,
-            'scale' => 0,
             'input_group' => ['right' => $this->__('pixels')]
         ]);
     }

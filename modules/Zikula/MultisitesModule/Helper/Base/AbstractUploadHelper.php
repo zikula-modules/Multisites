@@ -146,13 +146,17 @@ abstract class AbstractUploadHelper
         $fileNameParts[count($fileNameParts) - 1] = $extension;
         $fileName = implode('.', $fileNameParts);
     
-        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
+        $request = $this->requestStack->getCurrentRequest();
+        $session = $request->hasSession() ? $request->getSession() : null;
+        $flashBag = null !== $session ? $session->getFlashBag() : null;
     
         // retrieve the final file name
         try {
             $basePath = $this->getFileBaseFolder($objectType, $fieldName);
         } catch (Exception $exception) {
-            $flashBag->add('error', $exception->getMessage());
+            if (null !== $flashBag) {
+                $flashBag->add('error', $exception->getMessage());
+            }
             $logArgs = [
                 'app' => 'ZikulaMultisitesModule',
                 'user' => $this->currentUserApi->get('uname'),
@@ -177,7 +181,9 @@ abstract class AbstractUploadHelper
         if ($isImage) {
             $imgInfo = getimagesize($destinationFilePath);
             if (!is_array($imgInfo) || !$imgInfo[0] || !$imgInfo[1]) {
-                $flashBag->add('error', $this->__('Error! This file type seems not to be a valid image.'));
+                if (null !== $flashBag) {
+                    $flashBag->add('error', $this->__('Error! This file type seems not to be a valid image.'));
+                }
                 $this->logger->error(
                     '{app}: User {user} tried to upload a file which is seems not to be a valid image.',
                     ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname')]
@@ -250,11 +256,15 @@ abstract class AbstractUploadHelper
      */
     protected function validateFileUpload($objectType, UploadedFile $file, $fieldName)
     {
-        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
+        $request = $this->requestStack->getCurrentRequest();
+        $session = $request->hasSession() ? $request->getSession() : null;
+        $flashBag = null !== $session ? $session->getFlashBag() : null;
     
         // check if a file has been uploaded properly without errors
         if (UPLOAD_ERR_OK !== $file->getError()) {
-            $flashBag->add('error', $file->getErrorMessage());
+            if (null !== $flashBag) {
+                $flashBag->add('error', $file->getErrorMessage());
+            }
             $this->logger->error(
                 '{app}: User {user} tried to upload a file with errors: ' . $file->getErrorMessage(),
                 ['app' => 'ZikulaMultisitesModule', 'user' => $this->currentUserApi->get('uname')]
@@ -270,10 +280,12 @@ abstract class AbstractUploadHelper
         // validate extension
         $isValidExtension = $this->isAllowedFileExtension($objectType, $fieldName, $extension);
         if (false === $isValidExtension) {
-            $flashBag->add(
-                'error',
-                $this->__('Error! This file type is not allowed. Please choose another file format.')
-            );
+            if (null !== $flashBag) {
+                $flashBag->add(
+                    'error',
+                    $this->__('Error! This file type is not allowed. Please choose another file format.')
+                );
+            }
             $logArgs = [
                 'app' => 'ZikulaMultisitesModule',
                 'user' => $this->currentUserApi->get('uname'),
@@ -654,20 +666,24 @@ abstract class AbstractUploadHelper
     {
         $uploadPath = $this->getFileBaseFolder($objectType, $fieldName, true);
     
-        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
+        $request = $this->requestStack->getCurrentRequest();
+        $session = $request->hasSession() ? $request->getSession() : null;
+        $flashBag = null !== $session ? $session->getFlashBag() : null;
     
         // Check if directory exist and try to create it if needed
         if (!$this->filesystem->exists($uploadPath)) {
             try {
                 $this->filesystem->mkdir($uploadPath, 0777);
             } catch (IOExceptionInterface $exception) {
-                $flashBag->add(
-                    'error',
-                    $this->__f(
-                        'The upload directory "%path%" does not exist and could not be created. Try to create it yourself and make sure that this folder is accessible via the web and writable by the webserver.',
-                        ['%path%' => $exception->getPath()]
-                    )
-                );
+                if (null !== $flashBag) {
+                    $flashBag->add(
+                        'error',
+                        $this->__f(
+                            'The upload directory "%path%" does not exist and could not be created. Try to create it yourself and make sure that this folder is accessible via the web and writable by the webserver.',
+                            ['%path%' => $exception->getPath()]
+                        )
+                    );
+                }
                 $this->logger->error(
                     '{app}: The upload directory {directory} does not exist and could not be created.',
                     ['app' => 'ZikulaMultisitesModule', 'directory' => $uploadPath]
@@ -682,13 +698,15 @@ abstract class AbstractUploadHelper
             try {
                 $this->filesystem->chmod($uploadPath, 0777);
             } catch (IOExceptionInterface $exception) {
-                $flashBag->add(
-                    'warning',
-                    $this->__f(
-                        'Warning! The upload directory at "%path%" exists but is not writable by the webserver.',
-                        ['%path%' => $exception->getPath()]
-                    )
-                );
+                if (null !== $flashBag) {
+                    $flashBag->add(
+                        'warning',
+                        $this->__f(
+                            'Warning! The upload directory at "%path%" exists but is not writable by the webserver.',
+                            ['%path%' => $exception->getPath()]
+                        )
+                    );
+                }
                 $this->logger->error(
                     '{app}: The upload directory {directory} exists but is not writable by the webserver.',
                     ['app' => 'ZikulaMultisitesModule', 'directory' => $uploadPath]
@@ -711,14 +729,15 @@ abstract class AbstractUploadHelper
                 );
                 $this->filesystem->dumpFile($htaccessFilePath, $htaccessContent);
             } catch (IOExceptionInterface $exception) {
-                $flashBag->add(
-                    'error',
-                    $this->__f(
-                        'An error occured during creation of the .htaccess file in directory "%path%".',
-                        ['%path%' => $exception->getPath()]
-                    )
-                );
-    
+                if (null !== $flashBag) {
+                    $flashBag->add(
+                        'error',
+                        $this->__f(
+                            'An error occured during creation of the .htaccess file in directory "%path%".',
+                            ['%path%' => $exception->getPath()]
+                        )
+                    );
+                }
                 $this->logger->error(
                     '{app}: An error occured during creation of the .htaccess file in directory {directory}.',
                     ['app' => 'ZikulaMultisitesModule', 'directory' => $uploadPath]

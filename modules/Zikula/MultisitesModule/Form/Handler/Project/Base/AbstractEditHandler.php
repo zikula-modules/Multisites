@@ -40,10 +40,13 @@ abstract class AbstractEditHandler extends EditHandler
         }
     
         if ('create' === $this->templateParameters['mode'] && !$this->modelHelper->canBeCreated($this->objectType)) {
-            $this->requestStack->getCurrentRequest()->getSession()->getFlashBag()->add(
-                'error',
-                $this->__('Sorry, but you can not create the project yet as other items are required which must be created before!')
-            );
+            $request = $this->requestStack->getCurrentRequest();
+            if ($request->hasSession() && ($session = $request->getSession())) {
+                $session()->getFlashBag()->add(
+                    'error',
+                    $this->__('Sorry, but you can not create the project yet as other items are required which must be created before!')
+                );
+            }
             $logArgs = [
                 'app' => 'ZikulaMultisitesModule',
                 'user' => $this->currentUserApi->get('uname'),
@@ -216,18 +219,20 @@ abstract class AbstractEditHandler extends EditHandler
         $action = $args['commandName'];
     
         $success = false;
-        $flashBag = $this->requestStack->getCurrentRequest()->getSession()->getFlashBag();
         try {
             // execute the workflow action
             $success = $this->workflowHelper->executeAction($entity, $action);
         } catch (Exception $exception) {
-            $flashBag->add(
-                'error',
-                $this->__f(
-                    'Sorry, but an error occured during the %action% action. Please apply the changes again!',
-                    ['%action%' => $action]
-                ) . ' ' . $exception->getMessage()
-            );
+            $request = $this->requestStack->getCurrentRequest();
+            if ($request->hasSession() && ($session = $request->getSession())) {
+                $session->getFlashBag()->add(
+                    'error',
+                    $this->__f(
+                        'Sorry, but an error occured during the %action% action. Please apply the changes again!',
+                        ['%action%' => $action]
+                    ) . ' ' . $exception->getMessage()
+                );
+            }
             $logArgs = [
                 'app' => 'ZikulaMultisitesModule',
                 'user' => $this->currentUserApi->get('uname'),
@@ -277,10 +282,12 @@ abstract class AbstractEditHandler extends EditHandler
             return $this->repeatReturnUrl;
         }
     
-        $session = $this->requestStack->getCurrentRequest()->getSession();
-        if ($session->has('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer')) {
-            $this->returnTo = $session->get('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
-            $session->remove('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request->hasSession() && ($session = $request->getSession())) {
+            if ($session->has('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer')) {
+                $this->returnTo = $session->get('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
+                $session->remove('zikulamultisitesmodule' . $this->objectTypeCapital . 'Referer');
+            }
         }
     
         // normal usage, compute return url from given redirect code
