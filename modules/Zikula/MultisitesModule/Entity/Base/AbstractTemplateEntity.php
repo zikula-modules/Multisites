@@ -66,7 +66,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * the current workflow state
      *
      * @ORM\Column(length=20)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @MultisitesAssert\ListEntry(entityName="template", propertyName="workflowState", multiple=false)
      * @var string $workflowState
      */
@@ -74,7 +74,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=150)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="150")
      * @var string $name
      */
@@ -82,7 +82,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=250)
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Length(min="0", max="250")
      * @var string $description
      */
@@ -99,7 +99,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     /**
      * @ORM\Column(name="sqlFile", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="255")
      * @var string $sqlFileFileName
      */
@@ -125,7 +125,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="array")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="array")
      * @var array $parameters
      */
@@ -133,7 +133,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="array")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="array")
      * @var array $folders
      */
@@ -141,7 +141,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="array")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="array")
      * @var array $excludedTables
      */

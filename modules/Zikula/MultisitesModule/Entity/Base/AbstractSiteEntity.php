@@ -65,7 +65,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      * the current workflow state
      *
      * @ORM\Column(length=20)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @MultisitesAssert\ListEntry(entityName="site", propertyName="workflowState", multiple=false)
      * @var string $workflowState
      */
@@ -73,7 +73,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=150)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="150")
      * @var string $name
      */
@@ -81,7 +81,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=255)
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Length(min="0", max="255")
      * @var string $description
      */
@@ -89,7 +89,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=80)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="80")
      * @var string $siteAlias
      */
@@ -97,7 +97,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=150)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="150")
      * @var string $siteName
      */
@@ -105,7 +105,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=255)
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Length(min="0", max="255")
      * @var string $siteDescription
      */
@@ -113,7 +113,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=25)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="25")
      * @var string $siteAdminName
      */
@@ -121,7 +121,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=15)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="15")
      * @var string $siteAdminPassword
      */
@@ -129,7 +129,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=70)
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Length(min="0", max="70")
      * @var string $siteAdminRealName
      */
@@ -137,7 +137,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=40)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="40")
      * @Assert\Email(checkMX=false, checkHost=false)
      * @var string $siteAdminEmail
@@ -146,7 +146,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=100)
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Length(min="0", max="100")
      * @var string $siteCompany
      */
@@ -154,7 +154,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="255")
      * @var string $siteDns
      */
@@ -162,7 +162,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=50)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="50")
      * @var string $databaseName
      */
@@ -170,7 +170,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=50)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="50")
      * @var string $databaseUserName
      */
@@ -178,7 +178,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=50)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="50")
      * @var string $databasePassword
      */
@@ -186,7 +186,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=50)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="50")
      * @var string $databaseHost
      */
@@ -194,7 +194,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=25)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="25")
      * @var string $databaseType
      */
@@ -272,7 +272,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="array")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="array")
      * @var array $allowedLocales
      */
@@ -314,7 +314,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="array")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="array")
      * @var array $parametersArray
      */
@@ -322,7 +322,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $active
      */

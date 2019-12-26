@@ -28,21 +28,21 @@ abstract class AbstractAppSettings
     protected $variableApi;
     
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="255")
      * @var string $globalAdminName
      */
     protected $globalAdminName = '';
     
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="255")
      * @var string $globalAdminPassword
      */
     protected $globalAdminPassword = '';
     
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="255")
      * @Assert\Email(checkMX=false, checkHost=false)
      * @var string $globalAdminEmail
@@ -53,7 +53,7 @@ abstract class AbstractAppSettings
      * The amount of sites shown per page
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $siteEntriesPerPage
@@ -64,7 +64,7 @@ abstract class AbstractAppSettings
      * The amount of templates shown per page
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $templateEntriesPerPage
@@ -75,7 +75,7 @@ abstract class AbstractAppSettings
      * The amount of projects shown per page
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $projectEntriesPerPage
@@ -85,7 +85,7 @@ abstract class AbstractAppSettings
     /**
      * Whether only own entries should be shown on view pages by default or not
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $showOnlyOwnEntries
      */
@@ -94,7 +94,7 @@ abstract class AbstractAppSettings
     /**
      * Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $enableShrinkingForSiteLogo
      */
@@ -104,7 +104,7 @@ abstract class AbstractAppSettings
      * The maximum image width in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $shrinkWidthSiteLogo
@@ -115,7 +115,7 @@ abstract class AbstractAppSettings
      * The maximum image height in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $shrinkHeightSiteLogo
@@ -125,7 +125,7 @@ abstract class AbstractAppSettings
     /**
      * Thumbnail mode (inset or outbound).
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @MultisitesAssert\ListEntry(entityName="appSettings", propertyName="thumbnailModeSiteLogo", multiple=false)
      * @var string $thumbnailModeSiteLogo
      */
@@ -135,7 +135,7 @@ abstract class AbstractAppSettings
      * Thumbnail width on view pages in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $thumbnailWidthSiteLogoView
@@ -146,7 +146,7 @@ abstract class AbstractAppSettings
      * Thumbnail height on view pages in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $thumbnailHeightSiteLogoView
@@ -157,7 +157,7 @@ abstract class AbstractAppSettings
      * Thumbnail width on edit pages in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $thumbnailWidthSiteLogoEdit
@@ -168,7 +168,7 @@ abstract class AbstractAppSettings
      * Thumbnail height on edit pages in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $thumbnailHeightSiteLogoEdit
@@ -178,7 +178,7 @@ abstract class AbstractAppSettings
     /**
      * Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $enableShrinkingForSiteFavIcon
      */
@@ -188,7 +188,7 @@ abstract class AbstractAppSettings
      * The maximum image width in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $shrinkWidthSiteFavIcon
@@ -199,7 +199,7 @@ abstract class AbstractAppSettings
      * The maximum image height in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $shrinkHeightSiteFavIcon
@@ -209,7 +209,7 @@ abstract class AbstractAppSettings
     /**
      * Thumbnail mode (inset or outbound).
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @MultisitesAssert\ListEntry(entityName="appSettings", propertyName="thumbnailModeSiteFavIcon", multiple=false)
      * @var string $thumbnailModeSiteFavIcon
      */
@@ -219,7 +219,7 @@ abstract class AbstractAppSettings
      * Thumbnail width on view pages in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $thumbnailWidthSiteFavIconView
@@ -230,7 +230,7 @@ abstract class AbstractAppSettings
      * Thumbnail height on view pages in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $thumbnailHeightSiteFavIconView
@@ -241,7 +241,7 @@ abstract class AbstractAppSettings
      * Thumbnail width on edit pages in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $thumbnailWidthSiteFavIconEdit
@@ -252,7 +252,7 @@ abstract class AbstractAppSettings
      * Thumbnail height on edit pages in pixels.
      *
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
      * @var int $thumbnailHeightSiteFavIconEdit
@@ -262,7 +262,7 @@ abstract class AbstractAppSettings
     /**
      * Whether to allow moderators choosing a user which will be set as creator.
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $allowModerationSpecificCreatorForSite
      */
@@ -271,7 +271,7 @@ abstract class AbstractAppSettings
     /**
      * Whether to allow moderators choosing a custom creation date.
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $allowModerationSpecificCreationDateForSite
      */
@@ -280,7 +280,7 @@ abstract class AbstractAppSettings
     /**
      * Whether to allow moderators choosing a user which will be set as creator.
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $allowModerationSpecificCreatorForTemplate
      */
@@ -289,7 +289,7 @@ abstract class AbstractAppSettings
     /**
      * Whether to allow moderators choosing a custom creation date.
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $allowModerationSpecificCreationDateForTemplate
      */
@@ -298,7 +298,7 @@ abstract class AbstractAppSettings
     /**
      * Whether to allow moderators choosing a user which will be set as creator.
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $allowModerationSpecificCreatorForProject
      */
@@ -307,7 +307,7 @@ abstract class AbstractAppSettings
     /**
      * Whether to allow moderators choosing a custom creation date.
      *
-     * @Assert\NotNull()
+     * @Assert\NotNull
      * @Assert\Type(type="bool")
      * @var bool $allowModerationSpecificCreationDateForProject
      */
