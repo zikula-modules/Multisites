@@ -54,7 +54,7 @@ abstract class AbstractProjectEntity extends EntityAccess
      * the current workflow state
      *
      * @ORM\Column(length=20)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @MultisitesAssert\ListEntry(entityName="project", propertyName="workflowState", multiple=false)
      * @var string $workflowState
      */
@@ -62,7 +62,7 @@ abstract class AbstractProjectEntity extends EntityAccess
     
     /**
      * @ORM\Column(length=150)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min="0", max="150")
      * @var string $name
      */
