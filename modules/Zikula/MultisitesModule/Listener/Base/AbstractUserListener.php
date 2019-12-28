@@ -119,7 +119,7 @@ abstract class AbstractUserListener implements EventSubscriberInterface
      */
     public function delete(GenericEvent $event)
     {
-        $userId = $event->getSubject();
+        $userId = (int) $event->getSubject();
     
         
         $repo = $this->entityFactory->getRepository('site');
