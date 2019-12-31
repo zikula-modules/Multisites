@@ -3,125 +3,96 @@
 {% block title own ? __('My projects') : __('Projects list') %}
 {% block admin_page_icon 'list-alt' %}
 {% block content %}
-<div class="zikulamultisitesmodule-project zikulamultisitesmodule-view">
+    <div class="zikulamultisitesmodule-project zikulamultisitesmodule-view">
+        <p class="alert alert-info">{{ __('Projects serve for grouping sites by clients or topics.') }}</p>
+        
+        {% set viewActions = knp_menu_get('zikulaMultisitesMenuViewActions', [], {objectType: 'project', area: routeArea}) %}
+        {{ knp_menu_render(viewActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
+        
+        {{ include('@ZikulaMultisitesModule/Project/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
-    <p class="alert alert-info">{{ __('Projects serve for grouping sites by clients or topics.') }}</p>
-
-    {{ block('page_nav_links') }}
-
-    {{ include('@ZikulaMultisitesModule/Project/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
-
-    {% if routeArea == 'admin' %}
-    <form action="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="projectsViewForm" class="form-horizontal" role="form">
-        <div>
-    {% endif %}
-        <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover{% if routeArea == 'admin' %} table-condensed{% endif %}">
-            <colgroup>
-                {% if routeArea == 'admin' %}
-                    <col id="cSelect" />
-                {% endif %}
-                <col id="cItemActionsStart" />
-                <col id="cName" />
-            </colgroup>
-            <thead>
-            <tr>
-                {% if routeArea == 'admin' %}
-                    <th id="hSelect" scope="col" class="text-center z-w02">
-                        <input type="checkbox" class="zikulamultisites-mass-toggle" />
+        {% if routeArea == 'admin' %}
+        <form action="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="projectsViewForm" class="form-horizontal" role="form">
+            <div>
+        {% endif %}
+            <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover{% if routeArea == 'admin' %} table-condensed{% endif %}">
+                <colgroup>
+                    {% if routeArea == 'admin' %}
+                        <col id="cSelect" />
+                    {% endif %}
+                    <col id="cItemActionsStart" />
+                    <col id="cName" />
+                </colgroup>
+                <thead>
+                <tr>
+                    {% if routeArea == 'admin' %}
+                        <th id="hSelect" scope="col" class="text-center z-w02">
+                            <input type="checkbox" class="zikulamultisites-mass-toggle" />
+                        </th>
+                    {% endif %}
+                    <th id="hItemActionsStart" scope="col" class="z-w02">{{ __('Actions') }}</th>
+                    <th id="hName" scope="col" class="text-left">
+                        <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                     </th>
-                {% endif %}
-                <th id="hItemActionsStart" scope="col" class="z-w02">{{ __('Actions') }}</th>
-                <th id="hName" scope="col" class="text-left">
-                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-        
-        {% for project in items %}
-            <tr>
-                {% if routeArea == 'admin' %}
-                    <td headers="hSelect" class="text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ project.getKey() }}" class="zikulamultisites-toggle-checkbox" />
+                </tr>
+                </thead>
+                <tbody>
+            
+            {% for project in items %}
+                <tr>
+                    {% if routeArea == 'admin' %}
+                        <td headers="hSelect" class="text-center z-w02">
+                            <input type="checkbox" name="items[]" value="{{ project.getKey() }}" class="zikulamultisites-toggle-checkbox" />
+                        </td>
+                    {% endif %}
+                    <td id="itemActions{{ project.getKey() }}Start" headers="hItemActionsStart" class="actions nowrap z-w02">
+                        {% set itemActions = knp_menu_get('zikulaMultisitesMenuItemActions', [], {entity: project, area: routeArea, context: 'view'}) %}
+                        <div class="dropdown item-actions">
+                            <a id="itemActions{{ project.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                            {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
+                        </div>
                     </td>
-                {% endif %}
-                <td id="itemActions{{ project.getKey() }}Start" headers="hItemActionsStart" class="actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('zikulaMultisitesMenuItemActions', [], {entity: project, area: routeArea, context: 'view'}) %}
-                    <div class="dropdown item-actions">
-                        <a id="itemActions{{ project.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
-                    </div>
-                </td>
-                <td headers="hName" class="text-left">
-                    {{ project.name|notifyFilters('zikulamultisitesmodule.filterhook.projects')|safeHtml }}
-                </td>
-            </tr>
-        {% else %}
-            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}3{% else %}2{% endif %}">
-            {{ __('No projects found.') }}
-              </td>
-            </tr>
-        {% endfor %}
-        
-            </tbody>
-        </table>
-        </div>
-        
-        {% if all != 1 and pager|default %}
-            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'zikulamultisitesmodule_project_' ~ routeArea ~ 'view'}) }}
-        {% endif %}
-    {% if routeArea == 'admin' %}
-            <fieldset>
-                <label for="zikulaMultisitesModuleAction" class="col-sm-3 control-label">{{ __('With selected projects') }}</label>
-                <div class="col-sm-6">
-                    <select id="zikulaMultisitesModuleAction" name="action" class="form-control input-sm">
-                        <option value="">{{ __('Choose action') }}</option>
-                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
-                    </select>
-                </div>
-                <div class="col-sm-3">
-                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
-                </div>
-            </fieldset>
-        </div>
-    </form>
-    {% endif %}
-
-    {{ block('display_hooks') }}
-</div>
-{% endblock %}
-{% block page_nav_links %}
-    <p>
-        {% if canBeCreated %}
-            {% if permissionHelper.hasComponentPermission('project', constant('ACCESS_EDIT')) %}
-                {% set createTitle = __('Create project') %}
-                <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
+                    <td headers="hName" class="text-left">
+                        {{ project.name|notifyFilters('zikulamultisitesmodule.filterhook.projects')|safeHtml }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                    <td class="text-left" colspan="{% if routeArea == 'admin' %}3{% else %}2{% endif %}">
+                {{ __('No projects found.') }}
+                  </td>
+                </tr>
+            {% endfor %}
+            
+                </tbody>
+            </table>
+            </div>
+            
+            {% if all != 1 and pager|default %}
+                {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'zikulamultisitesmodule_project_' ~ routeArea ~ 'view'}) }}
             {% endif %}
+        {% if routeArea == 'admin' %}
+                <fieldset>
+                    <label for="zikulaMultisitesModuleAction" class="col-sm-3 control-label">{{ __('With selected projects') }}</label>
+                    <div class="col-sm-6">
+                        <select id="zikulaMultisitesModuleAction" name="action" class="form-control input-sm">
+                            <option value="">{{ __('Choose action') }}</option>
+                            <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                    </div>
+                </fieldset>
+            </div>
+        </form>
         {% endif %}
-        {% if all == 1 %}
-            {% set linkTitle = __('Back to paginated view') %}
-            {% set routeArgs = own ? {own: 1} : {} %}
-            <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
-        {% else %}
-            {% set linkTitle = __('Show all entries') %}
-            {% set routeArgs = own ? {all: 1, own: 1} : {all: 1} %}
-            <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
-        {% endif %}
-        {% if own == 1 %}
-            {% set linkTitle = __('Show also entries from other users') %}
-            {% set routeArgs = all ? {all: 1} : {} %}
-            <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-users"></i> {{ linkTitle }}</a>
-        {% elseif permissionHelper.hasComponentPermission('project', constant('ACCESS_EDIT')) %}
-            {% set linkTitle = __('Show only own entries') %}
-            {% set routeArgs = all ? {all: 1, own: 1} : {own: 1} %}
-            <a href="{{ path('zikulamultisitesmodule_project_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-user"></i> {{ linkTitle }}</a>
-        {% endif %}
-    </p>
+
+        {{ block('display_hooks') }}
+    </div>
 {% endblock %}
 {% block display_hooks %}
-    
     {# here you can activate calling display hooks for the view page if you need it #}
     {# % if routeArea != 'admin' %}
         {% set hooks = notifyDisplayHooks(eventName='zikulamultisitesmodule.ui_hooks.projects.display_view', urlObject=currentUrlObject, outputAsArray=true) %}

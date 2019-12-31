@@ -44,6 +44,29 @@ abstract class AbstractMultisitesEvents
      * @var string
      */
     const MENU_ITEMACTIONS_POST_CONFIGURE = 'zikulamultisitesmodule.itemactionsmenu_post_configure';
+    /**
+     * The zikulamultisitesmodule.viewactionsmenu_pre_configure event is thrown before the view actions
+     * menu is built in the menu builder.
+     *
+     * The event listener receives an
+     * Zikula\MultisitesModule\Event\ConfigureViewActionsMenuEvent instance.
+     *
+     * @see MenuBuilder::createViewActionsMenu()
+     * @var string
+     */
+    const MENU_VIEWACTIONS_PRE_CONFIGURE = 'zikulamultisitesmodule.viewactionsmenu_pre_configure';
+    
+    /**
+     * The zikulamultisitesmodule.viewactionsmenu_post_configure event is thrown after the view actions
+     * menu has been built in the menu builder.
+     *
+     * The event listener receives an
+     * Zikula\MultisitesModule\Event\ConfigureViewActionsMenuEvent instance.
+     *
+     * @see MenuBuilder::createViewActionsMenu()
+     * @var string
+     */
+    const MENU_VIEWACTIONS_POST_CONFIGURE = 'zikulamultisitesmodule.viewactionsmenu_post_configure';
     
     /**
      * The zikulamultisitesmodule.site_post_load event is thrown when sites
