@@ -27,6 +27,7 @@ use Zikula\MultisitesModule\Entity\TemplateEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 use Zikula\MultisitesModule\MultisitesEvents;
 use Zikula\MultisitesModule\Event\ConfigureItemActionsMenuEvent;
+use Zikula\MultisitesModule\Event\ConfigureViewActionsMenuEvent;
 use Zikula\MultisitesModule\Helper\ModelHelper;
 use Zikula\MultisitesModule\Helper\PermissionHelper;
 
@@ -279,6 +280,7 @@ class AbstractMenuBuilder
     
         return $menu;
     }
+    
     /**
      * Builds the view actions menu.
      *
@@ -337,7 +339,7 @@ class AbstractMenuBuilder
                 ]);
                 $menu[$title]->setLinkAttribute('title', $title);
                 $menu[$title]->setAttribute('icon', 'fa fa-table');
-                if ($this->permissionHelper.hasComponentPermission($objectType, ACCESS_EDIT)) {
+                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
                     $routeParameters = $query->all();
                     if (1 === $query->getInt('own')) {
                         unset($routeParameters['own']);
@@ -390,7 +392,7 @@ class AbstractMenuBuilder
                 ]);
                 $menu[$title]->setLinkAttribute('title', $title);
                 $menu[$title]->setAttribute('icon', 'fa fa-table');
-                if ($this->permissionHelper.hasComponentPermission($objectType, ACCESS_EDIT)) {
+                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
                     $routeParameters = $query->all();
                     if (1 === $query->getInt('own')) {
                         unset($routeParameters['own']);
@@ -443,7 +445,7 @@ class AbstractMenuBuilder
                 ]);
                 $menu[$title]->setLinkAttribute('title', $title);
                 $menu[$title]->setAttribute('icon', 'fa fa-table');
-                if ($this->permissionHelper.hasComponentPermission($objectType, ACCESS_EDIT)) {
+                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
                     $routeParameters = $query->all();
                     if (1 === $query->getInt('own')) {
                         unset($routeParameters['own']);
