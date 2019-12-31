@@ -19,14 +19,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 use Zikula\MultisitesModule\Entity\TemplateEntity;
 use Zikula\MultisitesModule\Entity\ProjectEntity;
 use Zikula\MultisitesModule\MultisitesEvents;
 use Zikula\MultisitesModule\Event\ConfigureItemActionsMenuEvent;
+use Zikula\MultisitesModule\Helper\ModelHelper;
 use Zikula\MultisitesModule\Helper\PermissionHelper;
-use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 
 /**
  * Menu builder base class.
@@ -34,39 +36,51 @@ use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 class AbstractMenuBuilder
 {
     use TranslatorTrait;
-
+    
     /**
      * @var FactoryInterface
      */
     protected $factory;
-
+    
     /**
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
-
+    
     /**
      * @var RequestStack
      */
     protected $requestStack;
-
+    
     /**
      * @var PermissionHelper
      */
     protected $permissionHelper;
-
+    
     /**
      * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
-
+    
+    /**
+     * @var VariableApiInterface
+     */
+    protected $variableApi;
+    
+    /**
+     * @var ModelHelper
+     */
+    protected $modelHelper;
+    
     public function __construct(
         TranslatorInterface $translator,
         FactoryInterface $factory,
         EventDispatcherInterface $eventDispatcher,
         RequestStack $requestStack,
         PermissionHelper $permissionHelper,
-        CurrentUserApiInterface $currentUserApi
+        CurrentUserApiInterface $currentUserApi,
+        VariableApiInterface $variableApi,
+        ModelHelper $modelHelper
     ) {
         $this->setTranslator($translator);
         $this->factory = $factory;
@@ -74,13 +88,15 @@ class AbstractMenuBuilder
         $this->requestStack = $requestStack;
         $this->permissionHelper = $permissionHelper;
         $this->currentUserApi = $currentUserApi;
+        $this->variableApi = $variableApi;
+        $this->modelHelper = $modelHelper;
     }
-
+    
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
-
+    
     /**
      * Builds the item actions menu.
      *
@@ -94,17 +110,17 @@ class AbstractMenuBuilder
         if (!isset($options['entity'], $options['area'], $options['context'])) {
             return $menu;
         }
-
+    
         $entity = $options['entity'];
         $routeArea = $options['area'];
         $context = $options['context'];
         $menu->setChildrenAttribute('class', 'list-inline item-actions');
-
+    
         $this->eventDispatcher->dispatch(
             MultisitesEvents::MENU_ITEMACTIONS_PRE_CONFIGURE,
             new ConfigureItemActionsMenuEvent($this->factory, $menu, $options)
         );
-
+    
         $currentUserId = $this->currentUserApi->isLoggedIn()
             ? $this->currentUserApi->get('uid')
             : UsersConstant::USER_ID_ANONYMOUS
@@ -115,7 +131,7 @@ class AbstractMenuBuilder
                 && null !== $entity->getCreatedBy()
                 && $currentUserId === $entity->getCreatedBy()->getUid()
             ;
-        
+            
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
@@ -157,7 +173,7 @@ class AbstractMenuBuilder
                 && null !== $entity->getCreatedBy()
                 && $currentUserId === $entity->getCreatedBy()->getUid()
             ;
-        
+            
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
@@ -209,7 +225,7 @@ class AbstractMenuBuilder
                 && null !== $entity->getCreatedBy()
                 && $currentUserId === $entity->getCreatedBy()->getUid()
             ;
-        
+            
             if ($this->permissionHelper->mayEdit($entity)) {
                 $title = $this->__('Edit', 'zikulamultisitesmodule');
                 $menu->addChild($title, [
@@ -255,12 +271,204 @@ class AbstractMenuBuilder
                 $menu[$title]->setAttribute('icon', 'fa fa-plus');
             }
         }
-
+    
         $this->eventDispatcher->dispatch(
             MultisitesEvents::MENU_ITEMACTIONS_POST_CONFIGURE,
             new ConfigureItemActionsMenuEvent($this->factory, $menu, $options)
         );
-
+    
+        return $menu;
+    }
+    /**
+     * Builds the view actions menu.
+     *
+     * @param array $options List of additional options
+     *
+     * @return ItemInterface The assembled menu
+     */
+    public function createViewActionsMenu(array $options = [])
+    {
+        $menu = $this->factory->createItem('viewActions');
+        if (!isset($options['objectType'], $options['area'])) {
+            return $menu;
+        }
+    
+        $objectType = $options['objectType'];
+        $routeArea = $options['area'];
+        $menu->setChildrenAttribute('class', 'list-inline view-actions');
+    
+        $this->eventDispatcher->dispatch(
+            MultisitesEvents::MENU_VIEWACTIONS_PRE_CONFIGURE,
+            new ConfigureViewActionsMenuEvent($this->factory, $menu, $options)
+        );
+    
+        $query = $this->requestStack->getMasterRequest()->query;
+        $currentTemplate = $query->getAlnum('tpl', '');
+        if ('site' === $objectType) {
+            $routePrefix = 'zikulamultisitesmodule_site_';
+            if (!in_array($currentTemplate, [])) {
+                $canBeCreated = $this->modelHelper->canBeCreated($objectType);
+                if ($canBeCreated) {
+                    if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
+                        $title = $this->__('Create site', 'zikulamultisitesmodule');
+                        $menu->addChild($title, [
+                            'route' => $routePrefix . $routeArea . 'edit'
+                        ]);
+                        $menu[$title]->setLinkAttribute('title', $title);
+                        $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                    }
+                }
+                $routeParameters = $query->all();
+                if (1 === $query->getInt('own')) {
+                    $routeParameters['own'] = 1;
+                } else {
+                    unset($routeParameters['own']);
+                }
+                if (1 === $query->getInt('all')) {
+                    unset($routeParameters['all']);
+                    $title = $this->__('Back to paginated view', 'zikulamultisitesmodule');
+                } else {
+                    $routeParameters['all'] = 1;
+                    $title = $this->__('Show all entries', 'zikulamultisitesmodule');
+                }
+                $menu->addChild($title, [
+                    'route' => $routePrefix . $routeArea . 'view',
+                    'routeParameters' => $routeParameters
+                ]);
+                $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-table');
+                if ($this->permissionHelper.hasComponentPermission($objectType, ACCESS_EDIT)) {
+                    $routeParameters = $query->all();
+                    if (1 === $query->getInt('own')) {
+                        unset($routeParameters['own']);
+                        $title = $this->__('Show also entries from other users', 'zikulamultisitesmodule');
+                        $icon = 'users';
+                    } else {
+                        $routeParameters['own'] = 1;
+                        $title = $this->__('Show only own entries', 'zikulamultisitesmodule');
+                        $icon = 'user';
+                    }
+                    $menu->addChild($title, [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ]);
+                    $menu[$title]->setLinkAttribute('title', $title);
+                    $menu[$title]->setAttribute('icon', 'fa fa-' . $icon);
+                }
+            }
+        }
+        if ('template' === $objectType) {
+            $routePrefix = 'zikulamultisitesmodule_template_';
+            if (!in_array($currentTemplate, [])) {
+                $canBeCreated = $this->modelHelper->canBeCreated($objectType);
+                if ($canBeCreated) {
+                    if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
+                        $title = $this->__('Create template', 'zikulamultisitesmodule');
+                        $menu->addChild($title, [
+                            'route' => $routePrefix . $routeArea . 'edit'
+                        ]);
+                        $menu[$title]->setLinkAttribute('title', $title);
+                        $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                    }
+                }
+                $routeParameters = $query->all();
+                if (1 === $query->getInt('own')) {
+                    $routeParameters['own'] = 1;
+                } else {
+                    unset($routeParameters['own']);
+                }
+                if (1 === $query->getInt('all')) {
+                    unset($routeParameters['all']);
+                    $title = $this->__('Back to paginated view', 'zikulamultisitesmodule');
+                } else {
+                    $routeParameters['all'] = 1;
+                    $title = $this->__('Show all entries', 'zikulamultisitesmodule');
+                }
+                $menu->addChild($title, [
+                    'route' => $routePrefix . $routeArea . 'view',
+                    'routeParameters' => $routeParameters
+                ]);
+                $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-table');
+                if ($this->permissionHelper.hasComponentPermission($objectType, ACCESS_EDIT)) {
+                    $routeParameters = $query->all();
+                    if (1 === $query->getInt('own')) {
+                        unset($routeParameters['own']);
+                        $title = $this->__('Show also entries from other users', 'zikulamultisitesmodule');
+                        $icon = 'users';
+                    } else {
+                        $routeParameters['own'] = 1;
+                        $title = $this->__('Show only own entries', 'zikulamultisitesmodule');
+                        $icon = 'user';
+                    }
+                    $menu->addChild($title, [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ]);
+                    $menu[$title]->setLinkAttribute('title', $title);
+                    $menu[$title]->setAttribute('icon', 'fa fa-' . $icon);
+                }
+            }
+        }
+        if ('project' === $objectType) {
+            $routePrefix = 'zikulamultisitesmodule_project_';
+            if (!in_array($currentTemplate, [])) {
+                $canBeCreated = $this->modelHelper->canBeCreated($objectType);
+                if ($canBeCreated) {
+                    if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
+                        $title = $this->__('Create project', 'zikulamultisitesmodule');
+                        $menu->addChild($title, [
+                            'route' => $routePrefix . $routeArea . 'edit'
+                        ]);
+                        $menu[$title]->setLinkAttribute('title', $title);
+                        $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                    }
+                }
+                $routeParameters = $query->all();
+                if (1 === $query->getInt('own')) {
+                    $routeParameters['own'] = 1;
+                } else {
+                    unset($routeParameters['own']);
+                }
+                if (1 === $query->getInt('all')) {
+                    unset($routeParameters['all']);
+                    $title = $this->__('Back to paginated view', 'zikulamultisitesmodule');
+                } else {
+                    $routeParameters['all'] = 1;
+                    $title = $this->__('Show all entries', 'zikulamultisitesmodule');
+                }
+                $menu->addChild($title, [
+                    'route' => $routePrefix . $routeArea . 'view',
+                    'routeParameters' => $routeParameters
+                ]);
+                $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setAttribute('icon', 'fa fa-table');
+                if ($this->permissionHelper.hasComponentPermission($objectType, ACCESS_EDIT)) {
+                    $routeParameters = $query->all();
+                    if (1 === $query->getInt('own')) {
+                        unset($routeParameters['own']);
+                        $title = $this->__('Show also entries from other users', 'zikulamultisitesmodule');
+                        $icon = 'users';
+                    } else {
+                        $routeParameters['own'] = 1;
+                        $title = $this->__('Show only own entries', 'zikulamultisitesmodule');
+                        $icon = 'user';
+                    }
+                    $menu->addChild($title, [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ]);
+                    $menu[$title]->setLinkAttribute('title', $title);
+                    $menu[$title]->setAttribute('icon', 'fa fa-' . $icon);
+                }
+            }
+        }
+    
+        $this->eventDispatcher->dispatch(
+            MultisitesEvents::MENU_VIEWACTIONS_POST_CONFIGURE,
+            new ConfigureViewActionsMenuEvent($this->factory, $menu, $options)
+        );
+    
         return $menu;
     }
 }
