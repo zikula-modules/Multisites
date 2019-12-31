@@ -20,3 +20,4 @@ services:
             - [setDbalDriver, ["%doctrine.dbal.driver%"]]
         tags:
             - { name: knp_menu.menu_builder, method: createItemActionsMenu, alias: zikulaMultisitesMenuItemActions }
+            - { name: knp_menu.menu_builder, method: createViewActionsMenu, alias: zikulaMultisitesMenuViewActions }
