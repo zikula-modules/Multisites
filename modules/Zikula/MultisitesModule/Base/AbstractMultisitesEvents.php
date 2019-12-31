@@ -44,6 +44,7 @@ abstract class AbstractMultisitesEvents
      * @var string
      */
     const MENU_ITEMACTIONS_POST_CONFIGURE = 'zikulamultisitesmodule.itemactionsmenu_post_configure';
+    
     /**
      * The zikulamultisitesmodule.viewactionsmenu_pre_configure event is thrown before the view actions
      * menu is built in the menu builder.
