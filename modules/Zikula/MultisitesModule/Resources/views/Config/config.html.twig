@@ -10,7 +10,7 @@
         ] %}
         {{ form_start(form) }}
         <div class="zikula-bootstrap-tab-container">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs" role="tablist">
                 {% set tabTitle = __('Security settings') %}
                 <li role="presentation" class="active">
                     <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>

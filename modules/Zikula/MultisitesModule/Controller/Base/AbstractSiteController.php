@@ -240,7 +240,7 @@ abstract class AbstractSiteController extends AbstractController
         if ($site->supportsHookSubscribers()) {
             $hookHelper = $this->get('zikula_multisites_module.hook_helper');
         
-            // Call form aware display hooks
+            // call form aware display hooks
             $formHook = $hookHelper->callFormDisplayHooks($form, $site, FormAwareCategory::TYPE_DELETE);
         }
         
