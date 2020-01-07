@@ -35,7 +35,7 @@
                     {% endif % #}
                     <th id="hItemActionsStart" scope="col" class="z-w02">{{ __('Actions') }}</th>
                     <th id="hName" scope="col" class="text-left">
-                        <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                        <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'})|e('html_attr') }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                     </th>
                     <th id="hTemplates" scope="col" class="text-left unsorted">
                         {{ __('Templates') }}
@@ -100,11 +100,11 @@
                     <div class="col-sm-6">
                         <select id="zikulaMultisitesModuleAction" name="action" class="form-control input-sm">
                             <option value="">{{ __('Choose action') }}</option>
-                            <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                            <option value="delete" title="{{ __('Delete content permanently.')|e('html_attr') }}">{{ __('Delete') }}</option>
                         </select>
                     </div>
                     <div class="col-sm-3">
-                        <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                        <input type="submit" value="{{ __('Submit')|e('html_attr') }}" class="btn btn-default btn-sm" />
                     </div>
                 </fieldset>#}
             </div>

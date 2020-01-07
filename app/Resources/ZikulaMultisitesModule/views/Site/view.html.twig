@@ -47,19 +47,19 @@
                     {% endif %}
                     <th id="hItemActionsStart" scope="col" class="z-w02">{{ __('Actions') }}</th>
                     <th id="hLogo" scope="col" class="text-left">
-                        <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', {'%s': 'logo'}) }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
+                        <a href="{{ sort.logo.url }}" title="{{ __f('Sort by %s', {'%s': 'logo'})|e('html_attr') }}" class="{{ sort.logo.class }}">{{ __('Logo') }}</a>
                     </th>
                     <th id="hSiteAlias" scope="col" class="text-left">
-                        <a href="{{ sort.siteAlias.url }}" title="{{ __f('Sort by %s', {'%s': 'site alias'}) }}" class="{{ sort.siteAlias.class }}">{{ __('Site alias') }}</a>
+                        <a href="{{ sort.siteAlias.url }}" title="{{ __f('Sort by %s', {'%s': 'site alias'})|e('html_attr') }}" class="{{ sort.siteAlias.class }}">{{ __('Site alias') }}</a>
                     </th>
                     <th id="hName" scope="col" class="text-left">
-                        <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                        <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'})|e('html_attr') }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
                     </th>
                     <th id="hSiteName" scope="col" class="text-left">
-                        <a href="{{ sort.siteName.url }}" title="{{ __f('Sort by %s', {'%s': 'site name'}) }}" class="{{ sort.siteName.class }}">{{ __('Site name') }}</a>
+                        <a href="{{ sort.siteName.url }}" title="{{ __f('Sort by %s', {'%s': 'site name'})|e('html_attr') }}" class="{{ sort.siteName.class }}">{{ __('Site name') }}</a>
                     </th>
     {#                <th id="hSiteDns" scope="col" class="text-left">
-                        <a href="{{ sort.siteDns.url }}" title="{{ __f('Sort by %s', {'%s': 'site dns'}) }}" class="{{ sort.siteDns.class }}">{{ __('Site dns') }}</a>
+                        <a href="{{ sort.siteDns.url }}" title="{{ __f('Sort by %s', {'%s': 'site dns'})|e('html_attr') }}" class="{{ sort.siteDns.class }}">{{ __('Site dns') }}</a>
                     </th>#}
                     <th id="hSiteAdminName" scope="col" class="text-left unsorted">
                         {{ __('Admin details') }}
@@ -71,7 +71,7 @@
                         {{ __('Allowed locales') }}
                     </th>#}
                     <th id="hActive" scope="col" class="text-center">
-                        <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', {'%s': 'active'}) }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
+                        <a href="{{ sort.active.url }}" title="{{ __f('Sort by %s', {'%s': 'active'})|e('html_attr') }}" class="{{ sort.active.class }}">{{ __('Active') }}</a>
                     </th>
                 </tr>
                 </thead>
@@ -129,7 +129,7 @@
                         <ul class="z-sub">
                             <li>{{ __('User') }}: {{ site.siteAdminName }}</li>
                             <li>{{ __('Real name') }}: {{ site.siteAdminRealName }}</li>
-                            <li>{{ __('Email') }}: <a href="mailto:{{ site.siteAdminEmail }}" title="{{ __('Send an email') }}"><i class="fa fa-envelope"></i></a></li>
+                            <li>{{ __('Email') }}: <a href="mailto:{{ site.siteAdminEmail }}" title="{{ __('Send an email')|e('html_attr') }}"><i class="fa fa-envelope"></i></a></li>
                             <li>{{ __('Company') }}: {{ site.siteCompany }}</li>
                         </ul>
                     </td>
@@ -154,15 +154,15 @@
                     </td>*}
                     <td headers="hActive" class="text-center">
                         {% set itemId = site.getKey() %}
-                        <a id="toggleActive{{ itemId }}" href="javascript:void(0);" class="zikulamultisites-ajax-toggle hidden" data-object-type="site" data-field-name="active" data-item-id="{{ itemId }}">
-                            <i class="fa fa-check text-success{% if not site.active %} hidden{% endif %}" id="yesActive{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.') }}"></i>
-                            <i class="fa fa-times text-danger{% if site.active %} hidden{% endif %}" id="noActive{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.') }}"></i>
+                        <a id="toggleActive{{ itemId|e('html_attr') }}" href="javascript:void(0);" class="zikulamultisites-ajax-toggle hidden" data-object-type="site" data-field-name="active" data-item-id="{{ itemId|e('html_attr') }}">
+                            <i class="fa fa-check text-success{% if not site.active %} hidden{% endif %}" id="yesActive{{ itemId|e('html_attr') }}" title="{{ __('This setting is enabled. Click here to disable it.')|e('html_attr') }}"></i>
+                            <i class="fa fa-times text-danger{% if site.active %} hidden{% endif %}" id="noActive{{ itemId|e('html_attr') }}" title="{{ __('This setting is disabled. Click here to enable it.')|e('html_attr') }}"></i>
                         </a>
-                        <noscript><div id="noscriptActive{{ itemId }}">
+                        <noscript><div id="noscriptActive{{ itemId|e('html_attr') }}">
                             {% if site.active %}
-                                <i class="fa fa-check text-success" title="{{ __('Yes') }}"></i>
+                                <i class="fa fa-check text-success" title="{{ __('Yes')|e('html_attr') }}"></i>
                             {% else %}
-                                <i class="fa fa-times text-danger" title="{{ __('No') }}"></i>
+                                <i class="fa fa-times text-danger" title="{{ __('No')|e('html_attr') }}"></i>
                             {% endif %}
                         </div></noscript>
                     </td>
@@ -188,12 +188,12 @@
                     <div class="col-sm-6">
                         <select id="zikulaMultisitesModuleAction" name="action" class="form-control input-sm">
                             <option value="">{{ __('Choose action') }}</option>
-                            <option value="cleartemplates">{{ __('Clear all cache and compile directories', 'zikula') }}</option>
-                            <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                            <option value="cleartemplates">{{ __('Clear all cache and compile directories') }}</option>
+                            <option value="delete" title="{{ __('Delete content permanently.')|e('html_attr') }}">{{ __('Delete') }}</option>
                         </select>
                     </div>
                     <div class="col-sm-3">
-                        <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                        <input type="submit" value="{{ __('Submit')|e('html_attr') }}" class="btn btn-default btn-sm" />
                     </div>
                 </fieldset>
             </div>
