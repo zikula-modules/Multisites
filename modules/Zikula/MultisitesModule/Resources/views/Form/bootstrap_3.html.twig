@@ -22,7 +22,7 @@
         {% if file_path|default %}
             <span class="help-block small">
                 {{ __('Current file') }}:
-                <a href="{{ file_url }}" title="{{ __('Open file') }}"{% if file_meta.isImage %} class="image-link"{% endif %}>
+                <a href="{{ file_url }}" title="{{ __('Open file')|e('html_attr') }}"{% if file_meta.isImage %} class="image-link"{% endif %}>
                 {% if file_meta.isImage %}
                     <img src="{{ file_path|imagine_filter('zkroot', thumb_runtime_options) }}" alt="{{ edited_entity|zikulamultisitesmodule_formattedTitle|e('html_attr') }}" width="{{ thumb_runtime_options.thumbnail.size[0] }}" height="{{ thumb_runtime_options.thumbnail.size[1] }}" class="img-thumbnail" />
                 {% else %}
