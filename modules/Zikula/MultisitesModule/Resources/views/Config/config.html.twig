@@ -47,9 +47,8 @@
                     {% set tabTitle = __('Security settings') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>
-                    
-                        <p class="alert alert-info">{{ __('Here you can define security-related settings.')|nl2br }}</p>
-                    
+                        <p class="alert alert-info">{{ __('Here you can define security-related settings.') }}</p>
+                        
                         {{ form_row(form.globalAdminName) }}
                         {{ form_row(form.globalAdminPassword) }}
                         {{ form_row(form.globalAdminEmail) }}
@@ -59,9 +58,8 @@
                     {% set tabTitle = __('List views') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>
-                    
-                        <p class="alert alert-info">{{ __('Here you can configure parameters for list views.')|nl2br }}</p>
-                    
+                        <p class="alert alert-info">{{ __('Here you can configure parameters for list views.') }}</p>
+                        
                         {{ form_row(form.siteEntriesPerPage) }}
                         {{ form_row(form.templateEntriesPerPage) }}
                         {{ form_row(form.projectEntriesPerPage) }}
@@ -106,9 +104,8 @@
                     {% set tabTitle = __('Moderation') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>
-                    
-                        <p class="alert alert-info">{{ __('Here you can define moderation-related settings.')|nl2br }}</p>
-                    
+                        <p class="alert alert-info">{{ __('Here you can define moderation-related settings.') }}</p>
+                        
                         {{ form_row(form.allowModerationSpecificCreatorForSite) }}
                         {{ form_row(form.allowModerationSpecificCreationDateForSite) }}
                         {{ form_row(form.allowModerationSpecificCreatorForTemplate) }}
@@ -125,11 +122,11 @@
                         <p class="alert alert-info">{{ __('Here you can inspect and amend the existing workflows.') }}</p>
                 
                         <h4>{{ __('Sites') }}</h4>
-                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for sites') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit sites workflow') }}</a>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for sites')|e('html_attr') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit sites workflow') }}</a>
                         <h4>{{ __('Templates') }}</h4>
-                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for templates') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit templates workflow') }}</a>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for templates')|e('html_attr') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit templates workflow') }}</a>
                         <h4>{{ __('Projects') }}</h4>
-                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for projects') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit projects workflow') }}</a>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'zikulamultisitesmodule_none'}) }}" title="{{ __('Edit workflow for projects')|e('html_attr') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit projects workflow') }}</a>
                     </fieldset>
                 </div>
             </div>
