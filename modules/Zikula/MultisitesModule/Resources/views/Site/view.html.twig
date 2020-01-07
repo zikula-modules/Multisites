@@ -222,8 +222,8 @@
                     <td headers="hActive" class="text-center">
                         {% set itemId = site.getKey() %}
                         <a id="toggleActive{{ itemId|e('html_attr') }}" href="javascript:void(0);" class="zikulamultisites-ajax-toggle hidden" data-object-type="site" data-field-name="active" data-item-id="{{ itemId|e('html_attr') }}">
-                            <i class="fa fa-check text-success{% if not site.active %} hidden{% endif %}" id="yesActive{{ itemId }}" title="{{ __('This setting is enabled. Click here to disable it.')|e('html_attr') }}"></i>
-                            <i class="fa fa-times text-danger{% if site.active %} hidden{% endif %}" id="noActive{{ itemId }}" title="{{ __('This setting is disabled. Click here to enable it.')|e('html_attr') }}"></i>
+                            <i class="fa fa-check text-success{% if not site.active %} hidden{% endif %}" id="yesActive{{ itemId|e('html_attr') }}" title="{{ __('This setting is enabled. Click here to disable it.')|e('html_attr') }}"></i>
+                            <i class="fa fa-times text-danger{% if site.active %} hidden{% endif %}" id="noActive{{ itemId|e('html_attr') }}" title="{{ __('This setting is disabled. Click here to enable it.')|e('html_attr') }}"></i>
                         </a>
                         <noscript><div id="noscriptActive{{ itemId|e('html_attr') }}">
                             {% if site.active %}
