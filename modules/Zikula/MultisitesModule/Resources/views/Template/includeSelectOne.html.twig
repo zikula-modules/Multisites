@@ -11,6 +11,34 @@
     <legend>{{ heading|default ? heading : __('Template') }}</legend>
     {% if displayMode == 'embedded' %}
         {% set subFields = attribute(form, alias) %}
+        de.guite.modulestudio.metamodel.impl.ApplicationImpl@cfbc8e8 (name: Multisites, documentation: Zikula Multisites manager.) (vendor: Zikula, author: Albert Pérez Monfort, email: aperezm@xtec.cat, url: https://modulestudio.de, version: 2.1.0, prefix: multisites, license: http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, targetCoreVersion: ZK20, capabilities: null, isSystemModule: false, amountOfExampleRows: 0, generateAccountApi: false, generateSearchApi: false, generateMailzApi: false, generateListBlock: false, generateDetailBlock: false, generateModerationBlock: false, generateListContentType: false, generateDetailContentType: false, generateNewsletterPlugin: false, generateModerationPanel: false, generatePendingContentSupport: false, generateExternalControllerAndFinder: false, generateScribitePlugins: false, generateTagSupport: false, generateMultiHookNeedles: false, generateRssTemplates: false, generateAtomTemplates: false, generateCsvTemplates: true, generateXmlTemplates: true, generateJsonTemplates: true, generateKmlTemplates: false, generateIcsTemplates: false, generatePdfSupport: false, authenticationMethod: NONE, filterHookProvider: DISABLED, generateOnlyBaseClasses: false, skipFiles: 
+                CHANGELOG.md,
+                Container/LinkContainer.php,
+                Entity/Repository/ProjectRepository.php,
+                Form/Handler/Site/EditHandler.php,
+                Form/Type/QuickNavigation/ProjectQuickNavType.php,
+                Form/Type/QuickNavigation/TemplateQuickNavType.php,
+                Form/Type/SiteType.php,
+                Helper/CollectionFilterHelper.php,
+                Helper/ControllerHelper.php,
+                Helper/ModelHelper.php,
+                Listener/EntityLifecycleListener.php,
+                Menu/MenuBuilder.php,
+                MultisitesModuleInstaller.php,
+                README.md
+            , markFiles: 
+                composer.json,
+                Controller/AdminController.php,
+                Controller/AjaxController.php,
+                Controller/ConfigController.php,
+                Controller/SiteController.php,
+                Controller/TemplateController.php,
+                Entity/TemplateEntity.php,
+                Resources/config/forms.yml,
+                Resources/config/helpers.yml,
+                Resources/config/menu.yml,
+                Resources/config/services.yml
+            , timestampAllGeneratedFiles: false, versionAllGeneratedFiles: true, separateAdminTemplates: false, generatePoweredByBacklinksIntoFooterTemplates: true, generateTests: true, writeModelToDocs: true, generateTechnicalDocumentation: true, viewActionsPosition: START, viewActionsStyle: DROPDOWN, viewActionsWithIcons: true, displayActionsPosition: START, displayActionsStyle: DROPDOWN, displayActionsWithIcons: true)
         <fieldset>
             <legend>{{ __('Content') }}</legend>
             {{ form_row(attribute(subFields, 'name')) }}
