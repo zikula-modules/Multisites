@@ -34,7 +34,6 @@ use Zikula\MultisitesModule\Helper\ListEntriesHelper;
 abstract class AbstractSiteQuickNavType extends AbstractType
 {
     use TranslatorTrait;
-
     /**
      * @var RequestStack
      */
