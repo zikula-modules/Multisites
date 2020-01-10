@@ -43,7 +43,7 @@ trait ModerationFormFieldsTrait
         ) {
             $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
                 'mapped' => false,
-                'label' => $this->__('Creator') . ':',
+                'label' => $this->__('Creator:'),
                 'attr' => [
                     'maxlength' => 11,
                     'title' => $this->__('Here you can choose a user which will be set as creator.')
@@ -59,7 +59,7 @@ trait ModerationFormFieldsTrait
         ) {
             $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
                 'mapped' => false,
-                'label' => $this->__('Creation date') . ':',
+                'label' => $this->__('Creation date:'),
                 'attr' => [
                     'class' => '',
                     'title' => $this->__('Here you can choose a custom creation date.')
