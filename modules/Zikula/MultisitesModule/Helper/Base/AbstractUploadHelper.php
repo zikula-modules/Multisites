@@ -644,11 +644,11 @@ abstract class AbstractUploadHelper
     {
         $result = true;
     
-        $result &= $this->checkAndCreateUploadFolder('site', 'logo', 'gif, jpeg, jpg, png');
-        $result &= $this->checkAndCreateUploadFolder('site', 'favIcon', 'png, ico');
-        $result &= $this->checkAndCreateUploadFolder('site', 'parametersCsvFile', 'csv');
+        $result = $result && $this->checkAndCreateUploadFolder('site', 'logo', 'gif, jpeg, jpg, png');
+        $result = $result && $this->checkAndCreateUploadFolder('site', 'favIcon', 'png, ico');
+        $result = $result && $this->checkAndCreateUploadFolder('site', 'parametersCsvFile', 'csv');
     
-        $result &= $this->checkAndCreateUploadFolder('template', 'sqlFile', 'sql, txt');
+        $result = $result && $this->checkAndCreateUploadFolder('template', 'sqlFile', 'sql, txt');
     
         return $result;
     }
@@ -684,10 +684,12 @@ abstract class AbstractUploadHelper
                         )
                     );
                 }
-                $this->logger->error(
-                    '{app}: The upload directory {directory} does not exist and could not be created.',
-                    ['app' => 'ZikulaMultisitesModule', 'directory' => $uploadPath]
-                );
+                if (null !== $this->logger) {
+                    $this->logger->error(
+                        '{app}: The upload directory {directory} does not exist and could not be created.',
+                        ['app' => 'ZikulaMultisitesModule', 'directory' => $uploadPath]
+                    );
+                }
     
                 return false;
             }
