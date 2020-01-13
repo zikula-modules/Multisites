@@ -36,6 +36,7 @@ abstract class AbstractConfigType extends AbstractType
 {
     use TranslatorTrait;
 
+
     /**
      * @var ListEntriesHelper
      */
@@ -71,7 +72,7 @@ abstract class AbstractConfigType extends AbstractType
     {
         
         $builder->add('globalAdminName', TextType::class, [
-            'label' => $this->__('Global admin name') . ':',
+            'label' => $this->__('Global admin name:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -82,7 +83,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('globalAdminPassword', PasswordType::class, [
-            'label' => $this->__('Global admin password') . ':',
+            'label' => $this->__('Global admin password:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -93,7 +94,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('globalAdminEmail', EmailType::class, [
-            'label' => $this->__('Global admin email') . ':',
+            'label' => $this->__('Global admin email:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -111,7 +112,7 @@ abstract class AbstractConfigType extends AbstractType
     {
         
         $builder->add('siteEntriesPerPage', IntegerType::class, [
-            'label' => $this->__('Site entries per page') . ':',
+            'label' => $this->__('Site entries per page:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The amount of sites shown per page')
@@ -121,13 +122,13 @@ abstract class AbstractConfigType extends AbstractType
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
-                'title' => $this->__('Enter the site entries per page.') . ' ' . $this->__('Only digits are allowed.')
+                'title' => $this->__('Enter the site entries per page. Only digits are allowed.')
             ],
             'required' => true,
         ]);
         
         $builder->add('templateEntriesPerPage', IntegerType::class, [
-            'label' => $this->__('Template entries per page') . ':',
+            'label' => $this->__('Template entries per page:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The amount of templates shown per page')
@@ -137,13 +138,13 @@ abstract class AbstractConfigType extends AbstractType
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
-                'title' => $this->__('Enter the template entries per page.') . ' ' . $this->__('Only digits are allowed.')
+                'title' => $this->__('Enter the template entries per page. Only digits are allowed.')
             ],
             'required' => true,
         ]);
         
         $builder->add('projectEntriesPerPage', IntegerType::class, [
-            'label' => $this->__('Project entries per page') . ':',
+            'label' => $this->__('Project entries per page:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The amount of projects shown per page')
@@ -153,13 +154,13 @@ abstract class AbstractConfigType extends AbstractType
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
-                'title' => $this->__('Enter the project entries per page.') . ' ' . $this->__('Only digits are allowed.')
+                'title' => $this->__('Enter the project entries per page. Only digits are allowed.')
             ],
             'required' => true,
         ]);
         
         $builder->add('showOnlyOwnEntries', CheckboxType::class, [
-            'label' => $this->__('Show only own entries') . ':',
+            'label' => $this->__('Show only own entries:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether only own entries should be shown on view pages by default or not')
@@ -180,7 +181,7 @@ abstract class AbstractConfigType extends AbstractType
     {
         
         $builder->add('enableShrinkingForSiteLogo', CheckboxType::class, [
-            'label' => $this->__('Enable shrinking for site logo') . ':',
+            'label' => $this->__('Enable shrinking for site logo:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
@@ -194,7 +195,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('shrinkWidthSiteLogo', IntegerType::class, [
-            'label' => $this->__('Shrink width site logo') . ':',
+            'label' => $this->__('Shrink width site logo:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The maximum image width in pixels.')
@@ -211,7 +212,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('shrinkHeightSiteLogo', IntegerType::class, [
-            'label' => $this->__('Shrink height site logo') . ':',
+            'label' => $this->__('Shrink height site logo:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The maximum image height in pixels.')
@@ -235,7 +236,7 @@ abstract class AbstractConfigType extends AbstractType
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
         $builder->add('thumbnailModeSiteLogo', ChoiceType::class, [
-            'label' => $this->__('Thumbnail mode site logo') . ':',
+            'label' => $this->__('Thumbnail mode site logo:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
@@ -254,7 +255,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailWidthSiteLogoView', IntegerType::class, [
-            'label' => $this->__('Thumbnail width site logo view') . ':',
+            'label' => $this->__('Thumbnail width site logo view:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
@@ -271,7 +272,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailHeightSiteLogoView', IntegerType::class, [
-            'label' => $this->__('Thumbnail height site logo view') . ':',
+            'label' => $this->__('Thumbnail height site logo view:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
@@ -288,7 +289,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailWidthSiteLogoEdit', IntegerType::class, [
-            'label' => $this->__('Thumbnail width site logo edit') . ':',
+            'label' => $this->__('Thumbnail width site logo edit:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
@@ -305,7 +306,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailHeightSiteLogoEdit', IntegerType::class, [
-            'label' => $this->__('Thumbnail height site logo edit') . ':',
+            'label' => $this->__('Thumbnail height site logo edit:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
@@ -322,7 +323,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('enableShrinkingForSiteFavIcon', CheckboxType::class, [
-            'label' => $this->__('Enable shrinking for site fav icon') . ':',
+            'label' => $this->__('Enable shrinking for site fav icon:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
@@ -336,7 +337,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('shrinkWidthSiteFavIcon', IntegerType::class, [
-            'label' => $this->__('Shrink width site fav icon') . ':',
+            'label' => $this->__('Shrink width site fav icon:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The maximum image width in pixels.')
@@ -353,7 +354,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('shrinkHeightSiteFavIcon', IntegerType::class, [
-            'label' => $this->__('Shrink height site fav icon') . ':',
+            'label' => $this->__('Shrink height site fav icon:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The maximum image height in pixels.')
@@ -377,7 +378,7 @@ abstract class AbstractConfigType extends AbstractType
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
         $builder->add('thumbnailModeSiteFavIcon', ChoiceType::class, [
-            'label' => $this->__('Thumbnail mode site fav icon') . ':',
+            'label' => $this->__('Thumbnail mode site fav icon:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
@@ -396,7 +397,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailWidthSiteFavIconView', IntegerType::class, [
-            'label' => $this->__('Thumbnail width site fav icon view') . ':',
+            'label' => $this->__('Thumbnail width site fav icon view:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
@@ -413,7 +414,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailHeightSiteFavIconView', IntegerType::class, [
-            'label' => $this->__('Thumbnail height site fav icon view') . ':',
+            'label' => $this->__('Thumbnail height site fav icon view:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
@@ -430,7 +431,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailWidthSiteFavIconEdit', IntegerType::class, [
-            'label' => $this->__('Thumbnail width site fav icon edit') . ':',
+            'label' => $this->__('Thumbnail width site fav icon edit:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
@@ -447,7 +448,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailHeightSiteFavIconEdit', IntegerType::class, [
-            'label' => $this->__('Thumbnail height site fav icon edit') . ':',
+            'label' => $this->__('Thumbnail height site fav icon edit:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
@@ -471,7 +472,7 @@ abstract class AbstractConfigType extends AbstractType
     {
         
         $builder->add('allowModerationSpecificCreatorForSite', CheckboxType::class, [
-            'label' => $this->__('Allow moderation specific creator for site') . ':',
+            'label' => $this->__('Allow moderation specific creator for site:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
@@ -485,7 +486,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('allowModerationSpecificCreationDateForSite', CheckboxType::class, [
-            'label' => $this->__('Allow moderation specific creation date for site') . ':',
+            'label' => $this->__('Allow moderation specific creation date for site:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
@@ -499,7 +500,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('allowModerationSpecificCreatorForTemplate', CheckboxType::class, [
-            'label' => $this->__('Allow moderation specific creator for template') . ':',
+            'label' => $this->__('Allow moderation specific creator for template:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
@@ -513,7 +514,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('allowModerationSpecificCreationDateForTemplate', CheckboxType::class, [
-            'label' => $this->__('Allow moderation specific creation date for template') . ':',
+            'label' => $this->__('Allow moderation specific creation date for template:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
@@ -527,7 +528,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('allowModerationSpecificCreatorForProject', CheckboxType::class, [
-            'label' => $this->__('Allow moderation specific creator for project') . ':',
+            'label' => $this->__('Allow moderation specific creator for project:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
@@ -541,7 +542,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('allowModerationSpecificCreationDateForProject', CheckboxType::class, [
-            'label' => $this->__('Allow moderation specific creation date for project') . ':',
+            'label' => $this->__('Allow moderation specific creation date for project:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
@@ -592,10 +593,9 @@ abstract class AbstractConfigType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver
-            ->setDefaults([
-                // define class for underlying data
-                'data_class' => AppSettings::class,
-            ]);
+        $resolver->setDefaults([
+            // define class for underlying data
+            'data_class' => AppSettings::class,
+        ]);
     }
 }

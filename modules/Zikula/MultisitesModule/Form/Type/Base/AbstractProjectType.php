@@ -36,6 +36,7 @@ use Zikula\MultisitesModule\Traits\ModerationFormFieldsTrait;
 abstract class AbstractProjectType extends AbstractType
 {
     use TranslatorTrait;
+
     use ModerationFormFieldsTrait;
 
     /**
@@ -91,7 +92,7 @@ abstract class AbstractProjectType extends AbstractType
     {
         
         $builder->add('name', TextType::class, [
-            'label' => $this->__('Name') . ':',
+            'label' => $this->__('Name:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 150,
