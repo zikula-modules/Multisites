@@ -46,7 +46,7 @@ abstract class AbstractConfigController extends AbstractController
                 $appSettings = $form->getData();
                 $appSettings->save();
         
-                $this->addFlash('status', $this->__('Done! Module configuration updated.'));
+                $this->addFlash('status', $this->__('Done! Configuration updated.'));
                 $userName = $this->get('zikula_users_module.current_user')->get('uname');
                 $this->get('logger')->notice(
                     '{app}: User {user} updated the configuration.',
