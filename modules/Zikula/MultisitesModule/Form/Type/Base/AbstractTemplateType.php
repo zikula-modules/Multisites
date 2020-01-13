@@ -41,6 +41,7 @@ use Zikula\MultisitesModule\Traits\ModerationFormFieldsTrait;
 abstract class AbstractTemplateType extends AbstractType
 {
     use TranslatorTrait;
+
     use ModerationFormFieldsTrait;
 
     /**
@@ -104,7 +105,7 @@ abstract class AbstractTemplateType extends AbstractType
     {
         
         $builder->add('name', TextType::class, [
-            'label' => $this->__('Name') . ':',
+            'label' => $this->__('Name:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 150,
@@ -115,7 +116,7 @@ abstract class AbstractTemplateType extends AbstractType
         ]);
         
         $builder->add('description', TextType::class, [
-            'label' => $this->__('Description') . ':',
+            'label' => $this->__('Description:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 250,
@@ -126,7 +127,7 @@ abstract class AbstractTemplateType extends AbstractType
         ]);
         
         $builder->add('sqlFile', UploadType::class, [
-            'label' => $this->__('Sql file') . ':',
+            'label' => $this->__('Sql file:'),
             'attr' => [
                 'accept' => '.' . implode(',.', $this->uploadHelper->getAllowedFileExtensions('template', 'sqlFile')),
                 'class' => ' validate-upload',
@@ -140,7 +141,7 @@ abstract class AbstractTemplateType extends AbstractType
         ]);
         
         $builder->add('parameters', ArrayType::class, [
-            'label' => $this->__('Parameters') . ':',
+            'label' => $this->__('Parameters:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
             'attr' => [
@@ -151,7 +152,7 @@ abstract class AbstractTemplateType extends AbstractType
         ]);
         
         $builder->add('folders', ArrayType::class, [
-            'label' => $this->__('Folders') . ':',
+            'label' => $this->__('Folders:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
             'attr' => [
@@ -162,7 +163,7 @@ abstract class AbstractTemplateType extends AbstractType
         ]);
         
         $builder->add('excludedTables', ArrayType::class, [
-            'label' => $this->__('Excluded tables') . ':',
+            'label' => $this->__('Excluded tables:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
             'attr' => [

@@ -44,6 +44,7 @@ use Zikula\MultisitesModule\Traits\ModerationFormFieldsTrait;
 abstract class AbstractSiteType extends AbstractType
 {
     use TranslatorTrait;
+
     use ModerationFormFieldsTrait;
 
     /**
@@ -107,7 +108,7 @@ abstract class AbstractSiteType extends AbstractType
     {
         
         $builder->add('name', TextType::class, [
-            'label' => $this->__('Name') . ':',
+            'label' => $this->__('Name:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 150,
@@ -118,7 +119,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('description', TextType::class, [
-            'label' => $this->__('Description') . ':',
+            'label' => $this->__('Description:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -129,7 +130,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteAlias', TextType::class, [
-            'label' => $this->__('Site alias') . ':',
+            'label' => $this->__('Site alias:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 80,
@@ -140,7 +141,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteName', TextType::class, [
-            'label' => $this->__('Site name') . ':',
+            'label' => $this->__('Site name:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 150,
@@ -151,7 +152,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteDescription', TextType::class, [
-            'label' => $this->__('Site description') . ':',
+            'label' => $this->__('Site description:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -162,7 +163,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteAdminName', TextType::class, [
-            'label' => $this->__('Site admin name') . ':',
+            'label' => $this->__('Site admin name:'),
             'empty_data' => 'admin',
             'attr' => [
                 'maxlength' => 25,
@@ -173,7 +174,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteAdminPassword', PasswordType::class, [
-            'label' => $this->__('Site admin password') . ':',
+            'label' => $this->__('Site admin password:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 15,
@@ -184,7 +185,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteAdminRealName', TextType::class, [
-            'label' => $this->__('Site admin real name') . ':',
+            'label' => $this->__('Site admin real name:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 70,
@@ -195,7 +196,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteAdminEmail', EmailType::class, [
-            'label' => $this->__('Site admin email') . ':',
+            'label' => $this->__('Site admin email:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 40,
@@ -206,7 +207,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteCompany', TextType::class, [
-            'label' => $this->__('Site company') . ':',
+            'label' => $this->__('Site company:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 100,
@@ -217,7 +218,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('siteDns', TextType::class, [
-            'label' => $this->__('Site dns') . ':',
+            'label' => $this->__('Site dns:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -228,7 +229,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('databaseName', TextType::class, [
-            'label' => $this->__('Database name') . ':',
+            'label' => $this->__('Database name:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 50,
@@ -239,7 +240,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('databaseUserName', TextType::class, [
-            'label' => $this->__('Database user name') . ':',
+            'label' => $this->__('Database user name:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 50,
@@ -250,7 +251,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('databasePassword', PasswordType::class, [
-            'label' => $this->__('Database password') . ':',
+            'label' => $this->__('Database password:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 50,
@@ -261,7 +262,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('databaseHost', TextType::class, [
-            'label' => $this->__('Database host') . ':',
+            'label' => $this->__('Database host:'),
             'empty_data' => 'localhost',
             'attr' => [
                 'maxlength' => 50,
@@ -272,7 +273,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('databaseType', TextType::class, [
-            'label' => $this->__('Database type') . ':',
+            'label' => $this->__('Database type:'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 25,
@@ -283,7 +284,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('logo', UploadType::class, [
-            'label' => $this->__('Logo') . ':',
+            'label' => $this->__('Logo:'),
             'attr' => [
                 'accept' => '.' . implode(',.', $this->uploadHelper->getAllowedFileExtensions('site', 'logo')),
                 'class' => ' validate-upload',
@@ -297,7 +298,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('favIcon', UploadType::class, [
-            'label' => $this->__('Fav icon') . ':',
+            'label' => $this->__('Fav icon:'),
             'attr' => [
                 'accept' => '.' . implode(',.', $this->uploadHelper->getAllowedFileExtensions('site', 'favIcon')),
                 'class' => ' validate-upload',
@@ -311,7 +312,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('allowedLocales', ArrayType::class, [
-            'label' => $this->__('Allowed locales') . ':',
+            'label' => $this->__('Allowed locales:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
             'attr' => [
@@ -322,7 +323,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('parametersCsvFile', UploadType::class, [
-            'label' => $this->__('Parameters csv file') . ':',
+            'label' => $this->__('Parameters csv file:'),
             'attr' => [
                 'accept' => '.' . implode(',.', $this->uploadHelper->getAllowedFileExtensions('site', 'parametersCsvFile')),
                 'class' => ' validate-upload',
@@ -336,7 +337,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('parametersArray', ArrayType::class, [
-            'label' => $this->__('Parameters array') . ':',
+            'label' => $this->__('Parameters array:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
             'attr' => [
@@ -347,7 +348,7 @@ abstract class AbstractSiteType extends AbstractType
         ]);
         
         $builder->add('active', CheckboxType::class, [
-            'label' => $this->__('Active') . ':',
+            'label' => $this->__('Active:'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('active ?')
