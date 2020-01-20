@@ -32,61 +32,64 @@ class MenuBuilder extends AbstractMenuBuilder
         $menu = parent::createItemActionsMenu($options);
 
         if ($entity instanceof TemplateEntity) {
-            $menu->removeChild($this->__('Create project'));
+            $menu->removeChild($this->__('Create projects', 'zikulamultisitesmodule'));
 
-            $title = $this->__('Parameters CSV');
-            $menu->addChild($title, [
+            $menu->addChild($this->__('Parameters CSV', 'zikulamultisitesmodule'), [
                 'route' => 'zikulamultisitesmodule_template_createparameterscsvtemplate',
                 'routeParameters' => ['id' => $entity->getKey()]
-            ])->setAttribute('icon', 'fa fa-file-o');
-            $menu[$title]->setLinkAttribute('title', $this->__('Create a CSV file for the defined parameters'));
+            ])
+                ->setLinkAttribute('title', $this->__('Create a CSV file for the defined parameters', 'zikulamultisitesmodule'))
+                ->setAttribute('icon', 'fa fa-file-o')
+            ;
 
-            $title = $this->__('Reapply template');
-            $menu->addChild($title, [
+            $menu->addChild($this->__('Reapply template', 'zikulamultisitesmodule'), [
                 'route' => 'zikulamultisitesmodule_template_reapply',
                 'routeParameters' => ['id' => $entity->getKey()]
-            ])->setAttribute('icon', 'fa fa-file-o');
-            $menu[$title]->setLinkAttribute('title', $this->__('Reapply template to all assigned sites'));
+            ])
+                ->setLinkAttribute('title', $this->__('Reapply template to all assigned sites', 'zikulamultisitesmodule'))
+                ->setAttribute('icon', 'fa fa-file-o')
+            ;
         } elseif ($entity instanceof SiteEntity) {
-            $menu->removeChild($this->__('Create site extension'));
-
             $deleteAction = null;
-            $deleteTitle = $this->__('Delete');
+            $deleteTitle = $this->__('Delete', 'zikulamultisitesmodule');
             if (isset($menu->children[$deleteTitle])) {
                 $deleteAction = $menu->getChild($deleteTitle);
                 $menu->removeChild($deleteTitle);
             }
 
-            $title = $this->__('Allowed extensions');
-            $menu->addChild($title, [
+            $menu->addChild($this->__('Allowed extensions', 'zikulamultisitesmodule'), [
                 'route' => 'zikulamultisitesmodule_site_manageextensions',
                 'routeParameters' => ['id' => $entity->getKey()]
-            ])->setAttribute('icon', 'fa fa-cubes');
-            $menu[$title]->setLinkAttribute('title', $this->__('Manage the modules for this site'));
+            ])
+                ->setLinkAttribute('title', $this->__('Manage the modules for this site', 'zikulamultisitesmodule'))
+                ->setAttribute('icon', 'fa fa-cubes')
+            ;
 
-            $title = $this->__('Allowed layouts');
-            $menu->addChild($title, [
+            $menu->addChild($this->__('Allowed layouts', 'zikulamultisitesmodule'), [
                 'route' => 'zikulamultisitesmodule_site_managethemes',
                 'routeParameters' => ['id' => $entity->getKey()]
-            ])->setAttribute('icon', 'fa fa-paint-brush');
-            $menu[$title]->setLinkAttribute('title', $this->__('Manage the themes for this site'));
+            ])
+                ->setLinkAttribute('title', $this->__('Manage the themes for this site', 'zikulamultisitesmodule'))
+                ->setAttribute('icon', 'fa fa-paint-brush')
+            ;
 
             // check if system() is allowed
             if (false !== strpos($this->dbalDriver, 'mysql') && $this->isFunctionAllowed('system')) {
-                $title = $this->__('Database SQL Export');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Database SQL Export', 'zikulamultisitesmodule'), [
                     'route' => 'zikulamultisitesmodule_site_exportdatabaseastemplate',
                     'routeParameters' => ['id' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-file-o');
-                $menu[$title]->setLinkAttribute('title', $this->__('Export the database as SQL file'));
+                ])
+                    ->setLinkAttribute('title', $this->__('Export the database as SQL file', 'zikulamultisitesmodule'))
+                    ->setAttribute('icon', 'fa fa-file-o')
+                ;
             }
 
-            $title = $this->__('Site tools');
-            $menu->addChild($title, [
+            $menu->addChild($this->__('Site tools', 'zikulamultisitesmodule'), [
                 'route' => 'zikulamultisitesmodule_site_viewtools',
                 'routeParameters' => ['id' => $entity->getKey()]
-            ])->setAttribute('icon', 'fa fa-briefcase');
-            $menu[$title]->setLinkAttribute('title', $title);
+            ])
+                ->setAttribute('icon', 'fa fa-briefcase')
+            ;
 
             // readd delete action
             if (null !== $deleteAction) {
