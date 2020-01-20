@@ -205,7 +205,6 @@ class AbstractMenuBuilder
                     'route' => 'zikulamultisitesmodule_site_' . $routeArea . 'edit',
                     'routeParameters' => ['template' => $entity->getKey()]
                 ])
-                    ->setLinkAttribute('title', $title)
                     ->setAttribute('icon', 'fa fa-plus')
                 ;
             }
@@ -215,7 +214,6 @@ class AbstractMenuBuilder
                     'route' => 'zikulamultisitesmodule_project_' . $routeArea . 'edit',
                     'routeParameters' => ['templates' => $entity->getKey()]
                 ])
-                    ->setLinkAttribute('title', $title)
                     ->setAttribute('icon', 'fa fa-plus')
                 ;
             }
@@ -257,7 +255,6 @@ class AbstractMenuBuilder
                     'route' => 'zikulamultisitesmodule_site_' . $routeArea . 'edit',
                     'routeParameters' => ['project' => $entity->getKey()]
                 ])
-                    ->setLinkAttribute('title', $title)
                     ->setAttribute('icon', 'fa fa-plus')
                 ;
             }
@@ -267,7 +264,6 @@ class AbstractMenuBuilder
                     'route' => 'zikulamultisitesmodule_template_' . $routeArea . 'edit',
                     'routeParameters' => ['projects' => $entity->getKey()]
                 ])
-                    ->setLinkAttribute('title', $title)
                     ->setAttribute('icon', 'fa fa-plus')
                 ;
             }
