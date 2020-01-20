@@ -134,38 +134,38 @@ class AbstractMenuBuilder
             ;
             
             if ($this->permissionHelper->mayEdit($entity)) {
-                $title = $this->__('Edit', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Edit', 'zikulamultisitesmodule'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ]);
-                $menu[$title]->setLinkAttribute(
-                    'title',
-                    $this->__('Edit this site', 'zikulamultisitesmodule')
-                );
-                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
-                $title = $this->__('Reuse', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                ])
+                    ->setLinkAttribute(
+                        'title',
+                        $this->__('Edit this site', 'zikulamultisitesmodule')
+                    )
+                    ->setAttribute('icon', 'fa fa-pencil-square-o')
+                ;
+                $menu->addChild($this->__('Reuse', 'zikulamultisitesmodule'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ]);
-                $menu[$title]->setLinkAttribute(
-                    'title',
-                    $this->__('Reuse for new site', 'zikulamultisitesmodule')
-                );
-                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
+                ])
+                    ->setLinkAttribute(
+                        'title',
+                        $this->__('Reuse for new site', 'zikulamultisitesmodule')
+                    )
+                    ->setAttribute('icon', 'fa fa-files-o')
+                ;
             }
             if ($this->permissionHelper->mayDelete($entity)) {
-                $title = $this->__('Delete', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Delete', 'zikulamultisitesmodule'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
-                ]);
-                $menu[$title]->setLinkAttribute(
-                    'title',
-                    $this->__('Delete this site', 'zikulamultisitesmodule')
-                );
-                $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
+                ])
+                    ->setLinkAttribute(
+                        'title',
+                        $this->__('Delete this site', 'zikulamultisitesmodule')
+                    )
+                    ->setAttribute('icon', 'fa fa-trash-o')
+                ;
             }
         }
         if ($entity instanceof TemplateEntity) {
@@ -176,48 +176,48 @@ class AbstractMenuBuilder
             ;
             
             if ($this->permissionHelper->mayEdit($entity)) {
-                $title = $this->__('Edit', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Edit', 'zikulamultisitesmodule'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ]);
-                $menu[$title]->setLinkAttribute(
-                    'title',
-                    $this->__('Edit this template', 'zikulamultisitesmodule')
-                );
-                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
-                $title = $this->__('Reuse', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                ])
+                    ->setLinkAttribute(
+                        'title',
+                        $this->__('Edit this template', 'zikulamultisitesmodule')
+                    )
+                    ->setAttribute('icon', 'fa fa-pencil-square-o')
+                ;
+                $menu->addChild($this->__('Reuse', 'zikulamultisitesmodule'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ]);
-                $menu[$title]->setLinkAttribute(
-                    'title',
-                    $this->__('Reuse for new template', 'zikulamultisitesmodule')
-                );
-                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
+                ])
+                    ->setLinkAttribute(
+                        'title',
+                        $this->__('Reuse for new template', 'zikulamultisitesmodule')
+                    )
+                    ->setAttribute('icon', 'fa fa-files-o')
+                ;
             }
             
             // more actions for adding new related items
             
             if ($isOwner || $this->permissionHelper->hasComponentPermission('site', ACCESS_EDIT)) {
-                $title = $this->__('Create sites', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Create sites', 'zikulamultisitesmodule'), [
                     'route' => 'zikulamultisitesmodule_site_' . $routeArea . 'edit',
                     'routeParameters' => ['template' => $entity->getKey()]
-                ]);
-                $menu[$title]->setLinkAttribute('title', $title);
-                $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                ])
+                    ->setLinkAttribute('title', $title)
+                    ->setAttribute('icon', 'fa fa-plus')
+                ;
             }
             
             if ($isOwner || $this->permissionHelper->hasComponentPermission('project', ACCESS_EDIT)) {
-                $title = $this->__('Create projects', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Create projects', 'zikulamultisitesmodule'), [
                     'route' => 'zikulamultisitesmodule_project_' . $routeArea . 'edit',
                     'routeParameters' => ['templates' => $entity->getKey()]
-                ]);
-                $menu[$title]->setLinkAttribute('title', $title);
-                $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                ])
+                    ->setLinkAttribute('title', $title)
+                    ->setAttribute('icon', 'fa fa-plus')
+                ;
             }
         }
         if ($entity instanceof ProjectEntity) {
@@ -228,48 +228,48 @@ class AbstractMenuBuilder
             ;
             
             if ($this->permissionHelper->mayEdit($entity)) {
-                $title = $this->__('Edit', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Edit', 'zikulamultisitesmodule'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
-                ]);
-                $menu[$title]->setLinkAttribute(
-                    'title',
-                    $this->__('Edit this project', 'zikulamultisitesmodule')
-                );
-                $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
-                $title = $this->__('Reuse', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                ])
+                    ->setLinkAttribute(
+                        'title',
+                        $this->__('Edit this project', 'zikulamultisitesmodule')
+                    )
+                    ->setAttribute('icon', 'fa fa-pencil-square-o')
+                ;
+                $menu->addChild($this->__('Reuse', 'zikulamultisitesmodule'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
-                ]);
-                $menu[$title]->setLinkAttribute(
-                    'title',
-                    $this->__('Reuse for new project', 'zikulamultisitesmodule')
-                );
-                $menu[$title]->setAttribute('icon', 'fa fa-files-o');
+                ])
+                    ->setLinkAttribute(
+                        'title',
+                        $this->__('Reuse for new project', 'zikulamultisitesmodule')
+                    )
+                    ->setAttribute('icon', 'fa fa-files-o')
+                ;
             }
             
             // more actions for adding new related items
             
             if ($isOwner || $this->permissionHelper->hasComponentPermission('site', ACCESS_EDIT)) {
-                $title = $this->__('Create sites', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Create sites', 'zikulamultisitesmodule'), [
                     'route' => 'zikulamultisitesmodule_site_' . $routeArea . 'edit',
                     'routeParameters' => ['project' => $entity->getKey()]
-                ]);
-                $menu[$title]->setLinkAttribute('title', $title);
-                $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                ])
+                    ->setLinkAttribute('title', $title)
+                    ->setAttribute('icon', 'fa fa-plus')
+                ;
             }
             
             if ($isOwner || $this->permissionHelper->hasComponentPermission('template', ACCESS_EDIT)) {
-                $title = $this->__('Create templates', 'zikulamultisitesmodule');
-                $menu->addChild($title, [
+                $menu->addChild($this->__('Create templates', 'zikulamultisitesmodule'), [
                     'route' => 'zikulamultisitesmodule_template_' . $routeArea . 'edit',
                     'routeParameters' => ['projects' => $entity->getKey()]
-                ]);
-                $menu[$title]->setLinkAttribute('title', $title);
-                $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                ])
+                    ->setLinkAttribute('title', $title)
+                    ->setAttribute('icon', 'fa fa-plus')
+                ;
             }
         }
     
@@ -312,12 +312,11 @@ class AbstractMenuBuilder
                 $canBeCreated = $this->modelHelper->canBeCreated($objectType);
                 if ($canBeCreated) {
                     if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
-                        $title = $this->__('Create site', 'zikulamultisitesmodule');
-                        $menu->addChild($title, [
+                        $menu->addChild($this->__('Create site', 'zikulamultisitesmodule'), [
                             'route' => $routePrefix . $routeArea . 'edit'
-                        ]);
-                        $menu[$title]->setLinkAttribute('title', $title);
-                        $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                        ])
+                            ->setAttribute('icon', 'fa fa-plus')
+                        ;
                     }
                 }
                 $routeParameters = $query->all();
@@ -328,34 +327,40 @@ class AbstractMenuBuilder
                 }
                 if (1 === $query->getInt('all')) {
                     unset($routeParameters['all']);
-                    $title = $this->__('Back to paginated view', 'zikulamultisitesmodule');
+                    $menu->addChild($this->__('Back to paginated view', 'zikulamultisitesmodule'), [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ])
+                        ->setAttribute('icon', 'fa fa-table')
+                    ;
                 } else {
                     $routeParameters['all'] = 1;
-                    $title = $this->__('Show all entries', 'zikulamultisitesmodule');
+                    $menu->addChild($this->__('Show all entries', 'zikulamultisitesmodule'), [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ])
+                        ->setAttribute('icon', 'fa fa-table')
+                    ;
                 }
-                $menu->addChild($title, [
-                    'route' => $routePrefix . $routeArea . 'view',
-                    'routeParameters' => $routeParameters
-                ]);
-                $menu[$title]->setLinkAttribute('title', $title);
-                $menu[$title]->setAttribute('icon', 'fa fa-table');
                 if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
                     $routeParameters = $query->all();
                     if (1 === $query->getInt('own')) {
                         unset($routeParameters['own']);
-                        $title = $this->__('Show also entries from other users', 'zikulamultisitesmodule');
-                        $icon = 'users';
+                        $menu->addChild($this->__('Show also entries from other users', 'zikulamultisitesmodule'), [
+                            'route' => $routePrefix . $routeArea . 'view',
+                            'routeParameters' => $routeParameters
+                        ])
+                            ->setAttribute('icon', 'fa fa-users')
+                        ;
                     } else {
                         $routeParameters['own'] = 1;
-                        $title = $this->__('Show only own entries', 'zikulamultisitesmodule');
-                        $icon = 'user';
+                        $menu->addChild($this->__('Show only own entries', 'zikulamultisitesmodule'), [
+                            'route' => $routePrefix . $routeArea . 'view',
+                            'routeParameters' => $routeParameters
+                        ])
+                            ->setAttribute('icon', 'fa fa-user')
+                        ;
                     }
-                    $menu->addChild($title, [
-                        'route' => $routePrefix . $routeArea . 'view',
-                        'routeParameters' => $routeParameters
-                    ]);
-                    $menu[$title]->setLinkAttribute('title', $title);
-                    $menu[$title]->setAttribute('icon', 'fa fa-' . $icon);
                 }
             }
         }
@@ -365,12 +370,11 @@ class AbstractMenuBuilder
                 $canBeCreated = $this->modelHelper->canBeCreated($objectType);
                 if ($canBeCreated) {
                     if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
-                        $title = $this->__('Create template', 'zikulamultisitesmodule');
-                        $menu->addChild($title, [
+                        $menu->addChild($this->__('Create template', 'zikulamultisitesmodule'), [
                             'route' => $routePrefix . $routeArea . 'edit'
-                        ]);
-                        $menu[$title]->setLinkAttribute('title', $title);
-                        $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                        ])
+                            ->setAttribute('icon', 'fa fa-plus')
+                        ;
                     }
                 }
                 $routeParameters = $query->all();
@@ -381,34 +385,40 @@ class AbstractMenuBuilder
                 }
                 if (1 === $query->getInt('all')) {
                     unset($routeParameters['all']);
-                    $title = $this->__('Back to paginated view', 'zikulamultisitesmodule');
+                    $menu->addChild($this->__('Back to paginated view', 'zikulamultisitesmodule'), [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ])
+                        ->setAttribute('icon', 'fa fa-table')
+                    ;
                 } else {
                     $routeParameters['all'] = 1;
-                    $title = $this->__('Show all entries', 'zikulamultisitesmodule');
+                    $menu->addChild($this->__('Show all entries', 'zikulamultisitesmodule'), [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ])
+                        ->setAttribute('icon', 'fa fa-table')
+                    ;
                 }
-                $menu->addChild($title, [
-                    'route' => $routePrefix . $routeArea . 'view',
-                    'routeParameters' => $routeParameters
-                ]);
-                $menu[$title]->setLinkAttribute('title', $title);
-                $menu[$title]->setAttribute('icon', 'fa fa-table');
                 if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
                     $routeParameters = $query->all();
                     if (1 === $query->getInt('own')) {
                         unset($routeParameters['own']);
-                        $title = $this->__('Show also entries from other users', 'zikulamultisitesmodule');
-                        $icon = 'users';
+                        $menu->addChild($this->__('Show also entries from other users', 'zikulamultisitesmodule'), [
+                            'route' => $routePrefix . $routeArea . 'view',
+                            'routeParameters' => $routeParameters
+                        ])
+                            ->setAttribute('icon', 'fa fa-users')
+                        ;
                     } else {
                         $routeParameters['own'] = 1;
-                        $title = $this->__('Show only own entries', 'zikulamultisitesmodule');
-                        $icon = 'user';
+                        $menu->addChild($this->__('Show only own entries', 'zikulamultisitesmodule'), [
+                            'route' => $routePrefix . $routeArea . 'view',
+                            'routeParameters' => $routeParameters
+                        ])
+                            ->setAttribute('icon', 'fa fa-user')
+                        ;
                     }
-                    $menu->addChild($title, [
-                        'route' => $routePrefix . $routeArea . 'view',
-                        'routeParameters' => $routeParameters
-                    ]);
-                    $menu[$title]->setLinkAttribute('title', $title);
-                    $menu[$title]->setAttribute('icon', 'fa fa-' . $icon);
                 }
             }
         }
@@ -418,12 +428,11 @@ class AbstractMenuBuilder
                 $canBeCreated = $this->modelHelper->canBeCreated($objectType);
                 if ($canBeCreated) {
                     if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
-                        $title = $this->__('Create project', 'zikulamultisitesmodule');
-                        $menu->addChild($title, [
+                        $menu->addChild($this->__('Create project', 'zikulamultisitesmodule'), [
                             'route' => $routePrefix . $routeArea . 'edit'
-                        ]);
-                        $menu[$title]->setLinkAttribute('title', $title);
-                        $menu[$title]->setAttribute('icon', 'fa fa-plus');
+                        ])
+                            ->setAttribute('icon', 'fa fa-plus')
+                        ;
                     }
                 }
                 $routeParameters = $query->all();
@@ -434,34 +443,40 @@ class AbstractMenuBuilder
                 }
                 if (1 === $query->getInt('all')) {
                     unset($routeParameters['all']);
-                    $title = $this->__('Back to paginated view', 'zikulamultisitesmodule');
+                    $menu->addChild($this->__('Back to paginated view', 'zikulamultisitesmodule'), [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ])
+                        ->setAttribute('icon', 'fa fa-table')
+                    ;
                 } else {
                     $routeParameters['all'] = 1;
-                    $title = $this->__('Show all entries', 'zikulamultisitesmodule');
+                    $menu->addChild($this->__('Show all entries', 'zikulamultisitesmodule'), [
+                        'route' => $routePrefix . $routeArea . 'view',
+                        'routeParameters' => $routeParameters
+                    ])
+                        ->setAttribute('icon', 'fa fa-table')
+                    ;
                 }
-                $menu->addChild($title, [
-                    'route' => $routePrefix . $routeArea . 'view',
-                    'routeParameters' => $routeParameters
-                ]);
-                $menu[$title]->setLinkAttribute('title', $title);
-                $menu[$title]->setAttribute('icon', 'fa fa-table');
                 if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
                     $routeParameters = $query->all();
                     if (1 === $query->getInt('own')) {
                         unset($routeParameters['own']);
-                        $title = $this->__('Show also entries from other users', 'zikulamultisitesmodule');
-                        $icon = 'users';
+                        $menu->addChild($this->__('Show also entries from other users', 'zikulamultisitesmodule'), [
+                            'route' => $routePrefix . $routeArea . 'view',
+                            'routeParameters' => $routeParameters
+                        ])
+                            ->setAttribute('icon', 'fa fa-users')
+                        ;
                     } else {
                         $routeParameters['own'] = 1;
-                        $title = $this->__('Show only own entries', 'zikulamultisitesmodule');
-                        $icon = 'user';
+                        $menu->addChild($this->__('Show only own entries', 'zikulamultisitesmodule'), [
+                            'route' => $routePrefix . $routeArea . 'view',
+                            'routeParameters' => $routeParameters
+                        ])
+                            ->setAttribute('icon', 'fa fa-user')
+                        ;
                     }
-                    $menu->addChild($title, [
-                        'route' => $routePrefix . $routeArea . 'view',
-                        'routeParameters' => $routeParameters
-                    ]);
-                    $menu[$title]->setLinkAttribute('title', $title);
-                    $menu[$title]->setAttribute('icon', 'fa fa-' . $icon);
                 }
             }
         }
