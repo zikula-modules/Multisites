@@ -21,7 +21,7 @@ use Zikula\MultisitesModule\Helper\ControllerHelper;
 use Zikula\MultisitesModule\Helper\PermissionHelper;
 
 /**
- * This is the link container service implementation class.
+ * This is the link container service base class.
  */
 abstract class AbstractLinkContainer implements LinkContainerInterface
 {
@@ -73,7 +73,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
 
         $permLevel = LinkContainerInterface::TYPE_ADMIN === $type ? ACCESS_ADMIN : ACCESS_READ;
 
-        // Create an array of links to return
+        // create an array of links to return
         $links = [];
 
         if (LinkContainerInterface::TYPE_ACCOUNT === $type) {
