@@ -193,7 +193,11 @@ abstract class AbstractSiteController extends AbstractController
             $site = $this->get('zikula_multisites_module.entity_factory')->getRepository('site')->selectById($id);
         }
         if (null === $site) {
-            throw new NotFoundHttpException($this->__('No such site found.'));
+            throw new NotFoundHttpException(
+                $this->__(
+                    'No such site found.'
+                )
+            );
         }
         
         $objectType = 'site';
@@ -230,7 +234,12 @@ abstract class AbstractSiteController extends AbstractController
             break;
         }
         if (!$deleteAllowed) {
-            $this->addFlash('error', $this->__('Error! It is not allowed to delete this site.'));
+            $this->addFlash(
+                'error',
+                $this->__(
+                    'Error! It is not allowed to delete this site.'
+                )
+            );
             $logger->error('{app}: User {user} tried to delete the {entity} with id {id}, but this action was not allowed.', $logArgs);
         
             return $this->redirectToRoute($redirectRoute);
@@ -258,7 +267,12 @@ abstract class AbstractSiteController extends AbstractController
                         // execute the workflow action
                         $success = $workflowHelper->executeAction($site, $deleteActionId);
                         if ($success) {
-                            $this->addFlash('status', $this->__('Done! Item deleted.'));
+                            $this->addFlash(
+                                'status',
+                                $this->__(
+                                    'Done! Site deleted.'
+                                )
+                            );
                             $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
                         }
                         
@@ -276,7 +290,12 @@ abstract class AbstractSiteController extends AbstractController
                     // execute the workflow action
                     $success = $workflowHelper->executeAction($site, $deleteActionId);
                     if ($success) {
-                        $this->addFlash('status', $this->__('Done! Item deleted.'));
+                        $this->addFlash(
+                            'status',
+                            $this->__(
+                                'Done! Site deleted.'
+                            )
+                        );
                         $logger->notice('{app}: User {user} deleted the {entity} with id {id}.', $logArgs);
                     }
                     
@@ -596,7 +615,12 @@ abstract class AbstractSiteController extends AbstractController
             }
         
             if ('delete' === $action) {
-                $this->addFlash('status', $this->__('Done! Item deleted.'));
+                $this->addFlash(
+                    'status',
+                    $this->__(
+                        'Done! Site deleted.'
+                    )
+                );
                 $logger->notice(
                     '{app}: User {user} deleted the {entity} with id {id}.',
                     [
@@ -607,7 +631,12 @@ abstract class AbstractSiteController extends AbstractController
                     ]
                 );
             } else {
-                $this->addFlash('status', $this->__('Done! Item updated.'));
+                $this->addFlash(
+                    'status',
+                    $this->__(
+                        'Done! Site updated.'
+                    )
+                );
                 $logger->notice(
                     '{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.',
                     [
