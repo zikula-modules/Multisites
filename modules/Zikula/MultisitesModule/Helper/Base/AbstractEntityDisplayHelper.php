@@ -74,9 +74,12 @@ abstract class AbstractEntityDisplayHelper
      */
     protected function formatSite(SiteEntity $entity)
     {
-        return $this->translator->__f('%name%', [
-            '%name%' => $entity->getName()
-        ]);
+        return $this->translator->__f(
+            '%name%',
+            [
+                '%name%' => $entity->getName()
+            ]
+        );
     }
     
     /**
@@ -88,9 +91,12 @@ abstract class AbstractEntityDisplayHelper
      */
     protected function formatTemplate(TemplateEntity $entity)
     {
-        return $this->translator->__f('%name%', [
-            '%name%' => $entity->getName()
-        ]);
+        return $this->translator->__f(
+            '%name%',
+            [
+                '%name%' => $entity->getName()
+            ]
+        );
     }
     
     /**
@@ -102,9 +108,12 @@ abstract class AbstractEntityDisplayHelper
      */
     protected function formatProject(ProjectEntity $entity)
     {
-        return $this->translator->__f('%name%', [
-            '%name%' => $entity->getName()
-        ]);
+        return $this->translator->__f(
+            '%name%',
+            [
+                '%name%' => $entity->getName()
+            ]
+        );
     }
     
     /**

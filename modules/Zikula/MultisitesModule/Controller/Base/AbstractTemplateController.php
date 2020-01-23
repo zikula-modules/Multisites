@@ -308,7 +308,12 @@ abstract class AbstractTemplateController extends AbstractController
             }
         
             if ('delete' === $action) {
-                $this->addFlash('status', $this->__('Done! Item deleted.'));
+                $this->addFlash(
+                    'status',
+                    $this->__(
+                        'Done! Template deleted.'
+                    )
+                );
                 $logger->notice(
                     '{app}: User {user} deleted the {entity} with id {id}.',
                     [
@@ -319,7 +324,12 @@ abstract class AbstractTemplateController extends AbstractController
                     ]
                 );
             } else {
-                $this->addFlash('status', $this->__('Done! Item updated.'));
+                $this->addFlash(
+                    'status',
+                    $this->__(
+                        'Done! Template updated.'
+                    )
+                );
                 $logger->notice(
                     '{app}: User {user} executed the {action} workflow action for the {entity} with id {id}.',
                     [
