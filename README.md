@@ -60,17 +60,22 @@ automatically.
 ## Structure and management
 
 1. Projects
+
   1. Example: _client xy_
   2. A project serves for grouping websites for a certain client or topic.
   3. A project can contain multiple site templates.
   4. A project can contain multiple sites.
+
 2. Site templates ("website master")
+
   1. Examples: _central website_, _community portal_, _sales partner page_
   2. Each site template represents the blueprint for multiple sites.
   3. Each site template includes a sql file containing it's structure and data. This involves all created content pages, user permissions and much more.
   4. After a site has been created it's database can be exported in order to reuse it as site template for other sites afterwards.
   5. A site template can be available either for all or just for specific projects.
+
 3. Sites
+
   1. Example: _community portal xy_
   2. Each site is assigned to a project and based on a certain site template.
   3. Each site gets a unique name as well as a domain or subdomain.
@@ -78,16 +83,22 @@ automatically.
   5. For each site you can upload a logo as well as a favicon image.
   6. Each site is equipped with a dedicated databases (for reasons of architecture and scalability). It is also possible to let multiple sites work with the same database. This requires corresponding customisations in the used theme though.
   7. The Multisites backend offers a quick search function to find a certain site quickly.
+
 4. Site parameters
+
   1. A site template can define parameters. These correspond to a variable piece of information which must be entered for each site based on this template. For example a template describing sites for sales partners could require parameters for the address, contact data and other individual data.
   2. The detail page of a template documents the existing parameters to make this information transparent.
   3. The parameter values for a certain site can be uploaded using a csv file. The first table column contains the parameter name (e. g. _LASTNAME_), the second column contains the value for the edited site. Alternatively you can also enter these values by hand using a form.
   4. When creating or editing a site which is going to be used as a template you can use placeholders which are replaced by the parameter values of sites based on the template in the final output of a page. Parameter values are also provided as module variables (see below for more details).
+
 5. Themes / Layouts
+
   1. New layouts are placed in a central place in the system (themes/ folder).
   2. Layouts can centrally inspected and activated for each site.
   3. Which layouts are available and which ones are initially active for a site is controlled as part of the underlying site template.
+
 6. Modules
+
   1. Examples: _News_, _Forums_, _Guestbook_, etc.
   2. New modules are placed in a central place in the system (modules/ folder).
   3. Modules can centrally inspected and activated for each site.
