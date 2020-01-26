@@ -59,99 +59,99 @@ automatically.
 
 ## Structure and management
 
-1. Projects
+### Projects
 
-  1. Example: _client xy_
-  2. A project serves for grouping websites for a certain client or topic.
-  3. A project can contain multiple site templates.
-  4. A project can contain multiple sites.
+1. Example: _client xy_
+2. A project serves for grouping websites for a certain client or topic.
+3. A project can contain multiple site templates.
+4. A project can contain multiple sites.
 
-2. Site templates ("website master")
+### Site templates ("website master")
 
-  1. Examples: _central website_, _community portal_, _sales partner page_
-  2. Each site template represents the blueprint for multiple sites.
-  3. Each site template includes a sql file containing it's structure and data. This involves all created content pages, user permissions and much more.
-  4. After a site has been created it's database can be exported in order to reuse it as site template for other sites afterwards.
-  5. A site template can be available either for all or just for specific projects.
+1. Examples: _central website_, _community portal_, _sales partner page_
+2. Each site template represents the blueprint for multiple sites.
+3. Each site template includes a sql file containing it's structure and data. This involves all created content pages, user permissions and much more.
+4. After a site has been created it's database can be exported in order to reuse it as site template for other sites afterwards.
+5. A site template can be available either for all or just for specific projects.
 
-3. Sites
+### Sites
 
-  1. Example: _community portal xy_
-  2. Each site is assigned to a project and based on a certain site template.
-  3. Each site gets a unique name as well as a domain or subdomain.
-  4. A site carries more data, like credentials for the database and for the primary admin user.
-  5. For each site you can upload a logo as well as a favicon image.
-  6. Each site is equipped with a dedicated databases (for reasons of architecture and scalability). It is also possible to let multiple sites work with the same database. This requires corresponding customisations in the used theme though.
-  7. The Multisites backend offers a quick search function to find a certain site quickly.
+1. Example: _community portal xy_
+2. Each site is assigned to a project and based on a certain site template.
+3. Each site gets a unique name as well as a domain or subdomain.
+4. A site carries more data, like credentials for the database and for the primary admin user.
+5. For each site you can upload a logo as well as a favicon image.
+6. Each site is equipped with a dedicated databases (for reasons of architecture and scalability). It is also possible to let multiple sites work with the same database. This requires corresponding customisations in the used theme though.
+7. The Multisites backend offers a quick search function to find a certain site quickly.
 
-4. Site parameters
+### Site parameters
 
-  1. A site template can define parameters. These correspond to a variable piece of information which must be entered for each site based on this template. For example a template describing sites for sales partners could require parameters for the address, contact data and other individual data.
-  2. The detail page of a template documents the existing parameters to make this information transparent.
-  3. The parameter values for a certain site can be uploaded using a csv file. The first table column contains the parameter name (e. g. _LASTNAME_), the second column contains the value for the edited site. Alternatively you can also enter these values by hand using a form.
-  4. When creating or editing a site which is going to be used as a template you can use placeholders which are replaced by the parameter values of sites based on the template in the final output of a page. Parameter values are also provided as module variables (see below for more details).
+1. A site template can define parameters. These correspond to a variable piece of information which must be entered for each site based on this template. For example a template describing sites for sales partners could require parameters for the address, contact data and other individual data.
+2. The detail page of a template documents the existing parameters to make this information transparent.
+3. The parameter values for a certain site can be uploaded using a csv file. The first table column contains the parameter name (e. g. _LASTNAME_), the second column contains the value for the edited site. Alternatively you can also enter these values by hand using a form.
+4. When creating or editing a site which is going to be used as a template you can use placeholders which are replaced by the parameter values of sites based on the template in the final output of a page. Parameter values are also provided as module variables (see below for more details).
 
-5. Themes / Layouts
+### Themes / Layouts
 
-  1. New layouts are placed in a central place in the system (themes/ folder).
-  2. Layouts can centrally inspected and activated for each site.
-  3. Which layouts are available and which ones are initially active for a site is controlled as part of the underlying site template.
+1. New layouts are placed in a central place in the system (themes/ folder).
+2. Layouts can centrally inspected and activated for each site.
+3. Which layouts are available and which ones are initially active for a site is controlled as part of the underlying site template.
 
-6. Modules
+### Modules
 
-  1. Examples: _News_, _Forums_, _Guestbook_, etc.
-  2. New modules are placed in a central place in the system (modules/ folder).
-  3. Modules can centrally inspected and activated for each site.
-  4. Which modules are available and their states for a site is controlled as part of the underlying site template.
+1. Examples: _News_, _Forums_, _Guestbook_, etc.
+2. New modules are placed in a central place in the system (modules/ folder).
+3. Modules can centrally inspected and activated for each site.
+4. Which modules are available and their states for a site is controlled as part of the underlying site template.
 
 ## Creating and adapting sites
 
-1. Initialise sites
+### Initialise sites
 
-  When a site is initially created the database is filled with the assigned template's data. After that
-  the CMS delivers this site as soon as it gets called by the configured domain.
+When a site is initially created the database is filled with the assigned template's data. After that
+the CMS delivers this site as soon as it gets called by the configured domain.
 
-  During the site creation all parameters are replaced using their deposited values. This approach
-  makes the initialisation process repeatable.
+During the site creation all parameters are replaced using their deposited values. This approach
+makes the initialisation process repeatable.
 
-2. Copy sites
+### Copy sites
 
-  To duplicate an already created site you can use the corresponding database as a basis for a new site template.
-  This new template can then be used for creating further sites, like described above.
+To duplicate an already created site you can use the corresponding database as a basis for a new site template.
+This new template can then be used for creating further sites, like described above.
 
-3. Change templates
+### Change templates
 
-  To amend a site template change the site which was used to create the template initially. Edit the site's structure
-  and content until it meets your requirements. Afterwards the database is exported again and the resulting sql file
-  is uploaded again into the site template.
+To amend a site template change the site which was used to create the template initially. Edit the site's structure
+and content until it meets your requirements. Afterwards the database is exported again and the resulting sql file
+is uploaded again into the site template.
 
-4. Copy templates
+### Copy templates
 
-  Site templates can be copied to change them and store them with a new name. Site parameter definitions are
-  considered and included during the copy process.
+Site templates can be copied to change them and store them with a new name. Site parameter definitions are
+considered and included during the copy process.
 
-5. Reapply templates
+### Reapply templates
 
-  It is possible to reapply a site template which has been updated before to all sites based on this template.
-  After approving a confirmation question the initialisation process is performed again for all affected sites ("reset").
-  This includes overriding of existing content, unless specific database tables have been added to the list of table names
-  to be excluded in the template data. You can even use wildcards here, for example you can exclude all Content tables
-  by using "content_*".
+It is possible to reapply a site template which has been updated before to all sites based on this template.
+After approving a confirmation question the initialisation process is performed again for all affected sites ("reset").
+This includes overriding of existing content, unless specific database tables have been added to the list of table names
+to be excluded in the template data. You can even use wildcards here, for example you can exclude all Content tables
+by using "content_*".
 
-  It is also possible to decouple selected sites from their template. As soon as the assignment is removed this
-  site is not affected anymore when the template is reapplied, but is independently configured and maintained.
-  If a decoupled site is reassigned to a site template, this template is applied to it's database like described above.
+It is also possible to decouple selected sites from their template. As soon as the assignment is removed this
+site is not affected anymore when the template is reapplied, but is independently configured and maintained.
+If a decoupled site is reassigned to a site template, this template is applied to it's database like described above.
 
-6. Customise layouts
+### Customise layouts
 
-  By using template plugins it is possible to represent variants within one layout theme. Therewith you can
-  use a theme for multiple sites. All data, variables and settings can be part of individual logic thereby.
-  This particularly includes the site parameters mentioned above. So if you for example have three sites for
-  different cities can check the content of the _city_ parameter for design-related decisions.
+By using template plugins it is possible to represent variants within one layout theme. Therewith you can
+use a theme for multiple sites. All data, variables and settings can be part of individual logic thereby.
+This particularly includes the site parameters mentioned above. So if you for example have three sites for
+different cities can check the content of the _city_ parameter for design-related decisions.
 
-  For this reason all parameter values are provided as module variables during the site initialisation process.
+For this reason all parameter values are provided as module variables during the site initialisation process.
 
-  Use in code files:
+Use in code files:
 
 ```php
 $city = $variableApi->get('ZikulaSubsiteModule', 'parameterValueCity', 'default value');
@@ -160,7 +160,7 @@ if ($city == 'Berlin') {
 }
 ```
 
-  Use in templates:
+Use in templates:
 
 ```twig
 {% set city = getModVar('ZikulaSubsiteModule', 'parameterValueCity', 'default value') %}
