@@ -14,6 +14,7 @@
 namespace Zikula\MultisitesModule\Helper\Base;
 
 use Imagine\Image\ImageInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
@@ -144,20 +145,20 @@ abstract class AbstractImageHelper
      */
     protected function checkIfImagineCacheDirectoryExists()
     {
-        $cachePath = 'web/imagine/cache';
-        if (file_exists($cachePath)) {
+        $cacheDirectory = 'web/imagine/cache';
+        $fs = new Filesystem();
+        if ($fs->exists($cacheDirectory)) {
             return;
         }
-        if (!$this->requestStack->getCurrentRequest()->hasSession()) {
-            return;
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request->hasSession() && $session = $request->getSession()) {
+            $session->getFlashBag()->add(
+                'warning',
+                $this->translator->__f(
+                    'The cache directory "%directory%" does not exist. Please create it and make it writable for the webserver.',
+                    ['%directory%' => $cacheDirectory]
+                )
+            );
         }
-        $session = $this->requestStack->getCurrentRequest()->getSession();
-        $session->getFlashBag()->add(
-            'warning',
-            $this->translator->__f(
-                'The cache directory "%directory%" does not exist. Please create it and make it writable for the webserver.',
-                ['%directory%' => $cachePath]
-            )
-        );
     }
 }
