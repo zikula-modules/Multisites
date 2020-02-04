@@ -123,7 +123,7 @@ abstract class AbstractProjectQuickNavType extends AbstractType
                 'attr' => [
                     'class' => 'input-sm'
                 ],
-                'choices' =>             [
+                'choices' => [
                     $this->__('Name') => 'name',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',

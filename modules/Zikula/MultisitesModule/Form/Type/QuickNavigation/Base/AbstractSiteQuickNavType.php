@@ -201,7 +201,7 @@ abstract class AbstractSiteQuickNavType extends AbstractType
                 'attr' => [
                     'class' => 'input-sm'
                 ],
-                'choices' =>             [
+                'choices' => [
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
                     $this->__('Site alias') => 'siteAlias',
@@ -222,6 +222,8 @@ abstract class AbstractSiteQuickNavType extends AbstractType
                     $this->__('Fav icon') => 'favIcon',
                     $this->__('Parameters csv file') => 'parametersCsvFile',
                     $this->__('Active') => 'active',
+                    $this->__('Template') => 'template',
+                    $this->__('Project') => 'project',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

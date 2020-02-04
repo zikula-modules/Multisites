@@ -123,7 +123,7 @@ abstract class AbstractTemplateQuickNavType extends AbstractType
                 'attr' => [
                     'class' => 'input-sm'
                 ],
-                'choices' =>             [
+                'choices' => [
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
                     $this->__('Sql file') => 'sqlFile',
