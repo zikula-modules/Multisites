@@ -13,8 +13,6 @@
 
 namespace Zikula\MultisitesModule\Form\Type\QuickNavigation;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Zikula\MultisitesModule\Form\Type\QuickNavigation\Base\AbstractProjectQuickNavType;
 
 /**
@@ -22,48 +20,5 @@ use Zikula\MultisitesModule\Form\Type\QuickNavigation\Base\AbstractProjectQuickN
  */
 class ProjectQuickNavType extends AbstractProjectQuickNavType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        parent::buildForm($builder, $options);
-
-        $this->addTemplateFilter($builder, $options);
-    }
-
-    /**
-     * Adds fields for template relationship.
-     *
-     * @param FormBuilderInterface $builder The form builder.
-     * @param array                $options The options.
-     */
-    public function addTemplateFilter(FormBuilderInterface $builder, array $options)
-    {
-        $mainSearchTerm = '';
-        $request = $this->requestStack->getCurrentRequest();
-        if ($request->query->has('q')) {
-            // remove current search argument from request to avoid filtering related items
-            $mainSearchTerm = $request->query->get('q');
-            $request->query->remove('q');
-        }
-    
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('template', EntityType::class, [
-            'class' => 'ZikulaMultisitesModule:TemplateEntity',
-            'choice_label' => $choiceLabelClosure,
-            'placeholder' => $this->__('All'),
-            'required' => false,
-            'label' => $this->__('Template'),
-            'attr' => [
-                'id' => 'template',
-                'class' => 'input-sm'
-            ]
-        ]);
-    
-        if ('' !== $mainSearchTerm) {
-            // readd current search argument
-            $request->query->set('q', $mainSearchTerm);
-        }
-    }
+    // feel free to extend the base form type class here
 }
