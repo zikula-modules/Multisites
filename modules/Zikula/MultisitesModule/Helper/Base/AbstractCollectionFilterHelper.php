@@ -173,6 +173,8 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
+        $parameters['projects'] = $request->query->get('projects', 0);
+        $parameters['sites'] = $request->query->get('sites', 0);
         $parameters['workflowState'] = $request->query->get('workflowState', '');
         $parameters['q'] = $request->query->get('q', '');
     
@@ -195,6 +197,8 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
+        $parameters['sites'] = $request->query->get('sites', 0);
+        $parameters['templates'] = $request->query->get('templates', 0);
         $parameters['workflowState'] = $request->query->get('workflowState', '');
         $parameters['q'] = $request->query->get('q', '');
     
@@ -293,6 +297,24 @@ abstract class AbstractCollectionFilterHelper
                 }
                 continue;
             }
+            if (in_array($k, ['projects']) && !empty($v)) {
+                // multi-valued source of incoming relation (many2many)
+                $qb->andWhere(
+                    $qb->expr()->isMemberOf(':' . $k, 'tbl.' . $k)
+                )
+                    ->setParameter($k, $v)
+                ;
+                continue;
+            }
+            if (in_array($k, ['sites']) && !empty($v)) {
+                // multi-valued target of outgoing relation (one2many or many2many)
+                $qb->andWhere(
+                    $qb->expr()->isMemberOf(':' . $k, 'tbl.' . $k)
+                )
+                    ->setParameter($k, $v)
+                ;
+                continue;
+            }
     
             if (is_array($v)) {
                 continue;
@@ -344,6 +366,15 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('project', $qb, $v);
                 }
+                continue;
+            }
+            if (in_array($k, ['sites', 'templates']) && !empty($v)) {
+                // multi-valued target of outgoing relation (one2many or many2many)
+                $qb->andWhere(
+                    $qb->expr()->isMemberOf(':' . $k, 'tbl.' . $k)
+                )
+                    ->setParameter($k, $v)
+                ;
                 continue;
             }
     

@@ -11,6 +11,20 @@
     <div id="collapseProjectQuickNav" class="collapse">
         <fieldset>
             <h3>{{ __('Quick navigation') }}</h3>
+            {% if sitesFilter is defined and sitesFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sites) }}
+            {% if sitesFilter is defined and sitesFilter != true %}
+                </div>
+            {% endif %}
+            {% if templatesFilter is defined and templatesFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.templates) }}
+            {% if templatesFilter is defined and templatesFilter != true %}
+                </div>
+            {% endif %}
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 <div class="hidden">
             {% endif %}
