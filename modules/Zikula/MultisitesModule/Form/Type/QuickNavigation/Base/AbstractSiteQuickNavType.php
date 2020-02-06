@@ -13,8 +13,6 @@
 
 namespace Zikula\MultisitesModule\Form\Type\QuickNavigation\Base;
 
-use Doctrine\ORM\EntityRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -25,8 +23,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
 use Zikula\MultisitesModule\Helper\EntityDisplayHelper;
 use Zikula\MultisitesModule\Helper\ListEntriesHelper;
+use Zikula\MultisitesModule\Helper\PermissionHelper;
 
 /**
  * Site quick navigation form type base class.
@@ -41,6 +41,16 @@ abstract class AbstractSiteQuickNavType extends AbstractType
     protected $requestStack;
 
     /**
+     * @var EntityFactory
+     */
+    protected $entityFactory;
+
+    /**
+     * @var PermissionHelper
+     */
+    protected $permissionHelper;
+
+    /**
      * @var EntityDisplayHelper
      */
     protected $entityDisplayHelper;
@@ -53,11 +63,15 @@ abstract class AbstractSiteQuickNavType extends AbstractType
     public function __construct(
         TranslatorInterface $translator,
         RequestStack $requestStack,
+        EntityFactory $entityFactory,
+        PermissionHelper $permissionHelper,
         EntityDisplayHelper $entityDisplayHelper,
         ListEntriesHelper $listHelper
     ) {
         $this->setTranslator($translator);
         $this->requestStack = $requestStack;
+        $this->entityFactory = $entityFactory;
+        $this->permissionHelper = $permissionHelper;
         $this->entityDisplayHelper = $entityDisplayHelper;
         $this->listHelper = $listHelper;
     }
@@ -102,19 +116,27 @@ abstract class AbstractSiteQuickNavType extends AbstractType
             $mainSearchTerm = $request->query->get('q');
             $request->query->remove('q');
         }
-    
-        $queryBuilder = function (EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
         $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('template', EntityType::class, [
-            'class' => 'ZikulaMultisitesModule:TemplateEntity',
-            'choice_label' => $choiceLabelClosure,
-            'query_builder' => $queryBuilder,
+        $objectType = 'template';
+        // select without joins
+        $entities = $this->entityFactory->getRepository($objectType)->selectWhere('', '', false);
+        $permLevel = ACCESS_READ;
+        
+        $entities = $this->permissionHelper->filterCollection(
+            $objectType,
+            $entities,
+            $permLevel
+        );
+        $choices = [];
+        foreach ($entities as $entity) {
+            $choices[$entity->getId()] = $entity;
+        }
+        
+        $builder->add('template', ChoiceType::class, [
+            'choices' => $choices,
+            'choice_label' => function ($entity) use ($entityDisplayHelper) {
+                return $entityDisplayHelper->getFormattedTitle($entity);
+            },
             'placeholder' => $this->__('All'),
             'required' => false,
             'label' => $this->__('Template'),
@@ -122,18 +144,27 @@ abstract class AbstractSiteQuickNavType extends AbstractType
                 'class' => 'input-sm'
             ]
         ]);
-        $queryBuilder = function (EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('project', EntityType::class, [
-            'class' => 'ZikulaMultisitesModule:ProjectEntity',
-            'choice_label' => $choiceLabelClosure,
-            'query_builder' => $queryBuilder,
+    
+        $objectType = 'project';
+        // select without joins
+        $entities = $this->entityFactory->getRepository($objectType)->selectWhere('', '', false);
+        $permLevel = ACCESS_READ;
+        
+        $entities = $this->permissionHelper->filterCollection(
+            $objectType,
+            $entities,
+            $permLevel
+        );
+        $choices = [];
+        foreach ($entities as $entity) {
+            $choices[$entity->getId()] = $entity;
+        }
+        
+        $builder->add('project', ChoiceType::class, [
+            'choices' => $choices,
+            'choice_label' => function ($entity) use ($entityDisplayHelper) {
+                return $entityDisplayHelper->getFormattedTitle($entity);
+            },
             'placeholder' => $this->__('All'),
             'required' => false,
             'label' => $this->__('Project'),
