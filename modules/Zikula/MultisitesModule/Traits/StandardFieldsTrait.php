@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\UsersModule\Entity\UserEntity;
 
 /**
- * Standard fields trait implementation class.
+ * Standard fields trait.
  */
 trait StandardFieldsTrait
 {
