@@ -64,7 +64,7 @@ abstract class AbstractUploadHelper
     protected $moduleVars;
     
     /**
-     * @var String
+     * @var string
      */
     protected $dataDirectory;
     
