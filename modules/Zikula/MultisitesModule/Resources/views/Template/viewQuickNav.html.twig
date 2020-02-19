@@ -1,4 +1,16 @@
 {# purpose of this template: templates view filter form #}
+{% import _self as helper %}
+{% macro renderQuickNavEntry(quickNavForm, fieldName, isVisible) %}
+    {% if attribute(quickNavForm, fieldName) is defined and attribute(quickNavForm, fieldName) is not null %}
+        {% if not isVisible %}
+            <div class="hidden">
+        {% endif %}
+            {{ form_row(attribute(quickNavForm, fieldName)) }}
+        {% if not isVisible %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
 {% if permissionHelper.mayUseQuickNav('template') %}
     {% form_theme quickNavForm with [
         'bootstrap_3_layout.html.twig'
@@ -11,49 +23,23 @@
     <div id="collapseTemplateQuickNav" class="collapse">
         <fieldset>
             <h3>{{ __('Quick navigation') }}</h3>
-            {% if projectsFilter is defined and projectsFilter != true %}
-                <div class="hidden">
+            {{ helper.renderQuickNavEntry(quickNavForm, 'projects', projectsFilter is not defined or projectsFilter == true) }}
+            {{ helper.renderQuickNavEntry(quickNavForm, 'sites', sitesFilter is not defined or sitesFilter == true) }}
+            {{ helper.renderQuickNavEntry(quickNavForm, 'workflowState', workflowStateFilter is not defined or workflowStateFilter == true) }}
+            {{ helper.renderQuickNavEntry(quickNavForm, 'q', searchFilter is not defined or searchFilter == true) }}
+            {% if quickNavForm.sort is defined and quickNavForm.sort is not null %}
+                {% if sorting is defined and sorting != true %}
+                    <div class="hidden">
+                {% endif %}
+                    {{ form_row(quickNavForm.sort) }}
+                    {% if quickNavForm.sortdir is defined and quickNavForm.sortdir is not null %}
+                        {{ form_row(quickNavForm.sortdir) }}
+                    {% endif %}
+                {% if sorting is defined and sorting != true %}
+                    </div>
+                {% endif %}
             {% endif %}
-                {{ form_row(quickNavForm.projects) }}
-            {% if projectsFilter is defined and projectsFilter != true %}
-                </div>
-            {% endif %}
-            {% if sitesFilter is defined and sitesFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.sites) }}
-            {% if sitesFilter is defined and sitesFilter != true %}
-                </div>
-            {% endif %}
-            {% if workflowStateFilter is defined and workflowStateFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.workflowState) }}
-            {% if workflowStateFilter is defined and workflowStateFilter != true %}
-                </div>
-            {% endif %}
-            {% if searchFilter is defined and searchFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.q) }}
-            {% if searchFilter is defined and searchFilter != true %}
-                </div>
-            {% endif %}
-            {% if sorting is defined and sorting != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.sort) }}
-                {{ form_row(quickNavForm.sortdir) }}
-            {% if sorting is defined and sorting != true %}
-                </div>
-            {% endif %}
-            {% if pageSizeSelector is defined and pageSizeSelector != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.num) }}
-            {% if pageSizeSelector is defined and pageSizeSelector != true %}
-                </div>
-            {% endif %}
+            {{ helper.renderQuickNavEntry(quickNavForm, 'num', pageSizeSelector is not defined or pageSizeSelector == true) }}
             {{ form_widget(quickNavForm.updateview) }}
             <a href="{{ path('zikulamultisitesmodule_template_' ~ routeArea|default ~ 'view', {tpl: app.request.query.get('tpl', ''), all: app.request.query.get('all', '')}) }}" title="{{ __('Back to default view') }}" class="btn btn-default btn-sm">{{ __('Reset') }}</a>
         </fieldset>
