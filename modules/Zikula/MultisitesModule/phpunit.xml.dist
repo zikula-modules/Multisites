@@ -16,7 +16,7 @@
         <testsuite name="ZikulaMultisitesModule Test Suite">
             <directory>./Tests</directory>
             <exclude>./Tests/Entity/*/Repository</exclude>
-            <exclude>./vendor</exclude>
+            <exclude>./vendor/</exclude>
         </testsuite>
     </testsuites>
     <filter>
