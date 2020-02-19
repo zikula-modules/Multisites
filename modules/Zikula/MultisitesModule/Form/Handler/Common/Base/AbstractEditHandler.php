@@ -548,7 +548,6 @@ abstract class AbstractEditHandler
         }
     
         $action = $args['commandName'];
-        $isRegularAction = 'delete' !== $action;
     
         $this->fetchInputData();
     
