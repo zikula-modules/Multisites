@@ -149,7 +149,13 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['template'] = $request->query->get('template', 0);
+        if (is_object($parameters['template'])) {
+            $parameters['template'] = $parameters['template']->getId();
+        }
         $parameters['project'] = $request->query->get('project', 0);
+        if (is_object($parameters['project'])) {
+            $parameters['project'] = $parameters['project']->getId();
+        }
         $parameters['workflowState'] = $request->query->get('workflowState', '');
         $parameters['q'] = $request->query->get('q', '');
         $parameters['active'] = $request->query->get('active', '');
@@ -174,7 +180,13 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['projects'] = $request->query->get('projects', 0);
+        if (is_object($parameters['projects'])) {
+            $parameters['projects'] = $parameters['projects']->getId();
+        }
         $parameters['sites'] = $request->query->get('sites', 0);
+        if (is_object($parameters['sites'])) {
+            $parameters['sites'] = $parameters['sites']->getId();
+        }
         $parameters['workflowState'] = $request->query->get('workflowState', '');
         $parameters['q'] = $request->query->get('q', '');
     
@@ -198,7 +210,13 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['sites'] = $request->query->get('sites', 0);
+        if (is_object($parameters['sites'])) {
+            $parameters['sites'] = $parameters['sites']->getId();
+        }
         $parameters['templates'] = $request->query->get('templates', 0);
+        if (is_object($parameters['templates'])) {
+            $parameters['templates'] = $parameters['templates']->getId();
+        }
         $parameters['workflowState'] = $request->query->get('workflowState', '');
         $parameters['q'] = $request->query->get('q', '');
     
@@ -251,6 +269,7 @@ abstract class AbstractCollectionFilterHelper
     
             // field filter
             if ((!is_numeric($v) && '' !== $v) || (is_numeric($v) && 0 < $v)) {
+                $v = (string)$v;
                 if ('workflowState' === $k && 0 === strpos($v, '!')) {
                     $qb->andWhere('tbl.' . $k . ' != :' . $k)
                        ->setParameter($k, substr($v, 1));
@@ -322,6 +341,7 @@ abstract class AbstractCollectionFilterHelper
     
             // field filter
             if ((!is_numeric($v) && '' !== $v) || (is_numeric($v) && 0 < $v)) {
+                $v = (string)$v;
                 if ('workflowState' === $k && 0 === strpos($v, '!')) {
                     $qb->andWhere('tbl.' . $k . ' != :' . $k)
                        ->setParameter($k, substr($v, 1));
@@ -384,6 +404,7 @@ abstract class AbstractCollectionFilterHelper
     
             // field filter
             if ((!is_numeric($v) && '' !== $v) || (is_numeric($v) && 0 < $v)) {
+                $v = (string)$v;
                 if ('workflowState' === $k && 0 === strpos($v, '!')) {
                     $qb->andWhere('tbl.' . $k . ' != :' . $k)
                        ->setParameter($k, substr($v, 1));
