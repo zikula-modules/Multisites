@@ -27,8 +27,12 @@
             "displayname": "Multisites",
             "url": "multisites",
             "capabilities": {
-                "user": {"route": "zikulamultisitesmodule_site_view"},
-                "admin": {"route": "zikulamultisitesmodule_admin_index"}
+                "admin": {
+                    "route": "zikulamultisitesmodule_admin_index"
+                },
+                "user": {
+                    "route": "zikulamultisitesmodule_site_view"
+                }
             },
             "securityschema": {
                 "ZikulaMultisitesModule::": "::",
