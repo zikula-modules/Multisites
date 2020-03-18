@@ -665,7 +665,7 @@ abstract class AbstractSiteRepository extends EntityRepository
         if (true !== $useJoins) {
             $orderByField = $orderBy;
             if (false !== mb_strpos($orderByField, ' ')) {
-                [$orderByField, $direction] = explode(' ', $orderByField, 2);
+                list($orderByField, $direction) = explode(' ', $orderByField, 2);
             }
             if (
                 in_array($orderByField, ['template', 'project'], true)
@@ -755,7 +755,7 @@ abstract class AbstractSiteRepository extends EntityRepository
     protected function resolveOrderByForRelation($orderBy)
     {
         if (false !== mb_strpos($orderBy, ' ')) {
-            [$orderBy, $direction] = explode(' ', $orderBy, 2);
+            list($orderBy, $direction) = explode(' ', $orderBy, 2);
         } else {
             $direction = 'ASC';
         }
