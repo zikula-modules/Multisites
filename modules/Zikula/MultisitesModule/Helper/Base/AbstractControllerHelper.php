@@ -263,7 +263,6 @@ abstract class AbstractControllerHelper
                 false
             );
     
-            $templateParameters['currentPage'] = $currentPage;
             $templateParameters['pager'] = [
                 'amountOfItems' => $objectCount,
                 'itemsPerPage' => $resultsPerPage
