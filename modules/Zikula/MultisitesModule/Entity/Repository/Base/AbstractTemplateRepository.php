@@ -520,8 +520,10 @@ abstract class AbstractTemplateRepository extends EntityRepository
      *
      * @return array Retrieved collection and (for paginated queries) the amount of total records affected
      */
-    public function retrieveCollectionResult(Query $query, $isPaginated = false)
-    {
+    public function retrieveCollectionResult(
+        Query $query,
+        $isPaginated = false
+    ) {
         $count = 0;
         if (!$isPaginated) {
             $result = $query->getResult();
@@ -587,7 +589,6 @@ abstract class AbstractTemplateRepository extends EntityRepository
     
         return (int)$query->getSingleScalarResult();
     }
-
 
     /**
      * Checks for unique values.
