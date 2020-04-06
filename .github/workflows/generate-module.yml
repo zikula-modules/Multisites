@@ -23,9 +23,7 @@ jobs:
     - name: Call standalone generator
       uses: docker://guite/generator-action:latest
       with:
-        model_name: 'Multisites.mostapp'
-        module_name: 'Zikula/MultisitesModule'
-        verbose: true
+        args: Multisites.mostapp Zikula/MultisitesModule "" true
 
     - name: Set output variables
       run: |

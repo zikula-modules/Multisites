@@ -22,13 +22,7 @@ jobs:
     - name: Build and test
       uses: docker://guite/zikula-action:latest
       with:
-        vendor_name: Zikula
-        module_name: Multisites
-        module_version: '2.1.0'
-        core_version: ZK20
-        database_host: mysql
-        database_port: 3306
-        create_artifacts: true
+        args: Zikula Multisites 2.1.0 ZK20 "" true
 
     # see https://github.com/actions/upload-artifact
     - name: Upload release folder as artifact
