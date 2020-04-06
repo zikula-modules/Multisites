@@ -82,23 +82,9 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.Validation.js'), 98) }}
     {{ pageAddAsset('javascript', zasset('@ZikulaMultisitesModule:js/ZikulaMultisitesModule.EditFunctions.js'), 99) }}
-    {% set formInitScript %}
-        <script>
-        /* <![CDATA[ */
-            var zikulaMultisitesInlineEditHandlers = [];
-            var zikulaMultisitesEditHandler = null;
-            
-            ( function($) {
-                $(document).ready(function() {
-                    zikulaMultisitesInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ template.id }}{% endif %}');
-                    zikulaMultisitesInitUploadField('zikulamultisitesmodule_template_sqlFile_sqlFile');
-                    {% if form.moderationSpecificCreator is defined %}
-                        initUserLiveSearch('zikulamultisitesmodule_template_moderationSpecificCreator');
-                    {% endif %}
-                });
-            })(jQuery);
-        /* ]]> */
-        </script>
-    {% endset %}
-    {{ pageAddAsset('footer', formInitScript) }}
+    <div id="formEditingDefinition" data-mode="{{ mode|e('html_attr') }}" data-entityid="{% if mode != 'create' %}{{ template.id|e('html_attr') }}{% endif %}"></div>
+    <div class="field-editing-definition" data-field-type="upload" data-field-name="zikulamultisitesmodule_template_sqlFile_sqlFile"></div>
+    {% if form.moderationSpecificCreator is defined %}
+        <div class="field-editing-definition" data-field-type="user" data-field-name="zikulamultisitesmodule_template_moderationSpecificCreator"></div>
+    {% endif %}
 {% endblock %}
