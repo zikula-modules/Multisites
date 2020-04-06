@@ -86,17 +86,17 @@ abstract class AbstractInstallerListener implements EventSubscriberInterface
     }
     
     /**
-    * Listener for the `module.enable` event.
-    *
-    * Called after a module has been successfully enabled.
-    * The event allows accessing the module bundle and the extension
-    * information array using `$event->getModule()` and `$event->getModInfo()`.
-    *
-    * You can access general data available in the event.
-    *
-    * The event name:
-    *     `echo 'Event: ' . $event->getName();`
-    *
+     * Listener for the `module.enable` event.
+     *
+     * Called after a module has been successfully enabled.
+     * The event allows accessing the module bundle and the extension
+     * information array using `$event->getModule()` and `$event->getModInfo()`.
+     *
+     * You can access general data available in the event.
+     *
+     * The event name:
+     *     `echo 'Event: ' . $event->getName();`
+     *
      */
     public function moduleEnabled(ModuleStateEvent $event)
     {
