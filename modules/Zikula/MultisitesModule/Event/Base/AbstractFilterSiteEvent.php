@@ -13,13 +13,12 @@
 
 namespace Zikula\MultisitesModule\Event\Base;
 
-use Symfony\Component\EventDispatcher\Event;
 use Zikula\MultisitesModule\Entity\SiteEntity;
 
 /**
  * Event base class for filtering site processing.
  */
-class AbstractFilterSiteEvent extends Event
+class AbstractFilterSiteEvent
 {
     /**
      * @var SiteEntity Reference to treated entity instance.

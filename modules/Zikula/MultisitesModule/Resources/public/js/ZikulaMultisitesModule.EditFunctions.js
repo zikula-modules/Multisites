@@ -99,3 +99,19 @@ function zikulaMultisitesInitEditForm(mode, entityId) {
     }
 }
 
+jQuery(document).ready(function () {
+    if (jQuery('.field-editing-definition').length > 0) {
+        jQuery('.field-editing-definition').each(function (index) {
+            if ('user' === jQuery(this).data('field-type')) {
+                initUserLiveSearch(jQuery(this).data('field-name'));
+            } else if ('date' === jQuery(this).data('field-type')) {
+                zikulaMultisitesInitDateField(jQuery(this).data('field-name'));
+            } else if ('upload' === jQuery(this).data('field-type')) {
+                zikulaMultisitesInitUploadField(jQuery(this).data('field-name'));
+            }
+        });
+    }
+    if (jQuery('#formEditingDefinition').length > 0) {
+        zikulaMultisitesInitEditForm(jQuery('#formEditingDefinition').data('mode'), jQuery('#formEditingDefinition').data('entityid'));
+    }
+});
