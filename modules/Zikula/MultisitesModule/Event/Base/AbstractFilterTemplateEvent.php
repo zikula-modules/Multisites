@@ -14,11 +14,12 @@
 namespace Zikula\MultisitesModule\Event\Base;
 
 use Zikula\MultisitesModule\Entity\TemplateEntity;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Event base class for filtering template processing.
  */
-class AbstractFilterTemplateEvent
+class AbstractFilterTemplateEvent extends Event
 {
     /**
      * @var TemplateEntity Reference to treated entity instance.
