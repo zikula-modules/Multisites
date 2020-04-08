@@ -15,11 +15,12 @@ namespace Zikula\MultisitesModule\Event\Base;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Event base class for extending item actions menu.
  */
-class AbstractConfigureItemActionsMenuEvent
+class AbstractConfigureItemActionsMenuEvent extends Event
 {
     /**
      * @var FactoryInterface.

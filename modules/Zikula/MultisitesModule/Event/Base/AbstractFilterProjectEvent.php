@@ -14,11 +14,12 @@
 namespace Zikula\MultisitesModule\Event\Base;
 
 use Zikula\MultisitesModule\Entity\ProjectEntity;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Event base class for filtering project processing.
  */
-class AbstractFilterProjectEvent
+class AbstractFilterProjectEvent extends Event
 {
     /**
      * @var ProjectEntity Reference to treated entity instance.
