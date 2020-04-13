@@ -58,8 +58,6 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                 '{app}: User {user} could not create upload folders during installation. Error details: {errorMessage}.',
                 ['app' => 'ZikulaMultisitesModule', 'user' => $userName, 'errorMessage' => $exception->getMessage()]
             );
-        
-            return false;
         }
         // create all tables from according entity definitions
         try {
@@ -71,7 +69,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                 ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]
             );
     
-            return false;
+            throw $exception;
         }
     
         // set up all our vars with initial values
@@ -130,7 +128,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                         ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]
                     );
     
-                    return false;
+                    throw $exception;
                 }
         }
     */
@@ -152,7 +150,7 @@ abstract class AbstractMultisitesModuleInstaller extends AbstractExtensionInstal
                 ['app' => 'ZikulaMultisitesModule', 'errorMessage' => $exception->getMessage()]
             );
     
-            return false;
+            throw $exception;
         }
     
         // remove all module vars
