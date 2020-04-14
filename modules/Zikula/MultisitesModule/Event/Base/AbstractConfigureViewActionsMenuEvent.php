@@ -23,7 +23,7 @@ use Symfony\Component\EventDispatcher\Event;
 class AbstractConfigureViewActionsMenuEvent extends Event
 {
     /**
-     * @var FactoryInterface.
+     * @var FactoryInterface
      */
     protected $factory;
 

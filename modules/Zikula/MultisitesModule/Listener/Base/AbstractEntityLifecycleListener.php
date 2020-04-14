@@ -262,6 +262,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         // create the filter event and dispatch it
         $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
+        $event->setEntityChangeSet($args->getEntityChangeSet());
         $eventName = constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_PRE_UPDATE');
         $this->eventDispatcher->dispatch($eventName, $event);
     }
