@@ -375,7 +375,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
         } else {
             $this->setSqlFileFileName('');
             $this->setSqlFileUrl('');
-            $this->setSqlFileMeta([]);
         }
     
         return $this->sqlFile;
