@@ -893,7 +893,6 @@ abstract class AbstractSiteEntity extends EntityAccess
         } else {
             $this->setLogoFileName('');
             $this->setLogoUrl('');
-            $this->setLogoMeta([]);
         }
     
         return $this->logo;
@@ -1023,7 +1022,6 @@ abstract class AbstractSiteEntity extends EntityAccess
         } else {
             $this->setFavIconFileName('');
             $this->setFavIconUrl('');
-            $this->setFavIconMeta([]);
         }
     
         return $this->favIcon;
@@ -1177,7 +1175,6 @@ abstract class AbstractSiteEntity extends EntityAccess
         } else {
             $this->setParametersCsvFileFileName('');
             $this->setParametersCsvFileUrl('');
-            $this->setParametersCsvFileMeta([]);
         }
     
         return $this->parametersCsvFile;
