@@ -13,8 +13,8 @@
             <li>{{ __f('Created on %date', {'%date': obj.createdDate|localizeddate('medium', 'short')}) }}</li>
         {% endif %}
         {% if obj.updatedBy|default and obj.updatedBy.uid > 0 %}
-            <li>{{ __f('Updated by %user', {'%user': obj.updatedBy.uname}) }}</li>
-            <li>{{ __f('Updated on %date', {'%date': obj.updatedDate|localizeddate('medium', 'short')}) }}</li>
+            <li>{{ __f('Last update by %user', {'%user': obj.updatedBy.uname}) }}</li>
+            <li>{{ __f('Last update on %date', {'%date': obj.updatedDate|localizeddate('medium', 'short')}) }}</li>
         {% endif %}
         </ul>
     {% if tabs|default(false) == true %}
