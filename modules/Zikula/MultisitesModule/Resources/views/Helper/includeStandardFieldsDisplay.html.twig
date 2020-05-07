@@ -26,7 +26,7 @@
         {% set profileLink = obj.updatedBy.uid|profileLinkByUserId %}
         <dd class="avatar">{{ userAvatar(obj.updatedBy.uid, {rating: 'g'}) }}</dd>
         <dd>
-            {{ __f('Updated by %user on %date', {'%user': profileLink, '%date': obj.updatedDate|localizeddate('medium', 'short')})|raw }}
+            {{ __f('Last update by %user on %date', {'%user': profileLink, '%date': obj.updatedDate|localizeddate('medium', 'short')})|raw }}
             {% if currentUser.loggedIn %}
                 {% set sendMessageUrl = obj.updatedBy.uid|messageSendLink(urlOnly=true) %}
                 {% if sendMessageUrl != '#' %}
