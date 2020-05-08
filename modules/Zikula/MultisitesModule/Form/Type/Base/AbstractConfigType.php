@@ -181,7 +181,7 @@ abstract class AbstractConfigType extends AbstractType
     {
         
         $builder->add('enableShrinkingForSiteLogo', CheckboxType::class, [
-            'label' => $this->__('Enable shrinking for site logo:'),
+            'label' => $this->__('Enable shrinking:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
@@ -195,7 +195,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('shrinkWidthSiteLogo', IntegerType::class, [
-            'label' => $this->__('Shrink width site logo:'),
+            'label' => $this->__('Shrink width:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The maximum image width in pixels.')
@@ -212,7 +212,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('shrinkHeightSiteLogo', IntegerType::class, [
-            'label' => $this->__('Shrink height site logo:'),
+            'label' => $this->__('Shrink height:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The maximum image height in pixels.')
@@ -236,7 +236,7 @@ abstract class AbstractConfigType extends AbstractType
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
         $builder->add('thumbnailModeSiteLogo', ChoiceType::class, [
-            'label' => $this->__('Thumbnail mode site logo:'),
+            'label' => $this->__('Thumbnail mode:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
@@ -255,7 +255,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailWidthSiteLogoView', IntegerType::class, [
-            'label' => $this->__('Thumbnail width site logo view:'),
+            'label' => $this->__('Thumbnail width list:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
@@ -272,7 +272,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailHeightSiteLogoView', IntegerType::class, [
-            'label' => $this->__('Thumbnail height site logo view:'),
+            'label' => $this->__('Thumbnail height list:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
@@ -289,7 +289,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailWidthSiteLogoEdit', IntegerType::class, [
-            'label' => $this->__('Thumbnail width site logo edit:'),
+            'label' => $this->__('Thumbnail width edit:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
@@ -306,7 +306,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailHeightSiteLogoEdit', IntegerType::class, [
-            'label' => $this->__('Thumbnail height site logo edit:'),
+            'label' => $this->__('Thumbnail height edit:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
@@ -323,7 +323,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('enableShrinkingForSiteFavIcon', CheckboxType::class, [
-            'label' => $this->__('Enable shrinking for site fav icon:'),
+            'label' => $this->__('Enable shrinking:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image.')
@@ -337,7 +337,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('shrinkWidthSiteFavIcon', IntegerType::class, [
-            'label' => $this->__('Shrink width site fav icon:'),
+            'label' => $this->__('Shrink width:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The maximum image width in pixels.')
@@ -354,7 +354,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('shrinkHeightSiteFavIcon', IntegerType::class, [
-            'label' => $this->__('Shrink height site fav icon:'),
+            'label' => $this->__('Shrink height:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('The maximum image height in pixels.')
@@ -378,7 +378,7 @@ abstract class AbstractConfigType extends AbstractType
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
         $builder->add('thumbnailModeSiteFavIcon', ChoiceType::class, [
-            'label' => $this->__('Thumbnail mode site fav icon:'),
+            'label' => $this->__('Thumbnail mode:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail mode (inset or outbound).')
@@ -397,7 +397,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailWidthSiteFavIconView', IntegerType::class, [
-            'label' => $this->__('Thumbnail width site fav icon view:'),
+            'label' => $this->__('Thumbnail width list:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail width on view pages in pixels.')
@@ -414,7 +414,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailHeightSiteFavIconView', IntegerType::class, [
-            'label' => $this->__('Thumbnail height site fav icon view:'),
+            'label' => $this->__('Thumbnail height list:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail height on view pages in pixels.')
@@ -431,7 +431,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailWidthSiteFavIconEdit', IntegerType::class, [
-            'label' => $this->__('Thumbnail width site fav icon edit:'),
+            'label' => $this->__('Thumbnail width edit:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail width on edit pages in pixels.')
@@ -448,7 +448,7 @@ abstract class AbstractConfigType extends AbstractType
         ]);
         
         $builder->add('thumbnailHeightSiteFavIconEdit', IntegerType::class, [
-            'label' => $this->__('Thumbnail height site fav icon edit:'),
+            'label' => $this->__('Thumbnail height edit:'),
             'label_attr' => [
                 'class' => 'tooltips',
                 'title' => $this->__('Thumbnail height on edit pages in pixels.')
