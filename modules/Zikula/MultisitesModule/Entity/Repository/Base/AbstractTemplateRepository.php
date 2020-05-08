@@ -343,7 +343,7 @@ abstract class AbstractTemplateRepository extends EntityRepository
         $qb = $this->genericBaseQuery('', '', $useJoins, $slimMode);
         $qb = $this->addIdListFilter($idList, $qb);
     
-        if (!$slimMode && null !== $this->collectionFilterHelper) {
+        if (null !== $this->collectionFilterHelper) {
             $qb = $this->collectionFilterHelper->applyDefaultFilters('template', $qb);
         }
     
@@ -390,7 +390,7 @@ abstract class AbstractTemplateRepository extends EntityRepository
         $slimMode = false
     ) {
         $qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
-        if (!$slimMode && null !== $this->collectionFilterHelper) {
+        if (null !== $this->collectionFilterHelper) {
             $qb = $this->collectionFilterHelper->addCommonViewFilters('template', $qb);
         }
     
