@@ -130,11 +130,11 @@ abstract class AbstractPermissionHelper
     public function filterCollection($objectType, $entities, $permissionLevel, $userId = null)
     {
         $filteredEntities = [];
-        foreach ($entities as $multisites) {
-            if (!$this->hasEntityPermission($multisites, $permissionLevel, $userId)) {
+        foreach ($entities as $entity) {
+            if (!$this->hasEntityPermission($entity, $permissionLevel, $userId)) {
                 continue;
             }
-            $filteredEntities[] = $multisites;
+            $filteredEntities[] = $entity;
         }
     
         return $filteredEntities;
