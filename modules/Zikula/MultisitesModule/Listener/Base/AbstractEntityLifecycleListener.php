@@ -122,8 +122,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         // create the filter event and dispatch it
-        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $eventName = constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_PRE_REMOVE');
         $this->eventDispatcher->dispatch($eventName, $event);
     }
@@ -174,8 +174,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $this->logger->debug('{app}: User {user} removed the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
-        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $eventName = constant($eventClass . '::' . strtoupper($objectType) . '_POST_REMOVE');
         $this->eventDispatcher->dispatch($eventName, $event);
     }
@@ -202,8 +202,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         // create the filter event and dispatch it
-        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $eventName = constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_PRE_PERSIST');
         $this->eventDispatcher->dispatch($eventName, $event);
     }
@@ -236,8 +236,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $this->logger->debug('{app}: User {user} created the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
-        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $eventName = constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_POST_PERSIST');
         $this->eventDispatcher->dispatch($eventName, $event);
     }
@@ -260,9 +260,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         // create the filter event and dispatch it
-        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
         $event->setEntityChangeSet($args->getEntityChangeSet());
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $eventName = constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_PRE_UPDATE');
         $this->eventDispatcher->dispatch($eventName, $event);
     }
@@ -294,8 +294,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $this->logger->debug('{app}: User {user} updated the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
-        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $eventName = constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_POST_UPDATE');
         $this->eventDispatcher->dispatch($eventName, $event);
     }
@@ -352,8 +352,8 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         }
         
         // create the filter event and dispatch it
-        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $event = $this->createFilterEvent($entity);
+        $eventClass = '\\Zikula\\MultisitesModule\\MultisitesEvents';
         $eventName = constant($eventClass . '::' . strtoupper($entity->get_objectType()) . '_POST_LOAD');
         $this->eventDispatcher->dispatch($eventName, $event);
     }
