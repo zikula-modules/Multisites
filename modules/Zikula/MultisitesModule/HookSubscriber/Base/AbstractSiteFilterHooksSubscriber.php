@@ -46,6 +46,11 @@ abstract class AbstractSiteFilterHooksSubscriber implements HookSubscriberInterf
     {
         return $this->translator->__('Site filter hooks subscriber');
     }
+    
+    public function getAreaName()
+    {
+        return 'subscriber.zikulamultisitesmodule.filter_hooks.sites';
+    }
 
     public function getEvents()
     {

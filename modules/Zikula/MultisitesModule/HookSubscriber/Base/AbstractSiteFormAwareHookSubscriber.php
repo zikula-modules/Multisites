@@ -46,6 +46,11 @@ abstract class AbstractSiteFormAwareHookSubscriber implements HookSubscriberInte
     {
         return $this->translator->__('Site form aware subscriber');
     }
+    
+    public function getAreaName()
+    {
+        return 'subscriber.zikulamultisitesmodule.form_aware_hook.sites';
+    }
 
     public function getEvents()
     {

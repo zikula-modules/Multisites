@@ -46,6 +46,11 @@ abstract class AbstractProjectFilterHooksSubscriber implements HookSubscriberInt
     {
         return $this->translator->__('Project filter hooks subscriber');
     }
+    
+    public function getAreaName()
+    {
+        return 'subscriber.zikulamultisitesmodule.filter_hooks.projects';
+    }
 
     public function getEvents()
     {

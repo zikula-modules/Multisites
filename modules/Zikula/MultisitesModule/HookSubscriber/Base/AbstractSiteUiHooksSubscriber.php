@@ -46,6 +46,11 @@ abstract class AbstractSiteUiHooksSubscriber implements HookSubscriberInterface
     {
         return $this->translator->__('Site ui hooks subscriber');
     }
+    
+    public function getAreaName()
+    {
+        return 'subscriber.zikulamultisitesmodule.ui_hooks.sites';
+    }
 
     public function getEvents()
     {
