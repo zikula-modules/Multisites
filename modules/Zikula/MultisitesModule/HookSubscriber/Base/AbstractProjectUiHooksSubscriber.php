@@ -46,6 +46,11 @@ abstract class AbstractProjectUiHooksSubscriber implements HookSubscriberInterfa
     {
         return $this->translator->__('Project ui hooks subscriber');
     }
+    
+    public function getAreaName()
+    {
+        return 'subscriber.zikulamultisitesmodule.ui_hooks.projects';
+    }
 
     public function getEvents()
     {

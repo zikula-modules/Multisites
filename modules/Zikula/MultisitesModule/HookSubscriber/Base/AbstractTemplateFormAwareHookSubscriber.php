@@ -46,6 +46,11 @@ abstract class AbstractTemplateFormAwareHookSubscriber implements HookSubscriber
     {
         return $this->translator->__('Template form aware subscriber');
     }
+    
+    public function getAreaName()
+    {
+        return 'subscriber.zikulamultisitesmodule.form_aware_hook.templates';
+    }
 
     public function getEvents()
     {

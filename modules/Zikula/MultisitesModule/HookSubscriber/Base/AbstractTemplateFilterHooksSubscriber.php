@@ -46,6 +46,11 @@ abstract class AbstractTemplateFilterHooksSubscriber implements HookSubscriberIn
     {
         return $this->translator->__('Template filter hooks subscriber');
     }
+    
+    public function getAreaName()
+    {
+        return 'subscriber.zikulamultisitesmodule.filter_hooks.templates';
+    }
 
     public function getEvents()
     {

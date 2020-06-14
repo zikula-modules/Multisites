@@ -123,7 +123,10 @@ abstract class AbstractPermissionHelper
     /**
      * Filters a given collection of entities based on different permission checks.
      *
+     * @param string $objectType
      * @param array|ArrayCollection $entities The given list of entities
+     * @param int $permissionLevel
+     * @param int $userId
      *
      * @return array The filtered list of entities
      */
