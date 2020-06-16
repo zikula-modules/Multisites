@@ -28,5 +28,5 @@ jobs:
     - name: Upload release folder as artifact
       uses: actions/upload-artifact@master
       with:
-        name: ZikulaMultisitesModule_v2.1.0
-        path: './ZikulaMultisitesModule_v2.1.0'
+        name: ZikulaMultisitesModule
+        path: './ZikulaMultisitesModule'
