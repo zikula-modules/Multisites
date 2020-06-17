@@ -133,7 +133,7 @@ abstract class AbstractTemplateType extends AbstractType
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the sql file of the template.')
             ],
-            'required' => true && $options['mode'] == 'create',
+            'required' => true && 'create' === $options['mode'],
             'entity' => $options['entity'],
             'allow_deletion' => false,
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('template', 'sqlFile')),
