@@ -290,7 +290,7 @@ abstract class AbstractSiteType extends AbstractType
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the logo of the site.')
             ],
-            'required' => false && $options['mode'] == 'create',
+            'required' => false && 'create' === $options['mode'],
             'entity' => $options['entity'],
             'allow_deletion' => true,
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'logo')),
@@ -304,7 +304,7 @@ abstract class AbstractSiteType extends AbstractType
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the fav icon of the site.')
             ],
-            'required' => false && $options['mode'] == 'create',
+            'required' => false && 'create' === $options['mode'],
             'entity' => $options['entity'],
             'allow_deletion' => true,
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'favIcon')),
@@ -329,7 +329,7 @@ abstract class AbstractSiteType extends AbstractType
                 'class' => ' validate-upload',
                 'title' => $this->__('Enter the parameters csv file of the site.')
             ],
-            'required' => false && $options['mode'] == 'create',
+            'required' => false && 'create' === $options['mode'],
             'entity' => $options['entity'],
             'allow_deletion' => true,
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'parametersCsvFile')),
