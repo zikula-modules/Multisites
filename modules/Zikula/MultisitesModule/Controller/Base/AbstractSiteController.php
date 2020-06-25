@@ -257,7 +257,7 @@ abstract class AbstractSiteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('delete')->isClicked()) {
                 if ($site->supportsHookSubscribers()) {
-                    // Let any ui hooks perform additional validation actions
+                    // let any ui hooks perform additional validation actions
                     $validationErrors = $hookHelper->callValidationHooks($site, UiHooksCategory::TYPE_VALIDATE_DELETE);
                     if (0 < count($validationErrors)) {
                         foreach ($validationErrors as $message) {
@@ -277,10 +277,10 @@ abstract class AbstractSiteController extends AbstractController
                         }
                         
                         if ($site->supportsHookSubscribers()) {
-                            // Call form aware processing hooks
+                            // call form aware processing hooks
                             $hookHelper->callFormProcessHooks($form, $site, FormAwareCategory::TYPE_PROCESS_DELETE);
                         
-                            // Let any ui hooks know that we have deleted the site
+                            // let any ui hooks know that we have deleted the site
                             $hookHelper->callProcessHooks($site, UiHooksCategory::TYPE_PROCESS_DELETE);
                         }
                         
@@ -300,10 +300,10 @@ abstract class AbstractSiteController extends AbstractController
                     }
                     
                     if ($site->supportsHookSubscribers()) {
-                        // Call form aware processing hooks
+                        // call form aware processing hooks
                         $hookHelper->callFormProcessHooks($form, $site, FormAwareCategory::TYPE_PROCESS_DELETE);
                     
-                        // Let any ui hooks know that we have deleted the site
+                        // let any ui hooks know that we have deleted the site
                         $hookHelper->callProcessHooks($site, UiHooksCategory::TYPE_PROCESS_DELETE);
                     }
                     
@@ -538,7 +538,7 @@ abstract class AbstractSiteController extends AbstractController
     ) {
         $objectType = 'site';
         
-        // Get parameters
+        // get parameters
         $action = $request->request->get('action');
         $items = $request->request->get('items');
         if (!is_array($items) || !count($items)) {
@@ -570,7 +570,7 @@ abstract class AbstractSiteController extends AbstractController
             }
         
             if ($entity->supportsHookSubscribers()) {
-                // Let any ui hooks perform additional validation actions
+                // let any ui hooks perform additional validation actions
                 $hookType = 'delete' === $action
                     ? UiHooksCategory::TYPE_VALIDATE_DELETE
                     : UiHooksCategory::TYPE_VALIDATE_EDIT
@@ -650,7 +650,7 @@ abstract class AbstractSiteController extends AbstractController
             }
         
             if ($entity->supportsHookSubscribers()) {
-                // Let any ui hooks know that we have updated or deleted an item
+                // let any ui hooks know that we have updated or deleted an item
                 $hookType = 'delete' === $action
                     ? UiHooksCategory::TYPE_PROCESS_DELETE
                     : UiHooksCategory::TYPE_PROCESS_EDIT
