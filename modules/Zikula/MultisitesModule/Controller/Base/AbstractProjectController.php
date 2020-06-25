@@ -167,7 +167,7 @@ abstract class AbstractProjectController extends AbstractController
     ) {
         $objectType = 'project';
         
-        // Get parameters
+        // get parameters
         $action = $request->request->get('action');
         $items = $request->request->get('items');
         if (!is_array($items) || !count($items)) {
@@ -199,7 +199,7 @@ abstract class AbstractProjectController extends AbstractController
             }
         
             if ($entity->supportsHookSubscribers()) {
-                // Let any ui hooks perform additional validation actions
+                // let any ui hooks perform additional validation actions
                 $hookType = 'delete' === $action
                     ? UiHooksCategory::TYPE_VALIDATE_DELETE
                     : UiHooksCategory::TYPE_VALIDATE_EDIT
@@ -279,7 +279,7 @@ abstract class AbstractProjectController extends AbstractController
             }
         
             if ($entity->supportsHookSubscribers()) {
-                // Let any ui hooks know that we have updated or deleted an item
+                // let any ui hooks know that we have updated or deleted an item
                 $hookType = 'delete' === $action
                     ? UiHooksCategory::TYPE_PROCESS_DELETE
                     : UiHooksCategory::TYPE_PROCESS_EDIT
