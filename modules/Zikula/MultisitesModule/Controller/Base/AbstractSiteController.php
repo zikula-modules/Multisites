@@ -154,9 +154,8 @@ abstract class AbstractSiteController extends AbstractController
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
         ];
-        
         $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
-        $templateParameters = $controllerHelper->processEditActionParameters($objectType, $templateParameters);
+        
         
         // delegate form processing to the form handler
         $formHandler = $this->get('zikula_multisites_module.form.handler.site');
@@ -166,6 +165,12 @@ abstract class AbstractSiteController extends AbstractController
         }
         
         $templateParameters = $formHandler->getTemplateParameters();
+        
+        $templateParameters = $controllerHelper->processEditActionParameters(
+            $objectType,
+            $templateParameters,
+            $templateParameters['site']->supportsHookSubscribers()
+        );
         
         // fetch and return the appropriate template
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
@@ -189,9 +194,7 @@ abstract class AbstractSiteController extends AbstractController
         $id,
         $isAdmin = false
     ) {
-        if (null === $site) {
-            $site = $this->get('zikula_multisites_module.entity_factory')->getRepository('site')->selectById($id);
-        }
+        $site = $this->get('zikula_multisites_module.entity_factory')->getRepository('site')->selectById($id);
         if (null === $site) {
             throw new NotFoundHttpException(
                 $this->__(
@@ -326,7 +329,11 @@ abstract class AbstractSiteController extends AbstractController
         }
         
         $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
-        $templateParameters = $controllerHelper->processDeleteActionParameters($objectType, $templateParameters, true);
+        $templateParameters = $controllerHelper->processDeleteActionParameters(
+            $objectType,
+            $templateParameters,
+            $site->supportsHookSubscribers()
+        );
         
         // fetch and return the appropriate template
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'delete', $templateParameters);
