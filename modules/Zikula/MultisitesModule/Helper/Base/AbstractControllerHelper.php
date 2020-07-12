@@ -333,16 +333,27 @@ abstract class AbstractControllerHelper
      *
      * @param string $objectType Name of treated entity type
      * @param array $templateParameters Template data
+     * @param bool $hasHookSubscriber Whether hook subscribers are supported or not
      *
      * @return array Enriched template parameters used for creating the response
      */
     public function processEditActionParameters(
         $objectType,
-        array $templateParameters = []
+        array $templateParameters = [],
+        $hasHookSubscriber = false
     ) {
         $contextArgs = ['controller' => $objectType, 'action' => 'edit'];
         if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs), true)) {
             throw new Exception($this->__('Error! Invalid object type received.'));
+        }
+    
+        if (true === $hasHookSubscriber) {
+            // build RouteUrl instance for display hooks
+            $entity = $templateParameters[$objectType];
+            $urlParameters = $entity->createUrlArgs();
+            $urlParameters['_locale'] = $this->requestStack->getCurrentRequest()->getLocale();
+            $routeName = 'zikulamultisitesmodule_' . strtolower($objectType) . '_edit';
+            $templateParameters['currentUrlObject'] = new RouteUrl($routeName, $urlParameters);
         }
     
         return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
@@ -365,6 +376,15 @@ abstract class AbstractControllerHelper
         $contextArgs = ['controller' => $objectType, 'action' => 'delete'];
         if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs), true)) {
             throw new Exception($this->__('Error! Invalid object type received.'));
+        }
+    
+        if (true === $hasHookSubscriber) {
+            // build RouteUrl instance for display hooks
+            $entity = $templateParameters[$objectType];
+            $urlParameters = $entity->createUrlArgs();
+            $urlParameters['_locale'] = $this->requestStack->getCurrentRequest()->getLocale();
+            $routeName = 'zikulamultisitesmodule_' . strtolower($objectType) . '_delete';
+            $templateParameters['currentUrlObject'] = new RouteUrl($routeName, $urlParameters);
         }
     
         return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);

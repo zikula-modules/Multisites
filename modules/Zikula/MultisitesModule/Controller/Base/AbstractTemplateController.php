@@ -132,9 +132,8 @@ abstract class AbstractTemplateController extends AbstractController
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : ''
         ];
-        
         $controllerHelper = $this->get('zikula_multisites_module.controller_helper');
-        $templateParameters = $controllerHelper->processEditActionParameters($objectType, $templateParameters);
+        
         
         // delegate form processing to the form handler
         $formHandler = $this->get('zikula_multisites_module.form.handler.template');
@@ -144,6 +143,12 @@ abstract class AbstractTemplateController extends AbstractController
         }
         
         $templateParameters = $formHandler->getTemplateParameters();
+        
+        $templateParameters = $controllerHelper->processEditActionParameters(
+            $objectType,
+            $templateParameters,
+            $templateParameters['template']->supportsHookSubscribers()
+        );
         
         // fetch and return the appropriate template
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
