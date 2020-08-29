@@ -372,7 +372,8 @@ abstract class AbstractSiteEntity extends EntityAccess
      * )
      * @ORM\JoinTable(name="zikula_multisites_template")
      * @Assert\Type(type="Zikula\MultisitesModule\Entity\TemplateEntity")
-     * @var \Zikula\MultisitesModule\Entity\TemplateEntity $template
+     *
+     * @var \Zikula\MultisitesModule\Entity\TemplateEntity
      */
     protected $template;
     
@@ -385,7 +386,8 @@ abstract class AbstractSiteEntity extends EntityAccess
      * )
      * @ORM\JoinTable(name="zikula_multisites_project")
      * @Assert\Type(type="Zikula\MultisitesModule\Entity\ProjectEntity")
-     * @var \Zikula\MultisitesModule\Entity\ProjectEntity $project
+     *
+     * @var \Zikula\MultisitesModule\Entity\ProjectEntity
      */
     protected $project;
     
@@ -903,6 +905,7 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->databaseType = isset($databaseType) ? $databaseType : '';
         }
     }
+    
     /**
      * Returns the logo.
      *
@@ -916,7 +919,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
         $fileName = $this->logoFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
-            throw new RuntimeException('Invalid upload base path in ' . get_class($this) . '#getLogo().');
+            throw new RuntimeException('Invalid upload base path in ' . static::class . '#getLogo().');
         }
     
         $filePath = $this->_uploadBasePath . 'logo/' . $fileName;
@@ -936,7 +939,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      *
      * @return void
      */
-    public function setLogo(File $logo = null)
+    public function setLogo(?File $logo = null)
     {
         if (null === $this->logo && null === $logo) {
             return;
@@ -959,7 +962,6 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->setLogoFileName($this->logo->getFilename());
         }
     }
-    
     
     /**
      * Returns the logo file name.
@@ -1032,6 +1034,7 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->logoMeta = $logoMeta;
         }
     }
+    
     /**
      * Returns the fav icon.
      *
@@ -1045,7 +1048,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
         $fileName = $this->favIconFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
-            throw new RuntimeException('Invalid upload base path in ' . get_class($this) . '#getFavIcon().');
+            throw new RuntimeException('Invalid upload base path in ' . static::class . '#getFavIcon().');
         }
     
         $filePath = $this->_uploadBasePath . 'favicon/' . $fileName;
@@ -1065,7 +1068,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      *
      * @return void
      */
-    public function setFavIcon(File $favIcon = null)
+    public function setFavIcon(?File $favIcon = null)
     {
         if (null === $this->favIcon && null === $favIcon) {
             return;
@@ -1088,7 +1091,6 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->setFavIconFileName($this->favIcon->getFilename());
         }
     }
-    
     
     /**
      * Returns the fav icon file name.
@@ -1185,6 +1187,7 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->allowedLocales = isset($allowedLocales) ? $allowedLocales : [];
         }
     }
+    
     /**
      * Returns the parameters csv file.
      *
@@ -1198,7 +1201,7 @@ abstract class AbstractSiteEntity extends EntityAccess
     
         $fileName = $this->parametersCsvFileFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
-            throw new RuntimeException('Invalid upload base path in ' . get_class($this) . '#getParametersCsvFile().');
+            throw new RuntimeException('Invalid upload base path in ' . static::class . '#getParametersCsvFile().');
         }
     
         $filePath = $this->_uploadBasePath . 'parameterscsvfile/' . $fileName;
@@ -1218,7 +1221,7 @@ abstract class AbstractSiteEntity extends EntityAccess
      *
      * @return void
      */
-    public function setParametersCsvFile(File $parametersCsvFile = null)
+    public function setParametersCsvFile(?File $parametersCsvFile = null)
     {
         if (null === $this->parametersCsvFile && null === $parametersCsvFile) {
             return;
@@ -1241,7 +1244,6 @@ abstract class AbstractSiteEntity extends EntityAccess
             $this->setParametersCsvFileFileName($this->parametersCsvFile->getFilename());
         }
     }
-    
     
     /**
      * Returns the parameters csv file file name.

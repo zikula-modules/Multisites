@@ -168,7 +168,7 @@ abstract class AbstractProjectType extends AbstractType
                 'allow_moderation_specific_creator' => false,
                 'allow_moderation_specific_creation_date' => false,
                 'filter_by_ownership' => true,
-                'inline_usage' => false
+                'inline_usage' => false,
             ])
             ->setRequired(['mode', 'actions'])
             ->setAllowedTypes('mode', 'string')

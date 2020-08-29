@@ -128,6 +128,7 @@ abstract class AbstractSiteController extends AbstractController
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
+
     
     /**
      * This action provides a handling of edit requests.
@@ -176,6 +177,7 @@ abstract class AbstractSiteController extends AbstractController
         // fetch and return the appropriate template
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
     }
+
     
     /**
      * This action provides a handling of simple delete requests.
@@ -338,6 +340,7 @@ abstract class AbstractSiteController extends AbstractController
         // fetch and return the appropriate template
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'delete', $templateParameters);
     }
+
     
     /**
      * This is a custom action.
@@ -368,6 +371,7 @@ abstract class AbstractSiteController extends AbstractController
         // return template
         return $this->render('@ZikulaMultisitesModule/Site/manageExtensions.html.twig', $templateParameters);
     }
+
     
     /**
      * This is a custom action.
@@ -398,6 +402,7 @@ abstract class AbstractSiteController extends AbstractController
         // return template
         return $this->render('@ZikulaMultisitesModule/Site/manageThemes.html.twig', $templateParameters);
     }
+
     
     /**
      * This is a custom action.
@@ -428,6 +433,7 @@ abstract class AbstractSiteController extends AbstractController
         // return template
         return $this->render('@ZikulaMultisitesModule/Site/setThemeAsDefault.html.twig', $templateParameters);
     }
+
     
     /**
      * This is a custom action.
@@ -458,6 +464,7 @@ abstract class AbstractSiteController extends AbstractController
         // return template
         return $this->render('@ZikulaMultisitesModule/Site/viewTools.html.twig', $templateParameters);
     }
+
     
     /**
      * This is a custom action.
@@ -488,6 +495,7 @@ abstract class AbstractSiteController extends AbstractController
         // return template
         return $this->render('@ZikulaMultisitesModule/Site/executeTool.html.twig', $templateParameters);
     }
+
     
     /**
      * This is a custom action.
@@ -518,6 +526,8 @@ abstract class AbstractSiteController extends AbstractController
         // return template
         return $this->render('@ZikulaMultisitesModule/Site/exportDatabaseAsTemplate.html.twig', $templateParameters);
     }
+
+    
     
     /**
      * Process status changes for multiple items.
@@ -662,5 +672,4 @@ abstract class AbstractSiteController extends AbstractController
         
         return $this->redirectToRoute('zikulamultisitesmodule_site_' . ($isAdmin ? 'admin' : '') . 'view');
     }
-    
 }

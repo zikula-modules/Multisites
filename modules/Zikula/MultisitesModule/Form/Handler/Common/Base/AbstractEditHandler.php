@@ -362,7 +362,6 @@ abstract class AbstractEditHandler
     
         // save entity reference for later reuse
         $this->entityRef = $entity;
-    
         
         $this->initRelationPresets();
     
@@ -452,7 +451,6 @@ abstract class AbstractEditHandler
         // to be customised in sub classes
         return [];
     }
-    
     
     /**
      * Initialises relationship presets.

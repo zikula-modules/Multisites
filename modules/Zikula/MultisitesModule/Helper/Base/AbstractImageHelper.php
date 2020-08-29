@@ -121,8 +121,8 @@ abstract class AbstractImageHelper
                     'thumbnailMode' . ucfirst($objectType) . ucfirst($fieldName),
                     ImageInterface::THUMBNAIL_INSET
                 ),
-                'extension' => null // file extension for thumbnails (jpg, png, gif; null for original file type)
-            ]
+                'extension' => null, // file extension for thumbnails (jpg, png, gif; null for original file type)
+            ],
         ];
     
         if ($this->name . '_relateditem' === $contextName) {
@@ -134,7 +134,7 @@ abstract class AbstractImageHelper
                 $defaultHeight = 'view' === $args['action'] ? 24 : 180;
                 $options['thumbnail']['size'] = [
                     $this->variableApi->get('ZikulaMultisitesModule', 'thumbnailWidth' . $fieldSuffix, $defaultWidth),
-                    $this->variableApi->get('ZikulaMultisitesModule', 'thumbnailHeight' . $fieldSuffix, $defaultHeight)
+                    $this->variableApi->get('ZikulaMultisitesModule', 'thumbnailHeight' . $fieldSuffix, $defaultHeight),
                 ];
             }
         }

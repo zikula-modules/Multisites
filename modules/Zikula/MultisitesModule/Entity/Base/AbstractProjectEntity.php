@@ -81,7 +81,8 @@ abstract class AbstractProjectEntity extends EntityAccess
      *     mappedBy="project", cascade={"remove"})
      * )
      * @ORM\JoinTable(name="zikula_multisites_projectsites")
-     * @var \Zikula\MultisitesModule\Entity\SiteEntity[] $sites
+     *
+     * @var \Zikula\MultisitesModule\Entity\SiteEntity[]
      */
     protected $sites = null;
     
@@ -93,7 +94,8 @@ abstract class AbstractProjectEntity extends EntityAccess
      *     inversedBy="projects"
      * )
      * @ORM\JoinTable(name="zikula_multisites_project_template")
-     * @var \Zikula\MultisitesModule\Entity\TemplateEntity[] $templates
+     *
+     * @var \Zikula\MultisitesModule\Entity\TemplateEntity[]
      */
     protected $templates = null;
     /**
