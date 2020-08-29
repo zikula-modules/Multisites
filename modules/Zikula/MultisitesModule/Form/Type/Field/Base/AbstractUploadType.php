@@ -175,7 +175,6 @@ abstract class AbstractUploadType extends AbstractType
             ->setAllowedTypes('allowed_size', 'string')
         ;
     }
-
     
     /**
      * Returns the form builder.
@@ -196,6 +195,7 @@ abstract class AbstractUploadType extends AbstractType
     {
         return $this->entity;
     }
+
     public function getBlockPrefix()
     {
         return 'zikulamultisitesmodule_field_upload';

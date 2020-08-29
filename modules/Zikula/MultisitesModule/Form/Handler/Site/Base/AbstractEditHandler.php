@@ -125,7 +125,7 @@ abstract class AbstractEditHandler extends EditHandler
                 false
             ),
             'filter_by_ownership' => !$this->permissionHelper->hasEntityPermission($this->entityRef, ACCESS_ADD),
-            'inline_usage' => $this->templateParameters['inlineUsage']
+            'inline_usage' => $this->templateParameters['inlineUsage'],
         ];
     
         return $options;

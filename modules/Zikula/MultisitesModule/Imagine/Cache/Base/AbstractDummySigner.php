@@ -62,6 +62,6 @@ abstract class AbstractDummySigner implements SignerInterface
 
     public function check($hash, $path, array $runtimeConfig = null)
     {
-        return true;//$hash === $this->sign($path, $runtimeConfig);
+        return true; //$hash === $this->sign($path, $runtimeConfig);
     }
 }

@@ -60,12 +60,12 @@ abstract class AbstractUploadFileTransformer implements DataTransformerInterface
     {
         return [
             $this->fieldName => $file,
-            $this->fieldName . 'DeleteFile' => false
+            $this->fieldName . 'DeleteFile' => false,
         ];
     }
 
     /**
-     * Transforms a result array back to the File object
+     * Transforms a result array back to the File object.
      */
     public function reverseTransform($data)
     {

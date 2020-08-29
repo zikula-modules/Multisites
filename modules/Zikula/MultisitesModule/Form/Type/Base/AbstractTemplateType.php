@@ -193,8 +193,8 @@ abstract class AbstractTemplateType extends AbstractType
             'required' => false,
             'label' => $this->__('Projects'),
             'attr' => [
-                'title' => $this->__('Choose the projects.')
-            ]
+                'title' => $this->__('Choose the projects.'),
+            ],
         ]);
     }
 
@@ -263,7 +263,7 @@ abstract class AbstractTemplateType extends AbstractType
                 'allow_moderation_specific_creator' => false,
                 'allow_moderation_specific_creation_date' => false,
                 'filter_by_ownership' => true,
-                'inline_usage' => false
+                'inline_usage' => false,
             ])
             ->setRequired(['entity', 'mode', 'actions'])
             ->setAllowedTypes('mode', 'string')

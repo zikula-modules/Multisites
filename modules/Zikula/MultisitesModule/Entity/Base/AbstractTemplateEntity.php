@@ -167,7 +167,8 @@ abstract class AbstractTemplateEntity extends EntityAccess
      *     targetEntity="Zikula\MultisitesModule\Entity\ProjectEntity",
      *     mappedBy="templates"
      * )
-     * @var \Zikula\MultisitesModule\Entity\ProjectEntity[] $projects
+     *
+     * @var \Zikula\MultisitesModule\Entity\ProjectEntity[]
      */
     protected $projects = null;
     /**
@@ -179,7 +180,8 @@ abstract class AbstractTemplateEntity extends EntityAccess
      * )
      * @ORM\JoinTable(name="zikula_multisites_templatesites")
      * @ORM\OrderBy({"name" = "ASC"})
-     * @var \Zikula\MultisitesModule\Entity\SiteEntity[] $sites
+     *
+     * @var \Zikula\MultisitesModule\Entity\SiteEntity[]
      */
     protected $sites = null;
     
@@ -363,6 +365,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->description = isset($description) ? $description : '';
         }
     }
+    
     /**
      * Returns the sql file.
      *
@@ -376,7 +379,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
     
         $fileName = $this->sqlFileFileName;
         if (!empty($fileName) && !$this->_uploadBasePath) {
-            throw new RuntimeException('Invalid upload base path in ' . get_class($this) . '#getSqlFile().');
+            throw new RuntimeException('Invalid upload base path in ' . static::class . '#getSqlFile().');
         }
     
         $filePath = $this->_uploadBasePath . 'sqlfile/' . $fileName;
@@ -396,7 +399,7 @@ abstract class AbstractTemplateEntity extends EntityAccess
      *
      * @return void
      */
-    public function setSqlFile(File $sqlFile = null)
+    public function setSqlFile(?File $sqlFile = null)
     {
         if (null === $this->sqlFile && null === $sqlFile) {
             return;
@@ -419,7 +422,6 @@ abstract class AbstractTemplateEntity extends EntityAccess
             $this->setSqlFileFileName($this->sqlFile->getFilename());
         }
     }
-    
     
     /**
      * Returns the sql file file name.

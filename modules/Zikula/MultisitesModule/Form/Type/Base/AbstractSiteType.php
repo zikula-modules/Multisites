@@ -360,8 +360,8 @@ abstract class AbstractSiteType extends AbstractType
             'required' => false,
             'label' => $this->__('Template'),
             'attr' => [
-                'title' => $this->__('Choose the template.')
-            ]
+                'title' => $this->__('Choose the template.'),
+            ],
         ]);
         $queryBuilder = function (EntityRepository $er) {
             // select without joins
@@ -381,8 +381,8 @@ abstract class AbstractSiteType extends AbstractType
             'required' => false,
             'label' => $this->__('Project'),
             'attr' => [
-                'title' => $this->__('Choose the project.')
-            ]
+                'title' => $this->__('Choose the project.'),
+            ],
         ]);
     }
 
@@ -453,7 +453,7 @@ abstract class AbstractSiteType extends AbstractType
                 'allow_moderation_specific_creator' => false,
                 'allow_moderation_specific_creation_date' => false,
                 'filter_by_ownership' => true,
-                'inline_usage' => false
+                'inline_usage' => false,
             ])
             ->setRequired(['entity', 'mode', 'actions'])
             ->setAllowedTypes('mode', 'string')

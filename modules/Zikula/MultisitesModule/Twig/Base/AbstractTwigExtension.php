@@ -121,7 +121,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
         return $result;
     }
     
-    
     /**
      * The zikulamultisitesmodule_fileSize filter displays the size of a given file in a readable way.
      * Example:
@@ -153,7 +152,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
     }
     
     /**
-     * Display a given file size in a readable format
+     * Display a given file size in a readable format.
      *
      * @param int $size File size in bytes
      * @param boolean $nodesc If set to true the description will not be appended
@@ -196,7 +195,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
         return $onlydesc ? $sizeDesc : $size;
     }
     
-    
     /**
      * The zikulamultisitesmodule_listEntry filter displays the name
      * or names for a given list item.
@@ -220,7 +218,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
     
         return $this->listHelper->resolve($value, $objectType, $fieldName, $delimiter);
     }
-    
     
     
     

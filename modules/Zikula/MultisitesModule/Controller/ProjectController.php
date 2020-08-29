@@ -28,6 +28,7 @@ use Zikula\MultisitesModule\Entity\ProjectEntity;
  */
 class ProjectController extends AbstractProjectController
 {
+    
     /**
      * @Route("/projects/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
@@ -51,6 +52,7 @@ class ProjectController extends AbstractProjectController
             false
         );
     }
+
     /**
      * @Route("/project/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -66,6 +68,8 @@ class ProjectController extends AbstractProjectController
             false
         );
     }
+
+    
     /**
      * Process status changes for multiple items.
      *
@@ -92,6 +96,6 @@ class ProjectController extends AbstractProjectController
     ) {
         return $this->handleSelectedEntriesActionInternal($request, false);
     }
-    
+
     // feel free to add your own controller methods here
 }
