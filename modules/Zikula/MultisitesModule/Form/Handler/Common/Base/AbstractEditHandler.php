@@ -357,7 +357,7 @@ abstract class AbstractEditHandler
                 $session->getFlashBag()->add('error', $this->__('No such item found.'));
             }
     
-            return new RedirectResponse($this->getRedirectUrl(['commandName' => 'cancel']), 302);
+            return new RedirectResponse($this->router->generate('home'), 302);
         }
     
         // save entity reference for later reuse
