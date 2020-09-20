@@ -28,6 +28,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Zikula\Bundle\FormExtensionBundle\Form\DataTransformer\NullToEmptyTransformer;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
@@ -118,7 +119,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => true,
         ]);
-        $builder->add('description', TextType::class, [
+        $builder->add($builder->create('description', TextType::class, [
             'label' => $this->__('Description:'),
             'empty_data' => '',
             'attr' => [
@@ -127,7 +128,7 @@ abstract class AbstractSiteType extends AbstractType
                 'title' => $this->__('Enter the description of the site.'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
         $builder->add('siteAlias', TextType::class, [
             'label' => $this->__('Site alias:'),
             'empty_data' => '',
@@ -148,7 +149,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => true,
         ]);
-        $builder->add('siteDescription', TextType::class, [
+        $builder->add($builder->create('siteDescription', TextType::class, [
             'label' => $this->__('Site description:'),
             'empty_data' => '',
             'attr' => [
@@ -157,7 +158,7 @@ abstract class AbstractSiteType extends AbstractType
                 'title' => $this->__('Enter the site description of the site.'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
         $builder->add('siteAdminName', TextType::class, [
             'label' => $this->__('Site admin name:'),
             'empty_data' => 'admin',
@@ -178,7 +179,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => true,
         ]);
-        $builder->add('siteAdminRealName', TextType::class, [
+        $builder->add($builder->create('siteAdminRealName', TextType::class, [
             'label' => $this->__('Site admin real name:'),
             'empty_data' => '',
             'attr' => [
@@ -187,7 +188,7 @@ abstract class AbstractSiteType extends AbstractType
                 'title' => $this->__('Enter the site admin real name of the site.'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
         $builder->add('siteAdminEmail', EmailType::class, [
             'label' => $this->__('Site admin email:'),
             'empty_data' => '',
@@ -198,7 +199,7 @@ abstract class AbstractSiteType extends AbstractType
             ],
             'required' => true,
         ]);
-        $builder->add('siteCompany', TextType::class, [
+        $builder->add($builder->create('siteCompany', TextType::class, [
             'label' => $this->__('Site company:'),
             'empty_data' => '',
             'attr' => [
@@ -207,7 +208,7 @@ abstract class AbstractSiteType extends AbstractType
                 'title' => $this->__('Enter the site company of the site.'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
         $builder->add('siteDns', TextType::class, [
             'label' => $this->__('Site dns:'),
             'empty_data' => '',
@@ -294,7 +295,7 @@ abstract class AbstractSiteType extends AbstractType
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'favIcon')),
             'allowed_size' => '',
         ]);
-        $builder->add('allowedLocales', ArrayType::class, [
+        $builder->add($builder->create('allowedLocales', ArrayType::class, [
             'label' => $this->__('Allowed locales:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
@@ -303,7 +304,7 @@ abstract class AbstractSiteType extends AbstractType
                 'title' => $this->__('Enter the allowed locales of the site.'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
         $builder->add('parametersCsvFile', UploadType::class, [
             'label' => $this->__('Parameters csv file:'),
             'attr' => [
@@ -317,7 +318,7 @@ abstract class AbstractSiteType extends AbstractType
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('site', 'parametersCsvFile')),
             'allowed_size' => '',
         ]);
-        $builder->add('parametersArray', ArrayType::class, [
+        $builder->add($builder->create('parametersArray', ArrayType::class, [
             'label' => $this->__('Parameters array:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
@@ -326,15 +327,15 @@ abstract class AbstractSiteType extends AbstractType
                 'title' => $this->__('Enter the parameters array of the site.'),
             ],
             'required' => false,
-        ]);
-        $builder->add('active', CheckboxType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('active', CheckboxType::class, [
             'label' => $this->__('Active:'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('active ?'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
     }
 
     /**

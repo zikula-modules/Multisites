@@ -25,6 +25,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Zikula\Bundle\FormExtensionBundle\Form\DataTransformer\NullToEmptyTransformer;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\MultisitesModule\Entity\Factory\EntityFactory;
@@ -115,7 +116,7 @@ abstract class AbstractTemplateType extends AbstractType
             ],
             'required' => true,
         ]);
-        $builder->add('description', TextType::class, [
+        $builder->add($builder->create('description', TextType::class, [
             'label' => $this->__('Description:'),
             'empty_data' => '',
             'attr' => [
@@ -124,7 +125,7 @@ abstract class AbstractTemplateType extends AbstractType
                 'title' => $this->__('Enter the description of the template.'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
         $builder->add('sqlFile', UploadType::class, [
             'label' => $this->__('Sql file:'),
             'attr' => [
@@ -138,7 +139,7 @@ abstract class AbstractTemplateType extends AbstractType
             'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('template', 'sqlFile')),
             'allowed_size' => '',
         ]);
-        $builder->add('parameters', ArrayType::class, [
+        $builder->add($builder->create('parameters', ArrayType::class, [
             'label' => $this->__('Parameters:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
@@ -147,8 +148,8 @@ abstract class AbstractTemplateType extends AbstractType
                 'title' => $this->__('Enter the parameters of the template.'),
             ],
             'required' => false,
-        ]);
-        $builder->add('folders', ArrayType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('folders', ArrayType::class, [
             'label' => $this->__('Folders:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
@@ -157,8 +158,8 @@ abstract class AbstractTemplateType extends AbstractType
                 'title' => $this->__('Enter the folders of the template.'),
             ],
             'required' => false,
-        ]);
-        $builder->add('excludedTables', ArrayType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('excludedTables', ArrayType::class, [
             'label' => $this->__('Excluded tables:'),
             'help' => $this->__('Enter one entry per line.'),
             'empty_data' => [],
@@ -167,7 +168,7 @@ abstract class AbstractTemplateType extends AbstractType
                 'title' => $this->__('Enter the excluded tables of the template.'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
     }
 
     /**
