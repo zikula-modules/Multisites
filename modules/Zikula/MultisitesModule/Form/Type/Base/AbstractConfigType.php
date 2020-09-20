@@ -26,6 +26,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Zikula\Bundle\FormExtensionBundle\Form\DataTransformer\NullToEmptyTransformer;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\MultisitesModule\AppSettings;
@@ -153,7 +154,7 @@ abstract class AbstractConfigType extends AbstractType
             ],
             'required' => true,
         ]);
-        $builder->add('showOnlyOwnEntries', CheckboxType::class, [
+        $builder->add($builder->create('showOnlyOwnEntries', CheckboxType::class, [
             'label' => $this->__('Show only own entries:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -165,7 +166,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The show only own entries option'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
     }
 
     /**
@@ -173,7 +174,7 @@ abstract class AbstractConfigType extends AbstractType
      */
     public function addImagesFields(FormBuilderInterface $builder, array $options = [])
     {
-        $builder->add('enableShrinkingForSiteLogo', CheckboxType::class, [
+        $builder->add($builder->create('enableShrinkingForSiteLogo', CheckboxType::class, [
             'label' => $this->__('Enable shrinking:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -185,7 +186,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The enable shrinking option'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
         $builder->add('shrinkWidthSiteLogo', IntegerType::class, [
             'label' => $this->__('Shrink width:'),
             'label_attr' => [
@@ -307,7 +308,7 @@ abstract class AbstractConfigType extends AbstractType
             'required' => true,
             'input_group' => ['right' => $this->__('pixels')],
         ]);
-        $builder->add('enableShrinkingForSiteFavIcon', CheckboxType::class, [
+        $builder->add($builder->create('enableShrinkingForSiteFavIcon', CheckboxType::class, [
             'label' => $this->__('Enable shrinking:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -319,7 +320,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The enable shrinking option'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
         $builder->add('shrinkWidthSiteFavIcon', IntegerType::class, [
             'label' => $this->__('Shrink width:'),
             'label_attr' => [
@@ -448,7 +449,7 @@ abstract class AbstractConfigType extends AbstractType
      */
     public function addModerationFields(FormBuilderInterface $builder, array $options = [])
     {
-        $builder->add('allowModerationSpecificCreatorForSite', CheckboxType::class, [
+        $builder->add($builder->create('allowModerationSpecificCreatorForSite', CheckboxType::class, [
             'label' => $this->__('Allow moderation specific creator for site:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -460,8 +461,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The allow moderation specific creator for site option'),
             ],
             'required' => false,
-        ]);
-        $builder->add('allowModerationSpecificCreationDateForSite', CheckboxType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('allowModerationSpecificCreationDateForSite', CheckboxType::class, [
             'label' => $this->__('Allow moderation specific creation date for site:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -473,8 +474,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The allow moderation specific creation date for site option'),
             ],
             'required' => false,
-        ]);
-        $builder->add('allowModerationSpecificCreatorForTemplate', CheckboxType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('allowModerationSpecificCreatorForTemplate', CheckboxType::class, [
             'label' => $this->__('Allow moderation specific creator for template:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -486,8 +487,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The allow moderation specific creator for template option'),
             ],
             'required' => false,
-        ]);
-        $builder->add('allowModerationSpecificCreationDateForTemplate', CheckboxType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('allowModerationSpecificCreationDateForTemplate', CheckboxType::class, [
             'label' => $this->__('Allow moderation specific creation date for template:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -499,8 +500,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The allow moderation specific creation date for template option'),
             ],
             'required' => false,
-        ]);
-        $builder->add('allowModerationSpecificCreatorForProject', CheckboxType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('allowModerationSpecificCreatorForProject', CheckboxType::class, [
             'label' => $this->__('Allow moderation specific creator for project:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -512,8 +513,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The allow moderation specific creator for project option'),
             ],
             'required' => false,
-        ]);
-        $builder->add('allowModerationSpecificCreationDateForProject', CheckboxType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('allowModerationSpecificCreationDateForProject', CheckboxType::class, [
             'label' => $this->__('Allow moderation specific creation date for project:'),
             'label_attr' => [
                 'class' => 'tooltips',
@@ -525,7 +526,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => $this->__('The allow moderation specific creation date for project option'),
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
     }
 
     /**
