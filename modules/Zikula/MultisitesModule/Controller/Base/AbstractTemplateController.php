@@ -33,7 +33,6 @@ use Zikula\MultisitesModule\Entity\TemplateEntity;
  */
 abstract class AbstractTemplateController extends AbstractController
 {
-    
     /**
      * This action provides an item list overview.
      *
@@ -107,7 +106,6 @@ abstract class AbstractTemplateController extends AbstractController
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
 
-    
     /**
      * This action provides a handling of edit requests.
      *
@@ -156,7 +154,6 @@ abstract class AbstractTemplateController extends AbstractController
         return $this->get('zikula_multisites_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
     }
 
-    
     /**
      * This is a custom action.
      *
@@ -187,7 +184,6 @@ abstract class AbstractTemplateController extends AbstractController
         return $this->render('@ZikulaMultisitesModule/Template/createParametersCsvTemplate.html.twig', $templateParameters);
     }
 
-    
     /**
      * This is a custom action.
      *
