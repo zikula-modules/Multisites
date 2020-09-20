@@ -68,7 +68,7 @@ abstract class AbstractEditHandler extends EditHandler
         $entityData = $this->entityRef->toArray();
     
         // assign data to template as array (for additions like standard fields)
-        $this->templateParameters[$this->objectTypeLower] = $entityData;
+        $this->templateParameters[$this->objectType] = $entityData;
         $this->templateParameters['supportsHookSubscribers'] = $this->entityRef->supportsHookSubscribers();
     
         return $result;
