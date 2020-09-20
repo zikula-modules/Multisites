@@ -30,6 +30,31 @@ class ProjectController extends AbstractProjectController
 {
     
     /**
+     * @Route("/admin/projects/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
+     *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
+     *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
+     *        methods = {"GET"}
+     * )
+     * @Theme("admin")
+     */
+    public function adminViewAction(
+        Request $request,
+        $sort,
+        $sortdir,
+        $pos,
+        $num
+    ) {
+        return $this->viewInternal(
+            $request,
+            $sort,
+            $sortdir,
+            $pos,
+            $num,
+            true
+        );
+    }
+    
+    /**
      * @Route("/projects/view/{sort}/{sortdir}/{pos}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "pos" = "\d+", "num" = "\d+", "_format" = "html|csv|xml|json"},
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
@@ -53,6 +78,23 @@ class ProjectController extends AbstractProjectController
         );
     }
 
+    /**
+     * @Route("/admin/project/edit/{id}.{_format}",
+     *        requirements = {"id" = "\d+", "_format" = "html"},
+     *        defaults = {"id" = "0", "_format" = "html"},
+     *        methods = {"GET", "POST"}
+     * )
+     * @Theme("admin")
+     */
+    public function adminEditAction(
+        Request $request
+    ) {
+        return $this->editInternal(
+            $request,
+            true
+        );
+    }
+    
     /**
      * @Route("/project/edit/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},

@@ -33,7 +33,6 @@ use Zikula\MultisitesModule\Entity\ProjectEntity;
  */
 abstract class AbstractProjectController extends AbstractController
 {
-    
     /**
      * This action provides an item list overview.
      *
@@ -105,7 +104,6 @@ abstract class AbstractProjectController extends AbstractController
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
 
-    
     /**
      * This action provides a handling of edit requests.
      *
