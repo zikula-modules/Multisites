@@ -288,7 +288,7 @@ class SiteController extends AbstractSiteController
     public function adminHandleSelectedEntriesAction(
         Request $request
     ) {
-        return $this->handleSelectedEntriesActionInternal($request, true);
+        return $this->handleSelectedEntriesInternal($request, true);
     }
 
     /**
@@ -300,20 +300,20 @@ class SiteController extends AbstractSiteController
     public function handleSelectedEntriesAction(
         Request $request
     ) {
-        return $this->handleSelectedEntriesActionInternal($request, false);
+        return $this->handleSelectedEntriesInternal($request, false);
     }
 
     /**
      * This method includes the common implementation code for adminHandleSelectedEntriesAction() and handleSelectedEntriesAction().
      */
-    protected function handleSelectedEntriesActionInternal(Request $request, $isAdmin = false)
+    protected function handleSelectedEntriesInternal(Request $request, $isAdmin = false)
     {
         $allowedCustomActions = ['cleartemplates'];
 
         $action = $request->request->get('action', null);
         if (!in_array($action, $allowedCustomActions)) {
             // delegate to parent
-            return parent::handleSelectedEntriesActionInternal($request, $isAdmin);
+            return parent::handleSelectedEntriesInternal($request, $isAdmin);
         }
 
         $items = $request->request->get('items', null);

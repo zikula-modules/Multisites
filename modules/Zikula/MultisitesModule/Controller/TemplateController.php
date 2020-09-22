@@ -158,7 +158,7 @@ class TemplateController extends AbstractTemplateController
     public function adminHandleSelectedEntriesAction(
         Request $request
     ) {
-        return $this->handleSelectedEntriesActionInternal($request, true);
+        return $this->handleSelectedEntriesInternal($request, true);
     }
 
     /**
@@ -170,7 +170,7 @@ class TemplateController extends AbstractTemplateController
     public function handleSelectedEntriesAction(
         Request $request
     ) {
-        return $this->handleSelectedEntriesActionInternal($request, false);
+        return $this->handleSelectedEntriesInternal($request, false);
     }
 
     /**
