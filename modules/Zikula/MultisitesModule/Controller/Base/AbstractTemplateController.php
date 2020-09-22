@@ -229,7 +229,7 @@ abstract class AbstractTemplateController extends AbstractController
      *
      * @throws RuntimeException Thrown if executing the workflow action fails
      */
-    protected function handleSelectedEntriesActionInternal(
+    protected function handleSelectedEntriesInternal(
         Request $request,
         $isAdmin = false
     ) {

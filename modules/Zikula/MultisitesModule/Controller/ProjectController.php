@@ -123,7 +123,7 @@ class ProjectController extends AbstractProjectController
     public function adminHandleSelectedEntriesAction(
         Request $request
     ) {
-        return $this->handleSelectedEntriesActionInternal($request, true);
+        return $this->handleSelectedEntriesInternal($request, true);
     }
     
     /**
@@ -136,7 +136,7 @@ class ProjectController extends AbstractProjectController
     public function handleSelectedEntriesAction(
         Request $request
     ) {
-        return $this->handleSelectedEntriesActionInternal($request, false);
+        return $this->handleSelectedEntriesInternal($request, false);
     }
 
     // feel free to add your own controller methods here
