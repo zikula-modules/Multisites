@@ -1,0 +1,17 @@
+
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/modules/Zikula/MultisitesModule/"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "composer"
+    directory: "/modules/Zikula/SubsiteModule/"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
