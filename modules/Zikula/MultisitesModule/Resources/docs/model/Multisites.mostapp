@@ -103,6 +103,7 @@ application "Multisites" {
                 },
                 string "siteDns" {
                     defaultValue ""
+                    length 191
                 },
                 string "databaseName" {
                     defaultValue ""
